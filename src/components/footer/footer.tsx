@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { FaFacebookF, FaInstagram, FaPinterest } from 'react-icons/fa';
 
 const footerData = {
@@ -40,20 +41,20 @@ const footerData = {
         { icon: FaInstagram, link: '#' },
         { icon: FaPinterest, link: '#' },
     ],
-    paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'google-pay', 'tamara'],
+    paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
 
 const Footer = () => {
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 pb-5">
-            <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                <div>
+            <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-7 gap-5">
+                <div className="md:col-span-">
                     <h2 className="text-xl font-bold">{footerData.company.name}</h2>
                     <p className="mt-2 text-sm">{footerData.company.description}</p>
                 </div>
                 {footerData.links.map((section, index) => (
-                    <div key={index}>
-                        <h3 className="text-lg font-semibold">{section.title}</h3>
+                    <div key={index} >
+                        <h3 className="text-base font-semibold ">{section.title}</h3>
                         <ul className="mt-2 space-y-2">
                             {section.items.map((item, i) => (
                                 <li key={i} className="text-sm hover:text-gray-900 cursor-pointer">{item}</li>
@@ -61,11 +62,18 @@ const Footer = () => {
                         </ul>
                     </div>
                 ))}
-                <div>
+                <div className=''>
                     <h3 className="text-lg font-semibold">CONTACT US</h3>
                     <p className="text-sm mt-2">{footerData.contact.address}</p>
                     <p className="text-sm mt-2">{footerData.contact.phone}</p>
                     <p className="text-sm mt-2">{footerData.contact.email}</p>
+                    <div className="grid grid-cols-3 gap-0 mt-4">
+                        {footerData.paymentMethods.map((method, index) => (
+                            <div key={index} className="flex justify-center ">
+                                <Image src={`/assets/icons/${method}.png`} alt={method} width={100} height={100} className="" />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
             <div className="border-t border-gray-300 mt-6 pt-4 flex flex-col md:flex-row items-center justify-between px-6">
@@ -74,11 +82,6 @@ const Footer = () => {
                         <a key={index} href={social.link} className="text-gray-600 hover:text-gray-900">
                             <social.icon size={20} />
                         </a>
-                    ))}
-                </div>
-                <div className="flex space-x-2 mt-4 md:mt-0">
-                    {footerData.paymentMethods.map((method, index) => (
-                        <img key={index} src={`/images/${method}.png`} alt={method} className="w-10" />
                     ))}
                 </div>
                 <p className="text-sm text-gray-500 mt-4 md:mt-0">Easyfloors.ae ©2024</p>
