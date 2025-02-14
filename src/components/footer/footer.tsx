@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { FaFacebookF, FaInstagram, FaPinterest } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 
 const footerData = {
     company: {
@@ -39,7 +39,7 @@ const footerData = {
     social: [
         { icon: FaFacebookF, link: '#' },
         { icon: FaInstagram, link: '#' },
-        { icon: FaPinterest, link: '#' },
+        { icon: FaPinterestP, link: '#' },
     ],
     paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
@@ -49,7 +49,7 @@ const Footer = () => {
         <footer className="bg-gray-100 text-gray-700 pt-10 pb-5">
             <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-7 gap-5">
                 <div className="md:col-span-">
-                    <h2 className="text-xl font-bold">{footerData.company.name}</h2>
+                    <Image src="/assets/images/logo.png" alt="Easyfloors" width={120} height={50} className="mb-4" />
                     <p className="mt-2 text-sm">{footerData.company.description}</p>
                 </div>
                 {footerData.links.map((section, index) => (
@@ -77,14 +77,15 @@ const Footer = () => {
                 </div>
             </div>
             <div className="border-t border-gray-300 mt-6 pt-4 flex flex-col md:flex-row items-center justify-between px-6">
-                <div className="flex space-x-4">
+                <div className="flex space-x-4 ">
                     {footerData.social.map((social, index) => (
-                        <a key={index} href={social.link} className="text-gray-600 hover:text-gray-900">
+                        <a key={index} href={social.link} className="text-gray-600 hover:text-gray-900 bg-white p-1 rounded-md">
                             <social.icon size={20} />
                         </a>
                     ))}
                 </div>
                 <p className="text-sm text-gray-500 mt-4 md:mt-0">Easyfloors.ae ©2024</p>
+                <div />
             </div>
         </footer>
     );
