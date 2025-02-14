@@ -2,14 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root { 
+  --primary: #BF6933;
+  --background : #FFF9F5;
+  --background-gray: #F0F0F0;
+  --light-black: #0F0F0F; 
+  --purple:#1B1139;
+  --card-text:#594F55;
+  --green:#008000;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+   

@@ -1,6 +1,5 @@
 import type { Config } from "tailwindcss";
-import  { fontFamily } from 'tailwindcss/defaultTheme'
-
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   content: [
@@ -14,8 +13,13 @@ export default {
         inter: ["var(--font-Inter)", ...fontFamily.sans],
       },
       colors: {
+        primary: "var(--primary)",
         background: "var(--background)",
-        foreground: "var(--foreground)",
+        "background-gray": "var(--background-gray)",
+        "light-black": "var(--light-black)",
+        purple: "var(--purple)",
+        "card-text": "var(--card-text)",
+        green: "var(--green)",
       },
     },
   },
