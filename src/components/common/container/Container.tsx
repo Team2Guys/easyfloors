@@ -8,7 +8,7 @@ interface ContainerProps {
 const Container: FC<ContainerProps> = ({ children, className }) => {
   return (
     <div
-      className={ `max-w-[95%] lg:max-w-[92%] min-w-[95%] lg:min-w-[92%]  mx-auto border-4  ${className}`}
+      className={ `max-w-[95%] lg:max-w-[92%] min-w-[95%] lg:min-w-[92%]  mx-auto   ${className}`}
     >
       {children}
     </div>

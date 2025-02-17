@@ -7,16 +7,9 @@ import { Navigation } from "swiper/modules";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import "swiper/css";
 import "swiper/css/navigation";
+import { FeaturesProps } from "types/type";
 
-interface FeatureItem {
-  title: string;
-  description: string;
-  icon: string;
-}
 
-interface FeaturesProps {
-  items: FeatureItem[];
-}
 
 const Features: React.FC<FeaturesProps> = ({ items }) => {
   const prevRef = useRef(null);
