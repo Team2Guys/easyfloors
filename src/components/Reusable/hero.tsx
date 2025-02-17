@@ -49,15 +49,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
               </span>
             </p>
           </div>
-          <div className="absolute bottom-1 sm:bottom-2 xl:bottom-4 left-1/2 transform -translate-x-1/2">
-            <Image
-              src="/assets/images/Home/Vector.png"
-              alt="vector"
-              width={400}
-              height={600}
-              className="w-3 xl:h-4 xl:w-6"
-            />
-          </div>
+  
         </div>
       ))}
     </div>
