@@ -43,7 +43,7 @@ const Card: React.FC<ProductCardProps> = ({ product, features }) => {
 
                     <div className="w-full md:text-right">
                         <Link
-                            href={"#"}
+                            href="#"
                             className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap"
                         >
                             Shop Now
