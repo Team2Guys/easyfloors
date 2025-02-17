@@ -5,7 +5,7 @@ interface SearchBarprops{
 }
 const SearchBar = ({className}:SearchBarprops) => {
   return (
-    <div className={`relative w-full max-w-[10rem]  sm:max-w-[17rem] ${className}`}>
+    <div className={`relative w-full max-w-[10rem]  sm:max-w-[17rem] 2xl:max-w-[40rem] ${className}`}>
       <input
         type='text'
         placeholder='Search'

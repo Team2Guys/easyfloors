@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        '3xl': '1800px',
+      },
       fontFamily: {
         inter: ["var(--font-Inter)", ...fontFamily.sans],
       },
@@ -20,6 +23,7 @@ export default {
         purple: "var(--purple)",
         "card-text": "var(--card-text)",
         green: "var(--green)",
+        "gray-light": "var(--gray-light)",
       },
       fontSize: {
         "10" : "10px",
