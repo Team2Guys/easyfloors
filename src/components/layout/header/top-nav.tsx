@@ -7,6 +7,8 @@ import SocialIcon from "components/reuseable/social-icon";
 import UserIcon from "./user-icon";
 
 const TopNav = () => {
+  const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER;
+  const email = process.env.NEXT_PUBLIC_EMAIL;
   return (
     <div className="bg-primary py-2">
       <Container className="flex justify-between items-center">
@@ -20,7 +22,7 @@ const TopNav = () => {
                 src="/assets/images/icon/telephone.png"
                 alt="email"
               />
-              <Link href="tel:+971 50 597 4385">+971 50 597 4385</Link>
+              <Link href={`tel:${phoneNumber}`}>{phoneNumber}</Link>
             </div>
             <div className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
               <Image
@@ -29,7 +31,7 @@ const TopNav = () => {
                 src="/assets/images/icon/email.png"
                 alt="email"
               />
-              <Link href="mailto:cs@easyfloors.ae">cs@easyfloors.ae</Link>
+              <Link href={`mailto:${email}`}>{email}</Link>
             </div>
           </div>
         </div>
