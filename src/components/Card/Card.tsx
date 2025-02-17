@@ -2,9 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductCardProps } from "types/type";
 
-
-
-const Card: React.FC<ProductCardProps> = ({ product, features }) => {
+const Card: React.FC<ProductCardProps> = ({ product, features = [] }) => {
     return (
         <div className="overflow-hidden px-2">
             <Image
@@ -12,9 +10,8 @@ const Card: React.FC<ProductCardProps> = ({ product, features }) => {
                 alt={product.name}
                 width={500}
                 height={200}
-                className="w-full h-40 object-cover"
+                className="w-full h-52 object-cover"
             />
-
             <div className="flex justify-between gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light">
                 {features.map((feature) => (
                     <div key={feature.id} className="flex items-center justify-between gap-1">
@@ -29,18 +26,14 @@ const Card: React.FC<ProductCardProps> = ({ product, features }) => {
                     </div>
                 ))}
             </div>
-
             <div className="md:p-4 md:text-center font-inter font-light">
                 <h3 className="md:text-lg md:mt-0 mt-1 text-sm text-left font-semibold text-[#594F55]">
                     {product.name}
                 </h3>
                 <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between py-2 gap-2 md:gap-4 w-full">
-
                     <p className="text-sm md:text-base lg:text-base font-bold text-primary w-full md:w-full md:text-left">
                         {product.price}
                     </p>
-
-
                     <div className="w-full md:text-right">
                         <Link
                             href="#"
@@ -48,6 +41,7 @@ const Card: React.FC<ProductCardProps> = ({ product, features }) => {
                         >
                             Shop Now
                         </Link>
+
                     </div>
                 </div>
 

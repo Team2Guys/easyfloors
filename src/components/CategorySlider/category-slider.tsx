@@ -5,20 +5,10 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import leftrightarrow from "../../../public/assets/categoryslider/leftrightarrow.png";
-import upbottomarrow from "../../../public/assets/categoryslider/upbottomarrow.png";
-import againupbottom from "../../../public/assets/categoryslider/againupbottom.png";
-import { flooringTypes, products } from "data/data";
-import { Feature, FlooringType, Product } from "types/type";
 import Link from "next/link";
 import Card from "components/Card/Card";
-
-const features: Feature[] = [
-  { id: 1, icon: leftrightarrow, label: "125mm", width: 25, height: 25 },
-  { id: 2, icon: upbottomarrow, label: "10mm", width: 10, height: 20 },
-  { id: 3, icon: againupbottom, label: "300-1200mm", width: 5, height: 20 },
-];
-
+import { features, flooringTypes, products } from "data/data";
+import { FlooringType, Product } from "types/type";
 
 
 const CategorySlider: React.FC = () => {
@@ -38,10 +28,11 @@ const CategorySlider: React.FC = () => {
             </p>
             <Link
               href="#"
-              className="transition md:text-black text-white px-4 py-1 border md:border-primary border-white font-inter"
+              className="transition md:text-black font-semibold text-white px-4 py-1 border md:border-primary border-white font-inter hover:text-white hover:bg-primary"
             >
               See All
             </Link>
+
           </div>
           <div className="md:w-3/4 w-full bg-white md:pr-10 md:pt-0 pt-5">
             <Swiper
