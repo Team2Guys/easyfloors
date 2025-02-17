@@ -3,12 +3,13 @@ import "./globals.css";
 
 
 import { Inter } from "next/font/google";
+import Footer from "components/footer/footer";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-Inter",
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], 
-  style: ["normal", "italic"], 
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.variable}`}>
         {children}
+        <Footer />
       </body>
     </html>
   );
