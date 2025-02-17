@@ -31,3 +31,13 @@ export interface LabelPrice {
     product: Product;
     features: Feature[];
 }
+export type Block = {
+  id: number;
+  heading: string;
+  points: string[];
+  imageUrl: string;
+};
+export interface HeadingImageProps {
+  title: string;
+  imageUrl: string;
+}
