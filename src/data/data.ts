@@ -1,9 +1,11 @@
 
 import { Feature, FlooringType, Product } from "types/type";
-// import leftrightarrow from "../../../public/assets/categoryslider/leftrightarrow.png";
-// import upbottomarrow from "../../../public/assets/categoryslider/upbottomarrow.png";
-// import againupbottom from "../../../public/assets/categoryslider/againupbottom.png";
 
+export const features: Feature[] = [
+  { id: 1, icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
+  { id: 2, icon: "/assets/categoryslider/upbottomarrow.png", label: "10mm", width: 10, height: 20 },
+  { id: 3, icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
+];
 
 export const products: Product[] = [
   {

@@ -18,14 +18,7 @@ export interface LabelPrice {
   }
   export interface Feature {
     id: number;
-    icon: any;
-    label: string;
-    width: number;
-    height: number;
-  }
-  export interface Feature {
-    id: number;
-    icon: any;
+    icon: string;
     label: string;
     width: number;
     height: number;
