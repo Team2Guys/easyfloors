@@ -7,4 +7,5 @@ export interface SocialLink {
     label: string;
     href: string;
     submenu?: { label: string; href: string; image?: string }[];
+    scrolling?: boolean;
   }

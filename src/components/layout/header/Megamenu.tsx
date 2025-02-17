@@ -7,7 +7,7 @@ import Container from "components/common/container/Container";
 
 
 
-const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
+const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu,scrolling }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -47,7 +47,7 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
       </Link>
       {submenu && submenu.length > 0 && isOpen && (
         <div
-          className="fixed left-0 top-[13%] w-[100vw] bg-white shadow z-50 overflow-y-auto"
+          className={`fixed left-0 w-[100vw] bg-white shadow z-50 overflow-y-auto ${scrolling ? "top-[8%]" : "top-[13%]"}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

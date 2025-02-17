@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "components/common/container/Container";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,6 +14,23 @@ import { BiChevronDown } from "react-icons/bi";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolling(true); 
+      } else {
+        setScrolling(false);
+      }
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const toggleMenu = (label: string) => {
     setOpenMenus((prev) => {
@@ -31,7 +48,8 @@ const Navbar = () => {
   };
 
   return (
-    <Container className="flex items-center max-sm:gap-4 justify-between bg-white mt-1 sm:mt-3 ">
+    <div className={`bg-blue-400 fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg' : 'top-10'} transition-all`}>
+      <Container className="flex items-center max-sm:gap-4 justify-between bg-red-300 mt-1 sm:mt-3 ">
       <div className="w-2/12 lg:w-[8%] 2xl:w-[10.3%] ">
         <Link href="/">
           <Image
@@ -51,6 +69,7 @@ const Navbar = () => {
               label={item.label}
               href={item.href}
               submenu={item.submenu}
+              scrolling={scrolling}
             />
           ))}
         </div>
@@ -87,7 +106,8 @@ const Navbar = () => {
           </Drawer>
         </div>
       </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 

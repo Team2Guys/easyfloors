@@ -1,10 +1,8 @@
-import Container from "components/common/container/Container";
+import CategorySdlier from "components/CategorySlider/category-slider";
 
 export default function Home() {
   return (
-   <Container className="mt-20">
-     <h1 className="text-primary">Welcome to Easyfloors</h1>
-     <h1 className="text-primary">Welcome to Easyfloors</h1>
-   </Container>
+     <CategorySdlier/>
+
   );
 }
