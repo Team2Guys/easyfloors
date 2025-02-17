@@ -41,3 +41,28 @@ export interface HeadingImageProps {
   title: string;
   imageUrl: string;
 }
+export interface FeatureItem {
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface FeaturesProps {
+  items: FeatureItem[];
+}
+export interface HeroItem {
+  backgroundImage: string;
+  offerText: string;
+  title: string;
+  highlight: string;
+  description: string;
+  buttonText: string;
+  buttonLink: string;
+  priceText: string;
+  flooringType: string;
+  brand: string;
+}
+
+export interface HeroMainProps {
+  items: HeroItem[];
+}
