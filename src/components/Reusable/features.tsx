@@ -1,21 +1,16 @@
-"use client"; // Required for Next.js App Router
-
-import React, { useRef, useState, useEffect } from "react";
+"use client"; 
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
+import Slider from "react-slick";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
-import "swiper/css";
-import "swiper/css/navigation";
 import { FeaturesProps } from "types/type";
-
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const Features: React.FC<FeaturesProps> = ({ items }) => {
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const sliderRef = useRef<Slider>(null);
 
   useEffect(() => {
     const checkScreenSize = () => setIsSmallScreen(window.innerWidth < 768);
@@ -24,41 +19,29 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
     return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
+  const sliderSettings = {
+    dots: false,
+    infinite: items.length > 4,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    responsive: [
+      { breakpoint: 1280, settings: { slidesToShow: 4 } },
+      { breakpoint: 1024, settings: { slidesToShow: 3 } },
+      { breakpoint: 640, settings: { slidesToShow: 2 } },
+    ],
+  };
+
   return (
-    <div className="relative bg-white w-full px-6 sm:px-6 my-5 xl:my-7">
-      <Swiper
-        modules={[Navigation]}
-        spaceBetween={10}
-        slidesPerView={2}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
-        }}
-        loop
-        navigation={{
-          prevEl: prevRef.current,
-          nextEl: nextRef.current,
-        }}
-        onSwiper={(swiper) => {
-          setTimeout(() => {
-            if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
-              swiper.params.navigation.prevEl = prevRef.current;
-              swiper.params.navigation.nextEl = nextRef.current;
-              swiper.navigation.init();
-              swiper.navigation.update();
-            }
-          });
-        }}
-        className="w-full"
-      >
+    <div className="relative bg-white w-full px-6 sm:px-6 my-7 sm:mb-10 xl:mb-14 xl:mt-7">
+      <Slider ref={sliderRef} {...sliderSettings} className="w-full">
         {items.map((item, index) => {
           const isExpanded = expandedIndex === index;
           const shortText = item.description.split(" ").slice(0, 10).join(" ") + "...";
 
           return (
-            <SwiperSlide key={index}>
-              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-r-black xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4 rounded-lg xl:rounded-none shadow-md xl:shadow-none md:gap-3 md:p-5">
+            <div key={index} className="px-2 !flex flex-nowrap">
+              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4 rounded-lg xl:rounded-none shadow-md xl:shadow-none md:gap-3 md:p-5">
                 <Image
                   src={item.icon}
                   alt={item.title}
@@ -83,16 +66,22 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
                   )}
                 </div>
               </div>
-            </SwiperSlide>
+              <div className="border-r border-black h-28 hidden xl:block"/>
+            </div>
           );
         })}
-      </Swiper>
-
-      <button ref={prevRef} className="absolute left-0 top-1/2 -translate-y-1/2 z-20">
+      </Slider>
+      <button
+        onClick={() => sliderRef.current?.slickPrev()}
+        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
+      >
         <BiChevronLeft className="text-3xl text-gray-700" />
       </button>
 
-      <button ref={nextRef} className="absolute right-0 top-1/2 -translate-y-1/2 z-20">
+      <button
+        onClick={() => sliderRef.current?.slickNext()}
+        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
+      >
         <BiChevronRight className="text-3xl text-gray-700" />
       </button>
     </div>
