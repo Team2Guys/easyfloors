@@ -48,8 +48,8 @@ const Navbar = () => {
   };
 
   return (
-    <div className={`bg-blue-400 fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg' : 'top-10'} transition-all`}>
-      <Container className="flex items-center max-sm:gap-4 justify-between bg-red-300 mt-1 sm:mt-3 ">
+    <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg' : 'top-10'} transition-all`}>
+      <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
       <div className="w-2/12 lg:w-[8%] 2xl:w-[10.3%] ">
         <Link href="/">
           <Image
