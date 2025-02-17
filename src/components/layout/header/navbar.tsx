@@ -48,20 +48,20 @@ const Navbar = () => {
   };
 
   return (
-    <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg' : 'top-10'} transition-all`}>
+    <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg pb-1 sm:pb-2' : 'top-10 pb-1 sm:pb-1'} transition-all font-inter `}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
-      <div className="w-2/12 lg:w-[8%] 2xl:w-[10.3%] ">
+      <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
         <Link href="/">
           <Image
             width={200}
             height={200}
-            className=" w-[54px] h-[24px] lg:w-[200px] lg:h-[60px] 2xl:w-auto 2xl:h-auto"
+            className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
             src="/assets/images/logo/logo.png"
             alt="logo"
           />
         </Link>
       </div>
-      <div className="w-8/12 lg:w-[65%] 2xl:w-[70%]  max-lg:flex max-lg:justify-center">
+      <div className="w-8/12 lg:w-[68%] 2xl:w-[70%] 3xl:w-[67%]  max-lg:flex max-lg:justify-center">
         <div className="hidden lg:flex items-center gap-2 2xl:gap-6 w-fit  justify-between capitalize font-light whitespace-nowrap">
           {menuItems.map((item, index) => (
             <Megamenu
@@ -75,14 +75,14 @@ const Navbar = () => {
         </div>
         <SearchBar className="block lg:hidden" />
       </div>
-      <div className="w-2/12 lg:w-[25%] 2xl:w-[20%]  text-end flex items-center gap-2 justify-between max-lg:justify-end">
+      <div className="w-2/12 lg:w-[20%] 2xl:w-[20%] 3xl:w-[23%]  text-end flex items-center gap-2 justify-between max-lg:justify-end">
         <SearchBar className="lg:block hidden" />
         <UserIcon className="hidden lg:flex" />
         <div className="lg:hidden flex justify-end">
           <FaBars onClick={() => setIsOpen(true)} size={20} />
           <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
               {menuItems.map((item) => (
-                <div key={item.label} className="border-b py-2">
+                <div key={item.label} className="border-b py-2 font-inter">
                   <div className="flex justify-between items-center gap-2">
                     <Link href={item.href} className="text-14 font-semibold w-fit whitespace-nowrap" onClick={() => setIsOpen(false)}>{item.label}</Link>
                     {item.submenu && (
@@ -108,6 +108,7 @@ const Navbar = () => {
       </div>
       </Container>
     </div>
+    
   );
 };
 
