@@ -13,7 +13,7 @@ const Layers: React.FC = () => {
           <h2 className="md:text-5xl text-2xl font-inter font-bold mb-4 bg-primary text-white text-center p-4">
             {block.heading}
           </h2>
-          <div className="flex justify-center">
+          <div className="flex justify-left pl-8">
             <div className="text-left md:py-5">
               <ul className="list-disc md:pl-20 pl-7 mb-4 font-inter font-light px-2">
                 {block.points.map((point, index) => (
