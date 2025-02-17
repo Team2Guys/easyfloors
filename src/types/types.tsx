@@ -1,10 +1,8 @@
 export interface SocialLink {
-    href: string;
-    src: string;
-    alt: string;
-    width: number;
-    height: number;
-  }
+  href: string;
+  alt: string;
+  className?: string; // Applying class directly to the icon component
+}
   export interface MenuItemProps {
     label: string;
     href: string;

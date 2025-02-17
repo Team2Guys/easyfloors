@@ -20,7 +20,7 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-    }, 500);
+    }, 200);
   };
 
   useEffect(() => {
