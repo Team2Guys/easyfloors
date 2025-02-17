@@ -92,3 +92,36 @@ export const footerData = {
     ],
     paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
+export const blocksData = [
+  {
+    id: 1,
+    heading: 'SPC',
+    points: [
+      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
+      'They provide an easy way for you to present the most important ideas.',
+      'The information following each bullet should be brief: ',
+      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
+      'They provide an easy way for you to present the most important ideas.',
+      'The information following each bullet should be brief: ',
+    ],
+    imageUrl: '/assets/layers/layer1.png',
+  },
+  {
+    id: 2,
+    heading: 'LVT',
+    points: [
+      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
+      'They provide an easy way for you to present the most important ideas.',
+      'The information following each bullet should be brief: ',
+      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
+      'They provide an easy way for you to present the most important ideas.',
+      'The information following each bullet should be brief: ',
+    ],
+    imageUrl: '/assets/layers/layers2.png',
+  },
+];
+export const FloorItemsData = [
+  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Rectangle1.png'},
+  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Rectangle2.png' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
+];

@@ -4,7 +4,10 @@ import Layers from "components/Layers/layers";
 
 export default function Home() {
   return (
-     <CategorySdlier/>
-
+    <>
+      <CategorySdlier />
+      <Layers />
+      <FloorItems />
+    </>
   );
 }
