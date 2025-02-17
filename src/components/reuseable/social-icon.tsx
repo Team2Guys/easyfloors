@@ -8,6 +8,8 @@ interface SocialProps {
   className?: string;
 }
 
+
+
 const SocialIcon = ({ className }: SocialProps) => {
   return (
     <div className={`space-x-2 2xl:space-x-5 flex items-center ${className}`}>
