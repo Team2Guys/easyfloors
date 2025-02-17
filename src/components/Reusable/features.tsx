@@ -49,7 +49,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
         }}
         onSwiper={(swiper) => {
           setTimeout(() => {
-            if (swiper.params.navigation) {
+            if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
               swiper.params.navigation.prevEl = prevRef.current;
               swiper.params.navigation.nextEl = nextRef.current;
               swiper.navigation.init();
