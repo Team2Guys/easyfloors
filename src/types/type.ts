@@ -41,3 +41,21 @@ export interface HeadingImageProps {
   title: string;
   imageUrl: string;
 }
+
+export interface TImageBanner {
+  src: string; 
+  alt: string; 
+}
+export interface TBlogCard {
+  id: number;
+  title: string;
+  heading: string;
+  backgroundImage: string;
+  Link: string;
+}
+export interface TCategoryData {
+  title: string;
+  subtitle: string;
+  description: string;
+  backgroundImage: string;
+}
