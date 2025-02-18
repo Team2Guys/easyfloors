@@ -13,23 +13,23 @@ const Layers: React.FC = () => {
           <h2 className="md:text-5xl text-2xl font-inter font-bold mb-4 bg-primary text-white text-center p-4">
             {block.heading}
           </h2>
-          <div className="flex justify-left pl-8">
+          <div className="flex flex-col justify-between sm:justify-left md:pl-8">
             <div className="text-left md:py-5">
-              <ul className="list-disc md:pl-20 pl-7 mb-4 font-inter font-light px-2">
+              <ul className="list-disc md:pl-20 pl-7 mb-4 font-inter font-medium sm:font-light px-2">
                 {block.points.map((point, index) => (
-                  <li key={index} className="md:text-xl text-[12px] md:py-1.5 py-1">
+                  <li key={index} className="md:text-xl text-10 sm:text-[12px] md:py-1.5 py-1">
                     {point}
                   </li>
                 ))}
               </ul>
+            </div>
               <Image
                 src={block.imageUrl}
                 alt={block.heading}
                 width={500} 
                 height={300} 
-                className="w-full h-auto md:px-0 px-10"
+                className="w-full h-[100px]  md:h-[300px] px-2 md:px-0 object-contain "
               />
-            </div>
           </div>
         </div>
       ))}

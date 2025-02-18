@@ -38,21 +38,24 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
         {items.map((item, index) => {
           const isExpanded = expandedIndex === index;
           const shortText = item.description.split(" ").slice(0, 10).join(" ") + "...";
+          const isLastItem = index === items.length - 1;
 
           return (
             <div key={index} className="px-2 !flex flex-nowrap">
-              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4 rounded-lg xl:rounded-none shadow-md xl:shadow-none md:gap-3 md:p-5">
+              
+              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4 rounded-lg xl:rounded-none shadow-md xl:shadow-none md:gap-3 xl:pr-4 2xl:pr-5">
                 <Image
                   src={item.icon}
                   alt={item.title}
-                  width={60}
-                  height={60}
-                  className="h-5 w-5 sm:h-8 sm:w-8"
+                  width={100}
+                  height={100}
+                  loading="lazy"
+                  className="h-5 w-5 sm:h-8 sm:w-8 xl:w-[64px] xl:h-[64px]"
                 />
-                <div className="flex flex-col md:justify-start md:items-start">
-                  <h3 className="text-12 xs:text-[16px] font-semibold">{item.title}</h3>
+                <div className="flex flex-col md:justify-start md:items-start font-inter">
+                  <h3 className="text-12 xs:text-[16px] xl:text-18 font-semibold">{item.title}</h3>
 
-                  <p className="text-[10px] sm:text-sm text-card-text md:text-start sm:block">
+                  <p className="text-[10px] sm:text-sm lg:text-14 2xl:text-16 font-light text-card-text md:text-start sm:block">
                     {isSmallScreen ? (isExpanded ? item.description : shortText) : item.description}
                   </p>
 
@@ -66,7 +69,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
                   )}
                 </div>
               </div>
-              <div className="border-r border-black h-28 hidden xl:block"/>
+               {!isLastItem && <div className="border-r border-black h-24 hidden xl:block"/>}
             </div>
           );
         })}
