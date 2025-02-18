@@ -316,3 +316,69 @@ export const HomeUserInfo = [
     reverse: false,
   },
 ]
+export const deliveryCharges = [
+  {
+    location: 'Dubai ( Next Day Delivery )',
+    charges: [
+      'Under AED 1,000 - AED 50',
+      'Above AED 1,000 - Free',
+    ],
+  },
+  {
+    location: 'Sharjah, Ajman, Umm Al Quwain ( 2 Working Days )',
+    charges: [
+      'Under AED 1,000 - AED 100',
+      'Above AED 1,000 - Free',
+    ],
+  },
+  {
+    location: 'Abu Dhabi, Fujairah, Ras Al Khaimah ( 2 Working Days )',
+    charges: [
+      'Under AED 1,000 - AED 200',
+      'Above AED 1,000 - Free',
+    ],
+  },
+];
+export const policySections = [
+  {
+    title: 'Can I Return A Purchased Product From EasyFloors.AE, If I Have A Change of Mind?',
+    content: [
+      'You can return any item within 7 days of receiving your order if it is unused, and in its original packing.',
+      'Begin a return simply by emailing our friendly customer service team at <a href="mailto:cs@easyfloors.ae" target="_blank" class="font-bold">cs@easyfloors.ae</a> with your order number and a 2-3 sentence explanation of why you’re returning an item.',
+      "We'll get back to you within 24 hours, and we'll give you a return authorisation number (RAN) that you need to include with the package when you send it back to be processed.",
+      "Once we get and accept your return, we'll send you your money back. It could take a few days to show up in your account, but we'll start the return process right away.",
+    ]
+  },
+  {
+    title: 'What Should I Do If I Receive A Defective Item?',
+    content: [
+      'If we send you a faulty set, please adhere to the above instructions. You need to enter in the subject line of the email “Defective – Order Number”. We shall respond to your request promptly and offer a substitute for the order.',
+      'We understand that if there is an issue with the installation of an item, it will remain unused. For this, you can write to us at <a href="mailto:cs@easyfloors.ae" class="font-bold" target="_blank">cs@easyfloors.ae</a> and we will arrange for one of our skilled representatives to visit the site.'
+    ]
+  },
+  {
+    title: 'Who Pays For Return Shipping?',
+    content: [
+      'If you want to return an item you purchased from us, you will need to pay for the return shipping unless the item is faulty or we sent you the wrong order.',
+      'We recommend using a trackable shipping method so we can track the package with you and easyfloors.ae as it comes to you. This will ensure the product gets back to you on time. If the item gets lost or the courier drops it, we can’t help and won’t refund.',
+      ' • Items That Are Final Sale',
+      ' • Items available during the sale and promotion period',
+      ' • Items not in pristine condition, worn or damaged'
+    ]
+  },
+  {
+    title: 'Refund Process',
+    content: [
+      "Once the product has reached our warehouse, we will initiate the refund. The mode of payment will determine how we process the refund: If you paid by card, the refund will be credited back to the same card within four working days after the product is received.",
+      "Once we complete the refund process, the duration taken for the funds to reflect in your account will depend on your bank's processing policies. If you need to follow up with your bank or card provider, we will inform you when all actions on our site are completed.",
+      "If the payment was made in cash, then the refund will be processed through bank deposit or transfer as soon as we receive the required information from you.",
+    ]
+  },
+  {
+    title: 'Get in Touch',
+    content: [
+      "Have questions about our return and refund policy? Reach out to us at cs@easyfloors.ae. Our customer service team is here to help from 9 am to 6 pm, Monday to Saturday (except on public holidays).",
+      'Thanks for shopping with <a href="/" class="font-bold" target="_blank">easyfloors.ae</a>.'
+    ]
+  },
+];

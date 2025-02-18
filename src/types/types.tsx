@@ -13,3 +13,10 @@ export interface SocialLink {
     title: string;
     image?: string;
   };
+  export interface TextInputProps {
+    label: string;
+    name: string;
+    required?: boolean;
+    placeholder?: string;
+    type?: string;
+  };
