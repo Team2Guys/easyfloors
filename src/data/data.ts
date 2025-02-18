@@ -176,6 +176,25 @@ export const blocksData = [
 ];
 export const FloorItemsData = [
   { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Rectangle1.png'},
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Rectangle2.png' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
+  { id: 2, title: 'Eco Floor', imageUrl: '/assets/layers/Rectangle2.png' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
+];
+
+export const HomeUserInfo = [
+  {
+    title: 'Budget Friendly',
+    description:
+      "High-quality flooring doesn’t have to cost a fortune. Our durable, stylish options are available at factory prices, so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
+    image: '/assets/images/UserInfo/budget.png',
+    icon: '/assets/images/UserInfo/budget-icon.png',
+    reverse: true,
+  },
+  {
+    title: 'Overlay Ready',
+    description:
+      "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
+    image: '/assets/images/UserInfo/overlay.png',
+    icon: '/assets/images/UserInfo/overlay-icon.png',
+    reverse: false,
+  },
 ];
