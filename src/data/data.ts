@@ -95,7 +95,7 @@ export const socialLinks: SocialLink[] = [
       ],
     },
     { label: 'How to measure', href: '/how-to-measure-your-room', },
-    { label: 'Estimator', href: '/estimator', },
+    // { label: 'Estimator', href: '/estimator', },
     { label: 'Accessories', href: '/accessories', },
     { label: 'About Us', href: '/about-us', },
     { label: 'Contact Us', href: '/contact-us', },
@@ -307,145 +307,87 @@ export const categoryData: TCategoryData = {
     "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
   backgroundImage: "/assets/category/campare-us.png", 
 };
-export const faqs: FAQItem[] = [
+export const HomeUserInfo = [
   {
-    id: 1,
-    question: "Q. What makes vinyl flooring a good choice for high-traffic areas?",
-    answer:
-      "Vinyl flooring Abu Dhabi is highly durable and resistant to wear and tear, making it ideal for high-traffic areas. Its water-resistant and scratch-resistant properties ensure it maintains its appearance and functionality even in busy environments.",
+    title: 'Budget Friendly',
+    description:
+      "High-quality flooring doesn’t have to cost a fortune. Our durable, stylish options are available at factory prices, so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
+    image: '/assets/images/UserInfo/budget.png',
+    icon: '/assets/images/UserInfo/budget-icon.png',
+    reverse: true,
   },
   {
-    id: 2,
-    question: "How long until we deliver your first blog post?",
-    answer:
-      "Your first consultation will include a comprehensive discussion about your health history and a tailored treatment plan.",
+    title: 'Overlay Ready',
+    description:
+      "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
+    image: '/assets/images/UserInfo/overlay.png',
+    icon: '/assets/images/UserInfo/overlay-icon.png',
+    reverse: false,
+  },
+]
+export const deliveryCharges = [
+  {
+    location: 'Dubai ( Next Day Delivery )',
+    charges: [
+      'Under AED 1,000 - AED 50',
+      'Above AED 1,000 - Free',
+    ],
   },
   {
-    id: 3,
-    question: "How long until we deliver your first blog post?",
-    answer: "We are open Monday to Friday from 9 AM to 6 PM.",
+    location: 'Sharjah, Ajman, Umm Al Quwain ( 2 Working Days )',
+    charges: [
+      'Under AED 1,000 - AED 100',
+      'Above AED 1,000 - Free',
+    ],
   },
   {
-    id: 4,
-    question: "Do I need a referral?",
-    answer:
-      "No referral is needed. You can directly book an appointment with us.",
-  },
-  {
-    id: 5,
-    question:
-      "Is the cost of the appointment covered by private health insurance?",
-    answer:
-      "Many private health insurances cover our services. Please check with your provider.",
+    location: 'Abu Dhabi, Fujairah, Ras Al Khaimah ( 2 Working Days )',
+    charges: [
+      'Under AED 1,000 - AED 200',
+      'Above AED 1,000 - Free',
+    ],
   },
 ];
-
-
-
-export const boxData:BoxData[] = [
+export const policySections = [
   {
-    id: 1,
-    title: 'Need help with measurement?',
-    description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
-    buttonText: 'Learn More',
-    icon: '/assets/images/Home/measure1.png',
-  },
-  {
-    id: 2,
-    title: 'Need help with installation',
-    description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
-    buttonText: 'Learn More',
-    icon: '/assets/images/Home/Vectorrg.png',
-  }
-];
-
-export const popupCards: CardData[] = [
-  {
-    id: 1,
-    heading: "Richmond <br /> SPC Eco",
+    title: 'Can I Return A Purchased Product From EasyFloors.AE, If I Have A Change of Mind?',
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
+      'You can return any item within 7 days of receiving your order if it is unused, and in its original packing.',
+      'Begin a return simply by emailing our friendly customer service team at <a href="mailto:cs@easyfloors.ae" target="_blank" class="font-bold">cs@easyfloors.ae</a> with your order number and a 2-3 sentence explanation of why you’re returning an item.',
+      "We'll get back to you within 24 hours, and we'll give you a return authorisation number (RAN) that you need to include with the package when you send it back to be processed.",
+      "Once we get and accept your return, we'll send you your money back. It could take a few days to show up in your account, but we'll start the return process right away.",
+    ]
   },
   {
-    id: 2,
-    heading: "Richmond  <br /> SPC Prime",
+    title: 'What Should I Do If I Receive A Defective Item?',
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
+      'If we send you a faulty set, please adhere to the above instructions. You need to enter in the subject line of the email “Defective – Order Number”. We shall respond to your request promptly and offer a substitute for the order.',
+      'We understand that if there is an issue with the installation of an item, it will remain unused. For this, you can write to us at <a href="mailto:cs@easyfloors.ae" class="font-bold" target="_blank">cs@easyfloors.ae</a> and we will arrange for one of our skilled representatives to visit the site.'
+    ]
   },
   {
-    id: 3,
-    heading: "Richmond SPC <br /> Herringbone",
+    title: 'Who Pays For Return Shipping?',
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
+      'If you want to return an item you purchased from us, you will need to pay for the return shipping unless the item is faulty or we sent you the wrong order.',
+      'We recommend using a trackable shipping method so we can track the package with you and easyfloors.ae as it comes to you. This will ensure the product gets back to you on time. If the item gets lost or the courier drops it, we can’t help and won’t refund.',
+      ' • Items That Are Final Sale',
+      ' • Items available during the sale and promotion period',
+      ' • Items not in pristine condition, worn or damaged'
+    ]
   },
   {
-    id: 4,
-    heading: "Richmond LVT <br /> Comfort",
-      content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
-  },
-  {
-    id: 5,
-    heading: "Richmond LVT <br /> Luxury",
+    title: 'Refund Process',
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
+      "Once the product has reached our warehouse, we will initiate the refund. The mode of payment will determine how we process the refund: If you paid by card, the refund will be credited back to the same card within four working days after the product is received.",
+      "Once we complete the refund process, the duration taken for the funds to reflect in your account will depend on your bank's processing policies. If you need to follow up with your bank or card provider, we will inform you when all actions on our site are completed.",
+      "If the payment was made in cash, then the refund will be processed through bank deposit or transfer as soon as we receive the required information from you.",
+    ]
   },
   {
-    id: 6,
-    heading: "Polar <br /> SPC",
+    title: 'Get in Touch',
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
-  },
-  {
-    id: 7,
-    heading: "Polar SPC <br /> Herringbone",
-    content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
-  },
-  {
-    id: 7,
-    heading: "Polar <br /> LVT",
-    content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
-    ],
+      "Have questions about our return and refund policy? Reach out to us at cs@easyfloors.ae. Our customer service team is here to help from 9 am to 6 pm, Monday to Saturday (except on public holidays).",
+      'Thanks for shopping with <a href="/" class="font-bold" target="_blank">easyfloors.ae</a>.'
+    ]
   },
 ];

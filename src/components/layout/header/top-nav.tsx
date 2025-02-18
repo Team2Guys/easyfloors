@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import TopLink from "./top-link";
-import SocialIcon from "components/reuseable/social-icon";
+import SocialIcon from "components/Reusable/social-icon";
 import UserIcon from "./user-icon";
 
 const TopNav = () => {
