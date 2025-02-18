@@ -26,19 +26,15 @@ export default function AmCategory() {
     setIsExpanded(true);
   };
 
-  // Listen to window resize events and update isMobile state
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
 
-    // Initial check for window size
     handleResize();
 
-    // Add event listener to handle window resize
     window.addEventListener("resize", handleResize);
 
-    // Cleanup the event listener when component unmounts
     return () => {
       window.removeEventListener("resize", handleResize);
     };

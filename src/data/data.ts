@@ -391,3 +391,145 @@ export const policySections = [
     ]
   },
 ];
+export const faqs: FAQItem[] = [
+  {
+    id: 1,
+    question: "Q. What makes vinyl flooring a good choice for high-traffic areas?",
+    answer:
+      "Vinyl flooring Abu Dhabi is highly durable and resistant to wear and tear, making it ideal for high-traffic areas. Its water-resistant and scratch-resistant properties ensure it maintains its appearance and functionality even in busy environments.",
+  },
+  {
+    id: 2,
+    question: "How long until we deliver your first blog post?",
+    answer:
+      "Your first consultation will include a comprehensive discussion about your health history and a tailored treatment plan.",
+  },
+  {
+    id: 3,
+    question: "How long until we deliver your first blog post?",
+    answer: "We are open Monday to Friday from 9 AM to 6 PM.",
+  },
+  {
+    id: 4,
+    question: "Do I need a referral?",
+    answer:
+      "No referral is needed. You can directly book an appointment with us.",
+  },
+  {
+    id: 5,
+    question:
+      "Is the cost of the appointment covered by private health insurance?",
+    answer:
+      "Many private health insurances cover our services. Please check with your provider.",
+  },
+];
+
+
+
+export const boxData:BoxData[] = [
+  {
+    id: 1,
+    title: 'Need help with measurement?',
+    description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
+    buttonText: 'Learn More',
+    icon: '/assets/images/Home/measure1.png',
+  },
+  {
+    id: 2,
+    title: 'Need help with installation',
+    description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
+    buttonText: 'Learn More',
+    icon: '/assets/images/Home/Vectorrg.png',
+  }
+];
+
+export const popupCards: CardData[] = [
+  {
+    id: 1,
+    heading: "Richmond <br /> SPC Eco",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 2,
+    heading: "Richmond  <br /> SPC Prime",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 3,
+    heading: "Richmond SPC <br /> Herringbone",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 4,
+    heading: "Richmond LVT <br /> Comfort",
+      content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 5,
+    heading: "Richmond LVT <br /> Luxury",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 6,
+    heading: "Polar <br /> SPC",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 7,
+    heading: "Polar SPC <br /> Herringbone",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+  {
+    id: 7,
+    heading: "Polar <br /> LVT",
+    content: [
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Cras ornare tristique elit.",
+      "Nunc dignissim risus id is",
+      "Nunc dignissim risus id is",
+    ],
+  },
+];
