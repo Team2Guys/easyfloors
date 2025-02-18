@@ -298,3 +298,21 @@ export const categoryData: TCategoryData = {
     "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
   backgroundImage: "/assets/category/campare-us.png", 
 };
+export const HomeUserInfo = [
+  {
+    title: 'Budget Friendly',
+    description:
+      "High-quality flooring doesn’t have to cost a fortune. Our durable, stylish options are available at factory prices, so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
+    image: '/assets/images/UserInfo/budget.png',
+    icon: '/assets/images/UserInfo/budget-icon.png',
+    reverse: true,
+  },
+  {
+    title: 'Overlay Ready',
+    description:
+      "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
+    image: '/assets/images/UserInfo/overlay.png',
+    icon: '/assets/images/UserInfo/overlay-icon.png',
+    reverse: false,
+  },
+]
