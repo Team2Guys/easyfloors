@@ -21,12 +21,12 @@ const ImageCompare = () => {
           }
         />
         {position < 5 ? null : (
-          <span className='absolute bottom-4 left-4 bg-white/70 w-[50px] h-[28px] sm:w-[100px] 2xl:w-[157px] text-center lg:h-[35px] 2xl:h-[47px] font-medium font-inter text-14 md:text-20 2xl:text-2 flex justify-center items-center'>
+          <span className='absolute bottom-4 text-black left-4 bg-white/70 w-[50px] h-[28px] sm:w-[100px] 2xl:w-[157px] text-center lg:h-[35px] 2xl:h-[47px] font-medium font-inter text-14 md:text-20 2xl:text-2 flex justify-center items-center'>
             Before
           </span>
         )}
         {position > 95 ? null : (
-          <span className='absolute bottom-4 right-4 bg-white/70 w-[50px] h-[28px] sm:w-[100px] 2xl:w-[157px] text-center lg:h-[35px] 2xl:h-[47px]  font-medium font-inter text-14 md:text-20 2xl:text-27 flex justify-center items-center'>
+          <span className='absolute bottom-4 text-black right-4 bg-white/70 w-[50px] h-[28px] sm:w-[100px] 2xl:w-[157px] text-center lg:h-[35px] 2xl:h-[47px] font-medium font-inter text-14 md:text-20 2xl:text-2 flex justify-center items-center'>
             After
           </span>
         )}
