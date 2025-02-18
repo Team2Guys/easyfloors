@@ -1,6 +1,52 @@
-import { SocialLink } from "types/types";
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { Feature, FlooringType, Product } from "types/type";
+import { Feature, FlooringType, Product, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { SocialLink } from "types/types";
+
+//HomePage
+export const heroItems = [
+  {
+    backgroundImage: "/assets/images/Home/hero.png",
+    offerText: "Limited Time Offer",
+    title: "High-Quality Flooring Get",
+    highlight: "FREE Samples",
+    description:
+      "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
+    buttonText: "EXPLORE PRODUCTS",
+    buttonLink: "/",
+    priceText: "Only On AED 49/m²",
+    flooringType: "SPC Eco • American Walnut",
+    brand: "Polar",
+  },
+];
+
+export const featureItems = [
+    {
+      title: "Free Samples",
+      description:
+        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      icon: "/assets/images/Home/free.png",
+    },
+    {
+      title: "Easy payment",
+      description:
+        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      icon: "/assets/images/Home/card.png",
+    },
+    {
+      title: "Delivery",
+      description:
+        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      icon: "/assets/images/Home/truck.png",
+    },
+    {
+      title: "Factory Prices",
+      description:
+        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      icon: "/assets/images/Home/factory.png",
+    },
+  ];
+
+
 
 
 export const socialLinks: SocialLink[] = [
@@ -176,10 +222,82 @@ export const blocksData = [
 ];
 export const FloorItemsData = [
   { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Rectangle1.png'},
-  { id: 2, title: 'Eco Floor', imageUrl: '/assets/layers/Rectangle2.png' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
+  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Rectangle2.png' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
 ];
 
+
+export const imageData: TImageBanner = {
+  src: '/assets/category/fiveTree.png',
+  alt: 'Picture of the author',
+};
+
+export const blogCards: TBlogCard[] = [
+  {
+    id: 1,
+    title: "I Am",
+    heading: "Polar SPC Herringbone",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 2,
+    title: "I Am",
+    heading: "Polar SPC",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 3,
+    title: "I Am",
+    heading: "POLAR LCT",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 4,
+    title: "I Am",
+    heading: "RECHMOND SPC Eco",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 5,
+    title: "I Am",
+    heading: "Richmond SPC Prime",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 6,
+    title: "I Am",
+    heading: "Richmond LVT Comfort",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 7,
+    title: "I Am",
+    heading: "Richmond LVT Luxury",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+  {
+    id: 8,
+    title: "I Am",
+    heading: "Richmond SPC Herringbone",
+    Link: "/category/",
+    backgroundImage: '/assets/category/iam.png',
+  },
+];
+
+export const categoryData: TCategoryData = {
+  title: "What Am I?",
+  subtitle: "(Compare us)",
+  description:
+    "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+  backgroundImage: "/assets/category/campare-us.png", 
+};
 export const HomeUserInfo = [
   {
     title: 'Budget Friendly',
@@ -197,4 +315,4 @@ export const HomeUserInfo = [
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
   },
-];
+]
