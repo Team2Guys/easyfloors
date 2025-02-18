@@ -8,6 +8,8 @@ import Layers from "components/Layers/layers";
 import SampleBanner from "components/SampleBanner/SampleBanner";
 import { imageData } from "data/data";
 import AmCategory from "./Categories/page";
+import NeedHelp from "components/NeedHelp/NeedHelp";
+import Faqs from "components/Faqs/Faqs";
 
 export default function Home() {
   return (
@@ -21,6 +23,8 @@ export default function Home() {
     <FloorItems />
       <AmCategory />
       <SampleBanner imageData={imageData} />
+     <Faqs />
+      <NeedHelp />
     </>
   );
 }

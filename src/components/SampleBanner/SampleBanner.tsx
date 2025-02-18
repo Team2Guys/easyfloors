@@ -5,12 +5,12 @@ import Container from 'components/common/container/Container';
 
 const SampleBanner: React.FC<{ imageData: TImageBanner }> = ({ imageData }) => {
   return (
-    <Container>
-      <div className="image-container w-full h-full">
+    <Container >
+      <div className="image-container w-full h-full mt-5">
         <Image
           src={imageData.src}
-          width={1500}
-          height={500}
+          width={2000}
+          height={100}
           alt={imageData.alt}
           className="w-full h-full"
         />

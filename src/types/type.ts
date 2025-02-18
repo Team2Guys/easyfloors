@@ -52,6 +52,7 @@ export interface TBlogCard {
   heading: string;
   backgroundImage: string;
   Link: string;
+  features: string[];
 }
 export interface TCategoryData {
   title: string;
@@ -85,3 +86,40 @@ export interface HeroItem {
 export interface HeroMainProps {
   items: HeroItem[];
 }
+export interface BlogCardProps {
+  card: TBlogCard;
+}
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+export interface BoxItem {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+}
+export interface BoxData {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+  icon: string;
+}
+
+
+export interface CardData {
+  id: number;
+  heading: string;
+  content: string[];
+  
+}
+
+export interface CategoryData {
+  id:number;
+  title: string;
+  subtitle: string;
+  description: string;
+}
+

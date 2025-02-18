@@ -6,7 +6,7 @@ import Image from 'next/image';
 const FloorItems: React.FC = () => {
   return (
     <Container>
-      <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 md:gap-14 gap-2 ">
+      <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 md:gap-16 gap-2 ">
         {FloorItemsData.map((item) => (
           <div key={item.id} className="flex flex-col items-center font-inter justify-center ">
             <h3 className="md:text-3xl text-[12px] font-bold md:mb-5 mb-2">{item.title}</h3>
@@ -15,7 +15,7 @@ const FloorItems: React.FC = () => {
               alt={item.title}
               width={500} 
               height={300} 
-              className="w-full h-auto"
+              className="w-auto h-auto"
             />
           </div>
         ))}
