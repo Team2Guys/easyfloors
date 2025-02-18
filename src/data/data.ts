@@ -95,7 +95,7 @@ export const socialLinks: SocialLink[] = [
       ],
     },
     { label: 'How to measure', href: '/how-to-measure-your-room', },
-    { label: 'Estimator', href: '/estimator', },
+    // { label: 'Estimator', href: '/estimator', },
     { label: 'Accessories', href: '/accessories', },
     { label: 'About Us', href: '/about-us', },
     { label: 'Contact Us', href: '/contact-us', },

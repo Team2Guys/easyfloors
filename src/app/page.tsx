@@ -9,7 +9,7 @@ import Layers from "components/Layers/layers";
 import SampleBanner from "components/SampleBanner/SampleBanner";
 import { imageData } from "data/data";
 import AmCategory from "./Categories/page";
-import UserInfo from "components/reuseable/user-info";
+import UserInfo from "components/Reusable/user-info";
 
 export default function Home() {
   return (

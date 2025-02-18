@@ -62,7 +62,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="w-8/12 lg:w-[68%] 2xl:w-[70%] 3xl:w-[67%]  max-lg:flex max-lg:justify-center">
-        <div className="hidden lg:flex items-center gap-2 2xl:gap-6 w-fit  justify-between capitalize font-light whitespace-nowrap">
+        <div className="hidden lg:flex items-center gap-2 lg:gap-4 2xl:gap-6 w-fit  justify-between capitalize font-light whitespace-nowrap">
           {menuItems.map((item, index) => (
             <Megamenu
               key={index}
