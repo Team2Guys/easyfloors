@@ -7,7 +7,7 @@ import React from 'react';
 
 const UserInfo = () => {
   return (
-    <Container >
+    <Container className='lg:mt-20'>
       {HomeUserInfo.map((section, index) => (
         <div
           key={index}

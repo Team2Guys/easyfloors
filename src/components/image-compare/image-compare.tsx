@@ -10,7 +10,7 @@ const ImageCompare = () => {
     <Container className='mt-10'>
       <div className='w-full flex flex-col items-center gap-8 relative'>
         <ReactCompareSlider
-          className='w-full h-[195px] md:h-[300px] xl:h-[400px]'
+          className='w-full h-[195px] md:h-[300px] xl:h-[400px] 2xl:h-[583px]'
           position={position}
           onPositionChange={(pos) => setPosition(pos)}
           itemOne={
