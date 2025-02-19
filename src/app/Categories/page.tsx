@@ -23,7 +23,7 @@ export default function AmCategory() {
   };
 
   const handleReadMoreClick = () => {
-    setIsExpanded(true);
+    setIsExpanded((prev) => !prev);
   };
 
   useEffect(() => {
@@ -44,8 +44,13 @@ export default function AmCategory() {
     <Container>
       <div className="font-inter md:mt-20 mt-10 category_slider">
         <h1
-          className="relative text-center md:text-5xl text-2xl md:max-w-2xl w-full font-bold text-white py-5 mx-auto bg-cover bg-center"
-          style={{ backgroundImage: `url(${categoryData.backgroundImage})` }}
+          className="relative text-center md:text-5xl text-2xl md:max-w-3xl w-full font-bold text-white py-7 mx-auto bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(${categoryData.backgroundImage})`,
+            backgroundSize: "100%", 
+            backgroundRepeat: "no-repeat", 
+            backgroundPosition: "center" 
+          }}
         >
           {categoryData.title}{" "}
           <span
@@ -98,12 +103,12 @@ export default function AmCategory() {
             {isExpanded || !isMobile
               ? categoryData.description
               : `${categoryData.description.substring(0, 150)}...`}
-            {isMobile && !isExpanded && (
+            {isMobile && (
               <button
                 onClick={handleReadMoreClick}
-                className="text-primary font-medium underline"
+                className="text-primary font-medium underline ml-2"
               >
-                Read More
+                {isExpanded ? "Read Less" : "Read More"}
               </button>
             )}
           </p>
