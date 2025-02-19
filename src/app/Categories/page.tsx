@@ -23,7 +23,7 @@ export default function AmCategory() {
   };
 
   const handleReadMoreClick = () => {
-    setIsExpanded(true);
+    setIsExpanded((prev) => !prev);
   };
 
   useEffect(() => {
@@ -98,12 +98,12 @@ export default function AmCategory() {
             {isExpanded || !isMobile
               ? categoryData.description
               : `${categoryData.description.substring(0, 150)}...`}
-            {isMobile && !isExpanded && (
+            {isMobile && (
               <button
                 onClick={handleReadMoreClick}
-                className="text-primary font-medium underline"
+                className="text-primary font-medium underline ml-2"
               >
-                Read More
+                {isExpanded ? "Read Less" : "Read More"}
               </button>
             )}
           </p>
