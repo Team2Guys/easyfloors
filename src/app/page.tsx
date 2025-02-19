@@ -18,7 +18,7 @@ export default function Home() {
     <>
       <HeroMain items={heroItems} />
       <Container>
-        <Features items={featureItems} />
+      <Features items={featureItems} />
       </Container>
       <CategorySdlier />
       <Layers />
@@ -27,7 +27,7 @@ export default function Home() {
       <SampleBanner imageData={imageData} />
       <ImageCompare />
       <UserInfo />
-     <Faqs />
+      <Faqs />
       <NeedHelp />
     </>
   );

@@ -14,10 +14,10 @@ const ImageCompare = () => {
           position={position}
           onPositionChange={(pos) => setPosition(pos)}
           itemOne={
-            <ReactCompareSliderImage src='/assets/bin/match1.jpg' alt='Before Image' />
+            <ReactCompareSliderImage loading='lazy' src='/assets/bin/match1.jpg' alt='Before Image' />
           }
           itemTwo={
-            <ReactCompareSliderImage src='/assets/bin/match2.jpg' alt='After Image' />
+            <ReactCompareSliderImage loading='lazy' src='/assets/bin/match2.jpg' alt='After Image' />
           }
         />
         {position < 5 ? null : (
