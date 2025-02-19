@@ -612,3 +612,81 @@ export const popupCards: CardData[] = [
     ],
   },
 ];
+
+
+export const product=[
+  {
+    id: 1,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Polar Herringbone SPC - American Walnut",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 2,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Polar SPC",
+    price: "Only AED 55/m²",
+    stock: 0
+  },
+  {
+    id: 3,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Richmond Eco SPC",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 4,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Product Three",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 5,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Product Three",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 6,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Polar SPC",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 7,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Richmond Eco SPC",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 8,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Product Three",
+    price: "Only AED 55/m²",
+  },
+  {
+    id: 9,
+    image: "/assets/categoryslider/Image.webp",
+    name: "Product Three",
+    price: "Only AED 55/m²",
+  },
+]
+
+export const categories = [
+  {
+    title: "Polar",
+    items: [
+      "Polar",
+      "Richmond Floorings",
+      "Manufacturer"
+    ]
+  },
+  {
+    title: "Richmond Floorings",
+    items: [
+      "Richmond Prime SPC",
+      "Richmond Herringbone SPC",
+      "Richmond Comfort LVT"
+    ]
+  }
+];

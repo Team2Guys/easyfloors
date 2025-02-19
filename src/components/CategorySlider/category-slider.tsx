@@ -52,7 +52,7 @@ const CategorySlider: React.FC = () => {
               >
                 {flooring.product.map((product: Product) => (
                   <SwiperSlide key={product.id} className="pb-7">
-                    <Card product={product} features={features} />
+                    <Card product={product} features={features} sldier />
                   </SwiperSlide>
                 ))}
               </Swiper>

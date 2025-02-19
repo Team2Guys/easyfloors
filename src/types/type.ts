@@ -17,8 +17,8 @@ export interface LabelPrice {
     height: number;
   }
   export interface FlooringType {
-    name: string;
-    price: string;
+    name?: string;
+    price?: string;
     product: Product[];
   }
   export interface Product {
@@ -26,9 +26,11 @@ export interface LabelPrice {
     image: string; 
     name: string;
     price: string;
+    stock?: number;
   }
   export interface ProductCardProps {
     product: Product;
+    sldier?: boolean;
     features: Feature[];
 }
 export type Block = {
