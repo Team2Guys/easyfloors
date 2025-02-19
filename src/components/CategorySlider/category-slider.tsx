@@ -29,7 +29,7 @@ const CategorySlider: React.FC = () => {
                 Price Starting From: {flooring.price}
               </p>
               <Link
-                href="#"
+                href="/all-collection"
                 className="transition md:text-black font-semibold text-white px-4 py-1 border md:border-primary border-white font-inter hover:text-white hover:bg-primary"
               >
                 See All

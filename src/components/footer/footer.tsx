@@ -111,9 +111,9 @@ const Footer = () => {
                     </div>
 
                 </div>
-                <div className="flex flex-col space-y-3 fixed right-4 bottom-32 sm:hidden z-50">
+                <div className="flex flex-col space-y-3 fixed right-4 bottom-32 md:right-16  z-50">
 
-                    <Link href="tel:+971505974385" className="bg-[#3DA162] text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
+                    <Link href="tel:+971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <IoCall size={35} />
                     </Link>
 
