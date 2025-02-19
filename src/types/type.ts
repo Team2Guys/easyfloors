@@ -22,7 +22,7 @@ export interface LabelPrice {
     product: Product[];
   }
   export interface Product {
-    id: number;
+    id: string;
     image: string; 
     name: string;
     price: string;
@@ -125,3 +125,17 @@ export interface CategoryData {
   description: string;
 }
 
+export interface CollectionProduct {
+  id: string;
+  name: string;
+  price: string;
+  image: string;
+}
+
+export interface CollectionFeature {
+  id: number;
+  label: string;
+  icon: string;
+  width: number;
+  height: number;
+}
