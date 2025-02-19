@@ -32,7 +32,7 @@ const Card: React.FC<ProductCardProps> = ({ product, features = [] }) => {
                 <Link href="#" className="md:text-lg md:mt-0 mt-1 text-sm text-left font-semibold text-[#594F55]">
                     {product.name}
                 </Link>
-                <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between py-2 gap-2 md:gap-4 w-full">
+                <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between gap-2 md:gap-4 w-full ">
                     <p className="text-sm md:text-base lg:text-base font-bold text-primary w-full md:w-full md:text-left">
                         {product.price}
                     </p>

@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { SocialLink } from "types/types";
 
 
@@ -111,122 +111,132 @@ export const features: Feature[] = [
 
 
 export const flooringTypes: FlooringType[] = [
-    { 
-      name: "SPC Flooring",
-      price: "AED 150m",
-      product:[
-        {
-          id: 1,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar Herringbone SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 2,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 3,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Richmond Eco SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 4,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Product Three",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 5,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Product Three",
-          price: "Only AED 55/m²",
-        },
-      ]
+  { 
+    id: "1", // ✅ Added ID
+    name: "SPC Flooring",
+    price: "AED 150m",
+    product:[
+      {
+        id: "1",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "2",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "3",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "4",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "5",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  { 
+    id: "2", // ✅ Added ID
+    name: "LVT Flooring", 
+    price: "AED 180m",
+    product:[
+      {
+        id: "1",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "2",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "3",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  { 
+    id: "3", // ✅ Added ID
+    name: "Polar Flooring", 
+    price: "AED 200m",
+    product:[
+      {
+        id: "1",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "2",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "3",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  { 
+    id: "4", // ✅ Added ID
+    name: "Richmond Flooring", 
+    price: "AED 220m",
+    product:[
+      {
+        id: "1",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "2",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "3",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "4",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+      {
+        id: "5",
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+];
 
-     },
-    { name: "LVT Flooring", price: "AED 180m",
-      product:[
-        {
-          id: 1,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar Herringbone SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 2,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 3,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Richmond Eco SPC",
-          price: "Only AED 55/m²",
-        },
-      ]
-     },
-    { name: "Polar Flooring", price: "AED 200m",
-      product:[
-        {
-          id: 1,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar Herringbone SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 2,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 3,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Richmond Eco SPC",
-          price: "Only AED 55/m²",
-        },
-      ]
-     },
-    { name: "Richmond Flooring", price: "AED 220m",
-      product:[
-        {
-          id: 1,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar Herringbone SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 2,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Polar SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 3,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Richmond Eco SPC",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 4,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Product Three",
-          price: "Only AED 55/m²",
-        },
-        {
-          id: 5,
-          image: "/assets/categoryslider/Image.webp",
-          name: "Product Three",
-          price: "Only AED 55/m²",
-        },
-      ]
-     },
-  ];
 
 
 
@@ -611,4 +621,73 @@ export const popupCards: CardData[] = [
       "Nunc dignissim risus id is",
     ],
   },
+];
+
+export const collectionProducts: CollectionProduct[] = [
+  {
+    id: "1",
+    image: "/assets/allcollection/image1.png",
+    name: "Polar  Herringbone SPC",
+    price: "6 Items",
+  },
+  {
+    id: "2",
+    image: "/assets/allcollection/image1.png",
+    name: "Polar Floorings",
+    price: "25 Items",
+  },
+  {
+    id: "3",
+    image: "/assets/allcollection/image2.png",
+    name: "Polar LVT",
+    price: "10 Items",
+  },
+  {
+    id: "4",
+    image: "/assets/allcollection/image3.png",
+    name: "Polar SPC",
+    price: "9 Items",
+  },
+  {
+    id: "5",
+    image: "/assets/allcollection/image6.png",
+    name: "Richmond Comfort LVT",
+    price: "8 Items",
+  },
+  {
+    id: "6",
+    image: "/assets/allcollection/image6.png",
+    name: "Richmond Eco SPC",
+    price: "10 Items",
+  },
+  {
+    id: "7",
+    image: "/assets/allcollection/image6.png",
+    name: "Richmond Floorings",
+    price: "34 Items",
+  },
+  {
+    id: "8",
+    image: "/assets/allcollection/image7.png",
+    name: "Richmond Herringbone SPC",
+    price: "6 Items",
+  },
+  {
+    id: "9",
+    image: "/assets/allcollection/image9.png",
+    name: "Richmond Luxury LVT",
+    price: "5 Items",
+  },
+  {
+    id: "10",
+    image: "/assets/allcollection/image0.png",
+    name: "Richmond Prime SPC",
+    price: "6 Items",
+  },
+];
+
+export const collectionFeatures: CollectionFeature[] = [
+  { id: 1, icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
+  { id: 2, icon: "/assets/categoryslider/upbottomarrow.png", label: "10mm", width: 10, height: 20 },
+  { id: 3, icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
