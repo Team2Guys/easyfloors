@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, FAQItem, Feature, FlooringType, Product, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { SocialLink } from "types/types";
 
 
@@ -108,45 +108,124 @@ export const features: Feature[] = [
   { id: 3, icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
-export const products: Product[] = [
-  {
-    id: 1,
-    image: "/assets/categoryslider/Image.webp",
-    name: "Polar Herringbone SPC",
-    price: "Only AED 55/m2",
-  },
-  {
-    id: 2,
-    image: "/assets/categoryslider/Image.webp",
-    name: "Polar SPC",
-    price: "Only AED 55/m2",
-  },
-  {
-    id: 3,
-    image: "/assets/categoryslider/Image.webp",
-    name: "Richmond Eco SPC",
-    price: "Only AED 55/m2",
-  },
-  {
-    id: 4,
-    image: "/assets/categoryslider/Image.webp",
-    name: "Product Three",
-    price: "Only AED 55/m2",
-  },
-  {
-    id: 5,
-    image: "/assets/categoryslider/Image.webp",
-    name: "Product Three",
-    price: "Only AED 55/m2",
-  },
-];
 
 
 export const flooringTypes: FlooringType[] = [
-    { name: "SPC Flooring", price: "AED 150m" },
-    { name: "LVT Flooring", price: "AED 180m" },
-    { name: "Polar Flooring", price: "AED 200m" },
-    { name: "Richmond Flooring", price: "AED 220m" },
+    { 
+      name: "SPC Flooring",
+      price: "AED 150m",
+      product:[
+        {
+          id: 1,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar Herringbone SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 2,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 3,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Richmond Eco SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 4,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Product Three",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 5,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Product Three",
+          price: "Only AED 55/m²",
+        },
+      ]
+
+     },
+    { name: "LVT Flooring", price: "AED 180m",
+      product:[
+        {
+          id: 1,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar Herringbone SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 2,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 3,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Richmond Eco SPC",
+          price: "Only AED 55/m²",
+        },
+      ]
+     },
+    { name: "Polar Flooring", price: "AED 200m",
+      product:[
+        {
+          id: 1,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar Herringbone SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 2,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 3,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Richmond Eco SPC",
+          price: "Only AED 55/m²",
+        },
+      ]
+     },
+    { name: "Richmond Flooring", price: "AED 220m",
+      product:[
+        {
+          id: 1,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar Herringbone SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 2,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Polar SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 3,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Richmond Eco SPC",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 4,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Product Three",
+          price: "Only AED 55/m²",
+        },
+        {
+          id: 5,
+          image: "/assets/categoryslider/Image.webp",
+          name: "Product Three",
+          price: "Only AED 55/m²",
+        },
+      ]
+     },
   ];
 
 
