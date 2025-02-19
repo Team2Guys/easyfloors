@@ -111,31 +111,31 @@ export const features: Feature[] = [
 export const products: Product[] = [
   {
     id: 1,
-    image: "/assets/categoryslider/Image.png",
+    image: "/assets/categoryslider/Image.webp",
     name: "Polar Herringbone SPC",
     price: "Only AED 55/m2",
   },
   {
     id: 2,
-    image: "/assets/categoryslider/Image.png",
+    image: "/assets/categoryslider/Image.webp",
     name: "Polar SPC",
     price: "Only AED 55/m2",
   },
   {
     id: 3,
-    image: "/assets/categoryslider/Image.png",
+    image: "/assets/categoryslider/Image.webp",
     name: "Richmond Eco SPC",
     price: "Only AED 55/m2",
   },
   {
     id: 4,
-    image: "/assets/categoryslider/Image.png",
+    image: "/assets/categoryslider/Image.webp",
     name: "Product Three",
     price: "Only AED 55/m2",
   },
   {
     id: 5,
-    image: "/assets/categoryslider/Image.png",
+    image: "/assets/categoryslider/Image.webp",
     name: "Product Three",
     price: "Only AED 55/m2",
   },
