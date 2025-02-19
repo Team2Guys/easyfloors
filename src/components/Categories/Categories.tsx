@@ -24,7 +24,7 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
           <div className="md:mt-3">
             <Link
               href={card.Link}
-              className="md:text-base text-[12px] font-medium text-white md:px-1 md:py-1 p-0.5 hover:bg-primary transition duration-300 underline hover:no-underline"
+              className="md:text-base text-[12px] font-medium text-white hover:bg-primary transition duration-300 underline hover:no-underline"
             >
               Click Me
             </Link>

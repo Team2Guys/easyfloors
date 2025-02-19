@@ -1,4 +1,3 @@
-
 "use client";
 
 import { faqs } from "data/data";
@@ -6,14 +5,14 @@ import React, { useState } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 
 const Faqs: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(null);
+    const [openIndex, setOpenIndex] = useState<number | null>(0); 
 
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);
     };
 
     return (
-        <section className="bg-white dark:bg-gray-900 py-10 md:mt-10 ">
+        <section className="bg-white dark:bg-gray-900 py-10 md:mt-10">
             <div className="container mx-auto px-6">
                 <h1 className="text-2xl font-semibold font-inter text-[#1B1139] lg:text-3xl dark:text-white text-center md:mb-10 mb-6">
                     FAQ’S
@@ -28,13 +27,13 @@ const Faqs: React.FC = () => {
                             >
                                 <h2 className="md:text-xl text-base text-gray-700 dark:text-white">
                                     <div className="flex md:items-center gap-3">
-                                      <div>
-                                      {openIndex === index ? (
-                                            <HiMinus size={30} className=" md:w-[25px] w-[20px] font-light text-primary" />
-                                        ) : (
-                                            <HiPlus size={30} className=" md:w-[25px] w-[20px] font-normal text-gray-700" />
-                                        )}
-                                      </div>
+                                        <div>
+                                            {openIndex === index ? (
+                                                <HiMinus size={30} className="md:w-[25px] w-[20px] font-light text-primary" />
+                                            ) : (
+                                                <HiPlus size={30} className="md:w-[25px] w-[20px] font-normal text-gray-700" />
+                                            )}
+                                        </div>
                                         {faq.question}
                                     </div>
                                 </h2>
@@ -48,7 +47,6 @@ const Faqs: React.FC = () => {
                         </div>
                     ))}
                 </div>
-
             </div>
         </section>
     );
