@@ -1,49 +1,43 @@
 import React from "react";
 import Image from "next/image";
-import { TBlogCard } from "types/type";
+import { BlogCardProps } from "types/type";
 import Link from "next/link";
-
-interface BlogCardProps {
-  card: TBlogCard;
-}
 
 const Categories: React.FC<BlogCardProps> = ({ card }) => {
   return (
-    <div className="group relative overflow-hidden shadow-lg h-96 w-full text-center">
-        <div className="relative h-full w-full">
-          <Image
-            src={card.backgroundImage}
-            alt={card.title}
-            layout="fill"
-            objectFit="cover"
-            className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
+    <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b ">
+      <div className="relative h-full w-full">
+        <Image
+          src={card.backgroundImage}
+          alt={card.title}
+          layout="fill"
+          objectFit="cover"
+          className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
+        />
+
+        <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70">
+          <h2 className="md:mb-3 md:text-6xl text-2xl font-bold text-white">{card.title}</h2>
+          <p
+            className="mt-1 md:text-2xl text-sm font-inter text-white font-normal"
+            dangerouslySetInnerHTML={{ __html: card.heading }}
           />
-          
-         
-          <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70">
-            <h2 className="mb-3 text-6xl font-bold text-white">{card.title}</h2>
-            <p className="mt-1 text-2xl font-inter text-white font-normal">{card.heading}</p>
-            
-           
-            <div className="mt-3">
-              <Link
-                href={card.Link}
-                className="text-base font-medium text-white px-4 py-2 hover:bg-primary transition duration-300"
-              >
-                Click Me
-              </Link>
-            </div>
-         
-            <div className="absolute bottom-4 right-4   text-white text-sm p-4 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <ul className="list-disc pl-5 text-left">
-                <li>Waterproof</li>
-                <li>Scratch proof</li>
-                <li>Durable</li>
-                <li>Easy to clean</li>
-              </ul>
-            </div>
+          <div className="md:mt-3">
+            <Link
+              href={card.Link}
+              className="md:text-base text-[12px] font-medium text-white md:px-1 md:py-1 p-0.5 hover:bg-primary transition duration-300 underline hover:no-underline"
+            >
+              Click Me
+            </Link>
+          </div>
+          <div className="absolute md:bottom-4  md:right-4 right-0 bottom-0 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <ul className="list-disc pl-5 text-left">
+              {card.features.map((feature, index) => (
+                <li className="md:text-sm text-[8px]" key={index}>{feature}</li>
+              ))}
+            </ul>
           </div>
         </div>
+      </div>
     </div>
   );
 };
