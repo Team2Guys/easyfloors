@@ -13,9 +13,9 @@ const FloorItems: React.FC = () => {
             <Image
               src={item.imageUrl}
               alt={item.title}
-              width={500} 
+              width={800} 
               height={300} 
-              className="w-auto h-auto"
+              className="w-auto h-auto object-fill"
             />
           </div>
         ))}

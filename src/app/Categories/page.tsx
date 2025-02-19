@@ -44,8 +44,13 @@ export default function AmCategory() {
     <Container>
       <div className="font-inter md:mt-20 mt-10 category_slider">
         <h1
-          className="relative text-center md:text-5xl text-2xl md:max-w-2xl w-full font-bold text-white py-5 mx-auto bg-cover bg-center"
-          style={{ backgroundImage: `url(${categoryData.backgroundImage})` }}
+          className="relative text-center md:text-5xl text-2xl md:max-w-3xl w-full font-bold text-white py-7 mx-auto bg-cover bg-center"
+          style={{ 
+            backgroundImage: `url(${categoryData.backgroundImage})`,
+            backgroundSize: "100%", 
+            backgroundRepeat: "no-repeat", 
+            backgroundPosition: "center" 
+          }}
         >
           {categoryData.title}{" "}
           <span
