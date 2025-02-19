@@ -247,7 +247,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Polar <br /> SPC",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image7.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -255,7 +255,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "POLAR <br /> LCT",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image6.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -263,7 +263,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "RECHMOND <br /> SPC Eco",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image5.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -271,7 +271,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond <br /> SPC Prime",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image2.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -279,7 +279,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond LVT <br /> Comfort",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image1.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -287,7 +287,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond LVT <br /> Luxury",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image3.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -295,7 +295,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond SPC <br /> Herringbone",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Image4.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
 ];
