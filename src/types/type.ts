@@ -1,10 +1,3 @@
-export interface Product {
-  id: number;
-  image: string; 
-  name: string;
-  price: string;
-}
-
 export interface LabelPrice {
     id: number;
     name: string;
@@ -24,6 +17,13 @@ export interface LabelPrice {
     height: number;
   }
   export interface FlooringType {
+    name: string;
+    price: string;
+    product: Product[];
+  }
+  export interface Product {
+    id: number;
+    image: string; 
     name: string;
     price: string;
   }
