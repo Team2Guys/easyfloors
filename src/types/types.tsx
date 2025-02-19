@@ -10,7 +10,7 @@ export interface SocialLink {
     scrolling?: boolean;
   }
   export interface BreadcrumbProps  {
-    title: string;
+    title?: string;
     image?: string;
   };
   export interface TextInputProps {
