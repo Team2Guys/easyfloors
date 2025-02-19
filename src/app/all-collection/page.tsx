@@ -9,13 +9,14 @@ const AllCollection: React.FC = () => {
     <div>
       <Breadcrumb title="All Collection" image='/assets/images/category/allcollection.png' />
       <div className="container mx-auto px-4 md:mt-10 mt-8 ">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2 justify-items-center place-items-center  w-full mx-auto">
           {collectionProducts.map((collectionProduct: CollectionProduct) => (
-            <div key={collectionProduct.id}    className="max-w-sm w-full">
+            <div key={collectionProduct.id} className="w-full flex justify-center">
               <CollectionCard product={collectionProduct} features={collectionFeatures} />
             </div>
           ))}
         </div>
+
       </div>
     </div>
 

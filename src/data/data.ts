@@ -114,7 +114,7 @@ export const flooringTypes: FlooringType[] = [
   { 
     id: "1", // ✅ Added ID
     name: "SPC Flooring",
-    price: "AED 150m",
+    price: "AED 150m²",
     product:[
       {
         id: "1",
@@ -151,7 +151,7 @@ export const flooringTypes: FlooringType[] = [
   { 
     id: "2", // ✅ Added ID
     name: "LVT Flooring", 
-    price: "AED 180m",
+    price: "AED 180m²",
     product:[
       {
         id: "1",
@@ -176,7 +176,7 @@ export const flooringTypes: FlooringType[] = [
   { 
     id: "3", // ✅ Added ID
     name: "Polar Flooring", 
-    price: "AED 200m",
+    price: "AED 200m²",
     product:[
       {
         id: "1",
@@ -201,7 +201,7 @@ export const flooringTypes: FlooringType[] = [
   { 
     id: "4", // ✅ Added ID
     name: "Richmond Flooring", 
-    price: "AED 220m",
+    price: "AED 220m²",
     product:[
       {
         id: "1",

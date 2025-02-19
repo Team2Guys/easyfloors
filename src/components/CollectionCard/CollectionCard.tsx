@@ -11,7 +11,7 @@ const CollectionCard: React.FC<ProductCardProps> = ({ product, features = [] }) 
                 alt={product.name}
                 width={500}
                 height={200}
-                className="md:w-[553px] w-full md:h-80 h-full object-cover"
+                className="w-[553px] md:h-80 h-full object-cover"
            />
            </Link>
             <div className="flex justify-between gap-4 py-4 border-b border-gray-100 px-2 font-inter font-light">
