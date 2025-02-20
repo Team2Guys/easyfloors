@@ -15,8 +15,8 @@ const CollectionCard: React.FC<ProductCardProps> = ({ product, features = [] }) 
            />
            </Link>
             <div className="flex justify-between md:gap-4 py-1 md:py-4 border-b border-gray-100 md:px-2 font-inter font-light">
-                {features.map((feature) => (
-                    <div key={feature.id} className="flex items-center justify-between gap-1">
+            {features.map((feature,index) => (
+                    <div key={index} className="flex items-center justify-between gap-1">
                         <Image
                             src={feature.icon}
                             alt="Icon"

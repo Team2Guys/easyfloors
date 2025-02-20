@@ -10,7 +10,6 @@ import SampleBanner from "components/SampleBanner/SampleBanner";
 import { imageData } from "data/data";
 import AmCategory from "./Categories/page";
 import UserInfo from "components/Reusable/user-info";
-import NeedHelp from "components/NeedHelp/NeedHelp";
 import Faqs from "components/Faqs/Faqs";
 
 export default function Home() {
@@ -28,7 +27,6 @@ export default function Home() {
       <ImageCompare />
       <UserInfo />
       <Faqs />
-      <NeedHelp />
     </>
   );
 }

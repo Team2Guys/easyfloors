@@ -10,26 +10,25 @@ export interface LabelPrice {
     label: string;
   }
   export interface Feature {
-    id: number;
     icon: string;
     label: string;
     width: number;
     height: number;
   }
   export interface FlooringType {
-    id: string;
-    name: string;
-    price: string;
+    name?: string;
+    price?: string;
     product: Product[];
   }
   export interface Product {
-    id: string;
     image: string; 
     name: string;
     price: string;
+    stock?: number;
   }
   export interface ProductCardProps {
     product: Product;
+    sldier?: boolean;
     features: Feature[];
 }
 export type Block = {
