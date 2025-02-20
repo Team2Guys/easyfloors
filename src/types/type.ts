@@ -10,7 +10,6 @@ export interface LabelPrice {
     label: string;
   }
   export interface Feature {
-    id: number;
     icon: string;
     label: string;
     width: number;
@@ -22,7 +21,6 @@ export interface LabelPrice {
     product: Product[];
   }
   export interface Product {
-    id: string;
     image: string; 
     name: string;
     price: string;

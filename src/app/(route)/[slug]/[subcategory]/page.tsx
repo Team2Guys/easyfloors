@@ -8,9 +8,9 @@ const Category = () => {
   return (
     <>
       <Breadcrumb image="/assets/images/category/category-breadcrumb.png" />
-      <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-10">
+      <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
         <div className=" lg:w-[20%] ">
-          <Filters />
+          <Filters className="hidden lg:block" />
         </div>
         <div className="lg:w-[80%]">
           <SubCategory />

@@ -5,9 +5,13 @@ import { categories } from "data/data";
 import Checkbox from "components/ui/checkbox";
 import RatioButtons from "components/ui/radio-button";
 
-const Filters = () => {
+interface FIlterprops {
+  className?: string;
+}
+
+const Filters = ({className}:FIlterprops) => {
   return (
-    <div className="p-4  w-full  space-y-5 ">
+    <div className={`p-2 xl:p-4  w-full  space-y-5 ${className}`}>
       <div className="border-b-2 pb-5">
         <p className="text-16 font-medium uppercase pb-2  text-[#191C1F]">Filter by Category</p>
 

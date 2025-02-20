@@ -33,8 +33,8 @@ const Card: React.FC<ProductCardProps> = ({
       <div
         className={`flex  gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light  ${ sldier ? "justify-between" : "justify-evenly"}`}
       >
-        {features.map((feature) => (
-          <div key={feature.id} className="flex items-center justify-between gap-1" >
+        {features.map((feature,index) => (
+          <div key={index} className="flex items-center justify-between gap-1" >
             <Image
               src={feature.icon}
               alt="Icon"
