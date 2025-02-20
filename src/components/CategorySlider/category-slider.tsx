@@ -50,8 +50,8 @@ const CategorySlider: React.FC = () => {
                   1280: { slidesPerView: 3, spaceBetween: 25 },
                 }}
               >
-                {flooring.product.map((product: Product) => (
-                  <SwiperSlide key={product.id} className="pb-7">
+                {flooring.product.map((product: Product , index) => (
+                  <SwiperSlide key={index} className="pb-7">
                     <Card product={product} features={features} sldier />
                   </SwiperSlide>
                 ))}
