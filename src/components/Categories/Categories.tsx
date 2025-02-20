@@ -10,8 +10,8 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
         <Image
           src={card.backgroundImage}
           alt={card.title}
-          layout="fill"
-          objectFit="cover"
+          fill
+          style={{ objectFit: "cover" }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
         />
 
