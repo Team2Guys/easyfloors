@@ -484,13 +484,6 @@ export const faqs: FAQItem[] = [
     answer:
       "No referral is needed. You can directly book an appointment with us.",
   },
-  {
-    id: 5,
-    question:
-      "Is the cost of the appointment covered by private health insurance?",
-    answer:
-      "Many private health insurances cover our services. Please check with your provider.",
-  },
 ];
 
 
