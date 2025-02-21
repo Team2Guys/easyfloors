@@ -13,26 +13,63 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Products {
-  id                    Int                     @id @default(autoincrement())
-  name                  String                  @unique
+  id                    Int            @id @default(autoincrement())
+  name                  String         @unique
   price                 Int
   description           String
   stock                 Int
   discountPrice         Int?
   posterImageUrl        Json
-  posterImagePublicId   String
   hoverImageUrl         Json
   productImages         Json[]
-  additionalInformation Json[]
-  colors                Json[]                  @default([])
-  spacification         Json[]                  @default([])
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @default(now())
+  colors                Json[]         @default([])
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @default(now())
   Canonical_Tag         String?
   Meta_Description      String?
   Meta_Title            String?
   last_editedBy         String?
   custom_url            String
+  waterproof            Boolean        @default(false)
+  AdditionalInformation Json[]         @default([])
+  plankWidth            String?
+  ResidentialWarranty   String?
+  CommmericallWarranty  String?
+  categoryId            Int?
+  short_description     String?
+  category              Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  subCategoryId         Int?
+  subcategory           subCategories? @relation(fields: [subCategoryId], references: [id], onDelete: SetNull)
+}
+
+model Category {
+  id                Int        @id @default(autoincrement())
+  name              String     @unique
+  description       String?
+  products          Products[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+ posterImageUrl        Json
+  last_editedBy     String?
+  short_description String?
+  Canonical_Tag     String?
+  Meta_Description  String?
+  Meta_Title        String?
+  custom_url        String
+}
+
+model subCategories {
+  id                Int        @id @default(autoincrement())
+  name              String     @unique
+  description       String?
+  products          Products[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+ posterImageUrl        Json
+  last_editedBy     String?
+  short_description String?
+  Canonical_Tag     String?
+  Meta_Description  String?
+  Meta_Title        String?
 }
