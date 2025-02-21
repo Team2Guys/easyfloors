@@ -29,7 +29,7 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
               Click Me
             </Link>
           </div>
-          <div className="absolute md:bottom-4  md:right-4 right-0 bottom-0 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="absolute md:bottom-0  md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <ul className="list-disc pl-5 text-left">
               {card.features.map((feature, index) => (
                 <li className="md:text-sm text-[8px]" key={index}>{feature}</li>
