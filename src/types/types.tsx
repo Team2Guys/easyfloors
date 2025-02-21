@@ -24,4 +24,8 @@ export interface SocialLink {
     question: string;
     answer: string;
   }
+
+export interface FAQsListProps {
+    faqspage: FAQ[];
+}
   
