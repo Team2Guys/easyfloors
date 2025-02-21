@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Card from "components/Card/Card";
-import { features, flooringTypes } from "data/data";
+import { features, flooringTypes, generateSlug } from "data/data";
 import { FlooringType, Product } from "types/type";
 
 const CategorySlider: React.FC = () => {
@@ -22,7 +22,7 @@ const CategorySlider: React.FC = () => {
             className="md:flex block items-center md:text-black text-white w-full overflow-hidden md:bg-background bg-primary category_slider"
           >
             <div className="p-4 text-center md:text-start w-full md:w-1/4 font-inter sm:pl-10 md:pl-12 lg:pl-20 xl:pl-24">
-            <Link href="#" className="text-2xl md:text-4xl font-semibold">
+            <Link href={`${generateSlug(flooring.name || '')}/${generateSlug(flooring.product[0]?.name || '')}`} className="text-2xl md:text-4xl font-semibold">
                 {flooring.name}
             </Link>
               <p className="text-sm md:text-base md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
@@ -52,7 +52,7 @@ const CategorySlider: React.FC = () => {
               >
                 {flooring.product.map((product: Product , index) => (
                   <SwiperSlide key={index} className="pb-7">
-                    <Card product={product} features={features} sldier />
+                    <Card product={product} features={features} category={flooring.name} sldier />
                   </SwiperSlide>
                 ))}
               </Swiper>

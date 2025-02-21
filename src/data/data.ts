@@ -3,6 +3,18 @@ import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Featu
 import { SocialLink } from "types/types";
 
 
+export const generateSlug = (text: string) => {
+  if (!text) return '';
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+};
+
+
 export const heroItems = [
   {
     backgroundImage: "/assets/images/Home/hero.png",
