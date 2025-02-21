@@ -30,6 +30,7 @@ export interface LabelPrice {
     product: Product;
     sldier?: boolean;
     features: Feature[];
+    category?: string;
 }
 export type Block = {
   id: number;

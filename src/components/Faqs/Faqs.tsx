@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 
 const Faqs: React.FC = () => {
-    const [openIndex, setOpenIndex] = useState<number | null>(0); 
+    const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     const toggleFAQ = (index: number) => {
         setOpenIndex(openIndex === index ? null : index);

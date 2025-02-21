@@ -3,6 +3,18 @@ import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Featu
 import { FAQ, SocialLink } from "types/types";
 
 
+export const generateSlug = (text: string) => {
+  if (!text) return '';
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]+/g, '')
+    .replace(/\-\-+/g, '-');
+};
+
+
 export const heroItems = [
   {
     backgroundImage: "/assets/images/Home/hero.png",
@@ -481,13 +493,6 @@ export const faqs: FAQItem[] = [
     question: "Do I need a referral?",
     answer:
       "No referral is needed. You can directly book an appointment with us.",
-  },
-  {
-    id: 5,
-    question:
-      "Is the cost of the appointment covered by private health insurance?",
-    answer:
-      "Many private health insurances cover our services. Please check with your provider.",
   },
 ];
 

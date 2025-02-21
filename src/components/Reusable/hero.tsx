@@ -44,9 +44,9 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             <p className="text-[10px] lg:text-base">{item.flooringType}</p>
             <p className="text-xs lg:text-xl font-semibold flex justify-start items-center gap-3">
               {item.priceText}
-              <span className="text-[16px] lg:text-[30px]">
+              <Link href="/polar/spc/american-walnut" className="text-[16px] lg:text-[30px]">
                 <TiArrowRight />
-              </span>
+              </Link>
             </p>
           </div>
   

@@ -1,3 +1,4 @@
+import { generateSlug } from "data/data";
 import Image from "next/image";
 import Link from "next/link";
 import { FiEye, FiHeart } from "react-icons/fi";
@@ -7,11 +8,12 @@ const Card: React.FC<ProductCardProps> = ({
   product,
   features = [],
   sldier,
+  category,
 }) => {
   return (
     <div className={`overflow-hidden group  ${sldier ? "px-2" : " hover:bg-background p-2"}`}>
      <div className="relative">
-      <Link href="#">
+      <Link href={`${generateSlug(category || '')}/${generateSlug(product.name)}`}>
         <Image
           src={product.image}
           alt={product.name}
@@ -50,7 +52,7 @@ const Card: React.FC<ProductCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href="#"
+          href={`${generateSlug(category || '')}/${generateSlug(product.name)}`}
           className={` md:mt-0 mt-1 text-left font-semibold text-[#594F55] ${
             sldier ? "text-sm md:text-lg" : " text-12 sm:text-14 md:text-16 xl:text-24 2xl:text-31 max-sm:leading-3"
           }`}
@@ -68,7 +70,7 @@ const Card: React.FC<ProductCardProps> = ({
               </button>
             ) : (
               <Link
-                href="#" className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary"
+              href={`${generateSlug(category || '')}/${generateSlug(product.name)}`}className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary"
               >
                 Shop Now
               </Link>

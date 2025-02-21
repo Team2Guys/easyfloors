@@ -15,24 +15,24 @@ const TopNav = () => {
         <div>
           <SocialIcon className=" lg:hidden" />
           <div className="lg:flex items-center gap-7 hidden">
-            <div className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
+            <Link href={`tel:${phoneNumber}`} className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
               <Image
                 width={20}
                 height={20}
                 src="/assets/images/icon/telephone.png"
                 alt="email"
               />
-              <Link href={`tel:${phoneNumber}`}>{phoneNumber}</Link>
-            </div>
-            <div className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
+              <p>{phoneNumber}</p>
+            </Link>
+            <Link href={`mailto:${email}`} className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
               <Image
                 width={20}
                 height={14}
                 src="/assets/images/icon/email.png"
                 alt="email"
               />
-              <Link href={`mailto:${email}`}>{email}</Link>
-            </div>
+              <p>{email}</p>
+            </Link>
           </div>
         </div>
         <div className="block lg:hidden">
