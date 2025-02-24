@@ -55,7 +55,7 @@ const Navbar = () => {
           <Image
             width={200}
             height={200}
-            className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-[100px] 2xl:h-[50px]"
+            className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[40px] 2xl:w-[100px] 2xl:h-[50px]"
             src="/assets/images/logo/logo1.png"
             alt="logo"
           />
