@@ -20,3 +20,12 @@ export interface SocialLink {
     placeholder?: string;
     type?: string;
   };
+  export interface FAQ {
+    question: string;
+    answer: string;
+  }
+
+export interface FAQsListProps {
+    faqspage: FAQ[];
+}
+  

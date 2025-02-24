@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
-import { SocialLink } from "types/types";
+import { FAQ, SocialLink } from "types/types";
 
 
 export const generateSlug = (text: string) => {
@@ -119,8 +119,6 @@ export const features: Feature[] = [
   {  icon: "/assets/categoryslider/upbottomarrow.png", label: "10mm", width: 10, height: 20 },
   {  icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
-
-
 
 export const flooringTypes: FlooringType[] = [
   { 
@@ -769,4 +767,19 @@ export const categories = [
       "Richmond Comfort LVT"
     ]
   }
+];
+
+export const faqspage: FAQ[] = [
+  { question: "What is your return policy?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
+  { question: "Do you offer international shipping?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
+  { question: "How can I contact customer support?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
+  { question: "What payment methods do you accept?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
+  { question: "Do you have a physical store?", answer: "No, we are an online-only store." },
+  { question: "How long does delivery take?", answer: "Standard shipping takes 5-7 business days." },
+  { question: "Can I modify my order after placing it?", answer: "Yes, within 24 hours of order confirmation." },
+  { question: "Are your products covered by a warranty?", answer: "Yes, all products come with a 1-year warranty." },
+  { question: "Do you offer bulk discounts?", answer: "Yes, we provide bulk discounts on large orders." },
+  { question: "Is my personal data secure?", answer: "Yes, we use advanced encryption for data security." },
+  { question: "Can I track my order?", answer: "Yes, we provide tracking details once shipped." },
+  { question: "What happens if I receive a damaged product?", answer: "Contact us immediately for a replacement." },
 ];
