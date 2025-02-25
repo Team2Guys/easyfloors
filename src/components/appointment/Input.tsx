@@ -4,12 +4,12 @@ import { TextInputProps } from "types/types";
 
 const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeholder = "", type = "text" }) => {
   return (
-    <div className="flex flex-col mb-2">
+    <div className="flex flex-col mb-1">
       <label htmlFor={name} className="text-13 font-medium font-inter">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
 
-      <div className="relative mt-2">
+      <div className="relative mt-1">
         {type === "number" && (
           <svg  className="absolute left-2 top-1/2 transform -translate-y-1/2 w-7 h-7" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_8256_23905)">

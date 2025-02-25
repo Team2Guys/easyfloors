@@ -48,8 +48,8 @@ export default function Appointment() {
           }}
         >
           {({ isSubmitting }) => (
-            <Form className="space-y-4">
-              <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-2 lg:gap-4">
+            <Form className="space-y-2">
+              <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-2 lg:gap-4 mb-3">
                 <Input type="text"  label="Name" name="firstname" placeholder="Enter Your Full Name" required/>
                 <Input type="number" label="Phone No" name="phoneNumber"placeholder=" Type Your Phone No  " required/>
                 <Input type="number" label="WhatsApp No. If Different"  placeholder=" Type Your WhatsApp No"  name="whatsappNumber"  /> 
@@ -66,8 +66,8 @@ export default function Appointment() {
                 <Select name="findUs" label="How did you find us?" placeholder="Google Search" options={FindUs} />
                
               </div>
-              <div>
-              <label className="text-13 font-medium font-inter">How shall we contact you?</label>
+              <div className="pb-2">
+              <label className="text-13 font-medium font-inter ">How shall we contact you?</label>
               <div className="flex gap-4 items-center pt-2">
               <Field name="contactMethod.whatsapp" component={Checkbox} label="WhatsApp" />
               <Field name="contactMethod.telephone" component={Checkbox} label="Telephone" />
@@ -76,7 +76,7 @@ export default function Appointment() {
               </div>
               <div className="space-y-2">
               <label className="text-13 font-medium font-inter">What is your query regarding?</label>
-              <Field as="textarea"name="comment" className="w-full pt-3 p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-13 placeholder:font-light placeholder:text-[#828282] h-64">
+              <Field as="textarea"name="comment" className="w-full pt-3 p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-13 placeholder:font-light placeholder:text-[#828282] h-52">
 
               </Field>
               </div>           

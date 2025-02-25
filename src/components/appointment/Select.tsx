@@ -34,12 +34,12 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
   }, []);
 
   return (
-    <div className="flex flex-col mb-2">
+    <div className="flex flex-col mb-1">
       <label htmlFor={name} className="text-13 font-medium font-inter">
         {label} {required && <span className="text-red-500">*</span>}
       </label>
 
-      <div ref={dropdownRef} className="relative w-full  mt-2">
+      <div ref={dropdownRef} className="relative w-full  mt-1">
         
         <Field name={name}>
           {({ field, meta }: { field: any; meta: { touched: boolean; error?: string } }) => ( // eslint-disable-line
