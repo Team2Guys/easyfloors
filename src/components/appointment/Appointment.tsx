@@ -34,14 +34,9 @@ export default function Appointment() {
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting,resetForm }) => {
             setSubmitting(true);
-            const formData = new FormData();
-            Object.entries(values).forEach(([key, value]) => {
-              if (typeof value === "object") {
-                formData.append(key, JSON.stringify(value)); // Convert object to string
-              } else {
-                formData.append(key, value);
-              }
-            });
+             // Log the form values to the console
+            console.log("Form submitted with the following data:");
+            console.log(values)
             formAction();
             setSubmitting(false);
             resetForm();
