@@ -53,8 +53,8 @@ const Navbar = () => {
       <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
         <Link href="/">
           <Image
-            width={200}
-            height={200}
+            width={400}
+            height={400}
             className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
             src="/assets/images/logo/logo.png"
             alt="logo"
