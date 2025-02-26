@@ -1,5 +1,5 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
-import { Category } from 'categories/entities/category.entity';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { Category } from '../../categories/entities/category.entity';
 import GraphQLJSON from 'graphql-type-json';
 import { Product } from 'products/entities/product.entity';
 
