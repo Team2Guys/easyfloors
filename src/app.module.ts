@@ -14,7 +14,7 @@ import { FileUploadingModule } from './file_uploading/file_uploading.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
-            csrfPrevention: false,
+      csrfPrevention: false,
 
     }),
     ProductsModule,

@@ -1,8 +1,7 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { CreateCategoryInput } from 'categories/dto/create-category.input';
-import { UpdateCategoryInput } from 'categories/dto/update-category.input';
+import { UpdateCategoryInput } from '../../categories/dto/update-category.input';
 import { GraphQLJSON } from 'graphql-type-json';
-import { UpdateSubCategoryInput } from 'sub_categories/dto/update-sub_category.input';
+import { UpdateSubCategoryInput } from '../../sub_categories/dto/update-sub_category.input';
 
 @InputType()
 export class CreateProductInput {

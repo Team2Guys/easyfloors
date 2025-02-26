@@ -1,6 +1,5 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
-import { UpdateCategoryInput } from 'categories/dto/update-category.input';
 
 @InputType()
 export class CreateSubCategoryInput {
