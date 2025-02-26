@@ -16,9 +16,9 @@ export class FileUploadingResolver {
   }
 
 
-  @Mutation(() => FileUploading)
-    async updateProduct(@Args('updateProductInput') updateProductInput: UpdateFileUploadingInput) {
-      return await this.fileUploadingService.delete(updateProductInput.public_id);
+  @Mutation(() => Boolean)
+    async DeleteImage(@Args('RemoveUImage') updatedImageInput: UpdateFileUploadingInput) {
+      return await this.fileUploadingService.delete(updatedImageInput.public_id);
     }
 
 }

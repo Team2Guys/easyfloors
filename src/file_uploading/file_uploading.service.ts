@@ -33,7 +33,11 @@ export class FileUploadingService {
 
   async delete (publicid: string) {
     try {
-      return  await cloudinary.uploader.destroy(publicid)
+   let result =   await cloudinary.uploader.destroy(publicid)
+   console.log(result, "result")
+   return result.result === "ok"; // ✅ Return true if successful
+   
+
     } catch (error) {
       throw new Error('File upload failed: ' + error.message);
     }
