@@ -30,4 +30,16 @@ export class FileUploadingService {
     }
   }
 
+
+  async delete (publicid: string) {
+    try {
+      return  await cloudinary.uploader.destroy(publicid)
+    } catch (error) {
+      throw new Error('File upload failed: ' + error.message);
+    }
+  }
+
+
+
+
 }

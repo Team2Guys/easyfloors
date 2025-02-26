@@ -3,6 +3,6 @@ import { InputType, Field, Int, PartialType } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateFileUploadingInput extends PartialType(CreateFileUploadingInput) {
-  @Field(() => Int)
-  id: number;
+  @Field()
+  public_id: string;
 }
