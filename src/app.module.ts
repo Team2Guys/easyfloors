@@ -13,7 +13,8 @@ import { FileUploadingModule } from './file_uploading/file_uploading.module';
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
+      // autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
+      autoSchemaFile:true,
       csrfPrevention: false,
 
     }),
