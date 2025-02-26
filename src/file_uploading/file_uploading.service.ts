@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateFileUploadingInput } from './dto/create-file_uploading.input';
-import { UpdateFileUploadingInput } from './dto/update-file_uploading.input';
 import { cloudinary } from './cloudinar.config';
 import { FileUpload } from 'graphql-upload';
 

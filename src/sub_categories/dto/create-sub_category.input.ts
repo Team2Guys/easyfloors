@@ -1,4 +1,4 @@
-import { InputType, Int, Field, ID } from '@nestjs/graphql';
+import { InputType, Field, ID } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
 
 @InputType()

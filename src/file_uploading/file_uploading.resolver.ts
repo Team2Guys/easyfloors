@@ -1,8 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { FileUploadingService } from './file_uploading.service';
 import { FileUploading } from './entities/file_uploading.entity';
-import { CreateFileUploadingInput } from './dto/create-file_uploading.input';
-import { UpdateFileUploadingInput } from './dto/update-file_uploading.input';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 
 
