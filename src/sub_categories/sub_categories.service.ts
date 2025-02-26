@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateSubCategoryInput } from './dto/create-sub_category.input';
 import { UpdateSubCategoryInput } from './dto/update-sub_category.input';
-import { PrismaService } from 'prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { customHttpException } from 'utils/helper';
 
 @Injectable()
