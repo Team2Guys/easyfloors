@@ -16,6 +16,8 @@ import { FileUploadingModule } from './file_uploading/file_uploading.module';
       // autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
       autoSchemaFile:true,
       csrfPrevention: false,
+      playground: true,
+
 
     }),
     ProductsModule,
