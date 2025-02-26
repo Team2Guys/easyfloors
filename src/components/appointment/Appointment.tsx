@@ -4,13 +4,10 @@ import Input from "./Input";
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
 import Select from "./Select";
-import { Appointmentlocation, FindUs, initialValues, validationSchema } from "types/interface";
+import {Appointmentlocation, FindUs, initialValues, validationSchema } from "data/data";
 import Checkbox from "./checkbox";
+import { FormState } from "types/type";
 
-interface FormState {
-  success?: string;
-  error?: string;
-}
 
 async function handleSubmit(): Promise<FormState> {
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -34,8 +31,6 @@ export default function Appointment() {
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting,resetForm }) => {
             setSubmitting(true);
-             // Log the form values to the console
-            console.log("Form submitted with the following data:");
             console.log(values)
             formAction();
             setSubmitting(false);

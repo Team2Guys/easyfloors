@@ -2,20 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Field, ErrorMessage } from "formik";
 import { FiChevronDown } from "react-icons/fi";
-
-interface Option {
-  value: string;
-  label: string;
-  disabled?: boolean;
-}
-
-interface SelectProps {
-  name: string;
-  options: Option[];
-  label: string;
-  required?: boolean;
-  placeholder?: string;
-}
+import { SelectProps } from "types/type";
 
 const Select = ({ name, options, label, required = false, placeholder = "Select Location" }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);

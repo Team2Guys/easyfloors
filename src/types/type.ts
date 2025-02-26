@@ -138,3 +138,26 @@ export interface CollectionFeature {
   width: number;
   height: number;
 }
+export  interface FormState {
+  success?: string;
+  error?: string;
+}
+
+interface Option {
+  value: string;
+  label: string;
+  disabled?: boolean;
+}
+
+export interface SelectProps {
+  name: string;
+  options: Option[];
+  label: string;
+  required?: boolean;
+  placeholder?: string;
+}
+
+export interface Appointmentprops {
+  title?:string;
+  description?:string;
+  }
