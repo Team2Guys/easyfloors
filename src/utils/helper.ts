@@ -17,10 +17,8 @@ export const customHttpException = (error: any, status?: string) => {
       default:
         throw new HttpException('A database error occurred.',HttpStatus.INTERNAL_SERVER_ERROR);
     }
-  }
 
-  // Handle generic errors
-  throw new HttpException(error.message || 'An unexpected error occurred.',
-    status ? HttpStatus[status] : HttpStatus.INTERNAL_SERVER_ERROR
+  }
+  throw new HttpException(error || 'An unexpected error occurred.', status ? HttpStatus[status] : HttpStatus.INTERNAL_SERVER_ERROR
   );
 };

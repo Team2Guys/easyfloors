@@ -7,6 +7,7 @@ import { join } from 'path';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SubCategoriesModule } from './sub_categories/sub_categories.module';
+import { FileUploadingModule } from './file_uploading/file_uploading.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { SubCategoriesModule } from './sub_categories/sub_categories.module';
     ProductsModule,
     CategoriesModule,
     SubCategoriesModule,
+    FileUploadingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,8 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
 import { CreateCategoryInput } from 'categories/dto/create-category.input';
+import { UpdateCategoryInput } from 'categories/dto/update-category.input';
 import { GraphQLJSON } from 'graphql-type-json';
+import { UpdateSubCategoryInput } from 'sub_categories/dto/update-sub_category.input';
 
 @InputType()
 export class CreateProductInput {
@@ -72,11 +74,17 @@ export class CreateProductInput {
   CommmericallWarranty: string;
 
 
-  @Field(() => CreateCategoryInput, { nullable: true })
-  category?: CreateCategoryInput | any;
+  @Field(() => UpdateCategoryInput, { nullable: true })
+  category?: UpdateCategoryInput | any;
 
   @Field(() => Int, { nullable: true })
   categoryId?: number | any
+
+  @Field(() => UpdateSubCategoryInput, { nullable: true })
+  subcategory?: UpdateSubCategoryInput | any;
+
+  @Field(() => UpdateSubCategoryInput, { nullable: true })
+  subCategoryId?: UpdateSubCategoryInput | any
 
 
 }

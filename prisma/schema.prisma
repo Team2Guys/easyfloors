@@ -24,8 +24,8 @@ model Products {
   hoverImageUrl         Json
   productImages         Json[]
   colors                Json[]         @default([])
-  createdAt             DateTime       @default(now())
-  updatedAt             DateTime       @default(now())
+  createdAt             DateTime?      @default(now())
+  updatedAt             DateTime?      @default(now())
   Canonical_Tag         String?
   Meta_Description      String?
   Meta_Title            String?
@@ -48,15 +48,17 @@ model Category {
   name              String     @unique
   description       String?
   products          Products[]
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
- posterImageUrl        Json
+  createdAt         DateTime?  @default(now())
+  updatedAt         DateTime?  @updatedAt
+  posterImageUrl    Json
   last_editedBy     String?
   short_description String?
   Canonical_Tag     String?
   Meta_Description  String?
   Meta_Title        String?
   custom_url        String
+  subcategories     subCategories[] @relation()
+  Recall_Cat      String?
 }
 
 model subCategories {
@@ -64,12 +66,16 @@ model subCategories {
   name              String     @unique
   description       String?
   products          Products[]
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
- posterImageUrl        Json
+  createdAt         DateTime?  @default(now())
+  updatedAt         DateTime?  @updatedAt
+  posterImageUrl    Json
   last_editedBy     String?
   short_description String?
   Canonical_Tag     String?
   Meta_Description  String?
   Meta_Title        String?
+  categoryId        Int?
+  category          Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  custom_url        String
+  Recall_subCat      String?
 }

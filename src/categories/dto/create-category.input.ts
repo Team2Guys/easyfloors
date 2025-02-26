@@ -1,13 +1,11 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
 import { CreateProductInput } from 'products/dto/create-product.input';
+import { CreateSubCategoryInput } from 'sub_categories/dto/create-sub_category.input';
 
 @InputType()
 export class CreateCategoryInput {
-  @Field(() => ID)
-  id: number;
-
-  @Field(() => String,)
+  @Field()
   name: string;
 
   @Field()
@@ -37,6 +35,14 @@ export class CreateCategoryInput {
   @Field()
   custom_url: string;
 
-  @Field(() => [CreateProductInput], { nullable: true })
-  products?: CreateProductInput[];
+
+    // @Field(() => [CreateProductInput], { nullable: true })
+    // products?: CreateProductInput[];
+  
+    // @Field(() => [CreateSubCategoryInput], { nullable: true })
+    // subcategories?: CreateSubCategoryInput[] | any;
+  
+    @Field({ nullable: true })
+    Recall_Cat?:string
+
 }

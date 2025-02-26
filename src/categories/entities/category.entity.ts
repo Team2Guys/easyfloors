@@ -1,17 +1,17 @@
 import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
 import { Product } from 'products/entities/product.entity';
+import { SubCategory } from 'sub_categories/entities/sub_category.entity';
 
 @ObjectType()
 
 export class Category {
-  @Field(() => ID)
-  id: number;
+  @Field(() => ID,{ nullable: true })
+  id?: number;
 
-  @Field(() => String,)
+  @Field()
   name: string;
 
-  
   @Field()
   description: string;
 
@@ -39,7 +39,15 @@ export class Category {
   @Field()
   custom_url: string;
 
-  @Field(() => [Product], { nullable: true }) // ✅ Define the relation with Products
+  @Field(() => [Product], { nullable: true })
   products?: Product[];
+
+  @Field(() => [SubCategory], { nullable: true })
+  subcategories?: SubCategory[];
+
+  @Field({ nullable: true })
+  Recall_Cat?:string
+
+
 }
 

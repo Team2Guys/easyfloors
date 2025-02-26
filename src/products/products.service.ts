@@ -10,12 +10,18 @@ export class ProductsService {
   constructor(private prisma: PrismaService) { }
 
   async create(createProductInput: CreateProductInput) {
+    const { category, subcategory, ...updateData } = createProductInput;
     try {
       return await this.prisma.products.create({
-        data: createProductInput,
+        data: {
+          ...updateData,
+          ...(category !== undefined ? { category: { connect: { id: category.id } } } : category ? { category } : undefined),
+          ...(category !== undefined ? { subcategory: { connect: { id: subcategory.id } } } : subcategory ? { subcategory } : undefined),
+        },
       });
 
     } catch (error) {
+      console.log(error, "error")
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
 
@@ -23,7 +29,7 @@ export class ProductsService {
 
   async findAll() {
     try {
-      return await this.prisma.products.findMany();
+      return await this.prisma.products.findMany({include: {category: true, subcategory: true}});
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -31,7 +37,7 @@ export class ProductsService {
 
   async findOne(id: number) {
     try {
-      return await this.prisma.products.findUnique({ where: { id } });
+      return await this.prisma.products.findUnique({ where: { id },include: {category: true, subcategory: true}});
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }

@@ -72,8 +72,8 @@ export class Product {
   @Field({nullable:true})
   CommmericallWarranty: string;
 
-  @Field(() => Category,{nullable:true})
-  category: Category;
+  @Field(() => ID,{nullable:true})
+  category: number;
 
 @Field(()=>Int,{nullable:true})
 categoryId:number
