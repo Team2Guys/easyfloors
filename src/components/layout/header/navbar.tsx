@@ -47,6 +47,7 @@ const Navbar = () => {
     });
   };
 
+
   return (
     <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg pb-1 sm:pb-2' : 'top-10 pb-1 sm:pb-1'} transition-all font-inter `}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
@@ -56,7 +57,7 @@ const Navbar = () => {
             width={400}
             height={400}
             className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
-            src="/assets/images/logo/logo.png"
+            src="/assets/images/logo.png"
             alt="logo"
           />
         </Link>
