@@ -41,7 +41,7 @@ export const DashboardfetchProducts = async () => {
     console.log(error, 'error');
   }
 };
-
+//eslint-disable-next-line
 export const fetchCategories = async (): Promise<ICategory[] | any> => {
   try {
     const result = await fetch(
@@ -83,7 +83,7 @@ export const TrimUrlHandler = (name: string | undefined) => {
 
 
 
-export const get_all_records = async (token: any) => {
+export const get_all_records = async (token: Record<string, string>) => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales-record/get_all_records`,

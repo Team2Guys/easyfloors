@@ -1,17 +1,9 @@
 import React, { useState } from 'react';
 import { Modal, Table } from 'antd';
 import Image from 'next/image';
-import { IOrder } from '@/types/types';
+import { IOrder, IOrderList } from 'types/type';
 
-interface IOrderList {
-  orderData: IOrder[];
-  orderColumns: any[];
-  visible: boolean;
-  /* eslint-disable */
-  setVisible: (value: boolean) => void;
-  /* eslint-enable */
-  selectedProducts: any[];
-}
+
 
 const OrderList = ({
   orderData,

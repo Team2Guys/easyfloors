@@ -18,7 +18,7 @@ export const TotalProducts = () => {
   const totalPrice = useSelector((state: State) =>
     totalProductsInCart(state.cart),
   );
-  return <>{totalPrice}</>;
+  return {totalPrice};
 };
 
 export const formatDate = (isoDate: string) => {
@@ -40,7 +40,7 @@ export const calculateRatingsPercentage = (reviews: IReview[]) => {
     };
   }
 
-  const ratingCounts: any = {
+  const ratingCounts: { [key: number]: number } = {
     5: Array.isArray(reviews)
       ? reviews.filter((review) => review.star === 5).length
       : 0,
@@ -65,7 +65,7 @@ export const calculateRatingsPercentage = (reviews: IReview[]) => {
     .reverse()
     .map((star) => ({
       label: `${star} star`,
-      ratingValue: Math.round((ratingCounts[star] / totalReviews) * 100),
+      ratingValue: Math.round((ratingCounts[Number(star)] / totalReviews) * 100),
     }));
 
   return {
@@ -191,19 +191,21 @@ export const getProductStock = ({ product }: { product: CartItem }) => {
 
 
 
-export const getAllStock = (product : CartItem | any ) => {
+export const getAllStock = (product : CartItem  ) => {
   console.log(product, "getAllStock")
   if (!product) return '';
   let totalStock: number = 0;
 
   if (product.sizes && product.sizes.length > 0) {
-    const sizesStock = product.sizes.find((value:any) => value.name?.trim() === product.sizeName?.trim());
+    //eslint-disable-next-line 
+    const sizesStock = product.sizes.find((value:any) => value.name?.trim() === product.sizeName?.trim()); 
     if (sizesStock) {
       totalStock = Number(sizesStock.stock);
 
     }
 
   } else if (product.filter && product.filter.length > 0) {
+    //eslint-disable-next-line
     const filterStock = product.filter[0].additionalInformation.find((value:any) => value.name?.trim() === product.colorName?.trim());
     if (filterStock) {
       totalStock = Number(filterStock.stock);

@@ -13,7 +13,7 @@ import { GrDocumentPerformance } from 'react-icons/gr';
 import { RECORDS } from 'types/type';
 
 const ECommerce = ({records}: {records: RECORDS}) => {
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  const { loggedInUser } = useAppSelector((state) => state.usersSlice);
 
   const canCheckProfit =
     loggedInUser &&

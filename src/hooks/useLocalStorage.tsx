@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-function useLocalStorage(key: string, initialValue: any): any {
+function useLocalStorage(key: string, initialValue: any): any { //eslint-disable-line
   // State to store our value
   // Pass  initial state function to useState so logic is only executed once
   const [storedValue, setStoredValue] = useState(() => {

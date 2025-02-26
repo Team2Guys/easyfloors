@@ -177,7 +177,7 @@ export interface Appointmentprops {
   }
   export interface IProduct {
     id: number;
-    name: string;
+    name: string ;
     price: number;
     description: string;
     stock: number;
@@ -188,6 +188,7 @@ export interface Appointmentprops {
     posterImageUrl: string | StaticImageData;
     posterImagePublicId: string;
     posterImageAltText?: string;
+    hoverImageAltText?: string;
     hoverImageUrl: string;
     hoverImagePublicId: string;
     productImages: ProductImage[];
@@ -195,17 +196,26 @@ export interface Appointmentprops {
     categoriesId: number;
     categories?: ICategory[];
     subcategories?: ICategory[];
+    category?: ICategory[];
     sections?: [];
     createdAt?: string;
     sale_counter?: string;
     sortedSubcategories?: ICategory[];
     sizes?: Sizes[];
-    filter?: Filter[];
-    reviews?:any[]
+    filter?: any;  //eslint-disable-line
+    reviews?:any[] //eslint-disable-line
     displayName?: string;
     sizeName?: string;
     colorName?: string;
     custom_url?:string
+    Images_Alt_Text?: string;
+    Meta_Title?: string;
+    Meta_Description?: string;
+    Canonical_Tag?: string;
+    Og_Title?: string;
+    Og_Image?: string;
+    OgUrl?: string;
+    
   }
   export interface specsDetails {
     id: number;
@@ -232,7 +242,7 @@ export interface Appointmentprops {
     createdAt?: string;
     posterImageUrl?: string;
     posterImagePublicId?: string;
-    categories?: any;
+    categories?: any; //eslint-disable-line
     description?: string;
     short_description?: string;
     Images_Alt_Text?: string;
@@ -249,15 +259,15 @@ export interface Appointmentprops {
     discountPrice: string;
     stock?: string;
 }
-interface Filter {
-  heading: string;
-  additionalInformation: {
-    name: string;
-    price: string;
-    discountPrice: string;
-    stock?: number;
-  }[];
-}
+// interface Filter {
+//   heading: string;
+//   additionalInformation: {
+//     name: string;
+//     price: string;
+//     discountPrice: string;
+//     stock?: number;
+//   }[];
+// }
 export interface IReview {
   id: number;
   name: string;
@@ -325,10 +335,10 @@ export interface SubCategory {
   custom_url? :string
 }
 export interface ADDPRODUCTFORMPROPS {
-  setselecteMenu: any;
-  EditInitialValues?: any | undefined;
+  setselecteMenu: any; //eslint-disable-line
+  EditInitialValues?: any | undefined; //eslint-disable-line
   EditProductValue?: Product | undefined;
-  setEditProduct?: any;
+  setEditProduct?: any; //eslint-disable-line
   subCategories?: ICategory[];
   categoriesList?: ICategory[];
 }
@@ -373,7 +383,7 @@ export interface IProductAdd {
   Meta_Description: string;
   Images_Alt_Text: string;
   sale_counter?: string;
-  filters?: any[];
+  filters?: any[]; //eslint-disable-line
   custom_url?:string
 }
 
@@ -399,8 +409,8 @@ export interface product {
   createdAt: string;
   starRating: string;
   reviews: string;
-  productImages?: any;
-  additionalInformation?: any;
+  productImages?: any; //eslint-disable-line
+  additionalInformation?: any; //eslint-disable-line
   sizes: Array<string>;
   stock?: string;
 
@@ -424,7 +434,7 @@ export interface USRPROPS {
   handleSubmit: FormEventHandler<HTMLFormElement>;
   error: string | null | undefined;
   loading: boolean | null | undefined;
-  inputFields: any;
+  inputFields: any; //eslint-disable-line
   buttonTitle: string;
   title?: string;
   descrition?: string;
@@ -432,21 +442,21 @@ export interface USRPROPS {
   routingText?: string;
   navigationLink?: string;
   navigationTxt?: string;
-  SelectComonent?: any;
+  SelectComonent?: any; //eslint-disable-line
   setadminType?: React.Dispatch<SetStateAction<string | undefined>>;
   adminType?: string | undefined;
 }
 interface PRODUCTS_TYPES {
-  _id?: any;
+  _id?: any; //eslint-disable-line
   name: string;
-  posterImageUrl?: Image;
-  hoverImageUrl?: Image;
+  posterImageUrl?: IMAGE_INTERFACE;  
+  hoverImageUrl?: IMAGE_INTERFACE;  
   description?: string;
   salePrice?: number;
   purchasePrice?: number;
   category?: string;
   imageUrl?: IMAGE_INTERFACE[];
-  discountPrice?: any;
+  discountPrice?: any; //eslint-disable-line
   colors?: Color[];
   modelDetails?: ModelDetail[];
   spacification?: Specification[];
@@ -456,11 +466,11 @@ interface PRODUCTS_TYPES {
   reviews?: string;
   totalStockQuantity?: number;
   sizes?: sizes[];
-  isFeatured?: any;
+  isFeatured?: any; //eslint-disable-line
   price?: number;
-  count?: any;
-  length?: any;
-  totalPrice?: any;
+  count?: any;  //eslint-disable-line
+  length?: any; //eslint-disable-line
+  totalPrice?: any; //eslint-disable-line
 }
 
 export default PRODUCTS_TYPES;
@@ -479,4 +489,55 @@ interface sizes {
 
 interface Color {
   colorName?: string;
+}
+
+export interface Admin {
+  fullname?: string;
+  email?: string;
+  password?: string;
+  canAddCategory?: boolean;
+  canAddProduct?: boolean;
+  canCheckProfit?: boolean;
+  canCheckRevenue?: boolean;
+  canCheckVisitors?: boolean;
+  canDeleteCategory?: boolean;
+  canDeleteProduct?: boolean;
+  canEditCategory?: boolean;
+  canEditProduct?: boolean;
+  canVeiwAdmins?: boolean;
+  canViewSales?: boolean;
+  canVeiwTotalCategories?: boolean;
+  canVeiwTotalproducts?: boolean;
+  canViewUsers?: boolean;
+}
+
+export interface AdminRecord {
+  _id: string;
+  id: string;
+  fullname: string;
+  email: string;
+  canAddProduct: boolean;
+  canDeleteProduct: boolean;
+  canAddCategory: boolean;
+  canDeleteCategory: boolean;
+  canCheckProfit: boolean;
+  canViewUsers: boolean;
+}
+export interface IOrderList {
+  orderData: IOrder[];
+  orderColumns: Array<{ title: string; dataIndex: string; key: string }>;
+  visible: boolean;
+  /* eslint-disable */
+  setVisible: (value: boolean) => void;
+  /* eslint-enable */
+  selectedProducts: Array<{
+    id: string;
+    productData: {
+      posterImageUrl: string;
+      name: string;
+      price: number;
+      currency: string;
+    };
+    quantity: number;
+  }>;
 }

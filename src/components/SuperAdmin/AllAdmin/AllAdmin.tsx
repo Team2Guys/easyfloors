@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'antd';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import axios from 'axios';
-import Loader from '@components/Loader/Loader';
+import Loader from 'components/Loader/Loader';
 import { FaEdit } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
+import { ColumnType } from 'antd/es/table';
+import { AdminRecord } from 'types/type';
 
-function Admins({ setselecteMenu, setEditAdmin }: any) {
+function Admins({ setselecteMenu, setEditAdmin }: any) {//eslint-disable-line
   const [admins, setAdmins] = useState([]);
   const [loading, setloading] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState<string | null>(null);
@@ -51,7 +52,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
         },
       );
       setAdmins((prevAdmins) =>
-        prevAdmins.filter((admin: any) => admin.id !== id),
+        prevAdmins.filter((admin: { id: string }) => admin.id !== id),
       );
     } catch (error) {
       console.error('Error deleting admin:', error);
@@ -60,12 +61,14 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
     }
   };
 
-  const columns = [
+ 
+  
+  const columns: Array<ColumnType<AdminRecord>> = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text: any, record: any) => `${record.fullname}`,
+      render: (text: string, record: { fullname: string }) => `${record.fullname}`,
     },
     {
       title: 'Email',
@@ -76,7 +79,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
       title: 'Can Add Product',
       dataIndex: 'canAddProduct',
       key: 'canAddProduct',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canAddProduct ? 'Yes' : 'No'}</span>
       ),
     },
@@ -84,7 +87,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
       title: 'Can Delete Product',
       dataIndex: 'canDeleteProduct',
       key: 'canDeleteProduct',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canDeleteProduct ? 'Yes' : 'No'}</span>
       ),
     },
@@ -92,7 +95,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
       title: 'Can Add Category',
       dataIndex: 'canAddCategory',
       key: 'canAddCategory',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canAddCategory ? 'Yes' : 'No'}</span>
       ),
     },
@@ -100,7 +103,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
       title: 'Can View Product',
       dataIndex: 'canDeleteCategory',
       key: 'canDeleteCategory',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canDeleteCategory ? 'Yes' : 'No'}</span>
       ),
     },
@@ -108,7 +111,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
       title: 'Can view Profit',
       dataIndex: 'canCheckProfit',
       key: 'canCheckProfit',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canCheckProfit ? 'Yes' : 'No'}</span>
       ),
     },
@@ -116,7 +119,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
       title: 'Can View Total user',
       dataIndex: 'canViewUsers',
       key: 'canViewUsers',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canViewUsers ? 'Yes' : 'No'}</span>
       ),
     },
@@ -124,7 +127,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
     {
       title: 'Edit',
       key: 'edit',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <FaEdit
           className="cursor-pointer text-slate-500"
           size={20}
@@ -138,7 +141,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
     {
       title: 'Actions',
       key: 'actions',
-      render: (text: any, record: any) =>
+      render: (text: string, record: AdminRecord) =>
         delLoading === record.id ? ( // Check if loading state matches current admin ID
           <Loader />
         ) : (
@@ -162,13 +165,12 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {
           <div className="flex justify-between mb-4 items-center text-black dark:text-white ">
             <p>Admins</p>
             <div>
-              <Button
-                variant={'login'}
+              <button
                 onClick={() => setselecteMenu('Add Admin')}
-                className="hover:bg-slate-800"
+                className="bg-primary text-white"
               >
                 Add new Admin
-              </Button>
+              </button>
             </div>
           </div>
           {admins && admins.length > 0 ? (

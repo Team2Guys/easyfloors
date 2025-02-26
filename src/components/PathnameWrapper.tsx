@@ -3,6 +3,7 @@ import React from 'react';
 import { usePathname } from 'next/navigation';
 import Footer from './footer/footer';
 import Header from './layout/header/Header';
+import NeedHelp from './NeedHelp/NeedHelp';
 
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
@@ -26,7 +27,10 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
           <Footer />
         ) : null
       ) : (
+        <>
+        <NeedHelp />
         <Footer />
+        </>
       )}
     </>
   );

@@ -792,7 +792,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                             onClick={() =>
                                               pushInfo({ name: '', detail: '' })
                                             }
-                                            className="px-4 py-2 bg-black text-white dark:bg-main rounded-md shadow-md w-fit"
+                                            className="px-4 py-2 bg-black text-white dark:bg-primary rounded-md shadow-md w-fit"
                                           >
                                             Add Model
                                           </button>
@@ -812,7 +812,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   additionalInformation: [],
                                 })
                               }
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md w-fit mt-4"
+                              className="px-4 py-2 bg-black  text-white dark:bg-primary rounded-md shadow-md w-fit mt-4"
                             >
                               Add Section
                             </button>
@@ -940,7 +940,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                             onClick={() =>
                                               pushInfo({ name: '', price: '', discountPrice: '', stock: '' })
                                             }
-                                            className="px-4 py-2 bg-black text-white dark:bg-main rounded-md shadow-md w-fit"
+                                            className="px-4 py-2 bg-black text-white dark:bg-primary rounded-md shadow-md w-fit"
                                           >
                                             Add details (colors, Shapes, etc)
                                           </button>
@@ -960,7 +960,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   additionalInformation: [],
                                 })
                               }
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md w-fit mt-4"
+                              className="px-4 py-2 bg-black text-white dark:bg-primary rounded-md shadow-md w-fit mt-4"
                             >
                               Add Section
                             </button>
@@ -1046,7 +1046,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             <button
                               type="button"
                               onClick={() => push({ name: '', detail: '' })}
-                              className="px-4 py-2 bg-black text-white dark:bg-main dark:border-0  rounded-md shadow-md w-fit"
+                              className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
                             >
                               Add Model
                             </button>
@@ -1067,7 +1067,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                         {({ push, remove }) => (
                           <div className="flex flex-col gap-2">
                             {formik.values.spacification.map(
-                              (spec: any, index: any) => (
+                              (spec: any, index: number) => (
                                 <div key={index} className="flex items-center">
                                   <input
                                     type="text"
@@ -1106,7 +1106,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                             <button
                               type="button"
                               onClick={() => push({ specsDetails: '' })}
-                              className="px-4 py-2 bg-black text-white dark:bg-main dark:border-0 rounded-md shadow-md w-fit"
+                              className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0 rounded-md shadow-md w-fit"
                             >
                               Add Specification
                             </button>
@@ -1127,7 +1127,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                         {({ push, remove }) => (
                           <div className="flex flex-col gap-2">
                             {formik.values.sizes.map(
-                              (model: any, modelIndex: any) => {
+                              (model: any, modelIndex: number) => {
                                 console.log('model', model);
                                 return (
                                   <div key={modelIndex} className="flex items-center">
@@ -1220,7 +1220,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                               onClick={() =>
                                 push({ name: '', price: '', discountPrice: '', stock: '' })
                               }
-                              className="px-4 py-2 bg-black text-white dark:bg-gray-800  rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
+                              className="px-4 py-2 bg-black text-white dark:bg-primary  rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
                             >
                               Add Sizes (1 seater, 2 seater,etc)
                             </button>
@@ -1239,7 +1239,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                     {hoverImage && hoverImage.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                        {hoverImage.map((item: any, index) => {
+                        {hoverImage.map((item, index) => {
                           return (
                             <div key={index}>
                               <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
@@ -1299,7 +1299,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                     {imagesUrl && imagesUrl.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                        {imagesUrl.map((item: any, index) => {
+                        {imagesUrl.map((item, index) => {
                           return (
                             <div key={index}
                               draggable
@@ -1405,7 +1405,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
               <button
                 type="submit"
-                className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md dark:bg-main dark:border-0"
+                className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md dark:bg-primary dark:border-0"
                 disabled={loading}
               >
                 {loading ? <Loader color="white" /> : 'Submit'}

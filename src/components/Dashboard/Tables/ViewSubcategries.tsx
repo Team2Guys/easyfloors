@@ -208,7 +208,7 @@ const ViewSubcategries = ({
             <p
               className={`${canAddCategory && 'cursor-pointer'} p-2 ${
                 canAddCategory &&
-                'dark:bg-main dark:border-0 bg-black text-white rounded-md border'
+                'dark:bg-primary dark:border-0 bg-black text-white rounded-md border'
               } flex justify-center ${
                 !canAddCategory && 'cursor-not-allowed '
               }`}

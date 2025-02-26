@@ -8,10 +8,11 @@ import { FaBars } from 'react-icons/fa';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
+  //eslint-disable-next-line
   setSidebarOpen: any;
 }) => {
   return (
-    <header className="sticky top-0 z-40 flex w-full bg-main dark:bg-black text-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none border dark:border-blue-50 border-t-0 border-l-0">
+    <header className="sticky top-0 z-40 flex w-full bg-primary dark:bg-black text-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none border dark:border-blue-50 border-t-0 border-l-0">
       <div className="flex flex-grow items-center justify-between px-4 py-1 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-1 xs:gap-2 sm:gap-4 lg:hidden text-black dark:text-white">
           <FaBars

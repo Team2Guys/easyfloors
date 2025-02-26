@@ -418,7 +418,7 @@ useEffect(() => {
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="mt-4 px-8 py-2 bg-primary dark:bg-main dark:border-0 text-white rounded"
+                  className="mt-4 px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded"
                   disabled={loading}
                 >
                   {loading ? <Loader color="#fff" /> : 'Submit'}

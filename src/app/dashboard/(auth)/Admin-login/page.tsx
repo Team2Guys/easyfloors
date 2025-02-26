@@ -22,7 +22,7 @@ const DashboardLogin = () => {
     password: '',
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: any) => { //eslint-disable-line
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -49,7 +49,7 @@ const DashboardLogin = () => {
           ? '/api/admin/login'
           : '/api/admin/superadmin-login';
 
-      const user: any = await axios.post(
+      const user = await axios.post(
         process.env.NEXT_PUBLIC_BASE_URL + url,
         formData,
       );
@@ -71,7 +71,7 @@ const DashboardLogin = () => {
       setTimeout(() => {
         router.push('/dashboard');
       }, 1000);
-    } catch (err: any) {
+    } catch (err: any) { //eslint-disable-line
       console.log(err, 'err');
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);

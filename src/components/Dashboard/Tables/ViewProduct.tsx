@@ -7,7 +7,7 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import axios from 'axios';
 import { FaRegEye } from 'react-icons/fa';
 import { LiaEdit } from 'react-icons/lia';
-import { product } from 'types/type';
+import { IProduct, product } from 'types/type';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
@@ -20,22 +20,21 @@ interface Product {
   category: string;
   posterImageUrl: { imageUrl: string };
   createdAt: string;
+  sizes?: { name: string; filterName: string; stock: number }[];
+  stock?: number;
+  updatedAt: string;
 }
 
-
-
-
-
+/* eslint-disable */
 interface CategoryProps {
   Categories: any;
   setCategory: any;
-  /* eslint-disable */
   setselecteMenu: (menu: string) => void;
-  /* eslint-enable */
   loading?: boolean;
   setEditProduct: any;
   // subcetagories: any;
 }
+/* eslint-enable */
 
 const ViewProduct: React.FC<CategoryProps> = ({
   Categories,
@@ -63,7 +62,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
   const canEditproduct = true;
 
   const filteredProducts: Product[] =
-    Categories?.filter((product: any) => {
+    Categories?.filter((product: IProduct) => {
       const searchtext = searchTerm.trim().toLowerCase();
 
       return (
@@ -76,22 +75,22 @@ const ViewProduct: React.FC<CategoryProps> = ({
             color.toLowerCase().includes(searchtext),
           )) ||
         (product.spacification &&
-          product.spacification.some((spec: any) =>
-            Object.values(spec).some((value: any) =>
+          product.spacification.some((spec) =>
+            Object.values(spec).some((value) =>
               value.toString().toLowerCase().includes(searchtext),
             ),
           )) ||
-        product.additionalInformation.some((info: any) =>
-          Object.values(info).some((value: any) =>
+        product.additionalInformation.some((info) =>
+          Object.values(info).some((value) =>
             value.toString().toLowerCase().includes(searchtext),
           ),
         ) ||
         (product.categories &&
-          product.categories.some((category: any) =>
+          product.categories.some((category) =>
             category.name.toLowerCase().includes(searchtext),
           )) ||
         (product.subcategories &&
-          product.subcategories.some((subcategory: any) =>
+          product.subcategories.some((subcategory) =>
             subcategory.name.toLowerCase().includes(searchtext),
           ))
       );
@@ -107,7 +106,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       return aStartsWith - bStartsWith || dateB - dateA;
     }) || [];
 
-  const confirmDelete = (key: any) => {
+  const confirmDelete = (key: string) => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Once deleted, the Product cannot be recovered.',
@@ -160,7 +159,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       dataIndex: 'posterImageUrl',
       width: 150,
       key: 'posterImageUrl',
-      render: (text: any, record: Product) => (
+      render: (text: string, record: Product) => (
         <Image
           src={`${record?.posterImageUrl}`}
           alt={`Image of ${record.name}`}
@@ -182,24 +181,21 @@ const ViewProduct: React.FC<CategoryProps> = ({
       width: 170,
       dataIndex: "stock",
       key: "stock",
-      render: (text: any, record: any) => {
+      render: (text: string, record: Product) => {
         const sizes =
           record.sizes && record.sizes.length > 0
             ? record.sizes
-            : record.filter && record.filter.length > 0
-              ? record.filter[0]
-              : [];
+            : []
 
         console.log(sizes, "sizes");
 
         return (
-          <>
-            {sizes.length > 0 ? (
+            sizes.length > 0 ? (
               <select name="custom-select" id="stock">
                 <option value="0">
                   Variations Stock
                 </option>
-                {sizes.map((item: any, index: number) => (
+                {sizes.map((item, index) => (
                   <option className='flex' disabled key={index} value={index + 1} >
                     <span className='block'>Variant: {item.name} </span>
                     <span>{item.filterName} </span>
@@ -210,9 +206,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
             ) : (
 
               <p>{record.stock}</p>
-
-            )}
-          </>
+            )
         );
       },
     },
@@ -220,7 +214,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (text: string, record: Product) => {
         const createdAt = new Date(record.createdAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -233,7 +227,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       title: 'Updated At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (text: string, record: Product) => {
         const createdAt = new Date(record.updatedAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -245,7 +239,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       title: 'Time',
       dataIndex: 'createdAt',
       key: 'time',
-      render: (text: any, record: any) => {
+      render: (text: string, record: Product) => {
         const createdAt = new Date(record.updatedAt);
         const formattedTime = `${String(createdAt.getHours()).padStart(2, '0')}:${String(
           createdAt.getMinutes(),
@@ -262,12 +256,12 @@ const ViewProduct: React.FC<CategoryProps> = ({
       title: 'Preview',
       key: 'Preview',
       width: 120,
-      render: (text: any, record: any) => {
+      render: (text: string, record: Product) => {
         return (
           <Link
             className="hover:text-black"
             target="_blank"
-            href={(record)}
+            href={`${record.name}`}
           >
             <FaRegEye />
           </Link>
@@ -278,7 +272,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       title: 'Edit',
       key: 'Edit',
       width: 150,
-      render: (text: any, record: Product) => (
+      render: (text: string, record: Product) => (
         <LiaEdit
           className={`${canEditproduct ? 'cursor-pointer' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
@@ -296,7 +290,7 @@ const ViewProduct: React.FC<CategoryProps> = ({
       title: 'Action',
       key: 'action',
       width: 150,
-      render: (text: any, record: any) => (
+      render: (text: string, record: Product) => (
         <RiDeleteBin6Line
           className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
             }`}
@@ -325,8 +319,8 @@ const ViewProduct: React.FC<CategoryProps> = ({
             <p
               className={`${canAddProduct &&
                 'cursor-pointer rounded-md text-nowrap text-12 xs:text-base'
-                } p-2 ${canAddProduct && 'bg-primary text-white rounded-md border'
-                } flex justify-center dark:bg-main dark:border-0 ${!canAddProduct &&
+                } py-2 px-4 ${canAddProduct && 'bg-black text-white rounded-md border'
+                } flex justify-center dark:bg-primary dark:border-0 ${!canAddProduct &&
                 'cursor-not-allowed bg-gray-500 text-white rounded-md'
                 }`}
               onClick={() => {

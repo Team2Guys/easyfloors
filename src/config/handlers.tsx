@@ -9,8 +9,8 @@ export async function getOrderHistory(flag?: boolean) {
   const superAdminToken = cookieStore.get('superAdminToken');
   const finalToken = token ? token : superAdminToken;
 
-  const headers: any = {
-    token: finalToken?.value,
+  const headers: { token: string } = {
+    token: finalToken?.value || '',
   };
   const paymentStatus = flag ? flag : false;
   try {

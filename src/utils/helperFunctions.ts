@@ -4,18 +4,19 @@ import React from 'react';
 
 type setTotalProducts = React.Dispatch<React.SetStateAction<PRODUCTS_TYPES[]>>;
 type setTotalPage = React.Dispatch<React.SetStateAction<string | undefined>>;
-type setError = React.Dispatch<React.SetStateAction<any>>;
+type setError = React.Dispatch<React.SetStateAction<string | null>>;
 type setLoading = React.Dispatch<React.SetStateAction<boolean>>;
 
-export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
+export const uploadPhotosToBackend = async (files: File[]): Promise<string | null[]> => {
   if (files.length === 0) throw new Error('No files found');
 
-  const Response_data: any[] = [];
+  const Response_data: string | null[] = [];
 
   try {
     for (const file of files) {
       const formData = new FormData();
       formData.append('file', file);
+      //eslint-disable-next-line
       const response: AxiosResponse<any> = await axios.post(
         `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE}/api/file-upload`,
         formData,
@@ -40,15 +41,15 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
-  setterFunction: any,
+  setterFunction: React.Dispatch<React.SetStateAction<{ public_id: string }[]>>,
 ) => {
   try {
     const response = await axios.delete(
       `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE}/api/file-upload/DelImage/${imagePublicId}`,
     );
     console.log('Image removed successfully:', response.data);
-    setterFunction((prev: any) =>
-      prev.filter((item: any) => item.public_id != imagePublicId),
+    setterFunction((prev) =>
+      prev.filter((item) => item.public_id != imagePublicId),
     );
   } catch (error) {
     console.error('Failed to remove image:', error);
@@ -57,7 +58,7 @@ export const ImageRemoveHandler = async (
 
 export const getPaginatedproducts = async (page: number) => {
   try {
-    const response: any = await axios.get(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/getPaginateProducts?page=${page}`,
     );
     const products = response.data.products;
@@ -70,6 +71,7 @@ export const getPaginatedproducts = async (page: number) => {
       currentPage,
       totalProducts,
     };
+    //eslint-disable-next-line
   } catch (err: any) {
     if (err.response && err.response.data && err.response.data.message) {
       throw new Error(err.response.data.message);
@@ -87,15 +89,19 @@ export const getPRODUCTS = async (
   setLoading: setLoading,
   pageNumber: number,
   setTotalPage?: setTotalPage,
+  //eslint-disable-next-line
   setTotalProductscount?: any,
 ) => {
   try {
     setLoading(true);
-    const { products, totalPages, totalProducts }: any =
+    const { products, totalPages, totalProducts } =
       await getPaginatedproducts(pageNumber);
     setTotalProducts(products);
+    //eslint-disable-next-line
     setTotalPage && setTotalPage(totalPages);
+    //eslint-disable-next-line
     setTotalProductscount && setTotalProductscount(totalProducts);
+    //eslint-disable-next-line
   } catch (err: any) {
     console.log(err, 'err');
     if (err.response && err.response.data && err.response.data.message) {

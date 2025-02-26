@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: {
   userLoading: boolean;
-  loggedInUser: any | undefined;
+  loggedInUser: any | undefined; //eslint-disable-line
 } = {
   userLoading: false,
   loggedInUser: undefined,

@@ -12,12 +12,12 @@ import { RiLogoutBoxLine } from 'react-icons/ri';
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  const { loggedInUser } = useAppSelector((state) => state.usersSlice) as { loggedInUser: { fullname: string; role: string; posterImageUrl: string; name: string } };
 
   const router = useRouter();
 
-  const trigger = useRef<any>(null);
-  const dropdown = useRef<any>(null);
+  const trigger = useRef<HTMLDivElement>(null);
+  const dropdown = useRef<HTMLDivElement>(null);
 
   // close on click outside
   useEffect(() => {
@@ -25,8 +25,8 @@ const DropdownUser = () => {
       if (!dropdown.current) return;
       if (
         !dropdownOpen ||
-        dropdown.current.contains(target) ||
-        trigger.current.contains(target)
+        dropdown.current.contains(target as Node) ||
+        trigger.current && trigger.current.contains(target as Node)
       )
         return;
       setDropdownOpen(false);
@@ -78,7 +78,7 @@ const DropdownUser = () => {
               src={
                 loggedInUser && loggedInUser.posterImageUrl
                   ? loggedInUser.posterImageUrl
-                  : '/images/dummy-avatar.jpg'
+                  : '/assets/images/dummy-avatar.jpg'
               }
               width={55}
               height={55}

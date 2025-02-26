@@ -5,8 +5,9 @@ import { Table, Button } from 'antd';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import axios from 'axios';
 import Loader from 'components/Loader/Loader';
+import { AdminRecord } from 'types/type';
 
-function Admins({ setselecteMenu }: any) {
+function Admins({ setselecteMenu }: any) { //eslint-disable-line
   const [admins, setAdmins] = useState([]);
   const [loading, setloading] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState<string | null>(null);
@@ -60,7 +61,7 @@ function Admins({ setselecteMenu }: any) {
         },
       );
       setAdmins((prevAdmins) =>
-        prevAdmins.filter((admin: any) => admin._id !== id),
+        prevAdmins.filter((admin: AdminRecord) => admin._id !== id),
       );
     } catch (error) {
       console.error('Error deleting admin:', error);
@@ -74,7 +75,7 @@ function Admins({ setselecteMenu }: any) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      render: (text: any, record: any) => `${record.fullname}`,
+      render: (text: string, record: AdminRecord) => `${record.fullname}`,
     },
     {
       title: 'Email',
@@ -85,7 +86,7 @@ function Admins({ setselecteMenu }: any) {
       title: 'Can Add Product',
       dataIndex: 'canAddProduct',
       key: 'canAddProduct',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canAddProduct ? 'Yes' : 'No'}</span>
       ),
     },
@@ -93,7 +94,7 @@ function Admins({ setselecteMenu }: any) {
       title: 'Can Delete Product',
       dataIndex: 'canDeleteProduct',
       key: 'canDeleteProduct',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canDeleteProduct ? 'Yes' : 'No'}</span>
       ),
     },
@@ -101,7 +102,7 @@ function Admins({ setselecteMenu }: any) {
       title: 'Can Add Category',
       dataIndex: 'canAddCategory',
       key: 'canAddCategory',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canAddCategory ? 'Yes' : 'No'}</span>
       ),
     },
@@ -109,14 +110,14 @@ function Admins({ setselecteMenu }: any) {
       title: 'Can Delete Category',
       dataIndex: 'canDeleteCategory',
       key: 'canDeleteCategory',
-      render: (text: any, record: any) => (
+      render: (text: string, record: AdminRecord) => (
         <span>{record.canDeleteCategory ? 'Yes' : 'No'}</span>
       ),
     },
     {
       title: 'Actions',
       key: 'actions',
-      render: (text: any, record: any) =>
+      render: (text: string, record: AdminRecord) =>
         delLoading === record._id ? ( 
           <Loader />
         ) : (

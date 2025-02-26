@@ -14,12 +14,12 @@ import { ImageRemoveHandler } from 'utils/helperFunctions';
 import { LabelInput } from 'components/ui/label-input';
 import { AiOutlineUpload } from 'react-icons/ai';
 interface ImageType {
-  posterImagePublicId: string | any;
+  posterImagePublicId: string ;
   posterImageUrl: string;
 }
 
 const Settings = () => {
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  const loggedInUser = useAppSelector((state) => state.usersSlice.loggedInUser);
   const token = Cookies.get('2guysAdminToken');
   const dispatch = useAppDispatch();
   const AdminType = loggedInUser && loggedInUser.role == 'super-Admin';
@@ -41,13 +41,15 @@ const Settings = () => {
     const file = event.target.files?.[0];
 
     if (file) {
-      const imageUrl: any = await uploadPhotosToBackend([file]);
+      const [imageUrl]: { imageUrl: string; public_id: string }[] = await uploadPhotosToBackend([file]);
       console.log(imageUrl, 'imageUrl');
       const Images: ImageType = {
         posterImageUrl: imageUrl.imageUrl,
         posterImagePublicId: imageUrl.public_id,
       };
-      imageUrl ? setProfilePhoto(Images) : null;
+      if (imageUrl) {
+        setProfilePhoto(Images);
+      }
     }
   };
 
@@ -78,7 +80,7 @@ const Settings = () => {
           ...extractedData,
         };
 
-        const response: any = await axios.post(
+        const response = await axios.post(
           `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/edit-admin`,
           combinedData,
           {
@@ -103,7 +105,7 @@ const Settings = () => {
     setFormData(initialFormData);
   }, [loggedInUser]);
 
-  const handleSubmit = async (event: any) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await adminUpdateHandler();
@@ -115,7 +117,7 @@ const Settings = () => {
 
   const AddminProfileTriggerHandler = async () => {
     try {
-      const user: any = await axios.get(
+      const user = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/getAdminHandler`,
         {
           headers: {
@@ -124,7 +126,7 @@ const Settings = () => {
         },
       );
       dispatch(loggedInAdminAction(user.data.user));
-    } catch (err: any) {
+    } catch (err) {
       console.log(err, 'err');
     }
   };

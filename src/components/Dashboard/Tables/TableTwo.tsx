@@ -124,7 +124,7 @@ const TableTwo = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      render: (text: any, record: any) =>
+      render: (text: string, record: any) =>
         record.posterImageUrl ? (
           <Image
             src={record.posterImageUrl || ''}
@@ -146,7 +146,7 @@ const TableTwo = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (text: string, record: any) => {
         const createdAt = new Date(record.createdAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -159,7 +159,7 @@ const TableTwo = ({
       title: 'Updated At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (text: string, record: any) => {
         const createdAt = new Date(record.updatedAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -171,7 +171,7 @@ const TableTwo = ({
       title: 'Time',
       dataIndex: 'createdAt',
       key: 'time',
-      render: (text: any, record: any) => {
+      render: (text: string, record: any) => {
         const createdAt = new Date(record.updatedAt);
         const formattedTime = `${String(createdAt.getHours()).padStart(2, '0')}:${String(
           createdAt.getMinutes(),
@@ -187,7 +187,7 @@ const TableTwo = ({
     {
       title: 'Edit',
       key: 'Edit',
-      render: (text: any, record: any) => (
+      render: (text: string, record: any) => (
         <LiaEdit
           className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
@@ -198,7 +198,7 @@ const TableTwo = ({
     {
       title: 'Action',
       key: 'action',
-      render: (text: any, record: any) => (
+      render: (text: string, record: any) => (
         <RiDeleteBin6Line
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${
             !canDeleteCategory && 'cursor-not-allowed text-slate-300'
@@ -229,7 +229,7 @@ const TableTwo = ({
             <p
               className={`${canAddCategory && 'cursor-pointer'} lg:p-2 md:p-2 ${
                 canAddCategory &&
-                'bg-black dark:bg-main dark:border-0 text-white rounded-md border   '
+                'bg-black dark:bg-primary dark:border-0 text-white rounded-md border   '
               } flex justify-center ${
                 !canAddCategory && 'cursor-not-allowed '
               }`}

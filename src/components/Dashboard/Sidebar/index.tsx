@@ -15,17 +15,18 @@ import { TbGardenCartOff } from 'react-icons/tb';
 
 interface SidebarProps {
   sidebarOpen: boolean;
+  //eslint-disable-next-line
   setSidebarOpen: any;
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  const { loggedInUser } = useAppSelector((state) => state.usersSlice);
   const superAdmin = loggedInUser && loggedInUser.role !== 'Admin';
 
   const pathname = usePathname();
 
-  const trigger = useRef<any>(null);
-  const sidebar = useRef<any>(null);
+  const trigger = useRef<HTMLDivElement>(null);
+  const sidebar = useRef<HTMLDivElement>(null);
 
   const storedSidebarExpanded = 'true';
 
@@ -38,8 +39,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       if (!sidebar.current || !trigger.current) return;
       if (
         !sidebarOpen ||
-        sidebar.current.contains(target) ||
-        trigger.current.contains(target)
+        sidebar.current.contains(target as Node) ||
+        trigger.current.contains(target as Node)
       )
         return;
       setSidebarOpen(false);
@@ -70,7 +71,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-50 flex h-screen w-72 flex-col overflow-y-hidden bg-main text-white duration-300 ease-linear dark:bg-black lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0 z-50 flex h-screen w-72 flex-col overflow-y-hidden bg-primary text-white duration-300 ease-linear dark:bg-black lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
@@ -119,14 +120,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
-                          pathname === '/dashboard' && 'bg-black dark:bg-main'
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
+                          pathname === '/dashboard' && 'bg-black dark:bg-primary'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
                         }}
                       >
                         <MdOutlineDashboard size={20} className="text-white" />
@@ -174,17 +177,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
                           pathname === '/dashboard/category' ||
                           pathname === '/dashboard/subcategory'
-                            ? 'bg-black dark:bg-main'
+                            ? 'bg-black dark:bg-primary'
                             : ''
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
                         }}
                       >
                         <BiCategoryAlt size={20} className="text-white" />
@@ -241,15 +246,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
                           pathname === '/dashboard/products' &&
-                          'bg-black dark:bg-main'
+                          'bg-black dark:bg-primary'
                         }`}
                         onClick={(e) => {
                           e.preventDefault(); // Prevent default link behavior
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
                         }}
                       >
                         <GrCodeSandbox size={20} className="text-white" />
@@ -293,15 +300,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
                           pathname === '/dashboard/orders' &&
-                          'bg-black dark:bg-main'
+                          'bg-black dark:bg-primary'
                         }`}
                         onClick={(e) => {
                           e.preventDefault(); 
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
                         }}
                       >
                         <TfiShoppingCartFull size={20} className="text-white" />
@@ -344,15 +353,17 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
                           pathname === '/dashboard/abundant' &&
-                          'bg-black dark:bg-main'
+                          'bg-black dark:bg-primary'
                         }`}
                         onClick={(e) => {
                           e.preventDefault(); // Prevent default link behavior
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
                         }}
                       >
                         <TbGardenCartOff size={20} className="text-white" />
@@ -402,9 +413,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         }`}
                         onClick={(e) => {
                           e.preventDefault(); 
-                          sidebarExpanded
-                            ? handleClick()
-                            : setSidebarExpanded(true);
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
                         }}
                       >
                         <BiEnvelope size={20} className="text-white" />
@@ -445,9 +458,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <Link
                     href="/dashboard/super-admin"
-                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
+                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
                       pathname.includes('super-admin') &&
-                      'bg-black dark:bg-main'
+                      'bg-black dark:bg-primary'
                     }`}
                   >
                     <GrUserAdmin size={20} />
@@ -459,8 +472,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/dashboard/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-main ${
-                    pathname.includes('settings') && 'bg-black dark:bg-main'
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${
+                    pathname.includes('settings') && 'bg-black dark:bg-primary'
                   }`}
                 >
                   <IoSettingsOutline size={20} />

@@ -11,7 +11,7 @@ import Services from '../services/services';
 export default function UserComponent({
   handleSubmit,
   error,
-  loading,
+  loading = false,
   inputFields,
   title,
   InstructionText,
@@ -25,7 +25,9 @@ export default function UserComponent({
 
   const handleTabChange = (value: string) => {
     setActiveTab(value);
-    setadminType && setadminType(value);
+    if (setadminType) {
+      setadminType(value);
+    }
   };
 
   return (
@@ -54,7 +56,7 @@ export default function UserComponent({
               <TabsContent value="Admin">
                 <div className="inputs_container w-full mt-10">
                   <form className="space-y-4" onSubmit={handleSubmit}>
-                    {inputFields.map((field: any, index: any) => (
+                    {inputFields.map((field: { type: string; name: string; id: string; placeholder: string; value: string; onChange: () => void; }, index: number) => (
                       <Input
                         key={index}
                         type={field.type}
@@ -85,7 +87,6 @@ export default function UserComponent({
                     <button
                       className="w-full h-[76px] bg-primary"
                       type="submit"
-                      disabled={loading}
                     >
                       {loading ? <Loader color="#fff" /> : buttonTitle}
                     </button>
@@ -113,7 +114,7 @@ export default function UserComponent({
               <TabsContent value="Super-Admin">
                 <div className="inputs_container w-full mt-10">
                   <form className="space-y-4" onSubmit={handleSubmit}>
-                    {inputFields.map((field: any, index: any) => (
+                    {inputFields.map((field: { type: string; name: string; id: string; placeholder: string; value: string; onChange: () => void; }, index: number) => (
                       <Input
                         key={index}
                         type={field.type}
@@ -142,9 +143,7 @@ export default function UserComponent({
 
                     <button
                       className="w-full h-[76px]"
-                
                       type="submit"
-                      disabled={loading}
                     >
                       {loading ? <Loader color="#ffffff" /> : buttonTitle}
                     </button>
