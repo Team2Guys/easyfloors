@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import Footer from "components/footer/footer";
 import Header from "components/layout/header/Header";
 import NeedHelp from "components/NeedHelp/NeedHelp";
+import Providers from "redux/provider";
+import PathnameWrapper from "components/PathnameWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -26,10 +28,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-        <Header />
-        {children}
-        <NeedHelp />
-        <Footer />
+      <Providers>
+          <PathnameWrapper>
+            {children}
+            <NeedHelp />
+          </PathnameWrapper>
+      </Providers>
+ 
       </body>
     </html>
   );

@@ -1,8 +1,11 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, Category, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, IProductAdd, SubCategory, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SocialLink } from "types/types";
 import * as Yup from 'yup';
-
+import palette from '../../public/assets/images/icon/chat-46.png';
+import delivery from '../../public/assets/images/icon/delivery-fast.png';
+import privacy from '../../public/assets/images/icon/privacy.png';
+import support from '../../public/assets/images/icon/chat-46.png';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -50,6 +53,94 @@ export const validationSchema = Yup.object({
   selectRooms: Yup.string().required("Select the number of rooms"),
   preferredDate: Yup.string().required("Preferred date is required"),
 });
+
+export const categoryInitialValues: Category = {
+  name: '',
+  description: '',
+  short_description: '',
+  meta_description: '',
+  meta_title: '',
+  canonical_tag: '',
+  images_alt_text: '',
+  custom_url : ""
+};
+
+export const categoryValidationSchema = Yup.object({
+  name: Yup.string().required('Required'),
+  // description: Yup.string().required('required'),
+});
+
+export const subcategoryInitialValues: SubCategory = {
+  name: '',
+  description: '',
+  meta_title: '',
+  meta_description: '',
+  canonical_tag: '',
+  images_alt_text: '',
+  categoriesId: [],
+  custom_url : ""
+};
+
+export const AddproductsinitialValues: IProductAdd = {
+  name: '',
+  price: 0,
+  description: '',
+  stock: 0,
+  discountPrice: 0,
+  posterImageUrl: '',
+  posterImagePublicId: '',
+  hoverImageUrl: '',
+  hoverImagePublicId: '',
+  productImages: [],
+  spacification: [],
+  sizes: [],
+  additionalInformation: [],
+  categories: [],
+  subcategories: [],
+  Meta_Title: '',
+  Canonical_Tag: '',
+  Meta_Description: '',
+  Images_Alt_Text: '',
+  sale_counter: '',
+  filters: [],
+  custom_url:""
+};
+export const AddProductvalidationSchema = Yup.object().shape({
+  name: Yup.string().min(2, 'Too Short!').required('Required'),
+  description: Yup.string().required('Required'),
+  price: Yup.number()
+    .min(1, 'Minimum sales price must be at least 1')
+    .required('Required'),
+  discountPrice: Yup.number().nullable(),
+  productImages: Yup.array().of(
+    Yup.object().shape({
+      colorName: Yup.string().nullable(),
+    }),
+  ),
+});
+
+export const serviceItems: IServiceItem[] = [
+  {
+    id: 1,
+    icon: palette,
+    title: 'Unique Everything',
+  },
+  {
+    id: 2,
+    icon: delivery,
+    title: 'Free Shipping & Return',
+  },
+  {
+    id: 3,
+    icon: privacy,
+    title: 'Secure Payments',
+  },
+  {
+    id: 4,
+    icon: support,
+    title: 'Support Customer',
+  },
+];
 
 export const Appointmentlocation=[
     { value: "Downtown Dubai", label: "Downtown Dubai" },
