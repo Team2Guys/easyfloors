@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import { Inter } from "next/font/google";
-import Footer from "components/footer/footer";
-import Header from "components/layout/header/Header";
-import NeedHelp from "components/NeedHelp/NeedHelp";
 import Providers from "redux/provider";
 import PathnameWrapper from "components/PathnameWrapper";
 
@@ -28,13 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
+
       <Providers>
           <PathnameWrapper>
             {children}
-            <NeedHelp />
           </PathnameWrapper>
-      </Providers>
- 
+      </Providers> 
       </body>
     </html>
   );

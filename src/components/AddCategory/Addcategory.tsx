@@ -1,22 +1,24 @@
 'use client';
 import React, { SetStateAction, useEffect, useState } from 'react';
-import Imageupload from 'components/ImageUpload/Imageupload';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
 import Toaster from 'components/Toaster/Toaster';
-import axios from 'axios';
-import { Formik, Form } from 'formik';
-import { Category } from 'types/type';
+import { Formik, Form, FormikHelpers } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { categoryInitialValues, categoryValidationSchema } from 'data/data';
 import Loader from 'components/Loader/Loader';
 import revalidateTag from '../ServerActons/ServerAction';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
+import { ProductImage } from 'types/prod';
+import { Category, EDIT_CATEGORY } from 'types/cat';
+import client from 'config/apolloClient';
+import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations/mutations';
 
 interface editCategoryProps {
-  seteditCategory: any;
-  editCategory: any;
+  seteditCategory:  React.Dispatch<SetStateAction<Category | undefined | null>>;
+  editCategory: Category | undefined | null;
   setMenuType: React.Dispatch<SetStateAction<string>>;
 
 }
@@ -26,75 +28,63 @@ const FormLayout = ({
   editCategory,
   setMenuType,
 }: editCategoryProps) => {
-  const CategoryName =editCategory && editCategory.name
+  const CategoryName:EDIT_CATEGORY | null =editCategory && editCategory.name
       ? {
-          name: editCategory.name,
-          description: editCategory.description,
-          meta_title: editCategory.meta_title || '',
+          name: editCategory.name || "",
+          description: editCategory.description || '',
+          Meta_Title: editCategory.Meta_Title || '',
           short_description: editCategory.short_description || '',
-          meta_description: editCategory.meta_description || '',
-          canonical_tag: editCategory.canonical_tag || '',
-          images_alt_text: editCategory.images_alt_text || '',
+          Meta_Description: editCategory.Meta_Description || '',
+          Canonical_Tag: editCategory.Canonical_Tag || '',
           custom_url: editCategory.custom_url || ""
         }
       : null;
-  const [posterimageUrl, setposterimageUrl] = useState<any | null | undefined>(
-    editCategory
-      ? [
-          {
-            imageUrl: editCategory.posterImageUrl,
-            public_id: editCategory.posterImagePublicId,
-          },
-        ]
-      : null,
-  );
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>( editCategory? [editCategory.posterImageUrl]: undefined);
 
   const [loading, setloading] = useState<boolean>(false);
-  const [editCategoryName, setEditCategoryName] = useState<Category | null | undefined>(CategoryName);
+  const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY | null | undefined>(CategoryName);
 
-  const token = Cookies.get('2guysAdminToken');
-  const superAdminToken = Cookies.get('superAdminToken');
-  const finalToken = token ? token : superAdminToken;
-
-  const onSubmit = async (values: Category, { resetForm }: any) => {
+  // const token = Cookies.get('2guysAdminToken');
+  // const superAdminToken = Cookies.get('superAdminToken');
+  // const finalToken = token ? token : superAdminToken;
+  const onSubmit = async (values: EDIT_CATEGORY, { resetForm }: FormikHelpers<EDIT_CATEGORY>) => {
     try {
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       if (!posterImageUrl) throw new Error('Please select relevant Images');
       const newValue = { ...values, posterImageUrl };
-
+  
       const updateFlag = editCategoryName ? true : false;
-      const addProductUrl = updateFlag ? `/api/category/update-category` : null;
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}${
-        updateFlag ? addProductUrl : '/api/category/add-category'
-      }`;
-      const response = await axios.post(
-        url,
-        updateFlag ? { ...newValue, id: editCategory.id } : newValue,
-        {
-          headers: {
-            token: finalToken,
-          },
-        },
-      );
+  
+      if (updateFlag) {
+        await client.mutate({
+          mutation: UPDATE_CATEGORY,
+          variables: { input: { id: Number(editCategory?.id), posterImageUrl, ...values } }, // ✅ Fix: Wrapped inside input
+        });
+      } else {
+        await client.mutate({
+          mutation: CREATE_CATEGORY,
+          variables: { input: newValue }, // ✅ Fix: Wrapped inside input
+        });
+      }
+  
       revalidateTag('categories');
-      console.log(response, 'response');
       setloading(false);
       Toaster(
         'success',
-        updateFlag
-          ? 'Category has been sucessufully updated !'
-          : 'Category has been sucessufully Created !',
+        updateFlag ? 'Category has been successfully updated!' : 'Category has been successfully created!',
       );
-      updateFlag ? seteditCategory(null) : null;
-      setposterimageUrl(null);
+  
+      seteditCategory?.(undefined);
+      setposterimageUrl(undefined);
       setMenuType('Categories');
       resetForm();
     } catch (err) {
-      console.log('error occurred', err);
       setloading(false);
+      throw err;
     }
   };
+  
 
   useEffect(() => {
     setEditCategoryName(CategoryName)
@@ -134,7 +124,8 @@ const FormLayout = ({
                       </div>
                       {posterimageUrl && posterimageUrl.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4  dark:border-white dark:bg-black">
-                          {posterimageUrl.map((item: any, index: number) => {
+                          {posterimageUrl.map((item: ProductImage, index: number) => {
+                        
                             return (
                               <div
                                 className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
@@ -166,7 +157,7 @@ const FormLayout = ({
                           })}
                         </div>
                       ) : (
-                        <Imageupload setposterimageUrl={setposterimageUrl} />
+                        <ImageUploader setposterimageUrl={setposterimageUrl} />
                       )}
                     </div>
 
@@ -267,22 +258,22 @@ const FormLayout = ({
                           </label>
                           <input
                             type="text"
-                            name="meta_title"
+                            name="Meta_Title"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            value={formik.values.meta_title}
+                            value={formik.values.Meta_Title}
                             placeholder="Meta Title"
                             className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.meta_title &&
-                              formik.errors.meta_title
+                              formik.touched.Meta_Title &&
+                              formik.errors.Meta_Title
                                 ? 'border-red-500'
                                 : ''
                             }`}
                           />
-                          {formik.touched.meta_title &&
-                          formik.errors.meta_title ? (
+                          {formik.touched.Meta_Title &&
+                          formik.errors.Meta_Title ? (
                             <div className="text-red text-sm">
-                              {formik.errors.meta_title as string}
+                              {formik.errors.Meta_Title as string}
                             </div>
                           ) : null}
                         </div>
@@ -293,22 +284,22 @@ const FormLayout = ({
                           <input
                             onBlur={formik.handleBlur}
                             type="text"
-                            name="canonical_tag"
+                            name="Canonical_Tag"
                             onChange={formik.handleChange}
-                            value={formik.values.canonical_tag}
+                            value={formik.values.Canonical_Tag}
                             placeholder="Canonical Tag"
                             className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.canonical_tag &&
-                              formik.errors.canonical_tag
+                              formik.touched.Canonical_Tag &&
+                              formik.errors.Canonical_Tag
                                 ? 'border-red-500'
                                 : ''
                             }`}
                           />
 
-                          {formik.touched.canonical_tag &&
-                          formik.errors.canonical_tag ? (
+                          {formik.touched.Canonical_Tag &&
+                          formik.errors.Canonical_Tag ? (
                             <div className="text-red text-sm">
-                              {formik.errors.canonical_tag as string}
+                              {formik.errors.Canonical_Tag as string}
                             </div>
                           ) : null}
                         </div>
@@ -318,25 +309,25 @@ const FormLayout = ({
                           Meta Description
                         </label>
                         <textarea
-                          name="meta_description"
+                          name="Meta_Description"
                           onChange={formik.handleChange}
-                          value={formik.values.meta_description}
+                          value={formik.values.Meta_Description}
                           placeholder="Meta Description"
                           className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                            formik.touched.meta_description &&
-                            formik.errors.meta_description
+                            formik.touched.Meta_Description &&
+                            formik.errors.Meta_Description
                               ? 'border-red-500'
                               : ''
                           }`}
                         />
-                        {formik.touched.meta_description &&
-                        formik.errors.meta_description ? (
+                        {formik.touched.Meta_Description &&
+                        formik.errors.Meta_Description ? (
                           <div className="text-red text-sm">
-                            {formik.errors.meta_description as string}
+                            {formik.errors.Meta_Description as string}
                           </div>
                         ) : null}
                       </div>
-                      <div className="flex gap-4 mt-2">
+                      {/* <div className="flex gap-4 mt-2">
                         <div className="w-full">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Images Alt Text
@@ -362,7 +353,7 @@ const FormLayout = ({
                             </div>
                           ) : null}
                         </div>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>

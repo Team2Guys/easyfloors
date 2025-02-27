@@ -1,59 +1,55 @@
 import { ICategory, IReview } from 'types/type';
 import axios from 'axios';
+import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS } from 'graphql/queries/queries';
+
 
 export const fetchProducts = async () => {
   try {
-    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/get-all`,
-      {
-        next: { tags: ['products'] },
+    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
-    if (!result.ok) {
+      body: JSON.stringify({query: FETCH_ALL_PRODUCTS }),
+    });
 
+    if (!result.ok) {
       return [];
     }
+
     const response = await result.json();
 
-    return response;
+    return response?.data?.products || [];
   } catch (error) {
-    console.log(error, 'error');
+
+    return [];
+    throw error;
   }
 };
 
 
 
-export const DashboardfetchProducts = async () => {
+export const fetchCategories = async () => {
   try {
-    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/product/get-all`,
-      {
-        cache: 'no-store',
-        next: { tags: ['products'] },
+    const result = await fetch(process.env.NEXT_PUBLIC_BASE_URL || "", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
-    if (!result.ok) {
+      body: JSON.stringify({query: FETCH_ALL_CATEGORIES }),
+    });
 
+    if (!result.ok) {
       return [];
     }
+
     const response = await result.json();
 
-    return response;
+    return response?.data?.categories || [];
   } catch (error) {
-    console.log(error, 'error');
-  }
-};
 
-export const fetchCategories = async (): Promise<ICategory[] | any> => {
-  try {
-    const result = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/get-all`,
-      {
-        next: { tags: ['categories'] },
-      },
-    );
-    const response = await result.json();
-    return response;
-  } catch (error) {
-    console.log(error, 'error');
+    return [];
+    throw error;
   }
 };
 
@@ -83,23 +79,24 @@ export const TrimUrlHandler = (name: string | undefined) => {
 
 
 
-export const get_all_records = async (token: any) => {
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales-record/get_all_records`,
-      {
-        headers: token
-      }
-    );
+export const get_all_records = async (token: string) => {
+  return [token]
+  // try {
+  //   const response = await fetch(
+  //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales-record/get_all_records`,
+  //     {
+  //       headers: token
+  //     }
+  //   );
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
+  //   if (!response.ok) {
+  //     throw new Error(`HTTP error! Status: ${response.status}`);
+  //   }
 
-    const record = await response.json();
-    return record;
-  } catch (err) {
-    console.error("Error fetching records:", err);
-    return null;
-  }
+  //   const record = await response.json();
+  //   return record;
+  // } catch (err) {
+  //   console.error("Error fetching records:", err);
+  //   return null;
+  // }
 };

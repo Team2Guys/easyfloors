@@ -1,59 +1,42 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import PRODUCTS_TYPES from 'types/type';
 import React from 'react';
+import { FILE_DELETION_MUTATION } from 'graphql/mutations/mutations';
+import { ProductImage } from 'types/prod';
 
 type setTotalProducts = React.Dispatch<React.SetStateAction<PRODUCTS_TYPES[]>>;
 type setTotalPage = React.Dispatch<React.SetStateAction<string | undefined>>;
 type setError = React.Dispatch<React.SetStateAction<any>>;
 type setLoading = React.Dispatch<React.SetStateAction<boolean>>;
 
-export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
-  if (files.length === 0) throw new Error('No files found');
-
-  const Response_data: any[] = [];
-
-  try {
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append('file', file);
-      const response: AxiosResponse<any> = await axios.post(
-        `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE}/api/file-upload`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      );
-
-      console.log(response.data, 'response.data');
-      Response_data.push(response.data);
-      console.log('Response_data', Response_data);
-    }
-
-    return Response_data;
-  } catch (error) {
-    console.log('Error:', error);
-    throw error;
-  }
-};
-
 export const ImageRemoveHandler = async (
   imagePublicId: string,
-  setterFunction: any,
+  setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
 ) => {
   try {
-    const response = await axios.delete(
-      `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE}/api/file-upload/DelImage/${imagePublicId}`,
+    const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
+      {
+        query: FILE_DELETION_MUTATION,
+        variables: {
+          public_id: imagePublicId,
+        },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
-    console.log('Image removed successfully:', response.data);
-    setterFunction((prev: any) =>
-      prev.filter((item: any) => item.public_id != imagePublicId),
-    );
+
+    
+    if (response.data.data?.DeleteImage) {
+      setterFunction((prev) =>prev?.filter((item) => item.public_id !== imagePublicId));
+    }
   } catch (error) {
-    console.error('Failed to remove image:', error);
-  }
+throw error;
+ }
 };
+
 
 export const getPaginatedproducts = async (page: number) => {
   try {

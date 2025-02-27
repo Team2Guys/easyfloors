@@ -1,4 +1,4 @@
-import { DashboardfetchProducts, fetchCategories } from 'config/fetch';
+import { fetchCategories, fetchProducts } from 'config/fetch';
 import dynamic from 'next/dynamic';
 const Product = dynamic(() => import('./Products'), {
   loading: () => <p>Loading...</p>,
@@ -7,9 +7,11 @@ const Product = dynamic(() => import('./Products'), {
 const Productspage = async () => {
   const [cetagories, products] = await Promise.all([
     fetchCategories(),
-    DashboardfetchProducts(),
+    fetchProducts(),
   ]);
 
+console.log(cetagories, "products")
+  
   return <Product cetagories={cetagories} productsData={products} />;
 };
 

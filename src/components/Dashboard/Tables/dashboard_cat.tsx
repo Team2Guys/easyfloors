@@ -4,39 +4,40 @@ import React, { SetStateAction, useState } from 'react';
 import { Table, notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import axios from 'axios';
+// import axios from 'axios';
 import { LiaEdit } from 'react-icons/lia';
-import { Category } from 'types/type';
-import { ICategory } from 'types/type';
 import revalidateTag from 'components/ServerActons/ServerAction';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
+import { Category } from 'types/cat';
+import { useMutation } from '@apollo/client';
+import { REMOVE_CATEGORY } from 'graphql/mutations/mutations';
 
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
   seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
-  editCategory?: Category | undefined | null;
-  cetagories?: ICategory[];
+  cetagories?: Category[];
 }
 
-const TableTwo = ({
+
+const DashboardCat  = ({
   setMenuType,
   seteditCategory,
   cetagories,
 }: CategoryProps) => {
-  const [category, setCategory] = useState<ICategory[] | undefined>(cetagories);
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [colorMode, toggleColorMode] = useColorMode();
+  const [category, setCategory] = useState<Category[] | undefined>(cetagories);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [removeCategory] = useMutation(REMOVE_CATEGORY);
+
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  const token = Cookies.get('2guysAdminToken');
-  const superAdminToken = Cookies.get('superAdminToken');
-  const finalToken = token ? token : superAdminToken;
+  // const token = Cookies.get('2guysAdminToken');
+  // const superAdminToken = Cookies.get('superAdminToken');
+  // const finalToken = token ? token : superAdminToken;
 
-  const filteredCategories: ICategory[] =
+  const filteredCategories: Category[] =
     (category &&
       category
         .filter(
@@ -53,7 +54,6 @@ const TableTwo = ({
           return dateB - dateA;
         })) ||
     [];
-  console.log(filteredCategories, 'Filter Cetagories');
 
   const canDeleteCategory = true;
   // const canDeleteCategory =
@@ -67,7 +67,7 @@ const TableTwo = ({
   //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true);
   const canEditCategory = true;
 
-  const confirmDelete = (key: any) => {
+  const confirmDelete = (key: string | number) => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Once deleted, the Category cannot be recovered.',
@@ -82,37 +82,31 @@ const TableTwo = ({
     });
   };
 
-  const handleDelete = async (key: any) => {
+  const handleDelete = async (key: number | string) => {
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/category/delete-category`,
-        {
-          params: {
-            categoryId: key,
-          },
-          headers: {
-            token: finalToken,
-          },
-        },
-      );
-      setCategory((prev: any) => prev.filter((item: any) => item.id != key));
+   
+
+      await removeCategory({ variables: { id: Number(key) } }); 
+      
+      setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
       revalidateTag('categories');
+  
       notification.success({
         message: 'Category Deleted',
         description: 'The category has been successfully deleted.',
         placement: 'topRight',
       });
     } catch (err) {
-      console.log(err, 'err');
       notification.error({
         message: 'Deletion Failed',
         description: 'There was an error deleting the category.',
         placement: 'topRight',
       });
+      return err;
     }
   };
 
-  const handleEdit = (record: any) => {
+  const handleEdit = (record: Category) => {
     if (seteditCategory) {
       seteditCategory(record);
       setMenuType('CategoryForm');
@@ -124,10 +118,10 @@ const TableTwo = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      render: (text: any, record: any) =>
+      render: (_: string, record: Category) =>
         record.posterImageUrl ? (
           <Image
-            src={record.posterImageUrl || ''}
+            src={record.posterImageUrl.imageUrl || ''}
             alt={`Image of ${record.name}`}
             loading='lazy'
             width={50}
@@ -146,7 +140,7 @@ const TableTwo = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (_: string, record: Category) => {
         const createdAt = new Date(record.createdAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -159,24 +153,12 @@ const TableTwo = ({
       title: 'Updated At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (_: string, record: Category) => {
         const createdAt = new Date(record.updatedAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
         ).padStart(2, '0')}`;
         return <span>{formattedDate}</span>;
-      },
-    },
-    {
-      title: 'Time',
-      dataIndex: 'createdAt',
-      key: 'time',
-      render: (text: any, record: any) => {
-        const createdAt = new Date(record.updatedAt);
-        const formattedTime = `${String(createdAt.getHours()).padStart(2, '0')}:${String(
-          createdAt.getMinutes(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedTime}</span>;
       },
     },
     {
@@ -187,7 +169,7 @@ const TableTwo = ({
     {
       title: 'Edit',
       key: 'Edit',
-      render: (text: any, record: any) => (
+      render: (_:string, record: Category) => (
         <LiaEdit
           className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
@@ -198,7 +180,7 @@ const TableTwo = ({
     {
       title: 'Action',
       key: 'action',
-      render: (text: any, record: any) => (
+      render: (text: string, record: Category) => (
         <RiDeleteBin6Line
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${
             !canDeleteCategory && 'cursor-not-allowed text-slate-300'
@@ -234,7 +216,7 @@ const TableTwo = ({
                 !canAddCategory && 'cursor-not-allowed '
               }`}
               onClick={() => {
-                seteditCategory && seteditCategory(null);
+                seteditCategory?.(undefined);
                 if (canAddCategory) {
                   setMenuType('Add Category');
                 }
@@ -260,4 +242,4 @@ const TableTwo = ({
   );
 };
 
-export default TableTwo;
+export default DashboardCat ;

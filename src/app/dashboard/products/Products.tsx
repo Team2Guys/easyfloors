@@ -1,44 +1,39 @@
 'use client';
+   
 
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
 import ViewProduct from 'components/Dashboard/Tables/ViewProduct';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
-import { useEffect, useState } from 'react';
-import { ICategory, IProduct } from 'types/type';
+import {useState } from 'react';
+import { ICategory} from 'types/type';
 import dynamic from 'next/dynamic';
-const FormElements = dynamic(() => import('components/Dashboard/FormElements'))
+import { fetchProducts } from 'config/fetch';
+import { IProduct } from 'types/prod';
+const AddProd = dynamic(() => import('components/Dashboard/AddProds/AddProd'))
 
-const Product = ({cetagories,productsData}: {
-  cetagories: ICategory[];
-  productsData: IProduct[];
-}) => {
-  const [editProduct, setEditProduct] = useState<any | undefined>();
-  const [products, setProducts] = useState<any[]>(productsData);
+const Product = ({cetagories,productsData}: {cetagories: ICategory[];productsData: IProduct[]}) => {
+  const [editProduct, setEditProduct] = useState<IProduct | undefined>();
+  const [products, setProducts] = useState<IProduct[]>(productsData);
   const [selecteMenu, setselecteMenu] = useState<string>('Add All Products');
 
-  const EditInitialValues: any = {
-    name: editProduct?.name,
-    description: editProduct?.description,
-    price: editProduct?.price,
+  /* eslint-disable */
+
+  const EditInitialValues: IProduct | any = {
+    name: editProduct?.name || "",
+    description: editProduct?.description || "",
+    price: editProduct?.price || 0,
     spacification: editProduct && editProduct?.spacification,
     discountPrice: editProduct?.discountPrice,
     category: editProduct && editProduct?.category,
-    stock: editProduct && editProduct.stock,
-    posterImageUrl: editProduct && editProduct.posterImageUrl,
-    posterImageAltText: editProduct && editProduct.posterImageAltText,
-    hoverImageUrl: editProduct && editProduct.hoverImageUrl,
-    hoverImageAltText: editProduct && editProduct.hoverImageAltText,
-    imagesUrl: editProduct && editProduct.productImages,
+    stock: editProduct && editProduct.stock || 0 ,
+    posterImageUrl: editProduct && editProduct.posterImageUrl || "",
+    productImages: editProduct && editProduct.productImages || [],
     sections: editProduct && editProduct?.sections,
-    additionalInformation: editProduct && editProduct.additionalInformation,
-    Images_Alt_Text: editProduct && editProduct?.Images_Alt_Text,
-    Meta_Title: editProduct && editProduct?.Meta_Title,
-    Meta_Description: editProduct && editProduct?.Meta_Description,
-    Canonical_Tag: editProduct && editProduct?.Canonical_Tag,
-    Og_title: editProduct && editProduct?.Meta_Title,
-    Og_Image: editProduct && editProduct?.Meta_Title,
-    OgUrl: editProduct && editProduct?.Meta_Title,
+    additionalInformation: editProduct && editProduct.additionalInformation || [],
+    Meta_Title: editProduct && editProduct?.Meta_Title || "",
+    Meta_Description: editProduct && editProduct?.Meta_Description || "",
+    Canonical_Tag: editProduct && editProduct?.Canonical_Tag || "",
     sale_counter: editProduct && editProduct?.sale_counter,
     colors: (editProduct && editProduct?.colors) || [],
     sizes: (editProduct && editProduct?.sizes) || [],
@@ -47,11 +42,11 @@ const Product = ({cetagories,productsData}: {
   };
 
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    setProducts(productsData)
+  //   setProducts(productsData)
 
-  }, [productsData])
+  // }, [productsData])
   
 
   
@@ -61,11 +56,14 @@ const Product = ({cetagories,productsData}: {
 
   console.log(editProduct, "EditInitialProductValues")
 
-  const productFlag: boolean = selecteMenu === 'Add All Products' ? true : false;
+  const productFlag: boolean = selecteMenu === 'Add aaAll Products' ? true : false;
 
   
   return (
+
+
     <DefaultLayout>
+      <button onClick={fetchProducts}>fetchProducts</button>
       <Breadcrumb pageName={productFlag ? 'Products' : 'Add Products'} />
       {productFlag ? (
         <ViewProduct
@@ -76,7 +74,7 @@ const Product = ({cetagories,productsData}: {
           loading={false}
         />
       ) : (
-        <FormElements
+        <AddProd
           setselecteMenu={setselecteMenu}
           EditInitialValues={editProduct}
           setEditProduct={setEditProduct}
@@ -95,3 +93,6 @@ const Product = ({cetagories,productsData}: {
 };
 
 export default ProtectedRoute(Product);
+   
+   
+  /* eslint-enable */

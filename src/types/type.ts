@@ -1,39 +1,28 @@
-import { StaticImageData } from "next/image";
 import { FormEventHandler, SetStateAction } from "react";
+import { IProduct, ProductImage } from "./prod";
 
-export interface LabelPrice {
-    id: number;
-    name: string;
-    price: string;
-    image: string;
-  }
-  
-  export interface ImageData {
-    src: string;
-    label: string;
-  }
-  export interface Feature {
-    icon: string;
-    label: string;
-    width: number;
-    height: number;
-  }
-  export interface FlooringType {
-    name?: string;
-    price?: string;
-    product: Product[];
-  }
-  export interface Product {
-    image: string; 
-    name: string;
-    price: string;
-    stock?: number;
-  }
-  export interface ProductCardProps {
-    product: Product;
-    sldier?: boolean;
-    features: Feature[];
-    category?: string;
+export interface Feature {
+  icon: string;
+  label: string;
+  width: number;
+  height: number;
+}
+export interface FlooringType {
+  name?: string;
+  price?: string;
+  product: Product[];
+}
+export interface Product {
+  image: string;
+  name: string;
+  price: string;
+  stock?: number;
+}
+export interface ProductCardProps {
+  product: Product;
+  sldier?: boolean;
+  features: Feature[];
+  category?: string;
 }
 export type Block = {
   id: number;
@@ -47,8 +36,8 @@ export interface HeadingImageProps {
 }
 
 export interface TImageBanner {
-  src: string; 
-  alt: string; 
+  src: string;
+  alt: string;
 }
 export interface TBlogCard {
   id: number;
@@ -117,11 +106,11 @@ export interface CardData {
   id: number;
   heading: string;
   content: string[];
-  
+
 }
 
 export interface CategoryData {
-  id:number;
+  id: number;
   title: string;
   subtitle: string;
   description: string;
@@ -141,7 +130,7 @@ export interface CollectionFeature {
   width: number;
   height: number;
 }
-export  interface FormState {
+export interface FormState {
   success?: string;
   error?: string;
 }
@@ -161,102 +150,54 @@ export interface SelectProps {
 }
 
 export interface Appointmentprops {
-  title?:string;
-  description?:string;
-  }
-  export interface RECORDS {
-    totalAdmins: string;
-    totalCategories: string;
-    totalProducts: string;
-    totalUsers: string;
-    totalProfit: string;
-    totalSales: string;
-    totalRevenue: string;
-    total_sub_categories: string;
-    Total_abandant_order: string;
-  }
-  export interface IProduct {
-    id: number;
-    name: string;
-    price: number;
-    description: string;
-    stock: number;
-    discountPrice: number;
-    sale?: string;
-    colors?: [];
-    spacification?: specsDetails[];
-    posterImageUrl: string | StaticImageData;
-    posterImagePublicId: string;
-    posterImageAltText?: string;
-    hoverImageUrl: string;
-    hoverImagePublicId: string;
-    productImages: ProductImage[];
-    additionalInformation: AdditionalInformation[];
-    categoriesId: number;
-    categories?: ICategory[];
-    subcategories?: ICategory[];
-    sections?: [];
-    createdAt?: string;
-    sale_counter?: string;
-    sortedSubcategories?: ICategory[];
-    sizes?: Sizes[];
-    filter?: Filter[];
-    reviews?:any[]
-    displayName?: string;
-    sizeName?: string;
-    colorName?: string;
-    custom_url?:string
-  }
-  export interface specsDetails {
-    id: number;
-    specsDetails: string;
-  }
-  export interface ProductImage {
-    imageUrl: string;
-    public_id: string;
-    altText?: string;
-    imageIndex?: number;
-    index?: string;
-    size?: string;
-    color?: string;
-  }
-  export interface AdditionalInformation {
-    key?: string;
-    value?: string;
-    colors?: string[];
-    dimension?: string[];
-  }
-  export interface ICategory {
-    id: number;
-    name: string;
-    createdAt?: string;
-    posterImageUrl?: string;
-    posterImagePublicId?: string;
-    categories?: any;
-    description?: string;
-    short_description?: string;
-    Images_Alt_Text?: string;
-    Meta_Title?: string;
-    Meta_Description?: string;
-    Canonical_Tag?: string;
-    subcategories?: ICategory[];
-    custom_url?:string
-  }
-  export interface Sizes {
-    name: string;
-    filterName?: string;
-    price: string;
-    discountPrice: string;
-    stock?: string;
+  title?: string;
+  description?: string;
 }
-interface Filter {
-  heading: string;
-  additionalInformation: {
-    name: string;
-    price: string;
-    discountPrice: string;
-    stock?: number;
-  }[];
+export interface RECORDS {
+  totalAdmins: string;
+  totalCategories: string;
+  totalProducts: string;
+  totalUsers: string;
+  totalProfit: string;
+  totalSales: string;
+  totalRevenue: string;
+  total_sub_categories: string;
+  Total_abandant_order: string;
+}
+
+export interface specsDetails {
+  id: number;
+  specsDetails: string;
+}
+
+
+export interface AdditionalInformation {
+  key?: string;
+  value?: string;
+  colors?: string[];
+  dimension?: string[];
+}
+export interface ICategory {
+  id: number;
+  name: string;
+  createdAt?: string;
+  posterImageUrl?: string;
+  posterImagePublicId?: string;
+  description?: string;
+  short_description?: string;
+  Images_Alt_Text?: string;
+  Meta_Title?: string;
+  Meta_Description?: string;
+  Canonical_Tag?: string;
+  subcategories?: ICategory[];
+  custom_url?: string
+}
+export interface Sizes {
+  name: string;
+  filterName?: string;
+  price: string;
+  discountPrice: string;
+  stock?: string;
 }
 export interface IReview {
   id: number;
@@ -292,22 +233,7 @@ export interface IPaymentStatus {
   checkoutStatus: boolean;
   paymentStatus: boolean;
 }
-export interface Category {
-  name: string;
-  description?: string;
-  short_description?: string;
-  meta_description?: string;
-  meta_title?: string;
-  canonical_tag?: string;
-  images_alt_text?: string;
-  posterImageUrl?: IMAGE_INTERFACE;
-  custom_url?:string
-}
-export interface IMAGE_INTERFACE {
-  public_id?: string;
-  imageUrl?: string;
-  name?: string;
-}
+
 
 export interface SubCategoryComponentProps_dashboard {
   subCategories: SubCategory[];
@@ -322,16 +248,13 @@ export interface SubCategory {
   canonical_tag?: string;
   images_alt_text?: string;
   categoriesId: number[];
-  custom_url? :string
+  custom_url?: string
 }
-export interface ADDPRODUCTFORMPROPS {
-  setselecteMenu: any;
-  EditInitialValues?: any | undefined;
-  EditProductValue?: Product | undefined;
-  setEditProduct?: any;
-  subCategories?: ICategory[];
-  categoriesList?: ICategory[];
-}
+
+export interface modelDetails { name: string; detail: string };
+export interface spacification { specsDetails: string };
+
+/* eslint-disable */
 
 export interface FormValues {
   name: string;
@@ -342,15 +265,15 @@ export interface FormValues {
   starRating: string;
   reviews: string;
   colors: { colorName: string }[];
-  modelDetails: { name: string; detail: string }[];
-  spacification: { specsDetails: string }[];
+  modelDetails: modelDetails[];
+  spacification: spacification[];
   sizes: string[];
   category: string;
   code: string;
   totalStockQuantity: number;
   variantStockQuantities: { variant: string; quantity: number }[];
   price?: string;
-  additionalInformation?: string;
+  AdditionalInformation?: [];
 }
 export interface IProductAdd {
   name: string;
@@ -365,16 +288,13 @@ export interface IProductAdd {
   productImages: ProductImage[];
   spacification: Array<{ specsDetails: string; _id: string }>;
   sizes?: string[];
-  additionalInformation: AdditionalInformation[];
+  AdditionalInformation: AdditionalInformation[];
   categories: number[];
   subcategories: number[];
-  Meta_Title: string;
-  Canonical_Tag: string;
-  Meta_Description: string;
   Images_Alt_Text: string;
   sale_counter?: string;
   filters?: any[];
-  custom_url?:string
+  custom_url?: string
 }
 
 export interface product {
@@ -400,12 +320,10 @@ export interface product {
   starRating: string;
   reviews: string;
   productImages?: any;
-  additionalInformation?: any;
+  AdditionalInformation?: any;
   sizes: Array<string>;
   stock?: string;
-
   updatedAt: string;
-
   price: string;
   __v: number;
   code: string;
@@ -413,11 +331,6 @@ export interface product {
   Meta_Description: string;
   URL: string;
   Canonical_Tag: string;
-  Images_Alt_Text: string;
-  Og_title: string;
-  Og_description: string;
-  Og_Image: string;
-  OgUrl: string;
 }
 
 export interface USRPROPS {
@@ -439,8 +352,8 @@ export interface USRPROPS {
 interface PRODUCTS_TYPES {
   _id?: any;
   name: string;
-  posterImageUrl?: Image;
-  hoverImageUrl?: Image;
+  posterImageUrl?: ProductImage;
+  hoverImageUrl?: ProductImage;
   description?: string;
   salePrice?: number;
   purchasePrice?: number;

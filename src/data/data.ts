@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, Category, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, IProductAdd, SubCategory, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, SubCategory, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SocialLink } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
@@ -54,14 +54,13 @@ export const validationSchema = Yup.object({
   preferredDate: Yup.string().required("Preferred date is required"),
 });
 
-export const categoryInitialValues: Category = {
+export const categoryInitialValues: EDIT_CATEGORY  = {
   name: '',
   description: '',
   short_description: '',
-  meta_description: '',
-  meta_title: '',
-  canonical_tag: '',
-  images_alt_text: '',
+  Meta_Description: '',
+  Meta_Title: '',
+  Canonical_Tag: '',
   custom_url : ""
 };
 
@@ -81,30 +80,34 @@ export const subcategoryInitialValues: SubCategory = {
   custom_url : ""
 };
 
-export const AddproductsinitialValues: IProductAdd = {
+
+export const AddproductsinitialValues: IProduct = {
+  id: 0, // Default value for id (should be generated dynamically)
   name: '',
   price: 0,
   description: '',
   stock: 0,
   discountPrice: 0,
-  posterImageUrl: '',
-  posterImagePublicId: '',
-  hoverImageUrl: '',
-  hoverImagePublicId: '',
-  productImages: [],
+  sale: '', // Added optional property
+  colors: [], // Added optional property
   spacification: [],
-  sizes: [],
-  additionalInformation: [],
+  posterImageUrl: {imageUrl:"", public_id:"" }, // Must be an array of `ProductImage`
+  productImages: [], // Must be an array of `ProductImage`
+  hoverImageUrl: {imageUrl:"", public_id:"" }, // Must be a `ProductImage` object
+  AdditionalInformation: [],
+  categoriesId: 0, // Must be a number
   categories: [],
   subcategories: [],
+  sections: [], // Added optional property
+  sortedSubcategories: [], // Added optional property
+  sizes: [],
+  filter: [],
+  custom_url: '',
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',
-  Images_Alt_Text: '',
-  sale_counter: '',
-  filters: [],
-  custom_url:""
 };
+
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Required'),
   description: Yup.string().required('Required'),
@@ -118,6 +121,16 @@ export const AddProductvalidationSchema = Yup.object().shape({
     }),
   ),
 });
+
+import { StaticImageData } from 'next/image';
+import { IProduct } from 'types/prod';
+import { EDIT_CATEGORY } from 'types/cat';
+
+interface IServiceItem{
+  id: number;
+  icon: StaticImageData;
+  title: string;
+}
 
 export const serviceItems: IServiceItem[] = [
   {

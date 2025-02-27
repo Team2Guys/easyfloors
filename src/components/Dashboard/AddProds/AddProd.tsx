@@ -1,8 +1,7 @@
 'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Formik, FieldArray, FormikErrors, Form } from 'formik';
-
-import Imageupload from 'components/ImageUpload/Imageupload';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
@@ -10,36 +9,29 @@ import Toaster from 'components/Toaster/Toaster';
 import axios from 'axios';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Loader from 'components/Loader/Loader';
-import { ADDPRODUCTFORMPROPS, FormValues } from 'types/type';
+import {  FormValues, modelDetails, spacification } from 'types/type';
 import {
   AddproductsinitialValues,
   AddProductvalidationSchema,
 } from 'data/data';
 import { Checkbox, Select } from 'antd';
-import showToast from 'components/Toaster/Toaster';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import { ICategory } from 'types/type';
 import Cookies from 'js-cookie';
+import { ADDPRODUCTFORMPROPS, IProduct, ProductImage } from 'types/prod';
+import ImageUploader from 'components/ImageUploader/ImageUploader';
 
-const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct, categoriesList }) => {
+const AddProd: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct, categoriesList }) => {
 
-  const [imagesUrl, setImagesUrl] = useState<any[]>(EditInitialValues ? EditInitialValues.productImages : [],);
-  const [posterimageUrl, setposterimageUrl] = useState<any[] | undefined | null>(
-    EditInitialValues
-      ? [
-        {
-          imageUrl: EditInitialValues.posterImageUrl,
-          public_id: EditInitialValues.posterImagePublicId,
-          altText: EditInitialValues.posterImageAltText,
-          Index: EditInitialValues.posterImageIndex,
-        },
-      ]
-      : [],
-  );
-  const [hoverImage, sethoverImage] = useState<any[] | null | undefined>(EditInitialValues ? [{ imageUrl: EditInitialValues.hoverImageUrl, public_id: EditInitialValues.hoverImagePublicId, altText: EditInitialValues.hoverImageAltText }] : [],
-  );
+  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined >(EditInitialValues ? EditInitialValues.productImages : [],);
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined >(EditInitialValues ? [EditInitialValues.posterImageUrl]: [],);
+  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(EditInitialValues ? [EditInitialValues.hoverImageUrl] : []);
+  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
+  const [selectedSubcategoryIds, setSelectedSubcategoryIds] = useState<number[]>([]);
+  const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+
   const [loading, setloading] = useState<boolean>(false);
-  const [productInitialValue, setProductInitialValue] = useState<any | null | undefined>(EditProductValue);
+  const [productInitialValue, setProductInitialValue] = useState<IProduct | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
@@ -47,50 +39,52 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   function handleSort() {
     if (dragImage.current === null || draggedOverImage.current === null) return;
 
-    const imagesClone = [...imagesUrl];
+    const imagesClone = imagesUrl && imagesUrl.length > 0 ? [...imagesUrl] : [];
+
     const temp = imagesClone[dragImage.current];
     imagesClone[dragImage.current] = imagesClone[draggedOverImage.current];
     imagesClone[draggedOverImage.current] = temp;
 
     setImagesUrl(imagesClone);
   }
+
+
+
+  console.log(categoriesList, "categoriesList")
+
+  
+ /* eslint-disable */
   useEffect(() => {
+
+
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
         const {
           posterImageUrl,
-          imageUrl,
-          _id,
-          createdAt,
-          updatedAt,
-          __v,
+          productImages,
           ...EditInitialProductValues
-        } = EditInitialValues as any;
+        } = EditInitialValues ;
         console.log(EditInitialProductValues, 'dsfsdfds');
         console.log(
           posterImageUrl,
-          imageUrl,
-          _id,
-          createdAt,
-          updatedAt,
-          __v,
+          productImages,
           'EditInitialValues',
         );
-        const categoryIds = EditInitialValues.categories?.map((category: any) => category.id) || [];
+        const categoryIds = EditInitialValues.categories?.map((category) => category.id) || [];
         setSelectedCategoryIds(categoryIds);
 
-        const subcategoryIds = EditInitialValues.subcategories?.map((subcategory: any) => subcategory.id,) || [];
+        const subcategoryIds = EditInitialValues.subcategories?.map((subcategory) => subcategory.id,) || [];
         setSelectedSubcategoryIds(subcategoryIds);
 
         setImagesUrl(EditInitialValues ? EditInitialValues.productImages : [])
 
 
-        sethoverImage(EditInitialValues ? [{ imageUrl: EditInitialValues.hoverImageUrl, public_id: EditInitialValues.hoverImagePublicId, altText: EditInitialValues.hoverImageAltText }] : [],)
-        setProductInitialValue(EditProductValue)
+        sethoverImage(EditInitialValues ? [EditInitialValues.hoverImageUrl] : [],)
+        setProductInitialValue?.(()=>EditProductValue)
 
       } catch (err) {
-        console.log(err, 'err');
+       throw err;
       }
     };
 
@@ -101,66 +95,140 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const superAdminToken = Cookies.get('superAdminToken');
   const finalToken = token ? token : superAdminToken;
 
-  const onSubmit = async (values: any, { resetForm }: any) => {
+
+ /* eslint-disable */
+  const onSubmit = async (values: IProduct, { resetForm }: any) => {
     values.categories = selectedCategoryIds;
     values.subcategories = selectedSubcategoryIds;
-    console.log(values, 'values')
+
+const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
+    
+  console.log(additionalInformation,"additionalInformation")
     try {
       setError(null);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const hoverImageUrl = hoverImage && hoverImage[0];
-      if (!posterImageUrl || !(imagesUrl.length > 0)) {
-        return showToast('warn', 'Please select relevant Images');
-      }
+  
       let newValues = {
-        ...values,
-        posterImageUrl: posterImageUrl.imageUrl,
-        posterImagePublicId: posterImageUrl.public_id,
-        posterImageAltText: posterImageUrl.altText,
-        posterImageIndex: posterImageUrl.Index,
-        hoverImageUrl: hoverImageUrl.imageUrl,
-        hoverImagePublicId: hoverImageUrl.public_id,
-        hoverImageAltText: posterImageUrl.altText,
+        ...withaditionalinfomratoin,
+        posterImageUrl: posterImageUrl ? posterImageUrl : {},
+        hoverImageUrl: hoverImageUrl ? hoverImageUrl : {},
         productImages: imagesUrl,
-        sale_counter:
-          values.sale_counter === '' || EditInitialValues.sale_counter == null
-            ? ''
-            : values.sale_counter
-              ? values.sale_counter
-              : EditInitialValues.sale_counter,
       };
+  
       setloading(true);
-
+  
       const updateFlag = EditProductValue && EditInitialValues ? true : false;
-      const addProductUrl = updateFlag ? `/api/product/update-product` : null;
-
-      const url = `${process.env.NEXT_PUBLIC_BASE_URL}${updateFlag ? addProductUrl : '/api/product/add-product'}`;
 
       if (updateFlag && EditInitialValues?.id) {
-        newValues = { id: EditInitialValues.id, ...newValues };
+         
+        //@ts-expect-error
+        newValues = { id: EditInitialValues?.id, ...newValues };
       }
-      const response = await axios.post(url, newValues, {
-        headers: {
-          token: finalToken,
+    
+      console.log(newValues, "newValues")
+      // ✅ Define GraphQL Mutation
+      const mutation = updateFlag
+      ? `mutation UpdateProduct($input: UpdateProductInput!) {
+          updateProduct(updateProductInput: $input) {
+            id
+            name
+            price
+            discountPrice
+            description
+            stock
+            posterImageUrl
+            hoverImageUrl
+            productImages
+            colors
+            createdAt
+            updatedAt
+            Canonical_Tag
+            Meta_Description
+            Meta_Title
+            last_editedBy
+            custom_url
+            waterproof
+            AdditionalInformation
+            plankWidth
+            ResidentialWarranty
+            CommmericallWarranty
+            categoryId
+          }
+        }`
+      : `mutation CreateProduct($input: CreateProductInput!) {
+          createProduct(createProductInput: $input) {
+            id
+            name
+            price
+            discountPrice
+            description
+            stock
+            posterImageUrl
+            hoverImageUrl
+            productImages
+            colors
+            createdAt
+            updatedAt
+            Canonical_Tag
+            Meta_Description
+            Meta_Title
+            last_editedBy
+            custom_url
+            waterproof
+            AdditionalInformation
+            plankWidth
+            ResidentialWarranty
+            CommmericallWarranty
+            categoryId
+          }
+        }`;
+
+  
+      // ✅ GraphQL Variables
+      const variables = updateFlag ? { id: EditInitialValues?.id, input: newValues }: { input: newValues };
+  
+      // ✅ API Request with GraphQL
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
+        {
+          query: mutation,
+          variables,
         },
-      });
-
-
-      revalidateTag('products');
-      Toaster('success', updateFlag
-        ? 'Product has been sucessufully Updated !'
-        : response.data.message,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            token: finalToken, // Pass token if required
+          },
+        }
       );
-      setProductInitialValue(AddproductsinitialValues);
-      resetForm();
-      setloading(false);
-      sethoverImage(null);
-      setposterimageUrl(undefined);
-      setImagesUrl([]);
-      setSelectedSubcategoryIds([]);
-      setSelectedCategoryIds([]);
-      setselecteMenu('Add All Products');
-      updateFlag ? setEditProduct && setEditProduct(undefined) : null;
+  
+      console.log(response.data, "GraphQL Response");
+  
+      // ✅ Handle Response
+      if (response.data.errors) {
+        throw new Error(response.data.errors[0].message);
+      }
+  
+      // ✅ Revalidate and show success message
+      revalidateTag("products");
+      Toaster(
+        "success",
+        updateFlag
+          ? "Product has been successfully updated!"
+          : "Product has been successfully added!"
+      );
+  
+      // ✅ Reset Form & State
+      // resetForm();
+      // setloading(false);
+      // sethoverImage(undefined);
+      // setposterimageUrl(undefined);
+      // setImagesUrl([]);
+      // setSelectedSubcategoryIds([]);
+      // setSelectedCategoryIds([]);
+      // setselecteMenu("Add All Products");
+      // updateFlag ? setEditProduct && setEditProduct(undefined) : null;
     } catch (err: any) {
       if (err.response && err.response.data && err.response.data.error) {
         setError(err.response.data.message);
@@ -168,23 +236,21 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
         if (err instanceof Error) {
           setError(err.message);
         } else {
-          setError('An unexpected error occurred');
+          setError("An unexpected error occurred");
         }
       }
     } finally {
       setloading(false);
     }
   };
+  
 
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
-  const [selectedSubcategoryIds, setSelectedSubcategoryIds] = useState<number[]>([]);
-  const [filteredSubcategories, setFilteredSubcategories] = useState<any>([]);
 
   useEffect(() => {
     const selectedCategories = categoriesList?.filter((category) =>
-      selectedCategoryIds.includes(category.id),
+      selectedCategoryIds.includes(category?.id),
     );
-    const subcategories = selectedCategories?.flatMap(
+    const subcategories:any = selectedCategories?.flatMap(
       (category: ICategory) => category.subcategories,
     );
     setFilteredSubcategories(subcategories || []);
@@ -203,12 +269,10 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   const handleImageAltText = (
     index: number,
     newImageIndex: number | string,
-    setImagesUrlhandler: React.Dispatch<React.SetStateAction<any>>,
+    setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
   ) => {
     setImagesUrlhandler((prev: any) => {
-      const updatedImagesUrl = prev.map((item: any, i: number) =>
-        i === index ? { ...item, altText: newImageIndex } : item,
-      );
+      const updatedImagesUrl = prev?.map((item: any, i: number) =>i === index ? { ...item, altText: newImageIndex } : item);
       return updatedImagesUrl;
     });
   };
@@ -249,13 +313,14 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
     });
   };
 
+   /* eslint-disable */
   return (
     <>
       <p
         className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-black dark:text-white"
         onClick={() => {
           setselecteMenu('Add All Products');
-          setEditProduct(undefined);
+          setEditProduct?.(()=>undefined);
         }}
       >
         <IoMdArrowRoundBack /> Back
@@ -263,6 +328,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
       <Formik
         enableReinitialize
+    
         initialValues={
           productInitialValue ? productInitialValue : AddproductsinitialValues
         }
@@ -284,7 +350,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                       {posterimageUrl && posterimageUrl?.length > 0 ? (
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
-                          {posterimageUrl.map((item: any, index) => {
+                          {posterimageUrl.map((item: ProductImage, index) => {
                             return (
                               <div key={index}>
                                 <div className="relative group rounded-lg overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105">
@@ -306,12 +372,13 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                     width={300}
                                     height={400}
                                     loading='lazy'
-                                    src={item?.imageUrl}
+                      
+                                    src={item?.imageUrl }
                                     alt={`productImage-${index}`}
                                   />
                                 </div>
                                 <input
-                                  className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                   placeholder="altText"
                                   type="text"
                                   name="altText"
@@ -329,7 +396,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           })}
                         </div>
                       ) : (
-                        <Imageupload setposterimageUrl={setposterimageUrl} />
+                        <ImageUploader setposterimageUrl={setposterimageUrl} />
                       )}
                     </div>
 
@@ -462,24 +529,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           ) : null}
                         </div>
                       </div>
-                      <div className="mt-4 md:w-1/2">
-                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                          Sale Counter
-                        </label>
-                        <input
-                          type="datetime-local"
-                          name="sale_counter"
-                          onChange={formik.handleChange}
-                          value={formik.values.sale_counter}
-                          min={new Date().toISOString().slice(0, 16)}
-                          placeholder="Select Date and Time"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.sale_counter &&
-                            formik.errors.sale_counter
-                            ? 'border-red-500'
-                            : ''
-                            }`}
-                        />
-                      </div>
+
+
                       <div className="mt-4 space-y-4">
                         <div className="flex gap-4">
                           <div className="w-2/4">
@@ -553,31 +604,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           ) : null}
                         </div>
 
-                        <div className="flex gap-4">
-                          <div className="w-full">
-                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                              Images Alt Text
-                            </label>
-                            <input
-                              type="text"
-                              name="Images_Alt_Text"
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
-                              value={formik.values.Images_Alt_Text}
-                              placeholder="Images Alt Text"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                                ? 'border-red-500'
-                                : ''
-                                }`}
-                            />
-                            {formik.touched.Images_Alt_Text &&
-                              formik.errors.Images_Alt_Text ? (
-                              <div className="text-red text-sm">
-                                {formik.errors.Images_Alt_Text as string}
-                              </div>
-                            ) : null}
-                          </div>
-                        </div>
                       </div>
                       <div className="flex gap-4 flex-col">
 
@@ -592,9 +618,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 className="flex items-center space-x-2"
                               >
                                 <Checkbox
-                                  checked={selectedCategoryIds.includes(
-                                    category.id,
-                                  )}
+                                  checked={selectedCategoryIds.includes(category.id)}
                                   className="custom-checkbox"
                                   onChange={(e) => {
                                     const checked = e.target.checked;
@@ -634,19 +658,19 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 >
                                   <Checkbox
                                     checked={selectedSubcategoryIds.includes(
-                                      subcategory.id,
+                                      subcategory?.id,
                                     )}
                                     className="custom-checkbox"
                                     onChange={(e) =>
                                       handleSubcategoryChange(
-                                        subcategory.id,
+                                        subcategory?.id,
                                         e.target.checked,
                                       )
                                     }
-                                    id={`subcategory-${subcategory.id}`}
+                                    id={`subcategory-${subcategory?.id}`}
                                   />
                                   <label
-                                    htmlFor={`subcategory-${subcategory.id}`}
+                                    htmlFor={`subcategory-${subcategory?.id}`}
                                     className="ml-2 text-black dark:text-white"
                                   >
                                     {subcategory.name}
@@ -689,136 +713,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                           {formik.errors.stock as string}
                         </div>
                       ) : null}
-                    </div>
-                  </div>
-
-                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                    <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Policy Information
-                      </h3>
-                    </div>
-                    <div className="flex flex-col py-4 px-6">
-                      <FieldArray name="sections">
-                        {({ push: pushSection, remove: removeSection }) => (
-                          <>
-                            {(formik.values.sections || []).map(
-                              (section: any, sectionIndex: number) => (
-                                <div
-                                  key={sectionIndex}
-                                  className="rounded-sm border border-stroke bg-white dark:bg-black mt-2"
-                                >
-                                  <div className="border-b border-stroke py-4 px-6 dark:border-strokedark flex items-center">
-                                    <input
-                                      type="text"
-                                      name={`sections[${sectionIndex}].heading`}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      value={section.heading || ''}
-                                      placeholder="Section Heading"
-                                      className="font-medium text-black dark:text-white w-full bg-transparent px-5 py-3 rounded-lg border-[1.5px] border-stroke dark:border-form-strokedark dark:bg-form-input"
-                                    />
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        removeSection(sectionIndex)
-                                      }
-                                      className="ml-4 text-red-500"
-                                    >
-                                      <RxCross2
-                                        className="text-red-500 dark:text-white"
-                                        size={25}
-                                      />
-                                    </button>
-                                  </div>
-                                  <div className="flex flex-col py-4 px-6">
-                                    <FieldArray
-                                      name={`sections[${sectionIndex}].additionalInformation`}
-                                    >
-                                      {({
-                                        push: pushInfo,
-                                        remove: removeInfo,
-                                      }) => (
-                                        <div className="flex flex-col gap-2">
-                                          {(
-                                            section.additionalInformation || []
-                                          ).map(
-                                            (
-                                              model: any,
-                                              modelIndex: number,
-                                            ) => (
-                                              <div
-                                                key={modelIndex}
-                                                className="flex items-center"
-                                              >
-                                                <input
-                                                  type="text"
-                                                  name={`sections[${sectionIndex}].additionalInformation[${modelIndex}].name`}
-                                                  onChange={formik.handleChange}
-                                                  onBlur={formik.handleBlur}
-                                                  value={model.name || ''}
-                                                  placeholder="Model Name"
-                                                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                                                />
-
-                                                <input
-                                                  type="text"
-                                                  name={`sections[${sectionIndex}].additionalInformation[${modelIndex}].detail`}
-                                                  onChange={formik.handleChange}
-                                                  onBlur={formik.handleBlur}
-                                                  value={model.detail || ''}
-                                                  placeholder="Model Detail"
-                                                  className="w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                                                />
-
-                                                <button
-                                                  type="button"
-                                                  onClick={() =>
-                                                    removeInfo(modelIndex)
-                                                  }
-                                                  className="ml-2 text-red-500"
-                                                >
-                                                  <RxCross2
-                                                    className="text-red-500 dark:text-white"
-                                                    size={25}
-                                                  />
-                                                </button>
-                                              </div>
-                                            ),
-                                          )}
-
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              pushInfo({ name: '', detail: '' })
-                                            }
-                                            className="px-4 py-2 bg-black text-white dark:bg-main rounded-md shadow-md w-fit"
-                                          >
-                                            Add Model
-                                          </button>
-                                        </div>
-                                      )}
-                                    </FieldArray>
-                                  </div>
-                                </div>
-                              ),
-                            )}
-
-                            <button
-                              type="button"
-                              onClick={() =>
-                                pushSection({
-                                  heading: '',
-                                  additionalInformation: [],
-                                })
-                              }
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md w-fit mt-4"
-                            >
-                              Add Section
-                            </button>
-                          </>
-                        )}
-                      </FieldArray>
                     </div>
                   </div>
 
@@ -976,11 +870,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       </h3>
                     </div>
                     <div className="flex flex-col py-4 px-6">
-                      <FieldArray name="additionalInformation">
+                      <FieldArray name="AdditionalInformation">
                         {({ push, remove }) => (
                           <div className="flex flex-col gap-2">
-                            {formik.values.additionalInformation &&
-                              formik.values.additionalInformation.map(
+                            {formik.values.AdditionalInformation &&
+                              formik.values.AdditionalInformation.map(
                                 (model: any, index: number) => (
                                   <div
                                     key={index}
@@ -988,11 +882,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   >
                                     <input
                                       type="text"
-                                      name={`additionalInformation[${index}].name`}
+                                      name={`AdditionalInformation[${index}].name`}
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
                                       value={
-                                        formik.values.additionalInformation[
+                                        formik.values.AdditionalInformation[
                                           index
                                         ].name
                                       }
@@ -1000,8 +894,8 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                       className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
                                         (
                                           formik.errors
-                                            .additionalInformation as FormikErrors<
-                                              FormValues['additionalInformation']
+                                            .AdditionalInformation as FormikErrors<
+                                              FormValues['AdditionalInformation']
                                             >
                                         )?.[index]
                                         ? 'border-red-500 dark:border-white'
@@ -1010,11 +904,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                     />
                                     <input
                                       type="text"
-                                      name={`additionalInformation[${index}].detail`}
+                                      name={`AdditionalInformation[${index}].detail`}
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
                                       value={
-                                        formik.values.additionalInformation[
+                                        formik.values.AdditionalInformation[
                                           index
                                         ].detail
                                       }
@@ -1022,9 +916,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                       className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
                                         (
                                           formik.errors
-                                            .additionalInformation as FormikErrors<
-                                              FormValues['additionalInformation']
-                                            >
+                                            .AdditionalInformation as FormikErrors<FormValues['AdditionalInformation']>
                                         )?.[index]
                                         ? 'border-red-500 dark:border-white'
                                         : ''
@@ -1056,180 +948,6 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                     </div>
                   </div>
 
-                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black ">
-                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Specification
-                      </h3>
-                    </div>
-                    <div className="flex flex-col py-4 px-6">
-                      <FieldArray name="spacification">
-                        {({ push, remove }) => (
-                          <div className="flex flex-col gap-2">
-                            {formik.values.spacification.map(
-                              (spec: any, index: any) => (
-                                <div key={index} className="flex items-center">
-                                  <input
-                                    type="text"
-                                    name={`spacification[${index}].specsDetails`}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    value={
-                                      formik.values.spacification[index]
-                                        .specsDetails
-                                    }
-                                    placeholder="Specification Details"
-                                    className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${spec.specsDetails &&
-                                      (
-                                        formik.errors
-                                          .spacification as FormikErrors<
-                                            FormValues['spacification']
-                                          >
-                                      )?.[index]?.specsDetails
-                                      ? 'border-red-500'
-                                      : ''
-                                      }`}
-                                  />
-                                  <button
-                                    type="button"
-                                    onClick={() => remove(index)}
-                                    className="ml-2 text-red"
-                                  >
-                                    <RxCross2
-                                      className="text-red-500 dark:text-white"
-                                      size={25}
-                                    />
-                                  </button>
-                                </div>
-                              ),
-                            )}
-                            <button
-                              type="button"
-                              onClick={() => push({ specsDetails: '' })}
-                              className="px-4 py-2 bg-black text-white dark:bg-main dark:border-0 rounded-md shadow-md w-fit"
-                            >
-                              Add Specification
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
-                    </div>
-                  </div>
-
-                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Sizes
-                      </h3>
-                    </div>
-                    <div className="flex flex-col py-4 px-6">
-                      <FieldArray name="sizes">
-                        {({ push, remove }) => (
-                          <div className="flex flex-col gap-2">
-                            {formik.values.sizes.map(
-                              (model: any, modelIndex: any) => {
-                                console.log('model', model);
-                                return (
-                                  <div key={modelIndex} className="flex items-center">
-                                    <input
-                                      type="text"
-                                      name={`sizes[${modelIndex}].name`}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      value={formik.values.sizes[modelIndex].name}
-                                      // value={model.name || ''}
-                                      placeholder="Size Name (1 seater, 2 seater, etc)"
-                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary `}
-                                    />
-                                    <Select
-                                    className="w-full ml-1 rounded-lg border-[1.5px] border-stroke bg-transparent px-2 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary custom-color-selector h-[50px]"
-                                      onChange={(value) => {
-                                        const updatedSizes = [...formik.values.sizes];
-                                        if (updatedSizes[modelIndex]) {
-                                          updatedSizes[modelIndex] = {
-                                            ...updatedSizes[modelIndex],
-                                            filterName: value,
-                                          };
-                                        } else {
-                                          updatedSizes[modelIndex] = { filterName: value };
-                                        }
-
-                                        formik.setFieldValue("sizes", updatedSizes);
-                                      }}
-                                      defaultValue={formik.values.sizes[modelIndex].filterName || 'Select Option'}
-                                    >
-                                      <Select.Option value="">
-                                        Select Option
-                                      </Select.Option>
-
-                                      {formik.values.filter?.[0].additionalInformation?.map((info: any, index: number) => (
-                                        <Select.Option value={info.name} key={index}>
-                                          {info.name}
-                                        </Select.Option>
-                                      ))}
-                                    </Select>
-
-
-                                    <input
-                                      type="text"
-                                      name={`sizes[${modelIndex}].price`}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      value={formik.values.sizes[modelIndex].price}
-                                      // value={model.price || ''}
-                                      placeholder="Size Price"
-                                      className={`ml-1 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary `}
-                                    />
-                                    <input
-                                      type="text"
-                                      name={`sizes[${modelIndex}].discountPrice`}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      value={formik.values.sizes[modelIndex].discountPrice}
-                                      // value={model.price || ''}
-                                      placeholder="Disc Price"
-                                      className={`ml-1 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary `}
-                                    />
-                                    <input
-                                      type="text"
-                                      name={`sizes[${modelIndex}].stock`}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      value={formik.values.sizes[modelIndex].stock}
-                                      placeholder="Stock"
-                                      className={`ml-1 w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary `}
-                                    />
-
-                                    <button
-                                      type="button"
-                                      onClick={() => remove(modelIndex)}
-                                      className="ml-2 text-red-500"
-                                    >
-                                      <RxCross2
-                                        className="text-red-500 dark:text-white"
-                                        size={25}
-                                      />
-                                    </button>
-                                  </div>
-                                )
-                              }
-                            )}
-                            <button
-                              type="button"
-                              // onClick={() => push('')}
-                              onClick={() =>
-                                push({ name: '', price: '', discountPrice: '', stock: '' })
-                              }
-                              className="px-4 py-2 bg-black text-white dark:bg-gray-800  rounded-md shadow-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-black w-fit"
-                            >
-                              Add Sizes (1 seater, 2 seater,etc)
-                            </button>
-                          </div>
-                        )}
-                      </FieldArray>
-                    </div>
-                  </div>
-
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
@@ -1239,7 +957,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
 
                     {hoverImage && hoverImage.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                        {hoverImage.map((item: any, index) => {
+                        {hoverImage.map((item: ProductImage, index) => {
                           return (
                             <div key={index}>
                               <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
@@ -1284,7 +1002,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                         })}
                       </div>
                     ) : (
-                      <Imageupload sethoverImage={sethoverImage} />
+                      <ImageUploader sethoverImage={sethoverImage} />
                     )}
                   </div>
 
@@ -1295,11 +1013,11 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                       </h3>
                     </div>
 
-                    <Imageupload setImagesUrl={setImagesUrl} />
+                    <ImageUploader setImagesUrl={setImagesUrl} />
 
                     {imagesUrl && imagesUrl.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
-                        {imagesUrl.map((item: any, index) => {
+                        {imagesUrl.map((item: ProductImage, index) => {
                           return (
                             <div key={index}
                               draggable
@@ -1328,6 +1046,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                   height={200}
                                   loading='lazy'
                                   src={item.imageUrl}
+                                
                                   alt={`productImage-${index}`}
                                 />
                               </div>
@@ -1378,7 +1097,7 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
                                 placeholder="index"
                                 type="text"
                                 name="index"
-                                value={item.index}
+                                value={item.Index}
                                 onChange={(e) =>
                                   handleIndex(
                                     item.public_id,
@@ -1418,4 +1137,4 @@ const FormElements: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditPr
   );
 };
 
-export default FormElements;
+export default AddProd;

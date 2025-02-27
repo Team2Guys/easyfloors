@@ -9,9 +9,9 @@ interface ImagesProps {
 }
 
 interface PROPS {
-  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[]>>;
-  setposterimageUrl?: | React.Dispatch<SetStateAction<ImagesProps[] | null | undefined>>;
-  sethoverImage?: React.Dispatch<SetStateAction<ImagesProps[] | null | undefined>>;
+  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | undefined>>;
+  setposterimageUrl?: | React.Dispatch<SetStateAction<ImagesProps[]  | undefined>>;
+  sethoverImage?: React.Dispatch<SetStateAction<ImagesProps[] | undefined>>;
 }
 
 
@@ -42,7 +42,7 @@ const ImageUploader = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS
         });
 
         const result = await response.json();
-        if (result.data.createFileUploading) {
+        if (result.data) {
           Response_data.push(result.data.createFileUploading)
         }
       }
@@ -66,7 +66,7 @@ const ImageUploader = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS
     }
     try {
       const response = await uploadPhotosToBackend(file ? [file] : files);
-      setImagesUrl?.((prev) => [...prev, ...response]);
+      setImagesUrl?.((prev =[]) => [...prev, ...response]);
       setposterimageUrl?.(response);
       sethoverImage?.(response);
     } catch (error) {
@@ -81,7 +81,7 @@ const ImageUploader = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS
     const files = e.target.files ? Array.from(e.target.files) : [];
     try {
       const response = await uploadPhotosToBackend(files);
-      setImagesUrl?.((prev) => [...prev, ...response]);
+      setImagesUrl?.((prev =[]) => [...prev, ...response]);
       setposterimageUrl?.(response);
       sethoverImage?.(response);
     } catch (error) {

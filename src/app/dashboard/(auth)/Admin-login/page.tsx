@@ -9,9 +9,7 @@ import { useAppDispatch } from 'components/Others/HelperRedux';
 import { loggedInAdminAction } from 'redux/slices/Admin/AdminsSlice';
 import USRcomponent from 'components/userComponent/userComponent';
 import { IoIosLock, IoMdMail } from 'react-icons/io';
-import NoneAuth from 'hooks/None-AuthHook';
-
-import Cookies from 'js-cookie';
+import NoneAuth from 'hooks/None-AuthHook'
 
 const DashboardLogin = () => {
   const router = useRouter();
@@ -49,7 +47,7 @@ const DashboardLogin = () => {
           ? '/api/admin/login'
           : '/api/admin/superadmin-login';
 
-      const user: any = await axios.post(
+      const user = await axios.post(
         process.env.NEXT_PUBLIC_BASE_URL + url,
         formData,
       );
@@ -57,13 +55,6 @@ const DashboardLogin = () => {
       setloading(false);
       dispatch(loggedInAdminAction(user.data.user));
 
-      Cookies.set(
-        adminType == 'Admin' ? '2guysAdminToken' : 'superAdminToken',
-        user.data.token,
-        {
-          expires: 24 * 60 * 60 * 1000,
-        },
-      );
 
       setFormData(intialvalue);
       Toaster('success', 'You have sucessfully login');
