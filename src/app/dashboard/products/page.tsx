@@ -12,6 +12,9 @@ const Productspage = async () => {
   ]);
 
 
+  
+
+
   return <Product categories={categories} productsData={products} />;
 };
 
