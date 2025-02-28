@@ -1,7 +1,7 @@
 import { Int, Field, ObjectType, ID } from '@nestjs/graphql';
-import { Category } from 'categories/entities/category.entity';
+import { Category } from '../../categories/entities/category.entity';
 import { GraphQLJSON } from 'graphql-type-json';
-import { SubCategory } from 'sub_categories/entities/sub_category.entity';
+import { SubCategory } from '../../sub_categories/entities/sub_category.entity';
 
 @ObjectType()
 export class Product {
