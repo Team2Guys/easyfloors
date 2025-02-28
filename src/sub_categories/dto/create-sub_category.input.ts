@@ -39,6 +39,10 @@ export class CreateSubCategoryInput {
    @Field({ nullable: true })
    Recall_subCat?:string
 
+   
+  @Field({ nullable: true })
+  short_description?:string
+
 
 
 }

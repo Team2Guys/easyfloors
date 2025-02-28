@@ -31,6 +31,8 @@ export class CreateCategoryInput {
 
   @Field({ nullable: true })
   last_editedBy: string;
+  @Field({ nullable: true })
+  short_description: string;
 
   @Field()
   custom_url: string;

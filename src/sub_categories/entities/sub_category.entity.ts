@@ -46,4 +46,8 @@ export class SubCategory {
 
   @Field({ nullable: true })
   Recall_subCat?:string
+
+
+  @Field({ nullable: true })
+  short_description?:string
 }

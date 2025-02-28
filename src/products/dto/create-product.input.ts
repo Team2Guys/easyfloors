@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Int, Field, ID } from '@nestjs/graphql';
 import { UpdateCategoryInput } from '../../categories/dto/update-category.input';
 import { GraphQLJSON } from 'graphql-type-json';
 import { UpdateSubCategoryInput } from '../../sub_categories/dto/update-sub_category.input';
@@ -24,7 +24,7 @@ export class CreateProductInput {
   @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON)
+  @Field(() => GraphQLJSON, {nullable:true})
   hoverImageUrl: any
 
 
@@ -73,17 +73,14 @@ export class CreateProductInput {
   CommmericallWarranty: string;
 
 
-  @Field(() => UpdateCategoryInput, { nullable: true })
-  category?: UpdateCategoryInput | any;
+ @Field(() => ID, { nullable: true })
+   category?: number | any ;
 
   @Field(() => Int, { nullable: true })
   categoryId?: number | any
 
-  @Field(() => UpdateSubCategoryInput, { nullable: true })
-  subcategory?: UpdateSubCategoryInput | any;
-
-  @Field(() => UpdateSubCategoryInput, { nullable: true })
-  subCategoryId?: UpdateSubCategoryInput | any
+  @Field(() => ID, { nullable: true })
+  subcategory?: number | any;
 
 
 }

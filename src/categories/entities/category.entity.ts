@@ -48,6 +48,9 @@ export class Category {
   @Field({ nullable: true })
   Recall_Cat?:string
 
+  @Field({ nullable: true })
+  short_description?:string
+
 
 }
 

@@ -16,7 +16,7 @@ export class SubCategoriesService {
       let response = await this.prisma.subCategories.create({
         data: {
           ...updateData,
-          ...(category !== undefined ? { category: { connect: { id: category } } } : category ? { category } : undefined),
+          ...(category !== undefined ? { category: { connect: { id: Number(category) } } } : category ? { category } : undefined),
           last_editedBy: email,
         },
       });
@@ -32,8 +32,8 @@ export class SubCategoriesService {
 
   async findAll() {
     try {
-
-      return await this.prisma.subCategories.findMany({ include: { category: true, products: true } });
+let categories = await this.prisma.subCategories.findMany({ include: { category: true, products: true } });
+return categories;
     } catch (error: any) {
       console.log(error, "err")
       return customHttpException(`${error.message || JSON.stringify(error)}`, 'GATEWAY_TIMEOUT')

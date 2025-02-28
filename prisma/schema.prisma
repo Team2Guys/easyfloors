@@ -21,7 +21,7 @@ model Products {
   stock                 Int
   discountPrice         Int?
   posterImageUrl        Json
-  hoverImageUrl         Json
+  hoverImageUrl         Json?
   productImages         Json[]
   colors                Json[]         @default([])
   createdAt             DateTime?      @default(now())

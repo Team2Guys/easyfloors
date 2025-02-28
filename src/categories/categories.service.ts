@@ -53,7 +53,7 @@ export class CategoriesService {
 
       let category = await this.prisma.category.findUnique({ where: { id: id } })
 
-      console.log(category, "category")
+      console.log("category", updateCategoryInput)
 
       if (!category) return customHttpException("Category not found", "NOT_FOUND")
       const updatedCategory = await this.prisma.category.update({

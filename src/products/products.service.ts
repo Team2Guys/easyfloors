@@ -12,11 +12,12 @@ export class ProductsService {
   async create(createProductInput: CreateProductInput) {
     const { category, subcategory, ...updateData } = createProductInput;
     try {
+      if (!category || !subcategory) return customHttpException("categories or sub categories are required", 'BAD_REQUEST');
       return await this.prisma.products.create({
         data: {
           ...updateData,
-          ...(category !== undefined ? { category: { connect: { id: category.id } } } : category ? { category } : undefined),
-          ...(category !== undefined ? { subcategory: { connect: { id: subcategory.id } } } : subcategory ? { subcategory } : undefined),
+          ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
+          ...(subcategory !== undefined ? { subcategory: { connect: { id: +subcategory } } } : subcategory ? { subcategory } : undefined),
         },
       });
 
@@ -29,7 +30,7 @@ export class ProductsService {
 
   async findAll() {
     try {
-      return await this.prisma.products.findMany({include: {category: true, subcategory: true}});
+      return await this.prisma.products.findMany({ include: { category: true, subcategory: true } });
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -37,7 +38,7 @@ export class ProductsService {
 
   async findOne(id: number) {
     try {
-      return await this.prisma.products.findUnique({ where: { id },include: {category: true, subcategory: true}});
+      return await this.prisma.products.findUnique({ where: { id }, include: { category: true, subcategory: true } });
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -46,17 +47,15 @@ export class ProductsService {
 
   async update(id: number, updateProductInput: UpdateProductInput) {
     try {
-      const { category, ...updateData } = updateProductInput;
-
+      const { category,subcategory,id:_, ...updateData } = updateProductInput;
+console.log(updateData, "updateProductInput")
       return await this.prisma.products.update({
         where: { id },
         data: {
           ...updateData,
-          ...(category !== undefined
-            ? { category: { set: { id: category.id } } }
-            : category
-              ? { category }
-              : undefined),
+          ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
+          ...(subcategory !== undefined ? { subcategory: { connect: { id: +subcategory } } } : subcategory ? { subcategory } : undefined),
+
         },
       });
     } catch (error) {

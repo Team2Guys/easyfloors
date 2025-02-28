@@ -1,5 +1,7 @@
-import {Int, Field, ObjectType, ID } from '@nestjs/graphql';
+import { Int, Field, ObjectType, ID } from '@nestjs/graphql';
+import { Category } from 'categories/entities/category.entity';
 import { GraphQLJSON } from 'graphql-type-json';
+import { SubCategory } from 'sub_categories/entities/sub_category.entity';
 
 @ObjectType()
 export class Product {
@@ -12,7 +14,7 @@ export class Product {
   @Field(() => Int)
   price: number
 
-  @Field(()=>Int,{ nullable: true })
+  @Field(() => Int, { nullable: true })
   discountPrice: number
 
   @Field()
@@ -21,10 +23,10 @@ export class Product {
   @Field(() => Int)
   stock: number
 
-  @Field(() =>  GraphQLJSON)
+  @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON)
+  @Field(() => GraphQLJSON ,{nullable:true})
   hoverImageUrl: any
 
 
@@ -55,25 +57,28 @@ export class Product {
   @Field()
   custom_url: string;
 
-  @Field(()=>Boolean,{nullable:true})
+  @Field(() => Boolean, { nullable: true })
   waterproof: boolean;
 
 
   @Field(() => [GraphQLJSON])
   AdditionalInformation: any[]
 
-  @Field({nullable:true})
+  @Field({ nullable: true })
   plankWidth: string;
 
-  @Field({nullable:true})
+  @Field({ nullable: true })
   ResidentialWarranty: string;
 
-  @Field({nullable:true})
+  @Field({ nullable: true })
   CommmericallWarranty: string;
 
-  @Field(() => ID,{nullable:true})
-  category: number;
+@Field(() => Category, { nullable: true })
+  category?: Category;
 
-@Field(()=>Int,{nullable:true})
-categoryId:number
+  @Field(() => SubCategory, { nullable: true })
+  subcategory?: SubCategory;
+
+  @Field(() => Int, { nullable: true })
+  categoryId: number
 }
