@@ -1,30 +1,27 @@
 'use client';
 
-import React, { SetStateAction, useState } from 'react';
+import React, { useState } from 'react';
 import { Table, notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
-import axios from 'axios';
 import { LiaEdit } from 'react-icons/lia';
-import { Category, SubCategory } from 'types/type';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import Swal from 'sweetalert2';
 
 import Cookies from 'js-cookie';
+import { DASHBOARD_VIEW_SUBCATEGORIES_PROPS } from 'types/PagesProps';
+import { ISUBCATEGORY } from 'types/cat';
+import { useMutation } from '@apollo/client';
+import { REMOVE_SUBCATEGORY } from 'graphql/mutations';
+import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
 
-interface CategoryProps {
-  setMenuType: React.Dispatch<SetStateAction<string>>;
-  seteditCategory?: React.Dispatch<SetStateAction<Category | undefined | null>>;
-  editCategory?: Category | undefined | null;
-  subCategories?: SubCategory[];
-}
 
 const ViewSubcategries = ({
   setMenuType,
   seteditCategory,
   subCategories,
-}: CategoryProps) => {
-  const [category, setCategory] = useState<SubCategory[] | undefined>(
+}: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
+  const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(
     subCategories,
   );
   // const [loading, setLoading] = useState<boolean>(false);
@@ -33,12 +30,12 @@ const ViewSubcategries = ({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-  const filteredSubCategories: SubCategory[] | undefined = category?.filter(
+  const filteredSubCategories: ISUBCATEGORY[] | undefined = category?.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
   // const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
-
+  const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
   const canDeleteCategory = true;
   const canAddCategory = true;
 
@@ -47,7 +44,7 @@ const ViewSubcategries = ({
   //   loggedInUser &&
   //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditCategory : true);
 
-  const confirmDelete = (key: any) => {
+  const confirmDelete = (key: number) => {
     Swal.fire({
       title: 'Are you sure?',
       text: 'Once deleted, the Sub Category cannot be recovered.',
@@ -65,18 +62,17 @@ const ViewSubcategries = ({
   const superAdminToken = Cookies.get('superAdminToken');
   const finalToken = token ? token : superAdminToken;
 
-  const handleDelete = async (key: any) => {
+  const handleDelete = async (key: number) => {
     try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/subcategories/delete-subcategory`,
-        {
+      await removeCategory({
+        variables: { id: Number(key) }, refetchQueries: [{ query: FETCH_ALL_SUB_CATEGORIES }],
+        context: {
           headers: {
-            subcategoryId: key,
-            token: finalToken,
+            Authorization: `Bearer ${finalToken}`,
           },
         },
-      );
-      setCategory((prev: any) => prev.filter((item: any) => item.id != key));
+      });
+      setCategory((prev: ISUBCATEGORY[] | undefined) => prev ? prev.filter((item: ISUBCATEGORY) => item.id != key) : []);
       revalidateTag('subcategories');
       notification.success({
         message: 'Category Deleted',
@@ -84,15 +80,17 @@ const ViewSubcategries = ({
         placement: 'topRight',
       });
     } catch (err) {
-      console.log(err, 'err');
+
       notification.error({
         message: 'Deletion Failed',
         description: 'There was an error deleting the category.',
         placement: 'topRight',
       });
+
+      throw err;
     }
   };
-  const handleEdit = (record: any) => {
+  const handleEdit = (record: ISUBCATEGORY) => {
     if (seteditCategory) {
       seteditCategory(record);
       setMenuType('CategoryForm');
@@ -104,10 +102,10 @@ const ViewSubcategries = ({
       title: 'Image',
       dataIndex: 'posterImageUrl',
       key: 'posterImageUrl',
-      render: (text: any, record: any) =>
+      render: (_: string, record: ISUBCATEGORY) =>
         record.posterImageUrl !== null ? (
           <Image
-            src={record.posterImageUrl || ''}
+            src={record.posterImageUrl.imageUrl || 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1740655318/download_krzc9s.jpg'}
             alt={`Image of ${record.name}`}
             loading='lazy'
             width={50}
@@ -126,7 +124,7 @@ const ViewSubcategries = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (_: string, record: ISUBCATEGORY) => {
         const createdAt = new Date(record.createdAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -138,7 +136,7 @@ const ViewSubcategries = ({
       title: 'Updated At',
       dataIndex: 'createdAt',
       key: 'date',
-      render: (text: any, record: any) => {
+      render: (_: string, record: ISUBCATEGORY) => {
         const createdAt = new Date(record.updatedAt);
         const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
           createdAt.getDate(),
@@ -150,7 +148,7 @@ const ViewSubcategries = ({
       title: 'Time',
       dataIndex: 'createdAt',
       key: 'time',
-      render: (text: any, record: any) => {
+      render: (_: string, record: ISUBCATEGORY) => {
         const createdAt = new Date(record.updatedAt);
         const formattedTime = `${String(createdAt.getHours()).padStart(2, '0')}:${String(
           createdAt.getMinutes(),
@@ -166,7 +164,7 @@ const ViewSubcategries = ({
     {
       title: 'Edit',
       key: 'Edit',
-      render: (text: any, record: any) => (
+      render: (_: string, record: ISUBCATEGORY) => (
         <LiaEdit
           className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
@@ -177,16 +175,15 @@ const ViewSubcategries = ({
     {
       title: 'Action',
       key: 'action',
-      render: (text: any, record: any) => (
+      render: (_: string, record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
-          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${
-            !canDeleteCategory && 'cursor-not-allowed text-slate-300'
-          }`}
+          className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
+            }`}
           // className="cursor-pointer text-red-500"
           size={20}
           onClick={() => {
             if (canDeleteCategory) {
-              confirmDelete(record.id);
+              confirmDelete(Number(record?.id));
             }
           }}
         />
@@ -197,44 +194,42 @@ const ViewSubcategries = ({
   return (
     <div>
       <div className="flex justify-between mb-4 items-center text-dark dark:text-white">
-          <input
-            className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:bg-transparent dark:border-white text-11 xs:text-sm dark:focus:border-primary focus:border-dark focus:ring-dark-500 disabled:opacity-50 disabled:pointer-events-none dark:text-black"
-            type="search"
-            placeholder="Search Sub Categories"
-            value={searchTerm}
-            onChange={handleSearchChange}
-          />
-          <div>
-            <p
-              className={`${canAddCategory && 'cursor-pointer'} p-2 ${
-                canAddCategory &&
-                'dark:bg-main dark:border-0 bg-black text-white rounded-md border'
-              } flex justify-center ${
-                !canAddCategory && 'cursor-not-allowed '
+        <input
+          className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:bg-transparent dark:border-white text-11 xs:text-sm dark:focus:border-primary focus:border-dark focus:ring-dark-500 disabled:opacity-50 disabled:pointer-events-none dark:text-black"
+          type="search"
+          placeholder="Search Sub Categories"
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+        <div>
+          <p
+            className={`${canAddCategory && 'cursor-pointer'} p-2 ${canAddCategory &&
+              'dark:bg-primary dark:border-0 bg-black text-white rounded-md border'
+              } flex justify-center ${!canAddCategory && 'cursor-not-allowed '
               }`}
-              onClick={() => {
-                seteditCategory && seteditCategory(null);
-                if (canAddCategory) {
-                  setMenuType('Add Sub Categories');
-                }
-              }}
-            >
-              Add Sub Category
-            </p>
-          </div>
+            onClick={() => {
+              seteditCategory?.(undefined);
+              if (canAddCategory) {
+                setMenuType('Add Sub Categories');
+              }
+            }}
+          >
+            Add Sub Category
+          </p>
+        </div>
       </div>
 
-        {filteredSubCategories && filteredSubCategories.length > 0 ? (
-          <Table
-            className="overflow-x-scroll lg:overflow-auto"
-            dataSource={filteredSubCategories}
-            columns={columns}
-            pagination={false}
-            rowKey="id"
-          />
-        ) : (
-          'No Sub Categories found'
-        )}
+      {filteredSubCategories && filteredSubCategories.length > 0 ? (
+        <Table
+          className="overflow-x-scroll lg:overflow-auto"
+          dataSource={filteredSubCategories}
+          columns={columns}
+          pagination={false}
+          rowKey="id"
+        />
+      ) : (
+        'No Sub Categories found'
+      )}
     </div>
   );
 };

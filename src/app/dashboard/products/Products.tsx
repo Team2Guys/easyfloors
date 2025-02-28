@@ -1,77 +1,62 @@
 'use client';
-   
+
 
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
-import ViewProduct from 'components/Dashboard/Tables/ViewProduct';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
+import ViewProduct from 'components/Dashboard/dashboard_products/ViewProduct';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
-import {useState } from 'react';
-import { ICategory} from 'types/type';
+import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { fetchProducts } from 'config/fetch';
 import { IProduct } from 'types/prod';
-const AddProd = dynamic(() => import('components/Dashboard/AddProds/AddProd'))
+import { DASHBOARD_MAINPAGE_PROPS } from 'types/PagesProps';
+const AddProd = dynamic(() => import('components/Dashboard/dashboard_products/AddProd'))
 
-const Product = ({cetagories,productsData}: {cetagories: ICategory[];productsData: IProduct[]}) => {
+const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
+
+
   const [editProduct, setEditProduct] = useState<IProduct | undefined>();
   const [products, setProducts] = useState<IProduct[]>(productsData);
   const [selecteMenu, setselecteMenu] = useState<string>('Add All Products');
 
-  /* eslint-disable */
-
-  const EditInitialValues: IProduct | any = {
+  const EditInitialValues = {
     name: editProduct?.name || "",
     description: editProduct?.description || "",
     price: editProduct?.price || 0,
     spacification: editProduct && editProduct?.spacification,
     discountPrice: editProduct?.discountPrice,
-    category: editProduct && editProduct?.category,
-    stock: editProduct && editProduct.stock || 0 ,
-    posterImageUrl: editProduct && editProduct.posterImageUrl || "",
+    category: editProduct && editProduct?.category?.id,
+    subCategory: editProduct && editProduct?.subCategory?.id,
+    stock: editProduct && editProduct.stock || 0,
+    posterImageUrl: editProduct?.posterImageUrl || {},
     productImages: editProduct && editProduct.productImages || [],
-    sections: editProduct && editProduct?.sections,
-    additionalInformation: editProduct && editProduct.additionalInformation || [],
+    AdditionalInformation: editProduct && editProduct.AdditionalInformation || [],
     Meta_Title: editProduct && editProduct?.Meta_Title || "",
     Meta_Description: editProduct && editProduct?.Meta_Description || "",
     Canonical_Tag: editProduct && editProduct?.Canonical_Tag || "",
-    sale_counter: editProduct && editProduct?.sale_counter,
     colors: (editProduct && editProduct?.colors) || [],
-    sizes: (editProduct && editProduct?.sizes) || [],
-    filter: (editProduct && editProduct?.filter) || [],
     custom_url: editProduct && editProduct?.custom_url
   };
 
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   setProducts(productsData)
+    setProducts(productsData)
 
-  // }, [productsData])
-  
-
-  
+  }, [productsData])
+  const productFlag: boolean = selecteMenu === 'Add All Products' ? true : false;
 
 
-
-
-  console.log(editProduct, "EditInitialProductValues")
-
-  const productFlag: boolean = selecteMenu === 'Add aaAll Products' ? true : false;
-
-  
   return (
 
 
     <DefaultLayout>
-      <button onClick={fetchProducts}>fetchProducts</button>
       <Breadcrumb pageName={productFlag ? 'Products' : 'Add Products'} />
       {productFlag ? (
         <ViewProduct
-          Categories={products}
-          setCategory={setProducts}
+          products={products}
+          setProducts={setProducts}
           setselecteMenu={setselecteMenu}
           setEditProduct={setEditProduct}
-          loading={false}
         />
       ) : (
         <AddProd
@@ -80,12 +65,12 @@ const Product = ({cetagories,productsData}: {cetagories: ICategory[];productsDat
           setEditProduct={setEditProduct}
           EditProductValue={
             EditInitialValues &&
-            (EditInitialValues.name !== undefined ||
-              EditInitialValues.category !== undefined)
+              (EditInitialValues.name !== undefined ||
+                EditInitialValues.category !== undefined)
               ? EditInitialValues
               : undefined
           }
-          categoriesList={cetagories}
+          categoriesList={categories}
         />
       )}
     </DefaultLayout>
@@ -93,6 +78,5 @@ const Product = ({cetagories,productsData}: {cetagories: ICategory[];productsDat
 };
 
 export default ProtectedRoute(Product);
-   
-   
-  /* eslint-enable */
+
+

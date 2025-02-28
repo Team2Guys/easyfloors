@@ -1,0 +1,122 @@
+import { gql } from '@apollo/client';
+
+
+export const FETCH_ALL_PRODUCTS = gql`
+query Products {
+products {
+    id
+    name
+    price
+    discountPrice
+    description
+    stock
+    posterImageUrl
+    hoverImageUrl
+    productImages
+    colors
+    createdAt
+    updatedAt
+    Canonical_Tag
+    Meta_Description
+    Meta_Title
+    last_editedBy
+    custom_url
+    waterproof
+    AdditionalInformation
+    plankWidth
+    ResidentialWarranty
+    CommmericallWarranty
+     category {
+            id
+            name
+}
+            subcategory {
+            id
+            name
+            }
+}
+}
+
+`;
+
+export const FETCH_ALL_CATEGORIES = gql`
+query Categories {
+    categories {
+        id
+        name
+        description
+        posterImageUrl
+        createdAt
+        updatedAt
+        Canonical_Tag
+        Meta_Description
+        Meta_Title
+        last_editedBy
+        custom_url
+        Recall_Cat
+        subcategories {
+            id
+            name    }
+    }
+}`
+export const FETCH_ALL_SUB_CATEGORIES = gql`
+query SubCategories {
+    subCategories {
+        id
+        name
+        description
+        posterImageUrl
+        createdAt
+        updatedAt
+        Canonical_Tag
+        Meta_Description
+        Meta_Title
+        last_editedBy
+        custom_url
+        Recall_subCat
+        category {
+            id
+            name
+            description
+            posterImageUrl
+            createdAt
+            updatedAt
+            Canonical_Tag
+            Meta_Description
+            Meta_Title
+            last_editedBy
+            custom_url
+            Recall_Cat
+        }
+        products {
+            id
+            name
+            price
+            discountPrice
+            description
+            stock
+            posterImageUrl
+            hoverImageUrl
+            productImages
+            colors
+            createdAt
+            updatedAt
+            Canonical_Tag
+            Meta_Description
+            Meta_Title
+            last_editedBy
+            custom_url
+            waterproof
+            AdditionalInformation
+            plankWidth
+            ResidentialWarranty
+            CommmericallWarranty
+            category
+            categoryId
+        }
+    }
+}
+    `
+
+
+

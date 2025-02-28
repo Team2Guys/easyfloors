@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { Table, notification } from 'antd';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import axios from 'axios';
-import { Button } from 'components/ui/button';
 import showToast from 'components/Toaster/Toaster';
 
 interface Product {
@@ -86,7 +85,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
     {
       title: 'Action',
       key: 'action',
-      render: (text: any, record: Product) => (
+      render: (text: string, record: Product) => (
         <RiDeleteBin6Line
           className="text-red-600 cursor-pointer"
           size={20}
@@ -133,13 +132,13 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
           onChange={handleSearchChange}
           className="p-2 border rounded-md"
         />
-        <Button
+        <button
           onClick={handleBroadcastMail}
-          className="bg-primary text-white px-4 py-2 rounded-md"
+          className={` px-4 py-2 font-medium rounded-md ${selectedRowKeys.length === 0 ? "bg-gray-300 text-black cursor-not-allowed" : "bg-primary text-white"}`}
           disabled={selectedRowKeys.length === 0 || sendingLoading}
         >
           {!sendingLoading ? 'Broadcast Email' : 'Sending'}
-        </Button>
+        </button>
       </div>
       <Table
         rowKey="id"

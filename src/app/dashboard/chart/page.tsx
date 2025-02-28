@@ -6,7 +6,7 @@ const Chart = dynamic(() => import('components/Dashboard/Charts/page'), {
   ssr: false,
 });
 
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
 const BasicChartPage: React.FC = () => {
   return (

@@ -1,28 +1,17 @@
 import { ICategory, IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS } from 'graphql/queries/queries';
+import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
+import client from './apolloClient';
 
 
 export const fetchProducts = async () => {
   try {
-    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({query: FETCH_ALL_PRODUCTS }),
+    const { data } = await client.query({
+      query: FETCH_ALL_PRODUCTS,
     });
 
-    if (!result.ok) {
-      return [];
-    }
-
-    const response = await result.json();
-
-    return response?.data?.products || [];
+    return data?.products || [];
   } catch (error) {
-
-    return [];
     throw error;
   }
 };
@@ -31,37 +20,25 @@ export const fetchProducts = async () => {
 
 export const fetchCategories = async () => {
   try {
-    const result = await fetch(process.env.NEXT_PUBLIC_BASE_URL || "", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({query: FETCH_ALL_CATEGORIES }),
+    const { data } = await client.query({
+      query: FETCH_ALL_CATEGORIES,
     });
-
-    if (!result.ok) {
-      return [];
-    }
-
-    const response = await result.json();
-
-    return response?.data?.categories || [];
+    
+    return data?.categories || [];
   } catch (error) {
-
-    return [];
-    throw error;
+    return error;
   }
 };
 
 export const fetchSubCategories = async (): Promise<ICategory[]> => {
-  const result = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/subcategories/get-all`,
-    {
-      next: { tags: ['subcategories'] },
-    },
-  );
-  const response = await result.json();
-  return response;
+  try {
+    const { data } = await client.query({
+      query: FETCH_ALL_SUB_CATEGORIES
+    })
+    return data?.subCategories || []
+  } catch (error) {
+    throw error
+  }
 };
 
 export const fetchReviews = async (): Promise<IReview[]> => {

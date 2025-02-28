@@ -10,11 +10,11 @@ export const Meta_handler = async (categoryName: string, url: string) => {
   if (!findCategory) {
     notFound()
   }
-  let fullurl = `${url}${findCategory?.custom_url || generateSlug(findCategory.name)}`;
+  const fullurl = `${url}${findCategory?.custom_url || generateSlug(findCategory.name)}`;
 
-  let images = findCategory.posterImageUrl || 'images';
-  let alttext = findCategory.Images_Alt_Text || 'Alternative Text';
-  let NewImage = [
+  const images = findCategory.posterImageUrl || 'images';
+  const alttext = findCategory.Images_Alt_Text || 'Alternative Text';
+  const NewImage = [
     {
       url: images,
       alt: alttext,
@@ -22,10 +22,10 @@ export const Meta_handler = async (categoryName: string, url: string) => {
   ];
 
   console.log()
-  let title = findCategory?.meta_title || 'Avenue39';
-  let description =
+  const title = findCategory?.meta_title || 'Avenue39';
+  const description =
     findCategory?.meta_description || 'Welcome to blindsandcurtains';
-  let canonical = findCategory?.canonical_tag;
+  const canonical = findCategory?.canonical_tag;
 
   return {
     title: title,
@@ -68,21 +68,21 @@ export const productsFindHandler = async (
     notFound()
   }
 
-  let fullurl = `${url}${slug[0]}/${slug[1]}/${generateSlug(findProduct?.custom_url || findProduct?.name)}`;
+  const fullurl = `${url}${slug[0]}/${slug[1]}/${generateSlug(findProduct?.custom_url || findProduct?.name)}`;
 
   console.log(fullurl, "urls")
-  let images = findProduct.posterImageUrl || 'images';
-  let alttext = findProduct.posterImageAltText || 'Alternative Text';
-  let NewImage = [
+  const images = findProduct.posterImageUrl || 'images';
+  const alttext = findProduct.posterImageAltText || 'Alternative Text';
+  const NewImage = [
     {
       url: images,
       alt: alttext,
     },
   ];
 
-  let title = findProduct?.Meta_Title || 'Avenue39';
-  let description = findProduct?.Meta_Description || 'Welcome to Avenue39';
-  let canonical = findProduct?.Canonical_Tag;
+  const title = findProduct?.Meta_Title || 'Avenue39';
+  const description = findProduct?.Meta_Description || 'Welcome to Avenue39';
+  const canonical = findProduct?.Canonical_Tag;
   return {
     metadataBase: new URL(url),
     title: title,
@@ -132,21 +132,21 @@ export const subCategory = async (slug: string[], url: string) => {
   if (!findSubCategory) {
     return productsFindHandler(slug, url, subcategoryName);
   }
-  let fullurl = url;
+  const fullurl = url;
 
-  let images = findSubCategory.posterImageUrl || 'images';
-  let alttext = findSubCategory.Images_Alt_Text || 'Alternative Text';
-  let NewImage = [
+  const images = findSubCategory.posterImageUrl || 'images';
+  const alttext = findSubCategory.Images_Alt_Text || 'Alternative Text';
+  const NewImage = [
     {
       url: images,
       alt: alttext,
     },
   ];
 
-  let title = findSubCategory?.meta_title || 'Avenue39';
-  let description =
+  const title = findSubCategory?.meta_title || 'Avenue39';
+  const description =
     findSubCategory?.meta_description || 'Welcome to blindsandcurtains';
-  let canonical = findSubCategory?.canonical_tag;
+  const canonical = findSubCategory?.canonical_tag;
 
   return {
 

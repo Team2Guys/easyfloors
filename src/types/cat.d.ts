@@ -1,3 +1,5 @@
+import { IProduct } from "./prod";
+
 export interface Category {
   id: number | string
   name: string;
@@ -17,8 +19,24 @@ export interface Category {
 
 export interface EDIT_CATEGORY extends Category {
     id?: number | string
-    posterImageUrl?: ProductImage;
     createdAt?: Date;
     updatedAt?: Date;
 
+}
+
+
+
+export interface ISUBCATEGORY extends Category {
+  id: number | string
+  category:EDIT_CATEGORY,
+  products?:IProduct[]
+}
+
+
+export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
+  id?: number | string
+  category:number | string,
+  products?:IProduct[]
+  createdAt?: Date;
+  updatedAt?: Date;
 }

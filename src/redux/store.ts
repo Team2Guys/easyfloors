@@ -13,7 +13,8 @@ import { initMainState } from './slices/main/init';
 const persistConfig = {
   key: 'root',
   storage,
-  migrate: (state: any) => {
+   
+  migrate: (state: any) => { //eslint-disable-line
     const { _persist = {} } = state || {};
     const main = { ...initMainState, ...(state?.main || {}) };
     const cart = { ...initCartState, ...(state?.cart || {}) };

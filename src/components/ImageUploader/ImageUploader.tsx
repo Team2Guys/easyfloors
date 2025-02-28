@@ -1,5 +1,5 @@
 "use client";
-import { FILE_UPLOAD_MUTATION } from "graphql/mutations/mutations";
+import { FILE_UPLOAD_MUTATION } from "graphql/mutations";
 import React, { ChangeEvent, DragEvent, SetStateAction, useRef, useState } from "react";
 import { BsCloudDownload, BsCloudUpload } from "react-icons/bs";
 

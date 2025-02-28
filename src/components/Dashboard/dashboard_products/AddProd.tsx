@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Formik, FieldArray, FormikErrors, Form } from 'formik';
+import { Formik, FieldArray, FormikErrors, Form, FormikHelpers, Field, ErrorMessage, FieldProps } from 'formik';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
@@ -9,30 +9,34 @@ import Toaster from 'components/Toaster/Toaster';
 import axios from 'axios';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Loader from 'components/Loader/Loader';
-import {  FormValues, modelDetails, spacification } from 'types/type';
+import { FormValues } from 'types/type';
 import {
   AddproductsinitialValues,
   AddProductvalidationSchema,
 } from 'data/data';
-import { Checkbox, Select } from 'antd';
 import revalidateTag from 'components/ServerActons/ServerAction';
-import { ICategory } from 'types/type';
 import Cookies from 'js-cookie';
-import { ADDPRODUCTFORMPROPS, IProduct, ProductImage } from 'types/prod';
+import { AdditionalInformation, EDIT_PRODUCT_PROPS, ProductImage } from 'types/prod';
 import ImageUploader from 'components/ImageUploader/ImageUploader';
+import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from 'types/PagesProps';
 
-const AddProd: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct, categoriesList }) => {
+const initialErrors = { categoryError: "", subCategoryError: "", posterImageError: "", prodImages: "" }
 
-  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined >(EditInitialValues ? EditInitialValues.productImages : [],);
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined >(EditInitialValues ? [EditInitialValues.posterImageUrl]: [],);
-  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(EditInitialValues ? [EditInitialValues.hoverImageUrl] : []);
-  const [selectedCategoryIds, setSelectedCategoryIds] = useState<number[]>([]);
-  const [selectedSubcategoryIds, setSelectedSubcategoryIds] = useState<number[]>([]);
-  const [filteredSubcategories, setFilteredSubcategories] = useState([]);
+const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct, categoriesList }) => {
+
+  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>(EditInitialValues ? EditInitialValues?.productImages : [],);
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(EditInitialValues ? [EditInitialValues?.posterImageUrl] : [],);
+  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(
+    EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : []
+  );
 
   const [loading, setloading] = useState<boolean>(false);
-  const [productInitialValue, setProductInitialValue] = useState<IProduct | null | undefined>(EditProductValue);
+  const [productInitialValue, setProductInitialValue] = useState<EDIT_PRODUCT_PROPS | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
+  const [selectedCategory, setSelectedCategory] = useState(EditInitialValues ? EditInitialValues.category : "");
+  const [subcategories, setSubcategories] = useState([]);
+  const [selectedSubcategory, setSelectedSubcategory] = useState(EditInitialValues ? EditInitialValues.subcategory : "");
+  const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
 
@@ -48,43 +52,18 @@ const AddProd: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProduct
     setImagesUrl(imagesClone);
   }
 
-
-
-  console.log(categoriesList, "categoriesList")
-
-  
- /* eslint-disable */
   useEffect(() => {
 
 
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
-        const {
-          posterImageUrl,
-          productImages,
-          ...EditInitialProductValues
-        } = EditInitialValues ;
-        console.log(EditInitialProductValues, 'dsfsdfds');
-        console.log(
-          posterImageUrl,
-          productImages,
-          'EditInitialValues',
-        );
-        const categoryIds = EditInitialValues.categories?.map((category) => category.id) || [];
-        setSelectedCategoryIds(categoryIds);
-
-        const subcategoryIds = EditInitialValues.subcategories?.map((subcategory) => subcategory.id,) || [];
-        setSelectedSubcategoryIds(subcategoryIds);
-
-        setImagesUrl(EditInitialValues ? EditInitialValues.productImages : [])
-
-
-        sethoverImage(EditInitialValues ? [EditInitialValues.hoverImageUrl] : [],)
-        setProductInitialValue?.(()=>EditProductValue)
+        setImagesUrl(EditInitialValues ? EditProductValue?.productImages : [])
+        sethoverImage(EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : [])
+        setProductInitialValue?.(() => EditProductValue)
 
       } catch (err) {
-       throw err;
+        throw err;
       }
     };
 
@@ -96,40 +75,65 @@ const AddProd: React.FC<ADDPRODUCTFORMPROPS> = ({ EditInitialValues, EditProduct
   const finalToken = token ? token : superAdminToken;
 
 
- /* eslint-disable */
-  const onSubmit = async (values: IProduct, { resetForm }: any) => {
-    values.categories = selectedCategoryIds;
-    values.subcategories = selectedSubcategoryIds;
-
-const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
-    
-  console.log(additionalInformation,"additionalInformation")
+  const onSubmit = async (values: EDIT_PRODUCT_PROPS, { resetForm }: FormikHelpers<EDIT_PRODUCT_PROPS>) => {
     try {
-      setError(null);
+      setcategorySubCatError(initialErrors);
+
+      if (!selectedCategory) {
+
+        setcategorySubCatError((prev) => ({
+          ...prev,
+          categoryError: "Category is Required",
+        }));
+        return
+      }
+
+      if (subcategories.length > 0 && !selectedSubcategory) {
+        setcategorySubCatError((prev) => ({
+          ...prev,
+          subCategoryError: "Subcategory is Required",
+        }));
+        return
+      }
+
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const hoverImageUrl = hoverImage && hoverImage[0];
-  
-      let newValues = {
-        ...withaditionalinfomratoin,
-        posterImageUrl: posterImageUrl ? posterImageUrl : {},
-        hoverImageUrl: hoverImageUrl ? hoverImageUrl : {},
-        productImages: imagesUrl,
+
+      if (!posterImageUrl) {
+        setcategorySubCatError((prev) => ({
+          ...prev,
+          posterImageError: "Poster Images is Required",
+        }));
+        return
       };
-  
+      if (!imagesUrl || !(imagesUrl.length > 0)) {
+        setcategorySubCatError((prev) => ({
+          ...prev,
+          prodImages: "Please upload Atleast 1 product relevant Images",
+        }));
+        return
+      };
+
+      let newValues = {
+        ...values,
+        posterImageUrl: posterImageUrl,
+        hoverImageUrl: hoverImageUrl,
+        productImages: imagesUrl,
+        category: +selectedCategory,
+        subcategory: +selectedSubcategory,
+      };
+
       setloading(true);
-  
+
       const updateFlag = EditProductValue && EditInitialValues ? true : false;
 
       if (updateFlag && EditInitialValues?.id) {
-         
-        //@ts-expect-error
-        newValues = { id: EditInitialValues?.id, ...newValues };
+        newValues = { id: +EditInitialValues?.id, ...newValues };
       }
-    
-      console.log(newValues, "newValues")
+
       // ✅ Define GraphQL Mutation
       const mutation = updateFlag
-      ? `mutation UpdateProduct($input: UpdateProductInput!) {
+        ? `mutation UpdateProduct($input: UpdateProductInput!) {
           updateProduct(updateProductInput: $input) {
             id
             name
@@ -156,7 +160,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
             categoryId
           }
         }`
-      : `mutation CreateProduct($input: CreateProductInput!) {
+        : `mutation CreateProduct($input: CreateProductInput!) {
           createProduct(createProductInput: $input) {
             id
             name
@@ -184,10 +188,10 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
           }
         }`;
 
-  
+
       // ✅ GraphQL Variables
-      const variables = updateFlag ? { id: EditInitialValues?.id, input: newValues }: { input: newValues };
-  
+      const variables = updateFlag ? { id: EditInitialValues?.id, input: newValues } : { input: newValues };
+
       // ✅ API Request with GraphQL
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
@@ -202,14 +206,11 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
           },
         }
       );
-  
-      console.log(response.data, "GraphQL Response");
-  
       // ✅ Handle Response
       if (response.data.errors) {
         throw new Error(response.data.errors[0].message);
       }
-  
+
       // ✅ Revalidate and show success message
       revalidateTag("products");
       Toaster(
@@ -218,20 +219,23 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
           ? "Product has been successfully updated!"
           : "Product has been successfully added!"
       );
-  
-      // ✅ Reset Form & State
-      // resetForm();
-      // setloading(false);
-      // sethoverImage(undefined);
-      // setposterimageUrl(undefined);
-      // setImagesUrl([]);
-      // setSelectedSubcategoryIds([]);
-      // setSelectedCategoryIds([]);
-      // setselecteMenu("Add All Products");
-      // updateFlag ? setEditProduct && setEditProduct(undefined) : null;
+
+      resetForm();
+      setloading(false);
+      sethoverImage(undefined);
+      setposterimageUrl(undefined);
+      setImagesUrl([]);
+      setselecteMenu("Add All Products");
+      if (updateFlag) {
+        setEditProduct?.(undefined);
+      }
+
+
+      //eslint-disable-next-line
     } catch (err: any) {
-      if (err.response && err.response.data && err.response.data.error) {
-        setError(err.response.data.message);
+
+      if (err?.response && err?.response?.data && err?.response?.data.error) {
+        setError(err?.response?.data.message);
       } else {
         if (err instanceof Error) {
           setError(err.message);
@@ -243,84 +247,40 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
       setloading(false);
     }
   };
-  
 
-
-  useEffect(() => {
-    const selectedCategories = categoriesList?.filter((category) =>
-      selectedCategoryIds.includes(category?.id),
-    );
-    const subcategories:any = selectedCategories?.flatMap(
-      (category: ICategory) => category.subcategories,
-    );
-    setFilteredSubcategories(subcategories || []);
-  }, [selectedCategoryIds, categoriesList]);
-
-  const handleSubcategoryChange = (subcategoryId: number, checked: boolean) => {
-    setSelectedSubcategoryIds((prev) => {
-      if (checked) {
-        return [...prev, subcategoryId];
-      } else {
-        return prev.filter((id) => id !== subcategoryId);
-      }
-    });
-  };
 
   const handleImageAltText = (
     index: number,
-    newImageIndex: number | string,
+    newImageIndex: string,
     setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
   ) => {
-    setImagesUrlhandler((prev: any) => {
-      const updatedImagesUrl = prev?.map((item: any, i: number) =>i === index ? { ...item, altText: newImageIndex } : item);
-      return updatedImagesUrl;
-    });
-  };
-  const handleImageColor = (
-    index: number,
-    newImageIndex: number | string,
-    setImagesUrlhandler: React.Dispatch<React.SetStateAction<any>>,
-  ) => {
-    setImagesUrlhandler((prev: any) => {
-      const updatedImagesUrl = prev.map((item: any, i: number) =>
-        i === index ? { ...item, color: newImageIndex } : item,
-      );
-      return updatedImagesUrl;
-    });
-  };
-  const handleIndex = (
-    index: string,
-    newImageIndex: number | string,
-    setImagesUrlhandler: React.Dispatch<React.SetStateAction<any>>,
-  ) => {
-    setImagesUrlhandler((prev: any) => {
-      const updatedImagesUrl = prev.map((item: any) =>
-        item.public_id === index ? { ...item, index: newImageIndex } : item,
-      );
-      return updatedImagesUrl;
-    });
-  };
-  const handleImageSize = (
-    index: number,
-    newImageIndex: number | string,
-    setImagesUrlhandler: React.Dispatch<React.SetStateAction<any>>,
-  ) => {
-    setImagesUrlhandler((prev: any) => {
-      const updatedImagesUrl = prev.map((item: any, i: number) =>
-        i === index ? { ...item, size: newImageIndex } : item,
-      );
+    setImagesUrlhandler((prev: ProductImage[] | undefined) => {
+      if (!prev) return [];
+
+      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) => i === index ? { ...item, altText: newImageIndex } : item);
       return updatedImagesUrl;
     });
   };
 
-   /* eslint-disable */
+
+  const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+
+    // Find the selected category and update subcategories
+    const selectedCat = categoriesList?.find((cat) => cat.id === categoryId);
+    setSubcategories(selectedCat?.subcategories || []);
+
+    // Reset subcategory when category changes
+    setSelectedSubcategory("");
+  };
   return (
     <>
       <p
         className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-black dark:text-white"
         onClick={() => {
           setselecteMenu('Add All Products');
-          setEditProduct?.(()=>undefined);
+          setEditProduct?.(() => undefined);
         }}
       >
         <IoMdArrowRoundBack /> Back
@@ -328,7 +288,6 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
 
       <Formik
         enableReinitialize
-    
         initialValues={
           productInitialValue ? productInitialValue : AddproductsinitialValues
         }
@@ -344,7 +303,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                     <div className="rounded-sm border border-stroke bg-white dark:bg-black">
                       <div className="border-b border-stroke py-4 px-4 ">
                         <h3 className="font-medium text-black dark:text-white">
-                          Add Product Images
+                          Add Poster Image
                         </h3>
                       </div>
 
@@ -372,8 +331,8 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                                     width={300}
                                     height={400}
                                     loading='lazy'
-                      
-                                    src={item?.imageUrl }
+
+                                    src={item?.imageUrl || ""}
                                     alt={`productImage-${index}`}
                                   />
                                 </div>
@@ -382,7 +341,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                                   placeholder="altText"
                                   type="text"
                                   name="altText"
-                                  value={item.altText}
+                                  value={item?.altText || ""}
                                   onChange={(e) =>
                                     handleImageAltText(
                                       index,
@@ -394,56 +353,57 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                               </div>
                             );
                           })}
+
                         </div>
                       ) : (
                         <ImageUploader setposterimageUrl={setposterimageUrl} />
                       )}
                     </div>
+                    {categorySubCatError.posterImageError ? <p className='text-red-500'>{categorySubCatError.posterImageError}</p> : null}
 
                     <div className="flex flex-col ">
-                      <div>
-                        <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4 ">
+                      <div className='w-full'>
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                           Product Title
                         </label>
-                        <input
-                          type="text"
-                          name="name"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.name}
-                          placeholder="Title"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                            ? 'border-red-500'
-                            : ''
-                            }`}
-                        />
-                        {formik.touched.name && formik.errors.name ? (
-                          <div className="text-red-500 dark:text-red-700 text-sm">
-                            {formik.errors.name as string}
-                          </div>
-                        ) : null}
+
+                        <Field name="name">
+                          {({ field, meta }: FieldProps) => (
+                            <input
+                              {...field}
+                              type="text"
+                              placeholder="Title"
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error ? "border-red-500" : ""
+                                }`}
+                            />
+                          )}
+                        </Field>
+
+                        <ErrorMessage name="name" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                       </div>
+
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4 ">
                           Custom Url
                         </label>
-                        <input
-                          type="text"
-                          name="custom_url"
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
-                          value={formik.values.custom_url}
-                          placeholder="Title"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                            ? 'border-red-500'
-                            : ''
-                            }`}
-                        />
-                        {formik.touched.name && formik.errors.custom_url ? (
-                          <div className="text-red-500 dark:text-red-700 text-sm">
-                            {formik.errors.custom_url as string}
-                          </div>
-                        ) : null}
+                        <Field name="custom_url">
+                          {({ field, meta }: FieldProps) => (
+                            <>
+                              <input
+                                {...field}
+                                type="text"
+                                placeholder="Title"
+                                className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error ? "border-red-500" : ""
+                                  }`}
+                              />
+                              {meta.touched && meta.error ? (
+                                <div className="text-red-500 dark:text-red-700 text-sm">
+                                  {meta.error}
+                                </div>
+                              ) : null}
+                            </>
+                          )}
+                        </Field>
                       </div>
 
                       <div>
@@ -605,87 +565,65 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                         </div>
 
                       </div>
+
                       <div className="flex gap-4 flex-col">
 
                         <div className="w-full">
-                          <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                            Select Parent Category (at least one)
+
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Select Categories & Sub Categories
                           </label>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {categoriesList?.map((category) => (
-                              <div
-                                key={category.id}
-                                className="flex items-center space-x-2"
-                              >
-                                <Checkbox
-                                  checked={selectedCategoryIds.includes(category.id)}
-                                  className="custom-checkbox"
-                                  onChange={(e) => {
-                                    const checked = e.target.checked;
-                                    setSelectedCategoryIds((prev) => {
-                                      if (checked) {
-                                        return [...prev, category.id];
-                                      } else {
-                                        return prev.filter(
-                                          (id) => id !== category.id,
-                                        );
-                                      }
-                                    });
-                                  }}
-                                  id={`category-${category.id}`}
-                                />
-                                <label
-                                  htmlFor={`category-${category.id}`}
-                                  className="ml-2 text-black dark:text-white"
-                                >
+                            <select
+                              name="category"
+                              value={selectedCategory}
+                              onChange={handleCategoryChange}
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            >
+                              <option value="" disabled>
+                                Select Category
+                              </option>
+                              {categoriesList?.map((category) => (
+                                <option key={category.id} value={category.id}>
                                   {category.name}
-                                </label>
-                              </div>
-                            ))}
+                                </option>
+                              ))}
+                            </select>
+
+                            {categorySubCatError.categoryError ? <p className='text-red-500'>{categorySubCatError.categoryError}</p> : null}
                           </div>
+
+                          {/* Subcategory Selection */}
+                          {subcategories.length > 0 && (
+                            <div className="mt-4">
+                              <h2 className="text-lg font-medium mb-3">Subcategories</h2>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <select
+                                  name="subcategory"
+                                  value={selectedSubcategory}
+                                  onChange={(e) => setSelectedSubcategory(e.target.value)}
+                                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                >
+                                  <option value="" disabled>
+                                    Select Subcategory
+                                  </option>
+                                  {subcategories.map((subCat: { id: string, name: string }) => (
+                                    <option key={subCat.id} value={subCat.id}>
+                                      {subCat.name}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                          )}
+
+                          {categorySubCatError.subCategoryError ? <p className='text-red-500'>{categorySubCatError.subCategoryError}</p> : null}
+
                         </div>
 
-                        <div className="mt-4">
-                          <h2 className="text-lg font-medium mb-3">
-                            Subcategories
-                          </h2>
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {filteredSubcategories.map(
-                              (subcategory: ICategory) => (
-                                <div
-                                  key={subcategory.id}
-                                  className="flex items-center space-x-2 p-2 border rounded"
-                                >
-                                  <Checkbox
-                                    checked={selectedSubcategoryIds.includes(
-                                      subcategory?.id,
-                                    )}
-                                    className="custom-checkbox"
-                                    onChange={(e) =>
-                                      handleSubcategoryChange(
-                                        subcategory?.id,
-                                        e.target.checked,
-                                      )
-                                    }
-                                    id={`subcategory-${subcategory?.id}`}
-                                  />
-                                  <label
-                                    htmlFor={`subcategory-${subcategory?.id}`}
-                                    className="ml-2 text-black dark:text-white"
-                                  >
-                                    {subcategory.name}
-                                  </label>
-                                </div>
-                              ),
-                            )}
-                          </div>
-                        </div>
+
                       </div>
                     </div>
-
-
-
-
                   </div>
                 </div>
 
@@ -716,153 +654,8 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                     </div>
                   </div>
 
-                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                    <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
-                      <h3 className="font-medium text-black dark:text-white">
-                        Add Filts (Color, Height, Shape)
-                      </h3>
-                    </div>
-                    <div className="flex flex-col py-4 px-6">
-                      <FieldArray name="filter">
-                        {({ push: pushSection, remove: removeSection }) => (
-                          <>
-                            {(formik.values.filter || []).map(
-                              (filter: any, sectionIndex: number) => (
-                                <div
-                                  key={sectionIndex}
-                                  className="rounded-sm border border-stroke bg-white dark:bg-black mt-2"
-                                >
-                                  <div className="border-b border-stroke py-4 px-6 dark:border-strokedark flex items-center">
-                                    <input
-                                      type="text"
-                                      name={`filter[${sectionIndex}].heading`}
-                                      onChange={formik.handleChange}
-                                      onBlur={formik.handleBlur}
-                                      value={filter.heading || ''}
-                                      placeholder="Heading Name (Color, Height, Shape)"
-                                      className="font-medium text-black dark:text-white w-full bg-transparent px-5 py-3 rounded-lg border-[1.5px] border-stroke dark:border-form-strokedark dark:bg-form-input"
-                                    />
-                                    <button
-                                      type="button"
-                                      onClick={() =>
-                                        removeSection(sectionIndex)
-                                      }
-                                      className="ml-4 text-red-500"
-                                    >
-                                      <RxCross2
-                                        className="text-red-500 dark:text-white"
-                                        size={25}
-                                      />
-                                    </button>
-                                  </div>
 
-                                  <div className="flex flex-col py-4 px-6">
-                                    <FieldArray
-                                      name={`filter[${sectionIndex}].additionalInformation`}
-                                    >
-                                      {({
-                                        push: pushInfo,
-                                        remove: removeInfo,
-                                      }) => (
-                                        <div className="flex flex-col gap-2">
-                                          {(
-                                            filter.additionalInformation || []
-                                          ).map(
-                                            (
-                                              model: any,
-                                              modelIndex: number,
-                                            ) => (
-                                              <div
-                                                key={modelIndex}
-                                                className="flex items-center"
-                                              >
-                                                <input
-                                                  type="text"
-                                                  name={`filter[${sectionIndex}].additionalInformation[${modelIndex}].name`}
-                                                  onChange={formik.handleChange}
-                                                  onBlur={formik.handleBlur}
-                                                  value={model.name || ''}
-                                                  placeholder="Add details (Black, Reactangle, 11cm)"
-                                                  className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                                                />
-                                                <input
-                                                  type="number"
-                                                  name={`filter[${sectionIndex}].additionalInformation[${modelIndex}].price`}
-                                                  onChange={formik.handleChange}
-                                                  onBlur={formik.handleBlur}
-                                                  value={model.price || ''}
-                                                  placeholder="price"
-                                                  className="w-full rounded-lg ml-1 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                                                />
-                                                <input
-                                                  type="number"
-                                                  name={`filter[${sectionIndex}].additionalInformation[${modelIndex}].discountPrice`}
-                                                  onChange={formik.handleChange}
-                                                  onBlur={formik.handleBlur}
-                                                  value={model.discountPrice || ''}
-                                                  placeholder="Disc Price"
-                                                  className="w-full rounded-lg ml-1 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                                                />
-                                                <input
-                                                  type="number"
-                                                  name={`filter[${sectionIndex}].additionalInformation[${modelIndex}].stock`}
-                                                  onChange={formik.handleChange}
-                                                  onBlur={formik.handleBlur}
-                                                  value={model.stock || ''}
-                                                  placeholder="stock"
-                                                  className="w-full rounded-lg ml-1 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:text-white"
-                                                />
 
-                                                <button
-                                                  type="button"
-                                                  onClick={() =>
-                                                    removeInfo(modelIndex)
-                                                  }
-                                                  className="ml-2 text-red-500"
-                                                >
-                                                  <RxCross2
-                                                    className="text-red-500 dark:text-white"
-                                                    size={25}
-                                                  />
-                                                </button>
-                                              </div>
-                                            ),
-                                          )}
-
-                                          <button
-                                            type="button"
-                                            onClick={() =>
-                                              pushInfo({ name: '', price: '', discountPrice: '', stock: '' })
-                                            }
-                                            className="px-4 py-2 bg-black text-white dark:bg-main rounded-md shadow-md w-fit"
-                                          >
-                                            Add details (colors, Shapes, etc)
-                                          </button>
-                                        </div>
-                                      )}
-                                    </FieldArray>
-                                  </div>
-                                </div>
-                              ),
-                            )}
-
-                            <button
-                              type="button"
-                              onClick={() =>
-                                pushSection({
-                                  heading: '',
-                                  additionalInformation: [],
-                                })
-                              }
-                              className="px-4 py-2 bg-black text-white rounded-md shadow-md w-fit mt-4"
-                            >
-                              Add Section
-                            </button>
-                          </>
-                        )}
-                      </FieldArray>
-                    </div>
-                  </div>
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
@@ -875,7 +668,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                           <div className="flex flex-col gap-2">
                             {formik.values.AdditionalInformation &&
                               formik.values.AdditionalInformation.map(
-                                (model: any, index: number) => (
+                                (model: AdditionalInformation, index: number) => (
                                   <div
                                     key={index}
                                     className="flex items-center"
@@ -938,7 +731,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                             <button
                               type="button"
                               onClick={() => push({ name: '', detail: '' })}
-                              className="px-4 py-2 bg-black text-white dark:bg-main dark:border-0  rounded-md shadow-md w-fit"
+                              className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
                             >
                               Add Model
                             </button>
@@ -958,6 +751,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                     {hoverImage && hoverImage.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {hoverImage.map((item: ProductImage, index) => {
+                          console.log(hoverImage, "item")
                           return (
                             <div key={index}>
                               <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
@@ -988,7 +782,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                                 placeholder="altText"
                                 type="text"
                                 name="altText"
-                                value={item.altText}
+                                value={item?.altText || ""}
                                 onChange={(e) =>
                                   handleImageAltText(
                                     index,
@@ -1045,30 +839,18 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                                   width={300}
                                   height={200}
                                   loading='lazy'
-                                  src={item.imageUrl}
-                                
-                                  alt={`productImage-${index}`}
+                                  src={item?.imageUrl || ""}
+
+                                  alt={`productImage-${index}` || ""}
                                 />
                               </div>
-                              <input
-                                type="text"
-                                placeholder="Add Image Color"
-                                className=" rounded-b-md p-2 text-sm focus:outline-none w-full "
-                                value={item.color}
-                                onChange={(e) =>
-                                  handleImageColor(
-                                    index,
-                                    e.target.value,
-                                    setImagesUrl,
-                                  )
-                                }
-                              />
+
                               <input
                                 className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                 placeholder="altText"
                                 type="text"
                                 name="altText"
-                                value={item.altText}
+                                value={item?.altText || ""}
                                 onChange={(e) =>
                                   handleImageAltText(
                                     index,
@@ -1077,42 +859,15 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
                                   )
                                 }
                               />
-                              <input
-                                className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                placeholder="Size"
-                                type="text"
-                                name="size"
-                                value={item.size}
-                                onChange={(e) =>
-                                  handleImageSize(
-                                    index,
-                                    String(e.target.value),
-                                    setImagesUrl,
-                                  )
-                                }
-                              />
 
-                              <input
-                                className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                placeholder="index"
-                                type="text"
-                                name="index"
-                                value={item.Index}
-                                onChange={(e) =>
-                                  handleIndex(
-                                    item.public_id,
-                                    String(e.target.value),
-                                    setImagesUrl,
-
-                                  )
-                                }
-                              />
                             </div>
                           );
                         })}
                       </div>
                     ) : null}
                   </div>
+                  {categorySubCatError.prodImages ? <p className='text-red-500'>{categorySubCatError.prodImages}</p> : null}
+
                 </div>
               </div>
 
@@ -1124,7 +879,7 @@ const {additionalInformation, categories, ...withaditionalinfomratoin} = values;
 
               <button
                 type="submit"
-                className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md dark:bg-main dark:border-0"
+                className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md dark:bg-primary dark:border-0"
                 disabled={loading}
               >
                 {loading ? <Loader color="white" /> : 'Submit'}

@@ -4,10 +4,9 @@ import { Col, Form, Row } from 'antd';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { Checkbox, CheckboxProps } from 'antd';
 import axios from 'axios';
-import Loader from '@components/Loader/Loader';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import showToast from '@components/Toaster/Toaster';
+import Loader from 'components/Loader/Loader';
+import { Input } from 'components/ui/input';
+import showToast from 'components/Toaster/Toaster';
 
 type formDataTypes = {
   fullname: string;
@@ -29,7 +28,7 @@ type formDataTypes = {
   canVeiwTotalCategories: boolean;
 };
 
-let intitalValues = {
+const intitalValues = {
   fullname: '',
   email: '',
   password: '',
@@ -53,8 +52,8 @@ const CreateAdmin = ({
   setselecteMenu,
   EditAdminValue,
   EditInitialValues,
-}: any) => {
-  let updateFlag = EditAdminValue && EditAdminValue ? true : false;
+}: any) => { //eslint-disable-line
+  const updateFlag = EditAdminValue && EditAdminValue ? true : false;
 
   const [formData, setFormData] = useState<formDataTypes>(
     !updateFlag ? intitalValues : EditAdminValue,
@@ -69,7 +68,7 @@ const CreateAdmin = ({
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCheckboxChange: CheckboxProps['onChange'] = (e: any) => {
+  const handleCheckboxChange: CheckboxProps['onChange'] = (e: any) => { //eslint-disable-line
     const { name, checked } = e.target;
     setFormData({
       ...formData,
@@ -84,13 +83,13 @@ const CreateAdmin = ({
       }
 
       setLoading(true);
-      let adminURL = updateFlag ? `/edit-admin` : '/create-admin';
+      const adminURL = updateFlag ? `/edit-admin` : '/create-admin';
 
-      let uploadData = updateFlag
+      const uploadData = updateFlag
         ? { id: EditInitialValues.id, ...formData }
         : formData;
 
-      let response: any = await axios.post(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin${adminURL}`,
         uploadData,
       );
@@ -101,7 +100,7 @@ const CreateAdmin = ({
 
       setFormData(intitalValues);
       return showToast('success', response.data.message);
-    } catch (err: any) {
+    } catch (err: any) { //eslint-disable-line
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
       } else if (err.message) {
@@ -205,7 +204,7 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 12 }}
             xs={{ order: 1, span: 24 }}
           >
-            <Form.Item label={'Full Name'}>
+            <Form.Item label='Full Name'>
               <Input
                 type="text"
                 name="fullname"
@@ -223,7 +222,7 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 12 }}
             xs={{ order: 1, span: 24 }}
           >
-            <Form.Item label={'Email'}>
+            <Form.Item label="Email">
               <Input
                 type="email"
                 name="email"
@@ -240,7 +239,7 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 24 }}
             xs={{ order: 1, span: 24 }}
           >
-            <Form.Item label={'Password'}>
+            <Form.Item label="Password">
               <Input
                 type="password"
                 name="password"
@@ -279,20 +278,18 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 24 }}
             xs={{ order: 1, span: 24 }}
           >
-            <Button
+            <button
               type="button"
-              variant={'underline'}
               onClick={handleClearAllPermissions}
             >
               Clear All{' '}
-            </Button>
-            <Button
+            </button>
+            <button
               type="button"
-              variant={'underline'}
               onClick={handleAddAllPermissions}
             >
               Mark All permissions
-            </Button>
+            </button>
           </Col>
 
           <Col
@@ -313,14 +310,13 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 24 }}
             xs={{ order: 1, span: 24 }}
           >
-            <Button
-              disable={loading}
-              variant={'login'}
+            <button
+              disabled={loading}
               className="h-14 w-full"
               onClick={handleSubmit}
             >
               {loading ? <Loader color="White" /> : 'Add Admin'}
-            </Button>
+            </button>
           </Col>
         </Row>
       </Form>

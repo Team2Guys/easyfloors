@@ -1,14 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import { formatDate } from 'config';
 import OrderList from 'components/Orders/orders';
 import { LuView } from 'react-icons/lu';
-import { IOrder, IProduct } from 'types/type';
+import { IOrder, IOrderProduct } from 'types/type';
 
 const Orders = ({ orderData }: { orderData: IOrder[] }) => {
-  const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<IOrderProduct[]>([])
   const [visible, setVisible] = useState(false);
 
   const orderColumns = [
@@ -26,7 +26,7 @@ const Orders = ({ orderData }: { orderData: IOrder[] }) => {
       title: 'View Products',
       dataIndex: 'view',
       key: 'view',
-      render: (_: any, record: any) => (
+      render: (_: unknown, record: IOrder) => (
         <span className="flex justify-center">
           <LuView
             onClick={() => handleViewProducts(record.products)}
@@ -38,7 +38,7 @@ const Orders = ({ orderData }: { orderData: IOrder[] }) => {
     },
   ];
 
-  const handleViewProducts = (products: IProduct[]) => {
+  const handleViewProducts = (products: IOrderProduct[]) => {
     setSelectedProducts(products);
     setVisible(true);
   };

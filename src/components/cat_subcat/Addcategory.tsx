@@ -14,10 +14,10 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { ProductImage } from 'types/prod';
 import { Category, EDIT_CATEGORY } from 'types/cat';
 import client from 'config/apolloClient';
-import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations/mutations';
+import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations';
 
 interface editCategoryProps {
-  seteditCategory:  React.Dispatch<SetStateAction<Category | undefined | null>>;
+  seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
   editCategory: Category | undefined | null;
   setMenuType: React.Dispatch<SetStateAction<string>>;
 
@@ -28,18 +28,18 @@ const FormLayout = ({
   editCategory,
   setMenuType,
 }: editCategoryProps) => {
-  const CategoryName:EDIT_CATEGORY | null =editCategory && editCategory.name
-      ? {
-          name: editCategory.name || "",
-          description: editCategory.description || '',
-          Meta_Title: editCategory.Meta_Title || '',
-          short_description: editCategory.short_description || '',
-          Meta_Description: editCategory.Meta_Description || '',
-          Canonical_Tag: editCategory.Canonical_Tag || '',
-          custom_url: editCategory.custom_url || ""
-        }
-      : null;
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>( editCategory? [editCategory.posterImageUrl]: undefined);
+  const CategoryName: EDIT_CATEGORY | null = editCategory && editCategory.name
+    ? {
+      name: editCategory.name || "",
+      description: editCategory.description || '',
+      Meta_Title: editCategory.Meta_Title || '',
+      short_description: editCategory.short_description || '',
+      Meta_Description: editCategory.Meta_Description || '',
+      Canonical_Tag: editCategory.Canonical_Tag || '',
+      custom_url: editCategory.custom_url || ""
+    }
+    : null;
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(editCategory ? [editCategory.posterImageUrl] : undefined);
 
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY | null | undefined>(CategoryName);
@@ -53,9 +53,9 @@ const FormLayout = ({
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       if (!posterImageUrl) throw new Error('Please select relevant Images');
       const newValue = { ...values, posterImageUrl };
-  
+
       const updateFlag = editCategoryName ? true : false;
-  
+
       if (updateFlag) {
         await client.mutate({
           mutation: UPDATE_CATEGORY,
@@ -67,14 +67,14 @@ const FormLayout = ({
           variables: { input: newValue }, // ✅ Fix: Wrapped inside input
         });
       }
-  
+
       revalidateTag('categories');
       setloading(false);
       Toaster(
         'success',
         updateFlag ? 'Category has been successfully updated!' : 'Category has been successfully created!',
       );
-  
+
       seteditCategory?.(undefined);
       setposterimageUrl(undefined);
       setMenuType('Categories');
@@ -84,13 +84,13 @@ const FormLayout = ({
       throw err;
     }
   };
-  
+
 
   useEffect(() => {
     setEditCategoryName(CategoryName)
-   
+
   }, [editCategory])
-  
+
 
   return (
     <>
@@ -125,7 +125,7 @@ const FormLayout = ({
                       {posterimageUrl && posterimageUrl.length > 0 ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4  dark:border-white dark:bg-black">
                           {posterimageUrl.map((item: ProductImage, index: number) => {
-                        
+
                             return (
                               <div
                                 className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
@@ -162,7 +162,7 @@ const FormLayout = ({
                     </div>
 
                     <div className="flex flex-col">
-                     
+
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
@@ -174,11 +174,10 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.name}
                           placeholder="Title"
-                          className={`w-full rounded-lg border-[1.5px]  px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whitebg-black dark:text-white ${
-                            formik.touched.name && formik.errors.name
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
                               ? 'border-red-500'
                               : ''
-                          }`}
+                            }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
                           <div className="text-red-500 text-sm">
@@ -197,11 +196,10 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.custom_url}
                           placeholder="Custom Url"
-                          className={`w-full rounded-lg border-[1.5px]  px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whitebg-black dark:text-white ${
-                            formik.touched.custom_url && formik.errors.custom_url
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url
                               ? 'border-red-500'
                               : ''
-                          }`}
+                            }`}
                         />
                         {formik.touched.custom_url && formik.errors.custom_url ? (
                           <div className="text-red-500 text-sm">
@@ -218,11 +216,10 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.description}
                           placeholder="Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${
-                            formik.touched.name && formik.errors.name
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
                               ? 'border-red-500'
                               : ''
-                          }`}
+                            }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
                           <div className="text-red-500 text-sm">
@@ -239,11 +236,10 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.short_description}
                           placeholder="Short Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${
-                            formik.touched.name && formik.errors.name
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
                               ? 'border-red-500'
                               : ''
-                          }`}
+                            }`}
                         />
                         {formik.touched.name && formik.errors.name ? (
                           <div className="text-red-500 text-sm">
@@ -263,15 +259,14 @@ const FormLayout = ({
                             onBlur={formik.handleBlur}
                             value={formik.values.Meta_Title}
                             placeholder="Meta Title"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.Meta_Title &&
-                              formik.errors.Meta_Title
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title &&
+                                formik.errors.Meta_Title
                                 ? 'border-red-500'
                                 : ''
-                            }`}
+                              }`}
                           />
                           {formik.touched.Meta_Title &&
-                          formik.errors.Meta_Title ? (
+                            formik.errors.Meta_Title ? (
                             <div className="text-red text-sm">
                               {formik.errors.Meta_Title as string}
                             </div>
@@ -288,16 +283,15 @@ const FormLayout = ({
                             onChange={formik.handleChange}
                             value={formik.values.Canonical_Tag}
                             placeholder="Canonical Tag"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.Canonical_Tag &&
-                              formik.errors.Canonical_Tag
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag &&
+                                formik.errors.Canonical_Tag
                                 ? 'border-red-500'
                                 : ''
-                            }`}
+                              }`}
                           />
 
                           {formik.touched.Canonical_Tag &&
-                          formik.errors.Canonical_Tag ? (
+                            formik.errors.Canonical_Tag ? (
                             <div className="text-red text-sm">
                               {formik.errors.Canonical_Tag as string}
                             </div>
@@ -313,15 +307,14 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.Meta_Description}
                           placeholder="Meta Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                            formik.touched.Meta_Description &&
-                            formik.errors.Meta_Description
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description &&
+                              formik.errors.Meta_Description
                               ? 'border-red-500'
                               : ''
-                          }`}
+                            }`}
                         />
                         {formik.touched.Meta_Description &&
-                        formik.errors.Meta_Description ? (
+                          formik.errors.Meta_Description ? (
                           <div className="text-red text-sm">
                             {formik.errors.Meta_Description as string}
                           </div>
@@ -361,7 +354,7 @@ const FormLayout = ({
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="mt-4 px-8 py-2 bg-primary dark:bg-main dark:border-0 text-white rounded "
+                  className="mt-4 px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded "
                   disabled={loading}
                 >
                   {loading ? <Loader color="#fff" /> : 'Submit'}

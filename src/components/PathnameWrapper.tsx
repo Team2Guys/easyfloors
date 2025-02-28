@@ -34,7 +34,10 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
           </>
         ) : null
       ) : (
+        <>
+        <NeedHelp />
         <Footer />
+        </>
       )}
     </>
 

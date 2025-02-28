@@ -59,3 +59,39 @@ export const REMOVE_CATEGORY = gql`
     }
   }
 `;
+
+
+
+
+export const CREATE_SUBCATEGORY = gql`
+  mutation CreateSubCategory($input: CreateSubCategoryInput!) {
+    createSubCategory(createSubCategoryInput: $input) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_SUBCATEGORY = gql`
+  mutation UpdateSubCategory($input: UpdateSubCategoryInput!) {
+    updateSubCategory(updateSubCategoryInput: $input) {
+      id
+    }
+  }
+`;
+
+
+export const REMOVE_SUBCATEGORY = gql`
+  mutation RemoveSubCategory($id: Int!) {
+    removeSubCategory(id: $id) {
+      id
+    }
+  }
+`;
+
+export const REMOVE_PRODUCT = gql`
+  mutation RemoveProduct($id: Int!) {
+    removeProduct(id: $id) {
+      id
+    }
+  }
+`;

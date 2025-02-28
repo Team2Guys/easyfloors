@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, SubCategory, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SocialLink } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
@@ -20,17 +20,17 @@ export const generateSlug = (text: string) => {
 
 
 export const initialValues = {
-    firstname: "",
-    phoneNumber: "",
-    whatsappNumber: "",
-    email: "",
-    area: "",
-    selectRooms: "",
-    preferredDate: "",
-    preferredTime: "",
-    findUs: "",
-    comment: "",
-    contactMethod: {
+  firstname: "",
+  phoneNumber: "",
+  whatsappNumber: "",
+  email: "",
+  area: "",
+  selectRooms: "",
+  preferredDate: "",
+  preferredTime: "",
+  findUs: "",
+  comment: "",
+  contactMethod: {
     whatsapp: false,
     telephone: false,
     email: false,
@@ -54,34 +54,35 @@ export const validationSchema = Yup.object({
   preferredDate: Yup.string().required("Preferred date is required"),
 });
 
-export const categoryInitialValues: EDIT_CATEGORY  = {
+export const categoryInitialValues: EDIT_CATEGORY = {
   name: '',
   description: '',
   short_description: '',
   Meta_Description: '',
   Meta_Title: '',
   Canonical_Tag: '',
-  custom_url : ""
+  custom_url: ""
 };
 
 export const categoryValidationSchema = Yup.object({
-  name: Yup.string().required('Required'),
+  name: Yup.string().required('Add Sub Category Name'),
+  category: Yup.string().required('Select Category'),
+  custom_url: Yup.string().required('Custom URL is required'),
   // description: Yup.string().required('required'),
 });
 
-export const subcategoryInitialValues: SubCategory = {
+export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   name: '',
   description: '',
-  meta_title: '',
-  meta_description: '',
-  canonical_tag: '',
-  images_alt_text: '',
-  categoriesId: [],
-  custom_url : ""
+  short_description: '',
+  Meta_Description: '',
+  Meta_Title: '',
+  custom_url: "",
+  category: "",
 };
 
 
-export const AddproductsinitialValues: IProduct = {
+export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
   id: 0, // Default value for id (should be generated dynamically)
   name: '',
   price: 0,
@@ -91,17 +92,10 @@ export const AddproductsinitialValues: IProduct = {
   sale: '', // Added optional property
   colors: [], // Added optional property
   spacification: [],
-  posterImageUrl: {imageUrl:"", public_id:"" }, // Must be an array of `ProductImage`
+  posterImageUrl: { imageUrl: "", public_id: "" }, // Must be an array of `ProductImage`
   productImages: [], // Must be an array of `ProductImage`
-  hoverImageUrl: {imageUrl:"", public_id:"" }, // Must be a `ProductImage` object
+  hoverImageUrl: { imageUrl: "", public_id: "" }, // Must be a `ProductImage` object
   AdditionalInformation: [],
-  categoriesId: 0, // Must be a number
-  categories: [],
-  subcategories: [],
-  sections: [], // Added optional property
-  sortedSubcategories: [], // Added optional property
-  sizes: [],
-  filter: [],
   custom_url: '',
   Meta_Title: '',
   Canonical_Tag: '',
@@ -109,24 +103,20 @@ export const AddproductsinitialValues: IProduct = {
 };
 
 export const AddProductvalidationSchema = Yup.object().shape({
-  name: Yup.string().min(2, 'Too Short!').required('Required'),
-  description: Yup.string().required('Required'),
+  name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),
+  description: Yup.string().required('Description is  Required'),
+  custom_url: Yup.string().required('Custom Url is Required'),
   price: Yup.number()
     .min(1, 'Minimum sales price must be at least 1')
     .required('Required'),
   discountPrice: Yup.number().nullable(),
-  productImages: Yup.array().of(
-    Yup.object().shape({
-      colorName: Yup.string().nullable(),
-    }),
-  ),
 });
 
 import { StaticImageData } from 'next/image';
-import { IProduct } from 'types/prod';
-import { EDIT_CATEGORY } from 'types/cat';
+import { EDIT_PRODUCT_PROPS } from 'types/prod';
+import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 
-interface IServiceItem{
+interface IServiceItem {
   id: number;
   icon: StaticImageData;
   title: string;
@@ -155,29 +145,29 @@ export const serviceItems: IServiceItem[] = [
   },
 ];
 
-export const Appointmentlocation=[
-    { value: "Downtown Dubai", label: "Downtown Dubai" },
-    { value: "Jumeirah", label: "Jumeirah" },
-    { value: "Dubai Marina", label: "Dubai Marina" },
-    { value: "Deira", label: "Deira" },
-    { value: "Bur Dubai", label: "Bur Dubai" },
-    { value: "Al Quoz", label: "Al Quoz" },
-    { value: "Business Bay", label: "Business Bay" },
-    { value: "Al Barsha", label: "Al Barsha" },
-    { value: "Silicon Oasis", label: "Silicon Oasis" },
-    { value: "Dubai Internet City", label: "Dubai Internet City" },
-  ]
+export const Appointmentlocation = [
+  { value: "Downtown Dubai", label: "Downtown Dubai" },
+  { value: "Jumeirah", label: "Jumeirah" },
+  { value: "Dubai Marina", label: "Dubai Marina" },
+  { value: "Deira", label: "Deira" },
+  { value: "Bur Dubai", label: "Bur Dubai" },
+  { value: "Al Quoz", label: "Al Quoz" },
+  { value: "Business Bay", label: "Business Bay" },
+  { value: "Al Barsha", label: "Al Barsha" },
+  { value: "Silicon Oasis", label: "Silicon Oasis" },
+  { value: "Dubai Internet City", label: "Dubai Internet City" },
+]
 
-  export const FindUs=[
-    { value: "Google", label: "Google" },
-    { value: "Tiktok", label: "Tiktok" },
-    { value: "Facebook", label: "Facebook" },
-    { value: "Friends", label: "Friends" },
-    { value: "ReturningCustomer", label: "Returning Customer" },
-    { value: "Radio", label: "Radio" },
-    { value: "Other", label: "Other" },
-  ]
-  
+export const FindUs = [
+  { value: "Google", label: "Google" },
+  { value: "Tiktok", label: "Tiktok" },
+  { value: "Facebook", label: "Facebook" },
+  { value: "Friends", label: "Friends" },
+  { value: "ReturningCustomer", label: "Returning Customer" },
+  { value: "Radio", label: "Radio" },
+  { value: "Other", label: "Other" },
+]
+
 
 export const heroItems = [
   {
@@ -196,31 +186,31 @@ export const heroItems = [
 ];
 
 export const featureItems = [
-    {
-      title: "Free Samples",
-      description:
-        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
-      icon: "/assets/images/Home/free.png",
-    },
-    {
-      title: "Easy payment",
-      description:
-        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
-      icon: "/assets/images/Home/card.png",
-    },
-    {
-      title: "Delivery",
-      description:
-        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
-      icon: "/assets/images/Home/truck.png",
-    },
-    {
-      title: "Factory Prices",
-      description:
-        "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
-      icon: "/assets/images/Home/factory.png",
-    },
-  ];
+  {
+    title: "Free Samples",
+    description:
+      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+    icon: "/assets/images/Home/free.png",
+  },
+  {
+    title: "Easy payment",
+    description:
+      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+    icon: "/assets/images/Home/card.png",
+  },
+  {
+    title: "Delivery",
+    description:
+      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+    icon: "/assets/images/Home/truck.png",
+  },
+  {
+    title: "Factory Prices",
+    description:
+      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+    icon: "/assets/images/Home/factory.png",
+  },
+];
 
 
 
@@ -231,64 +221,64 @@ export const socialLinks: SocialLink[] = [
   { href: '/faqs', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
 ];
 
-  export const menuItems = [
-    {
-      label: 'SPC Flooring',
-      href: '/',    
-      submenu: [
-        { label: 'SPC Wood', href: '/spc-wood' , image:"/assets/bin/Flooring.png" },
-        { label: 'SPC Tiles', href: '/spc-tiles', image:"/assets/bin/Flooring.png" },
-        { label: 'SPC Wood', href: '/spc-wood' , image:"/assets/bin/Flooring.png" },
-        { label: 'SPC Tiles', href: '/spc-tiles', image:"/assets/bin/Flooring.png" },
-        { label: 'SPC Wood', href: '/spc-wood' , image:"/assets/bin/Flooring.png" },
-      ],
-    },
-    {
-      label: 'LVT Flooring',
-      href: '/',
-      submenu: [
-        { label: 'Luxury LVT', href: '/lvt-luxury', image:"/assets/bin/Flooring.png" },
-        { label: 'Waterproof LVT', href: '/lvt-waterproof', image:"/assets/bin/Flooring.png" },
-      ],
-    },
-    {
-      label: 'Richmond Flooring',
-      href: '/',
-      submenu: [
-        { label: 'Richmond Flooring', href: '/spc-wood' , image:"/assets/bin/Flooring.png" },
-        { label: 'Richmond Eco SPC', href: '/spc-tiles', image:"/assets/bin/Eco.png" },
-        { label: 'Richmond Herringbone SPC', href: '/spc-wood' , image:"/assets/bin/Herringbone.png" },
-        { label: 'Richmond Comfort LVT', href: '/spc-tiles', image:"/assets/bin/Comfort.png" },
-        { label: 'Richmond Luxury LVT', href: '/spc-wood' , image:"/assets/bin/Luxury.png" },
-      ],
-    },
-    {
-      label: 'Polar Flooring',
-      href: '/',
-      submenu: [
-        { label: 'Polar Classic', href: '/polar-classic', image:"/assets/bin/Flooring.png" },
-        { label: 'Polar Premium', href: '/polar-premium', image:"/assets/bin/Flooring.png" },
-      ],
-    },
-    { label: 'How to measure', href: '/how-to-measure-your-room', },
-    // { label: 'Estimator', href: '/estimator', },
-    { label: 'Accessories', href: '/accessories', },
-    { label: 'About Us', href: '/about-us', },
-    { label: 'Contact Us', href: '/contact-us', },
-  ];
+export const menuItems = [
+  {
+    label: 'SPC Flooring',
+    href: '/',
+    submenu: [
+      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
+      { label: 'SPC Tiles', href: '/spc-tiles', image: "/assets/bin/Flooring.png" },
+      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
+      { label: 'SPC Tiles', href: '/spc-tiles', image: "/assets/bin/Flooring.png" },
+      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
+    ],
+  },
+  {
+    label: 'LVT Flooring',
+    href: '/',
+    submenu: [
+      { label: 'Luxury LVT', href: '/lvt-luxury', image: "/assets/bin/Flooring.png" },
+      { label: 'Waterproof LVT', href: '/lvt-waterproof', image: "/assets/bin/Flooring.png" },
+    ],
+  },
+  {
+    label: 'Richmond Flooring',
+    href: '/',
+    submenu: [
+      { label: 'Richmond Flooring', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
+      { label: 'Richmond Eco SPC', href: '/spc-tiles', image: "/assets/bin/Eco.png" },
+      { label: 'Richmond Herringbone SPC', href: '/spc-wood', image: "/assets/bin/Herringbone.png" },
+      { label: 'Richmond Comfort LVT', href: '/spc-tiles', image: "/assets/bin/Comfort.png" },
+      { label: 'Richmond Luxury LVT', href: '/spc-wood', image: "/assets/bin/Luxury.png" },
+    ],
+  },
+  {
+    label: 'Polar Flooring',
+    href: '/',
+    submenu: [
+      { label: 'Polar Classic', href: '/polar-classic', image: "/assets/bin/Flooring.png" },
+      { label: 'Polar Premium', href: '/polar-premium', image: "/assets/bin/Flooring.png" },
+    ],
+  },
+  { label: 'How to measure', href: '/how-to-measure-your-room', },
+  // { label: 'Estimator', href: '/estimator', },
+  { label: 'Accessories', href: '/accessories', },
+  { label: 'About Us', href: '/about-us', },
+  { label: 'Contact Us', href: '/contact-us', },
+];
 
 
 export const features: Feature[] = [
-  {  icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
-  {  icon: "/assets/categoryslider/upbottomarrow.png", label: "10mm", width: 10, height: 20 },
-  {  icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
+  { icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
+  { icon: "/assets/categoryslider/upbottomarrow.png", label: "10mm", width: 10, height: 20 },
+  { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
 export const flooringTypes: FlooringType[] = [
-  { 
+  {
     name: "SPC Flooring",
     price: "AED 150m²",
-    product:[
+    product: [
       {
         image: "/assets/categoryslider/Image.webp",
         name: "Polar Herringbone SPC",
@@ -316,10 +306,10 @@ export const flooringTypes: FlooringType[] = [
       },
     ]
   },
-  { 
-    name: "LVT Flooring", 
+  {
+    name: "LVT Flooring",
     price: "AED 180m²",
-    product:[
+    product: [
       {
         image: "/assets/categoryslider/Image.webp",
         name: "Polar Herringbone SPC",
@@ -337,10 +327,10 @@ export const flooringTypes: FlooringType[] = [
       },
     ]
   },
-  { 
-    name: "Polar Flooring", 
+  {
+    name: "Polar Flooring",
     price: "AED 200m²",
-    product:[
+    product: [
       {
         image: "/assets/categoryslider/Image.webp",
         name: "Polar Herringbone SPC",
@@ -358,10 +348,10 @@ export const flooringTypes: FlooringType[] = [
       },
     ]
   },
-  { 
-    name: "Richmond Flooring", 
+  {
+    name: "Richmond Flooring",
     price: "AED 220m²",
-    product:[
+    product: [
       {
         image: "/assets/categoryslider/Image.webp",
         name: "Polar Herringbone SPC",
@@ -396,44 +386,44 @@ export const flooringTypes: FlooringType[] = [
 
 
 export const footerData = {
-    company: {
-        name: 'easy floors',
-        description:
-            'Founded with a passion for quality and design. Easyfloors is committed to craftsmanship, customer satisfaction and great value for money.',
+  company: {
+    name: 'easy floors',
+    description:
+      'Founded with a passion for quality and design. Easyfloors is committed to craftsmanship, customer satisfaction and great value for money.',
+  },
+  links: [
+    {
+      title: 'SPC FLOORING',
+      items: ['Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Polar SPC Herringbone', 'Polar SPC'],
     },
-    links: [
-        {
-            title: 'SPC FLOORING',
-            items: ['Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Polar SPC Herringbone', 'Polar SPC'],
-        },
-        {
-            title: 'LVT FLOORING',
-            items: ['Richmond LVT Comfort', 'Richmond LVT Luxury', 'Polar LVT'],
-        },
-        {
-            title: 'RICHMOND FLOORING',
-            items: ['Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Richmond LVT Comfort', 'Richmond LVT Luxury'],
-        },
-        {
-            title: 'POLAR FLOORING',
-            items: ['Polar SPC', 'Polar SPC Herringbone', 'Polar LVT'],
-        },
-        {
-            title: 'ACCESSORIES',
-            items: ['SPC Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
-        },
-    ],
-    contact: {
-        address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',
-        phone: '+971 50 597 4385',
-        email: 'cs@easyfloors.ae',
+    {
+      title: 'LVT FLOORING',
+      items: ['Richmond LVT Comfort', 'Richmond LVT Luxury', 'Polar LVT'],
     },
-    social: [
-        { icon: FaFacebookF, link: '#' },
-        { icon: FaInstagram, link: '#' },
-        { icon: FaPinterestP, link: '#' },
-    ],
-    paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
+    {
+      title: 'RICHMOND FLOORING',
+      items: ['Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Richmond LVT Comfort', 'Richmond LVT Luxury'],
+    },
+    {
+      title: 'POLAR FLOORING',
+      items: ['Polar SPC', 'Polar SPC Herringbone', 'Polar LVT'],
+    },
+    {
+      title: 'ACCESSORIES',
+      items: ['SPC Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
+    },
+  ],
+  contact: {
+    address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',
+    phone: '+971 50 597 4385',
+    email: 'cs@easyfloors.ae',
+  },
+  social: [
+    { icon: FaFacebookF, link: '#' },
+    { icon: FaInstagram, link: '#' },
+    { icon: FaPinterestP, link: '#' },
+  ],
+  paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
 export const blocksData = [
   {
@@ -464,7 +454,7 @@ export const blocksData = [
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Rectangle1.png'},
+  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Rectangle1.png' },
   { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Rectangle2.png' },
   { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
 ];
@@ -548,7 +538,7 @@ export const categoryData: TCategoryData = {
   subtitle: "(Compare us)",
   description:
     "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
-  backgroundImage: "/assets/category/campare-us.png", 
+  backgroundImage: "/assets/category/campare-us.png",
 };
 export const HomeUserInfo = [
   {
@@ -662,7 +652,7 @@ export const faqs: FAQItem[] = [
 
 
 
-export const boxData:BoxData[] = [
+export const boxData: BoxData[] = [
   {
     id: 1,
     title: 'Need help with measurement?',
@@ -716,7 +706,7 @@ export const popupCards: CardData[] = [
   {
     id: 4,
     heading: "Richmond LVT <br /> Comfort",
-      content: [
+    content: [
       "Cras ornare tristique elit.",
       "Nunc dignissim risus id is",
       "Cras ornare tristique elit.",
@@ -840,9 +830,9 @@ export const collectionFeatures: CollectionFeature[] = [
 ];
 
 
-export const product=[
+export const product = [
   {
-    
+
     image: "/assets/categoryslider/Image.webp",
     name: "Polar Herringbone SPC - American Walnut",
     price: "Only AED 55/m²",

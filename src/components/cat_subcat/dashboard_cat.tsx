@@ -11,7 +11,7 @@ import revalidateTag from 'components/ServerActons/ServerAction';
 import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
-import { REMOVE_CATEGORY } from 'graphql/mutations/mutations';
+import { REMOVE_CATEGORY } from 'graphql/mutations';
 
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
@@ -211,7 +211,7 @@ const DashboardCat  = ({
             <p
               className={`${canAddCategory && 'cursor-pointer'} lg:p-2 md:p-2 ${
                 canAddCategory &&
-                'bg-black dark:bg-main dark:border-0 text-white rounded-md border   '
+                'bg-black dark:bg-primary dark:border-0 text-white rounded-md border   '
               } flex justify-center ${
                 !canAddCategory && 'cursor-not-allowed '
               }`}

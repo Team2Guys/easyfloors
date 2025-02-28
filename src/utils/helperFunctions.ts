@@ -1,12 +1,12 @@
 import axios from 'axios';
 import PRODUCTS_TYPES from 'types/type';
 import React from 'react';
-import { FILE_DELETION_MUTATION } from 'graphql/mutations/mutations';
+import { FILE_DELETION_MUTATION } from 'graphql/mutations';
 import { ProductImage } from 'types/prod';
 
 type setTotalProducts = React.Dispatch<React.SetStateAction<PRODUCTS_TYPES[]>>;
 type setTotalPage = React.Dispatch<React.SetStateAction<string | undefined>>;
-type setError = React.Dispatch<React.SetStateAction<any>>;
+type setError = React.Dispatch<React.SetStateAction<string | null>>;
 type setLoading = React.Dispatch<React.SetStateAction<boolean>>;
 
 export const ImageRemoveHandler = async (
@@ -40,7 +40,7 @@ throw error;
 
 export const getPaginatedproducts = async (page: number) => {
   try {
-    const response: any = await axios.get(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/getPaginateProducts?page=${page}`,
     );
     const products = response.data.products;
@@ -53,6 +53,7 @@ export const getPaginatedproducts = async (page: number) => {
       currentPage,
       totalProducts,
     };
+    //eslint-disable-next-line
   } catch (err: any) {
     if (err.response && err.response.data && err.response.data.message) {
       throw new Error(err.response.data.message);
@@ -70,17 +71,20 @@ export const getPRODUCTS = async (
   setLoading: setLoading,
   pageNumber: number,
   setTotalPage?: setTotalPage,
+  //eslint-disable-next-line
   setTotalProductscount?: any,
 ) => {
   try {
     setLoading(true);
-    const { products, totalPages, totalProducts }: any =
+    const { products, totalPages, totalProducts } =
       await getPaginatedproducts(pageNumber);
     setTotalProducts(products);
+    //eslint-disable-next-line
     setTotalPage && setTotalPage(totalPages);
+    //eslint-disable-next-line
     setTotalProductscount && setTotalProductscount(totalProducts);
+    //eslint-disable-next-line
   } catch (err: any) {
-    console.log(err, 'err');
     if (err.response && err.response.data && err.response.data.message) {
       setError(err.response.data.message);
     } else if (err.message) {

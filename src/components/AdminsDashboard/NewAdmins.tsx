@@ -5,7 +5,7 @@ import Loader from 'components/Loader/Loader';
 import Toaster from 'components/Toaster/Toaster';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { LabelInput } from '../ui/label-input';
-
+//eslint-disable-next-line
 const AddAdmin = ({ setselecteMenu }: any) => {
   const [error, setError] = useState<string | null | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -61,9 +61,13 @@ const AddAdmin = ({ setselecteMenu }: any) => {
           canDeleteCategory: false,
         });
       }
-    } catch (err: any) {
+    } catch (err) {
       console.log(err, 'err');
-      setError(err.message || JSON.stringify(err));
+      if (axios.isAxiosError(err)) {
+        setError(err.response?.data?.message || err.message);
+      } else {
+        setError(JSON.stringify(err));
+      }
     } finally {
       setLoading(false);
     }
@@ -118,7 +122,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
               type="checkbox"
               name="canAddProduct"
               checked={formData.canAddProduct}
-              onChange={(e: any) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData((prevData) => ({
                   ...prevData,
                   canAddProduct: e.target.checked,
@@ -135,7 +139,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
               type="checkbox"
               name="canDeleteProduct"
               checked={formData.canDeleteProduct}
-              onChange={(e: any) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData((prevData) => ({
                   ...prevData,
                   canDeleteProduct: e.target.checked,
@@ -152,7 +156,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
               type="checkbox"
               name="canAddCategory"
               checked={formData.canAddCategory}
-              onChange={(e: any) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData((prevData) => ({
                   ...prevData,
                   canAddCategory: e.target.checked,
@@ -168,7 +172,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
               type="checkbox"
               name="canDeleteCategory"
               checked={formData.canDeleteCategory}
-              onChange={(e: any) =>
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormData((prevData) => ({
                   ...prevData,
                   canDeleteCategory: e.target.checked,

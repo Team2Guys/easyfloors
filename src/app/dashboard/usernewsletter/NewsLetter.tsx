@@ -1,8 +1,8 @@
 'use client';
 
-import ViewNewsletter from 'components/Dashboard/Tables/ViewNewsletter';
+import ViewNewsletter from 'components/Dashboard/ViewNewsletter';
 import { useState } from 'react';
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
 

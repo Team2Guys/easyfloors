@@ -134,7 +134,7 @@ interface ChartOneState {
 }
 
 const ChartOne: React.FC = () => {
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  const { loggedInUser } = useAppSelector((state) => state.usersSlice);
 
   const AdminType = loggedInUser && loggedInUser.role === 'super-Admin';
   const [state, setState] = useState<ChartOneState | undefined>();
@@ -168,7 +168,7 @@ const ChartOne: React.FC = () => {
       const defaultArray = keys.map((key) => {
         return {
           name: key,
-          data: reports.map((report: any) => report[key] || 0),
+          data: reports.map((report: { [key: string]: number }) => report[key] || 0),
         };
       });
 

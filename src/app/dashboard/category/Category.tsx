@@ -1,13 +1,13 @@
 'use client';
 
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
 import { useState } from 'react';
-import Addcategory from 'components/AddCategory/Addcategory';
+import Addcategory from 'components/cat_subcat/Addcategory';
 ;
 import { Category } from 'types/cat';
-import DashboardCat from 'components/Dashboard/Tables/dashboard_cat';
+import DashboardCat from 'components/cat_subcat/dashboard_cat';
 
 const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   const [menuType, setMenuType] = useState<string>('Categories');

@@ -1,12 +1,12 @@
 import axios, { AxiosResponse } from 'axios';
 import React from 'react';
 
-type setTotalProducts = React.Dispatch<React.SetStateAction<any[]>>;
+type setTotalProducts = React.Dispatch<React.SetStateAction<{ id: string; name: string; }[]>>;
 type setTotalPage = React.Dispatch<React.SetStateAction<string | undefined>>;
-type setError = React.Dispatch<React.SetStateAction<any>>;
+type setError = React.Dispatch<React.SetStateAction<string | null>>;
 type setLoading = React.Dispatch<React.SetStateAction<boolean>>;
 
-export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
+export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => { //eslint-disable-line
   const formData = new FormData();
 
   if (files.length === 0) throw new Error('No files found');
@@ -15,7 +15,7 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
     for (const file of files) {
       formData.append('image', file);
     }
-
+    //eslint-disable-next-line
     const response: AxiosResponse<any> = await axios.post(
       `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE}/api/file-upload`,
       formData,
@@ -36,7 +36,7 @@ export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => {
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
-  setterFunction: any,
+  setterFunction: React.Dispatch<React.SetStateAction<{ public_id: string }[]>>, 
 ) => {
   // const requestConfig: AxiosRequestConfig = {
   //   data: { imageUrl: imagePublicId },
@@ -50,8 +50,8 @@ export const ImageRemoveHandler = async (
       `${process.env.NEXT_PUBLIC_PRODUCT_IMAGE}/api/file-upload/DelImage/${imagePublicId}`,
     );
     console.log('Image removed successfully:', response.data);
-    setterFunction((prev: any) =>
-      prev.filter((item: any) => item.public_id != imagePublicId),
+    setterFunction((prev) =>
+      prev.filter((item) => item.public_id != imagePublicId),
     );
   } catch (error) {
     console.error('Failed to remove image:', error);
@@ -60,20 +60,20 @@ export const ImageRemoveHandler = async (
 
 export const getPaginatedproducts = async (page: number) => {
   try {
-    let response: any = await axios.get(
+    const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/getPaginateProducts?page=${page}`,
     );
-    let products = response.data.products;
-    let totalPages = response.data.totalPages;
-    let currentPage = response.data.currentPage;
-    let totalProducts = response.data.totalProducts;
+    const products = response.data.products;
+    const totalPages = response.data.totalPages;
+    const currentPage = response.data.currentPage;
+    const totalProducts = response.data.totalProducts;
     return {
       products,
       totalPages,
       currentPage,
       totalProducts,
     };
-  } catch (err: any) {
+  } catch (err: any) {//eslint-disable-line
     if (err.response && err.response.data && err.response.data.message) {
       throw new Error(err.response.data.message);
     } else if (err.message) {
@@ -84,22 +84,22 @@ export const getPaginatedproducts = async (page: number) => {
   }
 };
 
-export let getPRODUCTS = async (
+export const getPRODUCTS = async (
   setTotalProducts: setTotalProducts,
   setError: setError,
   setLoading: setLoading,
   pageNumber: number,
   setTotalPage?: setTotalPage,
-  setTotalProductscount?: any,
+  setTotalProductscount?: any, //eslint-disable-line
 ) => {
   try {
     setLoading(true);
-    const { products, totalPages, totalProducts }: any =
+    const { products, totalPages, totalProducts } =
       await getPaginatedproducts(pageNumber);
     setTotalProducts(products);
-    setTotalPage && setTotalPage(totalPages);
-    setTotalProductscount && setTotalProductscount(totalProducts);
-  } catch (err: any) {
+    setTotalPage && setTotalPage(totalPages); //eslint-disable-line
+    setTotalProductscount && setTotalProductscount(totalProducts); //eslint-disable-line
+  } catch (err: any) { //eslint-disable-line
     console.log(err, 'err');
     if (err.response && err.response.data && err.response.data.message) {
       setError(err.response.data.message);

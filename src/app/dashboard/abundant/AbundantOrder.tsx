@@ -1,18 +1,18 @@
 'use client';
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import React, { useState } from 'react';
 import { formatDate } from 'config';
 import { LuView } from 'react-icons/lu';
 import OrderList from 'components/Orders/orders';
-import { IOrder, IProduct } from 'types/type';
+import { IOrder, IOrderProduct } from 'types/type';
 const AbundantOrder = ({
   abundantOrderData,
 }: {
   abundantOrderData: IOrder[];
 }) => {
   const [visible, setVisible] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState<IProduct[]>([]);
+  const [selectedProducts, setSelectedProducts] = useState<IOrderProduct[]>([]);
 
   const ordercolumns = [
     {
@@ -46,7 +46,7 @@ const AbundantOrder = ({
       title: 'View Products',
       dataIndex: 'view',
       key: 'view',
-      render: (text: any, record: any) => (
+      render: (text: string, record: IOrder) => (
         <span className="flex justify-center">
           <LuView
             onClick={() => handleViewProducts(record.products)}
@@ -58,7 +58,7 @@ const AbundantOrder = ({
     },
   ];
 
-  const handleViewProducts = (products: IProduct[]) => {
+  const handleViewProducts = (products: IOrderProduct[]) => {
     setSelectedProducts(products);
     setVisible(true);
   };

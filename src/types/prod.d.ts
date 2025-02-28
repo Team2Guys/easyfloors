@@ -1,5 +1,5 @@
-import React from "react";
-
+import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "./cat";
+import { AdditionalInformation } from "./type";
 
 
 export interface ProductImage {
@@ -9,12 +9,16 @@ export interface ProductImage {
     imageIndex?: number;
     Index?: string;
     size?: string;
-    color?: string;
+    color?: string | number;
     
   }
 
+export interface AdditionalInformation {
+   name: string, detail: string
+}
+
 export interface IProduct {
-    id: number;
+    id: number | string;
     name: string;
     price: number;
     description: string;
@@ -24,32 +28,34 @@ export interface IProduct {
     colors?: [];
     spacification?: specsDetails[];
     posterImageUrl: ProductImage;
-  
     productImages: ProductImage[];
     hoverImageUrl: ProductImage;
     AdditionalInformation: AdditionalInformation[];
     categoriesId: number;
-    categories?: ICategory[];
-    subcategories?: ICategory[];
-    sections?: [];
-    sortedSubcategories?: ICategory[];
-    sizes?: Sizes[];
-    filter?: Filter[];
-  
+    subCategory?: ISUBCATEGORY_EDIT;
     custom_url?:string
-    category?:ICategory[]
+    category?:EDIT_CATEGORY
     Meta_Title: string;
     Canonical_Tag: string;
     Meta_Description: string;
+    createdAt?:        Date    
+    updatedAt ?:          Date
+    
     
   }
 
 
-  export interface ADDPRODUCTFORMPROPS {
-    setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
-    EditInitialValues?: IProduct | undefined
-    EditProductValue?: IProduct | undefined;
-    setEditProduct?: React.Dispatch<React.SetStateAction<IProduct | undefined>>;
-    subCategories?: ICategory[];
-    categoriesList?: ICategory[];
+  export interface EDIT_PRODUCT_PROPS extends IProduct {
+    id?: number | string;
+    posterImageUrl?: ProductImage;
+    productImages?: ProductImage[];
+    hoverImageUrl?: ProductImage;
+    categoriesId?: number;
+    category?:string;
+    subcategory?:string;
+    custom_url:string
+
   }
+
+
+ 

@@ -6,7 +6,16 @@
 // import { loggedInAdminAction } from 'redux/slices/Admin/AdminsSlice';
 // import axios from 'axios';
 // import Cookies from 'js-cookie';
+// import React, { useState, useEffect } from 'react';
+// import { useRouter } from 'next/navigation';
+// import Loader from 'components/Loader/Loader';
+// import { useAppDispatch } from 'components/Others/HelperRedux';
+// import { loggedInAdminAction } from 'redux/slices/Admin/AdminsSlice';
+// import axios from 'axios';
+// import Cookies from 'js-cookie';
 
+
+ 
 
 //eslint-disable-next-line
 function ProtectedRoute(WrappedComponent: any) {
@@ -54,7 +63,13 @@ function ProtectedRoute(WrappedComponent: any) {
     //   const token = Cookies.get('2guysAdminToken');
     //   const superAdmintoken = Cookies.get('superAdminToken');
     //   const Finaltoken = superAdmintoken ? superAdmintoken : token;
+    // useEffect(() => {
+    //   const token = Cookies.get('2guysAdminToken');
+    //   const superAdmintoken = Cookies.get('superAdminToken');
+    //   const Finaltoken = superAdmintoken ? superAdmintoken : token;
 
+    //   AddminProfileTriggerHandler(Finaltoken, superAdmintoken ? true : false);
+    // }, [router]);
     //   AddminProfileTriggerHandler(Finaltoken, superAdmintoken ? true : false);
     // }, [router]);
 

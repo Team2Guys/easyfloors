@@ -4,8 +4,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import Loader from 'components/Loader/Loader';
 import Cookies from 'js-cookie';
 
-function UseAuth(WrappedComponent: any) {
-  const Wrapper = (props: any) => {
+function UseAuth(WrappedComponent: React.ComponentType<any>) {  //eslint-disable-line
+  const Wrapper = (props: React.ComponentProps<typeof WrappedComponent>) => {
     const router = useRouter();
     const [loading, setLoading] = useState<boolean>(true);
     const usePathName = usePathname();

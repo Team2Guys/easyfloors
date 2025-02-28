@@ -75,7 +75,7 @@ interface ChartTwoState {
 }
 
 const ChartTwo: React.FC = () => {
-  const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
+  const { loggedInUser } = useAppSelector((state) => state.usersSlice);
   const [state, setState] = useState<ChartTwoState | undefined>();
   const [loading, setLoading] = useState(true);
 
@@ -102,17 +102,17 @@ const ChartTwo: React.FC = () => {
       const defaultArray = [
         {
           name: 'Revenue',
-          data: reports.map((item: any) => item.revenue),
+          data: reports.map((item: { revenue: number; total_sold_product: number }) => item.revenue),
         },
         {
           name: 'Sold Products',
-          data: reports.map((item: any) => item.total_sold_product),
+          data: reports.map((item: { revenue: number; total_sold_product: number }) => item.total_sold_product),
         },
       ];
 
       setState({ series: defaultArray });
       setLoading(false);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err, 'err');
       setLoading(false);
     }

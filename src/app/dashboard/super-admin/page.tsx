@@ -1,13 +1,15 @@
 'use client';
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
-import DefaultLayout from 'components/Dashboard/Layouts/DefaultLayout';
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import AllAdmin from 'components/SuperAdmin/AllAdmin/AllAdmin';
 import CreateAdmin from 'components/SuperAdmin/CreateAdmin/CreateAdmin';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
+import { Admin } from 'types/type';
 const SuperAdmin = () => {
-  const [editAdmin, setEditAdmin] = useState<any | undefined>();
+
+  const [editAdmin, setEditAdmin] = useState<Admin | undefined>();
   const [selecteMenu, setselecteMenu] = useState<string | null | undefined>(
     'AllAdmin',
   );
@@ -20,7 +22,7 @@ const SuperAdmin = () => {
     console.log('toke super admin' + superAdminToken);
   }, [Navigate]);
 
-  const EditInitialValues: any = {
+  const EditInitialValues: Admin = {
     fullname: editAdmin?.fullname,
     email: editAdmin?.email,
     password: editAdmin?.password,
@@ -56,7 +58,7 @@ const SuperAdmin = () => {
               setEditProduct={setEditAdmin}
               EditAdminValue={
                 EditInitialValues &&
-                (EditInitialValues.name !== undefined ||
+                (EditInitialValues.fullname !== undefined ||
                   EditInitialValues.email !== undefined)
                   ? EditInitialValues
                   : undefined

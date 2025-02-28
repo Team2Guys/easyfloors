@@ -20,7 +20,7 @@ const DashboardLogin = () => {
     password: '',
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: any) => { //eslint-disable-line
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -62,7 +62,7 @@ const DashboardLogin = () => {
       setTimeout(() => {
         router.push('/dashboard');
       }, 1000);
-    } catch (err: any) {
+    } catch (err: any) { //eslint-disable-line
       console.log(err, 'err');
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);

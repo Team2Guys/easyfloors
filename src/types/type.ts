@@ -1,5 +1,5 @@
 import { FormEventHandler, SetStateAction } from "react";
-import { IProduct, ProductImage } from "./prod";
+import { IProduct } from "./prod";
 
 export interface Feature {
   icon: string;
@@ -170,13 +170,6 @@ export interface specsDetails {
   specsDetails: string;
 }
 
-
-export interface AdditionalInformation {
-  key?: string;
-  value?: string;
-  colors?: string[];
-  dimension?: string[];
-}
 export interface ICategory {
   id: number;
   name: string;
@@ -235,22 +228,6 @@ export interface IPaymentStatus {
 }
 
 
-export interface SubCategoryComponentProps_dashboard {
-  subCategories: SubCategory[];
-  cetagories: ICategory[];
-}
-
-export interface SubCategory {
-  name: string;
-  description?: string;
-  meta_title?: string;
-  meta_description?: string;
-  canonical_tag?: string;
-  images_alt_text?: string;
-  categoriesId: number[];
-  custom_url?: string
-}
-
 export interface modelDetails { name: string; detail: string };
 export interface spacification { specsDetails: string };
 
@@ -275,69 +252,12 @@ export interface FormValues {
   price?: string;
   AdditionalInformation?: [];
 }
-export interface IProductAdd {
-  name: string;
-  price: number;
-  description: string;
-  stock: number;
-  discountPrice: number;
-  posterImageUrl: string;
-  posterImagePublicId: string;
-  hoverImageUrl: string;
-  hoverImagePublicId: string;
-  productImages: ProductImage[];
-  spacification: Array<{ specsDetails: string; _id: string }>;
-  sizes?: string[];
-  AdditionalInformation: AdditionalInformation[];
-  categories: number[];
-  subcategories: number[];
-  Images_Alt_Text: string;
-  sale_counter?: string;
-  filters?: any[];
-  custom_url?: string
-}
-
-export interface product {
-  posterImageUrl: { public_id: string; imageUrl: string; altText: string };
-  hoverImageUrl: { public_id: string; imageUrl: string; altText: string };
-  _id: string;
-  name: string;
-  description: string;
-  salePrice: number;
-  purchasePrice: number;
-  category: string;
-  imageUrl: Array<{
-    public_id: string;
-    imageUrl: string;
-    _id: string;
-    altText: string;
-  }>;
-  discountPrice: number;
-  colors: Array<{ colorName: string; _id: string }>;
-  modelDetails: Array<{ name: string; detail: string; _id: string }>;
-  spacification: Array<{ specsDetails: string; _id: string }>;
-  createdAt: string;
-  starRating: string;
-  reviews: string;
-  productImages?: any;
-  AdditionalInformation?: any;
-  sizes: Array<string>;
-  stock?: string;
-  updatedAt: string;
-  price: string;
-  __v: number;
-  code: string;
-  Meta_Title: string;
-  Meta_Description: string;
-  URL: string;
-  Canonical_Tag: string;
-}
 
 export interface USRPROPS {
   handleSubmit: FormEventHandler<HTMLFormElement>;
   error: string | null | undefined;
   loading: boolean | null | undefined;
-  inputFields: any;
+  inputFields: any;  
   buttonTitle: string;
   title?: string;
   descrition?: string;
@@ -345,39 +265,10 @@ export interface USRPROPS {
   routingText?: string;
   navigationLink?: string;
   navigationTxt?: string;
-  SelectComonent?: any;
+  SelectComonent?: any;  
   setadminType?: React.Dispatch<SetStateAction<string | undefined>>;
   adminType?: string | undefined;
 }
-interface PRODUCTS_TYPES {
-  _id?: any;
-  name: string;
-  posterImageUrl?: ProductImage;
-  hoverImageUrl?: ProductImage;
-  description?: string;
-  salePrice?: number;
-  purchasePrice?: number;
-  category?: string;
-  imageUrl?: IMAGE_INTERFACE[];
-  discountPrice?: any;
-  colors?: Color[];
-  modelDetails?: ModelDetail[];
-  spacification?: Specification[];
-  createdAt: Date;
-  updatedAt: Date;
-  starRating?: string;
-  reviews?: string;
-  totalStockQuantity?: number;
-  sizes?: sizes[];
-  isFeatured?: any;
-  price?: number;
-  count?: any;
-  length?: any;
-  totalPrice?: any;
-}
-
-export default PRODUCTS_TYPES;
-
 interface ModelDetail {
   name?: string;
   detail?: string;
@@ -392,4 +283,55 @@ interface sizes {
 
 interface Color {
   colorName?: string;
+}
+
+export interface Admin {
+  fullname?: string;
+  email?: string;
+  password?: string;
+  canAddCategory?: boolean;
+  canAddProduct?: boolean;
+  canCheckProfit?: boolean;
+  canCheckRevenue?: boolean;
+  canCheckVisitors?: boolean;
+  canDeleteCategory?: boolean;
+  canDeleteProduct?: boolean;
+  canEditCategory?: boolean;
+  canEditProduct?: boolean;
+  canVeiwAdmins?: boolean;
+  canViewSales?: boolean;
+  canVeiwTotalCategories?: boolean;
+  canVeiwTotalproducts?: boolean;
+  canViewUsers?: boolean;
+}
+
+export interface AdminRecord {
+  _id: string;
+  id: string;
+  fullname: string;
+  email: string;
+  canAddProduct: boolean;
+  canDeleteProduct: boolean;
+  canAddCategory: boolean;
+  canDeleteCategory: boolean;
+  canCheckProfit: boolean;
+  canViewUsers: boolean;
+}
+export interface IOrderList {
+  orderData: IOrder[];
+  orderColumns: Array<{ title: string; dataIndex: string; key: string }>;
+  visible: boolean;
+  /* eslint-disable */
+  setVisible: (value: boolean) => void;
+  /* eslint-enable */
+  selectedProducts: Array<{
+    id: string;
+    productData: {
+      posterImageUrl: string;
+      name: string;
+      price: number;
+      currency: string;
+    };
+    quantity: number;
+  }>;
 }
