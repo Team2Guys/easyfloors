@@ -2,14 +2,16 @@
 
 import React, { useState } from 'react';
 
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Toaster from 'components/Toaster/Toaster';
 import { useAppDispatch } from 'components/Others/HelperRedux';
-import { loggedInAdminAction } from 'redux/slices/Admin/AdminsSlice';
+import { loggedInAdminAction } from "../../../../redux/slices/Admin/AdminsSlice";
 import USRcomponent from 'components/userComponent/userComponent';
 import { IoIosLock, IoMdMail } from 'react-icons/io';
 import NoneAuth from 'hooks/None-AuthHook'
+import { useMutation } from '@apollo/client';
+import { ADMIN_LOGIN } from 'graphql/mutations';
+import Cookies from 'js-cookie';
 
 const DashboardLogin = () => {
   const router = useRouter();
@@ -30,9 +32,10 @@ const DashboardLogin = () => {
 
   const [formData, setFormData] = useState(intialvalue);
 
-  const [error, setError] = useState<string | null | undefined>();
-  const [loading, setloading] = useState<boolean | null | undefined>(false);
+  const [loginError, setError] = useState<string | null | undefined>();
   const [adminType, setadminType] = useState<string | undefined>('Admin');
+
+  const [adminLogin, {loading}] = useMutation(ADMIN_LOGIN);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,20 +44,26 @@ const DashboardLogin = () => {
       return setError('All fields are rquired');
     }
     try {
-      setloading(true);
+
+      const {email, password} = formData
+
       const url =
         adminType == 'Admin'
           ? '/api/admin/login'
           : '/api/admin/superadmin-login';
 
-      const user = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + url,
-        formData,
+          const response = await adminLogin({
+            variables: { email, password },
+          });
+      dispatch(loggedInAdminAction(response.data.adminLogin));
+      Cookies.set(
+        adminType == 'Admin' ? '2guysAdminToken' : 'superAdminToken',
+        response.data.adminLogin.token,
+        {
+          expires: 24 * 60 * 60 * 1000,
+        },
       );
-      console.log(user.data, 'user');
-      setloading(false);
-      dispatch(loggedInAdminAction(user.data.user));
-
+      console.log(url, "url") //eslint-disable-line
 
       setFormData(intialvalue);
       Toaster('success', 'You have sucessfully login');
@@ -63,7 +72,7 @@ const DashboardLogin = () => {
         router.push('/dashboard');
       }, 1000);
     } catch (err: any) { //eslint-disable-line
-      console.log(err, 'err');
+    
       if (err.response && err.response.data && err.response.data.message) {
         setError(err.response.data.message);
       } else if (err.message) {
@@ -71,8 +80,7 @@ const DashboardLogin = () => {
       } else {
         setError('An unexpected error occurred.');
       }
-    } finally {
-      setloading(false);
+      throw err;
     }
   };
 
@@ -103,7 +111,7 @@ const DashboardLogin = () => {
     <div>
         <USRcomponent
           handleSubmit={handleSubmit}
-          error={error}
+          error={loginError}
           loading={loading}
           inputFields={inputFields}
           title="Sign In as Admin"

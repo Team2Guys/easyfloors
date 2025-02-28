@@ -7,6 +7,8 @@ import NeedHelp from './NeedHelp/NeedHelp';
 import { ApolloProvider } from '@apollo/client';
 import client from 'config/apolloClient';
 
+
+
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
 
@@ -42,7 +44,7 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
     </>
 
 
-    </ApolloProvider>
+    </ApolloProvider> 
   );
 };
 

@@ -37,7 +37,9 @@ export const fetchSubCategories = async (): Promise<ICategory[]> => {
     })
     return data?.subCategories || []
   } catch (error) {
-    throw error
+return []
+throw error
+
   }
 };
 

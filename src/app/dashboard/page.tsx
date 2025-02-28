@@ -1,4 +1,4 @@
-import { get_all_records } from "config/fetch";
+
 import DashboardMain from "./DashboardMain";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -13,10 +13,8 @@ async function Home() {
   if (!finalToken) {
     redirect('/dashboard/Admin-login');
   }
-  const headers = {
-    token: finalToken,
-  };
-  const records = await get_all_records(headers);
+ /* eslint-disable */
+  const records:any = [] //eslint-
   return (
     <Suspense fallback={<Loader />}>
         <DashboardMain records={records} />

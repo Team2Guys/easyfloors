@@ -69,8 +69,10 @@ export default function UserComponent({
                       />
                     ))}
                     {error ? (
+                      
                       <div className="flex justify-center text-red-500">
-                        {error}
+                        
+                        {JSON.stringify(error)  || error } 
                       </div>
                     ) : null}
                     <p className="pt-1 ">

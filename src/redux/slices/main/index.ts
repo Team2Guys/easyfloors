@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { initMainState, initProductState } from './init';
-import { IProduct } from 'types/type';
+import { IProduct } from 'types/prod';
 
 const MainSlice = createSlice({
   name: 'main',

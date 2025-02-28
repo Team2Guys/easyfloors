@@ -9,7 +9,7 @@ interface ProvidersProps {
 }
 const queryClient = new QueryClient();
 
-const Providers: React.FC<ProvidersProps> = ({ children }) => {
+const Customprovider: React.FC<ProvidersProps> = ({ children }) => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -21,4 +21,4 @@ const Providers: React.FC<ProvidersProps> = ({ children }) => {
   );
 };
 
-export default Providers;
+export default Customprovider;

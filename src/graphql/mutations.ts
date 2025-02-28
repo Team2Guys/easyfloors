@@ -95,3 +95,33 @@ export const REMOVE_PRODUCT = gql`
     }
   }
 `;
+
+
+
+
+export const ADMIN_LOGIN = gql`
+  mutation AdminLogin($email: String!, $password: String!) {
+    adminLogin(AdminLogin: { email: $email, password: $password }) {
+      id
+      fullname
+      email
+      canAddProduct
+      canEditProduct
+      canDeleteProduct
+      canAddCategory
+      canDeleteCategory
+      canEditCategory
+      canCheckProfit
+      canCheckRevenue
+      canCheckVisitors
+      canViewUsers
+      canViewSales
+      canVeiwAdmins
+      canVeiwTotalproducts
+      canVeiwTotalCategories
+      posterImageUrl
+      role
+      token
+    }
+  }
+`;

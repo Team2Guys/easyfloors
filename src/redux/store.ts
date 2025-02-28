@@ -2,9 +2,7 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import mainReducer, { productReducer } from './slices/main';
-import cartReducer from './slices/cart/index';
 import drawerReducer from './slices/drawer/index';
-import { initCartState } from './slices/cart/init';
 import { initCartDrawerState } from './slices/drawer/init';
 import usrSlice from './slices/user/userSlice';
 import usersSlice from './slices/Admin/AdminsSlice';
@@ -17,17 +15,15 @@ const persistConfig = {
   migrate: (state: any) => { //eslint-disable-line
     const { _persist = {} } = state || {};
     const main = { ...initMainState, ...(state?.main || {}) };
-    const cart = { ...initCartState, ...(state?.cart || {}) };
     // const products = { ...initProductState, ...(state?.products || {}) };
     const drawer =
       typeof state?.drawer === 'boolean' ? state.drawer : initCartDrawerState;
-    return Promise.resolve({ _persist, main, cart, drawer });
+    return Promise.resolve({ _persist, main, drawer });
   },
 };
 
 const rootReducer = combineReducers({
   main: mainReducer,
-  cart: cartReducer,
   drawer: drawerReducer,
   products: productReducer,
   usrSlice: usrSlice,

@@ -80,6 +80,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         </Link>
 
         <button
+        /* eslint-disable */
+        //@ts-ignore
           ref={trigger}
           onClick={() => setSidebarOpen(!sidebarOpen)}
           aria-controls="sidebar"
