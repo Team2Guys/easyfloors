@@ -16,10 +16,13 @@ import NewsLetter from './NewsLetter';
 
 const UserNewsletter = async () => {
   /* eslint-disable */
+
   const newsLetters:any = []
   
   // await productHandler();
   return <NewsLetter newsLetters={newsLetters} />;
 };
+
+
 
 export default UserNewsletter;
