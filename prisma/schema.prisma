@@ -79,3 +79,30 @@ model subCategories {
   custom_url        String
   Recall_subCat      String?
 }
+
+
+
+model Admins {
+  id                     Int     @id @default(autoincrement())
+  fullname               String
+  email                  String  @unique
+  password               String
+  canAddProduct          Boolean @default(false)
+  canEditProduct         Boolean @default(false)
+  canDeleteProduct       Boolean @default(false)
+  canAddCategory         Boolean @default(false)
+  canDeleteCategory      Boolean @default(false)
+  canEditCategory        Boolean @default(false)
+  canCheckProfit         Boolean @default(false)
+  canCheckRevenue        Boolean @default(false)
+  canCheckVisitors       Boolean @default(false)
+  canViewUsers           Boolean @default(false)
+  canViewSales           Boolean @default(false)
+  canVeiwAdmins          Boolean @default(false)
+  canVeiwTotalproducts   Boolean @default(false)
+  canVeiwTotalCategories Boolean @default(false)
+  posterImageUrl         Json?
+  role                   String  @default("Admin")
+}
+
+

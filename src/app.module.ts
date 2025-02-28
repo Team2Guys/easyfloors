@@ -7,6 +7,7 @@ import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
 import { SubCategoriesModule } from './sub_categories/sub_categories.module';
 import { FileUploadingModule } from './file_uploading/file_uploading.module';
+import { AdminsModule } from './admins/admins.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { FileUploadingModule } from './file_uploading/file_uploading.module';
     CategoriesModule,
     SubCategoriesModule,
     FileUploadingModule,
+    AdminsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
