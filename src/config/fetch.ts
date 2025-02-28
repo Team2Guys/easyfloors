@@ -12,21 +12,20 @@ export const fetchProducts = async () => {
 
     return data?.products || [];
   } catch (error) {
+    return []
     throw error;
   }
 };
-
-
-
 export const fetchCategories = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_CATEGORIES,
     });
-    
+
     return data?.categories || [];
   } catch (error) {
-    return error;
+    return []
+    throw error;
   }
 };
 
@@ -37,8 +36,8 @@ export const fetchSubCategories = async (): Promise<ICategory[]> => {
     })
     return data?.subCategories || []
   } catch (error) {
-return []
-throw error
+    return []
+    throw error
 
   }
 };
