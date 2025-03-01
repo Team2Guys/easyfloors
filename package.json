@@ -19,6 +19,7 @@
     "apexcharts": "^4.5.0",
     "axios": "^1.7.9",
     "formik": "^2.4.6",
+    "graphql": "^16.10.0",
     "js-cookie": "^3.0.5",
     "next": "15.1.7",
     "react": "^19.0.0",
