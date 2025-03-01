@@ -2,6 +2,7 @@
 import Breadcrumb from 'components/Reusable/breadcrumb'
 import React from 'react'
 import { useParams } from 'next/navigation'
+import Container from 'components/common/container/Container'
 
 const Product = () => {
   const params = useParams<{ slug: string; subcategory: string,product:string }>();
@@ -15,7 +16,12 @@ const Product = () => {
   return (
     <div>
       <Breadcrumb title={title} slug={category} subcategory={subcategory} />
-      Product
+    
+    <Container className='flex gap-5 w-full'>
+      <div className='w-[60%]'>
+
+      </div>
+    </Container>
     </div>
   )
 }
