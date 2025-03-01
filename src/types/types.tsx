@@ -12,6 +12,8 @@ export interface SocialLink {
   export interface BreadcrumbProps  {
     title?: string;
     image?: string;
+    slug?: string;
+    subcategory?: string;
   };
   export interface TextInputProps {
     label: string;
