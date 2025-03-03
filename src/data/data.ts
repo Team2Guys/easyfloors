@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, TBlogCard, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, SocialLink } from "types/types";
+import { FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -936,4 +936,50 @@ export const faqspage: FAQ[] = [
   { question: "Is my personal data secure?", answer: "Yes, we use advanced encryption for data security." },
   { question: "Can I track my order?", answer: "Yes, we provide tracking details once shipped." },
   { question: "What happens if I receive a damaged product?", answer: "Contact us immediately for a replacement." },
+];
+
+export const alternatingData: TAboutUs[] = [
+  {
+    id: 1,
+    image: "/assets/images/aboutus/about2.png",
+    alt: "First Image",
+    heading: "A satisfactory flooring is our glory",
+    paragraph: "Donec sed lorem dapibus, posuere dui eget, molestie ante. Vivamus aliquam gravida nibh, et aliquam risus fringilla aliquam. Cras ornare ac sem ut malesuada. Nulla ut sodales magna. Quisque venenatis sapien vulputate pellentesque.",
+  },
+  {
+    id: 2,
+    image: "/assets/images/aboutus/about3.png",
+    alt: "Second Image",
+    heading: "Best flooring at affordable prices",
+    paragraph: "Morbi in risus in nisi eleifend convallis. Etiam pretium varius quam in aliquam. Curabitur malesuada elit sed enim placerat, vitae interdum erat cursus. Morbi laoreet sapien id scelerisque dapibus. Aliquam purus erat volutpat.",
+  },
+  {
+    id: 3,
+    image: "/assets/images/aboutus/about1.png",
+    alt: "Third Image",
+    heading: "Flooring that meets your needs",
+    paragraph: "Nunc consequat nibh ut pretium vestibulum. Nulla facilisi. Cras porttitor lacus dolor, quis tincidunt nisl vestibulum at. Mauris tristique diam ex, eget dignissim enim scelerisque non. Pellentesque aliquam nulla nisi, id tristique",
+  },
+];
+
+
+export const sampleGridData: SampleGridData[] = [
+  {
+    id: 1,
+    title: "Order 5 free samples",
+    description:
+      "Order as many free samples as you like to find your style! Free next-day delivery included.",
+    buttonText: "Order free samples",
+    image: "/assets/images/aboutus/order-free-sample.png",
+    alt: "Free sample order",
+  },
+  {
+    id: 2,
+    title: "Discover your new favourite floor",
+    description:
+      "Need some advice? Request a callback to speak to one of our friendly flooring experts.",
+    buttonText: "Request a callback",
+    image: "/assets/images/aboutus/request-call-back.png",
+    alt: "Free sample order",
+  },
 ];
