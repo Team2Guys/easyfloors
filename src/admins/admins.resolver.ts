@@ -1,8 +1,14 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { AdminsService } from './admins.service';
 import { Admin, admin_with_token } from './entities/admin.entity';
 import { Admin_login, CreateAdminInput } from './dto/create-admin.input';
 import { UpdateAdminInput } from './dto/update-admin.input';
+import { Response } from 'express'; // Import Response from Express
+import { Public } from 'decorators/public.decorator';
+import { AuthenticatedRequest } from 'type/express';
+// import { UseGuards } from '@nestjs/common';
+// import { AuthGuard } from 'gaurds/auth.guard';
+
 
 @Resolver(() => Admin)
 export class AdminsResolver {
@@ -19,23 +25,23 @@ export class AdminsResolver {
   }
 
   @Query(() => Admin, { name: 'admin' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.adminsService.findOne(id);
+  findOne(@Context('req') req:AuthenticatedRequest) {
+    return this.adminsService.findOne(req);
   }
 
   @Mutation(() => Admin)
   updateAdmin(@Args('updateAdminInput') updateAdminInput: UpdateAdminInput) {
-    return this.adminsService.update(updateAdminInput.id, updateAdminInput);
+    return this.adminsService.update(+updateAdminInput.id, updateAdminInput);
   }
 
   @Mutation(() => Admin)
   removeAdmin(@Args('id', { type: () => Int }) id: number) {
     return this.adminsService.remove(id);
   }
-
+  @Public()
   @Mutation(() => admin_with_token)
-  adminLogin(@Args('AdminLogin') Admin_login:Admin_login) {
-    return this.adminsService.AdminLogin(Admin_login);
+  adminLogin(@Args('AdminLogin') Admin_login:Admin_login,@Context('res') res:Response) {
+    return this.adminsService.AdminLogin(Admin_login, res);
   }
 
 

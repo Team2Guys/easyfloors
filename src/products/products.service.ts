@@ -59,6 +59,7 @@ console.log(updateData, "updateProductInput")
         },
       });
     } catch (error) {
+        console.log(error, 'erro')
       if (error instanceof PrismaClientKnownRequestError && error.code === 'P2025') {
         throw new NotFoundException(`Product with ID ${id} not found`);
       }

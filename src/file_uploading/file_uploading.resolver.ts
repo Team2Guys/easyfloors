@@ -4,7 +4,6 @@ import { FileUploading } from './entities/file_uploading.entity';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { UpdateFileUploadingInput } from './dto/update-file_uploading.input';
 
-
 @Resolver(() => FileUploading)
 export class FileUploadingResolver {
   constructor(private readonly fileUploadingService: FileUploadingService) {}
@@ -14,7 +13,6 @@ export class FileUploadingResolver {
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload) {
    return this.fileUploadingService.create(file);
   }
-
 
   @Mutation(() => Boolean)
     async DeleteImage(@Args('RemoveUImage') updatedImageInput: UpdateFileUploadingInput) {

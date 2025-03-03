@@ -4,6 +4,9 @@ import { UpdateAdminInput } from './dto/update-admin.input';
 import { customHttpException } from '../utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
 import * as jwt from 'jsonwebtoken';
+import { Request, Response } from 'express'; // Import Response from Express
+import { AuthenticatedRequest } from 'type/express';
+
 
 
 @Injectable()
@@ -24,7 +27,7 @@ export class AdminsService {
     }
   }
 
-  async AdminLogin(loginData: Admin_login) {
+  async AdminLogin(loginData: Admin_login, res:Response) {
     const { email, password } = loginData;
     try {
       const existingUser = await this.prisma.admins.findFirst({
@@ -40,11 +43,17 @@ export class AdminsService {
         if (!isPasswordValid)
           throw new UnauthorizedException('Invalid username or password');
 
-        const token = jwt.sign({ email: email }, process.env.TOKEN_SECRET, {
+      
+        const { password: _, ...userWithoutPassword } = existingUser;
+        const token = jwt.sign({ userWithoutPassword }, process.env.TOKEN_SECRET, {
           expiresIn: '24h',
         });
-        const { password: _, ...userWithoutPassword } = existingUser;
-console.log(userWithoutPassword, "userdata")
+        res.cookie('admin_access_token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production', // Enable only in production
+          sameSite: 'lax',
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
         return {
           ...userWithoutPassword,
           token,
@@ -70,8 +79,10 @@ console.log(userWithoutPassword, "userdata")
     };
   }
 
-  async findOne(id: number) {
+  async findOne(req: AuthenticatedRequest) {
+    const id = req?.user?.userWithoutPassword?.id
     try {
+      console.log(req.user.userWithoutPassword.id, "id")
       return await this.prisma.admins.findUnique({ where: { id } })
     } catch (error) {
       return customHttpException(error.message,

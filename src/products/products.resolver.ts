@@ -1,8 +1,11 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { ProductsService } from './products.service';
 import { Product } from './entities/product.entity';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
+import { UseGuards } from '@nestjs/common';
+import { AuthGuard } from '../gaurds/auth.guard';
+import { Public } from 'decorators/public.decorator';
 
 @Resolver(() => Product)
 export class ProductsResolver {
@@ -13,11 +16,13 @@ export class ProductsResolver {
     return this.productsService.create(createProductInput);
   }
 
+  @Public()
   @Query(() => [Product], { name: 'products' })
-  findAll() {
+  findAll(@Context('req') req) {
     return this.productsService.findAll();
   }
 
+  @Public()
   @Query(() => Product, { name: 'product' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.productsService.findOne(id);

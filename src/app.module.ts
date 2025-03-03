@@ -8,6 +8,8 @@ import { CategoriesModule } from './categories/categories.module';
 import { SubCategoriesModule } from './sub_categories/sub_categories.module';
 import { FileUploadingModule } from './file_uploading/file_uploading.module';
 import { AdminsModule } from './admins/admins.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'gaurds/auth.guard';
 
 @Module({
   imports: [
@@ -17,7 +19,7 @@ import { AdminsModule } from './admins/admins.module';
       autoSchemaFile:true,
       csrfPrevention: false,
       playground: true,
-
+      context: ({ req, res }) => ({ req, res }),
 
     }),
     ProductsModule,
@@ -27,6 +29,9 @@ import { AdminsModule } from './admins/admins.module';
     AdminsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {
+    provide: APP_GUARD,
+    useClass: AuthGuard, // ✅ Register AuthGuard globally
+  },],
 })
 export class AppModule { }
