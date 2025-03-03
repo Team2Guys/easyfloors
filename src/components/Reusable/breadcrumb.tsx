@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BreadcrumbProps } from "types/types";
+import Container from "components/common/container/Container";
 
 const Breadcrumb = ({ title, image = "", slug, subcategory }: BreadcrumbProps) => {
   return (
@@ -20,7 +21,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory }: BreadcrumbProps) =
       <div className={`flex flex-col px-4 font-inter ${!image ? "bg-background text-black py-2" : "text-white absolute inset-0 justify-center text-center items-center "}`}>
         {!slug && !subcategory && title && <h1 className="text-30 md:text-[42.6px]">{title}</h1>}
         {title && (
-          <nav className=" text-lg flex items-center gap-2 ">
+          <Container className=" text-lg flex items-center gap-2 ">
             {/* Home Link */}
             <Link href="/" className="hover:underline text-12 md:text-14 text-[#9F9F9F] font-inter">
               Home
@@ -58,7 +59,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory }: BreadcrumbProps) =
             ) : (
               <span className="text-12 md:text-14">{title}</span>
             )}
-          </nav>
+          </Container>
         )}
       </div>
     </div>
