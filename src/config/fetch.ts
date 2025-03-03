@@ -8,6 +8,12 @@ export const fetchProducts = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_PRODUCTS,
+      fetchPolicy: "network-only", 
+      context: {
+        fetchOptions: {
+          credentials: "include", // ✅ Send cookies
+        },
+      },
     });
 
     return data?.products || [];
@@ -20,6 +26,7 @@ export const fetchCategories = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_CATEGORIES,
+    
     });
 
     return data?.categories || [];

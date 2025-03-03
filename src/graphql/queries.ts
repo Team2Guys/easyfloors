@@ -119,4 +119,14 @@ query SubCategories {
     `
 
 
-
+    export const GET_ADMIN_DETAILS = gql`
+    query GetAdmin {
+      admin {
+        id
+        name
+        email
+        role
+        createdAt
+      }
+    }
+  `;
