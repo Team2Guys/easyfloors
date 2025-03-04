@@ -53,7 +53,7 @@ export class AdminsService {
           secure: process.env.NODE_ENV === 'production', // Enable only in production
           sameSite: 'lax',
           maxAge: 24 * 60 * 60 * 1000, // 24 hours
-          domain: '.vercel.app'
+          domain: 'easyfloors.vercel.app'
         });
         return {
           ...userWithoutPassword,
