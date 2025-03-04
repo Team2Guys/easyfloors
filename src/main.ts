@@ -2,10 +2,8 @@ import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { graphqlUploadExpress } from 'graphql-upload';
 
-import * as cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser';
 import { AuthGuard } from './gaurds/auth.guard';
-// somewhere in your initialization file
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 5 }));
@@ -21,7 +19,7 @@ async function bootstrap() {
   });
 
   app.use(cookieParser());
-  app.useGlobalGuards(new AuthGuard(new Reflector())); // ✅ Apply global AuthGuard
+  app.useGlobalGuards(new AuthGuard(new Reflector()));
 
   await app.listen(process.env.PORT ?? 3200);
 }
