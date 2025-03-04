@@ -49,7 +49,7 @@ export class AdminsService {
           expiresIn: '24h',
         });
         res.cookie('admin_access_token', token, {
-          httpOnly: true,
+          httpOnly: false,
           secure: process.env.NODE_ENV === 'production', // Enable only in production
           sameSite: 'none',
           maxAge: 24 * 60 * 60 * 1000, // 24 hours
