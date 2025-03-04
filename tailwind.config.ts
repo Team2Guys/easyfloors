@@ -12,6 +12,7 @@ export default {
     extend: {
       screens: {
         '3xl': '1800px',
+        'xs': '375px',
       },
       fontFamily: {
         inter: ["var(--font-Inter)", ...fontFamily.sans],

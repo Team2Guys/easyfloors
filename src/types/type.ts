@@ -1,5 +1,6 @@
 import { FormEventHandler, SetStateAction } from "react";
 import { IProduct } from "./prod";
+import { StaticImageData } from "next/image";
 
 export interface Feature {
   icon: string;
@@ -334,4 +335,19 @@ export interface IOrderList {
     };
     quantity: number;
   }>;
+}
+
+export interface ITabbyList {
+  id: number;
+  para: string;
+}
+export interface ITabbyPayList {
+  id: number;
+  imageUrl: StaticImageData;
+}
+
+export interface ITamaraList {
+  id: number;
+  title?: string;
+  para: string;
 }
