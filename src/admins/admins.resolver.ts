@@ -3,11 +3,9 @@ import { AdminsService } from './admins.service';
 import { Admin, admin_with_token } from './entities/admin.entity';
 import { Admin_login, CreateAdminInput } from './dto/create-admin.input';
 import { UpdateAdminInput } from './dto/update-admin.input';
-import { Response } from 'express'; // Import Response from Express
+import { Response } from 'express'; 
 import { Public } from '../decorators/public.decorator';
 import { AuthenticatedRequest } from 'type/express';
-// import { UseGuards } from '@nestjs/common';
-// import { AuthGuard } from 'gaurds/auth.guard';
 
 
 @Resolver(() => Admin)

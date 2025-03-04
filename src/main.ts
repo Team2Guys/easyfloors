@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { graphqlUploadExpress } from 'graphql-upload';
 
 import * as cookieParser from 'cookie-parser';
-import { AuthGuard } from 'gaurds/auth.guard';
+import { AuthGuard } from './gaurds/auth.guard';
 // somewhere in your initialization file
 
 async function bootstrap() {

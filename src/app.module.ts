@@ -9,7 +9,7 @@ import { SubCategoriesModule } from './sub_categories/sub_categories.module';
 import { FileUploadingModule } from './file_uploading/file_uploading.module';
 import { AdminsModule } from './admins/admins.module';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from 'gaurds/auth.guard';
+import { AuthGuard } from './gaurds/auth.guard';
 
 @Module({
   imports: [
