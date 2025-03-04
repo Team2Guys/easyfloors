@@ -58,7 +58,7 @@ const DashboardLogin = () => {
           });
       dispatch(loggedInAdminAction(response.data.adminLogin));
       Cookies.set(
-        adminType == 'Admin' ? '2guysAdminToken' : 'superAdminToken',
+        adminType == 'Admin' ? 'admin_access_token' : 'super_admin_access_token',
         response.data.adminLogin.token,
         {
           expires: 24 * 60 * 60 * 1000,
