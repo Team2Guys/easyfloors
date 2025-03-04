@@ -7,8 +7,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Card from "components/Card/Card";
-import { features, flooringTypes, generateSlug } from "data/data";
+import { features, generateSlug } from "data/data";
 import { FlooringType, Product } from "types/type";
+import { flooringTypes } from "data/produuct-detail";
 
 const CategorySlider: React.FC = () => {
   return (

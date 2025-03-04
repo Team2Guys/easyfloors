@@ -1,11 +1,13 @@
-import { ThumnailBottom, ThumnailImage } from "data/data";
+
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { ThumbnailProps } from "types/product-detail";
 
-const Thumbnail: React.FC = () => {
+
+const Thumbnail: React.FC<ThumbnailProps> = ({ ThumnailImage, ThumnailBottom }) => {
   const [nav1, setNav1] = useState<Slider | null>(null);
   const [nav2, setNav2] = useState<Slider | null>(null);
   const [currentSlide, setCurrentSlide] = useState<number>(0);

@@ -1,14 +1,18 @@
+"use client"
 import React from "react";
 import Slider from "react-slick";
-import Card from 'components/Card/Card';
-import Container from 'components/common/container/Container';
-import { features, flooringTypes } from 'data/data';
-import { Product } from 'types/type';
+import Card from "components/Card/Card";
+import Container from "components/common/container/Container";
+import { features } from "data/data";
+import { Product } from "types/type";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
-// Defining the types for props if any, you can add your prop types here
-type RelatedSliderProps = object;
+interface RelatedSliderProps {
+  products: Product[]; 
+};
 
-const RelatedSlider: React.FC<RelatedSliderProps> = () => {
+const RelatedSlider = ({ products }:RelatedSliderProps) => {
   const settings = {
     dots: true,
     infinite: false,
@@ -26,62 +30,25 @@ const RelatedSlider: React.FC<RelatedSliderProps> = () => {
         <ul style={{ margin: "0px" }}>{dots}</ul>
       </div>
     ),
-    customPaging: () => (
-      <div className="custom-dot">
-      </div>
-    ),
+    customPaging: () => <div className="custom-dot"></div>,
     responsive: [
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2.5,
-          slidesToScroll: 1,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-        },
-      },
+      { breakpoint: 1280, settings: { slidesToShow: 3, slidesToScroll: 1, infinite: true, dots: true } },
+      { breakpoint: 1024, settings: { slidesToShow: 2.5, slidesToScroll: 1, infinite: true, dots: true } },
+      { breakpoint: 600, settings: { slidesToShow: 2, slidesToScroll: 2, initialSlide: 2 } },
+      { breakpoint: 480, settings: { slidesToShow: 2, slidesToScroll: 2 } },
     ],
   };
 
   return (
-    <Container className="mt-10 font-inter w-full">
-      <h2 className="text-24 lg:text-30 2xl:text-[40px] text-center">
-        Frequently Bought Together
-      </h2>
-      <div className="slider-container pt-10 w-full overflow-hidden">
-        <Slider {...settings} className="">
-          {flooringTypes
-            .flatMap((flooring) => flooring.product)
-            .slice(0, 5)
-            .map((product: Product, index: number) => (
-              <div key={index} className="pb-7">
-                <Card product={product} features={features} category={product.name} sldier />
-              </div>
-            ))}
+    <Container className=" sm:mt-10 font-inter w-full mb-10">
+      <h2 className="text-12 sm:text-24 max-sm:font-semibold lg:text-30 2xl:text-[40px] text-center">Frequently Bought Together</h2>
+      <div className="slider-container pt-4 sm:pt-10 w-full overflow-hidden">
+        <Slider {...settings}>
+          {products.map((product: Product, index: number) => (
+            <div key={index} className="pb-7">
+              <Card product={product} features={features} category={product.name} sldier />
+            </div>
+          ))}
         </Slider>
       </div>
     </Container>
