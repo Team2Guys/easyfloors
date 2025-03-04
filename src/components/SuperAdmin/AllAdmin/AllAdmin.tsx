@@ -7,38 +7,9 @@ import { FaEdit } from 'react-icons/fa';
 import { ColumnType } from 'antd/es/table';
 import { AdminRecord } from 'types/type';
 
-function Admins({ setselecteMenu, setEditAdmin }: any) {//eslint-disable-line
+function Admins({ setselecteMenu, setEditAdmin,AllAdmins }: any) {//eslint-disable-line
   const [admins, setAdmins] = useState([]);
-  const [loading, setloading] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState<string | null>(null);
-
-  useEffect(() => {
-    const getAllAdmins = async () => {
-      try {
-        const headers = {
-          token: 'token',
-        };
-
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin/get-all`,
-          {
-            method: 'GET',
-            headers: headers,
-          },
-        );
-
-        const admins = await response.json();
-        console.log(admins, 'admins');
-        setAdmins(admins);
-        setloading(false);
-      } catch (err) {
-        console.log(err, 'err');
-        setloading(false);
-      }
-    };
-
-    getAllAdmins();
-  }, []);
 
   const handleDelete = async (id: string) => {
     try {
@@ -55,12 +26,17 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {//eslint-disable-line
         prevAdmins.filter((admin: { id: string }) => admin.id !== id),
       );
     } catch (error) {
-      console.error('Error deleting admin:', error);
+      throw error;
     } finally {
       setDelLoading(null); 
     }
   };
 
+
+
+ useEffect(() => {
+  setAdmins(AllAdmins)
+ }, [AllAdmins])
  
   
   const columns: Array<ColumnType<AdminRecord>> = [
@@ -155,12 +131,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {//eslint-disable-line
   ];
 
   return (
-    <div>
-      {loading ? (
-        <div className="flex justify-center mt-10">
-          <Loader />
-        </div>
-      ) : (
+    
         <>
           <div className="flex justify-between mb-4 items-center text-black dark:text-white ">
             <p>Admins</p>
@@ -185,8 +156,7 @@ function Admins({ setselecteMenu, setEditAdmin }: any) {//eslint-disable-line
             <div className="flex justify-center"> No Admin found</div>
           )}
         </>
-      )}
-    </div>
+
   );
 }
 

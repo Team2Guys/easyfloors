@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
   if (token && isAuthRoute) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
-console.log(req.cookies, "token")
+
   if (!token && isProtectedRoute) {
     return NextResponse.redirect(new URL("/dashboard/Admin-login", req.url));
   }
