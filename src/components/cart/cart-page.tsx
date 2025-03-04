@@ -46,9 +46,9 @@ const CartPage = () => {
             </div>
             <div className='border border-b border-[#DEDEDE]'/>
 
-            {cartItems.map((item) => (
+            {cartItems.map((item,index) => (
               <>
-              <div key={item.id} className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+              <div key={index} className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
                 <div className=' col-span-10 xl:col-span-6'>
                   <div className='flex gap-4'>
                     <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image} alt='cart'/>
