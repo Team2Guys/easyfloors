@@ -1,0 +1,53 @@
+"use client";
+import React, { useState } from "react";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { CartSelectProps } from "types/type";
+
+
+
+const CartSelect = ({ select, fees, onSelect }: CartSelectProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedState, setSelectedState] = useState("City");
+
+  const handleSelect = (state: string) => {
+    setSelectedState(state);
+    setIsOpen(false);
+    onSelect(state, fees[state]);
+  };
+
+  return (
+    <div className="flex justify-between text-16 lg:text-20">
+      <p>Subtotal:</p>
+      <div>
+        <div className="border bg-white text-[#BBBBBB] text-12 xl:text-15  2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 w-full mb-2">
+          United Arab Emirates
+        </div>
+        <div className="relative w-full font-inter">
+          <div
+            className="border bg-white 2xl:px-5 2xl:py-3 px-2 py-2 w-full cursor-pointer flex justify-between items-center text-12 xl:text-15 text-[#BBBBBB]"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {selectedState}
+            <span>{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
+          </div>
+          {isOpen && (
+            <div className=" z-10 w-full bg-white border border-t-0 max-h-[90px] overflow-x-auto">
+              {select.map((state, index) => (
+                <div
+                  key={index}
+                  className="px-5 py-1 border-b text-[#BBBBBB] hover:text-black cursor-pointer text-12 xl:text-15"
+                  onClick={() => handleSelect(state)}
+                >
+                  {state}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+      <p className="hidden md:block">AED {fees[selectedState] || 0}</p>
+    </div>
+  );
+};
+
+export default CartSelect;

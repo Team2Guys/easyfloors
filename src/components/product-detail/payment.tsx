@@ -1,31 +1,34 @@
 import { useState } from "react";
-import {
-  tabbyfeature,
-  tabbyhowitwork,
-  tabbypayicon,
-  tamarafeature,
-  tamaralist,
-  tamarawhy,
-} from "data/data";
+
 import Image from "next/image";
 import tabbyLogo from "../../../public/assets/images/payment-icons/tabby-logo.png";
 import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.png";
 import Modal from "components/ui/modal";
+import { tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/produuct-detail";
 
-const PaymentMethod = () => {
+interface PaymentMethodProps{
+  showheading?: boolean
+}
+
+const PaymentMethod = ({showheading}:PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
   const [tamaraOpen, setTamaraOpen] = useState(false);
   const paymentLabels = ['Today', 'In 1 month', 'In 2 months', 'In 3 months'];
 
   return (
     <>
-      <div className="flex items-center justify-center relative text-[#E4E4E4] font-inter">
+    {
+      showheading &&(
+        <div className="flex items-center justify-center relative text-[#E4E4E4] font-inter">
         <span className="absolute left-0 w-1/6 border-t border-gray-300"></span>
         <p className="text-center px-3 w-4/6 whitespace-nowrap font-semibold text-[#000000] text-sm xs:text-base lg:text-xs xl:text-base">
           Guaranteed Safe Checkout
         </p>
         <span className="absolute right-0 w-1/6 border-t border-gray-300"></span>
-      </div>
+        </div>
+      )
+    }
+     
       <div className="flex gap-2 pt-4">
         <div className="relative w-1/2 border-4 border-[#00FFBC] p-4  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">
