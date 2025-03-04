@@ -3,7 +3,7 @@ import { SubCategoriesService } from './sub_categories.service';
 import { SubCategory } from './entities/sub_category.entity';
 import { CreateSubCategoryInput } from './dto/create-sub_category.input';
 import { UpdateSubCategoryInput } from './dto/update-sub_category.input';
-import { Public } from 'decorators/public.decorator';
+import { Public } from '../decorators/public.decorator';
 
 @Resolver(() => SubCategory)
 export class SubCategoriesResolver {
