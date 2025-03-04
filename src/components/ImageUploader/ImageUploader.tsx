@@ -32,6 +32,7 @@ const ImageUploader = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS
         formData.append("operations", JSON.stringify({
           query: FILE_UPLOAD_MUTATION,
           variables: { file: null },
+
         })
         );
         formData.append("map", JSON.stringify({ file: ["variables.file"] }));
@@ -39,6 +40,7 @@ const ImageUploader = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS
         const response = await fetch(process.env.NEXT_PUBLIC_BASE_URL || "", {
           method: "POST",
           body: formData,
+          credentials:"include"
         });
 
         const result = await response.json();

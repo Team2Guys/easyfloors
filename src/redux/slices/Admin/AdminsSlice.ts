@@ -3,11 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState: {
   userLoading: boolean;
   loggedInUser: any | undefined; //eslint-disable-line
-  assistantResponse: string;
 } = {
   userLoading: false,
   loggedInUser: undefined,
-  assistantResponse: '',
 };
 
 const usersSlice = createSlice({
@@ -19,6 +17,8 @@ const usersSlice = createSlice({
     },
   },
 });
+
+
 
 export const { loggedInAdminAction } = usersSlice.actions;
 export default usersSlice.reducer;

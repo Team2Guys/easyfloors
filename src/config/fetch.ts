@@ -1,6 +1,6 @@
 import { ICategory, IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
+import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS } from 'graphql/queries';
 import client from './apolloClient';
 
 
@@ -8,6 +8,12 @@ export const fetchProducts = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_PRODUCTS,
+      fetchPolicy: "network-only",
+      context: {
+        fetchOptions: {
+          credentials: "include", // ✅ Send cookies
+        },
+      },
     });
 
     return data?.products || [];
@@ -20,6 +26,7 @@ export const fetchCategories = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_CATEGORIES,
+
     });
 
     return data?.categories || [];
@@ -78,3 +85,22 @@ export const get_all_records = async (token: string) => {
   //   return null;
   // }
 };
+
+
+export const get_allAdmins = async (token: string | undefined) => {
+  try {
+    if (!token) throw new Error("Auntheticatoin token not found")
+    const { data } = await client.query({
+      query: GET_ALL_ADMINS,
+      context:{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
+    })
+return data?.admins || []
+  } catch (error) {
+    throw error;
+  }
+
+}

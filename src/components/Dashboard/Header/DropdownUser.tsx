@@ -3,21 +3,25 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useAppSelector } from 'components/Others/HelperRedux';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { FaRegUser } from 'react-icons/fa6';
 import { RiLogoutBoxLine } from 'react-icons/ri';
+import { useAppSelector } from 'Others/HelperRedux';
+
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const { loggedInUser } = useAppSelector((state) => state.usersSlice) as { loggedInUser: { fullname: string; role: string; posterImageUrl: string; name: string } };
+  const loggedInUser = useAppSelector((state) => state.usersSlice.loggedInUser);
+  
+
 
   const router = useRouter();
 
   const trigger = useRef<HTMLDivElement>(null);
   const dropdown = useRef<HTMLDivElement>(null);
+
 
   // close on click outside
   useEffect(() => {
@@ -47,8 +51,8 @@ const DropdownUser = () => {
 
   const logoutHhandler = () => {
     try {
-      Cookies.remove('2guysAdminToken');
-      Cookies.remove('superAdminToken');
+      Cookies.remove('admin_access_token');
+      Cookies.remove('super_admin_access_token');
       router.push('/dashboard/Admin-login');
     } catch (err) {
       throw err
@@ -68,7 +72,7 @@ const DropdownUser = () => {
               {loggedInUser ? loggedInUser?.fullname : null}
             </span>
             <span className="block text-11 xs:text-sm text-white ">
-              {loggedInUser?.role}
+              {loggedInUser?.role || "new adsd"}
             </span>
           </span>
         </div>

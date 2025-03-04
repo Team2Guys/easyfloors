@@ -6,7 +6,6 @@ import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
 import Toaster from 'components/Toaster/Toaster';
-import axios from 'axios';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import Loader from 'components/Loader/Loader';
 import { FormValues } from 'types/type';
@@ -15,10 +14,12 @@ import {
   AddProductvalidationSchema,
 } from 'data/data';
 import revalidateTag from 'components/ServerActons/ServerAction';
-import Cookies from 'js-cookie';
 import { AdditionalInformation, EDIT_PRODUCT_PROPS, ProductImage } from 'types/prod';
 import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from 'types/PagesProps';
+import { useMutation } from "@apollo/client";
+import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'graphql/mutations';
+
 
 const initialErrors = { categoryError: "", subCategoryError: "", posterImageError: "", prodImages: "" }
 
@@ -33,13 +34,28 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<EDIT_PRODUCT_PROPS | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
-  const [selectedCategory, setSelectedCategory] = useState(EditInitialValues ? EditInitialValues.category : "");
+  const [selectedCategory, setSelectedCategory] = useState(EditProductValue ? EditProductValue.category : "");
   const [subcategories, setSubcategories] = useState([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(EditInitialValues ? EditInitialValues.subcategory : "");
+  const [selectedSubcategory, setSelectedSubcategory] = useState(EditProductValue ? EditProductValue.subcategory : "");
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
 
+const [updateProduct] = useMutation(UPDATE_PRODUCT, {
+    context: {
+      fetchOptions: {
+        credentials: "include", // Send cookies for authentication
+      }
+    },
+  });
+
+  const [createProduct] = useMutation(CREATE_PRODUCT, {
+    context: {
+      fetchOptions: {
+        credentials: "include",
+      },
+    },
+  });
   function handleSort() {
     if (dragImage.current === null || draggedOverImage.current === null) return;
 
@@ -58,6 +74,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
+        const selectedCat = categoriesList?.find((cat) => cat.id === selectedCategory);
+        console.log(selectedCat, "editProduct")
+        setSubcategories(selectedCat?.subcategories || []);
+
         setImagesUrl(EditInitialValues ? EditProductValue?.productImages : [])
         sethoverImage(EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : [])
         setProductInitialValue?.(() => EditProductValue)
@@ -70,147 +90,80 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     CategoryHandler();
   }, [EditInitialValues]);
 
-  const token = Cookies.get('2guysAdminToken');
-  const superAdminToken = Cookies.get('superAdminToken');
-  const finalToken = token ? token : superAdminToken;
+
+  console.log(EditProductValue.category, "editProduct")
 
 
   const onSubmit = async (values: EDIT_PRODUCT_PROPS, { resetForm }: FormikHelpers<EDIT_PRODUCT_PROPS>) => {
     try {
       setcategorySubCatError(initialErrors);
-
+  
       if (!selectedCategory) {
-
         setcategorySubCatError((prev) => ({
           ...prev,
           categoryError: "Category is Required",
         }));
-        return
+        return;
       }
-
+  
       if (subcategories.length > 0 && !selectedSubcategory) {
         setcategorySubCatError((prev) => ({
           ...prev,
           subCategoryError: "Subcategory is Required",
         }));
-        return
+        return;
       }
-
+  
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const hoverImageUrl = hoverImage && hoverImage[0];
-
+  
       if (!posterImageUrl) {
         setcategorySubCatError((prev) => ({
           ...prev,
-          posterImageError: "Poster Images is Required",
+          posterImageError: "Poster Image is Required",
         }));
-        return
-      };
+        return;
+      }
+  
       if (!imagesUrl || !(imagesUrl.length > 0)) {
         setcategorySubCatError((prev) => ({
           ...prev,
-          prodImages: "Please upload Atleast 1 product relevant Images",
+          prodImages: "Please upload at least 1 product-relevant image",
         }));
-        return
-      };
-
+        return;
+      }
+  
       let newValues = {
         ...values,
-        posterImageUrl: posterImageUrl,
-        hoverImageUrl: hoverImageUrl,
+        posterImageUrl,
+        hoverImageUrl,
         productImages: imagesUrl,
         category: +selectedCategory,
         subcategory: +selectedSubcategory,
       };
-
+  
       setloading(true);
-
+  
       const updateFlag = EditProductValue && EditInitialValues ? true : false;
-
+  
       if (updateFlag && EditInitialValues?.id) {
         newValues = { id: +EditInitialValues?.id, ...newValues };
       }
+  
+      // ✅ Use Apollo Client Mutation with Credentials
+  
+      const { data } = updateFlag
+      ? await updateProduct({ variables: { input: newValues } })
+      : await createProduct({ variables: { input: newValues } });
 
-      // ✅ Define GraphQL Mutation
-      const mutation = updateFlag
-        ? `mutation UpdateProduct($input: UpdateProductInput!) {
-          updateProduct(updateProductInput: $input) {
-            id
-            name
-            price
-            discountPrice
-            description
-            stock
-            posterImageUrl
-            hoverImageUrl
-            productImages
-            colors
-            createdAt
-            updatedAt
-            Canonical_Tag
-            Meta_Description
-            Meta_Title
-            last_editedBy
-            custom_url
-            waterproof
-            AdditionalInformation
-            plankWidth
-            ResidentialWarranty
-            CommmericallWarranty
-            categoryId
-          }
-        }`
-        : `mutation CreateProduct($input: CreateProductInput!) {
-          createProduct(createProductInput: $input) {
-            id
-            name
-            price
-            discountPrice
-            description
-            stock
-            posterImageUrl
-            hoverImageUrl
-            productImages
-            colors
-            createdAt
-            updatedAt
-            Canonical_Tag
-            Meta_Description
-            Meta_Title
-            last_editedBy
-            custom_url
-            waterproof
-            AdditionalInformation
-            plankWidth
-            ResidentialWarranty
-            CommmericallWarranty
-            categoryId
-          }
-        }`;
-
-
-      // ✅ GraphQL Variables
-      const variables = updateFlag ? { id: EditInitialValues?.id, input: newValues } : { input: newValues };
-
-      // ✅ API Request with GraphQL
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/graphql`,
-        {
-          query: mutation,
-          variables,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            token: finalToken, // Pass token if required
-          },
-        }
-      );
-      // ✅ Handle Response
-      if (response.data.errors) {
-        throw new Error(response.data.errors[0].message);
+    if (!data) {
+      throw new Error("Mutation failed. No data returned.");
+    }
+  
+      if (!data) {
+        throw new Error("Mutation failed. No data returned.");
       }
-
+  
       // ✅ Revalidate and show success message
       revalidateTag("products");
       Toaster(
@@ -219,7 +172,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
           ? "Product has been successfully updated!"
           : "Product has been successfully added!"
       );
-
+  
       resetForm();
       setloading(false);
       sethoverImage(undefined);
@@ -229,24 +182,23 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       if (updateFlag) {
         setEditProduct?.(undefined);
       }
-
-
-      //eslint-disable-next-line
-    } catch (err: any) {
-
-      if (err?.response && err?.response?.data && err?.response?.data.error) {
-        setError(err?.response?.data.message);
+    } 
+/* eslint-disable */
+    catch (err: any) {
+      if (err?.graphQLErrors?.length > 0) {
+        setError(err?.graphQLErrors[0].message);
+      } else if (err instanceof Error) {
+        setError(err.message);
       } else {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unexpected error occurred");
-        }
+        setError("An unexpected error occurred");
       }
     } finally {
       setloading(false);
     }
+/* eslint-enable */
+
   };
+  
 
 
   const handleImageAltText = (

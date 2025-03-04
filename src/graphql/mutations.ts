@@ -125,3 +125,147 @@ export const ADMIN_LOGIN = gql`
     }
   }
 `;
+export const super_admin_ADMIN_LOGIN = gql`
+  mutation superAdminLogin($email: String!, $password: String!) {
+    superAdminLogin(superAdminLogin: { email: $email, password: $password }) {
+      id
+      fullname
+      email
+      canAddProduct
+      canEditProduct
+      canDeleteProduct
+      canAddCategory
+      canDeleteCategory
+      canEditCategory
+      canCheckProfit
+      canCheckRevenue
+      canCheckVisitors
+      canViewUsers
+      canViewSales
+      canVeiwAdmins
+      canVeiwTotalproducts
+      canVeiwTotalCategories
+      posterImageUrl
+      role
+      token
+    }
+  }
+`;
+
+
+
+export const UPDATE_PRODUCT = gql`
+mutation UpdateProduct($input: UpdateProductInput!) {
+  updateProduct(updateProductInput: $input) {
+    id
+    name
+    price
+    discountPrice
+    description
+    stock
+    posterImageUrl
+    hoverImageUrl
+    productImages
+    colors
+    createdAt
+    updatedAt
+    Canonical_Tag
+    Meta_Description
+    Meta_Title
+    last_editedBy
+    custom_url
+    waterproof
+    AdditionalInformation
+    plankWidth
+    ResidentialWarranty
+    CommmericallWarranty
+    categoryId
+  }
+}
+`;
+
+export const CREATE_PRODUCT = gql`
+mutation CreateProduct($input: CreateProductInput!) {
+  createProduct(createProductInput: $input) {
+    id
+    name
+    price
+    discountPrice
+    description
+    stock
+    posterImageUrl
+    hoverImageUrl
+    productImages
+    colors
+    createdAt
+    updatedAt
+    Canonical_Tag
+    Meta_Description
+    Meta_Title
+    last_editedBy
+    custom_url
+    waterproof
+    AdditionalInformation
+    plankWidth
+    ResidentialWarranty
+    CommmericallWarranty
+    categoryId
+  }
+}
+`;
+
+
+
+export const UPDATE_ADMIN = gql`
+  mutation UpdateAdmin($input: UpdateAdminInput!) {
+    updateAdmin(updateAdminInput: $input) {
+      id
+      fullname
+      email
+      role
+      canAddProduct
+      canEditProduct
+      canDeleteProduct
+      canAddCategory
+      canDeleteCategory
+      canEditCategory
+      canCheckProfit
+      canCheckRevenue
+      canCheckVisitors
+      canViewUsers
+      canViewSales
+      canVeiwAdmins
+      canVeiwTotalproducts
+      canVeiwTotalCategories
+      posterImageUrl
+    }
+  }
+`;
+
+
+export const CREATE_ADMIN = gql`
+  mutation CreateAdmin($input: CreateAdminInput!) {
+    createAdmin(createAdminInput: $input) {
+      id
+      fullname
+      email
+      role
+      canAddProduct
+      canEditProduct
+      canDeleteProduct
+      canAddCategory
+      canDeleteCategory
+      canEditCategory
+      canCheckProfit
+      canCheckRevenue
+      canCheckVisitors
+      canViewUsers
+      canViewSales
+      canVeiwAdmins
+      canVeiwTotalproducts
+      canVeiwTotalCategories
+      posterImageUrl
+    }
+      
+  }
+`;

@@ -1,12 +1,13 @@
 'use client';
 import React, { useState } from 'react';
-import { Col, Form, Row } from 'antd';
+import { CheckboxChangeEvent, Col, Form, Row } from 'antd';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { Checkbox, CheckboxProps } from 'antd';
-import axios from 'axios';
 import Loader from 'components/Loader/Loader';
 import { Input } from 'components/ui/input';
 import showToast from 'components/Toaster/Toaster';
+import { useMutation } from '@apollo/client';
+import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/mutations';
 
 type formDataTypes = {
   fullname: string;
@@ -52,67 +53,53 @@ const CreateAdmin = ({
   setselecteMenu,
   EditAdminValue,
   EditInitialValues,
+  setEditProduct,
 }: any) => { //eslint-disable-line
   const updateFlag = EditAdminValue && EditAdminValue ? true : false;
 
-  const [formData, setFormData] = useState<formDataTypes>(
-    !updateFlag ? intitalValues : EditAdminValue,
-  );
-  console.log('FOrm Data');
-  console.log(formData);
+  const [formData, setFormData] = useState<formDataTypes>(!updateFlag ? intitalValues : EditAdminValue);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined | null>();
+
+  const [createAdmin] = useMutation(CREATE_ADMIN);
+  const [updateAdmin] = useMutation(UPDATE_ADMIN);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCheckboxChange: CheckboxProps['onChange'] = (e: any) => { //eslint-disable-line
+  const handleCheckboxChange: CheckboxProps['onChange'] = (e: CheckboxChangeEvent) => { 
     const { name, checked } = e.target;
+    const  nename  = name ? name : ""
     setFormData({
       ...formData,
-      [name]: checked,
+      [nename]: checked,
     });
   };
-
   const handleSubmit = async () => {
     try {
       if (!formData.fullname || !formData.email || !formData.password) {
-        showToast('warn', 'Name, email and password is required');
+        return showToast("warn", "Name, email, and password are required");
       }
 
       setLoading(true);
-      const adminURL = updateFlag ? `/edit-admin` : '/create-admin';
 
-      const uploadData = updateFlag
-        ? { id: EditInitialValues.id, ...formData }
-        : formData;
+      const input = updateFlag ? { id: EditInitialValues.id, ...formData } : formData;
+      const { data } = updateFlag ? await updateAdmin({ variables: { input } })
+        : await createAdmin({ variables: { input } });
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/admin${adminURL}`,
-        uploadData,
-      );
-      console.log(response, 'response');
-      if (response.data.status === 409) {
-        return showToast('error', response.data.message + '!');
-      }
+      console.log(data, "Mutation Response");
 
       setFormData(intitalValues);
-      return showToast('success', response.data.message);
-    } catch (err: any) { //eslint-disable-line
-      if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message);
-      } else if (err.message) {
-        setError(err.message);
-      } else {
-        setError('An unexpected error occurred.');
-      }
+      showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
+    } catch (err:any) {//eslint-disable-line
+      console.error("GraphQL Error:", err);
+      setError(err?.message || "An unexpected error occurred.");
+      showToast("error", err?.message || "An error occurred");
     } finally {
       setLoading(false);
-      console.log(error);
-    }
-  };
+    }}
 
   const handleAddAllPermissions = () => {
     setFormData({
@@ -177,6 +164,7 @@ const CreateAdmin = ({
         className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer"
         onClick={() => {
           setselecteMenu('AllAdmin');
+          setEditProduct(undefined)
         }}
       >
         <IoMdArrowRoundBack /> Back
@@ -318,6 +306,8 @@ const CreateAdmin = ({
               {loading ? <Loader color="White" /> : 'Add Admin'}
             </button>
           </Col>
+
+          {error &&  <p>{error}</p>}
         </Row>
       </Form>
     </>

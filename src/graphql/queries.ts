@@ -119,4 +119,42 @@ query SubCategories {
     `
 
 
+    export const GET_ADMIN_DETAILS = gql`
+    query GetAdmin {
+      admin {
+        id
+        name
+        email
+        role
+        createdAt
+      }
+    }
+  `;
 
+
+  export const GET_ALL_ADMINS = gql`
+  query Admins {
+    admins {
+        id
+        fullname
+        email
+        password
+        canAddProduct
+        canEditProduct
+        canDeleteProduct
+        canAddCategory
+        canDeleteCategory
+        canEditCategory
+        canCheckProfit
+        canCheckRevenue
+        canCheckVisitors
+        canViewUsers
+        canViewSales
+        canVeiwAdmins
+        canVeiwTotalproducts
+        canVeiwTotalCategories
+        posterImageUrl
+        role
+    }
+}
+`

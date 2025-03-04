@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, TBlogCard, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, SocialLink } from "types/types";
+import { FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -835,3 +835,131 @@ export const faqspage: FAQ[] = [
   { question: "What happens if I receive a damaged product?", answer: "Contact us immediately for a replacement." },
 ];
 
+export const tabbyfeature: ITabbyList[] = [
+  { id: 1, para: 'No interest. No fees.' },
+  { id: 2, para: 'Trusted by 4,5m+ customers.' },
+  { id: 3, para: 'Shariah-compliant.' },
+];
+
+export const tabbyhowitwork: ITabbyList[] = [
+  { id: 1, para: 'Choose Tabby at checkout' },
+  { id: 2, para: 'Enter your information and add your debit or credit card.' },
+  { id: 3, para: 'Your first payment is taken when the order is made.' },
+  { id: 4, para: 'We will send you a reminder when your next payment is due' },
+];
+
+export const tabbypayicon: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+];
+
+export const tamarawhy: ITamaraList[] = [
+  { id: 1, para: 'Sharia-compliant' },
+  { id: 2, para: 'No late fees' },
+  { id: 3, para: 'Quick and easy' },
+];
+export const tamaralist: ITamaraList[] = [
+  {
+    id: 1,
+    para: 'Payment options availability may vary based on your order value and Tamara record.',
+  },
+  { id: 2, para: 'Subject to terms and conditions.' },
+  { id: 3, para: 'Tamara is Sharia-compliant.' },
+  { id: 4, para: 'Eligible for customers in United Arab Emirates.' },
+  {
+    id: 5,
+    para: 'Your final payment plan may vary depending on your credit history.',
+  },
+];
+
+export const tamarafeature: ITamaraList[] = [
+  {
+    id: 1,
+    title: 'Split in 4',
+    para: 'Pay a fraction now and the rest in 3 payments over the next 3 months. No late fees, shariah-compliant!*',
+  },
+  {
+    id: 2,
+    title: 'Pay in Full',
+    para: 'Pay the full amount today and enjoy exclusive perks with Tamara!*',
+  },
+];
+
+  export const specifications = [
+    { label: 'TOTAL THICKNESS', value: '4.0MM' },
+    { label: 'VIRGIN STONE/POLYMER CORE', value: '4.0MM VIRGIN WHITE STONE' },
+    { label: 'PRE ATTACHED IXPE UNDERLAY', value: 'NONE' },
+    { label: 'PLANK SIZE', value: '1220X183MM' },
+    { label: 'WEAR LAYER', value: '0.3MM' },
+    { label: 'EDGE DETAILS', value: 'UNILIN CLICK LOCK' },
+    { label: 'FINISH', value: 'MATT' },
+    { label: 'EMBOSSING', value: '3D NATURAL' },
+    { label: 'SQM PER CARTON', value: '2.68' },
+    { label: 'PIECES PER CARTON', value: '12PCS' },
+    { label: 'RESIDENTIAL LIMITED WARRANTY', value: '5 YEAR' },
+    { label: 'COMMERCIAL LIMITED WARRANTY', value: '2 YEAR' },
+  ];
+
+ export const faqData = [
+    {
+      id: 'adhesives',
+      label: 'Do I Need Any Adhesives to Stick the Planks?',
+      content: 'No, you don\'t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you\'re not someone who likes to do things themselves, the click-lock feature makes it great for DIY.',
+    },
+    {
+      id: 'fade',
+      label: 'Will The Color and Texture Fade Over Time?',
+      content: 'Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its color and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it\'s great for busy households and businesses.',
+    },
+    {
+      id: 'planks',
+      label: 'How many planks come in a box, and what\'s the coverage area?',
+      content: 'The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you\'ll need multiple boxes depending on the total area.',
+    },
+  ];
+export const alternatingData: TAboutUs[] = [
+  {
+    id: 1,
+    image: "/assets/images/aboutus/about2.png",
+    alt: "First Image",
+    heading: "A satisfactory flooring is our glory",
+    paragraph: "Donec sed lorem dapibus, posuere dui eget, molestie ante. Vivamus aliquam gravida nibh, et aliquam risus fringilla aliquam. Cras ornare ac sem ut malesuada. Nulla ut sodales magna. Quisque venenatis sapien vulputate pellentesque.",
+  },
+  {
+    id: 2,
+    image: "/assets/images/aboutus/about3.png",
+    alt: "Second Image",
+    heading: "Best flooring at affordable prices",
+    paragraph: "Morbi in risus in nisi eleifend convallis. Etiam pretium varius quam in aliquam. Curabitur malesuada elit sed enim placerat, vitae interdum erat cursus. Morbi laoreet sapien id scelerisque dapibus. Aliquam purus erat volutpat.",
+  },
+  {
+    id: 3,
+    image: "/assets/images/aboutus/about1.png",
+    alt: "Third Image",
+    heading: "Flooring that meets your needs",
+    paragraph: "Nunc consequat nibh ut pretium vestibulum. Nulla facilisi. Cras porttitor lacus dolor, quis tincidunt nisl vestibulum at. Mauris tristique diam ex, eget dignissim enim scelerisque non. Pellentesque aliquam nulla nisi, id tristique",
+  },
+];
+
+
+export const sampleGridData: SampleGridData[] = [
+  {
+    id: 1,
+    title: "Order 5 free samples",
+    description:
+      "Order as many free samples as you like to find your style! Free next-day delivery included.",
+    buttonText: "Order free samples",
+    image: "/assets/images/aboutus/order-free-sample.png",
+    alt: "Free sample order",
+  },
+  {
+    id: 2,
+    title: "Discover your new favourite floor",
+    description:
+      "Need some advice? Request a callback to speak to one of our friendly flooring experts.",
+    buttonText: "Request a callback",
+    image: "/assets/images/aboutus/request-call-back.png",
+    alt: "Free sample order",
+  },
+];
