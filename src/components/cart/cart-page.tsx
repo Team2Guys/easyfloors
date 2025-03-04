@@ -45,7 +45,6 @@ const CartPage = () => {
               <div className='col-span-2 text-end'>Remove</div>
             </div>
             <div className='border border-b border-[#DEDEDE]'/>
-
             {cartItems.map((item,index) => (
               <>
               <div key={index} className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
@@ -96,15 +95,11 @@ const CartPage = () => {
               </div>
                 <div className='border border-b border-[#DEDEDE]'/>
               </>
-
             ))}
-
           </div> 
 
           <Link href="/" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden lg:flex'><FaArrowLeftLong /> Continue shopping</Link>
-
           </div>
-
           <div className='w-full md:w-[45%] xl:w-[30%] 2xl:w-[35%] bg-background p-3 sm:p-5 space-y-5 h-fit'>
             <div className='flex gap-2 md:gap-5 items-center max-sm:justify-between'>
             <h2 className=' text-18 md:text-20 2xl:text-28'>Order Summary</h2>
