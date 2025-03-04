@@ -49,11 +49,14 @@ export class AdminsService {
           expiresIn: '24h',
         });
         res.cookie('admin_access_token', token, {
-          httpOnly: false,
-          secure: process.env.NODE_ENV === 'production', // Enable only in production
-          sameSite: 'none',
+          httpOnly: true,
+          secure: true, // Required when using SameSite: 'None'
+          sameSite: 'none', // Allows cross-origin cookies
+          domain: '.vercel.app', // Allows subdomains to access the cookie
+          path: '/',
           maxAge: 24 * 60 * 60 * 1000, // 24 hours
         });
+        
         return {
           ...userWithoutPassword,
           token,
