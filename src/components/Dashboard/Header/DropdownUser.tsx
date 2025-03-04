@@ -51,7 +51,6 @@ const DropdownUser = () => {
 
   const logoutHhandler = () => {
     try {
-      console.log("function called")
       Cookies.remove('admin_access_token');
       Cookies.remove('super_admin_access_token');
       router.push('/dashboard/Admin-login');
