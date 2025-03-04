@@ -30,4 +30,31 @@ export interface SocialLink {
 export interface FAQsListProps {
     faqspage: FAQ[];
 }
-  
+export interface TAboutUs {
+  id: number;
+  image: string;
+  alt: string;
+  heading: string;
+  paragraph: string;
+}
+export interface TAboutUsProps {
+  sections: TAboutUs[];
+}
+export interface SampleGridData {
+  id: number;
+  title: string;
+  description: string;
+  buttonText: string;
+  image: string;
+  alt: string;
+}
+
+export interface SampleGridProps {
+  sections: SampleGridData[];
+}
+
+export interface TAutoVideoProps {
+  videoUrl: string;
+  fallbackImage?: string; 
+  className?: string;
+}
