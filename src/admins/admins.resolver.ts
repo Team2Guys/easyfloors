@@ -3,14 +3,14 @@ import { AdminsService } from './admins.service';
 import { Admin, admin_with_token } from './entities/admin.entity';
 import { Admin_login, CreateAdminInput } from './dto/create-admin.input';
 import { UpdateAdminInput } from './dto/update-admin.input';
-import { Response } from 'express'; 
+import { Response } from 'express';
 import { Public } from '../decorators/public.decorator';
 import { AuthenticatedRequest } from 'type/express';
 
 
 @Resolver(() => Admin)
 export class AdminsResolver {
-  constructor(private readonly adminsService: AdminsService) {}
+  constructor(private readonly adminsService: AdminsService) { }
 
   @Mutation(() => Admin)
   createAdmin(@Args('createAdminInput') createAdminInput: CreateAdminInput) {
@@ -23,7 +23,7 @@ export class AdminsResolver {
   }
 
   @Query(() => Admin, { name: 'admin' })
-  findOne(@Context('req') req:AuthenticatedRequest) {
+  findOne(@Context('req') req: AuthenticatedRequest) {
     return this.adminsService.findOne(req);
   }
 
@@ -36,10 +36,19 @@ export class AdminsResolver {
   removeAdmin(@Args('id', { type: () => Int }) id: number) {
     return this.adminsService.remove(id);
   }
+
+
   @Public()
   @Mutation(() => admin_with_token)
-  adminLogin(@Args('AdminLogin') Admin_login:Admin_login,@Context('res') res:Response) {
+  adminLogin(@Args('AdminLogin') Admin_login: Admin_login, @Context('res') res: Response) {
     return this.adminsService.AdminLogin(Admin_login, res);
+  }
+
+
+  @Public()
+  @Mutation(() => admin_with_token)
+  superAdminLogin(@Args('superAdminLogin') Admin_login: Admin_login, @Context('res') res: Response) {
+    return this.adminsService.superAdmin(Admin_login, res);
   }
 
 

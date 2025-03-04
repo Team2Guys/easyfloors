@@ -20,7 +20,7 @@ export class AdminsService {
         customHttpException("User Already Exist", 'BAD_REQUEST');
         return
       }
-      await this.prisma.admins.create({ data: { ...createAdminInput } })
+      return await this.prisma.admins.create({ data: { ...createAdminInput } })
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
 
@@ -69,6 +69,52 @@ export class AdminsService {
     }
   }
 
+  async superAdmin(loginData: Admin_login, res:Response) {
+    const { email, password } = loginData;
+    try {
+   let superAdmin_email = process.env.SUPER_AMDIN_EMAIL  || " ";
+   let super_admin_pasword = process.env.SUPER_AMDIN_PASSWORD  || " ";
+   console.log(superAdmin_email, "superAdmin_email", email)
+
+      if (email!==superAdmin_email){
+        return customHttpException('User Not found', 'NOT_FOUND');
+      }
+      if (super_admin_pasword !==password) {
+        throw new UnauthorizedException('Invalid username or password');
+      }
+
+    
+    let   userWithoutPassword ={
+      fullname:"Shiraz Ossman",
+      email:superAdmin_email,
+      role:"super_admin"
+    }
+    
+        const token = jwt.sign( userWithoutPassword , process.env.TOKEN_SECRET, {
+          expiresIn: '24h',
+        });
+
+        res.cookie('super_admin_access_token', token, {
+          httpOnly: true,
+          secure: true, // Required when using SameSite: 'None'
+          sameSite: 'none', // Allows cross-origin cookie
+          path: '/',
+          maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+        
+        return {
+          ...userWithoutPassword,
+          token,
+        };
+      }
+     catch (error) {
+      return customHttpException(error.message,
+        'INTERNAL_SERVER_ERROR',
+      );
+
+    }
+  }
+
 
   findAll() {
     try {
@@ -82,7 +128,7 @@ export class AdminsService {
   }
 
   async findOne(req: AuthenticatedRequest) {
-    const id = req?.user?.userWithoutPassword?.id
+    const id = req?.user?.id
     try {
       console.log(req.user.userWithoutPassword.id, "id")
       return await this.prisma.admins.findUnique({ where: { id } })
