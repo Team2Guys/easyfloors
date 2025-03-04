@@ -51,8 +51,7 @@ export class AdminsService {
         res.cookie('admin_access_token', token, {
           httpOnly: true,
           secure: true, // Required when using SameSite: 'None'
-          sameSite: 'none', // Allows cross-origin cookies
-          domain: '.vercel.app', // Allows subdomains to access the cookie
+          sameSite: 'none', // Allows cross-origin cookie
           path: '/',
           maxAge: 24 * 60 * 60 * 1000, // 24 hours
         });
