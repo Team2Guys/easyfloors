@@ -1,8 +1,9 @@
+import Breadcrumb from 'components/Reusable/breadcrumb'
 import React from 'react'
 
 const Cart = () => {
   return (
-    <div>Cart</div>
+    <Breadcrumb title='Cart'/>
   )
 }
 

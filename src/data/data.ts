@@ -9,9 +9,6 @@ import support from '../../public/assets/images/icon/chat-46.png';
 import masterCard from './../../public/assets/images/payment-icons/Mastercard-Logo.png'
 import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
-// import applypayCard from './../../public/images/payment-icons/apply-pay-black.png'
-// import tabbyLogo from "./../../public/images/payment-icons/tabby-logo.png";
-// import tamaraLogo from "./../../public/images/payment-icons/tamara-logo.png";
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
