@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, HeroItem, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
@@ -170,7 +170,7 @@ export const FindUs = [
 ]
 
 
-export const heroItems = [
+export const heroItems: HeroItem[] = [ 
   {
     backgroundImage: "/assets/images/Home/hero.png",
     offerText: "Limited Time Offer",
@@ -181,7 +181,7 @@ export const heroItems = [
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/",
     priceText: "Only On AED 49/m²",
-    flooringType: "SPC Eco • American Walnut",
+    flooringType: "SPC Eco • American Walnut", 
     brand: "Polar",
   },
 ];
@@ -307,7 +307,7 @@ export const footerData = {
     },
     {
       title: 'ACCESSORIES',
-      items: ['SPC Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
+      items: ['SPC Skirting', 'L Shape Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
     },
   ],
   contact: {
@@ -351,9 +351,9 @@ export const blocksData = [
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Rectangle1.png' },
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Rectangle2.png' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Rectangle3.png' },
+  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor.webp' },
+  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor.webp' },
 ];
 
 
@@ -368,7 +368,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Polar SPC <br /> Herringbone",
     Link: "/category/",
-    backgroundImage: '/assets/category/iam.png',
+    backgroundImage: '/assets/category/Polar-Spc-Herringbone.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
 
   },
@@ -377,23 +377,23 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Polar <br /> SPC",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image7.webp',
+    backgroundImage: '/assets/category/Polar-SPC.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
     id: 3,
     title: "I Am",
-    heading: "POLAR <br /> LCT",
+    heading: "Polar <br /> LVT",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image6.webp',
+    backgroundImage: '/assets/category/Polar-LVT.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
     id: 4,
     title: "I Am",
-    heading: "RECHMOND <br /> SPC Eco",
+    heading: "Richmond <br /> SPC Eco",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image5.webp',
+    backgroundImage: '/assets/category/Richmond-SPC-Eco.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -401,7 +401,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond <br /> SPC Prime",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image2.webp',
+    backgroundImage: '/assets/category/Richmond-SPC-Prime.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -409,7 +409,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond LVT <br /> Comfort",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image1.webp',
+    backgroundImage: '/assets/category/Richmond-LVT-Comfort.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -417,7 +417,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond LVT <br /> Luxury",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image3.webp',
+    backgroundImage: '/assets/category/Richmond-LVT-Luxury.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
   {
@@ -425,7 +425,7 @@ export const blogCards: TBlogCard[] = [
     title: "I Am",
     heading: "Richmond SPC <br /> Herringbone",
     Link: "/category/",
-    backgroundImage: '/assets/category/Image4.webp',
+    backgroundImage: '/assets/category/Richmond-SPC-Herringbone.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
 ];

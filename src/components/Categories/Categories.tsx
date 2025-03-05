@@ -16,9 +16,9 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
         />
 
         <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70 ">
-          <h2 className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-2xl" >{card.title}</h2>
+          <h2 className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]" >{card.title}</h2>
           <p
-            className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-2xl "
+            className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]"
             dangerouslySetInnerHTML={{ __html: card.heading }}
           />
           <div className="md:mt-3">
