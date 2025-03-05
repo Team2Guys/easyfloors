@@ -48,6 +48,22 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #D0D0D0; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000000; 
+}
+
 .category_slider .swiper-pagination-bullet {
   background: black !important;
   width: 10px;

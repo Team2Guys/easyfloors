@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 const AreaCalculator = () => {
-  const [unit, setUnit] = useState("sqm"); // Default unit is square meters
-  const [area, setArea] = useState(""); // Input value
-  const boxCoverage = 2.01;
+  const [unit, setUnit] = useState("sqm");
+  const [area, setArea] = useState(""); 
+  const boxCoverage = 2.9;
   const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
   const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
 

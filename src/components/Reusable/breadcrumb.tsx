@@ -19,7 +19,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory }: BreadcrumbProps) =
         />
       )}
       <div className={`flex flex-col px-4 font-inter ${!image ? "bg-background text-black py-2" : "text-white absolute inset-0 justify-center text-center items-center "}`}>
-        {!slug && !subcategory && title && <h1 className="text-30 md:text-[42.6px]">{title}</h1>}
+        {!slug && !subcategory && !title && <h1 className="text-30 md:text-[42.6px]">{title}</h1>}
         {title && (
           <Container className=" text-lg flex items-center gap-2 ">
             {/* Home Link */}
