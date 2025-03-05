@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
 import { Formik, Form, FormikHelpers, Field, ErrorMessage } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { categoryValidationSchema, subcategoryInitialValues, } from 'data/data';
+import { subcategoryInitialValues, subcategoryValidationSchema, } from 'data/data';
 import Loader from 'components/Loader/Loader';
 import showToast from 'components/Toaster/Toaster';
 import Cookies from 'js-cookie';
@@ -132,7 +132,7 @@ const FormLayout = ({
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
         }
-        validationSchema={categoryValidationSchema}
+        validationSchema={subcategoryValidationSchema}
         onSubmit={onSubmit}
       >
         {(formik) => {

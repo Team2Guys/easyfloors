@@ -15,6 +15,8 @@ const SubCategoryComponent = ({
 }: SubCategoryComponentProps_dashboard) => {
   const [menuType, setMenuType] = useState<string>('Sub Categories');
   const [editCategory, seteditCategory] = useState<ISUBCATEGORY | undefined >();
+
+  
   return (
     <DefaultLayout>
       <Breadcrumb pageName={menuType} />
