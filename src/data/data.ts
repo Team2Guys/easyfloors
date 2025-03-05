@@ -71,8 +71,7 @@ export const categoryInitialValues: EDIT_CATEGORY = {
 };
 
 export const categoryValidationSchema = Yup.object({
-  name: Yup.string().required('Add Sub Category Name'),
-  category: Yup.string().required('Select Category'),
+  name: Yup.string().required('Add Category Name'),
   custom_url: Yup.string().required('Custom URL is required'),
   // description: Yup.string().required('required'),
 });

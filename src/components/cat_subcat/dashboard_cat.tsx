@@ -1,6 +1,6 @@
 'use client';
 
-import React, { SetStateAction, useState } from 'react';
+import React, { SetStateAction, useEffect, useState } from 'react';
 import { Table, notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -30,6 +30,11 @@ const DashboardCat  = ({
   const [removeCategory] = useMutation(REMOVE_CATEGORY);
 
 
+  useEffect(() => {
+    
+    setCategory(cetagories)
+  
+  }, [cetagories])
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };

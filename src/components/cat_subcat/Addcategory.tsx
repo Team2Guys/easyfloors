@@ -15,6 +15,7 @@ import { ProductImage } from 'types/prod';
 import { Category, EDIT_CATEGORY } from 'types/cat';
 import client from 'config/apolloClient';
 import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations';
+import { FETCH_ALL_CATEGORIES } from 'graphql/queries';
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -59,12 +60,14 @@ const FormLayout = ({
       if (updateFlag) {
         await client.mutate({
           mutation: UPDATE_CATEGORY,
-          variables: { input: { id: Number(editCategory?.id), posterImageUrl, ...values } }, // ✅ Fix: Wrapped inside input
+          variables: { input: { id: Number(editCategory?.id), posterImageUrl, ...values } }, 
+          refetchQueries: [{ query: FETCH_ALL_CATEGORIES }],
         });
       } else {
         await client.mutate({
           mutation: CREATE_CATEGORY,
-          variables: { input: newValue }, // ✅ Fix: Wrapped inside input
+          variables: { input: newValue },
+        refetchQueries: [{ query: FETCH_ALL_CATEGORIES }],
         });
       }
 

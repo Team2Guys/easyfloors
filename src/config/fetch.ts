@@ -26,6 +26,7 @@ export const fetchCategories = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_CATEGORIES,
+      fetchPolicy: "no-cache"
 
     });
 
