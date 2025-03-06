@@ -1,12 +1,17 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, ITabbyList, ITabbyPayList, ITamaraList, TBlogCard, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
 import privacy from '../../public/assets/images/icon/privacy.png';
 import support from '../../public/assets/images/icon/chat-46.png';
-
+import masterCard from './../../public/assets/images/payment-icons/Mastercard-Logo.png'
+import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
+import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
+// import applypayCard from './../../public/images/payment-icons/apply-pay-black.png'
+// import tabbyLogo from "./../../public/images/payment-icons/tabby-logo.png";
+// import tamaraLogo from "./../../public/images/payment-icons/tamara-logo.png";
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -65,11 +70,15 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   custom_url: ""
 };
 
-export const categoryValidationSchema = Yup.object({
+export const subcategoryValidationSchema = Yup.object({
   name: Yup.string().required('Add Sub Category Name'),
   category: Yup.string().required('Select Category'),
   custom_url: Yup.string().required('Custom URL is required'),
-  // description: Yup.string().required('required'),
+});
+
+export const categoryValidationSchema = Yup.object({
+  name: Yup.string().required('Add  Category Name'),
+  custom_url: Yup.string().required('Custom URL is required'),
 });
 
 export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
@@ -276,7 +285,147 @@ export const features: Feature[] = [
 ];
 
 
+export const ThumnailImage = [
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+]
+export const ThumnailBottom = [
+  {image:"/assets/bin/thumb1.png" , title:"Click lock system"},
+  {image:"/assets/bin/thumb2.png" ,title:"Layers of SPC or LVT"},
+  {image:"/assets/bin/thumb2.png" ,title:"Waterproof"},
+  {image:"/assets/bin/thumb4.png" ,title:"Easy to clean"},
+  {image:"/assets/bin/thumb5.png" ,title:"Scratch resistant"},
+  {image:"/assets/bin/thumb6.png" ,title:"the packaging"},
 
+]
+export const flooringTypes: FlooringType[] = [
+  {
+    name: "SPC Flooring",
+    price: "AED 150m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  {
+    name: "LVT Flooring",
+    price: "AED 180m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  {
+    name: "Polar Flooring",
+    price: "AED 200m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  {
+    name: "Richmond Flooring",
+    price: "AED 220m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+];
 
 
 
@@ -835,7 +984,56 @@ export const faqspage: FAQ[] = [
   { question: "What happens if I receive a damaged product?", answer: "Contact us immediately for a replacement." },
 ];
 
+export const tabbyfeature: ITabbyList[] = [
+  { id: 1, para: 'No interest. No fees.' },
+  { id: 2, para: 'Trusted by 4,5m+ customers.' },
+  { id: 3, para: 'Shariah-compliant.' },
+];
 
+export const tabbyhowitwork: ITabbyList[] = [
+  { id: 1, para: 'Choose Tabby at checkout' },
+  { id: 2, para: 'Enter your information and add your debit or credit card.' },
+  { id: 3, para: 'Your first payment is taken when the order is made.' },
+  { id: 4, para: 'We will send you a reminder when your next payment is due' },
+];
+
+export const tabbypayicon: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+];
+
+export const tamarawhy: ITamaraList[] = [
+  { id: 1, para: 'Sharia-compliant' },
+  { id: 2, para: 'No late fees' },
+  { id: 3, para: 'Quick and easy' },
+];
+export const tamaralist: ITamaraList[] = [
+  {
+    id: 1,
+    para: 'Payment options availability may vary based on your order value and Tamara record.',
+  },
+  { id: 2, para: 'Subject to terms and conditions.' },
+  { id: 3, para: 'Tamara is Sharia-compliant.' },
+  { id: 4, para: 'Eligible for customers in United Arab Emirates.' },
+  {
+    id: 5,
+    para: 'Your final payment plan may vary depending on your credit history.',
+  },
+];
+
+export const tamarafeature: ITamaraList[] = [
+  {
+    id: 1,
+    title: 'Split in 4',
+    para: 'Pay a fraction now and the rest in 3 payments over the next 3 months. No late fees, shariah-compliant!*',
+  },
+  {
+    id: 2,
+    title: 'Pay in Full',
+    para: 'Pay the full amount today and enjoy exclusive perks with Tamara!*',
+  },
+];
 
   export const specifications = [
     { label: 'TOTAL THICKNESS', value: '4.0MM' },
