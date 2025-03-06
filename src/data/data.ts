@@ -1,12 +1,17 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, HeroItem, TBlogCard, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
 import privacy from '../../public/assets/images/icon/privacy.png';
 import support from '../../public/assets/images/icon/chat-46.png';
-
+import masterCard from './../../public/assets/images/payment-icons/Mastercard-Logo.png'
+import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
+import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
+// import applypayCard from './../../public/images/payment-icons/apply-pay-black.png'
+// import tabbyLogo from "./../../public/images/payment-icons/tabby-logo.png";
+// import tamaraLogo from "./../../public/images/payment-icons/tamara-logo.png";
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -65,11 +70,15 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   custom_url: ""
 };
 
-export const categoryValidationSchema = Yup.object({
+export const subcategoryValidationSchema = Yup.object({
   name: Yup.string().required('Add Sub Category Name'),
   category: Yup.string().required('Select Category'),
   custom_url: Yup.string().required('Custom URL is required'),
-  // description: Yup.string().required('required'),
+});
+
+export const categoryValidationSchema = Yup.object({
+  name: Yup.string().required('Add  Category Name'),
+  custom_url: Yup.string().required('Custom URL is required'),
 });
 
 export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
@@ -95,9 +104,14 @@ export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
   spacification: [],
   posterImageUrl: { imageUrl: "", public_id: "" }, // Must be an array of `ProductImage`
   productImages: [], // Must be an array of `ProductImage`
-  hoverImageUrl: { imageUrl: "", public_id: "" }, // Must be a `ProductImage` object
+  hoverImageUrl: { imageUrl: "", public_id: "" }, 
   AdditionalInformation: [],
   custom_url: '',
+  plankWidth: '',
+  thickness: '',
+  ResidentialWarranty: '',
+  CommmericallWarranty: '',
+  waterproof:false,
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',
@@ -276,7 +290,147 @@ export const features: Feature[] = [
 ];
 
 
+export const ThumnailImage = [
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+  {image:"/assets/bin/slider.png"},
+]
+export const ThumnailBottom = [
+  {image:"/assets/bin/thumb1.png" , title:"Click lock system"},
+  {image:"/assets/bin/thumb2.png" ,title:"Layers of SPC or LVT"},
+  {image:"/assets/bin/thumb2.png" ,title:"Waterproof"},
+  {image:"/assets/bin/thumb4.png" ,title:"Easy to clean"},
+  {image:"/assets/bin/thumb5.png" ,title:"Scratch resistant"},
+  {image:"/assets/bin/thumb6.png" ,title:"the packaging"},
 
+]
+export const flooringTypes: FlooringType[] = [
+  {
+    name: "SPC Flooring",
+    price: "AED 150m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  {
+    name: "LVT Flooring",
+    price: "AED 180m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  {
+    name: "Polar Flooring",
+    price: "AED 200m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+  {
+    name: "Richmond Flooring",
+    price: "AED 220m²",
+    product: [
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar Herringbone SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Polar SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Richmond Eco SPC",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+      {
+        image: "/assets/categoryslider/Image.webp",
+        name: "Product Three",
+        price: "Only AED 55/m²",
+      },
+    ]
+  },
+];
 
 
 
@@ -367,7 +521,7 @@ export const blogCards: TBlogCard[] = [
     id: 1,
     title: "I Am",
     heading: "Polar SPC <br /> Herringbone",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Polar-Spc-Herringbone.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
 
@@ -376,7 +530,7 @@ export const blogCards: TBlogCard[] = [
     id: 2,
     title: "I Am",
     heading: "Polar <br /> SPC",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Polar-SPC.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -384,7 +538,7 @@ export const blogCards: TBlogCard[] = [
     id: 3,
     title: "I Am",
     heading: "Polar <br /> LVT",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Polar-LVT.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -392,7 +546,7 @@ export const blogCards: TBlogCard[] = [
     id: 4,
     title: "I Am",
     heading: "Richmond <br /> SPC Eco",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Richmond-SPC-Eco.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -400,7 +554,7 @@ export const blogCards: TBlogCard[] = [
     id: 5,
     title: "I Am",
     heading: "Richmond <br /> SPC Prime",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Richmond-SPC-Prime.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -408,7 +562,7 @@ export const blogCards: TBlogCard[] = [
     id: 6,
     title: "I Am",
     heading: "Richmond LVT <br /> Comfort",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Richmond-LVT-Comfort.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -416,7 +570,7 @@ export const blogCards: TBlogCard[] = [
     id: 7,
     title: "I Am",
     heading: "Richmond LVT <br /> Luxury",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Richmond-LVT-Luxury.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -424,7 +578,7 @@ export const blogCards: TBlogCard[] = [
     id: 8,
     title: "I Am",
     heading: "Richmond SPC <br /> Herringbone",
-    Link: "/category/",
+    Link: "/what-am-i/",
     backgroundImage: '/assets/category/Richmond-SPC-Herringbone.webp',
     features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
   },
@@ -450,7 +604,7 @@ export const HomeUserInfo = [
     title: 'Overlay Ready',
     description:
       "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
-    image: '/assets/images/UserInfo/overlay.png',
+    image: '/assets/images/UserInfo/overlay.webp',
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
   },
@@ -835,7 +989,56 @@ export const faqspage: FAQ[] = [
   { question: "What happens if I receive a damaged product?", answer: "Contact us immediately for a replacement." },
 ];
 
+export const tabbyfeature: ITabbyList[] = [
+  { id: 1, para: 'No interest. No fees.' },
+  { id: 2, para: 'Trusted by 4,5m+ customers.' },
+  { id: 3, para: 'Shariah-compliant.' },
+];
 
+export const tabbyhowitwork: ITabbyList[] = [
+  { id: 1, para: 'Choose Tabby at checkout' },
+  { id: 2, para: 'Enter your information and add your debit or credit card.' },
+  { id: 3, para: 'Your first payment is taken when the order is made.' },
+  { id: 4, para: 'We will send you a reminder when your next payment is due' },
+];
+
+export const tabbypayicon: ITabbyPayList[] = [
+  { id: 1, imageUrl: masterCard },
+  { id: 2, imageUrl: viseCard },
+  { id: 3, imageUrl: gPayCard },
+];
+
+export const tamarawhy: ITamaraList[] = [
+  { id: 1, para: 'Sharia-compliant' },
+  { id: 2, para: 'No late fees' },
+  { id: 3, para: 'Quick and easy' },
+];
+export const tamaralist: ITamaraList[] = [
+  {
+    id: 1,
+    para: 'Payment options availability may vary based on your order value and Tamara record.',
+  },
+  { id: 2, para: 'Subject to terms and conditions.' },
+  { id: 3, para: 'Tamara is Sharia-compliant.' },
+  { id: 4, para: 'Eligible for customers in United Arab Emirates.' },
+  {
+    id: 5,
+    para: 'Your final payment plan may vary depending on your credit history.',
+  },
+];
+
+export const tamarafeature: ITamaraList[] = [
+  {
+    id: 1,
+    title: 'Split in 4',
+    para: 'Pay a fraction now and the rest in 3 payments over the next 3 months. No late fees, shariah-compliant!*',
+  },
+  {
+    id: 2,
+    title: 'Pay in Full',
+    para: 'Pay the full amount today and enjoy exclusive perks with Tamara!*',
+  },
+];
 
   export const specifications = [
     { label: 'TOTAL THICKNESS', value: '4.0MM' },
@@ -914,3 +1117,30 @@ export const sampleGridData: SampleGridData[] = [
     alt: "Free sample order",
   },
 ];
+
+export const WhatAmIcategoryData: WhatAmICategoryData = {
+  categoryHeading: "Richmond LVT Comfort",
+  categorycontent: "I am another type of flooring that gives you the look and feel of real wood at a fraction of the price. My name stands for Luxury Vinyl Tile and in simple terms, I’m exactly this. I am made of 8 layers of materials to give you a high performing product, designed to outlast others by miles. Included in these 8 layers is a layer of glass fibre, adding to my strength. My top layer is a UV protection film to ensure maximum colour fastness retention and compared to other brands, I blast them out the water.",
+  subSections: [
+    {
+      subHeading: "Where can I be used",
+      content: "I offer more flexibility than my Richmond SPC cousins and can be used on level surfaces where you may have a slight gradient. Another area where I am often used is on mezzanine floors where there might be a slight “bounce on the flooring”. I’m also great for commercial areas or high volume traffic as I can be glued down, something my SPC cousins can’t do!",
+    },
+    {
+      subHeading: "Why LVT over SPC",
+      content: "To be honest, we both offer exceptional performance levels (naturally of course). SPC is made from stone and I’m made from vinyl. That’s the most obvious difference between us. SPC flooring is harder and I’m softer. In some cases, that’s better. For example, in areas where you might have kids, I provide a softer landing for those bottoms. Rubber is also more expensive than Polymer (oh yeah, I’m a classy one), hence the slightly higher costs of me over SPC. One other key difference is that I can be glued down, whereas Mr SPC can’t be glued down. Not an issue in most cases to be honest but if you have a high traffic area, gluing us planks down is better for longer term use.",
+    },
+    {
+      subHeading: "Do I come with a warranty",
+      content: "Yes, as with all Richmond Flooring products, I come with a 5-year warranty for commercial spaces and 15 years for residential areas. This gives you peace of mind that I can be trusted. There are some exceptions. If you fit me wrong or abuse me in ways I am not designed for, then let’s be real and accept that I’m not going to do you any favours. Use me right, look after me with regular cleaning and me and you will be friends for years to come.",
+    },
+    {
+      subHeading: "Can I be used in wet areas?",
+      content: "Yes, with my click lock system, you don’t even need glue to keep us planks in place. (however, adhesive for high traffic areas is recommended). The click system ensures that each of us lock into our neighboring plank and leaves zero gaps for water to seep into.",
+    },
+  ],
+  images: [
+    { src: "/assets/category/whatami1.png", alt: "Flooring Left" },
+    { src: "/assets/category/whatami.png", alt: "Flooring Right" },
+  ],
+};

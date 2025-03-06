@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { ImageRemoveHandler } from 'utils/helperFunctions';
 import { Formik, Form, FormikHelpers, Field, ErrorMessage } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
-import { categoryValidationSchema, subcategoryInitialValues, } from 'data/data';
+import { subcategoryInitialValues, subcategoryValidationSchema, } from 'data/data';
 import Loader from 'components/Loader/Loader';
 import showToast from 'components/Toaster/Toaster';
 import Cookies from 'js-cookie';
@@ -16,6 +16,7 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { useMutation } from '@apollo/client';
 import { CREATE_SUBCATEGORY, UPDATE_SUBCATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
+import revalidateTag from 'components/ServerActons/ServerAction';
 
 
 const FormLayout = ({
@@ -98,12 +99,15 @@ const FormLayout = ({
         showToast('success', 'Sub Category has been successfully created!');
       }
 
+      revalidateTag('subcategories');
+
       setloading(false);
       seteditCategory?.(undefined);
       setposterimageUrl(undefined);
       resetForm();
       setMenuType('Sub Categories');
     } catch (err) {
+      console.log(err, "err")
       setloading(false);
 
       showToast('error', 'Something went wrong!');
@@ -132,7 +136,7 @@ const FormLayout = ({
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
         }
-        validationSchema={categoryValidationSchema}
+        validationSchema={subcategoryValidationSchema}
         onSubmit={onSubmit}
       >
         {(formik) => {
