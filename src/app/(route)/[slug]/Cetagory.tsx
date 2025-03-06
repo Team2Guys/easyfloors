@@ -6,7 +6,7 @@ import SubCategory from "components/sub-category/sub-category-product";
 import React from "react";
 import type { Category } from "types/cat";
 
-const Category = ({catgories}: {catgories: Category[]}) => {
+const Category = ({catgories , category}: {catgories: Category[] , category: Category}) => {
    console.log(catgories)
   return (
     <>
@@ -16,7 +16,7 @@ const Category = ({catgories}: {catgories: Category[]}) => {
           <Filters className="hidden lg:block" />
         </div>
         <div className="lg:w-[80%]">
-          <SubCategory />
+          <SubCategory category={category} />
         </div>
       </Container>
     </>

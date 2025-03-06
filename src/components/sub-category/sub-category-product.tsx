@@ -4,31 +4,25 @@ import Modal from "components/ui/modal";
 import Select from "components/ui/Select";
 import { features, product } from "data/data";
 import React, { useState } from "react";
-import { FiSearch, FiX } from "react-icons/fi";
+import { FiX } from "react-icons/fi";
 import Filters from "./filters";
+import { Category } from "types/cat";
 
-const SubCategory = () => {
+const SubCategory = ({category}: {category: Category}) => {
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className="space-y-4 font-inter  lg:mb-20">
-      <div className="hidden lg:flex items-center border border-gray-300 px-2 py-2 w-full max-w-md focus-within:ring-2 focus-within:ring-primary hover:border-primary transition">
+      {/* <div className="hidden lg:flex items-center border border-gray-300 px-2 py-2 w-full max-w-md focus-within:ring-2 focus-within:ring-primary hover:border-primary transition">
         <input
           type="text"
           placeholder="Search for anything..."
           className="flex-1 px-2 outline-none bg-transparent"
         />
         <FiSearch className="text-gray-500" size={20} />
-      </div>
+      </div> */}
+      <h1 className="text-34 font-bold">{category.name}</h1>
       <p className=" text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter">
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industrys standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
+        {category.description}
       </p>
       <div className="flex items-center justify-between">
       <div className="">

@@ -10,7 +10,7 @@ export interface Category {
   Canonical_Tag?: string;
   images_alt_text?: string;
   posterImageUrl?: ProductImage;
-  custom_url?: string
+  custom_url: string
   createdAt: Date;
   updatedAt: Date;
   last_editedBy?: string;
