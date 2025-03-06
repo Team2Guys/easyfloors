@@ -26,6 +26,7 @@ products {
     plankWidth
     ResidentialWarranty
     CommmericallWarranty
+            thickness
      category {
             id
             name
