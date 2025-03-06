@@ -14,8 +14,8 @@ export class SubCategory {
   @Field()
   description: string;
 
-  @Field(() =>  GraphQLJSON)
-  posterImageUrl: any
+  @Field(() =>  GraphQLJSON,{nullable:true})
+  posterImageUrl?: any
 
   @Field(() => Date, { nullable: true })
   createdAt: Date;
@@ -50,4 +50,13 @@ export class SubCategory {
 
   @Field({ nullable: true })
   short_description?:string
+
+  @Field(() =>  GraphQLJSON,{nullable:true})
+  whatAmiImage?: any
+
+  @Field(() =>  GraphQLJSON,{nullable:true})
+  whatamIdetails?: any
+
+  @Field({nullable:true})
+  whatAmiTopHeading?:string
 }
