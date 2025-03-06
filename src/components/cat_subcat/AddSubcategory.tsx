@@ -16,6 +16,7 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { useMutation } from '@apollo/client';
 import { CREATE_SUBCATEGORY, UPDATE_SUBCATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
+import revalidateTag from 'components/ServerActons/ServerAction';
 
 
 const FormLayout = ({
@@ -98,12 +99,15 @@ const FormLayout = ({
         showToast('success', 'Sub Category has been successfully created!');
       }
 
+      revalidateTag('subcategories');
+
       setloading(false);
       seteditCategory?.(undefined);
       setposterimageUrl(undefined);
       resetForm();
       setMenuType('Sub Categories');
     } catch (err) {
+      console.log(err, "err")
       setloading(false);
 
       showToast('error', 'Something went wrong!');
