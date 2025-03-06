@@ -31,6 +31,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : []
   );
 
+
+
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<EDIT_PRODUCT_PROPS | null | undefined>(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
@@ -70,6 +72,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setImagesUrl(imagesClone);
   }
 
+
   useEffect(() => {
 
 
@@ -102,6 +105,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       }
 
       if (subcategories.length > 0 && !selectedSubcategory) {
+        console.log(selectedSubcategory, "selectedSubcategory")
         setcategorySubCatError((prev) => ({
           ...prev,
           subCategoryError: "Subcategory is Required",
@@ -218,6 +222,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     // Reset subcategory when category changes
     setSelectedSubcategory("");
   };
+
+
   return (
     <>
       <p
@@ -624,7 +630,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </label>
 
                       <Field
-                        type="number"
+                        type="text"
                         name="ResidentialWarranty"
                         placeholder="5 years"
                         min="0"
@@ -640,7 +646,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </label>
 
                       <Field
-                        type="number"
+                        type="text"
                         name="CommmericallWarranty"
                         placeholder="5 years"
                         min="0"
@@ -656,7 +662,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </label>
 
                       <Field
-                        type="number"
+                        type="text"
                         name="plankWidth"
                         placeholder="183 mm"
                         min="0"
@@ -672,7 +678,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </label>
 
                       <Field
-                        type="number"
+                        type="text"
                         name="thickness"
                         placeholder="5.5 mm"
                         min="0"

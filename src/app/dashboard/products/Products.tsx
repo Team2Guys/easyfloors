@@ -35,8 +35,15 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
     Canonical_Tag: (editProduct && editProduct?.Canonical_Tag) || "",
     colors: (editProduct && editProduct?.colors) || [],
     custom_url: editProduct && editProduct?.custom_url,
+    plankWidth: editProduct && editProduct?.plankWidth,
+    thickness: editProduct && editProduct?.thickness,
+    ResidentialWarranty: editProduct && editProduct?.ResidentialWarranty,
+    CommmericallWarranty: editProduct && editProduct?.CommmericallWarranty,
+    waterproof: editProduct && editProduct?.waterproof,
+
   };
 
+  console.log(editProduct, "editProduct")
 
   useEffect(() => {
     setProducts(productsData);
