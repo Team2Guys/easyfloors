@@ -22,24 +22,33 @@ export interface IProduct {
     name: string;
     price: number;
     description: string;
+    short_description?: string;
     stock: number;
     discountPrice?: number;
     sale?: string;
-    colors?: [];
+    colors: AdditionalInformation[];
     spacification?: specsDetails[];
     posterImageUrl: ProductImage;
     productImages: ProductImage[];
     hoverImageUrl: ProductImage;
     AdditionalInformation: AdditionalInformation[];
+    colors: AdditionalInformation[];
     categoriesId: number;
     subCategory?: ISUBCATEGORY_EDIT;
     custom_url?:string
+    thickness?:string
+    ResidentialWarranty?:string
+    CommmericallWarranty?:string
+    plankWidth?:string
+    waterproof?:boolean
+   
     category?:EDIT_CATEGORY
     Meta_Title: string;
     Canonical_Tag: string;
     Meta_Description: string;
     createdAt?:        Date    
     updatedAt ?:          Date
+    waterproof?:boolean
     
     
   }

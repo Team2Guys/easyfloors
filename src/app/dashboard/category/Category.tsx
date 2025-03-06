@@ -14,11 +14,11 @@ const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   const [editCategory, seteditCategory] = useState<Category | undefined | null>();
   const [AllCategories, setAllCategories] = useState<Category[]>([]);
 
-useEffect(() => {
-  
-  setAllCategories(cetagories)
+  useEffect(() => {
 
-}, [cetagories])
+    setAllCategories(cetagories)
+
+  }, [cetagories])
 
 
   return (
@@ -26,8 +26,8 @@ useEffect(() => {
       <Breadcrumb pageName={menuType} />
       {menuType === 'Categories' ? (
         <div className="flex flex-col gap-10">
-          <DashboardCat 
-                      setMenuType={setMenuType}
+          <DashboardCat
+            setMenuType={setMenuType}
             seteditCategory={seteditCategory}
             // editCategory={editCategory}
             cetagories={AllCategories || []}

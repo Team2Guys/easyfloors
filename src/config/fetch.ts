@@ -1,4 +1,4 @@
-import { ICategory, IReview } from 'types/type';
+import {IReview } from 'types/type';
 import axios from 'axios';
 import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS } from 'graphql/queries';
 import client from './apolloClient';
@@ -37,11 +37,13 @@ export const fetchCategories = async () => {
   }
 };
 
-export const fetchSubCategories = async (): Promise<ICategory[]> => {
+export const fetchSubCategories = async () => {
   try {
     const { data } = await client.query({
-      query: FETCH_ALL_SUB_CATEGORIES
+      query: FETCH_ALL_SUB_CATEGORIES,
+   fetchPolicy: "network-only"
     })
+
     return data?.subCategories || []
   } catch (error) {
     return []
@@ -49,6 +51,7 @@ export const fetchSubCategories = async (): Promise<ICategory[]> => {
 
   }
 };
+
 
 export const fetchReviews = async (): Promise<IReview[]> => {
   const response = await axios.get(
@@ -93,13 +96,13 @@ export const get_allAdmins = async (token: string | undefined) => {
     if (!token) throw new Error("Auntheticatoin token not found")
     const { data } = await client.query({
       query: GET_ALL_ADMINS,
-      context:{
-        headers:{
+      context: {
+        headers: {
           Authorization: `Bearer ${token}`
         }
       }
     })
-return data?.admins || []
+    return data?.admins || []
   } catch (error) {
     throw error;
   }

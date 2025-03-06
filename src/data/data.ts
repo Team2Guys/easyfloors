@@ -104,9 +104,14 @@ export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
   spacification: [],
   posterImageUrl: { imageUrl: "", public_id: "" }, // Must be an array of `ProductImage`
   productImages: [], // Must be an array of `ProductImage`
-  hoverImageUrl: { imageUrl: "", public_id: "" }, // Must be a `ProductImage` object
+  hoverImageUrl: { imageUrl: "", public_id: "" }, 
   AdditionalInformation: [],
   custom_url: '',
+  plankWidth: '',
+  thickness: '',
+  ResidentialWarranty: '',
+  CommmericallWarranty: '',
+  waterproof:false,
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',

@@ -2,21 +2,27 @@
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ViewSubcategries from 'components/cat_subcat/ViewSubcategries';
-import {ISUBCATEGORY } from 'types/cat';
+import { ISUBCATEGORY } from 'types/cat';
 import dynamic from 'next/dynamic';
 import { SubCategoryComponentProps_dashboard } from 'types/PagesProps';
-const AddSubcategory= dynamic(() => import('components/cat_subcat/AddSubcategory'),);
+const AddSubcategory = dynamic(() => import('components/cat_subcat/AddSubcategory'),);
 
 const SubCategoryComponent = ({
   subCategories,
   cetagories,
 }: SubCategoryComponentProps_dashboard) => {
   const [menuType, setMenuType] = useState<string>('Sub Categories');
-  const [editCategory, seteditCategory] = useState<ISUBCATEGORY | undefined >();
+  const [editCategory, seteditCategory] = useState<ISUBCATEGORY | undefined>();
+  const [updatedsubCategories, setUpdatedCategories] = useState(subCategories);
 
-  
+
+  useEffect(() => {
+    setUpdatedCategories(subCategories);
+  }, [subCategories, cetagories]);
+
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={menuType} />
@@ -26,7 +32,7 @@ const SubCategoryComponent = ({
             setMenuType={setMenuType}
             seteditCategory={seteditCategory}
             editCategory={editCategory}
-            subCategories={subCategories}
+            subCategories={updatedsubCategories}
           />
         </div>
       ) : (
