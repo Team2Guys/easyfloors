@@ -3,7 +3,7 @@ import SubCategoryComponent from './SubCategory';
 
 const AddSubCategory = async () => {
   const [cetagories, subCategories] = await Promise.all([fetchCategories(),fetchSubCategories()]);
-console.log(subCategories[2])
+
   return (
     <SubCategoryComponent
       subCategories={subCategories}
