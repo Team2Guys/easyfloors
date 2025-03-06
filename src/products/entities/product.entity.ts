@@ -33,8 +33,8 @@ export class Product {
   @Field(() => [GraphQLJSON])
   productImages: any[]
 
-  @Field(() => [String])
-  colors: string[]
+  @Field(() => [GraphQLJSON])
+  colors: any[]
 
   @Field(() => Date, { nullable: true })
   createdAt: Date;
@@ -66,6 +66,9 @@ export class Product {
 
   @Field({ nullable: true })
   plankWidth: string;
+
+  @Field({ nullable: true })
+  thickness: string;
 
   @Field({ nullable: true })
   ResidentialWarranty: string;

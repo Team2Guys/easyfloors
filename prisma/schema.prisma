@@ -34,6 +34,7 @@ model Products {
   waterproof            Boolean        @default(false)
   AdditionalInformation Json[]         @default([])
   plankWidth            String?
+  thickness            String?
   ResidentialWarranty   String?
   CommmericallWarranty  String?
   categoryId            Int?
