@@ -19,6 +19,7 @@ import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from 'types/PagesProps';
 import { useMutation } from "@apollo/client";
 import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'graphql/mutations';
+import Cookies from 'js-cookie';
 
 
 const initialErrors = { categoryError: "", subCategoryError: "", posterImageError: "", prodImages: "" }
@@ -42,6 +43,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
+  const token = Cookies.get('2guysAdminToken');
+  const superAdminToken = Cookies.get('superAdminToken');
+  const finalToken = token ? token : superAdminToken;
+
 
   const [updateProduct] = useMutation(UPDATE_PRODUCT, {
     context: {
@@ -105,7 +110,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       }
 
       if (subcategories.length > 0 && !selectedSubcategory) {
-        console.log(selectedSubcategory, "selectedSubcategory")
         setcategorySubCatError((prev) => ({
           ...prev,
           subCategoryError: "Subcategory is Required",
@@ -258,26 +262,27 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       {posterimageUrl && posterimageUrl?.length > 0 ? (
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
+                        <div className="">
                           {posterimageUrl.map((item: ProductImage, index) => {
                             return (
                               <div key={index}>
                                 <div className="relative group rounded-lg overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105">
                                   <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white dark:bg-black rounded-full">
                                     <RxCross2
-                                      className="cursor-pointer text-red-500 dark:text-red-700"
+                                      className="cursor-pointer border border-black  text-red-500 dark:text-red-700"
                                       size={17}
                                       onClick={() => {
                                         ImageRemoveHandler(
                                           item.public_id,
                                           setposterimageUrl,
+                                          finalToken
                                         );
                                       }}
                                     />
                                   </div>
                                   <Image
                                     key={index}
-                                    className="object-cover w-full h-full"
+                                    className="object-cover "
                                     width={300}
                                     height={400}
                                     loading='lazy'
@@ -286,6 +291,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     alt={`productImage-${index}`}
                                   />
                                 </div>
+
                                 <input
                                   className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                   placeholder="altText"
@@ -696,6 +702,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         Color Information
                       </h3>
                     </div>
+
                     <div className="flex flex-col py-4 px-6">
                       <FieldArray name="colors">
                         {({ push, remove }) => (
@@ -885,6 +892,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       ImageRemoveHandler(
                                         item.public_id,
                                         sethoverImage,
+                                        finalToken
                                       );
                                     }}
                                   />
@@ -951,6 +959,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       ImageRemoveHandler(
                                         item.public_id,
                                         setImagesUrl,
+                                        finalToken
                                       );
                                     }}
                                   />

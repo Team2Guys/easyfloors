@@ -28,8 +28,7 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
     stock: (editProduct && editProduct.stock) || 0,
     posterImageUrl: editProduct?.posterImageUrl || {},
     productImages: (editProduct && editProduct.productImages) || [],
-    AdditionalInformation:
-      (editProduct && editProduct.AdditionalInformation) || [],
+    AdditionalInformation:(editProduct && editProduct.AdditionalInformation) || [],
     Meta_Title: (editProduct && editProduct?.Meta_Title) || "",
     Meta_Description: (editProduct && editProduct?.Meta_Description) || "",
     Canonical_Tag: (editProduct && editProduct?.Canonical_Tag) || "",
@@ -42,8 +41,6 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
     waterproof: editProduct && editProduct?.waterproof,
 
   };
-
-  console.log(editProduct, "editProduct")
 
   useEffect(() => {
     setProducts(productsData);
