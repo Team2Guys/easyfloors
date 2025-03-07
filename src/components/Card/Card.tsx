@@ -10,13 +10,14 @@ const Card: React.FC<ProductCardProps> = ({
   sldier,
   category,
 }) => {
+  console.log(product,"product")
   return (
     <div className={`overflow-hidden group  ${sldier ? "px-2" : " hover:bg-background p-2"}`}>
      <div className="relative">
       <Link href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}>
         <Image
-          src={product.image}
-          alt={product.name}
+          src={product.posterImageUrl.imageUrl || product.image}
+          alt={product.posterImageUrl.altText || ""}
           width={500}
           height={200}
           className={`w-full  object-cover ${sldier ? " h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"}`}

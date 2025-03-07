@@ -2,9 +2,16 @@ import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import Filters from "components/sub-category/filters";
 import SubCategory from "components/sub-category/sub-category-product";
+import {fetchProducts } from "config/fetch";
 import React from "react";
 
-const Category = () => {
+const Category = async () => {
+  const [products] = await Promise.all([
+
+    fetchProducts(),
+    
+  ]);
+
   return (
     <>
       <Breadcrumb image="/assets/images/category/category-breadcrumb.png" />
@@ -13,7 +20,7 @@ const Category = () => {
           <Filters className="hidden lg:block" />
         </div>
         <div className="lg:w-[80%]">
-          <SubCategory />
+          <SubCategory  product={products}/>
         </div>
       </Container>
     </>

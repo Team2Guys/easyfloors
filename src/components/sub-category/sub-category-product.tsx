@@ -2,12 +2,17 @@
 import Card from "components/Card/Card";
 import Modal from "components/ui/modal";
 import Select from "components/ui/Select";
-import { features, product } from "data/data";
+import { features } from "data/data";
 import React, { useState } from "react";
 import { FiSearch, FiX } from "react-icons/fi";
 import Filters from "./filters";
+import { IProduct } from "types/prod";
 
-const SubCategory = () => {
+interface Subcategoryprops {
+  product: IProduct[];
+}
+
+const SubCategory = ({product}:Subcategoryprops) => {
   const [isModalOpen, setModalOpen] = useState(false);
   return (
     <div className="space-y-4 font-inter  lg:mb-20">

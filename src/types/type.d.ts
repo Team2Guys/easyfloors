@@ -11,16 +11,16 @@ export interface Feature {
 export interface FlooringType {
   name?: string;
   price?: string;
-  product: Product[];
+  product: AProduct[];
 }
-export interface Product {
+export interface AProduct {
   image: string;
   name: string;
   price: string;
   stock?: number;
 }
 export interface ProductCardProps {
-  product: Product;
+  product: IProduct;
   sldier?: boolean;
   features: Feature[];
   category?: string;
