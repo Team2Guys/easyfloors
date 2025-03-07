@@ -45,6 +45,9 @@ export class CreateSubCategoryInput {
 
     @Field(() =>  GraphQLJSON,{nullable:true})
     whatAmiImage?: any
+
+    @Field(() =>  GraphQLJSON,{nullable:true})
+    whatAmiImageBanner?: any
   
     @Field(() =>  GraphQLJSON,{nullable:true})
     whatamIdetails?: any
