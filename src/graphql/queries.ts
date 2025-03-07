@@ -79,6 +79,8 @@ query SubCategories {
         whatAmiImage
         whatamIdetails
         whatAmiTopHeading
+       whatAmiImage
+        whatAmiImageBanner
         products {
             id
             name

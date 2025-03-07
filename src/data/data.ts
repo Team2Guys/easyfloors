@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TBlogCard, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { FAQ, SampleGridData, SocialLink, TAboutUs, } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -1119,29 +1119,5 @@ export const sampleGridData: SampleGridData[] = [
   },
 ];
 
-export const WhatAmIcategoryData: WhatAmICategoryData = {
-  categoryHeading: "Richmond LVT Comfort",
-  categorycontent: "I am another type of flooring that gives you the look and feel of real wood at a fraction of the price. My name stands for Luxury Vinyl Tile and in simple terms, I’m exactly this. I am made of 8 layers of materials to give you a high performing product, designed to outlast others by miles. Included in these 8 layers is a layer of glass fibre, adding to my strength. My top layer is a UV protection film to ensure maximum colour fastness retention and compared to other brands, I blast them out the water.",
-  subSections: [
-    {
-      subHeading: "Where can I be used",
-      content: "I offer more flexibility than my Richmond SPC cousins and can be used on level surfaces where you may have a slight gradient. Another area where I am often used is on mezzanine floors where there might be a slight “bounce on the flooring”. I’m also great for commercial areas or high volume traffic as I can be glued down, something my SPC cousins can’t do!",
-    },
-    {
-      subHeading: "Why LVT over SPC",
-      content: "To be honest, we both offer exceptional performance levels (naturally of course). SPC is made from stone and I’m made from vinyl. That’s the most obvious difference between us. SPC flooring is harder and I’m softer. In some cases, that’s better. For example, in areas where you might have kids, I provide a softer landing for those bottoms. Rubber is also more expensive than Polymer (oh yeah, I’m a classy one), hence the slightly higher costs of me over SPC. One other key difference is that I can be glued down, whereas Mr SPC can’t be glued down. Not an issue in most cases to be honest but if you have a high traffic area, gluing us planks down is better for longer term use.",
-    },
-    {
-      subHeading: "Do I come with a warranty",
-      content: "Yes, as with all Richmond Flooring products, I come with a 5-year warranty for commercial spaces and 15 years for residential areas. This gives you peace of mind that I can be trusted. There are some exceptions. If you fit me wrong or abuse me in ways I am not designed for, then let’s be real and accept that I’m not going to do you any favours. Use me right, look after me with regular cleaning and me and you will be friends for years to come.",
-    },
-    {
-      subHeading: "Can I be used in wet areas?",
-      content: "Yes, with my click lock system, you don’t even need glue to keep us planks in place. (however, adhesive for high traffic areas is recommended). The click system ensures that each of us lock into our neighboring plank and leaves zero gaps for water to seep into.",
-    },
-  ],
-  images: [
-    { src: "/assets/category/whatami1.png", alt: "Flooring Left" },
-    { src: "/assets/category/whatami.png", alt: "Flooring Right" },
-  ],
-};
+
+

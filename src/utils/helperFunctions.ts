@@ -4,7 +4,7 @@ import axios from 'axios';
 import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
 import { ProductImage } from 'types/prod';
-import showToast from 'components/Toaster/Toaster';
+import { toast } from 'react-toastify';
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
@@ -12,7 +12,7 @@ export const ImageRemoveHandler = async (
   finalToken?:string
 ) => {
   try {
-    if(!finalToken) return  showToast("error", "Token Not found ")
+    if(!finalToken) return  toast.success("Token Not found ")
     const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: FILE_DELETION_MUTATION,
@@ -55,6 +55,18 @@ export const handleImageAltText = (
     return updatedImagesUrl;
   });
 };
+
+
+export const TrimerHandler = (value:string)=>{
+  if(!value) return 
+
+return value.trim().toLowerCase()
+
+
+
+}
+
+
 
 
 // export const getPRODUCTS = async (

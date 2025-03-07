@@ -38,13 +38,16 @@ const FormLayout = ({
       whatamIdetails: editCategory?.whatamIdetails || []
     }
     : undefined;
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(editCategory ? [editCategory.posterImageUrl] : undefined);
-  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory ? [editCategory.posterImageUrl] : undefined);
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
+  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ?  [editCategory?.whatAmiImageBanner] : undefined);
+  const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ?  [editCategory?.whatAmiImage] : undefined);
+  
+  
   const [loading, setloading] = useState<boolean>(false);
 
   const [editCategoryName, setEditCategoryName] = useState<ISUBCATEGORY_EDIT | undefined>(CategoryName);
-  const token = Cookies.get('2guysAdminToken');
-  const superAdminToken = Cookies.get('superAdminToken');
+  const token = Cookies.get('admin_access_token');
+  const superAdminToken = Cookies.get('super_admin_access_token');
   const finalToken = token ? token : superAdminToken;
 
   const [createSubCategory] = useMutation(CREATE_SUBCATEGORY);
@@ -57,8 +60,10 @@ const FormLayout = ({
     try {
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
+      const Banner = BannerImageUrl && BannerImageUrl[0];
+      const whatIamIImage = WhatamIImageUrl && WhatamIImageUrl[0];
 
-      const newValue = { ...values, posterImageUrl };
+      const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner,whatAmiImage:whatIamIImage  };
       const updateFlag = editCategoryName ? true : false;
 
       if (updateFlag) {
@@ -112,8 +117,7 @@ const FormLayout = ({
   }, [editCategory])
 
 
-
-
+  console.log(finalToken, "finalToken")
 
   return (
     <>
@@ -223,7 +227,7 @@ const FormLayout = ({
                                     onClick={() => {
                                       ImageRemoveHandler(
                                         item.public_id,
-                                        setposterimageUrl,
+                                        setBannerImageUrl,
                                         finalToken
                                       );
                                     }}
@@ -262,6 +266,72 @@ const FormLayout = ({
                         <ImageUploader setposterimageUrl={setBannerImageUrl} />
                       )}
                     </div>
+
+
+                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <h3 className="font-medium text-black dark:text-white">
+                          what Am I Image
+                        </h3>
+                      </div>
+                      {WhatamIImageUrl?.[0] && WhatamIImageUrl?.length > 0 ? (
+                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                          {WhatamIImageUrl.map((item: ProductImage, index: number) => {
+                            return (
+                              <div
+                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                key={index}
+                              >
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                                  <RxCross2
+                                    className="cursor-pointer border rounded text-red-500 dark:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        setWhatamIImageUrl,
+                                        finalToken
+                                      );
+                                    }}
+                                  />
+
+                                </div>
+                                <Image
+                                  key={index}
+                                  className="w-full h-full dark:bg-black dark:shadow-lg"
+
+                                  width={200}
+                                  height={500}
+                                  loading='lazy'
+                                  src={item?.imageUrl || ""}
+                                  alt={`productImage-${index}`}
+                                />
+                                <input
+                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  placeholder="Alt Text"
+                                  type="text"
+                                  name="altText"
+                                  value={item?.altText || ""}
+                                  onChange={(e) =>
+                                    handleImageAltText(
+                                      index,
+                                      String(e.target.value),
+                                      setWhatamIImageUrl,
+
+                                    )
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <ImageUploader setposterimageUrl={setWhatamIImageUrl} />
+                      )}
+                    </div>
+
+
+
 
 
 
