@@ -43,6 +43,20 @@ throw error;
 };
 
 
+export const handleImageAltText = (
+  index: number,
+  newImageIndex: string,
+  setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+) => {
+  setImagesUrlhandler((prev: ProductImage[] | undefined) => {
+    if (!prev) return [];
+
+    const updatedImagesUrl = prev?.map((item: ProductImage, i: number) => i === index ? { ...item, altText: newImageIndex } : item);
+    return updatedImagesUrl;
+  });
+};
+
+
 // export const getPRODUCTS = async (
 //   setTotalProducts: setTotalProducts,
 //   setError: setError,

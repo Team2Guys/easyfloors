@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
-import { ImageRemoveHandler } from 'utils/helperFunctions';
+import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
 import { Formik, Form, FormikHelpers, Field, ErrorMessage, FieldArray, FormikErrors } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { subcategoryInitialValues, subcategoryValidationSchema, } from 'data/data';
@@ -111,18 +111,7 @@ const FormLayout = ({
 
   }, [editCategory])
 
-  const handleImageAltText = (
-    index: number,
-    newImageIndex: string,
-    setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
-  ) => {
-    setImagesUrlhandler((prev: ProductImage[] | undefined) => {
-      if (!prev) return [];
 
-      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) => i === index ? { ...item, altText: newImageIndex } : item);
-      return updatedImagesUrl;
-    });
-  };
 
 
 
