@@ -55,12 +55,13 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
         placement: 'topRight',
       });
     } catch (err) {
-      console.log(err, 'err');
+
       notification.error({
         message: 'Deletion Failed',
         description: 'There was an error deleting the Email.',
         placement: 'topRight',
       });
+      throw err;
     }
   };
 
@@ -101,8 +102,6 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
       selectedRowKeys.includes(category.id),
     ).map((category) => category.email);
 
-    console.log(selectedEmails);
-
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/newsletters/send-promotional-email`,
@@ -110,7 +109,6 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
           emails: selectedEmails,
         },
       );
-      console.log(res);
       if (res.status === 201) {
         setSelectedRowKeys([]);
         showToast('success', res.data.message + '🎉');
@@ -118,7 +116,7 @@ const ViewNewsletter: React.FC<CategoryProps> = ({
       }
     } catch (error) {
       setSendingLoading(false);
-      console.log(error);
+throw error;
     }
   };
 

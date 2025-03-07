@@ -25,7 +25,6 @@ const Product = () => {
   const category = params.slug;
   const subcategory = params.subcategory;
 
-  console.log(params, "params");
  const relatedProducts = flooringTypes.flatMap((flooring) => flooring.product).slice(0, 5);
   return (
     <div className="mb-10">
