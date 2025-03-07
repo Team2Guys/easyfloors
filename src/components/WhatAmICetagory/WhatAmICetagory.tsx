@@ -6,9 +6,9 @@ import { ISUBCATEGORY } from "types/cat";
 const WhatAmICetagory: React.FC<{ subcat: ISUBCATEGORY }> = ({ subcat }) => {
   return (
     <section className="container mx-auto px-4 py-12 font-inter">
-      <h1 className="text-2xl md:text-4xl font-bold text-center md:mb-8 mb-4">
+      <h2 className="text-2xl md:text-4xl font-bold text-center md:mb-8 mb-4">
         {subcat.whatAmiTopHeading}
-      </h1>
+      </h2>
 
       <div className="space-y-6  mt-10">
         {subcat.whatamIdetails.map((section, index: number) => (

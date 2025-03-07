@@ -12,24 +12,21 @@ export const ImageRemoveHandler = async (
   finalToken?:string
 ) => {
   try {
+    console.log(finalToken, "token")
     if(!finalToken) return  toast.success("Token Not found ")
     const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: FILE_DELETION_MUTATION,
         variables: {
           public_id: imagePublicId,
-        },
-        context: {
-          headers: {
-            Authorization: `Bearer ${finalToken}`,
-          },
-        },
-        
+        },  
       },
       {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${finalToken}`,
         },
+        withCredentials: true,
       }
     );
 
@@ -65,6 +62,7 @@ return value.trim().toLowerCase()
 
 
 }
+
 
 
 

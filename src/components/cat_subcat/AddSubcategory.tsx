@@ -35,7 +35,8 @@ const FormLayout = ({
       Meta_Description: editCategory.Meta_Description || '',
       Canonical_Tag: editCategory.Canonical_Tag || '',
       custom_url: editCategory.custom_url || "",
-      whatamIdetails: editCategory?.whatamIdetails || []
+      whatamIdetails: editCategory?.whatamIdetails || [],
+      whatAmiTopHeading: editCategory?.whatAmiTopHeading || ""
     }
     : undefined;
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
@@ -115,9 +116,6 @@ const FormLayout = ({
     setEditCategoryName(CategoryName)
 
   }, [editCategory])
-
-
-  console.log(finalToken, "finalToken")
 
   return (
     <>
@@ -389,7 +387,7 @@ const FormLayout = ({
                           as="textarea"
                           name="whatAmiTopHeading"
                           placeholder="What Am I Heading"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.whatAmiTopHeading && formik.errors.whatAmiTopHeading ? "border-red-500" : ""
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik?.touched?.whatAmiTopHeading && formik.errors.whatAmiTopHeading ? "border-red-500" : ""
                             }`}
                         />
                         <ErrorMessage name="whatAmiTopHeading" component="div" className="text-red-500 text-sm" />

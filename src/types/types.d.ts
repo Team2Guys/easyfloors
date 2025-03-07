@@ -9,12 +9,7 @@ export interface SocialLink {
     submenu?: { label: string; href: string; image?: string }[];
     scrolling?: boolean;
   }
-  export interface BreadcrumbProps  {
-    title?: string;
-    image?: string;
-    slug?: string;
-    subcategory?: string;
-  };
+
   export interface TextInputProps {
     label: string;
     name: string;
