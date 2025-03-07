@@ -89,12 +89,12 @@ const CreateAdmin = ({
       const { data } = updateFlag ? await updateAdmin({ variables: { input } })
         : await createAdmin({ variables: { input } });
 
-      console.log(data, "Mutation Response");
+      console.log(data, "Mutation Response"); //eslint-disable-line
 
       setFormData(intitalValues);
       showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
     } catch (err:any) {//eslint-disable-line
-      console.error("GraphQL Error:", err);
+
       setError(err?.message || "An unexpected error occurred.");
       showToast("error", err?.message || "An error occurred");
     } finally {

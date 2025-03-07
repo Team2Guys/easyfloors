@@ -37,8 +37,9 @@ function Admins({ setselecteMenu }: any) { //eslint-disable-line
         setAdmins(admins);
         setloading(false);
       } catch (err) {
-        console.log(err, 'err');
+
         setloading(false);
+        throw err;
       }
     };
 
@@ -64,7 +65,7 @@ function Admins({ setselecteMenu }: any) { //eslint-disable-line
         prevAdmins.filter((admin: AdminRecord) => admin._id !== id),
       );
     } catch (error) {
-      console.error('Error deleting admin:', error);
+      throw error
     } finally {
       setDelLoading(null);
     }

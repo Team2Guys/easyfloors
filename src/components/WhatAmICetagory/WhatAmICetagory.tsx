@@ -1,35 +1,38 @@
 import React from "react";
 import Image from "next/image";
-import { WhatAmICategoryData, SubSection } from "types/types";
+import { ISUBCATEGORY } from "types/cat";
 
-const WhatAmICetagory: React.FC<{ data: WhatAmICategoryData }> = ({ data }) => {
+
+const WhatAmICetagory: React.FC<{ subcat: ISUBCATEGORY }> = ({ subcat }) => {
   return (
     <section className="container mx-auto px-4 py-12 font-inter">
-      <h1 className="text-2xl md:text-4xl font-bold text-center md:mb-8 mb-4">
-        {data.categoryHeading}
-      </h1>
-      <p>{data.categorycontent}</p>
+      <h2 className="text-2xl md:text-4xl font-bold text-center md:mb-8 mb-4">
+        {subcat.whatAmiTopHeading}
+      </h2>
 
       <div className="space-y-6  mt-10">
-        {data.subSections.map((section: SubSection, index: number) => (
+        {subcat.whatamIdetails.map((section, index: number) => (
           <div key={index}>
-            <h2 className="text-xl md:text-2xl font-semibold mb-2">{section.subHeading}</h2>
-            <p>{section.content}</p>
+            {section.name &&
+              <h2 className="text-xl md:text-2xl font-semibold mb-2">{section.name}</h2>
+
+            }
+            <p>{section.detail}</p>
           </div>
         ))}
       </div>
       <div className="flex flex-col md:flex-row justify-center gap-6 mt-10">
-        {data.images.map((image, index) => (
-          <div key={index} className="w-full md:w-1/2">
+        {subcat && subcat?.whatAmiImage &&
+          <div className="w-full md:w-1/2">
             <Image
-              src={image.src}
-              alt={image.alt}
+              src={subcat.whatAmiImage.imageUrl}
+              alt={subcat.whatAmiImage.altText || "SubCategory text"}
               width={1000}
               height={1000}
               className="w-full h-auto"
             />
           </div>
-        ))}
+        }
       </div>
     </section>
   );

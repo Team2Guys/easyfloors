@@ -91,7 +91,9 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   custom_url: "",
   category: "",
   Canonical_Tag:"",
-  whatamIdetails:[]
+  whatamIdetails:[],
+  whatAmiTopHeading:""
+
 
 };
 
@@ -1224,4 +1226,6 @@ export const measurementData: MeasurementSection[] = [
     image: "",
   },
 ];
+
+
 

@@ -1,4 +1,4 @@
-import { AdditionalInformation, IProduct } from "./prod";
+import { AdditionalInformation, IProduct, ProductImage } from "./prod";
 
 export interface Category {
   id: number | string
@@ -10,7 +10,7 @@ export interface Category {
   Canonical_Tag?: string;
   images_alt_text?: string;
   posterImageUrl?: ProductImage;
-  custom_url?: string
+  custom_url: string
   createdAt: Date;
   updatedAt: Date;
   last_editedBy?: string;
@@ -31,6 +31,7 @@ export interface ISUBCATEGORY extends Category {
   category:EDIT_CATEGORY,
   products?:IProduct[]
   whatAmiImage?:ProductImage;
+  whatAmiImageBanner?:ProductImage;
   whatAmiTopHeading?:string
   whatamIdetails:AdditionalInformation[]
 }

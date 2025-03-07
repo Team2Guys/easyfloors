@@ -24,7 +24,7 @@ export async function getOrderHistory(flag?: boolean) {
     );
     return data;
   } catch (error) {
-    console.error('Error fetching order history:', error);
     return [];
+    throw error
   }
 }

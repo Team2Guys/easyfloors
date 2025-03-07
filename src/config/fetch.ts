@@ -11,7 +11,7 @@ export const fetchProducts = async () => {
       fetchPolicy: "network-only",
       context: {
         fetchOptions: {
-          credentials: "include", // ✅ Send cookies
+          credentials: "include",
         },
       },
     });

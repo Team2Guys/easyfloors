@@ -2,10 +2,11 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BreadcrumbProps } from "types/types";
 import Container from "components/common/container/Container";
+import { BreadcrumbProps } from "types/PagesProps";
 
-const Breadcrumb = ({ title, image = "", slug, subcategory }: BreadcrumbProps) => {
+const Breadcrumb = ({ title, image = "", slug, subcategory, altText }: BreadcrumbProps) => {
+
   return (
     <div className="relative w-full pt-3 ">
       <div className="bg-background text-black py-3 mb-3 font-inter">
@@ -39,7 +40,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory }: BreadcrumbProps) =
       </div>
       {image && (
         <div className="relative">
-          <Image className="object-cover w-full h-[200px] md:h-[332px]" width={1400} height={332} src={image} alt={title || "breadcrumb-image"} />
+          <Image className="object-cover w-full h-[200px] md:h-[332px]" width={1400} height={332} src={image} alt={(altText ? altText : title) || "breadcrumb-image"} />
           <div className="absolute inset-0 flex justify-center items-center text-white text-center">
             <h1 className="text-30 md:text-[42.6px] font-bold">{title}</h1>
           </div>
