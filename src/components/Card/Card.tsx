@@ -1,4 +1,3 @@
-import { generateSlug } from "data/data";
 import Image from "next/image";
 import Link from "next/link";
 import { FiEye, FiHeart } from "react-icons/fi";
@@ -8,14 +7,14 @@ const Card: React.FC<ProductCardProps> = ({
   product,
   features = [],
   sldier,
-  category,
+  // category,
 }) => {
   return (
     <div className={`overflow-hidden group  ${sldier ? "px-2" : " hover:bg-background p-2"}`}>
      <div className="relative">
-      <Link href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}>
+      <Link href={product.custom_url|| ''}>
         <Image
-          src={product.image}
+          src={product.posterImageUrl.imageUrl}
           alt={product.name}
           width={500}
           height={200}
@@ -52,7 +51,7 @@ const Card: React.FC<ProductCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}
+          href={product.custom_url|| ''}
           className={` md:mt-0 mt-1 text-left font-semibold text-[#594F55] ${
             sldier ? "text-sm md:text-lg" : " text-12 sm:text-14 md:text-16 xl:text-24 2xl:text-31 max-sm:leading-3"
           }`}
@@ -60,8 +59,8 @@ const Card: React.FC<ProductCardProps> = ({
           {product.name}
         </Link>
         <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between py-2 gap-2 md:gap-4 w-full">
-          <p className="text-sm md:text-14 xl:text-base font-bold text-primary w-full md:w-full md:text-left">
-            {product.price}
+          <p className="text-sm md:text-14 xl:text-base font-bold  w-full md:w-full md:text-left">
+           Only AED <span className="text-primary">{product.price}</span>/m<span className="align-super text-10">2</span>
           </p>
           <div className="w-full md:text-right">
             {product.stock === 0 ? (
@@ -70,7 +69,7 @@ const Card: React.FC<ProductCardProps> = ({
               </button>
             ) : (
               <Link
-              href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary"
+              href={product.custom_url || ''}className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary"
               >
                 Shop Now
               </Link>

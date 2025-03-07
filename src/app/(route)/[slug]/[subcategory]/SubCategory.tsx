@@ -1,15 +1,14 @@
 'use client'
+import Select from "components/appointment/Select";
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import Filters from "components/sub-category/filters";
 import SubCategory from "components/sub-category/sub-category-product";
 import Modal from "components/ui/modal";
-import Select from "components/ui/Select";
 import React, { useEffect, useState } from "react";
 import type { Category } from "types/cat";
 import { Product } from "types/type";
 import { SelectedFilter } from "types/types";
-
 
 const Category = ({ catgories, category }: { catgories: Category[], category: Category }) => {
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
@@ -22,13 +21,11 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
   const [priceValue, setPriceValue] = useState<[number, number]>([200, 1200]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
-  const [sortOption, setSortOption] = useState<string>('Default');
 
   useEffect(() => {
     let filtered = category.products;
     const selectedFilter = []
     if (
-      sortOption &&
       selectedColors.length === 0 &&
       selectedThicknesses.length === 0 &&
       selectedCommmericallWarranty.length === 0 &&
@@ -36,55 +33,7 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
       selectedPlankWidth.length === 0 &&
       isWaterProof === null
     ) {
-      filtered = filtered?.filter(product => {
-        const price = parseFloat(product.price);
-        return price >= priceValue[0] && price <= priceValue[1];
-      });
-      switch (sortOption) {
-        case "A to Z":
-          filtered = filtered?.sort((a, b) => {
-            if (!a.name || !b.name) return 0;
-            return a.name.localeCompare(b.name);
-          });
-          break;
-
-        case "Z to A":
-
-          filtered = filtered?.sort((a, b) => {
-            if (!a.name || !b.name) return 0;
-            return b.name.localeCompare(a.name);
-          });
-          break;
-
-        case "Low to High":
-          filtered = filtered?.sort((a, b) => {
-            const priceA = parseFloat(a.price);
-            const priceB = parseFloat(b.price);
-
-            if (isNaN(priceA)) return 1;
-            if (isNaN(priceB)) return -1;
-
-            return priceA - priceB;
-          });
-          break;
-
-        case "High to Low":
-          filtered = filtered?.sort((a, b) => {
-            const priceA = parseFloat(a.price);
-            const priceB = parseFloat(b.price);
-
-            if (isNaN(priceA)) return -1;
-            if (isNaN(priceB)) return 1;
-
-            return priceB - priceA;
-          });
-          break;
-
-        default:
-          break;
-      }
       setFilteredProducts(filtered || []);
-      setSelectedFilters([]);
       return;
     }
 
@@ -92,101 +41,46 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
       filtered = filtered?.filter(product => product.waterproof === isWaterProof);
       selectedFilter.push({ name: "isWaterProof", value: isWaterProof });
     }
-  
+
     if (selectedColors.length > 0) {
       filtered = filtered?.filter(product =>
         product.colors?.some(color => selectedColors.includes(color.name))
       );
-      selectedColors.forEach(color => {
-        selectedFilter.push({ name: "selectedColors", value: color });
-      });
-  
+      selectedFilter.push({ name: "selectedColors", value: selectedColors })
     }
-  
+
     if (selectedThicknesses.length > 0) {
       filtered = filtered?.filter(product =>
         selectedThicknesses.includes(product.thickness || '')
       );
-      selectedThicknesses.forEach(thickness => {
-        selectedFilter.push({ name: "selectedThicknesses", value: thickness });
-      });
+      selectedFilter.push({ name: "selectedThicknesses", value: selectedThicknesses });
     }
-  
+
     if (selectedCommmericallWarranty.length > 0) {
       filtered = filtered?.filter(product =>
         selectedCommmericallWarranty.includes(product.CommmericallWarranty || '')
       );
-      selectedCommmericallWarranty.forEach(warranty => {
-        selectedFilter.push({ name: "selectedCommmericallWarranty", value: warranty });
-      });
+      selectedFilter.push({ name: "selectedCommmericallWarranty", value: selectedCommmericallWarranty });
     }
-  
+
     if (selectedResidentialWarranty.length > 0) {
       filtered = filtered?.filter(product =>
         selectedResidentialWarranty.includes(product.ResidentialWarranty || '')
       );
-      selectedResidentialWarranty.forEach(warranty => {
-        selectedFilter.push({ name: "selectedResidentialWarranty", value: warranty });
-      });
+      selectedFilter.push({ name: "selectedResidentialWarranty", value: selectedResidentialWarranty });
     }
-  
+
     if (selectedPlankWidth.length > 0) {
       filtered = filtered?.filter(product =>
         selectedPlankWidth.includes(product.plankWidth || '')
       );
-      selectedPlankWidth.forEach(width => {
-        selectedFilter.push({ name: "selectedPlankWidth", value: width });
-      });
+      selectedFilter.push({ name: "selectedPlankWidth", value: selectedPlankWidth });
     }
-  
-    // Price filter
+
     filtered = filtered?.filter(product => {
       const price = parseFloat(product.price);
       return price >= priceValue[0] && price <= priceValue[1];
     });
-    switch (sortOption) {
-      case "A to Z":
-        filtered = filtered?.sort((a, b) => {
-          if (!a.name || !b.name) return 0;
-          return a.name.localeCompare(b.name);
-        });
-        break;
-
-      case "Z to A":
-        filtered = filtered?.sort((a, b) => {
-          if (!a.name || !b.name) return 0;
-          return b.name.localeCompare(a.name);
-        });
-        break;
-
-      case "Low to High":
-        filtered = filtered?.sort((a, b) => {
-          const priceA = parseFloat(a.price);
-          const priceB = parseFloat(b.price);
-
-          if (isNaN(priceA)) return 1;
-          if (isNaN(priceB)) return -1;
-
-          return priceA - priceB;
-        });
-        break;
-
-      case "High to Low":
-        filtered = filtered?.sort((a, b) => {
-          const priceA = parseFloat(a.price);
-          const priceB = parseFloat(b.price);
-
-          if (isNaN(priceA)) return -1;
-          if (isNaN(priceB)) return 1;
-
-          return priceB - priceA;
-        });
-        break;
-
-      default:
-        break;
-    }
-
 
     setFilteredProducts(filtered || []);
     setSelectedFilters(selectedFilter);
@@ -198,9 +92,9 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
     selectedResidentialWarranty,
     selectedPlankWidth,
     priceValue,
-    sortOption,
     category.products
   ]);
+  console.log(isWaterProof, 'isWaterProof', filteredProducts)
 
   return (
     <>
@@ -268,7 +162,7 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
               </div>
               <div className="flex items-center justify-end gap-2 lg:pt-4">
                 <span className="text-[#191C1F] text-14 hidden lg:block">Sort by:</span>
-                <Select options={["Default", "A to Z", "Z to A", "Low to High", "High to Low"]} onChange={setSortOption} sortOption={sortOption} />
+                <Select options={["Most Popular", "Low to High", "High to Low"]} />
               </div>
             </div>
           </div>

@@ -14,10 +14,25 @@ export interface FlooringType {
   product: Product[];
 }
 export interface Product {
-  image: string;
+  posterImageUrl: {
+    altText?: string;
+    imageUrl: string;
+    public_id: string};
   name: string;
+  custom_url?: string;
   price: string;
   stock?: number;
+  colors?: Color[],
+  thickness?: string;
+  CommmericallWarranty?: string;
+  ResidentialWarranty?: string;
+  plankWidth?:string;
+  waterproof?: boolean;
+}
+
+interface Color {
+  name: string;
+  detail: string;
 }
 export interface ProductCardProps {
   product: Product;
