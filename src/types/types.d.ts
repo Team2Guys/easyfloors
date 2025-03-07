@@ -79,3 +79,16 @@ export interface WhatAmICategoryData {
   subSections: SubSection[];
   images: { src: string; alt: string; }[];
 }
+// types/roomMeasurement.ts
+
+export interface Step {
+  title: string;
+  content: string;
+}
+
+export interface MeasurementSection {
+  title: string;
+  description: string;
+  steps: Step[];
+  image: string;
+}

@@ -12,6 +12,7 @@ import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.
 import { StaticImageData } from 'next/image';
 import { EDIT_PRODUCT_PROPS } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
+import { MeasurementSection } from '../types/types';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -1145,3 +1146,82 @@ export const WhatAmIcategoryData: WhatAmICategoryData = {
     { src: "/assets/category/whatami.png", alt: "Flooring Right" },
   ],
 };
+
+export const measurementData: MeasurementSection[] = [
+  {
+    title: "How to measure your room for flooring",
+    description:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+    steps: [],
+    image: "",
+  },
+  {
+    title: "Follow the below steps to measure flooring for a perfectly square or rectangular room:",
+    description: "",
+    steps: [
+      {
+        title: "Step 1",
+        content:
+          "Measure the length and width of the room in meters or feet.",
+      },
+      {
+        title: "Step 2",
+        content:
+          "Multiply the length by the width to get the total area.",
+      },
+      {
+        title: "Step 3",
+        content:
+          "Ensure to add an extra 10% for cutting and waste.",
+      },
+    ],
+    image: "/assets/images/how-to-measure-your-room/measure1.png",
+  },
+  {
+    title: "Follow the below steps to measure flooring for an L-shaped or irregular room:",
+    description:
+      "For irregular rooms, divide the space into smaller rectangles and calculate each separately.",
+    steps: [
+      {
+        title: "Step 1",
+        content:
+          "Break the room into smaller rectangular sections.",
+      },
+      {
+        title: "Step 2",
+        content:
+          "Measure and calculate the area of each section separately.",
+      },
+      {
+        title: "Step 3",
+        content:
+          "Add up all the section areas to get the total flooring needed.",
+      },
+    ],
+    image: "/assets/images/how-to-measure-your-room/mearuse2.png",
+  },
+  {
+    title: "Calculate the 10% waste",
+    description:
+      "It's recommended to add 10% extra flooring material for cutting and fitting.",
+    steps: [
+      {
+        title: "Step 1",
+        content:
+          "Calculate 10% of the total flooring area.",
+      },
+      {
+        title: "Step 2",
+        content:
+          "Add this extra area to your total flooring calculation.",
+      },
+      {
+        title: "Step 3",
+        content:
+          "Purchase the final flooring amount based on this total.",
+      },
+    ],
+    image: "",
+  },
+];
+
