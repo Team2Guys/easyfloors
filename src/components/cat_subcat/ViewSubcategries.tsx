@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Table, notification } from 'antd';
 import Image from 'next/image';
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -21,19 +21,27 @@ const ViewSubcategries = ({
   seteditCategory,
   subCategories,
 }: DASHBOARD_VIEW_SUBCATEGORIES_PROPS) => {
-  const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(
-    subCategories,
-  );
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [colorMode, toggleColorMode] = useColorMode();
+  const [category, setCategory] = useState<ISUBCATEGORY[] | undefined>(subCategories);
+
+  useEffect(() => {
+    setCategory(subCategories)
+
+  }, [subCategories])
+
   const [searchTerm, setSearchTerm] = useState<string>('');
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
+
+
+
   const filteredSubCategories: ISUBCATEGORY[] | undefined = category?.filter(
     (category) =>
       category.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
+
+
+
   // const { loggedInUser }: any = useAppSelector((state) => state.usersSlice);
   const [removeCategory] = useMutation(REMOVE_SUBCATEGORY);
   const canDeleteCategory = true;

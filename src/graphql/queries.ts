@@ -26,6 +26,7 @@ products {
     plankWidth
     ResidentialWarranty
     CommmericallWarranty
+            thickness
      category {
             id
             name
@@ -74,20 +75,10 @@ query SubCategories {
         last_editedBy
         custom_url
         Recall_subCat
-        category {
-            id
-            name
-            description
-            posterImageUrl
-            createdAt
-            updatedAt
-            Canonical_Tag
-            Meta_Description
-            Meta_Title
-            last_editedBy
-            custom_url
-            Recall_Cat
-        }
+        short_description
+        whatAmiImage
+        whatamIdetails
+        whatAmiTopHeading
         products {
             id
             name
@@ -111,15 +102,28 @@ query SubCategories {
             plankWidth
             ResidentialWarranty
             CommmericallWarranty
-            category
             categoryId
+        }
+        category {
+            id
+            name
+            description
+            posterImageUrl
+            createdAt
+            updatedAt
+            Canonical_Tag
+            Meta_Description
+            Meta_Title
+            last_editedBy
+            custom_url
+            Recall_Cat
+            short_description
         }
     }
 }
+
     `
-
-
-    export const GET_ADMIN_DETAILS = gql`
+export const GET_ADMIN_DETAILS = gql`
     query GetAdmin {
       admin {
         id
@@ -132,7 +136,7 @@ query SubCategories {
   `;
 
 
-  export const GET_ALL_ADMINS = gql`
+export const GET_ALL_ADMINS = gql`
   query Admins {
     admins {
         id
