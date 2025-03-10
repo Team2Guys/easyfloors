@@ -56,7 +56,7 @@ return categories;
     try {
       const { category, id: _, ...updateData } = updateSubCategoryInput;
 
-      console.log(id, "id", updateSubCategoryInput.category);
+      console.log(id, "Function Called", updateSubCategoryInput.category);
 
       return await this.prisma.subCategories.update({
         where: { id },

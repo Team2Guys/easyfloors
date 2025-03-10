@@ -58,6 +58,9 @@ export class SubCategory {
   whatAmiImageBanner?: any
 
   @Field(() =>  GraphQLJSON,{nullable:true})
+  homePageImage?: any
+
+  @Field(() =>  GraphQLJSON,{nullable:true})
   whatamIdetails?: any
 
   @Field({nullable:true})

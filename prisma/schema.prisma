@@ -63,25 +63,26 @@ model Category {
 }
 
 model subCategories {
-  id                Int        @id @default(autoincrement())
-  name              String     @unique
-  description       String?
-  products          Products[]
-  createdAt         DateTime?  @default(now())
-  updatedAt         DateTime?  @updatedAt
-  posterImageUrl    Json?
-  last_editedBy     String?
-  short_description String?
-  Canonical_Tag     String?
-  Meta_Description  String?
-  Meta_Title        String?
-  categoryId        Int?
-  category          Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  custom_url        String
-  Recall_subCat     String?
-  whatAmiImage      Json?
-  whatAmiImageBanner      Json?
-  whatAmiTopHeading String?
+  id                 Int        @id @default(autoincrement())
+  name               String     @unique
+  description        String?
+  products           Products[]
+  createdAt          DateTime?  @default(now())
+  updatedAt          DateTime?  @updatedAt
+  posterImageUrl     Json?
+  last_editedBy      String?
+  short_description  String?
+  Canonical_Tag      String?
+  Meta_Description   String?
+  Meta_Title         String?
+  categoryId         Int?
+  category           Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  custom_url         String
+  Recall_subCat      String?
+  whatAmiImage       Json?
+  homePageImage       Json?
+  whatAmiImageBanner Json?
+  whatAmiTopHeading  String?
   whatamIdetails     Json[]     @default([])
 }
 
