@@ -23,6 +23,8 @@ const SubCategoryComponent = ({
   }, [subCategories, cetagories]);
 
 
+  console.log(subCategories, "editCategory")
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={menuType} />

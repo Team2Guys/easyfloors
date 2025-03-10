@@ -6,10 +6,11 @@ import CategorySdlier from "components/CategorySlider/category-slider";
 import FloorItems from "components/FloorItems/FloorItems";
 import ImageCompare from "components/image-compare/image-compare";
 import Layers from "components/Layers/layers";
-import AmCategory from "./Categories/page";
 import UserInfo from "components/Reusable/user-info";
 import Faqs from "components/Faqs/Faqs";
 import SampleBanner from "components/Reusable/SampleBanner";
+import AmCategory from "components/Categories/AmCategory";
+
 
 export default function Home() {
   return (

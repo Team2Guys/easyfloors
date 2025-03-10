@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
@@ -520,73 +520,9 @@ export const imageData: TImageBanner = {
   alt: 'Picture of the author',
 };
 
-export const blogCards: TBlogCard[] = [
-  {
-    id: 1,
-    title: "I Am",
-    heading: "Polar SPC <br /> Herringbone",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Polar-Spc-Herringbone.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
 
-  },
-  {
-    id: 2,
-    title: "I Am",
-    heading: "Polar <br /> SPC",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Polar-SPC.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 3,
-    title: "I Am",
-    heading: "Polar <br /> LVT",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Polar-LVT.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 4,
-    title: "I Am",
-    heading: "Richmond <br /> SPC Eco",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-SPC-Eco.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 5,
-    title: "I Am",
-    heading: "Richmond <br /> SPC Prime",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-SPC-Prime.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 6,
-    title: "I Am",
-    heading: "Richmond LVT <br /> Comfort",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-LVT-Comfort.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 7,
-    title: "I Am",
-    heading: "Richmond LVT <br /> Luxury",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-LVT-Luxury.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 8,
-    title: "I Am",
-    heading: "Richmond SPC <br /> Herringbone",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-SPC-Herringbone.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-];
+export const categoriesFeatures = ["Waterproof", "Scratch proof", "Durable", "Easy to clean"]
+
 
 export const categoryData: TCategoryData = {
   title: "What Am I?",

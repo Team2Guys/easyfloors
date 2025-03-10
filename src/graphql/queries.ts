@@ -81,6 +81,7 @@ query SubCategories {
         whatAmiTopHeading
        whatAmiImage
         whatAmiImageBanner
+        homePageImage
         products {
             id
             name
