@@ -31,7 +31,11 @@ export class CategoriesService {
 
   async findAll() {
     try {
-      return await this.prisma.category.findMany({include: {subcategories: true, products:true}});
+      return await this.prisma.category.findMany({include: {subcategories: true,     products: {
+        include: {
+          subcategory: true
+        }
+      }}});
     } catch (error) {
       console.log(error, "error")
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
