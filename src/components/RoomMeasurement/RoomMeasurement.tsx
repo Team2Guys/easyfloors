@@ -14,7 +14,7 @@ const RoomMeasurement: React.FC = () => {
         <div key={index} className="mb-8">
           <h2 className="md:text-xl text-lg font-bold mb-2">{section.title}</h2>
           {section.description && <p className="mb-4">{section.description}</p>}
-          <ul className="list-none pl-5">
+          <ul className="list-none ">
             {section.steps.map((step, idx) => (
               <li key={idx} className="mb-2">
                 <strong>{step.title} -</strong> {step.content}
