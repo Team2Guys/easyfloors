@@ -32,6 +32,7 @@ export interface ISUBCATEGORY extends Category {
   products?:IProduct[]
   whatAmiImage?:ProductImage;
   whatAmiImageBanner?:ProductImage;
+  homePageImage?:homePageImage;
   whatAmiTopHeading?:string
   whatamIdetails:AdditionalInformation[]
 }

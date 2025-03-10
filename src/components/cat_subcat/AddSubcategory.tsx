@@ -42,6 +42,7 @@ const FormLayout = ({
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ?  [editCategory?.whatAmiImageBanner] : undefined);
   const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ?  [editCategory?.whatAmiImage] : undefined);
+  const [homePagemageUrl, sethomePagemageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.homePageImage ?  [editCategory?.homePageImage] : undefined);
   
   
   const [loading, setloading] = useState<boolean>(false);
@@ -63,8 +64,9 @@ const FormLayout = ({
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
       const whatIamIImage = WhatamIImageUrl && WhatamIImageUrl[0];
+      const homePageImage = homePagemageUrl && homePagemageUrl[0];
 
-      const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner,whatAmiImage:whatIamIImage  };
+      const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner,whatAmiImage:whatIamIImage,homePageImage  };
       const updateFlag = editCategoryName ? true : false;
 
       if (updateFlag) {
@@ -101,6 +103,8 @@ const FormLayout = ({
       seteditCategory?.(undefined);
       setposterimageUrl(undefined);
       setBannerImageUrl(undefined)
+      setWhatamIImageUrl(undefined)
+      sethomePagemageUrl(undefined)
       resetForm();
       setMenuType('Sub Categories');
     } catch (err) {
@@ -110,9 +114,12 @@ const FormLayout = ({
       throw err
     }
   }
-
   useEffect(() => {
 
+    setposterimageUrl((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
+    setBannerImageUrl(editCategory && editCategory?.whatAmiImageBanner ?  [editCategory?.whatAmiImageBanner] : undefined)
+    setWhatamIImageUrl(editCategory && editCategory?.whatAmiImage ?  [editCategory?.whatAmiImage] : undefined)
+    sethomePagemageUrl(editCategory && editCategory?.homePageImage ?  [editCategory?.homePageImage] : undefined)
     setEditCategoryName(CategoryName)
 
   }, [editCategory])
@@ -325,6 +332,68 @@ const FormLayout = ({
                         </div>
                       ) : (
                         <ImageUploader setposterimageUrl={setWhatamIImageUrl} />
+                      )}
+                    </div>
+
+                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <h3 className="font-medium text-black dark:text-white">
+                          What am I (home Page)
+                        </h3>
+                      </div>
+                      {homePagemageUrl?.[0] && homePagemageUrl?.length > 0 ? (
+                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                          {homePagemageUrl.map((item: ProductImage, index: number) => {
+                            return (
+                              <div
+                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                key={index}
+                              >
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                                  <RxCross2
+                                    className="cursor-pointer border rounded text-red-500 dark:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        sethomePagemageUrl,
+                                        finalToken
+                                      );
+                                    }}
+                                  />
+
+                                </div>
+                                <Image
+                                  key={index}
+                                  className="w-full h-full dark:bg-black dark:shadow-lg"
+
+                                  width={200}
+                                  height={500}
+                                  loading='lazy'
+                                  src={item?.imageUrl || ""}
+                                  alt={`productImage-${index}`}
+                                />
+                                <input
+                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  placeholder="Alt Text"
+                                  type="text"
+                                  name="altText"
+                                  value={item?.altText || ""}
+                                  onChange={(e) =>
+                                    handleImageAltText(
+                                      index,
+                                      String(e.target.value),
+                                      sethomePagemageUrl,
+
+                                    )
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <ImageUploader setposterimageUrl={sethomePagemageUrl} />
                       )}
                     </div>
 

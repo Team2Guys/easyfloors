@@ -8,7 +8,7 @@ export const fetchProducts = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_PRODUCTS,
-      fetchPolicy: "network-only",
+       fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
           credentials: "include",
@@ -41,7 +41,7 @@ export const fetchSubCategories = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_SUB_CATEGORIES,
-   fetchPolicy: "network-only"
+   fetchPolicy: "no-cache"
     })
 
     return data?.subCategories || []
