@@ -53,5 +53,38 @@ export interface TAutoVideoProps {
   fallbackImage?: string; 
   className?: string;
 }
+export interface SubSection {
+  subHeading: string;
+  content: string;
+}
+
+export interface SubSection {
+  subHeading: string;
+  content: string;
+}
+
+export interface SubSection {
+  subHeading: string;
+  content: string;
+}
+
+export interface WhatAmICategoryData {
+  categoryHeading: string;
+  categorycontent:string;
+  subSections: SubSection[];
+  images: { src: string; alt: string; }[];
+}
+
+export interface Step {
+  title: string;
+  content: string;
+}
+
+export interface MeasurementSection {
+  title: string;
+  description: string;
+  steps: Step[];
+  image: string;
+}
 
 
