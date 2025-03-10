@@ -113,7 +113,7 @@ const ViewSubcategries = ({
       render: (_: string, record: ISUBCATEGORY) =>
         record.posterImageUrl !== null ? (
           <Image
-            src={record.posterImageUrl.imageUrl || 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1740655318/download_krzc9s.jpg'}
+            src={record?.posterImageUrl?.imageUrl || 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1740655318/download_krzc9s.jpg'}
             alt={`Image of ${record.name}`}
             loading='lazy'
             width={50}

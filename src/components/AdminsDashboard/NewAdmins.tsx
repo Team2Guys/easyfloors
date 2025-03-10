@@ -36,7 +36,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
       return;
     }
     setLoading(true);
-    console.log(formData, 'formData');
+ 
     if (!formData.fullname || !formData.email || !formData.password)
       return setError('All fields are required');
     try {
@@ -62,7 +62,7 @@ const AddAdmin = ({ setselecteMenu }: any) => {
         });
       }
     } catch (err) {
-      console.log(err, 'err');
+     
       if (axios.isAxiosError(err)) {
         setError(err.response?.data?.message || err.message);
       } else {

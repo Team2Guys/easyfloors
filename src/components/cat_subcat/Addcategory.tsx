@@ -40,7 +40,7 @@ const FormLayout = ({
       custom_url: editCategory.custom_url || ""
     }
     : null;
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(editCategory ? [editCategory.posterImageUrl] : undefined);
+  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory.posterImageUrl) ? [editCategory.posterImageUrl] : undefined);
 
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY | null | undefined>(CategoryName);
