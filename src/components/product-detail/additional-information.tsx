@@ -1,3 +1,4 @@
+'use client'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'components/ui/tabs';
 import { specifications } from 'data/produuct-detail';
 import React from 'react';

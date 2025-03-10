@@ -11,7 +11,13 @@ export interface Feature {
 export interface FlooringType {
   name?: string;
   price?: string;
-  product: any[];
+  product: FlooringProduct[];
+}
+
+interface FlooringProduct {
+  image: string;
+  price: string;
+  name: string
 }
 export interface Product {
   posterImageUrl: {
@@ -36,6 +42,12 @@ interface Color {
 }
 export interface ProductCardProps {
   product: Product;
+  sldier?: boolean;
+  features: Feature[];
+  category?: string;
+}
+export interface CollectionProductCardProps {
+  product: FlooringProduct;
   sldier?: boolean;
   features: Feature[];
   category?: string;

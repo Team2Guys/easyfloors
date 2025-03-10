@@ -1,7 +1,5 @@
-"use client";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import React from "react";
-import { useParams } from "next/navigation";
 import Container from "components/common/container/Container";
 import AdditionalInfo from "components/product-detail/additional-information";
 import FaqDetail from "components/product-detail/faq-detail";
@@ -13,22 +11,16 @@ import AreaCalculator from "components/product-detail/AreaCalculator";
 import Image from "next/image";
 import PaymentMethod from "components/product-detail/payment";
 import { LuHeart } from "react-icons/lu";
-import { flooringTypes, ThumnailBottom, ThumnailImage } from "data/produuct-detail";
+import { ThumnailBottom, ThumnailImage } from "data/produuct-detail";
+import { fetchSubCategories } from "config/fetch";
 
-const Product = () => {
-  const params = useParams<{
-    slug: string;
-    subcategory: string;
-    product: string;
-  }>();
-  const title = params.product;
-  const category = params.slug;
-  const subcategory = params.subcategory;
-
- const relatedProducts = flooringTypes.flatMap((flooring) => flooring.product).slice(0, 5);
+const Product = async ({params}:{params:Promise<{slug:string, subcategory: string, product:string}>}) => {
+  const {slug , subcategory , product} = await params;
+  const subCategories = await fetchSubCategories()
+  const products = subCategories?.products || [];
   return (
     <div className="mb-10">
-      <Breadcrumb title={title} slug={category} subcategory={subcategory} />
+      <Breadcrumb title={product} slug={slug} subcategory={subcategory} />
       <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
         <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
           <Thumbnail ThumnailImage={ThumnailImage}  ThumnailBottom={ThumnailBottom}/>
@@ -94,7 +86,7 @@ const Product = () => {
       <Features items={featureItems} />
                              
       </Container>
-      <RelatedSlider products={relatedProducts}/>
+      <RelatedSlider products={products.slice(0,5)}/>
     </div>
   );
 };
