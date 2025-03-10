@@ -2,6 +2,7 @@ import {IReview } from 'types/type';
 import axios from 'axios';
 import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS } from 'graphql/queries';
 import client from './apolloClient';
+import { DocumentNode} from '@apollo/client';
 
 
 export const fetchProducts = async () => {
@@ -37,10 +38,10 @@ export const fetchCategories = async () => {
   }
 };
 
-export const fetchSubCategories = async () => {
+export const fetchSubCategories = async (FETCHSUBCAT?:DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCH_ALL_SUB_CATEGORIES,
+      query: FETCHSUBCAT ?FETCHSUBCAT : FETCH_ALL_SUB_CATEGORIES,
    fetchPolicy: "no-cache"
     })
 

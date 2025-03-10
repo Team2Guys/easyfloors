@@ -1,6 +1,7 @@
 import { FormEventHandler, SetStateAction } from "react";
 import { IProduct } from "./prod";
 import { StaticImageData } from "next/image";
+import { ISUBCATEGORY } from "./cat";
 
 export interface Feature {
   icon: string;
@@ -40,14 +41,7 @@ export interface TImageBanner {
   src: string;
   alt: string;
 }
-export interface TBlogCard {
-  id: number;
-  title: string;
-  heading: string;
-  backgroundImage: string;
-  Link: string;
-  features: string[];
-}
+
 export interface TCategoryData {
   title: string;
   subtitle: string;
@@ -81,7 +75,7 @@ export interface HeroMainProps {
   items: HeroItem[];
 }
 export interface BlogCardProps {
-  card: TBlogCard;
+  card: ISUBCATEGORY;
 }
 export interface FAQItem {
   id: number;
