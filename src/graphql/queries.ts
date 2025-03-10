@@ -95,6 +95,11 @@ query SubCategories {
         custom_url
         Recall_subCat
         short_description
+        whatAmiImage
+        whatamIdetails
+        whatAmiTopHeading
+       whatAmiImage
+        whatAmiImageBanner
         products {
             id
             name
@@ -139,8 +144,6 @@ query SubCategories {
 }
 
     `
-
-
 export const GET_ADMIN_DETAILS = gql`
     query GetAdmin {
       admin {

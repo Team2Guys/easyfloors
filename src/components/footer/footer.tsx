@@ -68,7 +68,7 @@ const Footer = () => {
                 <div className="sm:block ">
                     <h3 className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</h3>
                     <div className="text-sm mt-3 flex items-start gap-2">
-                        <div className='p-1 bg-white border' >
+                        <div className='' >
                             <FaMapMarkerAlt size={16} className="text-black" />
                         </div>
                         <Link
@@ -81,7 +81,7 @@ const Footer = () => {
                         </Link>
                     </div>
                     <div className="text-sm mt-2 flex items-center gap-2">
-                        <div className='p-1 bg-white border'>
+                        <div className=''>
                             <IoCall size={16} className="text-black" />
                         </div>
                         <Link href="tel:+971505974385" className="text-gray-700 hover:text-gray-900">
@@ -89,14 +89,14 @@ const Footer = () => {
                         </Link>
                     </div>
                     <div className="text-sm mt-2 flex items-center gap-2">
-                        <div className='p-1 bg-white border'>
+                        <div className=''>
                             <FaRegEnvelope size={16} className="text-black" />
                         </div>
                         <Link href="mailto:cs@easyfloors.ae" className="text-gray-700 hover:text-gray-900">
                             {footerData.contact.email}
                         </Link>
                     </div>
-                    <div className="grid grid-cols-6 md:grid-cols-3 w-4/5 gap-0 mt-4 items-center">
+                    <div className="grid grid-cols-6 md:grid-cols-3 w-4/5 gap-3 mt-4 items-center">
                         {footerData.paymentMethods.map((method, index) => (
                             <div key={index} className="flex justify-start">
                                 <Image

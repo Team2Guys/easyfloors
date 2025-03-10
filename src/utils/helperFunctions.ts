@@ -1,31 +1,32 @@
- /* eslint-disable */
+
 
 import axios from 'axios';
 import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
 import { ProductImage } from 'types/prod';
-
-// type setTotalProducts = React.Dispatch<React.SetStateAction<PRODUCTS_TYPEs[]>>;
-type setTotalPage = React.Dispatch<React.SetStateAction<string | undefined>>;
-type setError = React.Dispatch<React.SetStateAction<string | null>>;
-type setLoading = React.Dispatch<React.SetStateAction<boolean>>;
+import { toast } from 'react-toastify';
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
   setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+  finalToken?:string
 ) => {
   try {
+    console.log(finalToken, "token")
+    if(!finalToken) return  toast.success("Token Not found ")
     const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: FILE_DELETION_MUTATION,
         variables: {
           public_id: imagePublicId,
-        },
+        },  
       },
       {
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${finalToken}`,
         },
+        withCredentials: true,
       }
     );
 
@@ -39,32 +40,32 @@ throw error;
 };
 
 
-export const getPaginatedproducts = async (page: number) => {
-  try {
-    const response = await axios.get(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/getPaginateProducts?page=${page}`,
-    );
-    const products = response.data.products;
-    const totalPages = response.data.totalPages;
-    const currentPage = response.data.currentPage;
-    const totalProducts = response.data.totalProducts;
-    return {
-      products,
-      totalPages,
-      currentPage,
-      totalProducts,
-    };
-     
-  } catch (err: any) {
-    if (err.response && err.response.data && err.response.data.message) {
-      throw new Error(err.response.data.message);
-    } else if (err.message) {
-      throw new Error(err.message);
-    } else {
-      throw new Error('unexpected Error occured');
-    }
-  }
+export const handleImageAltText = (
+  index: number,
+  newImageIndex: string,
+  setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+) => {
+  setImagesUrlhandler((prev: ProductImage[] | undefined) => {
+    if (!prev) return [];
+
+    const updatedImagesUrl = prev?.map((item: ProductImage, i: number) => i === index ? { ...item, altText: newImageIndex } : item);
+    return updatedImagesUrl;
+  });
 };
+
+
+export const TrimerHandler = (value:string)=>{
+  if(!value) return 
+
+return value.trim().toLowerCase()
+
+
+
+}
+
+
+
+
 
 // export const getPRODUCTS = async (
 //   setTotalProducts: setTotalProducts,

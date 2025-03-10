@@ -9,12 +9,7 @@ export interface SocialLink {
     submenu?: { label: string; href: string; image?: string }[];
     scrolling?: boolean;
   }
-  export interface BreadcrumbProps  {
-    title?: string;
-    image?: string;
-    slug?: string;
-    subcategory?: string;
-  };
+
   export interface TextInputProps {
     label: string;
     name: string;
@@ -99,3 +94,38 @@ export interface SubCategoryProps {
   selectedPlankWidth: string[];
   setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
 }
+export interface SubSection {
+  subHeading: string;
+  content: string;
+}
+
+export interface SubSection {
+  subHeading: string;
+  content: string;
+}
+
+export interface SubSection {
+  subHeading: string;
+  content: string;
+}
+
+export interface WhatAmICategoryData {
+  categoryHeading: string;
+  categorycontent:string;
+  subSections: SubSection[];
+  images: { src: string; alt: string; }[];
+}
+
+export interface Step {
+  title: string;
+  content: string;
+}
+
+export interface MeasurementSection {
+  title: string;
+  description: string;
+  steps: Step[];
+  image: string;
+}
+
+

@@ -42,3 +42,13 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
   
   }
   
+
+
+
+  export interface BreadcrumbProps  {
+    title?: string;
+    image?: string;
+    slug?: string;
+    subcategory?: string;
+    altText?:string
+  };

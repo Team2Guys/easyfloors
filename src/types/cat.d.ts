@@ -1,4 +1,4 @@
-import { IProduct } from "./prod";
+import { AdditionalInformation, IProduct, ProductImage } from "./prod";
 import { Product } from "./type";
 
 export interface Category {
@@ -37,6 +37,10 @@ export interface ISUBCATEGORY extends Category {
   id: number | string
   category:EDIT_CATEGORY,
   products?:IProduct[]
+  whatAmiImage?:ProductImage;
+  whatAmiImageBanner?:ProductImage;
+  whatAmiTopHeading?:string
+  whatamIdetails:AdditionalInformation[]
 }
 
 
@@ -46,4 +50,6 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   products?:IProduct[]
   createdAt?: Date;
   updatedAt?: Date;
+
+
 }

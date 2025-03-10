@@ -36,11 +36,11 @@
       transform: translateX(0%);
     }
     100% {
-      transform: translateX(300%);
+      transform: translateX(410%);
     }
   }
   .animate-moveTruck {
-    animation: moveTruck 5s linear infinite;
+    animation: moveTruck 3s linear infinite;
   }
 
   .animate-scale-in {
