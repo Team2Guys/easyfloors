@@ -16,8 +16,9 @@ const Card: React.FC<ProductCardProps> = ({
      <div className="relative">
       <Link href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}>
         <Image
-          src={product.posterImageUrl.imageUrl || product.image}
-          alt={product.posterImageUrl.altText || ""}
+            src={product?.posterImageUrl?.imageUrl || "/images/images.png"}
+            alt={product?.posterImageUrl?.altText || "Default Image"}
+          
           width={500}
           height={200}
           className={`w-full  object-cover ${sldier ? " h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"}`}
