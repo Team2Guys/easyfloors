@@ -11,7 +11,7 @@ export interface Feature {
 export interface FlooringType {
   name?: string;
   price?: string;
-  product: Product[];
+  product: any[];
 }
 export interface Product {
   posterImageUrl: {

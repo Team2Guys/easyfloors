@@ -19,7 +19,7 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
   const [selectedResidentialWarranty, setSelectedResidentialWarranty] = useState<string[]>([]);
   const [selectedPlankWidth, setSelectedPlankWidth] = useState<string[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
-  const [priceValue, setPriceValue] = useState<[number, number]>([200, 1200]);
+  const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
@@ -27,119 +27,7 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
   useEffect(() => {
     let filtered = category.products;
     const selectedFilter = []
-    if (
-      sortOption &&
-      selectedColors.length === 0 &&
-      selectedThicknesses.length === 0 &&
-      selectedCommmericallWarranty.length === 0 &&
-      selectedResidentialWarranty.length === 0 &&
-      selectedPlankWidth.length === 0 &&
-      isWaterProof === null
-    ) {
-      filtered = filtered?.filter(product => {
-        const price = parseFloat(product.price);
-        return price >= priceValue[0] && price <= priceValue[1];
-      });
-      switch (sortOption) {
-        case "A to Z":
-          filtered = filtered?.sort((a, b) => {
-            if (!a.name || !b.name) return 0;
-            return a.name.localeCompare(b.name);
-          });
-          break;
 
-        case "Z to A":
-
-          filtered = filtered?.sort((a, b) => {
-            if (!a.name || !b.name) return 0;
-            return b.name.localeCompare(a.name);
-          });
-          break;
-
-        case "Low to High":
-          filtered = filtered?.sort((a, b) => {
-            const priceA = parseFloat(a.price);
-            const priceB = parseFloat(b.price);
-
-            if (isNaN(priceA)) return 1;
-            if (isNaN(priceB)) return -1;
-
-            return priceA - priceB;
-          });
-          break;
-
-        case "High to Low":
-          filtered = filtered?.sort((a, b) => {
-            const priceA = parseFloat(a.price);
-            const priceB = parseFloat(b.price);
-
-            if (isNaN(priceA)) return -1;
-            if (isNaN(priceB)) return 1;
-
-            return priceB - priceA;
-          });
-          break;
-
-        default:
-          break;
-      }
-      setFilteredProducts(filtered || []);
-      setSelectedFilters([]);
-      return;
-    }
-
-    if (isWaterProof !== null) {
-      filtered = filtered?.filter(product => product.waterproof === isWaterProof);
-      selectedFilter.push({ name: "isWaterProof", value: isWaterProof });
-    }
-  
-    if (selectedColors.length > 0) {
-      filtered = filtered?.filter(product =>
-        product.colors?.some(color => selectedColors.includes(color.name))
-      );
-      selectedColors.forEach(color => {
-        selectedFilter.push({ name: "selectedColors", value: color });
-      });
-  
-    }
-  
-    if (selectedThicknesses.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedThicknesses.includes(product.thickness || '')
-      );
-      selectedThicknesses.forEach(thickness => {
-        selectedFilter.push({ name: "selectedThicknesses", value: thickness });
-      });
-    }
-  
-    if (selectedCommmericallWarranty.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedCommmericallWarranty.includes(product.CommmericallWarranty || '')
-      );
-      selectedCommmericallWarranty.forEach(warranty => {
-        selectedFilter.push({ name: "selectedCommmericallWarranty", value: warranty });
-      });
-    }
-  
-    if (selectedResidentialWarranty.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedResidentialWarranty.includes(product.ResidentialWarranty || '')
-      );
-      selectedResidentialWarranty.forEach(warranty => {
-        selectedFilter.push({ name: "selectedResidentialWarranty", value: warranty });
-      });
-    }
-  
-    if (selectedPlankWidth.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedPlankWidth.includes(product.plankWidth || '')
-      );
-      selectedPlankWidth.forEach(width => {
-        selectedFilter.push({ name: "selectedPlankWidth", value: width });
-      });
-    }
-  
-    // Price filter
     filtered = filtered?.filter(product => {
       const price = parseFloat(product.price);
       return price >= priceValue[0] && price <= priceValue[1];
@@ -153,6 +41,7 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
         break;
 
       case "Z to A":
+
         filtered = filtered?.sort((a, b) => {
           if (!a.name || !b.name) return 0;
           return b.name.localeCompare(a.name);
@@ -186,7 +75,70 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
       default:
         break;
     }
+    if (
+      sortOption &&
+      selectedColors.length === 0 &&
+      selectedThicknesses.length === 0 &&
+      selectedCommmericallWarranty.length === 0 &&
+      selectedResidentialWarranty.length === 0 &&
+      selectedPlankWidth.length === 0 &&
+      isWaterProof === null
+    ) {
+      setFilteredProducts(filtered || []);
+      setSelectedFilters([]);
+      return;
+    }
 
+    if (isWaterProof !== null) {
+      filtered = filtered?.filter(product => product.waterproof === isWaterProof);
+      selectedFilter.push({ name: "isWaterProof", value: isWaterProof });
+    }
+
+    if (selectedColors.length > 0) {
+      filtered = filtered?.filter(product =>
+        product.colors?.some(color => selectedColors.includes(color.name))
+      );
+      selectedColors.forEach(color => {
+        selectedFilter.push({ name: "selectedColors", value: color });
+      });
+
+    }
+
+    if (selectedThicknesses.length > 0) {
+      filtered = filtered?.filter(product =>
+        selectedThicknesses.includes(product.thickness || '')
+      );
+      selectedThicknesses.forEach(thickness => {
+        selectedFilter.push({ name: "selectedThicknesses", value: thickness });
+      });
+    }
+
+    if (selectedCommmericallWarranty.length > 0) {
+      filtered = filtered?.filter(product =>
+        selectedCommmericallWarranty.includes(product.CommmericallWarranty || '')
+      );
+      selectedCommmericallWarranty.forEach(warranty => {
+        selectedFilter.push({ name: "selectedCommmericallWarranty", value: warranty });
+      });
+    }
+
+    if (selectedResidentialWarranty.length > 0) {
+      filtered = filtered?.filter(product =>
+        selectedResidentialWarranty.includes(product.ResidentialWarranty || '')
+      );
+      selectedResidentialWarranty.forEach(warranty => {
+        selectedFilter.push({ name: "selectedResidentialWarranty", value: warranty });
+      });
+    }
+
+    if (selectedPlankWidth.length > 0) {
+      filtered = filtered?.filter(product =>
+        selectedPlankWidth.includes(product.plankWidth || '')
+      );
+      selectedPlankWidth.forEach(width => {
+        selectedFilter.push({ name: "selectedPlankWidth", value: width });
+      });
+    }
 
     setFilteredProducts(filtered || []);
     setSelectedFilters(selectedFilter);
@@ -274,6 +226,17 @@ const Category = ({ catgories, category }: { catgories: Category[], category: Ca
           </div>
           <SubCategory filteredProducts={filteredProducts}
             selectedFilters={selectedFilters}
+            setIsWaterProof={setIsWaterProof}
+            selectedColor={selectedColors}
+            setSelectedColor={setSelectedColors}
+            selectedThickness={selectedThicknesses}
+            setSelectedThickness={setSelectedThicknesses}
+            selectedPlankWidth={selectedPlankWidth}
+            setSelectedPlankWidth={setSelectedPlankWidth}
+            selectedResidentialWarranty={selectedResidentialWarranty}
+            setSelectedResidentialWarranty={setSelectedResidentialWarranty}
+            selectedCommmericallWarranty={selectedCommmericallWarranty}
+            setSelectedCommmericallWarranty={setSelectedCommmericallWarranty}
           />
         </div>
       </Container>

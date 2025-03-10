@@ -83,3 +83,19 @@ export interface SelectedFilter {
   name: string;
   value: boolean | string | null | undefined;
 }
+
+export interface SubCategoryProps {
+  filteredProducts: Product[],
+  selectedFilters: SelectedFilter[],
+  setSelectedColor: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedColor: string[];
+  setSelectedThickness: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedThickness: string[];
+  setSelectedCommmericallWarranty: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedCommmericallWarranty: string[];
+  setSelectedResidentialWarranty: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedResidentialWarranty: string[];
+  setSelectedPlankWidth: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedPlankWidth: string[];
+  setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
+}

@@ -3,10 +3,22 @@ import Card from "components/Card/Card";
 import { features } from "data/data";
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
-import { Product } from "types/type";
-import { SelectedFilter } from "types/types";
+import { SelectedFilter, SubCategoryProps } from "types/types";
 
-const SubCategory = ({ filteredProducts, selectedFilters }: { filteredProducts: Product[], selectedFilters: SelectedFilter[] }) => {
+const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
+  selectedFilters,
+  setSelectedColor,
+  selectedColor,
+  setSelectedThickness,
+  selectedThickness,
+  setSelectedCommmericallWarranty,
+  selectedCommmericallWarranty,
+  setSelectedResidentialWarranty,
+  selectedResidentialWarranty,
+  setSelectedPlankWidth,
+  selectedPlankWidth,
+  setIsWaterProof
+}) => {
   const [products, setProducts] = useState(filteredProducts);
   useEffect(() => {
     if (filteredProducts) {
@@ -14,7 +26,26 @@ const SubCategory = ({ filteredProducts, selectedFilters }: { filteredProducts: 
     }
   }, [filteredProducts])
 
-  console.log(selectedFilters)
+  const handleRemoveFilter = (item: SelectedFilter) => {
+    if (item.name === "selectedColors") {
+      const filterColors = selectedColor.filter((col) => col !== item.value);
+      setSelectedColor(filterColors)
+    } else if (item.name === "selectedThicknesses") {
+      const filterThickness = selectedThickness.filter((col) => col !== item.value);
+      setSelectedThickness(filterThickness)
+    } else if (item.name === "selectedCommmericallWarranty") {
+      const filterCommmerical = selectedCommmericallWarranty.filter((col) => col !== item.value);
+      setSelectedCommmericallWarranty(filterCommmerical)
+    } else if (item.name === "selectedResidentialWarranty") {
+      const filterResidential = selectedResidentialWarranty.filter((col) => col !== item.value);
+      setSelectedResidentialWarranty(filterResidential)
+    } else if (item.name === "selectedPlankWidth") {
+      const filterPlankWidth = selectedPlankWidth.filter((col) => col !== item.value);
+      setSelectedPlankWidth(filterPlankWidth)
+    } else if (item.name === "isWaterProof") {
+      setIsWaterProof(null)
+    }
+  }
   return (
     <div className="pt-5 lg:mb-20">
       {/* <div className="hidden lg:flex items-center border border-gray-300 px-2 py-2 w-full max-w-md focus-within:ring-2 focus-within:ring-primary hover:border-primary transition">
@@ -26,20 +57,23 @@ const SubCategory = ({ filteredProducts, selectedFilters }: { filteredProducts: 
         <FiSearch className="text-gray-500" size={20} />
       </div> */}
 
-      <div className="flex justify-between items-center bg-[#F2F4F5] p-2 md:p-3 rounded-md w-full">
-        <div className="flex items-center gap-1 md:gap-3">
-          <span className="text-[#191C1F] text-[8px] md:text-14">Active Filters:</span>
-          <div className="flex items-center gap-4 px-3 py-1  text-[#191C1F] text-[8px] md:text-14">
-            {selectedFilters.map((item,index) => (
-              <div key={index} className="flex items-center gap-2 flex-nowrap">
-                <span>{item.value}</span>
-                <FiX className="text-gray-500 cursor-pointer hover:text-red-500" />
-              </div>
-            ))}
+      <div className={`flex ${selectedFilters.length > 0 ? 'justify-between items-center' : 'justify-end items-center'}  bg-[#F2F4F5] p-2 md:p-3 rounded-md w-full min-h-14`}>
+        {selectedFilters.length > 0 &&
+          <div className="flex items-center gap-1 md:gap-3">
+            <span className="text-[#191C1F] text-[8px] md:text-13 text-nowrap">Active Filters:</span>
+            <div className="flex items-center flex-wrap gap-x-3 gap-y-1 px-3 py-1  text-[#191C1F] text-[8px] md:text-14">
+              {selectedFilters.map((item, index) => (
+                <div key={index} className="flex items-center gap-2 flex-nowrap">
+                  <span>{item.value === true ? 'Yes' : item.value === false ? 'No' : item.value}</span>
+                  <FiX className="text-gray-500 cursor-pointer hover:text-red-500" onClick={() => handleRemoveFilter(item)} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        }
+
         <p className="text-[#191C1F] text-[8px] md:text-14">
-          {products.length} <span className="text-[#5F6C72]">Results found</span>
+          {products.length} <span className="text-[#5F6C72]">{products.length === 1 ? 'Result' : 'Results'} found</span>
         </p>
       </div>
 

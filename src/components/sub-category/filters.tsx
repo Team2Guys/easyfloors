@@ -6,6 +6,7 @@ import RatioButtons from "components/ui/radio-button";
 import { Category } from "types/cat";
 import Link from "next/link";
 import { FIlterprops } from "types/types";
+import { usePathname } from "next/navigation";
 
 
 
@@ -33,6 +34,16 @@ const Filters = ({
   const [uniqueResidentialWarranty, setUniqueResidentialWarranty] = useState<string[]>([]);
   const [uniquePlankWidth, setUniquePlankWidth] = useState<string[]>([]);
   const [uniqueColors, setUniqueColors] = useState<string[]>([]);
+  const [polarCategory, setPolarCategory] = useState<Category>();
+  const [richmondCategory, setRichmondCategory] = useState<Category>();
+  const path = usePathname();
+
+  useEffect(() => {
+    const polar = catgories.find((cat: Category) => cat.name.toLowerCase() === 'polar');
+    setPolarCategory(polar);
+    const richmond = catgories.find((cat: Category) => cat.name.toLowerCase() === 'richmond');
+    setRichmondCategory(richmond);
+  }, [catgories])
 
   const extractUniqueAttributes = (category: Category) => {
     const thicknessSet = new Set<string>();
@@ -66,13 +77,15 @@ const Filters = ({
   };
   useEffect(() => {
     extractUniqueAttributes(category);
+    console.log(category, 'category', uniqueColors)
   }, [category])
 
   const handleYesWaterProof = (text: string) => {
     if (text === 'yes') {
-      setIsWaterProof(true)
+
+      setIsWaterProof(isWaterProof === true ? null : true)
     } else {
-      setIsWaterProof(false)
+      setIsWaterProof(isWaterProof === false ? null : false)
     }
   }
 
@@ -127,7 +140,7 @@ const Filters = ({
   };
 
   const handleClearFilter = () => {
-    setPriceValue([200, 1200])
+    setPriceValue([0, 2000])
     setSelectedPlankWidth([])
     setSelectedResidentialWarranty([])
     setSelectedCommmericallWarranty([])
@@ -145,7 +158,7 @@ const Filters = ({
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
               {category.subcategories?.map((subcategory: Category, i: number) => (
-                <Link href={subcategory.custom_url} key={i} className="cursor-pointer hover:text-primary block">
+                <Link href={`/${subcategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
                   {subcategory.name}
                 </Link>
               ))}
@@ -155,34 +168,45 @@ const Filters = ({
 
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
+            {richmondCategory && 
             <li>
-              <button className={`cursor-pointer  ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}>
-                Richmond
-              </button>
-            </li>
+              <Link href={`/${richmondCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
+                {richmondCategory.name}
+              </Link>
+            </li>}
+
+            {polarCategory && 
             <li>
-              <button className={`cursor-pointer  ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}>
-                Polar
-              </button>
-            </li>
+              <Link href={`/${polarCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
+                {polarCategory.name}
+              </Link>
+            </li>}
           </ul>
         </Accordion>
 
         <Accordion title='Style' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
-            <li>
-              <button className={`cursor-pointer  ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}>
-                Richmond
-              </button>
-            </li>
-            <li>
-              <button className={`cursor-pointer  ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}>
-                Polar
-              </button>
-            </li>
+            {richmondCategory?.subcategories &&
+              richmondCategory?.subcategories.map((item, index) => (
+                <li key={index}>
+                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                    {item.name}
+                  </Link>
+                </li>
+              ))
+            }
+            {polarCategory?.subcategories &&
+              polarCategory?.subcategories.map((item, index) => (
+                <li key={index}>
+                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                    {item.name}
+                  </Link>
+                </li>
+              ))
+            }
           </ul>
         </Accordion>
-        {uniqueColors &&
+        {uniqueColors.length > 0 &&
           <Accordion title='Colors' >
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
               {uniqueColors?.map((item, i) => (
@@ -216,7 +240,7 @@ const Filters = ({
           </ul>
         </Accordion>
 
-        {uniqueThickness &&
+        {uniqueThickness.length > 0 &&
           <Accordion title='Thickness' >
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
@@ -230,7 +254,7 @@ const Filters = ({
             </ul>
           </Accordion>
         }
-        {uniqueCommmericallWarranty &&
+        {uniqueCommmericallWarranty.length > 0 &&
           <Accordion title='Commerical Warranty' >
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
@@ -244,7 +268,7 @@ const Filters = ({
             </ul>
           </Accordion>
         }
-        {uniqueResidentialWarranty &&
+        {uniqueResidentialWarranty.length > 0 &&
           <Accordion title='Residentail Warranty' >
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
@@ -258,7 +282,7 @@ const Filters = ({
             </ul>
           </Accordion>
         }
-        {uniquePlankWidth &&
+        {uniquePlankWidth.length > 0 &&
           <Accordion title='Plank Width' >
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
@@ -292,14 +316,21 @@ const Filters = ({
       <div className="border-b-2 pb-5">
         <p className="text-16 font-medium uppercase pb-5  text-[#191C1F]">popular Brands</p>
         <div className="flex gap-4 items-center">
-          <Checkbox label="Richmond" />
-          <Checkbox label="Polar" />
+        {richmondCategory && 
+              <Link href={`/${richmondCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
+              <Checkbox label={richmondCategory.name} isActive={path === `/${richmondCategory.custom_url}`} />
+              </Link>}
+
+            {polarCategory && 
+              <Link href={`/${polarCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
+                <Checkbox label={polarCategory.name} isActive={path === `/${polarCategory.custom_url}`} />
+              </Link>}
         </div>
       </div>
       <div className="pb-5">
         <p className="text-16 font-medium uppercase pb-5 text-[#191C1F]">Popular Tag</p>
         <div className="flex items-center ">
-          <RatioButtons options={['Richmond', 'Polar', 'SPC', 'LVT']} />
+          <RatioButtons options={catgories} />
         </div>
       </div>
     </div>

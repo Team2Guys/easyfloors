@@ -4,14 +4,14 @@ import { Category as ICategory } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import SubCategoryClient from "./SubCategory";
+import Category from "../Cetagory";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params
+export async function generateMetadata({ params }: { params: Promise<{ slug: string , subcategory: string }> }): Promise<Metadata> {
+  const { slug , subcategory } = await params
   const subCategories = await fetchSubCategories()
 
 
-  const subCategory = subCategories.find((subCategory: ICategory) => subCategory.custom_url === `/${slug}`);
+  const subCategory = subCategories.find((sub: ICategory) => sub.custom_url === `${slug.trim()}/${subcategory.trim()}`);
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
   const protocol = headersList.get('x-forwarded-proto') || 'https';
@@ -55,17 +55,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
-  const { slug } = await params
+const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
+  const { slug , subcategory } = await params
   const [ catgories , subCategories ] = await Promise.all([ fetchCategories() ,fetchSubCategories()]);
   console.log(subCategories,'subCategories')
-  const findSubCategories = subCategories.find((sub: ICategory) => sub.custom_url.trim() === `/${slug.trim()}`);
+  const findSubCategories = subCategories.find((sub: ICategory) => sub.custom_url.trim() === `${slug.trim()}/${subcategory.trim()}`);
   if (!findSubCategories) {
     return notFound()
   }
   return (
     <Suspense fallback="Loading .....">
-      <SubCategoryClient catgories={catgories} category={findSubCategories} />
+      <Category catgories={catgories} category={findSubCategories} />
     </Suspense>
   );
 };
