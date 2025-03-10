@@ -28,7 +28,7 @@ const Filters = ({
   setPriceValue,
   priceValue,
   className }: FIlterprops) => {
-
+ console.log(category,'category')
   const [uniqueThickness, setUniqueThickness] = useState<string[]>([]);
   const [uniqueCommmericallWarranty, setUniqueCommmericallWarranty] = useState<string[]>([]);
   const [uniqueResidentialWarranty, setUniqueResidentialWarranty] = useState<string[]>([]);
@@ -77,7 +77,6 @@ const Filters = ({
   };
   useEffect(() => {
     extractUniqueAttributes(category);
-    console.log(category, 'category', uniqueColors)
   }, [category])
 
   const handleYesWaterProof = (text: string) => {
@@ -158,7 +157,7 @@ const Filters = ({
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
               {category.subcategories?.map((subcategory: Category, i: number) => (
-                <Link href={`/${subcategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
+                <Link href={`/${category.custom_url}/${subcategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
                   {subcategory.name}
                 </Link>
               ))}
@@ -189,7 +188,7 @@ const Filters = ({
             {richmondCategory?.subcategories &&
               richmondCategory?.subcategories.map((item, index) => (
                 <li key={index}>
-                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                  <Link href={`/${richmondCategory.custom_url}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
                     {item.name}
                   </Link>
                 </li>
@@ -198,7 +197,7 @@ const Filters = ({
             {polarCategory?.subcategories &&
               polarCategory?.subcategories.map((item, index) => (
                 <li key={index}>
-                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                  <Link href={`/${polarCategory.custom_url}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
                     {item.name}
                   </Link>
                 </li>
@@ -317,12 +316,12 @@ const Filters = ({
         <p className="text-16 font-medium uppercase pb-5  text-[#191C1F]">popular Brands</p>
         <div className="flex gap-4 items-center">
         {richmondCategory && 
-              <Link href={`/${richmondCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
+              <Link href={`/${richmondCategory.custom_url}/${richmondCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
               <Checkbox label={richmondCategory.name} isActive={path === `/${richmondCategory.custom_url}`} />
               </Link>}
 
             {polarCategory && 
-              <Link href={`/${polarCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
+              <Link href={`/${polarCategory.custom_url}/${polarCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
                 <Checkbox label={polarCategory.name} isActive={path === `/${polarCategory.custom_url}`} />
               </Link>}
         </div>

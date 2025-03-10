@@ -1,6 +1,7 @@
 import { FormEventHandler, SetStateAction } from "react";
 import { IProduct } from "./prod";
 import { StaticImageData } from "next/image";
+import { Category } from "./cat";
 
 export interface Feature {
   icon: string;
@@ -34,6 +35,7 @@ export interface Product {
   ResidentialWarranty?: string;
   plankWidth?:string;
   waterproof?: boolean;
+  subcategory?: Category
 }
 
 interface Color {
@@ -44,7 +46,8 @@ export interface ProductCardProps {
   product: Product;
   sldier?: boolean;
   features: Feature[];
-  category?: string;
+  categoryData: Category;
+  subCategoryData?: Category;
 }
 export interface CollectionProductCardProps {
   product: FlooringProduct;

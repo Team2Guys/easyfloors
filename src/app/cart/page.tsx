@@ -11,7 +11,7 @@ const Cart = async () => {
     <>
       <Breadcrumb title="Cart" />
       <CartPage />
-      <RelatedSlider products={products.slice(0,5)} />
+      <RelatedSlider products={products.slice(0,5)} CategoryData={subCategories.category} />
     </>
   );
 };

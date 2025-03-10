@@ -76,6 +76,11 @@ query Categories {
             ResidentialWarranty
             CommmericallWarranty
             thickness
+            subcategory {
+                id
+                name
+                custom_url
+            }
         }
     }
 }`

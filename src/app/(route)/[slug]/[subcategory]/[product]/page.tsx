@@ -86,7 +86,7 @@ const Product = async ({params}:{params:Promise<{slug:string, subcategory: strin
       <Features items={featureItems} />
                              
       </Container>
-      <RelatedSlider products={products.slice(0,5)}/>
+      <RelatedSlider products={products.slice(0,5)} CategoryData={subCategories.category} />
     </div>
   );
 };

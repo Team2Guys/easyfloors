@@ -80,8 +80,8 @@ export interface SelectedFilter {
 }
 
 export interface SubCategoryProps {
-  filteredProducts: Product[],
-  selectedFilters: SelectedFilter[],
+  filteredProducts: Product[];
+  selectedFilters: SelectedFilter[];
   setSelectedColor: React.Dispatch<React.SetStateAction<string[]>>;
   selectedColor: string[];
   setSelectedThickness: React.Dispatch<React.SetStateAction<string[]>>;
@@ -93,6 +93,8 @@ export interface SubCategoryProps {
   setSelectedPlankWidth: React.Dispatch<React.SetStateAction<string[]>>;
   selectedPlankWidth: string[];
   setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
+  categoryData: Category;
+  subCategoryData?: Category
 }
 export interface SubSection {
   subHeading: string;

@@ -17,7 +17,9 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
   selectedResidentialWarranty,
   setSelectedPlankWidth,
   selectedPlankWidth,
-  setIsWaterProof
+  setIsWaterProof,
+  categoryData,
+  subCategoryData
 }) => {
   const [products, setProducts] = useState(filteredProducts);
   useEffect(() => {
@@ -79,7 +81,7 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {products.length > 0 ? products.map((product, index) => (
-          <Card key={index} product={product} features={features} />
+          <Card key={index} product={product} features={features} categoryData={categoryData} subCategoryData={subCategoryData} />
         )) : <p>No Product found</p>}
       </div>
     </div>

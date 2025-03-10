@@ -53,7 +53,7 @@ const CategorySlider = ({categories}: {categories: Category[]}) => {
               >
                 {category.products?.map((product: Product , index) => (
                   <SwiperSlide key={index} className="pb-7">
-                    <Card product={product} features={features} sldier />
+                    <Card product={product} categoryData={category} features={features} sldier />
                   </SwiperSlide>
                 ))}
               </Swiper>

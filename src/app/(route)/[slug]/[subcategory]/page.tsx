@@ -8,10 +8,11 @@ import Category from "../Cetagory";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string , subcategory: string }> }): Promise<Metadata> {
   const { slug , subcategory } = await params
-  const subCategories = await fetchSubCategories()
+  const [ catgories , subCategories ] = await Promise.all([ fetchCategories() ,fetchSubCategories()]);
 
 
-  const subCategory = subCategories.find((sub: ICategory) => sub.custom_url === `${slug.trim()}/${subcategory.trim()}`);
+  const subCategory = subCategories.find((sub: ICategory) => sub.custom_url === subcategory.trim());
+  const category = catgories.find((sub: ICategory) => sub.custom_url === slug.trim());
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
   const protocol = headersList.get('x-forwarded-proto') || 'https';
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description =
     subCategory?.Meta_Description ||
     'Welcome to Easy Floor';
-  const url = `${fullUrl}${subCategory.custom_url}`;
+  const url = `${fullUrl}${category.custom_url}/${subCategory.custom_url}`;
   return {
     title: title,
     description: description,
@@ -58,14 +59,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
   const { slug , subcategory } = await params
   const [ catgories , subCategories ] = await Promise.all([ fetchCategories() ,fetchSubCategories()]);
-  console.log(subCategories,'subCategories')
-  const findSubCategories = subCategories.find((sub: ICategory) => sub.custom_url.trim() === `${slug.trim()}/${subcategory.trim()}`);
-  if (!findSubCategories) {
+  const findSubCategories = subCategories.find((sub: ICategory) => sub.custom_url.trim() === subcategory.trim());
+  const findCategory = catgories.find((sub: ICategory) => sub.custom_url === slug.trim());
+
+  if ( !findCategory || !findSubCategories) {
     return notFound()
   }
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} category={findSubCategories} />
+      <Category catgories={catgories} categoryData={findCategory} subCategoryData={findSubCategories} isSubCategory />
     </Suspense>
   );
 };

@@ -64,7 +64,7 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
   }
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} category={findCategory} />
+      <Category catgories={catgories} categoryData={findCategory} isSubCategory={false} />
     </Suspense>
   );
 };

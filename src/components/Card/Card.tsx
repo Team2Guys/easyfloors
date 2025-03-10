@@ -1,18 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FiEye, FiHeart } from "react-icons/fi";
-import { ProductCardProps } from "types/type";
+import { Category } from "types/cat";
+import { Product, ProductCardProps } from "types/type";
 
 const Card: React.FC<ProductCardProps> = ({
   product,
   features = [],
   sldier,
-  // category,
+  categoryData,
+  subCategoryData
 }) => {
+  console.log(product,'product data',categoryData)
+  
+  const handleNavigate = (product: Product , categoryData: Category , subCategoryData?: Category) => {
+    if(subCategoryData){
+      return `/${categoryData.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
+    } else {
+      return `/${categoryData.custom_url}/${product.subcategory?.custom_url}/${product.custom_url}`;
+    }
+    
+    }
   return (
     <div className={`overflow-hidden group  ${sldier ? "px-2" : " hover:bg-background p-2"}`}>
      <div className="relative">
-      <Link href={product.custom_url|| ''}>
+      <Link href={handleNavigate(product , categoryData , subCategoryData)}>
         <Image
           src={product.posterImageUrl.imageUrl}
           alt={product.name}
