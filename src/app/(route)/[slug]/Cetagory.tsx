@@ -26,12 +26,12 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
   useEffect(() => {
-    if (isSubCategory && subCategoryData){
+    if (isSubCategory && subCategoryData) {
       setData(subCategoryData);
     } else {
       setData(categoryData)
     }
-  }, [categoryData,subCategoryData])
+  }, [categoryData, subCategoryData])
 
   useEffect(() => {
     let filtered = Data?.products;
@@ -63,7 +63,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
 
     if (selectedColors.length > 0) {
       filtered = filtered?.filter(product =>
-        product.colors?.some((color:AdditionalInformation) => selectedColors.includes(color.name))
+        product.colors?.some((color: AdditionalInformation) => selectedColors.includes(color.name))
       );
       selectedColors.forEach(color => {
         selectedFilter.push({ name: "selectedColors", value: color });
@@ -123,7 +123,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
 
   return (
     <>
-      <Breadcrumb image="/assets/images/category/category-breadcrumb.png" />
+      <Breadcrumb image={Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={Data.whatAmiImageBanner?.altText} />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
         <div className=" lg:w-[20%] ">
           <Filters
@@ -148,9 +148,11 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
         </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-            <h1 className="text-34 font-bold">{Data?.name}</h1>
-            <p className=" text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter">
-              {Data?.description}
+            <h1 className="text-34 font-bold">{Data?.topHeading || Data?.name}</h1>
+            <p
+              className="text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter"
+              dangerouslySetInnerHTML={{ __html: Data?.description || "" }}
+            >
             </p>
             <div className="flex items-center justify-between">
               <div className="">
