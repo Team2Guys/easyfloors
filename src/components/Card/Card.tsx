@@ -50,7 +50,7 @@ const Card: React.FC<productCardProps> = ({
         </div>
       </div>
 
-      <div className="flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light justify-evenly">
+      <div className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light  ${isAccessories ? "py-3 justify-around " : " justify-evenly"}`}>
         {features.map((feature, index) => (
           <div key={index} className="flex items-center justify-between gap-1">
             <Image
