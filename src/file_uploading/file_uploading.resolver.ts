@@ -3,6 +3,7 @@ import { FileUploadingService } from './file_uploading.service';
 import { FileUploading } from './entities/file_uploading.entity';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { UpdateFileUploadingInput } from './dto/update-file_uploading.input';
+import { Public } from 'decorators/public.decorator';
 
 @Resolver(() => FileUploading)
 export class FileUploadingResolver {
@@ -14,6 +15,7 @@ export class FileUploadingResolver {
    return this.fileUploadingService.create(file);
   }
 
+  @Public()
   @Mutation(() => Boolean)
     async DeleteImage(@Args('RemoveUImage') updatedImageInput: UpdateFileUploadingInput) {
       return await this.fileUploadingService.delete(updatedImageInput.public_id);
