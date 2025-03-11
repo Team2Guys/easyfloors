@@ -2,16 +2,16 @@ import React from 'react';
 import CartPage from 'components/cart/cart-page';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import RelatedSlider from 'components/related-slider/related-slider';
-import { flooringTypes } from 'data/produuct-detail';
+import { fetchSubCategories } from 'config/fetch';
 
-const Cart = () => {
-  const relatedProducts = flooringTypes.flatMap((flooring) => flooring.product).slice(0, 5);
-
+const Cart = async () => {
+  const subCategories = await fetchSubCategories()
+  const products = subCategories?.products || [];
   return (
     <>
       <Breadcrumb title="Cart" />
       <CartPage />
-      <RelatedSlider products={relatedProducts} />
+      <RelatedSlider products={products.slice(0,5)} CategoryData={subCategories.category} />
     </>
   );
 };

@@ -179,7 +179,7 @@ const FormLayout = ({
                             }`}
                         />
                         <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
-                      </div>;
+                      </div>
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
                           Custom URL
@@ -192,7 +192,7 @@ const FormLayout = ({
                             }`}
                         />
                         <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
-                      </div>;
+                      </div>
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
@@ -206,7 +206,7 @@ const FormLayout = ({
                             }`}
                         />
                         <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
-                      </div>;
+                      </div>
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
@@ -294,7 +294,7 @@ const FormLayout = ({
                             }`}
                         />
                         <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
-                      </div>;
+                      </div>
 
                     </div>
 

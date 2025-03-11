@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ProductCardProps } from "types/type";
+import { CollectionProductCardProps } from "types/type";
 
-const CollectionCard: React.FC<ProductCardProps> = ({ product, features = [] }) => {
+const CollectionCard: React.FC<CollectionProductCardProps> = ({ product, features = [] }) => {
     return (
         <div className="overflow-hidden md:px-2 hover:bg-[#FFF9F5]">
            <Link href="#">

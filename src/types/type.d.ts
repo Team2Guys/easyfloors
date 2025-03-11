@@ -2,6 +2,7 @@ import { FormEventHandler, SetStateAction } from "react";
 import { IProduct } from "./prod";
 import { StaticImageData } from "next/image";
 import { ISUBCATEGORY } from "./cat";
+import { Category } from "./cat";
 
 export interface Feature {
   icon: string;
@@ -12,16 +13,45 @@ export interface Feature {
 export interface FlooringType {
   name?: string;
   price?: string;
-  product: Product[];
+  product: FlooringProduct[];
+}
+
+interface FlooringProduct {
+  image: string;
+  price: string;
+  name: string
 }
 export interface Product {
-  image: string;
+  posterImageUrl: {
+    altText?: string;
+    imageUrl: string;
+    public_id: string};
   name: string;
+  custom_url?: string;
   price: string;
   stock?: number;
+  colors?: Color[],
+  thickness?: string;
+  CommmericallWarranty?: string;
+  ResidentialWarranty?: string;
+  plankWidth?:string;
+  waterproof?: boolean;
+  subcategory?: Category
+}
+
+interface Color {
+  name: string;
+  detail: string;
 }
 export interface ProductCardProps {
   product: Product;
+  sldier?: boolean;
+  features: Feature[];
+  categoryData: Category;
+  subCategoryData?: Category;
+}
+export interface CollectionProductCardProps {
+  product: FlooringProduct;
   sldier?: boolean;
   features: Feature[];
   category?: string;

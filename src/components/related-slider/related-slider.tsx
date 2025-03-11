@@ -7,12 +7,14 @@ import { features } from "data/data";
 import { Product } from "types/type";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Category } from "types/cat";
 
 interface RelatedSliderProps {
   products: Product[]; 
+  CategoryData: Category
 };
 
-const RelatedSlider = ({ products }:RelatedSliderProps) => {
+const RelatedSlider = ({ products , CategoryData }:RelatedSliderProps) => {
   const settings = {
     dots: true,
     infinite: false,
@@ -46,7 +48,7 @@ const RelatedSlider = ({ products }:RelatedSliderProps) => {
         <Slider {...settings}>
           {products.map((product: Product, index: number) => (
             <div key={index} className="pb-7">
-              <Card product={product} features={features} category={product.name} sldier />
+              <Card product={product} features={features} categoryData={CategoryData} sldier />
             </div>
           ))}
         </Slider>

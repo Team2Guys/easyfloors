@@ -57,7 +57,31 @@ query Categories {
         Recall_Cat
         subcategories {
             id
-            name    }
+            name
+            custom_url
+        }
+        products {
+            id
+            name
+            price
+            discountPrice
+            description
+            stock
+            posterImageUrl
+            hoverImageUrl
+            colors
+            custom_url
+            waterproof
+            plankWidth
+            ResidentialWarranty
+            CommmericallWarranty
+            thickness
+            subcategory {
+                id
+                name
+                custom_url
+            }
+        }
     }
 }`
 export const FETCH_ALL_SUB_CATEGORIES = gql`

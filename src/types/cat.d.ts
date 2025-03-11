@@ -1,4 +1,5 @@
 import { AdditionalInformation, IProduct, ProductImage } from "./prod";
+import { Product } from "./type";
 
 export interface Category {
   id: number | string
@@ -15,6 +16,12 @@ export interface Category {
   updatedAt: Date;
   last_editedBy?: string;
   Recall_Cat?: string;
+  products?: Product[];
+  subcategories?: {
+    id: number | string;
+    name: string;
+    custom_url: string
+  }[]
 }
 
 export interface EDIT_CATEGORY extends Category {
