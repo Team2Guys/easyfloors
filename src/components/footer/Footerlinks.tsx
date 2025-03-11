@@ -3,34 +3,40 @@ import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Category } from "types/cat"; 
 
 interface FooterlinksProps {
-  categories: Category[]; 
+  categories: Category[];
 }
 
-const Footerlinks: React.FC<FooterlinksProps> = ({  categories }) => {
-  const [activeSection, setActiveSection] = useState<string | null>(null);
+const Footerlinks: React.FC<FooterlinksProps> = ({ categories }) => {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
-  const toggleSection = (section: string) => {
-    setActiveSection(activeSection === section ? null : section);
+  const toggleSection = (index: number) => {
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
     <>
       {categories.map((section, index) => (
-        <div key={index} className="sm:hidden">
+        <div key={index} className="sm:hidden w-full">
+          
           <div
             className="flex items-center justify-between cursor-pointer border-b-2 pb-3"
-            onClick={() => toggleSection(section.name)}
+            onClick={() => toggleSection(index)}
           >
-            <div>{section.name}</div>
+            <div className="font-medium">{section.name}</div>
             <div>
-              {activeSection === section.name ? (
+              {activeIndex === index ? (
                 <FaChevronUp className="text-gray-600" />
               ) : (
                 <FaChevronDown className="text-gray-600" />
               )}
             </div>
           </div>
-          <div className={`${activeSection === section.name ? "block" : "hidden"} mt-2`}>
+
+          <div
+            className={`overflow-hidden transition-all duration-300 ${
+              activeIndex === index ? "h-auto scale-y-100 opacity-100 mt-2" : "h-0 scale-y-0 opacity-0"
+            }`}
+          >
             <ul className="space-y-2">
               {section.subcategories?.map((item, i) => (
                 <li key={i} className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
