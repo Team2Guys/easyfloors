@@ -198,9 +198,9 @@ export const heroItems: HeroItem[] = [
       "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/",
-    priceText: "Only On AED 49/m²",
+    priceText: "Starting From AED 49/m²",
     flooringType: "SPC Eco • American Walnut", 
-    brand: "Polar",
+    brand: "Polar Flooring",
   },
 ];
 
@@ -282,6 +282,7 @@ export const menuItems = [
   { label: 'How to measure', href: '/how-to-measure-your-room', },
   // { label: 'Estimator', href: '/estimator', },
   { label: 'Accessories', href: '/accessories', },
+  { label: 'Blogs', href: '/blogs', },
   { label: 'About Us', href: '/about-us', },
   { label: 'Contact Us', href: '/contact-us', },
 ];
@@ -355,7 +356,7 @@ export const footerData = {
     },
     {
       title: 'ACCESSORIES',
-      items: ['SPC Skirting', 'L Shape Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
+      items: ['Skirting', 'L Shape Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
     },
   ],
   contact: {
@@ -508,7 +509,7 @@ export const policySections = [
 export const faqs: FAQItem[] = [
   {
     id: 1,
-    question: "Q. What makes vinyl flooring a good choice for high-traffic areas?",
+    question: " What makes vinyl flooring a good choice for high-traffic areas?",
     answer:
       "Vinyl flooring Abu Dhabi is highly durable and resistant to wear and tear, making it ideal for high-traffic areas. Its water-resistant and scratch-resistant properties ensure it maintains its appearance and functionality even in busy environments.",
   },
