@@ -533,6 +533,25 @@ export const faqs: FAQItem[] = [
   },
 ];
 
+export const accessoriesfaqs: FAQItem[] = [
+  {
+    id: 1,
+    question: "Do I Need Any Adhesives to Stick the Planks?",
+    answer:
+      "No, you don’t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you’re not someone who likes to do things themselves, the click-lock feature makes it great for DIY. ",
+  },
+  {
+    id: 2,
+    question: "Will The Color and Texture Fade Over Time?",
+    answer:
+      "Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its colour and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it's great for busy households and businesses",
+  },
+  {
+    id: 3,
+    question: "How many planks come in a box, and what’s the coverage area?",
+    answer: "The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you’ll need multiple boxes depending on the total area.",
+  },
+];
 
 
 export const boxData: BoxData[] = [
@@ -977,6 +996,38 @@ export const accessoriesText = `
   It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
 `;
 
+//additional info
+export const productTabs=[
+  {
+    title: "Description",
+    heading: "Richmond Eco SPC - Oak History",
+    content: `The SPC Oak mixes warm oak shades with natural woodgrain textures, which makes it a versatile flooring choice. 
+    The SPC planks are tough and capable of resisting scratches and stains. As well as providing excellent grip underfoot, 
+    the top wear layer also prevents slips and falls. This makes it a safer option for families with children or pets. 
+    The oak flooring gives a secure feel compared to the sometimes slippery surface of polished wood floors.
+    
+    How much flooring should I get? Each box covers 2 square meters and comes with nine planks. Each plank is 1220mm long, 
+    183mm wide, and 5.5mm thick. The Oak floors are super easy to put together with a click-lock system. You can install 
+    them over concrete, wood, or tile floors. It's great for homes or rentals because you can take it out quickly and put 
+    it somewhere else. Also, you don't need any glue or adhesives to install - it's completely mess-free.
+    
+    The SPC Oak History is low-maintenance, stain-resistant, and designed to withstand daily rough use. Keeping it 
+    clean is as easy as wiping it with a damp cloth. You can put it anywhere, it's elegant, practical, and easy to maintain.`,
+    bulletpoints: [
+      "Each box contains 9 planks.",
+      "The size of each plank is 1220mm x 183mm x 5.5mm including a 0.5mm wear layer.",
+    ],
+  },
+  {
+    title: "Additional Information",
+    heading: "Richmond Eco SPC - Oak History",
+    content: `- Made with high-quality SPC material.\n- Waterproof and easy to maintain.\n- Ideal for homes and commercial spaces.`,
+    bulletpoints: [
+      "Each box contains 9 planks.",
+      "The size of each plank is 1220mm x 183mm x 5.5mm including a 0.5mm wear layer.",
+    ],
+  },
+];
 
 
 

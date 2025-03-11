@@ -1,7 +1,7 @@
 import Container from "components/common/container/Container";
 import Features from "components/Reusable/features";
 import HeroMain from "components/Reusable/hero";
-import { featureItems, heroItems } from "data/data";
+import { faqs, featureItems, heroItems } from "data/data";
 import CategorySlider from "components/CategorySlider/category-slider";
 import FloorItems from "components/FloorItems/FloorItems";
 import ImageCompare from "components/image-compare/image-compare";
@@ -30,7 +30,7 @@ const categories = await fetchCategories()
       <SampleBanner/>
       <ImageCompare />
       <UserInfo />
-      <Faqs />
+      <Faqs data={faqs} />
     </>
   );
 }

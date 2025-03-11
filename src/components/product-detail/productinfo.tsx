@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import Container from "components/common/container/Container";
+import { CiHeart } from "react-icons/ci";
+import { HiOutlineShoppingCart } from "react-icons/hi";
 
 const SkirtingProductDetail = () => {
   const pricePerPiece = 84; // Price per piece in AED
@@ -47,19 +48,19 @@ const SkirtingProductDetail = () => {
   };
 
   return (
-    <Container className="max-w-2xl mx-auto p-4">
+    <div className="w-4/12 p-4">
     <h2 className="text-[33.6px] font-semibold font-inter">Skirting</h2>
     <div className="flex border-b-[1px] border-gray-300"></div>
       {/* Price and Stock Info */}
       <p className="text-[23.6px] font-semibold font-inter">
         Price Per Piece: <span className="text-primary">AED {pricePerPiece}</span>
       </p>
-      <p className="text-[19.6px] font-inter font-normal">Stock: <span className="inline-block text-green-600">In Stock</span>
+      <p className="text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
       </p>
       <div className="flex border-b-[1px] border-gray-300"></div>
 
       {/* Color Selection */}
-      <div className="mt-4 h-216 border border-black p-5">
+      <div className="mt-4 h-216 border border-black p-3">
         <p className="font-semibold font-inter text-[23.6px] ">Colour: <span className="font-light text-[20.6px]">Chestnut</span></p>
         <div className="flex flex-wrap gap-2 mt-2">
           {colors.map((col, index) => (
@@ -72,7 +73,7 @@ const SkirtingProductDetail = () => {
       </div>
 
       {/* Matching Colors */}
-      <div className="mt-4 p-3 border border-black rounded">
+      <div className="mt-4 p-3 border border-black">
         <p className="font-semibold text-[23.6px] font-inter">Matching with:</p>
         <p className="font-inter font-light">Cappuccino Colour 2369</p>
         <p className="font-inter font-light">Antique Colour 2869</p>
@@ -87,36 +88,39 @@ const SkirtingProductDetail = () => {
           value={length}
           onChange={handleLengthChange}
           placeholder="Enter your required meter"
-          className="border p-2 w-full mt-1 boredr border-primary"
+          className="border p-2 w-full mt-1 border-primary"
         /> 
       </div>
-      <p className="font-inter font-light text-sm mt-2">(Selling in fixed length of {fixedLength} cm)</p>
-      <div className="mt-2">
-        <p className="font-semibold text-[23.6px]">Height: <span className="font-light text-[20.6px]">10 cm</span></p>
-        <p className="font-semibold text-[23.6px]">Depth: <span className="font-light text-[20.6px]">1.6 cm</span></p>
+      <p className="font-inter font-light text-sm mt-2">
+        (Selling in fixed length of {fixedLength} cm)
+      </p>
+      <div className="mt-2 font-semibold text-[23.6px]">
+        <p>Height: <span className="font-light text-[20.6px]">10 cm</span></p>
+        <p>Depth: <span className="font-light text-[20.6px]">1.6 cm</span></p>
       </div>
       </div>
-      <div className="mt-4 p-3 border rounded">
-        <p><strong>Total Required Pieces:</strong> {totalPieces} Pieces</p>
-        <p><strong>Price per piece:</strong> AED {pricePerPiece}</p>
-        <p><strong>Total amount:</strong> AED {totalAmount}</p>
+      <div className="mt-4 p-3 border border-black font-inter text-[23.6px] font-semibold">
+        <p>Total Required Pieces:<span className="text-[20.6px] font-light">{totalPieces} Pieces</span></p>
+        <p >Price per piece: <span className="text-[20.6px] font-light">AED {pricePerPiece}</span></p>
+        <p>Total amount: <span className="text-[20.6px] font-light">AED {totalAmount} ({totalPieces}pieces * AED {pricePerPiece})</span></p>
       </div>
 
       {/* Add to Cart & Wishlist */}
-      <div className="mt-4 flex gap-4">
-        <button className="bg-black text-white px-6 py-2 rounded">🛒 Add to Cart</button>
-        <button className="border px-6 py-2 rounded">❤️ Add to Wishlist</button>
+      <div className="mt-4 flex text-[22.6px] font-normal font-inter justify-between items-center gap-2">
+        <button className="bg-black text-white w-fit px-4 py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
+        <button className="flex justify-center items-center text-14 text-[#475156]"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
 
       {/* Payment Options */}
-      <p className="text-center mt-4 font-semibold">Guaranteed Safe Checkout</p>
-      <div className="flex gap-2 justify-center mt-2">
-        <Image src="/assets/icons/visa.png" alt="Visa" width={50} height={30} />
-        <Image src="/assets/icons/mastercard.png" alt="Mastercard" width={50} height={30} />
-        <Image src="/assets/icons/applepay.png" alt="Apple Pay" width={50} height={30} />
-        <Image src="/assets/icons/googlepay.png" alt="Google Pay" width={50} height={30} />
+      <p className="text-center mt-4 font-medium font-inter text-[20.6px]">Guaranteed Safe Checkout</p>
+      <p className="font-inter text-[22.6px] font-semibold">Buy Now, Pay Later</p>
+      <div className="flex gap-5 mt-2">
+        <Image src="/assets/icons/visa1.png" alt="Visa" width={1000} height={1000} className="w-16 h-12" />
+        <Image src="/assets/icons/Maestro.png" alt="Mastercard" width={1000} height={1000} className="w-16 h-12"  />
+        <Image src="/assets/icons/pay.png" alt="Apple Pay" width={1000} height={1000} className="w-16 h-12"  />
+        <Image src="/assets/icons/Gpay.png" alt="Google Pay" width={1000} height={1000} className="w-16 h-12"  />
       </div>
-    </Container>
+    </div>
   );
 };
 
