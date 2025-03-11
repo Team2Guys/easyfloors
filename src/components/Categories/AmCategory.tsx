@@ -4,6 +4,7 @@ import Container from "components/common/container/Container";
 import { fetchSubCategories } from "config/fetch";
 import { ISUBCATEGORY } from "types/cat";
 import CustomSwiper from "./Swiper";
+import Popup from "./Popup";
 
 
 export default async function AmCategory() {
@@ -12,7 +13,7 @@ export default async function AmCategory() {
   return (
     <Container>
       <div className="font-inter md:mt-20 mt-10 category_slider">
-    
+    <Popup/>
     <CustomSwiper subCategories={subCategories} />
 
         <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
