@@ -143,7 +143,7 @@ console.log(cartItems,"cartItems")
             <p>AED {(cartItems.reduce((total, item) => total + item.totalPrice * (item.quantity ?? 0), 0) + selectedFee).toFixed(2)}</p>
             </div>
             <button className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20'>Proceed to Checkout</button>
-            <PaymentMethod/>
+            <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.totalPrice * (item.quantity ?? 0), 0) + selectedFee) / 4}/>
             <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
               <div className='flex justify-between gap-2' >
             {

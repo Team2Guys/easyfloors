@@ -96,6 +96,7 @@ const ProductDetail = ({slug,subCategory,product,ProductInfo,products,subCat}:de
     const pricePerBox = productData ? (boxCoverage * productData.price) : 0;
     const squareMeter = requiredBoxes * boxCoverage;
     const totalPrice = productData ? (requiredBoxes * pricePerBox) : 0;
+    const installments = totalPrice/4;
   
   
     return (
@@ -154,7 +155,7 @@ const ProductDetail = ({slug,subCategory,product,ProductInfo,products,subCat}:de
           </button>
         </div>
         <button className="flex items-center gap-2 text-[#475156]" onClick={handleAddToWishlist}><LuHeart size={20} />Add to Wishlist</button>
-        <PaymentMethod showheading/>
+        <PaymentMethod installments={installments} showheading/>
           </div>
         </Container>
         <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
