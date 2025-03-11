@@ -9,6 +9,7 @@ export interface Feature {
   label: string;
   width: number;
   height: number;
+  
 }
 export interface FlooringType {
   name?: string;
@@ -43,6 +44,7 @@ interface Color {
   name: string;
   detail: string;
 }
+
 export interface ProductCardProps {
   product: Product;
   sldier?: boolean;
@@ -55,6 +57,9 @@ export interface CollectionProductCardProps {
   sldier?: boolean;
   features: Feature[];
   category?: string;
+  name?: string;
+  price?: string;
+  product: Product[];
 }
 export type Block = {
   id: number;
