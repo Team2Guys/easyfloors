@@ -23,7 +23,7 @@ export interface ProductCardProps {
   product: IProduct;
   sldier?: boolean;
   features: Feature[];
-  category?: string;
+  // category?: string;
 }
 export type Block = {
   id: number;

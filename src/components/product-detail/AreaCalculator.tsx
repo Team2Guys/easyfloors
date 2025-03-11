@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
+import { AreaCalculatorProps } from "types/product-detail";
 
-const AreaCalculator = () => {
-  const [unit, setUnit] = useState("sqm");
-  const [area, setArea] = useState(""); 
-  const boxCoverage = 2.9;
-  const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
-  const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
+const AreaCalculator= ({ setArea, setUnit, requiredBoxes, convertedArea, area, unit }:AreaCalculatorProps) => {
 
   return (
     <div className="space-y-3 my-4">

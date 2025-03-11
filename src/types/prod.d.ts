@@ -34,25 +34,32 @@ export interface IProduct {
     AdditionalInformation: AdditionalInformation[];
     colors: AdditionalInformation[];
     categoriesId: number;
-    subCategory?: ISUBCATEGORY_EDIT;
+    subcategory?: ISUBCATEGORY_EDIT;
     custom_url?:string
     thickness?:string
     ResidentialWarranty?:string
     CommmericallWarranty?:string
     plankWidth?:string
     waterproof?:boolean
-   
     category?:EDIT_CATEGORY
     Meta_Title: string;
     Canonical_Tag: string;
     Meta_Description: string;
     createdAt?:        Date    
     updatedAt ?:          Date
-    waterproof?:boolean
-    
-    
+    image?: string
   }
 
+  export interface ICart {
+    id: number ;
+    name: string;
+    price: number;
+    stock: number;
+    subcategory?: Array<{ name: string }>;
+    category?:Array<{ name: string }>;
+    image?: string
+    quantity?:number ;
+  }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {
     id?: number | string;

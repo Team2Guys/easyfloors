@@ -1,4 +1,18 @@
 export interface ThumbnailProps {
-  ThumnailImage: { image: string }[];
+  ThumnailImage: { imageUrl: string }[];
   ThumnailBottom: { image: string; title: string }[];
+}
+export interface AdditionalInfoProps {
+  description: string;
+  AdditionalInformation: { name: string; detail: string }[];
+  subcategory:string
+}
+
+export interface AreaCalculatorProps {
+  setArea: (value: string) => void; //eslint-disable-line
+  setUnit: (unit: "sqm" | "sqft") => void; //eslint-disable-line
+  requiredBoxes: number;
+  convertedArea: number;
+  area: string;
+  unit: string;
 }

@@ -8,17 +8,15 @@ const Card: React.FC<ProductCardProps> = ({
   product,
   features = [],
   sldier,
-  category,
 }) => {
-  console.log(product,"product")
   return (
     <div className={`overflow-hidden group  ${sldier ? "px-2" : " hover:bg-background p-2"}`}>
      <div className="relative">
-      <Link href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}>
+      <Link href={`/${generateSlug(product.category?.name || '')}/${generateSlug(product.subcategory?.name || '')}/${generateSlug(product.name)}`}>
         <Image
-            src={product?.posterImageUrl?.imageUrl || "/images/images.png"}
+            src={product?.posterImageUrl?.imageUrl || "/assets/allcollection/image0.png"}
             alt={product?.posterImageUrl?.altText || "Default Image"}
-          
+          loading="lazy"
           width={500}
           height={200}
           className={`w-full  object-cover ${sldier ? " h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"}`}
@@ -54,7 +52,7 @@ const Card: React.FC<ProductCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}
+          href={`/${generateSlug(product.category?.name || '')}/${generateSlug(product.subcategory?.name || '')}/${generateSlug(product.name)}`}
           className={` md:mt-0 mt-1 text-left font-semibold text-[#594F55] ${
             sldier ? "text-sm md:text-lg" : " text-12 sm:text-14 md:text-16 xl:text-24 2xl:text-31 max-sm:leading-3"
           }`}
@@ -72,7 +70,8 @@ const Card: React.FC<ProductCardProps> = ({
               </button>
             ) : (
               <Link
-              href={`/${generateSlug(category || '')}/${generateSlug(product.name)}`}className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary"
+              href={`/${generateSlug(product.category?.name || '')}/${generateSlug(product.subcategory?.name || '')}/${generateSlug(product.name)}`}
+              className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary"
               >
                 Shop Now
               </Link>
