@@ -1,13 +1,17 @@
 "use client"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface CheckboxProps {
   label: string;
+  isActive?: boolean
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ label }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ label , isActive }) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
+  useEffect(() => {
+    setIsChecked(isActive || false)
+  },[isActive])
   const handleChange = () => {
     setIsChecked(!isChecked);
   };

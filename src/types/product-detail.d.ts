@@ -15,4 +15,6 @@ export interface AreaCalculatorProps {
   convertedArea: number;
   area: string;
   unit: string;
+  pricePerBox: number;
+  squareMeter:number;
 }

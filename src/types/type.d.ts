@@ -1,29 +1,41 @@
 import { FormEventHandler, SetStateAction } from "react";
 import { IProduct } from "./prod";
 import { StaticImageData } from "next/image";
+import { ISUBCATEGORY } from "./cat";
 
 export interface Feature {
   icon: string;
   label: string;
   width: number;
   height: number;
+  
 }
 export interface FlooringType {
   name?: string;
   price?: string;
-  product: AProduct[];
+  product: FlooringProduct[];
 }
-export interface AProduct {
+
+interface FlooringProduct {
   image: string;
-  name: string;
   price: string;
-  stock?: number;
+  name: string
 }
-export interface ProductCardProps {
-  product: IProduct;
+
+interface Color {
+  name: string;
+  detail: string;
+}
+
+
+export interface CollectionProductCardProps {
+  product: FlooringProduct;
   sldier?: boolean;
   features: Feature[];
-  // category?: string;
+  category?: string;
+  name?: string;
+  price?: string;
+  product: IProduct[];
 }
 export type Block = {
   id: number;
@@ -40,14 +52,7 @@ export interface TImageBanner {
   src: string;
   alt: string;
 }
-export interface TBlogCard {
-  id: number;
-  title: string;
-  heading: string;
-  backgroundImage: string;
-  Link: string;
-  features: string[];
-}
+
 export interface TCategoryData {
   title: string;
   subtitle: string;
@@ -81,7 +86,7 @@ export interface HeroMainProps {
   items: HeroItem[];
 }
 export interface BlogCardProps {
-  card: TBlogCard;
+  card: ISUBCATEGORY;
 }
 export interface FAQItem {
   id: number;

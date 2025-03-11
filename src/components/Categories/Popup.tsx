@@ -1,49 +1,45 @@
-"use client";
+
+"use client"
 import React, { useState, useEffect } from "react";
-import BlogCard from "components/Categories/Categories";
-import Container from "components/common/container/Container";
-import { blogCards, categoryData, popupCards } from "data/data";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Pagination } from "swiper/modules";
 import { CardData } from "types/type";
 import { IoMdClose } from "react-icons/io";
+import {categoryData, popupCards } from "data/data";
 
-export default function AmCategory() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+function Popup() {
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleReadMoreClick = () => {
-    setIsExpanded((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+  
+    const handleOpenModal = () => {
+      setIsModalOpen(true);
     };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
+  
+    const handleCloseModal = () => {
+      setIsModalOpen(false);
     };
-  }, []);
-
+  
+    const handleReadMoreClick = () => {
+      setIsExpanded((prev) => !prev);
+    };
+  
+    useEffect(() => {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 768);
+      };
+  
+      handleResize();
+  
+      window.addEventListener("resize", handleResize);
+  
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }, []);
+  
   return (
-    <Container>
-      <div className="font-inter md:mt-20 mt-10 category_slider">
-        <h1
+  <>
+      <h1
           className="relative text-center md:text-5xl text-2xl md:max-w-3xl w-full font-bold text-white py-7 mx-auto bg-cover bg-center"
           style={{ 
             backgroundImage: `url(${categoryData.backgroundImage})`,
@@ -51,7 +47,7 @@ export default function AmCategory() {
             backgroundRepeat: "no-repeat", 
             backgroundPosition: "center" 
           }}
-        >
+      >
           {categoryData.title}{" "}
           <span
             onClick={handleOpenModal}
@@ -59,7 +55,7 @@ export default function AmCategory() {
           >
             {categoryData.subtitle}
           </span>
-        </h1>
+      </h1>
 
         {isModalOpen && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 font-inter">
@@ -114,34 +110,8 @@ export default function AmCategory() {
           </p>
         </div>
 
-        <div className="sm:hidden">
-          <Swiper
-            modules={[Pagination]}
-            spaceBetween={20}
-            pagination={{ clickable: true }}
-            breakpoints={{
-              0: { slidesPerView: 2, spaceBetween: 10 },
-              480: { slidesPerView: 2, spaceBetween: 15 },
-              640: { slidesPerView: 2, spaceBetween: 15 },
-              768: { slidesPerView: 2, spaceBetween: 20 },
-              1024: { slidesPerView: 3, spaceBetween: 20 },
-              1280: { slidesPerView: 3, spaceBetween: 25 },
-            }}
-          >
-            {blogCards.map((card) => (
-              <SwiperSlide key={card.id}>
-                <BlogCard card={card} />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {blogCards.map((card) => (
-            <BlogCard key={card.id} card={card} />
-          ))}
-        </div>
-      </div>
-    </Container>
-  );
+  </>
+  )
 }
+
+export default Popup

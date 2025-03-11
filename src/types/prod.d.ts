@@ -20,7 +20,7 @@ export interface AdditionalInformation {
 export interface IProduct {
     id: number | string;
     name: string;
-    price: number;
+    price: number ;
     description: string;
     short_description?: string;
     stock: number;
@@ -59,6 +59,10 @@ export interface IProduct {
     category?:Array<{ name: string }>;
     image?: string
     quantity?:number ;
+    totalPrice:number,
+    pricePerBox:number,
+    squareMeter:number,
+    requiredBoxes:number,
   }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {

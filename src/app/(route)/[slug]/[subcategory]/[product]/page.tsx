@@ -1,16 +1,16 @@
 import React from "react";
-import ProductPage from "./ProductPage";
-import { fetchProducts } from "config/fetch";
+import { fetchProducts, fetchSubCategories } from "config/fetch";
+import ProductDetail from "./ProductDetail";
 
-const Product = async () => {
-  const [product] = await Promise.all([
+const Product = async ({params}:{params:Promise<{slug:string, subcategory: string, product:string}>}) => {
+  const {slug , subcategory , product} = await params;
+  const subCategories = await fetchSubCategories()
+  const ProductInfo = await fetchProducts()
+  const products = subCategories?.products || [];
 
-    fetchProducts(),
-    
-  ]);
 
   return (
-   <ProductPage ProductInfo={product}/>
+    <ProductDetail slug={slug} subCategory={subcategory} product={product} ProductInfo={ProductInfo} products={products} subCat={subCategories}/>
   );
 };
 

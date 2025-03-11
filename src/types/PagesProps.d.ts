@@ -1,4 +1,5 @@
 import { Category, ISUBCATEGORY } from "./cat";
+import { IProduct } from "./prod";
 
 export interface SubCategoryComponentProps_dashboard {
     subCategories: ISUBCATEGORY[];
@@ -20,7 +21,7 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
   export interface DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS {
     setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
     EditInitialValues?: IProduct | undefined
-    EditProductValue?: IProduct | undefined;
+    EditProductValue?: EDIT_PRODUCT_PROPS | null | undefined;
     setEditProduct?: React.Dispatch<React.SetStateAction<IProduct | undefined>>;
     subCategories?: ISUBCATEGORY[];
     categoriesList?: ICategory[];
@@ -52,3 +53,12 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     subcategory?: string;
     altText?:string
   };
+
+
+  export interface productCardProps {
+    product: IProduct;
+    sldier?: boolean;
+    features: Feature[];
+    categoryData: ICategory;
+    subCategoryData?: ISUBCATEGORY;
+  }

@@ -23,6 +23,7 @@ const SubCategoryComponent = ({
   }, [subCategories, cetagories]);
 
 
+
   return (
     <DefaultLayout>
       <Breadcrumb pageName={menuType} />

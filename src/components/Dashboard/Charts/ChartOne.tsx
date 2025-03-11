@@ -176,7 +176,7 @@ const ChartOne: React.FC = () => {
 
       setState({ series: defaultArray });
     } catch (err) {
-      console.error('Error fetching monthly record:', err);
+      throw err;
     } finally {
       setLoading(false);
     }

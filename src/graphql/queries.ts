@@ -55,9 +55,35 @@ query Categories {
         last_editedBy
         custom_url
         Recall_Cat
+            whatAmiImageBanner
+        topHeading
         subcategories {
             id
-            name    }
+            name
+            custom_url
+        }
+        products {
+            id
+            name
+            price
+            discountPrice
+            description
+            stock
+            posterImageUrl
+            hoverImageUrl
+            colors
+            custom_url
+            waterproof
+            plankWidth
+            ResidentialWarranty
+            CommmericallWarranty
+            thickness
+            subcategory {
+                id
+                name
+                custom_url
+            }
+        }
     }
 }`
 export const FETCH_ALL_SUB_CATEGORIES = gql`
@@ -81,6 +107,7 @@ query SubCategories {
         whatAmiTopHeading
        whatAmiImage
         whatAmiImageBanner
+        homePageImage
         products {
             id
             name

@@ -3,8 +3,8 @@
 import axios from 'axios';
 import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
-import { ProductImage } from 'types/prod';
-import { toast } from 'react-toastify';
+import { IProduct, ProductImage } from 'types/prod';
+// import { toast } from 'react-toastify';
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
@@ -12,8 +12,7 @@ export const ImageRemoveHandler = async (
   finalToken?:string
 ) => {
   try {
-    console.log(finalToken, "token")
-    if(!finalToken) return  toast.success("Token Not found ")
+    // if(!finalToken) return  toast.success("Token Not found ")
     const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: FILE_DELETION_MUTATION,
@@ -29,6 +28,7 @@ export const ImageRemoveHandler = async (
         withCredentials: true,
       }
     );
+    
 
     
     if (response.data.data?.DeleteImage) {
@@ -61,6 +61,48 @@ return value.trim().toLowerCase()
 
 
 
+}
+
+
+export const ProductsSorting = (filtered: IProduct[], sortOption: string) => {
+  switch (sortOption) {
+    case "A to Z":
+      filtered = filtered?.sort((a, b) => {
+        if (!a.name || !b.name) return 0;
+        return a.name.localeCompare(b.name);
+      });
+      break;
+
+    case "Z to A":
+
+      filtered = filtered?.sort((a, b) => {
+        if (!a.name || !b.name) return 0;
+        return b.name.localeCompare(a.name);
+      });
+      break;
+
+    case "Low to High":
+      filtered = filtered?.sort((a:IProduct, b) => {
+        const priceA = a.price
+        const priceB = b.price
+
+        return priceA - priceB;
+      });
+      break;
+
+    case "High to Low":
+      filtered = filtered?.sort((a, b) => {
+        const priceA = a.price
+        const priceB = b.price
+
+
+        return priceB - priceA;
+      });
+      break;
+
+    default:
+      break;
+  }
 }
 
 

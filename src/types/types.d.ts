@@ -53,6 +53,49 @@ export interface TAutoVideoProps {
   fallbackImage?: string; 
   className?: string;
 }
+
+export interface FIlterprops {
+  className?: string;
+  catgories: Category[];
+  category: Category;
+  setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
+  isWaterProof: boolean | null | undefined;
+  setSelectedColor: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedColor: string[];
+  setSelectedThickness: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedThickness: string[];
+  setSelectedCommmericallWarranty: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedCommmericallWarranty: string[];
+  setSelectedResidentialWarranty: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedResidentialWarranty: string[];
+  setSelectedPlankWidth: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedPlankWidth: string[];
+  setPriceValue: React.Dispatch<React.SetStateAction<[number, number]>>;
+  priceValue: [number, number];
+}
+
+export interface SelectedFilter {
+  name: string;
+  value: boolean | string | null | undefined;
+}
+
+export interface SubCategoryProps {
+  filteredProducts: Product[];
+  selectedFilters: SelectedFilter[];
+  setSelectedColor: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedColor: string[];
+  setSelectedThickness: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedThickness: string[];
+  setSelectedCommmericallWarranty: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedCommmericallWarranty: string[];
+  setSelectedResidentialWarranty: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedResidentialWarranty: string[];
+  setSelectedPlankWidth: React.Dispatch<React.SetStateAction<string[]>>;
+  selectedPlankWidth: string[];
+  setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
+  categoryData: Category;
+  subCategoryData?: Category
+}
 export interface SubSection {
   subHeading: string;
   content: string;

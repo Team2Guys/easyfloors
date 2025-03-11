@@ -53,7 +53,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
         )) ||
 
       product.category && product?.category?.name.toLowerCase().includes(searchtext) ||
-      product.subCategory && product.subCategory.name.toLowerCase().includes(searchtext)
+      product.subcategory && product.subcategory.name.toLowerCase().includes(searchtext)
 
     );
   }).sort((a: IProduct, b: IProduct) => {

@@ -1,3 +1,4 @@
+'use client'
 import Accordion from 'components/ui/accordion';
 import { faqData } from 'data/produuct-detail';
 import React, { useState } from 'react';

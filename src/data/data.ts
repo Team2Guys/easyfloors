@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, FlooringType, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TBlogCard, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
@@ -68,7 +68,9 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Meta_Description: '',
   Meta_Title: '',
   Canonical_Tag: '',
-  custom_url: ""
+  custom_url: "",
+  topHeading:""
+
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -329,116 +331,6 @@ export const ThumnailBottom = [
   {image:"/assets/bin/thumb6.png" ,title:"the packaging"},
 
 ]
-export const flooringTypes: FlooringType[] = [
-  {
-    name: "SPC Flooring",
-    price: "AED 150m²",
-    product: [
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar Herringbone SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Richmond Eco SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Product Three",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Product Three",
-        price: "Only AED 55/m²",
-      },
-    ]
-  },
-  {
-    name: "LVT Flooring",
-    price: "AED 180m²",
-    product: [
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar Herringbone SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Richmond Eco SPC",
-        price: "Only AED 55/m²",
-      },
-    ]
-  },
-  {
-    name: "Polar Flooring",
-    price: "AED 200m²",
-    product: [
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar Herringbone SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Richmond Eco SPC",
-        price: "Only AED 55/m²",
-      },
-    ]
-  },
-  {
-    name: "Richmond Flooring",
-    price: "AED 220m²",
-    product: [
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar Herringbone SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Polar SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Richmond Eco SPC",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Product Three",
-        price: "Only AED 55/m²",
-      },
-      {
-        image: "/assets/categoryslider/Image.webp",
-        name: "Product Three",
-        price: "Only AED 55/m²",
-      },
-    ]
-  },
-];
-
-
-
-
 
 export const footerData = {
   company: {
@@ -520,73 +412,9 @@ export const imageData: TImageBanner = {
   alt: 'Picture of the author',
 };
 
-export const blogCards: TBlogCard[] = [
-  {
-    id: 1,
-    title: "I Am",
-    heading: "Polar SPC <br /> Herringbone",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Polar-Spc-Herringbone.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
 
-  },
-  {
-    id: 2,
-    title: "I Am",
-    heading: "Polar <br /> SPC",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Polar-SPC.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 3,
-    title: "I Am",
-    heading: "Polar <br /> LVT",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Polar-LVT.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 4,
-    title: "I Am",
-    heading: "Richmond <br /> SPC Eco",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-SPC-Eco.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 5,
-    title: "I Am",
-    heading: "Richmond <br /> SPC Prime",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-SPC-Prime.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 6,
-    title: "I Am",
-    heading: "Richmond LVT <br /> Comfort",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-LVT-Comfort.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 7,
-    title: "I Am",
-    heading: "Richmond LVT <br /> Luxury",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-LVT-Luxury.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-  {
-    id: 8,
-    title: "I Am",
-    heading: "Richmond SPC <br /> Herringbone",
-    Link: "/what-am-i/",
-    backgroundImage: '/assets/category/Richmond-SPC-Herringbone.webp',
-    features: ["Waterproof", "Scratch proof", "Durable", "Easy to clean"],
-  },
-];
+export const categoriesFeatures = ["Waterproof", "Scratch proof", "Durable", "Easy to clean"]
+
 
 export const categoryData: TCategoryData = {
   title: "What Am I?",
@@ -884,100 +712,6 @@ export const collectionFeatures: CollectionFeature[] = [
   { id: 3, icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
-
-export const product = [
-  {
-
-    image: "/assets/categoryslider/Image.webp",
-    name: "Polar Herringbone SPC - American Walnut",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Polar SPC",
-    price: "Only AED 55/m²",
-    stock: 0
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Richmond Eco SPC",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Product Three",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Product Three",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Polar SPC",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Richmond Eco SPC",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Product Three",
-    price: "Only AED 55/m²",
-  },
-  {
-    image: "/assets/categoryslider/Image.webp",
-    name: "Product Three",
-    price: "Only AED 55/m²",
-  },
-]
-
-export const categories = [
-  {
-    title: "Polar",
-    items: [
-      "Polar",
-      "Richmond Floorings",
-      "Manufacturer"
-    ]
-  },
-  {
-    title: "Richmond Floorings",
-    items: [
-      "Richmond Prime SPC",
-      "Richmond Herringbone SPC",
-      "Richmond Comfort LVT"
-    ]
-  },
-  {
-    title: "Manufacturer",
-    items: [
-      "Richmond Prime SPC",
-      "Richmond Herringbone SPC",
-      "Richmond Comfort LVT"
-    ]
-  },
-  {
-    title: "Style",
-    items: [
-      "Richmond Prime SPC",
-      "Richmond Herringbone SPC",
-      "Richmond Comfort LVT"
-    ]
-  },
-  {
-    title: "Color",
-    items: [
-      "Richmond Prime SPC",
-      "Richmond Herringbone SPC",
-      "Richmond Comfort LVT"
-    ]
-  }
-];
-
 export const faqspage: FAQ[] = [
   { question: "What is your return policy?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
   { question: "Do you offer international shipping?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
@@ -1226,6 +960,23 @@ export const measurementData: MeasurementSection[] = [
     image: "",
   },
 ];
+
+
+export const accessoriesText = `
+  Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+  when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+  It has survived not only five centuries, but also the leap into electronic typesetting, 
+  remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets 
+  containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker 
+  including versions of Lorem Ipsum. <br> <br>
+
+  Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
+  took a galley of type and scrambled it to make a type specimen book. 
+  It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+`;
+
 
 
 
