@@ -28,6 +28,7 @@ export const ImageRemoveHandler = async (
         withCredentials: true,
       }
     );
+    
 
     
     if (response.data.data?.DeleteImage) {
