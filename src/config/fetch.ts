@@ -13,6 +13,7 @@ export const fetchProducts = async () => {
       context: {
         fetchOptions: {
           credentials: "include",
+          next: { tags: ["products"] }
         },
       },
     });
@@ -27,7 +28,10 @@ export const fetchCategories = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_CATEGORIES,
-      fetchPolicy: "no-cache"
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["categories"] } }, 
+      },
 
     });
 
@@ -42,7 +46,10 @@ export const fetchSubCategories = async (FETCHSUBCAT?:DocumentNode) => {
   try {
     const { data } = await client.query({
       query: FETCHSUBCAT ?FETCHSUBCAT : FETCH_ALL_SUB_CATEGORIES,
-   fetchPolicy: "no-cache"
+   fetchPolicy: "no-cache",
+   context: {
+    fetchOptions: { next: { tags: ["subcategories"] } }, 
+  },
     })
 
     return data?.subCategories || []
