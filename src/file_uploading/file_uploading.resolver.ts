@@ -3,7 +3,7 @@ import { FileUploadingService } from './file_uploading.service';
 import { FileUploading } from './entities/file_uploading.entity';
 import { GraphQLUpload, FileUpload } from 'graphql-upload';
 import { UpdateFileUploadingInput } from './dto/update-file_uploading.input';
-import { Public } from 'decorators/public.decorator';
+import { Public } from '../decorators/public.decorator';
 
 @Resolver(() => FileUploading)
 export class FileUploadingResolver {
