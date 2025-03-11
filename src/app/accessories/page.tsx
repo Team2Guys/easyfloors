@@ -1,13 +1,15 @@
 import AccessoriesComp from 'components/Accessories/Accessories'; 
 import Breadcrumb from 'components/Reusable/breadcrumb';
-import { product } from 'data/data';
+import { fetchProducts } from 'config/fetch';
 import React from 'react';
 
-const Accessories = () => {
+const Accessories =async () => {
+const products = await fetchProducts()
+
   return (
     <>
       <Breadcrumb title="Accessories" image="/assets/images/accessories/Accessories-header-image.png" />
-      <AccessoriesComp product={product} features={[]} />
+      <AccessoriesComp product={products} features={[]} />
     </>
   );
 };

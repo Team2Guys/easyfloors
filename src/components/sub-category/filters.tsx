@@ -7,6 +7,7 @@ import { Category } from "types/cat";
 import Link from "next/link";
 import { FIlterprops } from "types/types";
 import { usePathname } from "next/navigation";
+import { AdditionalInformation } from "types/prod";
 
 
 
@@ -63,7 +64,7 @@ const Filters = ({
       if (product.plankWidth) plankWidthSet.add(product.plankWidth);
 
       if (product.colors) {
-        product.colors.forEach((color) => {
+        product.colors.forEach((color:AdditionalInformation) => {
           colorSet.add(color.name);
         });
       }

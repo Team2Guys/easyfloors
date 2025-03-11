@@ -2,22 +2,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { FiEye, FiHeart } from "react-icons/fi";
 import { Category } from "types/cat";
-import { Product, ProductCardProps } from "types/type";
+import { productCardProps } from "types/PagesProps";
+import { IProduct } from "types/prod";
 
-const Card: React.FC<ProductCardProps> = ({
+const Card: React.FC<productCardProps> = ({
   product,
   features = [],
   sldier,
   categoryData,
   subCategoryData
 }) => {
-  console.log(product,'product data',categoryData)
   
-  const handleNavigate = (product: Product , categoryData: Category , subCategoryData?: Category) => {
+  const handleNavigate = (product: IProduct , categoryData: Category , subCategoryData?: Category) => {
     if(subCategoryData){
       return `/${categoryData.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
     } else {
-      return `/${categoryData.custom_url}/${product.subcategory?.custom_url}/${product.custom_url}`;
+      return `/${categoryData.custom_url}/${product.subCategory?.custom_url}/${product.custom_url}`;
     }
     
     }

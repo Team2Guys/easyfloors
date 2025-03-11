@@ -8,8 +8,8 @@ import "swiper/css/pagination";
 import Link from "next/link";
 import Card from "components/Card/Card";
 import { features } from "data/data";
-import {  Product } from "types/type";
 import { Category } from "types/cat";
+import { IProduct } from "types/prod";
 
 const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
@@ -51,7 +51,7 @@ const CategorySlider = ({categories}: {categories: Category[]}) => {
                   1280: { slidesPerView: 3, spaceBetween: 25 },
                 }}
               >
-                {category.products?.map((product: Product , index) => (
+                {category.products?.map((product: IProduct , index) => (
                   <SwiperSlide key={index} className="pb-7">
                     <Card product={product} categoryData={category} features={features} sldier />
                   </SwiperSlide>

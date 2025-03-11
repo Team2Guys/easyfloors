@@ -3,9 +3,8 @@
 import axios from 'axios';
 import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
-import { ProductImage } from 'types/prod';
+import { IProduct, ProductImage } from 'types/prod';
 import { toast } from 'react-toastify';
-import { Product } from 'types/type';
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
@@ -64,7 +63,7 @@ return value.trim().toLowerCase()
 }
 
 
-export const ProductsSorting = (filtered: Product[], sortOption: string) => {
+export const ProductsSorting = (filtered: IProduct[], sortOption: string) => {
   switch (sortOption) {
     case "A to Z":
       filtered = filtered?.sort((a, b) => {
@@ -82,12 +81,9 @@ export const ProductsSorting = (filtered: Product[], sortOption: string) => {
       break;
 
     case "Low to High":
-      filtered = filtered?.sort((a, b) => {
-        const priceA = parseFloat(a.price);
-        const priceB = parseFloat(b.price);
-
-        if (isNaN(priceA)) return 1;
-        if (isNaN(priceB)) return -1;
+      filtered = filtered?.sort((a:IProduct, b) => {
+        const priceA = a.price
+        const priceB = b.price
 
         return priceA - priceB;
       });
@@ -95,11 +91,9 @@ export const ProductsSorting = (filtered: Product[], sortOption: string) => {
 
     case "High to Low":
       filtered = filtered?.sort((a, b) => {
-        const priceA = parseFloat(a.price);
-        const priceB = parseFloat(b.price);
+        const priceA = a.price
+        const priceB = b.price
 
-        if (isNaN(priceA)) return -1;
-        if (isNaN(priceB)) return 1;
 
         return priceB - priceA;
       });

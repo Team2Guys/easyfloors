@@ -20,7 +20,7 @@ export interface AdditionalInformation {
 export interface IProduct {
     id: number | string;
     name: string;
-    price: number;
+    price: number ;
     description: string;
     short_description?: string;
     stock: number;
@@ -41,7 +41,6 @@ export interface IProduct {
     CommmericallWarranty?:string
     plankWidth?:string
     waterproof?:boolean
-   
     category?:EDIT_CATEGORY
     Meta_Title: string;
     Canonical_Tag: string;

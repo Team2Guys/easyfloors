@@ -7,7 +7,7 @@ import Modal from "components/ui/modal";
 import Select from "components/ui/Select";
 import React, { useEffect, useState } from "react";
 import type { Category } from "types/cat";
-import { Product } from "types/type";
+import { AdditionalInformation, IProduct } from "types/prod";
 import { SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
@@ -22,7 +22,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
   const [selectedPlankWidth, setSelectedPlankWidth] = useState<string[]>([]);
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
   useEffect(() => {
@@ -63,7 +63,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
 
     if (selectedColors.length > 0) {
       filtered = filtered?.filter(product =>
-        product.colors?.some(color => selectedColors.includes(color.name))
+        product.colors?.some((color:AdditionalInformation) => selectedColors.includes(color.name))
       );
       selectedColors.forEach(color => {
         selectedFilter.push({ name: "selectedColors", value: color });
