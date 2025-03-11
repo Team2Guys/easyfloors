@@ -34,7 +34,7 @@ const Footerlinks: React.FC<FooterlinksProps> = ({ categories }) => {
 
           <div
             className={`overflow-hidden transition-all duration-300 ${
-              activeIndex === index ? "h-auto scale-y-100 opacity-100 mt-2" : "h-0 scale-y-0 opacity-0"
+              activeIndex === index ? "h-auto scale-y-100 opacity-100 mt-2" : "h-0 scale-y-0 opacity-1"
             }`}
           >
             <ul className="space-y-2">
