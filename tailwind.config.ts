@@ -2,6 +2,7 @@ import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
+  darkMode: ["class"],
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,6 +12,7 @@ export default {
     extend: {
       screens: {
         '3xl': '1800px',
+        'xs': '375px',
       },
       fontFamily: {
         inter: ["var(--font-Inter)", ...fontFamily.sans],
@@ -24,6 +26,7 @@ export default {
         "card-text": "var(--card-text)",
         green: "var(--green)",
         "gray-light": "var(--gray-light)",
+        
       },
       fontSize: {
         "10" : "10px",

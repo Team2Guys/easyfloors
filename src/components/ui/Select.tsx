@@ -2,8 +2,8 @@
 import { useState, useEffect, useRef } from "react";
 import { FiChevronDown } from "react-icons/fi";
 
-const Select = ({ options }: { options: string[] }) => {
-  const [selected, setSelected] = useState("Sort");
+const Select = ({ options , sortOption , onChange}: { options: string[] , sortOption:string, onChange: React.Dispatch<React.SetStateAction<string>>;}) => {
+  const [selected, setSelected] = useState(sortOption);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -56,6 +56,7 @@ const Select = ({ options }: { options: string[] }) => {
               className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white transition text-12 lg:text-sm"
               onClick={() => {
                 setSelected(option);
+                onChange(option)
                 setIsOpen(false);
               }}
             >

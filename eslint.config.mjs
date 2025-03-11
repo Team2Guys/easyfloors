@@ -47,6 +47,8 @@ const eslintConfig = [
       "react/require-default-props": "off", // Disables requiring default props
       "react/require-render-return": "error", // Errors when not returning a value from render
       "react/void-dom-elements-no-children": "error", // Errors when using children in void DOM elements
+      "react-hooks/exhaustive-deps": "off", // or "off" if you want to disable it
+
     },
   },
 ];

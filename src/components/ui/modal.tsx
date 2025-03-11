@@ -6,9 +6,10 @@ interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
   className?: string;
+  width?: string; // New width prop
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children,className }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className, width = "max-w-md" }) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") onClose();
@@ -25,7 +26,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children,className }) =>
       onClick={onClose}
     >
       <div
-        className="bg-white p-1  shadow-lg max-w-md w-full relative animate-fade-in animate-scale-in"
+        className={`bg-white p-4 shadow-lg ${width ? width: "w-[30%]"}  relative animate-fade-in animate-scale-in`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -34,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children,className }) =>
         >
           ✕
         </button>
-
+        
         {/* Modal Content */}
         <div className="mt-2">{children}</div>
       </div>

@@ -1,9 +1,17 @@
-import React from 'react'
+import AccessoriesComp from 'components/Accessories/Accessories'; 
+import Breadcrumb from 'components/Reusable/breadcrumb';
+import { fetchProducts } from 'config/fetch';
+import React from 'react';
 
-const Accessories = () => {
+const Accessories =async () => {
+const products = await fetchProducts()
+
   return (
-    <div>Accessories</div>
-  )
-}
+    <>
+      <Breadcrumb title="Accessories" image="/assets/images/accessories/Accessories-header-image.png" />
+      <AccessoriesComp product={products} features={[]} />
+    </>
+  );
+};
 
-export default Accessories
+export default Accessories;

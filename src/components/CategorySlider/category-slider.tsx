@@ -7,14 +7,15 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Card from "components/Card/Card";
-import { features, flooringTypes, generateSlug } from "data/data";
-import { FlooringType, Product } from "types/type";
+import { features } from "data/data";
+import { Category } from "types/cat";
+import { IProduct } from "types/prod";
 
-const CategorySlider: React.FC = () => {
+const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
     <div className="md:space-y-10 space-y-8">
-      {flooringTypes.map((flooring: FlooringType, index: number) => {
-        const shouldEnablePagination = flooring.product.length >= 3;
+      {categories.map((category: Category, index: number) => {
+        const shouldEnablePagination = category.products && category.products.length >= 3;
 
         return (
           <div
@@ -22,11 +23,11 @@ const CategorySlider: React.FC = () => {
             className="md:flex block items-center md:text-black text-white w-full overflow-hidden md:bg-background bg-primary category_slider"
           >
             <div className="p-4 text-center md:text-start w-full md:w-1/4 font-inter sm:pl-10 md:pl-12 lg:pl-20 xl:pl-24">
-            <Link href={`${generateSlug(flooring.name || '')}/${generateSlug(flooring.product[0]?.name || '')}`} className="text-2xl md:text-4xl font-semibold">
-                {flooring.name}
+            <Link href={`/${category.custom_url}`} className="text-2xl md:text-4xl font-semibold">
+                {category.name}
             </Link>
               <p className="text-sm md:text-base md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
-                Price Starting From: {flooring.price}
+                Price Starting From: {category.name.toLowerCase() === 'spc' ? 'AED 150m²' : category.name.toLowerCase() === 'lvt' ? 'AED 180m²' : category.name.toLowerCase() === 'polar' ? 'AED 200m²' : category.name.toLowerCase() === 'richmond' ? 'AED 220m²' : '' }
               </p>
               <Link
                 href="/all-collection"
@@ -50,9 +51,9 @@ const CategorySlider: React.FC = () => {
                   1280: { slidesPerView: 3, spaceBetween: 25 },
                 }}
               >
-                {flooring.product.map((product: Product , index) => (
+                {category.products?.map((product: IProduct , index) => (
                   <SwiperSlide key={index} className="pb-7">
-                    <Card product={product} features={features} category={flooring.name} sldier />
+                    <Card product={product} categoryData={category} features={features} sldier />
                   </SwiperSlide>
                 ))}
               </Swiper>

@@ -36,16 +36,32 @@
       transform: translateX(0%);
     }
     100% {
-      transform: translateX(300%);
+      transform: translateX(410%);
     }
   }
   .animate-moveTruck {
-    animation: moveTruck 5s linear infinite;
+    animation: moveTruck 3s linear infinite;
   }
 
   .animate-scale-in {
     animation: scaleIn 0.3s ease-out;
   }
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #D0D0D0; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000000; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #000000; 
 }
 
 .category_slider .swiper-pagination-bullet {
@@ -66,6 +82,29 @@ padding: 4px;
     border-radius: 0px;
     height: 5px;
 }
+
+
+.slick-dots li button {
+  color: black !important; 
+}
+
+.slick-dots li.slick-active button:before {
+  color: var(--primary) !important; /* Active dot color (orange) */
+}
+
+.custom-dot {
+  width: 11px;
+  height: 11px;
+  background-color: black; /* Default dot color */
+  border-radius: 50%;
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+.slick-dots li.slick-active .custom-dot {
+  background-color: var(--primary) !important;; /* Active dot color */
+}
+
 @media (max-width: 767px) {
   .category_slider .swiper-pagination {
     background-color: transparent !important;

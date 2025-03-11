@@ -46,17 +46,16 @@ const Navbar = () => {
       return newState;
     });
   };
-
   return (
     <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg pb-1 sm:pb-2' : 'top-10 pb-1 sm:pb-1'} transition-all font-inter `}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
       <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
         <Link href="/">
           <Image
-            width={200}
-            height={200}
-            className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[40px] 2xl:w-[100px] 2xl:h-[50px]"
-            src="/assets/images/logo/logo1.png"
+            width={400}
+            height={400}
+            className=" w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
+            src="/assets/images/logo.png"
             alt="logo"
           />
         </Link>

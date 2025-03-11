@@ -1,0 +1,64 @@
+import { Category, ISUBCATEGORY } from "./cat";
+import { IProduct } from "./prod";
+
+export interface SubCategoryComponentProps_dashboard {
+    subCategories: ISUBCATEGORY[];
+    cetagories: Category[];
+  }
+
+export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
+    setMenuType: React.Dispatch<SetStateAction<string>>;
+    seteditCategory?: React.Dispatch<SetStateAction<ISUBCATEGORY | undefined | null>>;
+    editCategory?: ISUBCATEGORY | undefined | null;
+    subCategories?: ISUBCATEGORY[];
+  }
+
+  export interface DASHBOARD_ADD_SUBCATEGORIES_PROPS extends DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
+    categoriesList: Category[];
+
+  }
+
+  export interface DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS {
+    setselecteMenu: React.Dispatch<React.SetStateAction<string>>;
+    EditInitialValues?: IProduct | undefined
+    EditProductValue?: EDIT_PRODUCT_PROPS | null | undefined;
+    setEditProduct?: React.Dispatch<React.SetStateAction<IProduct | undefined>>;
+    subCategories?: ISUBCATEGORY[];
+    categoriesList?: ICategory[];
+  }
+
+
+  export interface DASHBOARD_MAINPAGE_PROPS {
+    categories: ICategory[], 
+    productsData: IProduct[]
+  }
+
+
+  export interface DASHBOARD_MAIN_PRODUCT_PROPS {
+    products: IProduct[];
+    setProducts: React.Dispatch<SetStateAction<IProduct[]>>;
+    setselecteMenu: React.Dispatch<SetStateAction<string>>;
+    setEditProduct: React.Dispatch<SetStateAction<IProduct | undefined>>;
+  
+  
+  }
+  
+
+
+
+  export interface BreadcrumbProps  {
+    title?: string;
+    image?: string;
+    slug?: string;
+    subcategory?: string;
+    altText?:string
+  };
+
+
+  export interface productCardProps {
+    product: IProduct;
+    sldier?: boolean;
+    features: Feature[];
+    categoryData: ICategory;
+    subCategoryData?: ISUBCATEGORY;
+  }

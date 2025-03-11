@@ -41,9 +41,9 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
           const isLastItem = index === items.length - 1;
 
           return (
-            <div key={index} className="px-2 !flex flex-nowrap">
+            <div key={index} className="sm:px-2 !flex flex-nowrap">
               
-              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4 rounded-lg xl:rounded-none shadow-md xl:shadow-none md:gap-3 xl:pr-4 2xl:pr-5">
+              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4  shadow-md xl:shadow-none md:gap-3 xl:pr-4 2xl:pr-5">
                 <Image
                   src={item.icon}
                   alt={item.title}
