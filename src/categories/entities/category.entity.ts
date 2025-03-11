@@ -51,6 +51,13 @@ export class Category {
   @Field({ nullable: true })
   short_description?:string
 
+  @Field(() =>  GraphQLJSON,{nullable:true})
+  whatAmiImageBanner: any
+
+  @Field({nullable:true})
+  topHeading?:string
+
+
 
 }
 

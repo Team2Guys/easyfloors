@@ -60,6 +60,8 @@ model Category {
   custom_url        String
   subcategories     subCategories[] @relation()
   Recall_Cat        String?
+  topHeading    String?
+  whatAmiImageBanner Json?
 }
 
 model subCategories {

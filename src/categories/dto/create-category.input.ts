@@ -47,4 +47,11 @@ export class CreateCategoryInput {
     @Field({ nullable: true })
     Recall_Cat?:string
 
+      @Field(() =>  GraphQLJSON,{nullable:true})
+      whatAmiImageBanner: any
+    
+      @Field({nullable:true})
+      topHeading?:string
+    
+
 }
