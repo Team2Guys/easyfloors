@@ -17,11 +17,15 @@ export interface Category {
   last_editedBy?: string;
   Recall_Cat?: string;
   products?: Product[];
+
   subcategories?: {
     id: number | string;
     name: string;
     custom_url: string
   }[]
+
+  whatAmiImageBanner?:ProductImage
+  topHeading?:string
 }
 
 export interface EDIT_CATEGORY extends Category {

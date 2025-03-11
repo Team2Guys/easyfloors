@@ -55,6 +55,8 @@ query Categories {
         last_editedBy
         custom_url
         Recall_Cat
+            whatAmiImageBanner
+        topHeading
         subcategories {
             id
             name

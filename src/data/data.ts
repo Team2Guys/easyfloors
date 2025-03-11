@@ -68,7 +68,9 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Meta_Description: '',
   Meta_Title: '',
   Canonical_Tag: '',
-  custom_url: ""
+  custom_url: "",
+  topHeading:""
+
 };
 
 export const subcategoryValidationSchema = Yup.object({
