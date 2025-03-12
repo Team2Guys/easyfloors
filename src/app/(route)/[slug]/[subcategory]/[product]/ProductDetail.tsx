@@ -20,7 +20,7 @@ import { detailprops } from 'types/product-detail';
 const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && generateSlug(product.custom_url) === ProductName)[0];
+    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && (product.custom_url) === ProductName)[0];
     const boxCoverage = 2.9;
     const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
       const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
