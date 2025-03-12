@@ -38,20 +38,19 @@ export class CreateCategoryInput {
   custom_url: string;
 
 
-    // @Field(() => [CreateProductInput], { nullable: true })
-    // products?: CreateProductInput[];
-  
-    // @Field(() => [CreateSubCategoryInput], { nullable: true })
-    // subcategories?: CreateSubCategoryInput[] | any;
-  
-    @Field({ nullable: true })
-    Recall_Cat?:string
+  @Field({ nullable: true })
+  Recall_Cat?: string
 
-      @Field(() =>  GraphQLJSON,{nullable:true})
-      whatAmiImageBanner: any
-    
-      @Field({nullable:true})
-      topHeading?:string
-    
+  @Field(() => GraphQLJSON, { nullable: true })
+  whatAmiImageBanner: any
+
+  @Field({ nullable: true })
+  topHeading?: string
+
+  @Field({ nullable: true })
+  RecallUrl?: string
+
+
+
 
 }

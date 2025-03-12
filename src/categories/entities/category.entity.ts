@@ -56,6 +56,9 @@ export class Category {
 
   @Field({nullable:true})
   topHeading?:string
+  
+  @Field({nullable:true})
+  RecallUrl?:string
 
 
 

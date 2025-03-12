@@ -58,5 +58,12 @@ export class CreateSubCategoryInput {
     @Field({nullable:true})
     whatAmiTopHeading?:string
 
+      @Field({nullable:true})
+      Heading?:string
+    
+      @Field(() =>  GraphQLJSON,{nullable:true})
+      BannerImage?: any
+    
+
 
 }

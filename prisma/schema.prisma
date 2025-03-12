@@ -45,23 +45,24 @@ model Products {
 }
 
 model Category {
-  id                Int             @id @default(autoincrement())
-  name              String          @unique
-  description       String?
-  products          Products[]
-  createdAt         DateTime?       @default(now())
-  updatedAt         DateTime?       @updatedAt
-  posterImageUrl    Json
-  last_editedBy     String?
-  short_description String?
-  Canonical_Tag     String?
-  Meta_Description  String?
-  Meta_Title        String?
-  custom_url        String
-  subcategories     subCategories[] @relation()
-  Recall_Cat        String?
-  topHeading    String?
+  id                 Int             @id @default(autoincrement())
+  name               String          @unique
+  description        String?
+  products           Products[]
+  createdAt          DateTime?       @default(now())
+  updatedAt          DateTime?       @updatedAt
+  posterImageUrl     Json
+  last_editedBy      String?
+  short_description  String?
+  Canonical_Tag      String?
+  Meta_Description   String?
+  Meta_Title         String?
+  custom_url         String
+  subcategories      subCategories[] @relation()
+  Recall_Cat         String?
+  topHeading         String?
   whatAmiImageBanner Json?
+  RecallUrl          String?
 }
 
 model subCategories {
@@ -82,8 +83,10 @@ model subCategories {
   custom_url         String
   Recall_subCat      String?
   whatAmiImage       Json?
-  homePageImage       Json?
+  homePageImage      Json?
   whatAmiImageBanner Json?
+  BannerImage        Json?
+  Heading            String?
   whatAmiTopHeading  String?
   whatamIdetails     Json[]     @default([])
 }
