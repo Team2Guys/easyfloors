@@ -80,9 +80,21 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-        {products.length > 0 ? products.map((product, index) => (
-          <Card key={index} product={product} features={features} categoryData={categoryData} subCategoryData={subCategoryData} />
-        )) : <p>No Product found</p>}
+  {products.length > 0 ? (
+    products.map((product, index) => (
+      <Card 
+        key={index} 
+        product={product} 
+        features={features} 
+        categoryData={categoryData} 
+        subCategoryData={subCategoryData} 
+        isSoldOut={false} 
+        isAccessories={false} 
+      />
+    ))
+  ) : (
+    <p>No Product found</p>
+  )}
       </div>
     </div>
   );

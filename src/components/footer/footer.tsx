@@ -1,18 +1,17 @@
-"use client"
-import { useState } from 'react';
+
 import { footerData } from 'data/data';
 import Image from 'next/image';
-import { FaChevronDown, FaChevronUp, FaMapMarkerAlt, FaRegEnvelope, FaWhatsapp } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaRegEnvelope, FaWhatsapp } from 'react-icons/fa';
 import Container from 'components/common/container/Container';
 import Link from 'next/link';
 import { IoCall } from 'react-icons/io5';
+import Footerlinks from './Footerlinks';
+import { fetchCategories } from 'config/fetch';
+import { Category } from 'types/cat';
 
-const Footer = () => {
-    const [activeSection, setActiveSection] = useState<string | null>(null);
+const Footer = async () => {
+    const categories = await fetchCategories();
 
-    const toggleSection = (section: string) => {
-        setActiveSection(activeSection === section ? null : section);
-    };
 
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
@@ -21,44 +20,16 @@ const Footer = () => {
                     <Image src="/assets/images/logo.png" alt="Easyfloors" width={120} height={50} className="mb-4" />
                     <p className="mt-2 text-sm">{footerData.company.description}</p>
                 </div>
+                <Footerlinks  categories={categories} />
 
-                {footerData.links.map((section, index) => (
-                    <div key={index} className="sm:hidden">
-                        <div
-                            className="flex items-center justify-between flex-wrap md:text-base text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal cursor-pointer md:border-none border-b-2 pb-3"
-                            onClick={() => toggleSection(section.title)}
-                        >
-                            <div>{section.title}</div>
-                            <div>
-                                {activeSection === section.title ? (
-                                    <FaChevronUp className="text-gray-600" />
-                                ) : (
-                                    <FaChevronDown className="text-gray-600" />
-                                )}
-                            </div>
-                        </div>
-                        <div
-                            className={`${activeSection === section.title ? 'max-h-screen' : 'max-h-0'
-                                } overflow-hidden transition-all duration-300 ease-in-out md:mt-4 space-y-2`}
-                        >
-                            <ul>
-                                {section.items.map((item, i) => (
-                                    <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal md:mt-0 mt-2">
-                                        {item}
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    </div>
-                ))}
 
-                {footerData.links.map((section, index) => (
+                {categories.map((section: Category, index: number) => (
                     <div key={index} className="sm:block hidden">
-                        <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">{section.title}</h3>
+                        <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">{section.name}</h3>
                         <ul className="mt-4 space-y-2">
-                            {section.items.map((item, i) => (
+                            {section?.subcategories && section?.subcategories.map((item, i) => (
                                 <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
-                                    {item}
+                                    {item.name}
                                 </li>
                             ))}
                         </ul>
@@ -74,7 +45,7 @@ const Footer = () => {
                         <Link
                             href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D"
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="noopener noreferrer" 
                             className="text-gray-700 hover:text-gray-900 md:full w-60"
                         >
                             {footerData.contact.address}
