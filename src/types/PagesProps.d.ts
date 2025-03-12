@@ -57,6 +57,8 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
 
   export interface productCardProps {
     product: IProduct;
+    isSoldOut?: boolean;
+    isAccessories?: boolean;
     sldier?: boolean;
     features: Feature[];
     categoryData: ICategory;
