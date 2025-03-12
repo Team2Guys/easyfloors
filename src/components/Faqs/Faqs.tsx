@@ -5,9 +5,10 @@ import { FAQItem } from "types/type";
 
 interface FaqsProps {
     data: FAQItem[];
+    className?:string;
   }
   
-  const Faqs: React.FC<FaqsProps> = ({ data }) => {
+  const Faqs: React.FC<FaqsProps> = ({ data,className }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     const toggleFAQ = (index: number) => {
@@ -15,8 +16,7 @@ interface FaqsProps {
     };
 
     return (
-        <section className="bg-white py-10 md:mt-10">
-            <div className="container mx-auto px-6">
+        <section className={`bg-white py-10 md:mt-10 ${className}`}>
                 <h1 className="text-2xl font-semibold font-inter text-[#1B1139] lg:text-3x text-center md:mb-10 mb-6">
                     FAQ’S
                 </h1>
@@ -50,7 +50,6 @@ interface FaqsProps {
                         </div>
                     ))}
                 </div>
-            </div>
         </section>
     );
 };

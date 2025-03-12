@@ -13,7 +13,6 @@ interface RelatedSliderProps {
   products: IProduct[]; 
   CategoryData: Category
 };
-
 const RelatedSlider = ({ products , CategoryData }:RelatedSliderProps) => {
   const settings = {
     dots: true,

@@ -1,39 +1,39 @@
 "use client";
-// import { useState } from "react";
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
-// import Thumbnail from "components/product-detail/thumbnail";
+import Thumbnail from "components/product-detail/thumbnail";
 import SkirtingProductDetail from "components/product-detail/productinfo";
 import Features from "components/Reusable/features";
-import { accessoriesfaqs, featureItems, productTabs } from "data/data";
+import { accessoriesfaqs, accessoriesimages, featureItems, productTabs, ThumnailBottom, ThumnailImage } from "data/data";
 import Faqs from "components/Faqs/Faqs";
 import ProductDetails from "components/Reusable/additinalinfo";
+import RelatedSlider from 'components/related-slider/related-slider';
+import { fetchSubCategories } from 'config/fetch';
 
 
-const ProductImageGallery = () => {
-  // const images = [
-  //   { src: "/assets/images/accessories/product/1.png", alt: "Thumbnail 1" },
-  //   { src: "/assets/images/accessories/product/2.png", alt: "Thumbnail 2" },
-  //   { src: "/assets/images/accessories/product/3.png", alt: "Thumbnail 3" },
-  //   { src: "/assets/images/accessories/product/4.png", alt: "Thumbnail 4" },
-  //   { src: "/assets/images/accessories/product/5.png", alt: "Thumbnail 5" },
-  // ];
-  // const [mainImage, setMainImage] = useState(images[0].src);
-
+const ProductImageGallery = async () => {
+  const subCategories = await fetchSubCategories();
+  console.log("SubCategories Data:", subCategories); // Debugging
+  
+  const products = subCategories?.products || [];
+  console.log("Products Data:", products);
   return (
     <>
     <Container>
     <Breadcrumb />
-    <div className="flex">
-    <div className="w-8/12">
-    {/* <Thumbnail ThumnailImage={mainImage} ThumnailBottom=""/> */}
+    <div className="flex flex-col lg:flex-row">
+    <div className="w-full lg:w-8/12">
+    <Thumbnail ThumnailImage={accessoriesimages} ThumnailBottom={ThumnailBottom} hideThumnailBottom={true} />
     </div>
+    <div className="w-full lg:w-4/12">
     <SkirtingProductDetail />
     </div>
+    </div>
     <ProductDetails tabs={productTabs} />
-    <Faqs data={accessoriesfaqs} />
+    <Faqs data={accessoriesfaqs} className="!py-3" />
     </Container>
-     <Features items={featureItems} />
+    <Features items={featureItems} />
+    <RelatedSlider products={products.slice(0,5)} CategoryData={subCategories.category} />
     </>
   );
 };

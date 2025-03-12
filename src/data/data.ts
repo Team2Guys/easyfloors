@@ -1029,5 +1029,36 @@ export const productTabs=[
   },
 ];
 
+export const accessoriesimages = [
+  { image: "/assets/images/accessories/product/1.png" },
+  { image: "/assets/images/accessories/product/2.png" },
+  { image: "/assets/images/accessories/product/3.png" },
+  { image: "/assets/images/accessories/product/4.png"},
+  { image: "/assets/images/accessories/product/5.png"},
+];
 
+export const colors = [
+  { code: "3897", color: "/assets/bin/colors/c1.png" },
+  { code: "3895", color: "/assets/bin/colors/c2.png" },
+  { code: "2868", color: "/assets/bin/colors/c3.png"},
+  { code: "6661", color: "/assets/bin/colors/c4.png" },
+  { code: "2636", color: "/assets/bin/colors/c5.png" },
+  { code: "X8355-9", color: "/assets/bin/colors/c6.png" },
+  { code: "3896", color: "/assets/bin/colors/c7.png" },
+  { code: "3891", color: "/assets/bin/colors/c8.png" },
+  { code: "3895", color: "/assets/bin/colors/c9.png" },
+  { code: "2869", color: "/assets/bin/colors/c10.png" },
+  { code: "6661", color: "/assets/bin/colors/c11.png" },
+  { code: "2634", color: "/assets/bin/colors/c12.png" },
+  { code: "X8365-9", color: "/assets/bin/colors/c13.png"},
+  { code: "FC5943", color: "/assets/bin/colors/c14.png" },
+  { code: "FC5943", color: "/assets/bin/colors/c15.png" },
+  { code: "FC5943", color: "/assets/bin/colors/c16.png" },
+];
 
+export const paymentIcons = [
+  { src: "/assets/icons/visa1.png", alt: "Visa" },
+  { src: "/assets/icons/Maestro.png", alt: "Mastercard" },
+  { src: "/assets/icons/pay.png", alt: "Apple Pay" },
+  { src: "/assets/icons/Gpay.png", alt: "Google Pay" }
+];
