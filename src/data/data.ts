@@ -82,6 +82,7 @@ export const subcategoryValidationSchema = Yup.object({
 export const categoryValidationSchema = Yup.object({
   name: Yup.string().required('Add  Category Name'),
   custom_url: Yup.string().required('Custom URL is required'),
+  RecallUrl: Yup.string().required('Custom URL is required for categories and products'),
 });
 
 export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
@@ -94,7 +95,9 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   category: "",
   Canonical_Tag:"",
   whatamIdetails:[],
-  whatAmiTopHeading:""
+  whatAmiTopHeading:"",
+  Heading:"",
+  RecallUrl:""
 
 
 };

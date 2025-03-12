@@ -36,15 +36,18 @@ const FormLayout = ({
       Canonical_Tag: editCategory.Canonical_Tag || '',
       custom_url: editCategory.custom_url || "",
       whatamIdetails: editCategory?.whatamIdetails || [],
-      whatAmiTopHeading: editCategory?.whatAmiTopHeading || ""
+      whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
+      Heading: editCategory?.Heading || "",
+
     }
     : undefined;
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
-  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ?  [editCategory?.whatAmiImageBanner] : undefined);
-  const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ?  [editCategory?.whatAmiImage] : undefined);
-  const [homePagemageUrl, sethomePagemageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.homePageImage ?  [editCategory?.homePageImage] : undefined);
-  
-  
+  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined);
+  const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ? [editCategory?.whatAmiImage] : undefined);
+  const [homePagemageUrl, sethomePagemageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.homePageImage ? [editCategory?.homePageImage] : undefined);
+  const [bannerImage, setBannerImage] = useState<ProductImage[] | undefined>(editCategory && editCategory?.BannerImage ? [editCategory?.BannerImage] : undefined);
+
+
   const [loading, setloading] = useState<boolean>(false);
 
   const [editCategoryName, setEditCategoryName] = useState<ISUBCATEGORY_EDIT | undefined>(CategoryName);
@@ -65,8 +68,9 @@ const FormLayout = ({
       const Banner = BannerImageUrl && BannerImageUrl[0];
       const whatIamIImage = WhatamIImageUrl && WhatamIImageUrl[0];
       const homePageImage = homePagemageUrl && homePagemageUrl[0];
+      const NewbannerImage = bannerImage && bannerImage[0];
 
-      const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner,whatAmiImage:whatIamIImage,homePageImage  };
+      const newValue = { ...values, posterImageUrl, BannerImage: NewbannerImage, whatAmiImageBanner: Banner, whatAmiImage: whatIamIImage, homePageImage };
       const updateFlag = editCategoryName ? true : false;
 
       if (updateFlag) {
@@ -105,6 +109,7 @@ const FormLayout = ({
       setBannerImageUrl(undefined)
       setWhatamIImageUrl(undefined)
       sethomePagemageUrl(undefined)
+      setBannerImage(undefined)
       resetForm();
       setMenuType('Sub Categories');
     } catch (err) {
@@ -117,9 +122,11 @@ const FormLayout = ({
   useEffect(() => {
 
     setposterimageUrl((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
-    setBannerImageUrl(editCategory && editCategory?.whatAmiImageBanner ?  [editCategory?.whatAmiImageBanner] : undefined)
-    setWhatamIImageUrl(editCategory && editCategory?.whatAmiImage ?  [editCategory?.whatAmiImage] : undefined)
-    sethomePagemageUrl(editCategory && editCategory?.homePageImage ?  [editCategory?.homePageImage] : undefined)
+    setBannerImageUrl(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined)
+    setWhatamIImageUrl(editCategory && editCategory?.whatAmiImage ? [editCategory?.whatAmiImage] : undefined)
+    sethomePagemageUrl(editCategory && editCategory?.homePageImage ? [editCategory?.homePageImage] : undefined)
+    setBannerImage(editCategory && editCategory?.BannerImage ? [editCategory?.BannerImage] : undefined)
+
     setEditCategoryName(CategoryName)
 
   }, [editCategory])
@@ -214,7 +221,7 @@ const FormLayout = ({
                     <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
-                          Add Banner Image
+                          Add Banner Image (What Am I )
                         </h3>
                       </div>
                       {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
@@ -335,6 +342,69 @@ const FormLayout = ({
                       )}
                     </div>
 
+
+                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <h3 className="font-medium text-black dark:text-white">
+                          Banner Image
+                        </h3>
+                      </div>
+                      {bannerImage?.[0] && bannerImage?.length > 0 ? (
+                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                          {bannerImage.map((item: ProductImage, index: number) => {
+                            return (
+                              <div
+                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                key={index}
+                              >
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                                  <RxCross2
+                                    className="cursor-pointer border rounded text-red-500 dark:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        setBannerImage,
+                                        finalToken
+                                      );
+                                    }}
+                                  />
+
+                                </div>
+                                <Image
+                                  key={index}
+                                  className="w-full h-full dark:bg-black dark:shadow-lg"
+
+                                  width={200}
+                                  height={500}
+                                  loading='lazy'
+                                  src={item?.imageUrl || ""}
+                                  alt={`productImage-${index}`}
+                                />
+                                <input
+                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  placeholder="Alt Text"
+                                  type="text"
+                                  name="altText"
+                                  value={item?.altText || ""}
+                                  onChange={(e) =>
+                                    handleImageAltText(
+                                      index,
+                                      String(e.target.value),
+                                      setBannerImage,
+
+                                    )
+                                  }
+                                />
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ) : (
+                        <ImageUploader setposterimageUrl={setBannerImage} />
+                      )}
+                    </div>
+
                     <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
@@ -430,6 +500,20 @@ const FormLayout = ({
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
                         <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
+                      </div>
+
+                      <div>
+                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                          Heading
+                        </label>
+
+                        <Field
+                          type="text"
+                          name="Heading"
+                          placeholder="Top Heading"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        />
+                        <ErrorMessage name="Heading" component="div" className="text-red-500 text-sm" />
                       </div>
 
                       <div>

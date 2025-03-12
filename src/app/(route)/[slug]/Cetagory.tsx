@@ -6,14 +6,16 @@ import SubCategory from "components/sub-category/sub-category-product";
 import Modal from "components/ui/modal";
 import Select from "components/ui/Select";
 import React, { useEffect, useState } from "react";
-import type { Category } from "types/cat";
+import { type ISUBCATEGORY, type Category } from "types/cat";
 import { AdditionalInformation, IProduct } from "types/prod";
 import { SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
+interface SUBNCATEGORIES_PAGES_PROPS{ catgories: Category[], categoryData: Category, subCategoryData?: ISUBCATEGORY, isSubCategory: boolean }
 
-const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: { catgories: Category[], categoryData: Category, subCategoryData?: Category, isSubCategory: boolean }) => {
-  const [Data, setData] = useState<Category>(subCategoryData || categoryData)
+
+const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }:SUBNCATEGORIES_PAGES_PROPS ) => {
+  const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedThicknesses, setSelectedThicknesses] = useState<string[]>([]);
@@ -121,9 +123,10 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
     Data?.products
   ]);
 
+
   return (
     <>
-      <Breadcrumb image={Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={Data.whatAmiImageBanner?.altText} />
+      <Breadcrumb image={Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
         <div className=" lg:w-[20%] ">
           <Filters
@@ -148,7 +151,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
         </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-            <h1 className="text-34 font-bold">{Data?.topHeading || Data?.name}</h1>
+            <h1 className="text-34 font-bold">{Data?.topHeading || Data?.Heading  || Data.name}</h1>
             <p
               className="text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter"
               dangerouslySetInnerHTML={{ __html: Data?.description || "" }}
@@ -193,7 +196,8 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }: {
               </div>
             </div>
           </div>
-          <SubCategory filteredProducts={filteredProducts}
+          <SubCategory 
+          filteredProducts={filteredProducts}
             selectedFilters={selectedFilters}
             setIsWaterProof={setIsWaterProof}
             selectedColor={selectedColors}

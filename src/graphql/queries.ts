@@ -57,6 +57,7 @@ query Categories {
         Recall_Cat
             whatAmiImageBanner
         topHeading
+          RecallUrl
         subcategories {
             id
             name
@@ -108,6 +109,9 @@ query SubCategories {
        whatAmiImage
         whatAmiImageBanner
         homePageImage
+          Heading
+        BannerImage
+      
         products {
             id
             name

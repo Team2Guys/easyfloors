@@ -15,9 +15,9 @@ const Card: React.FC<productCardProps> = ({
   
   const handleNavigate = (product: IProduct , categoryData: Category , subCategoryData?: Category) => {
     if(subCategoryData){
-      return `/${categoryData.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
+      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
     } else {
-      return `/${categoryData.custom_url}/${product.subCategory?.custom_url}/${product.custom_url}`;
+      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${product.subCategory?.custom_url}/${product.custom_url}`;
     }
     
     }

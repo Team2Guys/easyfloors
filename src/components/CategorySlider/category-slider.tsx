@@ -14,7 +14,7 @@ import { IProduct } from "types/prod";
 const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
     <div className="md:space-y-10 space-y-8">
-      {categories.map((category: Category, index: number) => {
+      {categories?.map((category: Category, index: number) => {
         const shouldEnablePagination = category.products && category.products.length >= 3;
 
         return (
@@ -23,7 +23,7 @@ const CategorySlider = ({categories}: {categories: Category[]}) => {
             className="md:flex block items-center md:text-black text-white w-full overflow-hidden md:bg-background bg-primary category_slider"
           >
             <div className="p-4 text-center md:text-start w-full md:w-1/4 font-inter sm:pl-10 md:pl-12 lg:pl-20 xl:pl-24">
-            <Link href={`/${category.custom_url}`} className="text-2xl md:text-4xl font-semibold">
+            <Link href={`/${category?.RecallUrl || category?.custom_url}`} className="text-2xl md:text-4xl font-semibold">
                 {category.name}
             </Link>
               <p className="text-sm md:text-base md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
