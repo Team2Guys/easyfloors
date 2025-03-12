@@ -14,11 +14,12 @@ const Card: React.FC<productCardProps> = ({
   isAccessories = false,
   isSoldOut = false,
 }) => {
-  const handleNavigate = (product: IProduct, categoryData: Category, subCategoryData?: Category) => {
-    if (subCategoryData) {
-      return `/${categoryData.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
+  
+  const handleNavigate = (product: IProduct , categoryData: Category , subCategoryData?: Category) => {
+    if(subCategoryData){
+      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
     } else {
-      return `/${categoryData.custom_url}/${product.subcategory?.custom_url}/${product.custom_url}`;
+      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${product.subcategory?.custom_url}/${product.custom_url}`;
     }
   };
 

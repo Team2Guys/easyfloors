@@ -8,11 +8,10 @@ import Category from "../Cetagory";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string , subcategory: string }> }): Promise<Metadata> {
   const { slug , subcategory } = await params
-  const [ catgories , subCategories ] = await Promise.all([ fetchCategories() ,fetchSubCategories()]);
+  const [subCategories ] = await Promise.all([ fetchCategories()]);
 
 
   const subCategory = subCategories.find((sub: ICategory) => sub.custom_url === subcategory.trim());
-  const category = catgories.find((sub: ICategory) => sub.custom_url === slug.trim());
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
   const protocol = headersList.get('x-forwarded-proto') || 'https';
@@ -39,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description =
     subCategory?.Meta_Description ||
     'Welcome to Easy Floor';
-  const url = `${fullUrl}${category.custom_url}/${subCategory.custom_url}`;
+  const url = `${fullUrl}${slug}/${subcategory}`;
   return {
     title: title,
     description: description,
@@ -59,8 +58,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
   const { slug , subcategory } = await params
   const [ catgories , subCategories ] = await Promise.all([ fetchCategories() ,fetchSubCategories()]);
-  const findSubCategories = subCategories.find((sub: ICategory) => sub.custom_url.trim() === subcategory.trim());
-  const findCategory = catgories.find((sub: ICategory) => sub.custom_url === slug.trim());
+
+  const findSubCategories = subCategories.find((sub: ICategory) => sub?.custom_url.trim() === subcategory.trim());
+  const findCategory = catgories.find((sub: ICategory) => (sub?.RecallUrl ?sub?.RecallUrl : sub?.custom_url) === slug.trim());
 
   if ( !findCategory || !findSubCategories) {
     return notFound()

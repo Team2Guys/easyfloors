@@ -17,10 +17,10 @@ import { IProduct } from 'types/prod';
 import { detailprops } from 'types/product-detail';
 
 
-const ProductDetail = ({MainCategory,subCategory,product,ProductInfo,products,subCat}:detailprops) => {
+const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-    const productData = ProductInfo.filter((productdata: IProduct) => generateSlug(productdata.name) === generateSlug(product))[0];
+    const productData = ProductInfo.filter((productdata: IProduct) => generateSlug(productdata.name) === generateSlug(ProductName))[0];
     const boxCoverage = 2.9;
 
     const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
@@ -51,7 +51,7 @@ const ProductDetail = ({MainCategory,subCategory,product,ProductInfo,products,su
   
     return (
       <div className="mb-10">
-        <Breadcrumb title={product} slug={MainCategory} subcategory={subCategory} />
+        <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
         <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
           <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
             <Thumbnail ThumnailImage={productData.productImages}  ThumnailBottom={ThumnailBottom}/>
@@ -117,7 +117,7 @@ const ProductDetail = ({MainCategory,subCategory,product,ProductInfo,products,su
         <Features items={featureItems} />
                                
         </Container>
-        <RelatedSlider products={products.slice(0,5)} CategoryData={subCat} />
+        <RelatedSlider products={ProductInfo.slice(0,5)} />
       </div>
     );
   };

@@ -10,18 +10,20 @@ import { LuMinus, LuPlus } from 'react-icons/lu';
 import CartSelect from './cart-select';
 import { getCart, removeCartItem } from 'utils/indexedDB';
 import { ICart } from 'types/prod';
+import { toast } from 'react-toastify';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<ICart[]>([]); 
   const [selectedFee, setSelectedFee] = useState(0);
-
+  const [totalProducts, setTotalProducts] = useState(0);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const items = await getCart();
         setCartItems(items);
-      } catch (error) {
-        console.error("Error fetching cart items:", error);
+        setTotalProducts(items.length);
+      } catch  {
+        toast.error("Error fetching cart items:");
       }
     };
 
@@ -31,9 +33,9 @@ const CartPage = () => {
   const handleRemoveItem = async (id: number) => {
     try {
       await removeCartItem(id); 
-      setCartItems(cartItems.filter(cartItem => cartItem.id !== id));
-    } catch (error) {
-      console.error("Error removing item from cart:", error);
+      setCartItems((pre)=>pre.filter((value)=>value.id !==id))
+    } catch {
+      toast.error("Error removing item from cart:");
     }
   };
 
@@ -53,12 +55,19 @@ const CartPage = () => {
     setSelectedFee(fee);
   };
 
-  const totalProducts = cartItems.length;
-
-console.log(cartItems,"cartItems")
   return (
+    
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
         <h1 className='text-center xl:text-[48px]'>Your Shopping Cart</h1>
+        {
+          cartItems.length === 0 ?
+          <div className='text-center'>
+          <p className='text-center text-[24px] pt-10'>Cart is empty</p>
+          <Link href='/' className='text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4'>
+              <FaArrowLeftLong /> Go Back to Shop
+          </Link>
+          </div>
+          :
         <div className='mt-10 flex flex-wrap md:flex-nowrap gap-5 '>
           <div className=' w-full md:w-[55%] xl:w-[70%] 2xl:w-[65%] px-2'>
           <div className=' max-h-[590px] overflow-x-auto pr-4'>
@@ -136,7 +145,6 @@ console.log(cartItems,"cartItems")
             <p>AED {cartItems.reduce((total, item) => total + item.totalPrice * (item.quantity ?? 0), 0).toFixed(2)}</p>
             </div>
             <CartSelect select={UAEStates} fees={fees} onSelect={handleStateSelect} />
-            
             <div className='border border-b border-[#DEDEDE]'/>
             <div className='flex items-center justify-between text-16 lg:text-20'>
             <p>Subtotal Incl. VAT</p>
@@ -154,6 +162,8 @@ console.log(cartItems,"cartItems")
               </div>
           </div>
         </div>
+        }
+        
     </Container>
   )
 }
