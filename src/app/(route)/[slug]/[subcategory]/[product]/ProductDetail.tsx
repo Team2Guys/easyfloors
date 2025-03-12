@@ -20,9 +20,8 @@ import { detailprops } from 'types/product-detail';
 const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-    const productData = ProductInfo.filter((productdata: IProduct) => generateSlug(productdata.name) === generateSlug(ProductName))[0];
+    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && generateSlug(product.custom_url) === ProductName)[0];
     const boxCoverage = 2.9;
-
     const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
       const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
       const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
@@ -48,13 +47,15 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
       totalPrice,
       installments,
     } = calculateProductDetails(area, unit, productData);
-  
+
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
         <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
           <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
-            <Thumbnail ThumnailImage={productData.productImages}  ThumnailBottom={ThumnailBottom}/>
+          {productData && productData.productImages && 
+        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={ThumnailBottom} />
+        }
           </div>
           <div className="w-full lg:w-[45%] 2xl:w-[40%] space-y-3 xl:space-y-4 mb-2">
   
@@ -117,7 +118,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <Features items={featureItems} />
                                
         </Container>
-        <RelatedSlider products={ProductInfo.slice(0,5)} />
+        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category} subCategoryData={productData.subcategory} />
       </div>
     );
   };

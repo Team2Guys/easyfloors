@@ -35,10 +35,10 @@ export interface IProduct {
     colors: AdditionalInformation[];
     categoriesId: number;
     subcategory?: ISUBCATEGORY_EDIT;
-    custom_url?:string
-    thickness?:string
-    ResidentialWarranty?:string
-    CommmericallWarranty?:string
+    custom_url?:string;
+    thickness?:string;
+    ResidentialWarranty?:string;
+    CommmericallWarranty?:string;
     plankWidth?:string
     waterproof?:boolean
     category?:EDIT_CATEGORY

@@ -14,12 +14,11 @@ const Card: React.FC<productCardProps> = ({
   isAccessories = false,
   isSoldOut = false,
 }) => {
-  
   const handleNavigate = (product: IProduct , categoryData: Category , subCategoryData?: Category) => {
     if(subCategoryData){
-      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${subCategoryData.custom_url}/${product.custom_url}`;
+      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${subCategoryData.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
     } else {
-      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${product.subcategory?.custom_url}/${product.custom_url}`;
+      return `/${categoryData?.RecallUrl ||categoryData?.custom_url}/${product.subcategory?.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
 
@@ -67,7 +66,7 @@ const Card: React.FC<productCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href={product.custom_url || ""}
+          href={product.custom_url?.toLowerCase() || ""}
           className={`md:mt-0 mt-1 text-left font-semibold ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55]"
             }`}
         >
