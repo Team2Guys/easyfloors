@@ -8,11 +8,23 @@ import { IoCall } from 'react-icons/io5';
 import Footerlinks from './Footerlinks';
 import { fetchCategories } from 'config/fetch';
 import { Category } from 'types/cat';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
-const Footer = async () => {
-    const categories = await fetchCategories();
-
-
+const Footer =  () => {
+    const [categories, setCategories] = useState([]);
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const data = await fetchCategories();
+        setCategories(data);
+      } catch {
+        toast.error("Error fetching categories:");
+      }
+    };
+    getCategories();
+  }, []);
+  
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >

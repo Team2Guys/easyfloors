@@ -9,99 +9,49 @@ import RelatedSlider from 'components/related-slider/related-slider';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import Features from 'components/Reusable/features';
 import { featureItems, generateSlug, ThumnailBottom } from 'data/data';
+import { handleAddToStorage } from 'lib/carthelper';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { LuHeart } from 'react-icons/lu';
-import { toast } from 'react-toastify';
-import { Category } from 'types/cat';
 import { IProduct } from 'types/prod';
-import { addToCart, addToWishlist, getCart, getWishlist } from 'utils/indexedDB';
+import { detailprops } from 'types/product-detail';
 
-interface detailprops{
-    product: string;
-    ProductInfo: IProduct[];
-    products: IProduct[];
-    slug: string;
-    subCategory: string;
-    subCat:Category;
-}
 
-const ProductDetail = ({slug,subCategory,product,ProductInfo,products,subCat}:detailprops) => {
+const ProductDetail = ({MainCategory,subCategory,product,ProductInfo,products,subCat}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-
     const productData = ProductInfo.filter((productdata: IProduct) => generateSlug(productdata.name) === generateSlug(product))[0];
-    const handleAddToCart = async () => {
-      if (productData) {
-        const cartItem = {
-          id: Number(productData.id),
-          name: productData.name,
-          price: productData.price,
-          stock: productData.stock,
-          quantity: 1,
-          image: productData.productImages?.[0]?.imageUrl || "",
-          subcategories: productData.subcategory ? [{ name: productData.subcategory.name }] : undefined,
-          category: productData.category ? [{ name: productData.category.name }] : undefined,
-          totalPrice:totalPrice,
-          pricePerBox:pricePerBox,
-          squareMeter:squareMeter,
-          requiredBoxes:requiredBoxes,
-        };
-        try {
-          await addToCart(cartItem);  
-          const updatedCart = await getCart();
-          console.log("Updated cart:", updatedCart);
-          toast.success("Product added to cart!")
-        } catch {
-          toast.error("Error adding product to cart"); 
-        }
-      } else {
-          toast.success("Product is undefined");
-      }
-    };
-    const handleAddToWishlist = async () => {
-      if (productData) {
-        const wishlistItem = {
-          id: Number(productData.id),
-          name: productData.name,
-          price: productData.price,
-          stock: productData.stock,
-          quantity: 1,
-          image: productData.productImages?.[0]?.imageUrl || "",
-          subcategories: productData.subcategory ? [{ name: productData.subcategory.name }] : undefined,
-          category: productData.category ? [{ name: productData.category.name }] : undefined,
-          totalPrice:totalPrice,
-          pricePerBox:pricePerBox,
-          squareMeter:squareMeter,
-          requiredBoxes:requiredBoxes,
-        };
-        try {
-          await addToWishlist(wishlistItem);  
-          const updatedWishlist = await getWishlist();
-          console.log("Updated Wishlist:", updatedWishlist);
-          toast.success("Product added to Wishlist!")
-        } catch {
-          toast.error("Error adding product to Wishlist");
-        }
-      } else {
-          toast.success("Product is undefined");
-      }
-    };
-  
-    console.log(product,"productfilter")
-
     const boxCoverage = 2.9;
-    const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
-    const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
-    const pricePerBox = productData ? (boxCoverage * productData.price) : 0;
-    const squareMeter = requiredBoxes * boxCoverage;
-    const totalPrice = productData ? (requiredBoxes * pricePerBox) : 0;
-    const installments = totalPrice/4;
-  
+
+    const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
+      const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
+      const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
+      const pricePerBox = productData ? (boxCoverage * productData.price) : 0;
+      const squareMeter = requiredBoxes * boxCoverage;
+      const totalPrice = productData ? (requiredBoxes * pricePerBox) : 0;
+      const installments = totalPrice / 4;
+    
+      return {
+        convertedArea,
+        requiredBoxes,
+        pricePerBox,
+        squareMeter,
+        totalPrice,
+        installments,
+      };
+    };
+    const {
+      convertedArea,
+      requiredBoxes,
+      pricePerBox,
+      squareMeter,
+      totalPrice,
+      installments,
+    } = calculateProductDetails(area, unit, productData);
   
     return (
       <div className="mb-10">
-        <Breadcrumb title={product} slug={slug} subcategory={subCategory} />
+        <Breadcrumb title={product} slug={MainCategory} subcategory={subCategory} />
         <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
           <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
             <Thumbnail ThumnailImage={productData.productImages}  ThumnailBottom={ThumnailBottom}/>
@@ -149,12 +99,12 @@ const ProductDetail = ({slug,subCategory,product,ProductInfo,products,subCat}:de
               <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
               Order Now Free Sample
           </button>
-          <button onClick={handleAddToCart} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
+          <button  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory, MainCategory, "cart")} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
           <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} />
             Add to Cart
           </button>
         </div>
-        <button className="flex items-center gap-2 text-[#475156]" onClick={handleAddToWishlist}><LuHeart size={20} />Add to Wishlist</button>
+        <button className="flex items-center gap-2 text-[#475156]"  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory, MainCategory, "wishlist")}><LuHeart size={20} />Add to Wishlist</button>
         <PaymentMethod installments={installments} showheading/>
           </div>
         </Container>

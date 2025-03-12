@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 
-
 export const uploadPhotosToBackend = async (files: File[]): Promise<any[]> => { //eslint-disable-line
   const formData = new FormData();
 

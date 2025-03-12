@@ -55,8 +55,8 @@ export interface IProduct {
     name: string;
     price: number;
     stock: number;
-    subcategory?: Array<{ name: string }>;
-    category?:Array<{ name: string }>;
+    subcategory?: string;
+    category?:string;
     image?: string
     quantity?:number ;
     totalPrice:number,

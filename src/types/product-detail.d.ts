@@ -1,3 +1,5 @@
+import { Category } from "./cat";
+
 export interface ThumbnailProps {
   ThumnailImage: { imageUrl: string }[];
   ThumnailBottom: { image: string; title: string }[];
@@ -22,4 +24,13 @@ export interface AreaCalculatorProps {
 export interface PaymentMethodProps{
   showheading?: boolean
   installments:number
+}
+
+export interface detailprops{
+    product: string;
+    ProductInfo: IProduct[];
+    products: IProduct[];
+    MainCategory: string;
+    subCategory: string;
+    subCat:Category;
 }

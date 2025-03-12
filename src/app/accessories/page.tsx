@@ -4,8 +4,7 @@ import { fetchProducts } from 'config/fetch';
 import React from 'react';
 
 const Accessories = async () => {
-  const products = await fetchProducts();
-
+const [ products ] = await Promise.all([ fetchProducts()]);
   return (
     <>
       <Breadcrumb title="Accessories" image="/assets/images/accessories/Accessories-header-image.png" />

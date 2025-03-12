@@ -4,13 +4,13 @@ import ProductDetail from "./ProductDetail";
 
 const Product = async ({params}:{params:Promise<{slug:string, subcategory: string, product:string}>}) => {
   const {slug , subcategory , product} = await params;
-  const subCategories = await fetchSubCategories()
-  const ProductInfo = await fetchProducts()
+   const [ subCategories , ProductInfo ] = await Promise.all([ fetchSubCategories() ,fetchProducts()]);
   const products = subCategories?.products || [];
-
+ 
+  console.log(ProductInfo,"subCategories")
 
   return (
-    <ProductDetail slug={slug} subCategory={subcategory} product={product} ProductInfo={ProductInfo} products={products} subCat={subCategories}/>
+    <ProductDetail MainCategory={slug} subCategory={subcategory} product={product} ProductInfo={ProductInfo} products={products} subCat={subCategories}/>
   );
 };
 
