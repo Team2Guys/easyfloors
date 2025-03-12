@@ -18,3 +18,8 @@ export interface AreaCalculatorProps {
   pricePerBox: number;
   squareMeter:number;
 }
+
+export interface PaymentMethodProps{
+  showheading?: boolean
+  installments:number
+}

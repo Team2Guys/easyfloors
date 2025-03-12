@@ -6,11 +6,7 @@ import tabbyLogo from "../../../public/assets/images/payment-icons/tabby-logo.pn
 import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.png";
 import Modal from "components/ui/modal";
 import { tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/produuct-detail";
-
-interface PaymentMethodProps{
-  showheading?: boolean
-  installments:number
-}
+import { PaymentMethodProps } from "types/product-detail";
 
 const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
@@ -30,7 +26,6 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
         </div>
       )
     }
-     
       <div className="flex gap-2 pt-4">
         <div className="relative w-1/2 border-4 border-[#00FFBC] p-4  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">
