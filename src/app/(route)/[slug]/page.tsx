@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description =
     Category?.Meta_Description ||
     'Welcome to Easy Floor';
-  const url = `${fullUrl}${Category.custom_url}`;
+  const url = `${fullUrl}${slug}`;
   return {
     title: title,
     description: description,

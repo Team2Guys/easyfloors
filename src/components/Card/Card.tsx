@@ -22,6 +22,8 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
+  console.log(product, "subCategoryData")
+
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">
@@ -66,7 +68,7 @@ const Card: React.FC<productCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href={product.custom_url?.toLowerCase() || ""}
+          href={handleNavigate(product, categoryData, subCategoryData)}
           className={`md:mt-0 mt-1 text-left font-semibold ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55]"
             }`}
         >
@@ -88,7 +90,7 @@ const Card: React.FC<productCardProps> = ({
                 Out of Stock
               </button>
             ) : (
-              <Link href={product.custom_url || ""} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
+              <Link href={handleNavigate(product, categoryData, subCategoryData)} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
                 Shop Now
               </Link>
             )}

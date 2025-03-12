@@ -48,6 +48,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
       installments,
     } = calculateProductDetails(area, unit, productData);
 
+    console.log(productData,"productData")
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
