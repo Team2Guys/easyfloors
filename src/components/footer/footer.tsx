@@ -24,7 +24,7 @@ const Footer =  () => {
     };
     getCategories();
   }, []);
-  
+  console.log(categories,"categories")
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -34,14 +34,15 @@ const Footer =  () => {
                 </div>
                 <Footerlinks  categories={categories} />
 
-
                 {categories.map((section: Category, index: number) => (
                     <div key={index} className="sm:block hidden">
                         <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">{section.name}</h3>
                         <ul className="mt-4 space-y-2">
                             {section?.subcategories && section?.subcategories.map((item, i) => (
                                 <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                    <Link href={`/${section.RecallUrl}/${item.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
                                     {item.name}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

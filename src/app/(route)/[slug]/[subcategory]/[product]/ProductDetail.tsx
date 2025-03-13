@@ -42,10 +42,12 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         }
           </div>
           <div className="w-full lg:w-[45%] 2xl:w-[40%] space-y-3 xl:space-y-4 mb-2">
-  
+          {productData && productData.name &&
         <h1 className="font-inter text-25 2xl:text-[33px] font-semibold">
           {productData.name}
         </h1>
+        }
+
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-2 sm:gap-4 text-18 2xl:text-23 font-semibold text-primary">
           <p className="text-black">Price Per Sqm :</p>
