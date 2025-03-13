@@ -29,7 +29,7 @@ const Filters = ({
   setPriceValue,
   priceValue,
   className }: FIlterprops) => {
- console.log(category,'category')
+    
   const [uniqueThickness, setUniqueThickness] = useState<string[]>([]);
   const [uniqueCommmericallWarranty, setUniqueCommmericallWarranty] = useState<string[]>([]);
   const [uniqueResidentialWarranty, setUniqueResidentialWarranty] = useState<string[]>([]);
