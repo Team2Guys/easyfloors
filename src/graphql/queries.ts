@@ -12,7 +12,6 @@ export const FETCH_ALL_PRODUCTS = gql`
       posterImageUrl
       hoverImageUrl
       productImages
-      colors
       createdAt
       updatedAt
       Canonical_Tag
@@ -75,7 +74,6 @@ export const FETCH_ALL_CATEGORIES = gql`
         stock
         posterImageUrl
         hoverImageUrl
-        colors
         custom_url
         waterproof
         plankWidth

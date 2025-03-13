@@ -10,7 +10,7 @@ import Faqs from "components/Faqs/Faqs";
 import SampleBanner from "components/Reusable/SampleBanner";
 import { fetchCategories } from "config/fetch";
 import AmCategory from "components/Categories/AmCategory";
-import CategorySlider from "components/CategorySlider/cat-slider";
+import CategorySlider from "components/CategorySlider/category-slider";
 
 
 export default async function Home() {
