@@ -1,6 +1,6 @@
 import {IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS } from 'graphql/queries';
+import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS,} from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode} from '@apollo/client';
 
@@ -24,10 +24,10 @@ export const fetchProducts = async () => {
     throw error;
   }
 };
-export const fetchCategories = async () => {
+export const fetchCategories = async (FETCH_HEADER_CATEGORIES?:DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCH_ALL_CATEGORIES,
+      query: FETCH_HEADER_CATEGORIES ? FETCH_HEADER_CATEGORIES : FETCH_ALL_CATEGORIES,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } }, 

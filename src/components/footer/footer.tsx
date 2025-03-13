@@ -24,7 +24,6 @@ const Footer =  () => {
     };
     getCategories();
   }, []);
-  console.log(categories,"categories")
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
