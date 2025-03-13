@@ -39,17 +39,14 @@ const CartPage = () => {
     }
   };
 
-  const increment = (id: number) => {
-    setCartItems(cartItems.map(item => 
-      item.id === id ? { ...item, quantity: (item.quantity ?? 0) + 1 } : item
+  const updateQuantity = (id: number, index: number) => {
+    setCartItems(cartItems.map(item =>
+      item.id === id ? { ...item, quantity: Math.max(1, (item.quantity ?? 0) + index) } : item
     ));
   };
-
-  const decrement = (id: number) => {
-    setCartItems(cartItems.map(item => 
-      item.id === id && (item.quantity ?? 0) > 1 ? { ...item, quantity: (item.quantity ?? 0) - 1 } : item
-    ));
-  };
+  
+  const increment = (id: number) => updateQuantity(id, 1);
+  const decrement = (id: number) => updateQuantity(id, -1);
 
   const handleStateSelect = (state: string, fee: number) => {
     setSelectedFee(fee);
@@ -78,9 +75,9 @@ const CartPage = () => {
               <div className='col-span-2 text-end'>Remove</div>
             </div>
             <div className='border border-b border-[#DEDEDE]'/>
-            {cartItems.map((item,index) => (
-              <>
-              <div key={index} className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+            {cartItems.map((item,cartindex) => (
+              <div key={cartindex}>
+              <div  className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
                 <div className=' col-span-10 xl:col-span-6'>
                   <div className='flex gap-4'>
                     <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt='cart'/>
@@ -127,7 +124,7 @@ const CartPage = () => {
                 </div>
               </div>
               <div className='border border-b border-[#DEDEDE]'/>
-              </>
+              </div>
             ))}
           </div> 
 

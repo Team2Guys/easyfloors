@@ -8,8 +8,8 @@ import Thumbnail from 'components/product-detail/thumbnail';
 import RelatedSlider from 'components/related-slider/related-slider';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import Features from 'components/Reusable/features';
-import { featureItems, generateSlug, ThumnailBottom } from 'data/data';
-import { handleAddToStorage } from 'lib/carthelper';
+import { featureItems, ThumnailBottom } from 'data/data';
+import { calculateProductDetails, handleAddToStorage } from 'lib/carthelper';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { LuHeart } from 'react-icons/lu';
@@ -21,24 +21,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
     const productData = ProductInfo.filter((product: IProduct) => product.custom_url && (product.custom_url) === ProductName)[0];
-    const boxCoverage = 2.9;
-    const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
-      const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
-      const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
-      const pricePerBox = productData ? (boxCoverage * productData.price) : 0;
-      const squareMeter = requiredBoxes * boxCoverage;
-      const totalPrice = productData ? (requiredBoxes * pricePerBox) : 0;
-      const installments = totalPrice / 4;
     
-      return {
-        convertedArea,
-        requiredBoxes,
-        pricePerBox,
-        squareMeter,
-        totalPrice,
-        installments,
-      };
-    };
     const {
       convertedArea,
       requiredBoxes,
@@ -46,6 +29,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
       squareMeter,
       totalPrice,
       installments,
+      boxCoverage,
     } = calculateProductDetails(area, unit, productData);
 
     return (

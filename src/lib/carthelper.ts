@@ -42,3 +42,23 @@ export const handleAddToStorage = async (
       toast.error(`Error adding product to ${type}`);
     }
   };
+
+  export const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
+    const boxCoverage = 2.9;
+    const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
+    const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
+    const pricePerBox = productData ? (boxCoverage * productData.price) : 0;
+    const squareMeter = requiredBoxes * boxCoverage;
+    const totalPrice = productData ? (requiredBoxes * pricePerBox) : 0;
+    const installments = totalPrice / 4;
+  
+    return {
+      convertedArea,
+      requiredBoxes,
+      pricePerBox,
+      squareMeter,
+      totalPrice,
+      installments,
+      boxCoverage,
+    };
+  };

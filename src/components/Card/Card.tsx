@@ -22,8 +22,6 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
-  console.log(product, "subCategoryData")
-
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">

@@ -48,7 +48,6 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
       setIsWaterProof(null)
     }
   }
-  console.log(products,"products")
   return (
     <div className="pt-5 lg:mb-20">
       {/* <div className="hidden lg:flex items-center border border-gray-300 px-2 py-2 w-full max-w-md focus-within:ring-2 focus-within:ring-primary hover:border-primary transition">

@@ -9,8 +9,8 @@ export interface AdditionalInfoProps {
 }
 
 export interface AreaCalculatorProps {
-  setArea: (value: string) => void; //eslint-disable-line
-  setUnit: (unit: "sqm" | "sqft") => void; //eslint-disable-line
+  setArea: React.Dispatch<SetStateAction<string>>;
+  setUnit: React.Dispatch<SetStateAction<string>>; 
   requiredBoxes: number;
   convertedArea: number;
   area: string;
