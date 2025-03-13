@@ -982,11 +982,11 @@ export const accessoriesText = `
 
 
 export const accessoriesimages = [
-  { imageUrl: "/assets/images/accessories/product/1.png" },
-  { imageUrl: "/assets/images/accessories/product/2.png" },
-  { imageUrl: "/assets/images/accessories/product/3.png" },
-  { imageUrl: "/assets/images/accessories/product/4.png"},
-  { imageUrl: "/assets/images/accessories/product/5.png"},
+  { imageUrl: "/assets/images/accessories/product/1.png",altText:"thumbnail"  },
+  { imageUrl: "/assets/images/accessories/product/2.png",altText:"thumbnail" },
+  { imageUrl: "/assets/images/accessories/product/3.png",altText:"thumbnail" },
+  { imageUrl: "/assets/images/accessories/product/4.png",altText:"thumbnail"},
+  { imageUrl: "/assets/images/accessories/product/5.png",altText:"thumbnail"},
 ];
 
 export const colors = [

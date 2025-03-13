@@ -202,12 +202,12 @@ export const FETCH_HEADER_CATEGORIES = gql`
     categories {
       id
       name
-      posterImageUrl
       RecallUrl
       subcategories {
         id
         name
         custom_url
+        posterImageUrl
       }
       }
     }
