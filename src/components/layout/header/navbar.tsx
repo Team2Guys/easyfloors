@@ -17,8 +17,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [scrolling, setScrolling] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-const [categories, setCategories] = useState([]);
   useEffect(() => {
     const getCategories = async () => {
       try {
@@ -30,6 +30,7 @@ const [categories, setCategories] = useState([]);
     };
     getCategories();
   }, []);
+  
   console.log(categories,"categories")
 
   useEffect(() => {
