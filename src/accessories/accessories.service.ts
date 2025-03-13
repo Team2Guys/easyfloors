@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { CreateAccessoryInput } from './dto/create-accessory.input';
 import { UpdateAccessoryInput } from './dto/update-accessory.input';
-import { PrismaService } from 'prisma/prisma.service';
-import { customHttpException } from 'utils/helper';
+import { PrismaService } from '../prisma/prisma.service';
+import { customHttpException } from '../utils/helper';
 
 @Injectable()
 export class AccessoriesService {

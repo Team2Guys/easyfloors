@@ -1,6 +1,5 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
-import { CreateAccessoryInput } from 'accessories/dto/create-accessory.input';
 
 @InputType()
 export class CreateProductInput {

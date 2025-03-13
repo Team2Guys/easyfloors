@@ -1,6 +1,6 @@
 import { Int, Field, ObjectType, ID } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
-import { Product } from 'products/entities/product.entity';
+import { Product } from '../../products/entities/product.entity';
 
 
 
