@@ -389,8 +389,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         ) : null}
                       </div>
 
-                      <div className="flex full gap-4">
-                        <div className="w-1/2 xs:w-1/3">
+                      <div className="flex full items-center gap-4">
+                        <div className="w-1/3 xs:w-1/3">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                             Price
                           </label>
@@ -419,17 +419,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           ) : null}
                         </div>
 
-                        <div className="w-1/2 xs:w-1/3">
+                        <div className="w-1/3 xs:w-1/3">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                             Discount Price
                           </label>
-                          <input
+                          
+                          <Field
                             type="number"
                             name="discountPrice"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.discountPrice}
-                            placeholder="Discount Price"
+                            placeholder="How many items available"
                             min="0"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.discountPrice &&
                               formik.errors.discountPrice
@@ -437,13 +435,31 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               : ''
                               }`}
                           />
-                          {formik.touched.discountPrice &&
-                            formik.errors.discountPrice ? (
-                            <div className="text-red-500 dark:text-red-700 text-sm">
-                              {formik.errors.discountPrice as string}
-                            </div>
-                          ) : null}
+
+                          <ErrorMessage name="discountPrice" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                         </div>
+
+                       
+                        <div className="w-1/3 xs:w-1/3 ">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
+                           Stock 
+                          </label>
+                          
+
+                          <Field
+                            type="number"
+                            name="stock"
+                            placeholder="How many items available"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
+
+                          <ErrorMessage name="stock" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                        </div>
+                        
+
+
+                          
                       </div>
 
 
@@ -584,24 +600,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="flex flex-col gap-5">
-                  <div className="py-4 px-6 rounded-sm border border-stroke">
-
-                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                        Add Stock Quantity
-                      </label>
-
-                      <Field
-                        type="number"
-                        name="stock"
-                        placeholder="How many items available"
-                        min="0"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-
-                      <ErrorMessage name="stock" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                    </div>
-                  </div>
+             
 
                   <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                     <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
@@ -694,6 +693,22 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       <ErrorMessage name="thickness" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                     </div>
 
+                        
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                     Box Coverage
+                      </label>
+
+                      <Field
+                        type="text"
+                        name="boxCoverage"
+                        placeholder="2.9"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage name="boxCoverage" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                    </div>
                   </div>
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
@@ -778,6 +793,90 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         )}
                       </FieldArray>
                     </div>
+
+                   
+
+                  </div>
+                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                    <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        FAQS Details
+                      </h3>
+                    </div>
+                  <div className="flex flex-col py-4 px-6">
+                      <FieldArray name="FAQS">
+                        {({ push, remove }) => (
+                          <div className="flex flex-col gap-2">
+                            {formik.values.FAQS && 
+                              formik.values.FAQS.map(
+                                (model: AdditionalInformation, index: number) => (
+                                  <div
+                                    key={index}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      type="text"
+                                      name={`FAQS[${index}].name`}
+                                      onChange={formik.handleChange}
+                                      onBlur={formik.handleBlur}
+                                      value={
+                                        formik?.values?.FAQS[index].name
+                                      }
+                                      placeholder="Model Name"
+                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                        (
+                                          formik.errors.FAQS as FormikErrors<
+                                              FormValues['FAQS']
+                                            >
+                                        )?.[index]
+                                        ? 'border-red-500 dark:border-white'
+                                        : ''
+                                        }`}
+                                    />
+                                    <input
+                                      type="text"
+                                      name={`FAQS[${index}].detail`}
+                                      onChange={formik.handleChange}
+                                      onBlur={formik.handleBlur}
+                                      value={
+                                        formik.values.FAQS[
+                                          index
+                                        ].detail
+                                      }
+                                      placeholder="Model Detail"
+                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                        (
+                                          formik.errors
+                                            .FAQS as FormikErrors<FormValues['FAQS']>
+                                        )?.[index]
+                                        ? 'border-red-500 dark:border-white'
+                                        : ''
+                                        }`}
+                                    />
+                                    <button
+                                      type="button"
+                                      onClick={() => remove(index)}
+                                      className="ml-2 text-red-500 "
+                                    >
+                                      <RxCross2
+                                        className="text-red-500 dark:text-white"
+                                        size={25}
+                                      />
+                                    </button>
+                                  </div>
+                                ),
+                              )}
+                            <button
+                              type="button"
+                              onClick={() => push({ name: '', detail: '' })}
+                              className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
+                            >
+                             FAQ Details
+                            </button>
+                          </div>
+                        )}
+                      </FieldArray>
+                  </div>
                   </div>
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">

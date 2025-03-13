@@ -126,6 +126,8 @@ export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',
+  FAQS:[],
+  boxCoverage:""
 };
 
 export const AddProductvalidationSchema = Yup.object().shape({
