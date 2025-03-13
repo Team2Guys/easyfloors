@@ -257,6 +257,8 @@ export interface FormValues {
   variantStockQuantities: { variant: string; quantity: number }[];
   price?: string;
   AdditionalInformation?: [];
+  FAQS:[]
+  box:string
 }
 
 export interface USRPROPS {

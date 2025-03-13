@@ -48,6 +48,8 @@ export interface IProduct {
     createdAt?:        Date    
     updatedAt ?:          Date
     image?: string
+    FAQS: AdditionalInformation[];
+    boxCoverage?: string
   }
 
   export interface ICart {
@@ -63,6 +65,7 @@ export interface IProduct {
     pricePerBox:number,
     squareMeter:number,
     requiredBoxes:number,
+
   }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {

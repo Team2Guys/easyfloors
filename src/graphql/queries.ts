@@ -26,6 +26,8 @@ export const FETCH_ALL_PRODUCTS = gql`
       ResidentialWarranty
       CommmericallWarranty
       thickness
+      FAQS
+        boxCoverage
       category {
         id
         name
