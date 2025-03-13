@@ -1,9 +1,12 @@
 'use client'
 import Accordion from 'components/ui/accordion';
-import { faqData } from 'data/produuct-detail';
 import React, { useState } from 'react';
 
-const FaqDetail = () => {
+interface FAQprops {
+  FAQS: { name: string; detail: string }[];
+}
+
+const FaqDetail = ({FAQS}:FAQprops) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   const handleToggle = (label: string) => {
@@ -16,15 +19,15 @@ const FaqDetail = () => {
     <>
     <p className='mx-auto max-w-[72%]  sm:max-w-[25%] pl-1 mb-10 text-14 sm:text-24 font-inter font-medium pt-10'>FAQ’s</p>
     <div className="max-w-[90%] mx-auto mt-5 font-inter">
-      {faqData.map((faq) => (
+      {FAQS.map((faq,index) => (
           <Accordion
-          key={faq.id}
+          key={index}
           detailpage
-          label={faq.label}
-          isOpen={openAccordion === faq.id}
-          onToggle={() => handleToggle(faq.id)}
+          label={faq.name}
+          isOpen={openAccordion === faq.name}
+          onToggle={() => handleToggle(faq.name)}
           >
-          <p className="text-14 lg:text-16">{faq.content}</p>
+          <p className="text-14 lg:text-16">{faq.detail}</p>
           </Accordion>
       ))}
     </div>

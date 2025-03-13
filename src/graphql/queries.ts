@@ -197,3 +197,19 @@ export const GET_ALL_ADMINS = gql`
     }
   }
 `;
+export const FETCH_HEADER_CATEGORIES = gql`
+  query Categories {
+    categories {
+      id
+      name
+      posterImageUrl
+      custom_url
+      RecallUrl
+      subcategories {
+        id
+        name
+        custom_url
+      }
+      }
+    }
+`;

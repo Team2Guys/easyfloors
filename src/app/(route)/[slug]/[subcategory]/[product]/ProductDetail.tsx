@@ -8,7 +8,7 @@ import Thumbnail from 'components/product-detail/thumbnail';
 import RelatedSlider from 'components/related-slider/related-slider';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import Features from 'components/Reusable/features';
-import { featureItems, ThumnailBottom } from 'data/data';
+import { featureItems } from 'data/data';
 import { calculateProductDetails, handleAddToStorage } from 'lib/carthelper';
 import Image from 'next/image';
 import React, { useState } from 'react'
@@ -32,20 +32,24 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
       boxCoverage,
     } = calculateProductDetails(area, unit, productData);
 
+    console.log(productData,"productData")
+
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
         <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
           <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
           {productData && productData.productImages && 
-        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={ThumnailBottom} />
+        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={productData.featureImages} />
         }
           </div>
           <div className="w-full lg:w-[45%] 2xl:w-[40%] space-y-3 xl:space-y-4 mb-2">
-  
+          {productData && productData.name &&
         <h1 className="font-inter text-25 2xl:text-[33px] font-semibold">
           {productData.name}
         </h1>
+        }
+
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-2 sm:gap-4 text-18 2xl:text-23 font-semibold text-primary">
           <p className="text-black">Price Per Sqm :</p>
@@ -95,7 +99,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         </Container>
         <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
           <AdditionalInfo description={productData.description} AdditionalInformation={productData.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
-          <FaqDetail />
+          <FaqDetail FAQS={productData.FAQS} />
         </div>
   
         <Container>

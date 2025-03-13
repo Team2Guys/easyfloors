@@ -10,7 +10,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const categories = await fetchCategories()
 
-
   const Category = categories.find((category: ICategory) => category.custom_url === slug);
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
