@@ -1,10 +1,14 @@
 "use client";
-
-import { faqs } from "data/data";
 import React, { useState } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
+import { FAQItem } from "types/type";
 
-const Faqs: React.FC = () => {
+interface FaqsProps {
+    data: FAQItem[];
+    className?:string;
+  }
+  
+  const Faqs: React.FC<FaqsProps> = ({ data,className }) => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     const toggleFAQ = (index: number) => {
@@ -12,14 +16,13 @@ const Faqs: React.FC = () => {
     };
 
     return (
-        <section className="bg-white py-10 md:mt-10">
-            <div className="container mx-auto px-6">
+        <section className={`bg-white py-10 md:mt-10 ${className}`}>
                 <h1 className="text-2xl font-semibold font-inter text-[#1B1139] lg:text-3x text-center md:mb-10 mb-6">
                     FAQ’S
                 </h1>
 
                 <div className="border font-inter font-semibold">
-                    {faqs.map((faq, index) => (
+                    {data.map((faq, index) => (
                         <div key={faq.id}>
                             <button
                                 onClick={() => toggleFAQ(index)}
@@ -47,7 +50,6 @@ const Faqs: React.FC = () => {
                         </div>
                     ))}
                 </div>
-            </div>
         </section>
     );
 };

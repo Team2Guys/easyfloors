@@ -287,7 +287,6 @@ export const menuItems = [
     ],
   },
   { label: 'How to measure', href: '/how-to-measure-your-room', },
-  // { label: 'Estimator', href: '/estimator', },
   { label: 'Accessories', href: '/accessories', },
   { label: 'Blogs', href: '/blogs', },
   { label: 'About Us', href: '/about-us', },
@@ -517,6 +516,25 @@ export const faqs: FAQItem[] = [
   },
 ];
 
+export const accessoriesfaqs: FAQItem[] = [
+  {
+    id: 1,
+    question: "Do I Need Any Adhesives to Stick the Planks?",
+    answer:
+      "No, you don’t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you’re not someone who likes to do things themselves, the click-lock feature makes it great for DIY. ",
+  },
+  {
+    id: 2,
+    question: "Will The Color and Texture Fade Over Time?",
+    answer:
+      "Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its colour and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it's great for busy households and businesses",
+  },
+  {
+    id: 3,
+    question: "How many planks come in a box, and what’s the coverage area?",
+    answer: "The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you’ll need multiple boxes depending on the total area.",
+  },
+];
 
 
 export const boxData: BoxData[] = [
@@ -963,4 +981,30 @@ export const accessoriesText = `
 
 
 
+export const accessoriesimages = [
+  { imageUrl: "/assets/images/accessories/product/1.png",altText:"thumbnail"  },
+  { imageUrl: "/assets/images/accessories/product/2.png",altText:"thumbnail" },
+  { imageUrl: "/assets/images/accessories/product/3.png",altText:"thumbnail" },
+  { imageUrl: "/assets/images/accessories/product/4.png",altText:"thumbnail"},
+  { imageUrl: "/assets/images/accessories/product/5.png",altText:"thumbnail"},
+];
+
+export const colors = [
+  { code: "3897", color: "/assets/bin/colors/c1.png" },
+  { code: "3895", color: "/assets/bin/colors/c2.png" },
+  { code: "2868", color: "/assets/bin/colors/c3.png"},
+  { code: "6661", color: "/assets/bin/colors/c4.png" },
+  { code: "2636", color: "/assets/bin/colors/c5.png" },
+  { code: "X8355-9", color: "/assets/bin/colors/c6.png" },
+  { code: "3896", color: "/assets/bin/colors/c7.png" },
+  { code: "3891", color: "/assets/bin/colors/c8.png" },
+  { code: "3895", color: "/assets/bin/colors/c9.png" },
+  { code: "2869", color: "/assets/bin/colors/c10.png" },
+  { code: "6661", color: "/assets/bin/colors/c11.png" },
+  { code: "2634", color: "/assets/bin/colors/c12.png" },
+  { code: "X8365-9", color: "/assets/bin/colors/c13.png"},
+  { code: "FC5943", color: "/assets/bin/colors/c14.png" },
+  { code: "FC5943", color: "/assets/bin/colors/c15.png" },
+  { code: "FC5943", color: "/assets/bin/colors/c16.png" },
+];
 
