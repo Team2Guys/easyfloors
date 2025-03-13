@@ -50,6 +50,7 @@ export interface IProduct {
     image?: string
     FAQS: AdditionalInformation[];
     boxCoverage?: string
+    featureImages?:ProductImage[]
   }
 
   export interface ICart {

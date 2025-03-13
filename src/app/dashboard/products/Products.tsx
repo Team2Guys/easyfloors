@@ -40,7 +40,8 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
     CommmericallWarranty: editProduct && editProduct?.CommmericallWarranty,
     waterproof: editProduct && editProduct?.waterproof,
     FAQS:editProduct && editProduct?.FAQS,
-    boxCoverage:editProduct && editProduct?.boxCoverage
+    boxCoverage:editProduct && editProduct?.boxCoverage,
+    featureImages:editProduct && editProduct?.featureImages || []
 
   };
 
