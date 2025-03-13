@@ -71,7 +71,6 @@ const Thumbnail: React.FC<ExtendedThumbnailProps> = ({ ThumnailImage, ThumnailBo
           ))}
         </Slider>
 
-        {/* Conditionally render ThumnailBottom based on hideThumnailBottom prop */}
         {!hideThumnailBottom && ThumnailBottom && (
           <div className="grid grid-cols-6 gap-1 sm:gap-3 pt-2 sm:pt-6">
             {ThumnailBottom.map((array, index) => (

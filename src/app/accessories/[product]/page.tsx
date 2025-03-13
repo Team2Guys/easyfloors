@@ -27,7 +27,7 @@ const ProductImageGallery = async ({params}:{params:Promise<{product:string}>}) 
     </div>
     <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
       <AdditionalInfo description={productData[0].description} AdditionalInformation={productData[0].AdditionalInformation} subcategory={productData[0].subcategory?.name || ""} />
-      <FaqDetail />
+      <FaqDetail FAQS={productData[0].FAQS} />
     </div>
   
     </Container>
