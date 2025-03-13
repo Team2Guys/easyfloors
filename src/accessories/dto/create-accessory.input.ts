@@ -1,11 +1,14 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
-import { CreateAccessoryInput } from 'accessories/dto/create-accessory.input';
+import { CreateProductInput } from 'products/dto/create-product.input';
+
 
 @InputType()
-export class CreateProductInput {
+export class CreateAccessoryInput {
+  @Field(() => ID)
+  id: number;
 
-  @Field(() => String, { description: 'products name' })
+  @Field(() => String,)
   name: string;
 
   @Field(() => Int)
@@ -23,16 +26,15 @@ export class CreateProductInput {
   @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON, { nullable: true })
+  @Field(() => GraphQLJSON ,{nullable:true})
   hoverImageUrl: any
 
 
   @Field(() => [GraphQLJSON])
   productImages: any[]
 
-  @Field(() => Int, {nullable:true})
-  colorCode?: number
-
+  @Field(() => [GraphQLJSON])
+  colors: any[]
 
   @Field(() => Date, { nullable: true })
   createdAt: Date;
@@ -55,44 +57,16 @@ export class CreateProductInput {
   @Field()
   custom_url: string;
 
-  @Field(() => Boolean, { nullable: true })
-  waterproof: boolean;
-
   @Field(() => [GraphQLJSON])
   AdditionalInformation: any[]
 
-  @Field({ nullable: true })
-  plankWidth: string;
-
-  @Field({ nullable: true })
-  thickness: string;
-
-  @Field({ nullable: true })
-  ResidentialWarranty: string;
-
-  @Field({ nullable: true })
-  CommmericallWarranty: string;
-
-
-  @Field(() => ID, { nullable: true })
-  category?: number | any;
-
-  @Field(() => Int, { nullable: true })
-  categoryId?: number | any
-
-  @Field(() => ID, { nullable: true })
-  subcategory?: number | any;
-
   @Field(() => [GraphQLJSON])
   FAQS: any[]
-
+  
   @Field({ nullable: true })
   boxCoverage: string
-  
-  @Field(() => [GraphQLJSON])
-  featureImages: any[]
-  
-    @Field(()=>ID,{nullable:true})
-    acessories?:number
 
+    @Field(()=>ID,{nullable:true})
+    Category:Number
+  
 }

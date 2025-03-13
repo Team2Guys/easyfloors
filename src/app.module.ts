@@ -10,6 +10,7 @@ import { FileUploadingModule } from './file_uploading/file_uploading.module';
 import { AdminsModule } from './admins/admins.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './gaurds/auth.guard';
+import { AccessoriesModule } from './accessories/accessories.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AuthGuard } from './gaurds/auth.guard';
     SubCategoriesModule,
     FileUploadingModule,
     AdminsModule,
+    AccessoriesModule,
   ],
   controllers: [AppController],
   providers: [AppService, {

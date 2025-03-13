@@ -10,7 +10,7 @@ export class ProductsService {
   constructor(private prisma: PrismaService) { }
 
   async create(createProductInput: CreateProductInput) {
-    const { category, subcategory, ...updateData } = createProductInput;
+    const { category, subcategory, acessories, ...updateData } = createProductInput;
     try {
       if (!category || !subcategory) return customHttpException("categories or sub categories are required", 'BAD_REQUEST');
       return await this.prisma.products.create({
@@ -18,6 +18,7 @@ export class ProductsService {
           ...updateData,
           ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
           ...(subcategory !== undefined ? { subcategory: { connect: { id: +subcategory } } } : subcategory ? { subcategory } : undefined),
+          ...(acessories !== undefined ? { acessories: { connect: { id: +acessories } } } : acessories ? { acessories } : undefined),
         },
       });
 
@@ -30,7 +31,7 @@ export class ProductsService {
 
   async findAll() {
     try {
-      return await this.prisma.products.findMany({ include: { category: true, subcategory: true } });
+      return await this.prisma.products.findMany({ include: { category: true, subcategory: true, acessories: true } });
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -47,19 +48,20 @@ export class ProductsService {
 
   async update(id: number, updateProductInput: UpdateProductInput) {
     try {
-      const { category,subcategory,id:_, ...updateData } = updateProductInput;
-console.log(updateData, "updateProductInput")
+      const { category, subcategory, id: _, acessories, ...updateData } = updateProductInput;
+      console.log(updateData, "updateProductInput")
       return await this.prisma.products.update({
         where: { id },
         data: {
           ...updateData,
           ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
           ...(subcategory !== undefined ? { subcategory: { connect: { id: +subcategory } } } : subcategory ? { subcategory } : undefined),
+          ...(acessories !== undefined ? { acessories: { set: { id: +acessories } } } : acessories ? { acessories } : undefined),
 
         },
       });
     } catch (error) {
-        console.log(error, 'erro')
+      console.log(error, 'erro')
       if (error instanceof PrismaClientKnownRequestError && error.code === 'P2025') {
         throw new NotFoundException(`Product with ID ${id} not found`);
       }

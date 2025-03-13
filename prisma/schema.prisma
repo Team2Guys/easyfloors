@@ -15,7 +15,7 @@ datasource db {
 
 model Products {
   id                    Int            @id @default(autoincrement())
-  name                  String         @unique
+  name                  String         
   price                 Int
   description           String
   stock                 Int
@@ -23,7 +23,7 @@ model Products {
   posterImageUrl        Json
   hoverImageUrl         Json?
   productImages         Json[]
-  colors                Json[]         @default([])
+  colorCode             Int?
   createdAt             DateTime?      @default(now())
   updatedAt             DateTime?      @default(now())
   Canonical_Tag         String?
@@ -45,6 +45,7 @@ model Products {
   subCategoryId         Int?
   subcategory           subCategories? @relation(fields: [subCategoryId], references: [id], onDelete: SetNull)
   featureImages         Json[]         @default([])
+  acessories Acessories[] @relation("ProductAccessories")
 }
 
 model Category {
@@ -66,11 +67,12 @@ model Category {
   topHeading         String?
   whatAmiImageBanner Json?
   RecallUrl          String?
+  accessories Acessories[] @relation()
 }
 
 model subCategories {
   id                 Int        @id @default(autoincrement())
-  name               String     @unique
+  name               String     
   description        String?
   products           Products[]
   createdAt          DateTime?  @default(now())
@@ -115,4 +117,31 @@ model Admins {
   canVeiwTotalCategories Boolean @default(false)
   posterImageUrl         Json?
   role                   String  @default("Admin")
+}
+
+model Acessories {
+  id                    Int       @id @default(autoincrement())
+  name                  String    
+  price                 Int
+  description           String
+  stock                 Int
+  discountPrice         Int?
+  posterImageUrl        Json
+  hoverImageUrl         Json?
+  productImages         Json[]
+  colors                Json[]    @default([])
+  createdAt             DateTime? @default(now())
+  updatedAt             DateTime? @default(now())
+  Canonical_Tag         String?
+  Meta_Description      String?
+  Meta_Title            String?
+  last_editedBy         String?
+  custom_url            String
+  AdditionalInformation Json[]    @default([])
+  FAQS                  Json[]    @default([])
+  boxCoverage           String?
+  categoryId            Int?
+  short_description     String?
+  products Products[] @relation("ProductAccessories")
+  Category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }
