@@ -33,6 +33,8 @@ model Products {
   custom_url            String
   waterproof            Boolean        @default(false)
   AdditionalInformation Json[]         @default([])
+  FAQS                  Json[]         @default([])
+  boxCoverage           String?
   plankWidth            String?
   thickness             String?
   ResidentialWarranty   String?

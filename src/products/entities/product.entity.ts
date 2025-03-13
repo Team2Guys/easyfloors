@@ -84,4 +84,11 @@ export class Product {
 
   @Field(() => Int, { nullable: true })
   categoryId: number
+
+  @Field(() => [GraphQLJSON])
+  FAQS: any[]
+
+  @Field({ nullable: true })
+  boxCoverage: string
+
 }

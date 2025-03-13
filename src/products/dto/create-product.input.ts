@@ -24,7 +24,7 @@ export class CreateProductInput {
   @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON, {nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   hoverImageUrl: any
 
 
@@ -76,8 +76,8 @@ export class CreateProductInput {
   CommmericallWarranty: string;
 
 
- @Field(() => ID, { nullable: true })
-   category?: number | any ;
+  @Field(() => ID, { nullable: true })
+  category?: number | any;
 
   @Field(() => Int, { nullable: true })
   categoryId?: number | any
@@ -85,5 +85,10 @@ export class CreateProductInput {
   @Field(() => ID, { nullable: true })
   subcategory?: number | any;
 
+  @Field(() => [GraphQLJSON])
+  FAQS: any[]
+
+  @Field({ nullable: true })
+  boxCoverage: string
 
 }
