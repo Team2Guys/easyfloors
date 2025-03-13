@@ -36,7 +36,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 src={product.imageUrl}
                 className={`w-full ${
                   imageheight
-                    ? "h-[35px] sm:h-[73px] md:h-[290px]"
+                    ? "h-[35px] sm:h-[73px] md:h-[230px]"
                     : "h-[35px] sm:h-[73px] md:h-[124px]"
                 }`}
                 alt="thumbnail"
@@ -57,7 +57,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 src={product.imageUrl}
                 className={`w-full ${
                   imageheight
-                    ? "h-[273px] sm:h-[520px] md:h-[1210px]"
+                    ? "h-[273px] sm:h-[520px] md:h-[1218px]"
                     : "h-[273px] sm:h-[520px] md:h-[830px]"
                 }`}
                 alt="main-image"
