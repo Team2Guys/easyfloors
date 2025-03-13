@@ -364,13 +364,3 @@ export interface CartSelectProps {
   fees: { [key: string]: number };
   onSelect: (state: string, fee: number) => void; //eslint-disable-line
 }
-export interface TabData {
-  title: string;
-  heading?:string;
-  content: string;
-  bulletpoints?:string[];
-}
-
-export interface ProductDetailsProps {
-  tabs: TabData[];
-}
