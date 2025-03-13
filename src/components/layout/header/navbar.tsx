@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Container from "components/common/container/Container";
 import Image from "next/image";
@@ -9,29 +10,11 @@ import { menuItems } from "data/data";
 import { FaBars } from "react-icons/fa6";
 import Drawer from "components/ui/drawer";
 import { BiChevronDown } from "react-icons/bi";
-import { toast } from "react-toastify";
-import { fetchCategories } from "config/fetch";
-import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [scrolling, setScrolling] = useState(false);
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-        setCategories(data);
-      } catch {
-        toast.error("Error fetching categories:");
-      }
-    };
-    getCategories();
-  }, []);
-  
-  console.log(categories,"categories")
 
   useEffect(() => {
     const handleScroll = () => {
