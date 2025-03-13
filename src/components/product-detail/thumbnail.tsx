@@ -39,7 +39,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     ? "h-[35px] sm:h-[73px] md:h-[230px]"
                     : "h-[35px] sm:h-[73px] md:h-[124px]"
                 }`}
-                alt="thumbnail"
+                alt={product.altText}
               />
             </div>
           ))}
@@ -60,7 +60,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     ? "h-[273px] sm:h-[520px] md:h-[1218px]"
                     : "h-[273px] sm:h-[520px] md:h-[830px]"
                 }`}
-                alt="main-image"
+                alt={product.altText}
               />
             </div>
           ))}
