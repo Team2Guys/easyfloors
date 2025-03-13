@@ -31,8 +31,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(
     EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : []
   );
-
-
+  const [featureImagesimagesUrl, setfeatureImagesImagesUrl] = useState<ProductImage[] | undefined>(EditInitialValues ? EditInitialValues?.featureImages : []);
 
   const [loading, setloading] = useState<boolean>(false);
   const [productInitialValue, setProductInitialValue] = useState<EDIT_PRODUCT_PROPS | null | undefined>(EditProductValue);
@@ -64,6 +63,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     },
   });
 
+  console.log(featureImagesimagesUrl, "featureImagesimagesUrl")
 
   function handleSort() {
     if (dragImage.current === null || draggedOverImage.current === null) return;
@@ -89,6 +89,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         setImagesUrl(EditInitialValues ? EditProductValue?.productImages : [])
         sethoverImage(EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : [])
         setProductInitialValue?.(() => EditProductValue)
+        setfeatureImagesImagesUrl(EditInitialValues ? EditProductValue?.featureImages : [])
 
       } catch (err) {
         throw err;
@@ -143,6 +144,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         productImages: imagesUrl,
         category: +selectedCategory,
         subcategory: +selectedSubcategory,
+        featureImages: featureImagesimagesUrl
+        
       };
 
       setloading(true);
@@ -178,6 +181,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       sethoverImage(undefined);
       setposterimageUrl(undefined);
       setImagesUrl([]);
+      setfeatureImagesImagesUrl([])
       setselecteMenu("Add All Products");
       if (updateFlag) {
         setEditProduct?.(undefined);
@@ -423,7 +427,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                             Discount Price
                           </label>
-                          
+
                           <Field
                             type="number"
                             name="discountPrice"
@@ -439,12 +443,12 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           <ErrorMessage name="discountPrice" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                         </div>
 
-                       
+
                         <div className="w-1/3 xs:w-1/3 ">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
-                           Stock 
+                            Stock
                           </label>
-                          
+
 
                           <Field
                             type="number"
@@ -456,10 +460,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                           <ErrorMessage name="stock" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                         </div>
-                        
 
 
-                          
+
+
                       </div>
 
 
@@ -600,7 +604,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="flex flex-col gap-5">
-             
+
 
                   <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                     <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
@@ -613,7 +617,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           <input
                             type="checkbox"
                             name={field.name}
-                            checked={Boolean(field.value)} 
+                            checked={Boolean(field.value)}
                             onChange={() => form.setFieldValue(field.name, !field.value)}
                             className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
                           />
@@ -693,10 +697,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       <ErrorMessage name="thickness" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                     </div>
 
-                        
+
                     <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                       <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                     Box Coverage
+                        Box Coverage
                       </label>
 
                       <Field
@@ -794,7 +798,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </FieldArray>
                     </div>
 
-                   
+
 
                   </div>
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
@@ -803,11 +807,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         FAQS Details
                       </h3>
                     </div>
-                  <div className="flex flex-col py-4 px-6">
+                    <div className="flex flex-col py-4 px-6">
                       <FieldArray name="FAQS">
                         {({ push, remove }) => (
                           <div className="flex flex-col gap-2">
-                            {formik.values.FAQS && 
+                            {formik.values.FAQS &&
                               formik.values.FAQS.map(
                                 (model: AdditionalInformation, index: number) => (
                                   <div
@@ -826,8 +830,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
                                         (
                                           formik.errors.FAQS as FormikErrors<
-                                              FormValues['FAQS']
-                                            >
+                                            FormValues['FAQS']
+                                          >
                                         )?.[index]
                                         ? 'border-red-500 dark:border-white'
                                         : ''
@@ -871,12 +875,12 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               onClick={() => push({ name: '', detail: '' })}
                               className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
                             >
-                             FAQ Details
+                              FAQ Details
                             </button>
                           </div>
                         )}
                       </FieldArray>
-                  </div>
+                    </div>
                   </div>
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
@@ -1096,6 +1100,79 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
                     ) : null}
                   </div>
+
+
+                  {categorySubCatError.prodImages ? <p className='text-red-500'>{categorySubCatError.prodImages}</p> : null}
+
+                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Add Feature Images
+                      </h3>
+                    </div>
+
+                    <ImageUploader setImagesUrl={setfeatureImagesImagesUrl} />
+
+                    {featureImagesimagesUrl && featureImagesimagesUrl.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                        {featureImagesimagesUrl.map((item: ProductImage, index) => {
+                          return (
+                            <div key={index}
+                              draggable
+                              onDragStart={() => (dragImage.current = index)}
+                              onDragEnter={() => (draggedOverImage.current = index)}
+                              onDragEnd={handleSort}
+                              onDragOver={(e) => e.preventDefault()}
+                            >
+                              <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full" draggable>
+                                  <RxCross2
+                                    className="cursor-pointer text-red-500 dark:text-red-700"
+                                    size={17}
+                                    onClick={() => {
+                                      ImageRemoveHandler(
+                                        item.public_id,
+                                        setfeatureImagesImagesUrl,
+                                        finalToken
+                                      );
+                                    }}
+                                  />
+                                </div>
+                                <Image
+                                  key={index}
+                                  className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg"
+                                  width={300}
+                                  height={200}
+                                  loading='lazy'
+                                  src={item?.imageUrl || ""}
+
+                                  alt={`productImage-${index}` || ""}
+                                />
+                              </div>
+
+                              <input
+                                className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                placeholder="altText"
+                                type="text"
+                                name="altText"
+                                value={item?.altText || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setfeatureImagesImagesUrl,
+                                  )
+                                }
+                              />
+
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : null}
+                  </div>
+
+
                   {categorySubCatError.prodImages ? <p className='text-red-500'>{categorySubCatError.prodImages}</p> : null}
 
                 </div>

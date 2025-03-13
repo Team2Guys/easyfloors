@@ -28,6 +28,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       thickness
       FAQS
         boxCoverage
+        featureImages
       category {
         id
         name
