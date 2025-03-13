@@ -27,7 +27,7 @@ export const fetchProducts = async () => {
 export const fetchCategories = async (FETCH_HEADER_CATEGORIES?:DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCH_HEADER_CATEGORIES ? FETCH_HEADER_CATEGORIES : FETCH_ALL_CATEGORIES,
+      query: FETCH_HEADER_CATEGORIES ?FETCH_HEADER_CATEGORIES : FETCH_ALL_CATEGORIES,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } }, 

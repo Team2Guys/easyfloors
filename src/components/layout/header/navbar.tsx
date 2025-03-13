@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useState } from "react";
 import Container from "components/common/container/Container";
 import Image from "next/image";
@@ -6,15 +5,34 @@ import Link from "next/link";
 import SearchBar from "./search-bar";
 import UserIcon from "./user-icon";
 import Megamenu from "./Megamenu";
-import { menuItems } from "data/data";
 import { FaBars } from "react-icons/fa6";
 import Drawer from "components/ui/drawer";
 import { BiChevronDown } from "react-icons/bi";
+import { toast } from "react-toastify";
+import { fetchCategories } from "config/fetch";
+import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
+import { HeaderProps } from "types/PagesProps";
+import { staticMenuItems } from "data/data";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [scrolling, setScrolling] = useState(false);
+
+  
+  const [categories, setCategories] = useState<HeaderProps[]>([]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
+        setCategories(data);
+      } catch {
+        toast.error("Error fetching categories:");
+      }
+    };
+    getCategories();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,6 +64,21 @@ const Navbar = () => {
       return newState;
     });
   };
+
+
+
+  const menuItems = staticMenuItems.map((staticItem) => {
+    const matchedCategory = categories.find((cat) => cat.RecallUrl === staticItem.href);
+    return {
+      ...staticItem,
+      submenu: matchedCategory?.subcategories?.map((sub) => ({
+        label: sub.name,
+        href: `/${matchedCategory.RecallUrl}/${sub.custom_url}`,
+        image: sub.posterImageUrl?.imageUrl || "/assets/default-image.png", 
+      })) || [],
+    };
+  });
+
   return (
     <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg pb-1 sm:pb-2' : 'top-10 pb-1 sm:pb-1'} transition-all font-inter `}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
@@ -80,28 +113,31 @@ const Navbar = () => {
         <div className="lg:hidden flex justify-end">
           <FaBars onClick={() => setIsOpen(true)} size={20} />
           <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
-              {menuItems.map((item) => (
-                <div key={item.label} className="border-b py-2 font-inter">
-                  <div className="flex justify-between items-center gap-2">
-                    <Link href={item.href} className="text-14 font-semibold w-fit whitespace-nowrap" onClick={() => setIsOpen(false)}>{item.label}</Link>
-                    {item.submenu && (
-                      <button onClick={() => toggleMenu(item.label)} className="w-full flex justify-end">
-                        <BiChevronDown className={`w-5 h-5 transition-transform  ${openMenus[item.label] ? 'rotate-180' : ''}`} />
-                      </button>
-                    )}
-                  </div>
-                  {item.submenu && openMenus[item.label] && (
-                    <div className="grid grid-cols-2 gap-3 pt-2">
-                    {item.submenu.map((sub,index) => (
-                      <Link href={sub.href} key={index} className="py-1  text-center"  onClick={() => setIsOpen(false)}>
-                        <Image  width={200} height={200} src={sub.image} alt={sub.label} className="w-full h-20" />
-                        <p className="text-sm text-black hover:underline">{sub.label}</p>
-                      </Link>
-                    ))}
-                    </div>
-                  )}
+          {menuItems.map((item) => (
+            <div key={item.label} className="border-b py-2 font-inter">
+              <div className="flex justify-between items-center gap-2">
+                <Link href={item.href} className="text-14 font-semibold w-fit whitespace-nowrap" onClick={() => setIsOpen(false)}>
+                  {item.label}
+                </Link>
+                {item.submenu.length > 0 && (
+                  <button onClick={() => toggleMenu(item.label)} className="w-full flex justify-end">
+                    <BiChevronDown className={`w-5 h-5 transition-transform ${openMenus[item.label] ? 'rotate-180' : ''}`} />
+                  </button>
+                )}
+              </div>
+              {item.submenu.length > 0 && openMenus[item.label] && (
+                <div className="grid grid-cols-2 gap-5 pt-2">
+                  {item.submenu.map((sub, index) => (
+                    <Link href={sub.href} key={index} className="py-1 text-center" onClick={() => setIsOpen(false)}>
+                      <Image width={200} height={200} src={sub.image} alt={sub.label} className="w-full rounded-md h-20" />
+                      <p className="text-14 text-black hover:underline">{sub.label}</p>
+                    </Link>
+                  ))}
                 </div>
-              ))}
+              )}
+            </div>
+          ))}
+
           </Drawer>
         </div>
       </div>
