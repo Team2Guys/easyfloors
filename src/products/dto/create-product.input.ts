@@ -90,5 +90,8 @@ export class CreateProductInput {
 
   @Field({ nullable: true })
   boxCoverage: string
+  
+  @Field(() => [GraphQLJSON])
+  featureImages: any[]
 
 }

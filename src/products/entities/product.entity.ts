@@ -87,8 +87,11 @@ export class Product {
 
   @Field(() => [GraphQLJSON])
   FAQS: any[]
-
+  
   @Field({ nullable: true })
   boxCoverage: string
 
+  @Field(() => [GraphQLJSON])
+  featureImages: any[]
+  
 }
