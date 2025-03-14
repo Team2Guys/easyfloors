@@ -1,8 +1,8 @@
-import {IReview } from 'types/type';
+import { IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS,} from 'graphql/queries';
+import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS, } from 'graphql/queries';
 import client from './apolloClient';
-import { DocumentNode} from '@apollo/client';
+import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
 
 
@@ -10,7 +10,7 @@ export const fetchProducts = async () => {
   try {
     const { data } = await client.query({
       query: FETCH_ALL_PRODUCTS,
-       fetchPolicy: "no-cache",
+      fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
           credentials: "include",
@@ -26,13 +26,13 @@ export const fetchProducts = async () => {
   }
 };
 
-export const fetchCategories = async (FETCH_HEADER_CATEGORIES?:DocumentNode) => {
+export const fetchCategories = async (FETCH_HEADER_CATEGORIES?: DocumentNode) => {
   try {
     const { data } = await client.query({
       query: FETCH_HEADER_CATEGORIES ? FETCH_HEADER_CATEGORIES : FETCH_ALL_CATEGORIES,
       fetchPolicy: "no-cache",
       context: {
-        fetchOptions: { next: { tags: ["categories"] } }, 
+        fetchOptions: { next: { tags: ["categories"] } },
       },
 
     });
@@ -44,18 +44,19 @@ export const fetchCategories = async (FETCH_HEADER_CATEGORIES?:DocumentNode) => 
   }
 };
 
-export const fetchSubCategories = async (FETCHSUBCAT?:DocumentNode) => {
+export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCHSUBCAT ?FETCHSUBCAT : FETCH_ALL_SUB_CATEGORIES,
-   fetchPolicy: "no-cache",
-   context: {
-    fetchOptions: { next: { tags: ["subcategories"] } }, 
-  },
+      query: FETCHSUBCAT ? FETCHSUBCAT : FETCH_ALL_SUB_CATEGORIES,
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["subcategories"] } },
+      },
     })
 
     return data?.subCategories || []
   } catch (error) {
+    console.log(error, 'error')
     return []
     throw error
 
@@ -121,11 +122,11 @@ export const get_allAdmins = async (token: string | undefined) => {
 
 
 
-export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?:DocumentNode) => {
+export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => {
   try {
     const { data } = await client.query({
       query: CUSTOMISE_ACCESSORIES ? CUSTOMISE_ACCESSORIES : FETCH_ALL_ACCESSORIES,
-       fetchPolicy: "no-cache",
+      fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
           credentials: "include",
@@ -134,7 +135,7 @@ export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?:DocumentNode) => {
       },
     });
 
-    return data?.products || [];
+    return data?.accessories || [];
   } catch (error) {
     return []
     throw error;
