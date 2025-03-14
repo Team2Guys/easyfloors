@@ -179,3 +179,6 @@ export const FETCH_HEADER_CATEGORIES = gql`
       }
     }
 `;
+
+
+
