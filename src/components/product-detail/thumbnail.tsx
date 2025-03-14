@@ -46,7 +46,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       </div>
 
       <div className="w-10/12">
-        <Slider ref={sliderRef1} dots={false} arrows={false}>
+        <Slider infinite={ThumnailImage.length > 1} ref={sliderRef1} dots={false} arrows={false}>
           {ThumnailImage.map((product, index) => (
             <div key={index}>
               <Image

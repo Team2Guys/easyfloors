@@ -20,20 +20,20 @@ export interface AdditionalInformation {
 export interface IProduct {
     id: number | string;
     name: string;
-    price: number ;
-    description: string;
+    price?: number ;
+    description?: string;
     short_description?: string;
-    stock: number;
+    stock?: number;
     discountPrice?: number;
     sale?: string;
     colors: AdditionalInformation[];
     spacification?: specsDetails[];
     posterImageUrl: ProductImage;
-    productImages: ProductImage[];
-    hoverImageUrl: ProductImage;
-    AdditionalInformation: AdditionalInformation[];
-    colors: AdditionalInformation[];
-    categoriesId: number;
+    productImages?: ProductImage[];
+    hoverImageUrl?: ProductImage;
+    AdditionalInformation?: AdditionalInformation[];
+    colors?: AdditionalInformation[];
+    categoriesId?: number;
     subcategory?: ISUBCATEGORY_EDIT;
     custom_url?:string;
     thickness?:string;
@@ -42,13 +42,13 @@ export interface IProduct {
     plankWidth?:string
     waterproof?:boolean
     category?:EDIT_CATEGORY
-    Meta_Title: string;
-    Canonical_Tag: string;
-    Meta_Description: string;
+    Meta_Title?: string;
+    Canonical_Tag?: string;
+    Meta_Description?: string;
     createdAt?:        Date    
     updatedAt ?:          Date
     image?: string
-    FAQS: AdditionalInformation[];
+    FAQS?: AdditionalInformation[];
     boxCoverage?: string
     featureImages?:ProductImage[]
   }

@@ -11,10 +11,11 @@ import SampleBanner from "components/Reusable/SampleBanner";
 import { fetchCategories } from "config/fetch";
 import AmCategory from "components/Categories/AmCategory";
 import CategorySlider from "components/CategorySlider/category-slider";
+import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
 
 
 export default async function Home() {
-const categories = await fetchCategories()
+const categories = await fetchCategories(FETCH_HEADER_CATEGORIES)
   console.log(categories,"categories")
   return (
     <>
