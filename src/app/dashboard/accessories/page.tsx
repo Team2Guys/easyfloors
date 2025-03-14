@@ -9,9 +9,8 @@ async function  page() {
         fetchAccessories()
     
       ]);
-    
-  return (
-    <Product categories={categories} productsData={products} accessories={accessories}  accessoryFlag/>
+      return (
+    <Product categories={categories} productsData={products} accessories={accessories}/>
   )
 }
 

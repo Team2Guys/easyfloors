@@ -34,7 +34,6 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     categories: ICategory[], 
     productsData: IProduct[],
     accessories?:IAccessories[]
-    accessoryFlag?:boolean
   }
 
 
