@@ -20,7 +20,7 @@ import { AdditionalInformation, ProductImage } from 'types/prod';
 import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from 'types/PagesProps';
 import { useMutation } from "@apollo/client";
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'graphql/mutations';
+import { CREATE_ACCESSORIES, CREATE_PRODUCT, UPDATE_PRODUCT } from 'graphql/mutations';
 import Cookies from 'js-cookie';
 
 
@@ -54,9 +54,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     },
   });
 
-  console.log(products, "products")
-
-  const [createProduct] = useMutation(CREATE_PRODUCT, {
+  const [createProduct] = useMutation(accessoryFlag ? CREATE_ACCESSORIES : CREATE_PRODUCT, {
     context: {
       fetchOptions: {
         credentials: "include",
@@ -97,16 +95,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     CategoryHandler();
   }, [EditInitialValues]);
 
-   
+
 
   const onSubmit = async (changedValue: (IProductValues), { resetForm }: FormikHelpers<IProductValues>) => {
-     
-
     try {
       const values = removedValuesHandler(changedValue)
-
-      console.log(values, "values")
-
       setcategorySubCatError(initialErrors);
 
       if (!selectedCategory) {
@@ -117,7 +110,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         return;
       }
 
-      if (subcategories.length > 0 && !selectedSubcategory) {
+      if ((subcategories.length > 0 && !selectedSubcategory) && !accessoryFlag) {
         setcategorySubCatError((prev) => ({
           ...prev,
           subCategoryError: "Subcategory is Required",
@@ -144,16 +137,29 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         return;
       }
 
+      const images = {
+        subcategory: +selectedSubcategory,
+        featureImages: featureImagesimagesUrl
+      }
+
+      /* eslint-disable */
+
+      const { products, colors, ...restValues } = values;
+      /* eslint-enable */
+
       let newValues = {
-        ...values,
+        ...(accessoryFlag ? values : restValues),
         posterImageUrl,
         hoverImageUrl,
         productImages: imagesUrl,
         category: +selectedCategory,
-        subcategory: +selectedSubcategory,
-        featureImages: featureImagesimagesUrl
+      };;
 
-      };
+      if (!accessoryFlag) {
+
+
+        Object.assign(newValues, images);
+      }
 
       setloading(true);
 
@@ -239,7 +245,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   };
 
 
-  const removedValuesHandler = (ChangedValue:IProductValues) => {
+  const removedValuesHandler = (ChangedValue: IProductValues) => {
     const modifiedProductValues = Object.fromEntries(
       Object.entries(ChangedValue).filter(([key]) => !excludedKeys.includes(key))
     ) as IProductValues;
@@ -586,7 +592,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           </div>
 
                           {/* Subcategory Selection */}
-                          {subcategories.length > 0 && (
+
+
+                          {(!accessoryFlag && subcategories.length > 0) && (
                             <div className="mt-4">
                               <h2 className="text-lg font-medium mb-3">Subcategories</h2>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -613,7 +621,41 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                         </div>
 
+                        {
+                          accessoryFlag ?
+                            <FieldArray name="products">
+                              {({ push, remove }) => (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  {products?.map((product) => {
+                                    const isChecked = formik.values.products?.includes(product.id.toString());
+                                    return (
+                                      <label key={product.id} className="flex items-center space-x-2">
+                                        <Field
+                                          type="checkbox"
+                                          name="products"
+                                          value={product.id.toString()}
+                                          checked={isChecked}
+                                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                            if (e.target.checked) {
+                                              push(product.id.toString());
+                                            } else {
+                                              remove(formik.values.products.indexOf(product.id.toString()));
+                                            }
+                                          }}
+                                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                                        />
+                                        <span className="text-black dark:text-white">{product.name}</span>
+                                      </label>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </FieldArray>
 
+                            : ""
+
+
+                        }
                       </div>
                     </div>
                   </div>
@@ -621,200 +663,202 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                 <div className="flex flex-col gap-5">
 
+                  {
+                    !accessoryFlag ?
+                      <>
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Waterproof
+                          </label>
 
-                  <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                    <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                      Waterproof
-                    </label>
+                          <div className="flex items-center gap-2">
+                            <Field name="waterproof">
+                              {({ field, form }: { field: FieldInputProps<boolean>; form: FormikProps<{ waterproof: boolean }> }) => (
+                                <input
+                                  type="checkbox"
+                                  name={field.name}
+                                  checked={Boolean(field.value)}
+                                  onChange={() => form.setFieldValue(field.name, !field.value)}
+                                  className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
+                                />
+                              )}
+                            </Field>
+                            <span className="text-black dark:text-white">Is this waterproof?</span>
+                          </div>
 
-                    <div className="flex items-center gap-2">
-                      <Field name="waterproof">
-                        {({ field, form }: { field: FieldInputProps<boolean>; form: FormikProps<{ waterproof: boolean }> }) => (
-                          <input
-                            type="checkbox"
-                            name={field.name}
-                            checked={Boolean(field.value)}
-                            onChange={() => form.setFieldValue(field.name, !field.value)}
-                            className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
-                          />
-                        )}
-                      </Field>
-                      <span className="text-black dark:text-white">Is this waterproof?</span>
-                    </div>
-
-                    <ErrorMessage name="waterproof" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                  </div>
-
-
-                  {accessoryFlag ? "" :
-                    <div className="py-4 px-6 rounded-sm border border-stroke">
-
-                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                          Add Residential Warranty
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="ResidentialWarranty"
-                          placeholder="5 years"
-                          min="0"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-
-                        <ErrorMessage name="ResidentialWarranty" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                      </div>
-
-                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                          Add Commercial Warranty
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="CommmericallWarranty"
-                          placeholder="5 years"
-                          min="0"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-
-                        <ErrorMessage name="CommmericallWarranty" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                      </div>
-
-                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                          Add Plank Width
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="plankWidth"
-                          placeholder="183 mm"
-                          min="0"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-
-                        <ErrorMessage name="plankWidth" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                      </div>
-
-                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                          Add Thickness
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="thickness"
-                          placeholder="5.5 mm"
-                          min="0"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-
-                        <ErrorMessage name="thickness" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                      </div>
-
-
-                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                          Box Coverage
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="boxCoverage"
-                          placeholder="2.9"
-                          min="0"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-
-                        <ErrorMessage name="boxCoverage" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                      </div>
-                    </div>
-                  }
-
-
-                  {accessoryFlag ?
-                    <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                      <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Color Information
-                        </h3>
-                      </div>
-
-             
-                        <div className="flex flex-col py-4 px-6">
-                          <FieldArray name="colors">
-                            {({ push, remove }) => (
-                              <div className="flex flex-col gap-2">
-                                {formik.values.colors &&
-                                  formik.values.colors.map(
-                                    (model: AdditionalInformation, index: number) => (
-                                      <div
-                                        key={index}
-                                        className="flex items-center"
-                                      >
-                                        <input
-                                          type="text"
-                                          name={`colors[${index}].name`}
-                                          onChange={formik.handleChange}
-                                          onBlur={formik.handleBlur}
-                                          value={formik?.values?.colors?.[index]?.detail || ''}
-                                          placeholder="Model Name"
-                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
-                                            (
-                                              formik.errors
-                                                .colors as FormikErrors<
-                                                  IProductValues['colors']
-                                                >
-                                            )?.[index]
-                                            ? 'border-red-500 dark:border-white'
-                                            : ''
-                                            }`}
-                                        />
-                                        <input
-                                          type="text"
-                                          name={`colors[${index}].detail`}
-                                          onChange={formik.handleChange}
-                                          onBlur={formik.handleBlur}
-                                          value={formik?.values?.colors?.[index]?.detail || ''}
-                                          placeholder="Model Detail"
-                                          className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
-                                            (
-                                              formik.errors
-                                                .colors as FormikErrors<IProductValues['colors']>
-                                            )?.[index]
-                                            ? 'border-red-500 dark:border-white'
-                                            : ''
-                                            }`}
-                                        />
-                                        <button
-                                          type="button"
-                                          onClick={() => remove(index)}
-                                          className="ml-2 text-red-500 "
-                                        >
-                                          <RxCross2
-                                            className="text-red-500 dark:text-white"
-                                            size={25}
-                                          />
-                                        </button>
-                                      </div>
-                                    ),
-                                  )}
-                                <button
-                                  type="button"
-                                  onClick={() => push({ name: '', detail: '' })}
-                                  className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
-                                >
-                                  Add Model
-                                </button>
-                              </div>
-                            )}
-                          </FieldArray>
+                          <ErrorMessage name="waterproof" component="div" className="text-red-500 dark:text-red-700 text-sm" />
                         </div>
-               
 
 
-                    </div> : ""
+                        <div className="py-4 px-6 rounded-sm border border-stroke">
+
+                          <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                              Add Residential Warranty
+                            </label>
+
+                            <Field
+                              type="text"
+                              name="ResidentialWarranty"
+                              placeholder="5 years"
+                              min="0"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+
+                            <ErrorMessage name="ResidentialWarranty" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                          </div>
+
+                          <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                              Add Commercial Warranty
+                            </label>
+
+                            <Field
+                              type="text"
+                              name="CommmericallWarranty"
+                              placeholder="5 years"
+                              min="0"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+
+                            <ErrorMessage name="CommmericallWarranty" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                          </div>
+
+                          <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                              Add Plank Width
+                            </label>
+
+                            <Field
+                              type="text"
+                              name="plankWidth"
+                              placeholder="183 mm"
+                              min="0"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+
+                            <ErrorMessage name="plankWidth" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                          </div>
+
+                          <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                              Add Thickness
+                            </label>
+
+                            <Field
+                              type="text"
+                              name="thickness"
+                              placeholder="5.5 mm"
+                              min="0"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+
+                            <ErrorMessage name="thickness" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                          </div>
+
+
+                          <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                            <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                              Box Coverage
+                            </label>
+
+                            <Field
+                              type="text"
+                              name="boxCoverage"
+                              placeholder="2.9"
+                              min="0"
+                              className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+
+                            <ErrorMessage name="boxCoverage" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                          </div>
+                        </div>
+
+
+
+
+                        <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                          <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                            <h3 className="font-medium text-black dark:text-white">
+                              Color Information
+                            </h3>
+                          </div>
+
+
+                          <div className="flex flex-col py-4 px-6">
+                            <FieldArray name="colors">
+                              {({ push, remove }) => (
+                                <div className="flex flex-col gap-2">
+                                  {formik.values.colors &&
+                                    formik.values.colors.map(
+                                      (model: AdditionalInformation, index: number) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center"
+                                        >
+                                          <input
+                                            type="text"
+                                            name={`colors[${index}].name`}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik?.values?.colors?.[index]?.detail || ''}
+                                            placeholder="Model Name"
+                                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                              (
+                                                formik.errors
+                                                  .colors as FormikErrors<
+                                                    IProductValues['colors']
+                                                  >
+                                              )?.[index]
+                                              ? 'border-red-500 dark:border-white'
+                                              : ''
+                                              }`}
+                                          />
+                                          <input
+                                            type="text"
+                                            name={`colors[${index}].detail`}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik?.values?.colors?.[index]?.detail || ''}
+                                            placeholder="Model Detail"
+                                            className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                              (
+                                                formik.errors
+                                                  .colors as FormikErrors<IProductValues['colors']>
+                                              )?.[index]
+                                              ? 'border-red-500 dark:border-white'
+                                              : ''
+                                              }`}
+                                          />
+                                          <button
+                                            type="button"
+                                            onClick={() => remove(index)}
+                                            className="ml-2 text-red-500 "
+                                          >
+                                            <RxCross2
+                                              className="text-red-500 dark:text-white"
+                                              size={25}
+                                            />
+                                          </button>
+                                        </div>
+                                      ),
+                                    )}
+                                  <button
+                                    type="button"
+                                    onClick={() => push({ name: '', detail: '' })}
+                                    className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
+                                  >
+                                    Add Model
+                                  </button>
+                                </div>
+                              )}
+                            </FieldArray>
+                          </div>
+
+
+
+                        </div>
+                      </> : ""
 
                   }
 

@@ -28,6 +28,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     setSearchTerm(e.target.value);
   };
 
+  
   // const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true )
   const canAddProduct = true;
   // const canDeleteProduct =

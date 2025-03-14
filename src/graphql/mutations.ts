@@ -172,6 +172,16 @@ mutation CreateProduct($input: CreateProductInput!) {
 }
 `;
 
+export const CREATE_ACCESSORIES = gql`
+mutation Add_Accessories($input: CreateAccessoryInput!) {
+  add_Accessories(createAccessoryInput: $input) {
+    id
+    name
+  }
+}
+
+`
+;
 
 
 export const UPDATE_ADMIN = gql`

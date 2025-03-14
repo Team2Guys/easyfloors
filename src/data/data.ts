@@ -123,6 +123,8 @@ export interface IProductValues {
   FAQS: AdditionalInformation[];
   boxCoverage?: string;
   colors?: AdditionalInformation[];
+  products: (string | number)[];
+
 }
 
 
@@ -147,6 +149,7 @@ export const AddproductsinitialValues: IProductValues = {
   Meta_Description: '',
   FAQS:[],
   boxCoverage:"",
+  products: [],
 };
 
 
@@ -157,7 +160,14 @@ export const excludedKeys = [
    "spacification",
    "ResidentialWarranty",
    "waterproof",
-   "thickness"
+   "thickness",
+    "subcategory",
+    "featureImages"
+  
+  ] 
+export const excludedKeysFroProducts = [
+"product",
+"colors"
   
   ] 
 

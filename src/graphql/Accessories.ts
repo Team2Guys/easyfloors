@@ -23,11 +23,11 @@ query Accessories {
         AdditionalInformation
         FAQS
         boxCoverage
-        products {
+        category {
             id
             name
         }
-        category {
+        products {
             id
             name
         }

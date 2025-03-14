@@ -8,15 +8,17 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { IAccessories, IProduct } from "types/prod";
 import { DASHBOARD_MAINPAGE_PROPS } from "types/PagesProps";
+import { usePathname } from "next/navigation";
 const AddProd = dynamic(
   () => import("components/Dashboard/dashboard_products/AddProd")
 );
 
-const Product = ({ categories, productsData,accessories,accessoryFlag }: DASHBOARD_MAINPAGE_PROPS) => {
+const Product = ({ categories, productsData,accessories, }: DASHBOARD_MAINPAGE_PROPS) => {
   const [editProduct, setEditProduct] = useState<IProduct | IAccessories | undefined>();
-  const [products, setProducts] = useState<(IProduct | IAccessories)[]>(accessories ? accessories : productsData);
+  const [products, setProducts] = useState<(IProduct | IAccessories)[]>([]);
   const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");
-
+  const path = usePathname()
+const accessoryFlag = path === "/dashboard/accessories";
   const EditInitialValues = {
     name: editProduct?.name || "",
     description: editProduct?.description || "",
@@ -46,11 +48,11 @@ const Product = ({ categories, productsData,accessories,accessoryFlag }: DASHBOA
 
 
   useEffect(() => {
-    setProducts(accessories ? accessories : productsData);
+    setProducts((accessoryFlag && accessories) ? accessories : productsData);
   }, [productsData, accessories]);
   const productFlag: boolean =
     selecteMenu === "Add All Products" ? true : false;
-
+    
   return (
     <DefaultLayout>
       <Breadcrumb pageName={productFlag ? "Products" : "Add Products"} />
@@ -75,7 +77,7 @@ const Product = ({ categories, productsData,accessories,accessoryFlag }: DASHBOA
               : undefined
           }
           categoriesList={categories}
-          products={products}
+          products={productsData}
           accessoryFlag={accessoryFlag}
         />
       )}

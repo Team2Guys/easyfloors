@@ -15,7 +15,14 @@ const eslintConfig = [
   {
     rules: {
       "no-console": "warn", // Warns when using console.log
-      "no-unused-vars": "error", // Errors when variables are declared but not used
+      "@typescript-eslint/no-explicit-any": [
+        "error",
+        {
+          "ignoreRestArgs": false,
+          "fixToUnknown": false,
+        },
+      ],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_", "caughtErrors": "none" }], // ✅ Allows unused catch error
       "react-hooks/rules-of-hooks": "error", // Ensures rules of hooks are followed
       "react/jsx-no-undef": "error", // Errors when using undefined JSX components
       "react/jsx-uses-react": "error", // Errors when React is not in scope
