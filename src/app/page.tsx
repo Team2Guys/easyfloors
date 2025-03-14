@@ -12,7 +12,6 @@ import SampleBanner from "components/Reusable/SampleBanner";
 import { fetchCategories } from "config/fetch";
 import AmCategory from "components/Categories/AmCategory";
 
-
 export default async function Home() {
 const categories = await fetchCategories()
   return (
@@ -30,5 +29,6 @@ const categories = await fetchCategories()
       <UserInfo />
       <Faqs data={faqs} />
     </>
+    
   );
 }
