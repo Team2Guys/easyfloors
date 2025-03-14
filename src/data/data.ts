@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, OrderItem, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -1040,40 +1040,4 @@ export const colors = [
 ];
 
 
-export const orderSummary: OrderItem[] = [
-  {
-    image: "/assets/bin/cart.png",
-    title: "Richmond SPC Eco - Oak History",
-    boxes: 2,
-    sqm: 2.009,
-    price: 357.66,
-  },
-  {
-    image: "/assets/bin/cart.png",
-    title: "Luxury Vinyl Plank - Walnut Brown",
-    boxes: 3,
-    sqm: 3.015,
-    price: 529.99,
-  },
-  {
-    image: "/assets/bin/cart.png",
-    title: "Modern SPC Flooring - Grey Ash",
-    boxes: 1,
-    sqm: 1.005,
-    price: 199.50,
-  },
-  {
-    image: "/assets/bin/cart.png",
-    title: "Modern SPC Flooring - Grey Ash",
-    boxes: 1,
-    sqm: 1.005,
-    price: 199.50,
-  },
-  {
-    image: "/assets/bin/cart.png",
-    title: "Modern SPC Flooring - Grey Ash",
-    boxes: 1,
-    sqm: 1.005,
-    price: 199.50,
-  },
-];
+
