@@ -71,5 +71,6 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
 
   export  interface HeaderProps {
       RecallUrl: string;
+      custom_url:string;
       subcategories?: { name: string; custom_url: string; posterImageUrl?: { imageUrl: string } }[];
     }

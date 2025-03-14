@@ -35,6 +35,8 @@ export interface Category {
 
 export interface EDIT_CATEGORY extends Category {
     id?: number | string
+    custom_url?: string
+    RecallUrl?:string
     createdAt?: Date;
     updatedAt?: Date;
 

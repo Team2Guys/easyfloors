@@ -18,8 +18,6 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [scrolling, setScrolling] = useState(false);
-
-  
   const [categories, setCategories] = useState<HeaderProps[]>([]);
 
   useEffect(() => {
@@ -65,10 +63,8 @@ const Navbar = () => {
     });
   };
 
-
-
   const menuItems = staticMenuItems.map((staticItem) => {
-    const matchedCategory = categories.find((cat) => cat.RecallUrl === staticItem.href);
+    const matchedCategory = categories.find((cat) => cat.custom_url === staticItem.href);
     return {
       ...staticItem,
       submenu: matchedCategory?.subcategories?.map((sub) => ({

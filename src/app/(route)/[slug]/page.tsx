@@ -56,13 +56,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
   const catgories = await fetchCategories();
-  const findCategory = catgories.find((cat: ICategory) => (cat.RecallUrl?.trim() ?? '') === slug.trim());
+  const findCategory = catgories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
   if(!findCategory) {
    return notFound()
   }
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} categoryData={findCategory} isSubCategory={false} />
+      <Category catgories={catgories} categoryData={findCategory}  isSubCategory={false} />
     </Suspense>
   );
 };

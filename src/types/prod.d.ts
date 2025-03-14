@@ -48,7 +48,7 @@ export interface IProduct {
     updatedAt ?:          Date
     image?: string
     FAQS?: AdditionalInformation[];
-    boxCoverage?: string
+    boxCoverage?: string;
     featureImages?:ProductImage[]
   }
 

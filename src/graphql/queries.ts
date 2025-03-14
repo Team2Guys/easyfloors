@@ -63,6 +63,7 @@ export const FETCH_ALL_CATEGORIES = gql`
       subcategories {
         id
         name
+        posterImageUrl
         custom_url
       }
       products {

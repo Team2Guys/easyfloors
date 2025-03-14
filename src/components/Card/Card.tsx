@@ -10,24 +10,21 @@ const Card: React.FC<productCardProps> = ({
   features,
   sldier,
   categoryData,
-  subCategoryData,
   isAccessories = false,
   isSoldOut = false,
 }) => {
-  const handleNavigate = (product: IProduct , categoryData: Category , subCategoryData?: Category) => {
-    if (subCategoryData) {
-      return `/${categoryData?.RecallUrl || categoryData?.custom_url}/${subCategoryData.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
-    } else if (product.subcategory) {
-      return `/${categoryData?.RecallUrl || categoryData?.custom_url}/${product.subcategory.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
-    } else {
-      return `/${categoryData?.RecallUrl || categoryData?.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
+  const handleNavigate = (product: IProduct , categoryData: Category ) => {
+    if (product.subcategory) {
+      return `/${categoryData?.RecallUrl || product?.custom_url}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
+    }  else {
+      return `/${categoryData?.RecallUrl || product?.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
 
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">
-        <Link href={handleNavigate(product as IProduct, categoryData, subCategoryData)} >
+        <Link href={handleNavigate(product as IProduct, categoryData, )} >
           <Image
             src={product.posterImageUrl?.imageUrl ?? ''}
             alt={product.name}
@@ -69,7 +66,7 @@ const Card: React.FC<productCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href={handleNavigate(product as IProduct, categoryData, subCategoryData)}
+          href={handleNavigate(product as IProduct, categoryData,)}
           className={`md:mt-0 mt-1 text-left font-semibold ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55]"
             }`}
         >
@@ -93,7 +90,7 @@ const Card: React.FC<productCardProps> = ({
                 Out of Stock
               </button>
             ) : (
-              <Link href={handleNavigate(product as IProduct, categoryData, subCategoryData)} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
+              <Link href={handleNavigate(product as IProduct, categoryData,)} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
                 Shop Now
               </Link>
             )}
