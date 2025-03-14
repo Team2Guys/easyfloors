@@ -68,6 +68,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     return aStartsWith - bStartsWith || dateB - dateA;
   }) || [];
 
+
+
+
   const confirmDelete = (key: string | number) => {
     Swal.fire({
       title: 'Are you sure?',
@@ -82,9 +85,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       }
     });
   };
-  // const token = Cookies.get('2guysAdminToken');
-  // const superAdminToken = Cookies.get('superAdminToken');
-  // const finalToken = token ? token : superAdminToken;
 
   const handleDelete = async (key: string | number) => {
     try {

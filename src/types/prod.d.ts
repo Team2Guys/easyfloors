@@ -26,7 +26,6 @@ export interface IProduct {
     stock?: number;
     discountPrice?: number;
     sale?: string;
-    colors: AdditionalInformation[];
     spacification?: specsDetails[];
     posterImageUrl: ProductImage;
     productImages?: ProductImage[];
@@ -82,4 +81,14 @@ export interface IProduct {
   }
 
 
- 
+
+  export interface IAccessories extends IProduct{
+        colors: AdditionalInformation[];
+
+  }
+
+
+ export interface Edit_Accessories extends EDIT_PRODUCT_PROPS{
+  colors: AdditionalInformation[];
+
+ }

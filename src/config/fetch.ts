@@ -3,6 +3,7 @@ import axios from 'axios';
 import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS,} from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode} from '@apollo/client';
+import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
 
 
 export const fetchProducts = async () => {
@@ -24,6 +25,7 @@ export const fetchProducts = async () => {
     throw error;
   }
 };
+
 export const fetchCategories = async (FETCH_HEADER_CATEGORIES?:DocumentNode) => {
   try {
     const { data } = await client.query({
@@ -116,3 +118,25 @@ export const get_allAdmins = async (token: string | undefined) => {
   }
 
 }
+
+
+
+export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?:DocumentNode) => {
+  try {
+    const { data } = await client.query({
+      query: CUSTOMISE_ACCESSORIES ? CUSTOMISE_ACCESSORIES : FETCH_ALL_ACCESSORIES,
+       fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: {
+          credentials: "include",
+          next: { tags: ["accessories"] }
+        },
+      },
+    });
+
+    return data?.products || [];
+  } catch (error) {
+    return []
+    throw error;
+  }
+};
