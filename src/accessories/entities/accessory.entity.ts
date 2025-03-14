@@ -1,6 +1,7 @@
 import { Int, Field, ObjectType, ID } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Product } from '../../products/entities/product.entity';
+import { Category } from 'categories/entities/category.entity';
 
 
 
@@ -27,7 +28,7 @@ export class Accessory {
   @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON ,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   hoverImageUrl: any
 
 
@@ -63,12 +64,15 @@ export class Accessory {
 
   @Field(() => [GraphQLJSON])
   FAQS: any[]
-  
+
   @Field({ nullable: true })
   boxCoverage: string
 
-  @Field(()=>Product,{nullable:true})
-  products:Product
-  
+  @Field(() => Product, { nullable: true })
+  products: Product
+
+
+  @Field(() => Category, { nullable: true })
+  category: Category
 
 }

@@ -32,8 +32,9 @@ export class SubCategoriesService {
 
   async findAll() {
     try {
-let categories = await this.prisma.subCategories.findMany({ include: { category: true, products: true } });
-return categories;
+      console.log('reqest recieved')
+      let categories = await this.prisma.subCategories.findMany({ include: { category: true, products: true } });
+      return categories;
     } catch (error: any) {
       console.log(error, "err")
       return customHttpException(`${error.message || JSON.stringify(error)}`, 'GATEWAY_TIMEOUT')

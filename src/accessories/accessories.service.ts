@@ -8,25 +8,27 @@ import { customHttpException } from '../utils/helper';
 export class AccessoriesService {
   constructor(private prisma: PrismaService) { }
   async create(createAccessoryInput: CreateAccessoryInput) {
-    const { Category, ...updateData } = createAccessoryInput
+    const { category,products, ...updateData } = createAccessoryInput;
     try {
       return await this.prisma.acessories.create({
         data: {
           ...updateData,
-          ...(Category !== undefined ? { category: { connect: { id: +Category } } } : Category ? { Category } : undefined),
-
-
+          ...(category !== undefined ? { category: { connect: { id: +category } } } : {}), 
+          ...((products !== undefined && products.length > 0) 
+          ? { products: { connect: products.map((id: string) => ({ id: +id })) } } 
+          : {}),
         },
-
       });
     } catch (error) {
+      console.log(error, "error")
       if (error.code === 'P2025') {
         throw new BadRequestException('The requested record does not exist.');
       } else {
         throw new InternalServerErrorException('Something went wrong while creating the accessory.');
       }
     }
-  }
+}
+
 
   async findAll() {
     try {
@@ -46,13 +48,13 @@ export class AccessoriesService {
 
   async update(id: number, updateAccessoryInput: UpdateAccessoryInput) {
     try {
-      const { Category, id: _, ...updateData } = updateAccessoryInput;
+      const { category, id: _, ...updateData } = updateAccessoryInput;
 
       return await this.prisma.products.update({
         where: { id },
         data: {
           ...updateData,
-          ...(Category !== undefined ? { category: { connect: { id: +Category } } } : Category ? { Category } : undefined),
+          ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
 
         },
       });

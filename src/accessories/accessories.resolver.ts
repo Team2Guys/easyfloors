@@ -3,6 +3,7 @@ import { AccessoriesService } from './accessories.service';
 import { Accessory } from './entities/accessory.entity';
 import { CreateAccessoryInput } from './dto/create-accessory.input';
 import { UpdateAccessoryInput } from './dto/update-accessory.input';
+import { Public } from 'decorators/public.decorator';
 
 @Resolver(() => Accessory)
 export class AccessoriesResolver {
@@ -12,12 +13,12 @@ export class AccessoriesResolver {
   createAccessory(@Args('createAccessoryInput') createAccessoryInput: CreateAccessoryInput) {
     return this.accessoriesService.create(createAccessoryInput);
   }
-
+  @Public()
   @Query(() => [Accessory], { name: 'accessories' })
   findAll() {
     return this.accessoriesService.findAll();
   }
-
+  @Public()
   @Query(() => Accessory, { name: 'accessory' })
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.accessoriesService.findOne(id);

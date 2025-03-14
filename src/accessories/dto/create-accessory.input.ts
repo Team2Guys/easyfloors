@@ -4,9 +4,6 @@ import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
 export class CreateAccessoryInput {
-  @Field(() => ID)
-  id: number;
-
   @Field(() => String,)
   name: string;
 
@@ -25,7 +22,7 @@ export class CreateAccessoryInput {
   @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON ,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   hoverImageUrl: any
 
 
@@ -61,11 +58,14 @@ export class CreateAccessoryInput {
 
   @Field(() => [GraphQLJSON])
   FAQS: any[]
-  
+
   @Field({ nullable: true })
   boxCoverage: string
 
-    @Field(()=>ID,{nullable:true})
-    Category:Number
-  
+  @Field(() => ID, { nullable: true })
+  category: Number
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  products: any
+
 }

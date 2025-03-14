@@ -143,5 +143,5 @@ model Acessories {
   categoryId            Int?
   short_description     String?
   products Products[] @relation("ProductAccessories")
-  Category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }

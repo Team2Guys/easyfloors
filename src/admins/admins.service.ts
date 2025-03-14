@@ -27,7 +27,7 @@ export class AdminsService {
     }
   }
 
-  async AdminLogin(loginData: Admin_login, res:Response) {
+  async AdminLogin(loginData: Admin_login, res: Response) {
     const { email, password } = loginData;
     try {
       const existingUser = await this.prisma.admins.findFirst({
@@ -43,7 +43,7 @@ export class AdminsService {
         if (!isPasswordValid)
           throw new UnauthorizedException('Invalid username or password');
 
-      
+
         const { password: _, ...userWithoutPassword } = existingUser;
         const token = jwt.sign({ userWithoutPassword }, process.env.TOKEN_SECRET, {
           expiresIn: '24h',
@@ -55,7 +55,7 @@ export class AdminsService {
           path: '/',
           maxAge: 24 * 60 * 60 * 1000, // 24 hours
         });
-        
+
         return {
           ...userWithoutPassword,
           token,
@@ -69,45 +69,45 @@ export class AdminsService {
     }
   }
 
-  async superAdmin(loginData: Admin_login, res:Response) {
+  async superAdmin(loginData: Admin_login, res: Response) {
     const { email, password } = loginData;
     try {
-   let superAdmin_email = process.env.SUPER_AMDIN_EMAIL  || " ";
-   let super_admin_pasword = process.env.SUPER_AMDIN_PASSWORD  || " ";
-   console.log(superAdmin_email, "superAdmin_email", email)
+      let superAdmin_email = process.env.SUPER_AMDIN_EMAIL || " ";
+      let super_admin_pasword = process.env.SUPER_AMDIN_PASSWORD || " ";
+      console.log(superAdmin_email, "superAdmin_email", email)
 
-      if (email!==superAdmin_email){
+      if (email !== superAdmin_email) {
         return customHttpException('User Not found', 'NOT_FOUND');
       }
-      if (super_admin_pasword !==password) {
+      if (super_admin_pasword !== password) {
         throw new UnauthorizedException('Invalid username or password');
       }
 
-    
-    let   userWithoutPassword ={
-      fullname:"Shiraz Ossman",
-      email:superAdmin_email,
-      role:"super_admin"
-    }
-    
-        const token = jwt.sign( userWithoutPassword , process.env.TOKEN_SECRET, {
-          expiresIn: '24h',
-        });
 
-        res.cookie('super_admin_access_token', token, {
-          httpOnly: true,
-          secure: true, // Required when using SameSite: 'None'
-          sameSite: 'none', // Allows cross-origin cookie
-          path: '/',
-          maxAge: 24 * 60 * 60 * 1000, // 24 hours
-        });
-        
-        return {
-          ...userWithoutPassword,
-          token,
-        };
+      let userWithoutPassword = {
+        fullname: "Shiraz Ossman",
+        email: superAdmin_email,
+        role: "super_admin"
       }
-     catch (error) {
+
+      const token = jwt.sign(userWithoutPassword, process.env.TOKEN_SECRET, {
+        expiresIn: '24h',
+      });
+
+      res.cookie('super_admin_access_token', token, {
+        httpOnly: true,
+        secure: true, // Required when using SameSite: 'None'
+        sameSite: 'none', // Allows cross-origin cookie
+        path: '/',
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      });
+
+      return {
+        ...userWithoutPassword,
+        token,
+      };
+    }
+    catch (error) {
       return customHttpException(error.message,
         'INTERNAL_SERVER_ERROR',
       );
