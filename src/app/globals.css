@@ -102,7 +102,16 @@ padding: 4px;
 }
 
 .slick-dots li.slick-active .custom-dot {
-  background-color: var(--primary) !important;; /* Active dot color */
+  background-color: var(--primary) !important;
+}
+
+.custom-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--primary) !important;
+  border: var(--primary) !important;
+}
+
+.custom-collapse .ant-collapse-header {
+  border-bottom: 1px solid #DEDEDE;
 }
 
 @media (max-width: 767px) {
