@@ -10,7 +10,7 @@ import masterCard from './../../public/assets/images/payment-icons/Mastercard-Lo
 import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 import { StaticImageData } from 'next/image';
-import { EDIT_PRODUCT_PROPS } from 'types/prod';
+import { AdditionalInformation} from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
 
@@ -103,19 +103,38 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
 };
 
 
-export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
+export interface IProductValues {
+  id?: number;
+  name: string;
+  price: number;
+  description: string;
+  stock: number;
+  discountPrice?: number;
+  AdditionalInformation: AdditionalInformation[];
+  custom_url: string;
+  plankWidth?: string;
+  thickness?: string;
+  ResidentialWarranty?: string;
+  CommmericallWarranty?: string;
+  waterproof?: boolean;
+  Meta_Title?: string;
+  Canonical_Tag?: string;
+  Meta_Description?: string;
+  FAQS: AdditionalInformation[];
+  boxCoverage?: string;
+  colors?: AdditionalInformation[];
+}
+
+
+
+
+export const AddproductsinitialValues: IProductValues = {
   id: 0, // Default value for id (should be generated dynamically)
   name: '',
   price: 0,
   description: '',
   stock: 0,
   discountPrice: 0,
-  sale: '', // Added optional property
-  colors: [], // Added optional property
-  spacification: [],
-  posterImageUrl: { imageUrl: "", public_id: "" }, // Must be an array of `ProductImage`
-  productImages: [], // Must be an array of `ProductImage`
-  hoverImageUrl: { imageUrl: "", public_id: "" }, 
   AdditionalInformation: [],
   custom_url: '',
   plankWidth: '',
@@ -127,8 +146,20 @@ export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
   Canonical_Tag: '',
   Meta_Description: '',
   FAQS:[],
-  boxCoverage:""
+  boxCoverage:"",
 };
+
+
+export const excludedKeys = [
+  "plankWidth",
+   "boxCoverage",
+   "CommmericallWarranty",
+   "spacification",
+   "ResidentialWarranty",
+   "waterproof",
+   "thickness"
+  
+  ] 
 
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),

@@ -159,27 +159,6 @@ mutation UpdateProduct($input: UpdateProductInput!) {
   updateProduct(updateProductInput: $input) {
     id
     name
-    price
-    discountPrice
-    description
-    stock
-    posterImageUrl
-    hoverImageUrl
-    productImages
-    colors
-    createdAt
-    updatedAt
-    Canonical_Tag
-    Meta_Description
-    Meta_Title
-    last_editedBy
-    custom_url
-    waterproof
-    AdditionalInformation
-    plankWidth
-    ResidentialWarranty
-    CommmericallWarranty
-    categoryId
   }
 }
 `;
@@ -189,27 +168,6 @@ mutation CreateProduct($input: CreateProductInput!) {
   createProduct(createProductInput: $input) {
     id
     name
-    price
-    discountPrice
-    description
-    stock
-    posterImageUrl
-    hoverImageUrl
-    productImages
-    colors
-    createdAt
-    updatedAt
-    Canonical_Tag
-    Meta_Description
-    Meta_Title
-    last_editedBy
-    custom_url
-    waterproof
-    AdditionalInformation
-    plankWidth
-    ResidentialWarranty
-    CommmericallWarranty
-    categoryId
   }
 }
 `;

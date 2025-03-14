@@ -6,15 +6,15 @@ import ViewProduct from "components/Dashboard/dashboard_products/ViewProduct";
 import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { IProduct } from "types/prod";
+import { IAccessories, IProduct } from "types/prod";
 import { DASHBOARD_MAINPAGE_PROPS } from "types/PagesProps";
 const AddProd = dynamic(
   () => import("components/Dashboard/dashboard_products/AddProd")
 );
 
-const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
-  const [editProduct, setEditProduct] = useState<IProduct | undefined>();
-  const [products, setProducts] = useState<IProduct[]>(productsData);
+const Product = ({ categories, productsData,accessories,accessoryFlag }: DASHBOARD_MAINPAGE_PROPS) => {
+  const [editProduct, setEditProduct] = useState<IProduct | IAccessories | undefined>();
+  const [products, setProducts] = useState<(IProduct | IAccessories)[]>(accessories ? accessories : productsData);
   const [selecteMenu, setselecteMenu] = useState<string>("Add All Products");
 
   const EditInitialValues = {
@@ -32,7 +32,6 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
     Meta_Title: (editProduct && editProduct?.Meta_Title) || "",
     Meta_Description: (editProduct && editProduct?.Meta_Description) || "",
     Canonical_Tag: (editProduct && editProduct?.Canonical_Tag) || "",
-    colors: (editProduct && editProduct?.colors) || [],
     custom_url: editProduct && editProduct?.custom_url,
     plankWidth: editProduct && editProduct?.plankWidth,
     thickness: editProduct && editProduct?.thickness,
@@ -45,9 +44,10 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
 
   };
 
+
   useEffect(() => {
-    setProducts(productsData);
-  }, [productsData]);
+    setProducts(accessories ? accessories : productsData);
+  }, [productsData, accessories]);
   const productFlag: boolean =
     selecteMenu === "Add All Products" ? true : false;
 
@@ -60,6 +60,7 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
           setProducts={setProducts}
           setselecteMenu={setselecteMenu}
           setEditProduct={setEditProduct}
+          accessoryFlag={accessoryFlag}
         />
       ) : (
         <AddProd
@@ -74,6 +75,8 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
               : undefined
           }
           categoriesList={categories}
+          products={products}
+          accessoryFlag={accessoryFlag}
         />
       )}
     </DefaultLayout>

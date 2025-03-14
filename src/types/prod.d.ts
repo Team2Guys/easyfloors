@@ -26,13 +26,11 @@ export interface IProduct {
     stock: number;
     discountPrice?: number;
     sale?: string;
-    colors: AdditionalInformation[];
     spacification?: specsDetails[];
     posterImageUrl: ProductImage;
     productImages: ProductImage[];
     hoverImageUrl: ProductImage;
     AdditionalInformation: AdditionalInformation[];
-    colors: AdditionalInformation[];
     categoriesId: number;
     subcategory?: ISUBCATEGORY_EDIT;
     custom_url?:string;
@@ -82,4 +80,14 @@ export interface IProduct {
   }
 
 
- 
+
+  export interface IAccessories extends IProduct{
+        colors: AdditionalInformation[];
+
+  }
+
+
+ export interface Edit_Accessories extends EDIT_PRODUCT_PROPS{
+  colors: AdditionalInformation[];
+
+ }

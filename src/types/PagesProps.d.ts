@@ -25,12 +25,16 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     setEditProduct?: React.Dispatch<React.SetStateAction<IProduct | undefined>>;
     subCategories?: ISUBCATEGORY[];
     categoriesList?: ICategory[];
+    products?:IProduct[]
+    accessoryFlag?:boolean
   }
 
 
   export interface DASHBOARD_MAINPAGE_PROPS {
     categories: ICategory[], 
-    productsData: IProduct[]
+    productsData: IProduct[],
+    accessories?:IAccessories[]
+    accessoryFlag?:boolean
   }
 
 
@@ -39,7 +43,7 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     setProducts: React.Dispatch<SetStateAction<IProduct[]>>;
     setselecteMenu: React.Dispatch<SetStateAction<string>>;
     setEditProduct: React.Dispatch<SetStateAction<IProduct | undefined>>;
-  
+    accessoryFlag?:boolean
   
   }
   
