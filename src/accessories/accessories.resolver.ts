@@ -3,7 +3,7 @@ import { AccessoriesService } from './accessories.service';
 import { Accessory } from './entities/accessory.entity';
 import { CreateAccessoryInput } from './dto/create-accessory.input';
 import { UpdateAccessoryInput } from './dto/update-accessory.input';
-import { Public } from 'decorators/public.decorator';
+import { Public } from '../decorators/public.decorator';
 
 @Resolver(() => Accessory)
 export class AccessoriesResolver {
