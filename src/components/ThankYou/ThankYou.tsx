@@ -12,7 +12,7 @@ const ThankYouComp: React.FC = () => {
             <h1 className="md:text-6xl text-3xl font-bold text-center font-inter">THANK YOU!</h1>
             <p className="text-center mt-2 md:text-xl text-base md:px-0 px-4">Say thanks, confirm the payment, provide the order ID and mention that the order confirmation email has been sent.</p>
             <div className="flex flex-col justify-center items-center gap-4 md:my-16 my-6">
-                <Link href="/shop" className="bg-primary text-white max-w-fit md:px-16 px-8 md:py-3 py-2 flex items-center md:text-lg text-sm font-inter font-light md:gap-3 gap-1"> <IoIosArrowRoundBack className="text-32" />  Back to Shopping</Link>
+                <Link href="/shop" className="bg-primary text-white max-w-fit md:px-28 px-8 md:py-4 py-2 flex items-center md:text-lg text-sm font-inter font-light md:gap-3 gap-1"> <IoIosArrowRoundBack className="text-32" />  Back to Shopping</Link>
                 <Link href="/return-policy" className=" max-w-fit text-black border-black text-lg font-inter md:mt-4 border-b">Read about our return policy</Link>
             </div>
 
