@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AuthData, FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -1048,6 +1048,30 @@ export const colors = [
   { code: "FC5943", color: "/assets/bin/colors/c15.png" },
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
 ];
+
+
+export const loginData: AuthData = {
+  title: "WELCOME TO EASY FLOORS",
+  subtitle: "Login",
+  description: "Please login using account details below.",
+  emailPlaceholder: "Enter your email",
+  passwordPlaceholder: "Enter your password",
+  forgotPasswordText: "Forgot your password?",
+  buttonText: "Login",
+  footerText: "Don't Have an Account?",
+  footerLinkText: "Create account",
+};
+
+export const signupData: AuthData = {
+  title: "WELCOME TO EASY FLOORS",
+  subtitle: "Create Account",
+  description: "Please fill in your details to create an account.",
+  emailPlaceholder: "Enter your email",
+  passwordPlaceholder: "Create a password",
+  buttonText: "Sign Up",
+  footerText: "Already have an account?",
+  footerLinkText: "Login",
+};
 
 
 

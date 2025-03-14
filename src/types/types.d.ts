@@ -136,3 +136,20 @@ export interface OrderItem {
   sqm: number;
   price: number;
 }
+export interface AuthData {
+  title: string;
+  subtitle: string;
+  description: string;
+  emailPlaceholder: string;
+  passwordPlaceholder: string;
+  forgotPasswordText?: string;
+  buttonText: string;
+  footerText: string;
+  footerLinkText: string;
+}
+
+export interface AuthFormState {
+  email: string;
+  password: string;
+}
+
