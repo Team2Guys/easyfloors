@@ -34,10 +34,10 @@ import { useMutation } from "@apollo/client";
 import {
   CREATE_ACCESSORIES,
   CREATE_PRODUCT,
-  UPDATE_ACCESSORY_MUTATION,
   UPDATE_PRODUCT,
 } from "graphql/mutations";
 import Cookies from "js-cookie";
+import { UPDATE_ACCESSORY_MUTATION } from "graphql/Accessories";
 
 const initialErrors = {
   categoryError: "",
@@ -98,6 +98,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       },
     }
   );
+
 
   const [createProduct] = useMutation(
     accessoryFlag ? CREATE_ACCESSORIES : CREATE_PRODUCT,
@@ -196,7 +197,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
       /* eslint-disable */
 
-      const { products, colors, ...restValues } = values;
+      const { products, ...restValues } = values;
       /* eslint-enable */
 
       let newValues = {
@@ -318,7 +319,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       )
     ) as IProductValues;
     return accessoryFlag
-      ? { ...modifiedProductValues, colors: [] }
+      ? { ...modifiedProductValues }
       : ChangedValue;
   };
 
@@ -912,97 +913,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             component="div"
                             className="text-red-500 dark:text-red-700 text-sm"
                           />
-                        </div>
-                      </div>
-
-                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
-                          <h3 className="font-medium text-black dark:text-white">
-                            Color Information
-                          </h3>
-                        </div>
-
-                        <div className="flex flex-col py-4 px-6">
-                          <FieldArray name="colors">
-                            {({ push, remove }) => (
-                              <div className="flex flex-col gap-2">
-                                {formik.values.colors &&
-                                  formik.values.colors.map(
-                                    (
-                                      model: AdditionalInformation,
-                                      index: number
-                                    ) => (
-                                      <div
-                                        key={index}
-                                        className="flex items-center"
-                                      >
-                                        <input
-                                          type="text"
-                                          name={`colors[${index}].name`}
-                                          onChange={formik.handleChange}
-                                          onBlur={formik.handleBlur}
-                                          value={
-                                            formik?.values?.colors?.[index]
-                                              ?.detail || ""
-                                          }
-                                          placeholder="Model Name"
-                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                            model.name &&
-                                            (
-                                              formik.errors
-                                                .colors as FormikErrors<
-                                                IProductValues["colors"]
-                                              >
-                                            )?.[index]
-                                              ? "border-red-500 dark:border-white"
-                                              : ""
-                                          }`}
-                                        />
-                                        <input
-                                          type="text"
-                                          name={`colors[${index}].detail`}
-                                          onChange={formik.handleChange}
-                                          onBlur={formik.handleBlur}
-                                          value={
-                                            formik?.values?.colors?.[index]
-                                              ?.detail || ""
-                                          }
-                                          placeholder="Model Detail"
-                                          className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                            model.detail &&
-                                            (
-                                              formik.errors
-                                                .colors as FormikErrors<
-                                                IProductValues["colors"]
-                                              >
-                                            )?.[index]
-                                              ? "border-red-500 dark:border-white"
-                                              : ""
-                                          }`}
-                                        />
-                                        <button
-                                          type="button"
-                                          onClick={() => remove(index)}
-                                          className="ml-2 text-red-500 "
-                                        >
-                                          <RxCross2
-                                            className="text-red-500 dark:text-white"
-                                            size={25}
-                                          />
-                                        </button>
-                                      </div>
-                                    )
-                                  )}
-                                <button
-                                  type="button"
-                                  onClick={() => push({ name: "", detail: "" })}
-                                  className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
-                                >
-                                  Add Model
-                                </button>
-                              </div>
-                            )}
-                          </FieldArray>
                         </div>
                       </div>
                     </>
