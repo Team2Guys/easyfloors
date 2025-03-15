@@ -1,5 +1,4 @@
 "use client";
-
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/DefaultLayout";
 import ViewProduct from "components/Dashboard/dashboard_products/ViewProduct";
