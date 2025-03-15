@@ -237,3 +237,11 @@ export const CREATE_ADMIN = gql`
       
   }
 `;
+
+export const UPDATE_ACCESSORY_MUTATION = gql`
+mutation UpdateAccessory($input: UpdateAccessoryInput!) {
+    updateAccessory(updateAccessoryInput: $input) {
+        id
+        name
+    }
+}`

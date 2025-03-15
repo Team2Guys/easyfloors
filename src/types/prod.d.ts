@@ -84,6 +84,7 @@ export interface IProduct {
 
   export interface IAccessories extends IProduct{
         colors: AdditionalInformation[];
+        products: IProduct[]
 
   }
 
