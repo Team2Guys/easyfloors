@@ -122,7 +122,6 @@ export interface IProductValues {
   Meta_Description?: string;
   FAQS: AdditionalInformation[];
   boxCoverage?: string;
-  colors?: AdditionalInformation[];
   products: (string | number)[];
 
 }
@@ -162,7 +161,8 @@ export const excludedKeys = [
    "waterproof",
    "thickness",
     "subcategory",
-    "featureImages"
+    "featureImages",
+    "colors"
   
   ] 
 export const excludedKeysFroProducts = [
