@@ -73,6 +73,8 @@ export class Accessory {
   @Field(() => Product, { nullable: true })
   products: Product
 
+  @Field(() => [GraphQLJSON])
+  featureImages: any[]
 
   @Field(() => Category, { nullable: true })
   category: Category
