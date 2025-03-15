@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -1051,27 +1051,30 @@ export const colors = [
 
 
 export const loginData: AuthData = {
-  title: "WELCOME TO EASY FLOORS",
-  subtitle: "Login",
+  title: "WELCOME TO <br> EASY FLOORS",
+  subtitle: "Sign In",
   description: "Please login using account details below.",
   emailPlaceholder: "Enter your email",
   passwordPlaceholder: "Enter your password",
   forgotPasswordText: "Forgot your password?",
-  buttonText: "Login",
+  buttonText: "Sign In",
   footerText: "Don't Have an Account?",
   footerLinkText: "Create account",
 };
 
-export const signupData: AuthData = {
-  title: "WELCOME TO EASY FLOORS",
-  subtitle: "Create Account",
-  description: "Please fill in your details to create an account.",
+export const signupData: SignAuthData = {
+  title: "WELCOME TO <br> EASY FLOORS",
+  subtitle: "Sign Up",
+  fullNamePlaceholder: "Enter your full name",
   emailPlaceholder: "Enter your email",
-  passwordPlaceholder: "Create a password",
+  passwordPlaceholder: "Enter your password",
+  retypePasswordPlaceholder: "Retype your password",
+  // forgotPasswordText: "Forgot your password?",
   buttonText: "Sign Up",
   footerText: "Already have an account?",
-  footerLinkText: "Login",
+  footerLinkText: "Sign In",
 };
+
 
 
 

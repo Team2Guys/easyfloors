@@ -142,11 +142,24 @@ export interface AuthData {
   description: string;
   emailPlaceholder: string;
   passwordPlaceholder: string;
-  forgotPasswordText?: string;
+  forgotPasswordText: string;
   buttonText: string;
   footerText: string;
   footerLinkText: string;
 }
+export interface SignAuthData {
+  title: string;
+  subtitle: string;
+  emailPlaceholder: string;
+  passwordPlaceholder: string;
+  // forgotPasswordText?: string; 
+  buttonText: string;
+  footerText: string;
+  footerLinkText: string;
+  fullNamePlaceholder?:string;
+  retypePasswordPlaceholder?:string
+}
+
 
 export interface AuthFormState {
   email: string;
