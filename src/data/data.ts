@@ -288,50 +288,16 @@ export const socialLinks: SocialLink[] = [
   { href: '/faqs', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
 ];
 
-export const menuItems = [
-  {
-    label: 'SPC Flooring',
-    href: '/',
-    submenu: [
-      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Tiles', href: '/spc-tiles', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Tiles', href: '/spc-tiles', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-    ],
-  },
-  {
-    label: 'LVT Flooring',
-    href: '/',
-    submenu: [
-      { label: 'Luxury LVT', href: '/lvt-luxury', image: "/assets/bin/Flooring.png" },
-      { label: 'Waterproof LVT', href: '/lvt-waterproof', image: "/assets/bin/Flooring.png" },
-    ],
-  },
-  {
-    label: 'Richmond Flooring',
-    href: '/',
-    submenu: [
-      { label: 'Richmond Flooring', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-      { label: 'Richmond Eco SPC', href: '/spc-tiles', image: "/assets/bin/Eco.png" },
-      { label: 'Richmond Herringbone SPC', href: '/spc-wood', image: "/assets/bin/Herringbone.png" },
-      { label: 'Richmond Comfort LVT', href: '/spc-tiles', image: "/assets/bin/Comfort.png" },
-      { label: 'Richmond Luxury LVT', href: '/spc-wood', image: "/assets/bin/Luxury.png" },
-    ],
-  },
-  {
-    label: 'Polar Flooring',
-    href: '/',
-    submenu: [
-      { label: 'Polar Classic', href: '/polar-classic', image: "/assets/bin/Flooring.png" },
-      { label: 'Polar Premium', href: '/polar-premium', image: "/assets/bin/Flooring.png" },
-    ],
-  },
-  { label: 'How to measure', href: '/how-to-measure-your-room', },
-  { label: 'Accessories', href: '/accessories', },
-  { label: 'Blogs', href: '/blogs', },
-  { label: 'About Us', href: '/about-us', },
-  { label: 'Contact Us', href: '/contact-us', },
+export  const staticMenuItems = [
+  { label: "SPC Flooring", href: "spc-flooring", submenu: [] },
+  { label: "LVT Flooring", href: "lvt-flooring", submenu: [] },
+  { label: "Richmond Flooring", href: "richmond-flooring", submenu: [] },
+  { label: "Polar Flooring", href: "polar-flooring", submenu: [] },
+  { label: "How to measure", href: "how-to-measure-your-room" },
+  { label: "Accessories", href: "accessories" },
+  { label: "Blogs", href: "blogs" },
+  { label: "About Us", href: "about-us" },
+  { label: "Contact Us", href: "contact-us" },
 ];
 
 
