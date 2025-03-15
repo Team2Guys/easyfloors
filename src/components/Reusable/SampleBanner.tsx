@@ -13,6 +13,7 @@ const SampleBanner = () => {
             height={200}
             width={800}
             alt='image'
+            loading='lazy'
             className='w-[200px] h-[160px] lg:w-[500px] lg:h-[400px] xl:w-[610px] xl:h-[500px] 2xl:w-[810px] 2xl:h-[669px]'
           />
         </div>

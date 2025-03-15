@@ -13,7 +13,7 @@ import { IProduct } from "types/prod";
 
 const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
-    <div className="md:space-y-10 space-y-8">
+    <div className="space-y-8">
       {categories?.map((category: Category, index: number) => {
         const shouldEnablePagination = category.products && category.products.length >= 3;
 

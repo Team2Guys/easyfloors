@@ -32,7 +32,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
       boxCoverage,
     } = calculateProductDetails(area, unit, productData);
 
-    console.log(productData,"productData")
+    console.log(productData,"productData",ProductInfo)
 
     return (
       <div className="mb-10">
@@ -54,7 +54,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <div className="flex items-center gap-2 sm:gap-4 text-18 2xl:text-23 font-semibold text-primary">
           <p className="text-black">Price Per Sqm :</p>
           <p>
-            <span>AED</span> {productData.price}{" "}
+            <span>AED</span> {productData.price }{" "}
             <span>
               /m<sup>2</sup>
             </span>
