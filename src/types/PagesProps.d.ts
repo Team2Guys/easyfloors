@@ -55,6 +55,7 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     slug?: string;
     subcategory?: string;
     altText?:string
+    isImagetext?: boolean;
   };
 
 

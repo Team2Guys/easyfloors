@@ -170,6 +170,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
     categories {
       id
       name
+      custom_url
       RecallUrl
       subcategories {
         id

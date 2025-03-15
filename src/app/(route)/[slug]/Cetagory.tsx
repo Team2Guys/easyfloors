@@ -36,103 +36,106 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, }: 
     }
   }, [categoryData, subCategoryData])
 
-  console.log("Data",params.subcategory)
   useEffect(() => {
-    console.log("Params:", params);
-  }, [params]);
+  let filtered = Data?.products;
+  if (params.subcategory) {
+    filtered = filtered?.filter(product => 
+      product.subcategory?.custom_url === params.subcategory
+    );
+  }
 
-  useEffect(() => {
-    let filtered = Data?.products;
-    const selectedFilter = []
+  const selectedFilter = [];
 
-    filtered = filtered?.filter(product => {
-      const price = parseFloat(product.price);
-      return price >= priceValue[0] && price <= priceValue[1];
-    });
-    ProductsSorting(filtered || [], sortOption)
-    if (
-      sortOption &&
-      selectedColors.length === 0 &&
-      selectedThicknesses.length === 0 &&
-      selectedCommmericallWarranty.length === 0 &&
-      selectedResidentialWarranty.length === 0 &&
-      selectedPlankWidth.length === 0 &&
-      isWaterProof === null
-    ) {
-      setFilteredProducts(filtered || []);
-      setSelectedFilters([]);
-      return;
-    }
+  filtered = filtered?.filter(product => {
+    const price = parseFloat(product.price);
+    return price >= priceValue[0] && price <= priceValue[1];
+  });
 
-    if (isWaterProof !== null) {
-      filtered = filtered?.filter(product => product.waterproof === isWaterProof);
-      selectedFilter.push({ name: "isWaterProof", value: isWaterProof });
-    }
+  ProductsSorting(filtered || [], sortOption);
 
-    if (selectedColors.length > 0) {
-      filtered = filtered?.filter(product =>
-        product.colors?.some((color: AdditionalInformation) => selectedColors.includes(color.name))
-      );
-      selectedColors.forEach(color => {
-        selectedFilter.push({ name: "selectedColors", value: color });
-      });
-
-    }
-
-    if (selectedThicknesses.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedThicknesses.includes(product.thickness || '')
-      );
-      selectedThicknesses.forEach(thickness => {
-        selectedFilter.push({ name: "selectedThicknesses", value: thickness });
-      });
-    }
-
-    if (selectedCommmericallWarranty.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedCommmericallWarranty.includes(product.CommmericallWarranty || '')
-      );
-      selectedCommmericallWarranty.forEach(warranty => {
-        selectedFilter.push({ name: "selectedCommmericallWarranty", value: warranty });
-      });
-    }
-
-    if (selectedResidentialWarranty.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedResidentialWarranty.includes(product.ResidentialWarranty || '')
-      );
-      selectedResidentialWarranty.forEach(warranty => {
-        selectedFilter.push({ name: "selectedResidentialWarranty", value: warranty });
-      });
-    }
-
-    if (selectedPlankWidth.length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedPlankWidth.includes(product.plankWidth || '')
-      );
-      selectedPlankWidth.forEach(width => {
-        selectedFilter.push({ name: "selectedPlankWidth", value: width });
-      });
-    }
-
+  if (
+    sortOption &&
+    selectedColors.length === 0 &&
+    selectedThicknesses.length === 0 &&
+    selectedCommmericallWarranty.length === 0 &&
+    selectedResidentialWarranty.length === 0 &&
+    selectedPlankWidth.length === 0 &&
+    isWaterProof === null
+  ) {
     setFilteredProducts(filtered || []);
-    setSelectedFilters(selectedFilter);
-  }, [
-    isWaterProof,
-    selectedColors,
-    selectedThicknesses,
-    selectedCommmericallWarranty,
-    selectedResidentialWarranty,
-    selectedPlankWidth,
-    priceValue,
-    sortOption,
-    Data?.products
-  ]);
+    setSelectedFilters([]);
+    return;
+  }
+
+  if (isWaterProof !== null) {
+    filtered = filtered?.filter(product => product.waterproof === isWaterProof);
+    selectedFilter.push({ name: "isWaterProof", value: isWaterProof });
+  }
+
+  if (selectedColors.length > 0) {
+    filtered = filtered?.filter(product =>
+      product.colors?.some((color: AdditionalInformation) => selectedColors.includes(color.name))
+    );
+    selectedColors.forEach(color => {
+      selectedFilter.push({ name: "selectedColors", value: color });
+    });
+  }
+
+  if (selectedThicknesses.length > 0) {
+    filtered = filtered?.filter(product =>
+      selectedThicknesses.includes(product.thickness || '')
+    );
+    selectedThicknesses.forEach(thickness => {
+      selectedFilter.push({ name: "selectedThicknesses", value: thickness });
+    });
+  }
+
+  if (selectedCommmericallWarranty.length > 0) {
+    filtered = filtered?.filter(product =>
+      selectedCommmericallWarranty.includes(product.CommmericallWarranty || '')
+    );
+    selectedCommmericallWarranty.forEach(warranty => {
+      selectedFilter.push({ name: "selectedCommmericallWarranty", value: warranty });
+    });
+  }
+
+  if (selectedResidentialWarranty.length > 0) {
+    filtered = filtered?.filter(product =>
+      selectedResidentialWarranty.includes(product.ResidentialWarranty || '')
+    );
+    selectedResidentialWarranty.forEach(warranty => {
+      selectedFilter.push({ name: "selectedResidentialWarranty", value: warranty });
+    });
+  }
+
+  if (selectedPlankWidth.length > 0) {
+    filtered = filtered?.filter(product =>
+      selectedPlankWidth.includes(product.plankWidth || '')
+    );
+    selectedPlankWidth.forEach(width => {
+      selectedFilter.push({ name: "selectedPlankWidth", value: width });
+    });
+  }
+
+  setFilteredProducts(filtered || []);
+  setSelectedFilters(selectedFilter);
+}, [
+  isWaterProof,
+  selectedColors,
+  selectedThicknesses,
+  selectedCommmericallWarranty,
+  selectedResidentialWarranty,
+  selectedPlankWidth,
+  priceValue,
+  sortOption,
+  Data?.products,
+  params.subcategory
+]);
 
 
   return (
     <>
-      <Breadcrumb image={Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} />
+      <Breadcrumb image={Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={params.slug} title={params.subcategory} isImagetext />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
         <div className=" lg:w-[20%] ">
           <Filters
