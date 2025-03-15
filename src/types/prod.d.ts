@@ -21,17 +21,18 @@ export interface IProduct {
     id: number | string;
     name: string;
     price: number ;
-    description: string;
+    description?: string;
     short_description?: string;
-    stock: number;
+    stock?: number;
     discountPrice?: number;
     sale?: string;
     spacification?: specsDetails[];
     posterImageUrl: ProductImage;
-    productImages: ProductImage[];
-    hoverImageUrl: ProductImage;
-    AdditionalInformation: AdditionalInformation[];
-    categoriesId: number;
+    productImages?: ProductImage[];
+    hoverImageUrl?: ProductImage;
+    AdditionalInformation?: AdditionalInformation[];
+    colors?: AdditionalInformation[];
+    categoriesId?: number;
     subcategory?: ISUBCATEGORY_EDIT;
     custom_url?:string;
     thickness?:string;
@@ -40,21 +41,21 @@ export interface IProduct {
     plankWidth?:string
     waterproof?:boolean
     category?:EDIT_CATEGORY
-    Meta_Title: string;
-    Canonical_Tag: string;
-    Meta_Description: string;
+    Meta_Title?: string;
+    Canonical_Tag?: string;
+    Meta_Description?: string;
     createdAt?:        Date    
     updatedAt ?:          Date
     image?: string
-    FAQS: AdditionalInformation[];
-    boxCoverage?: string
+    FAQS?: AdditionalInformation[];
+    boxCoverage?: string;
     featureImages?:ProductImage[]
   }
 
   export interface ICart {
     id: number ;
     name: string;
-    price: number;
+    price?: number;
     stock: number;
     subcategory?: string;
     category?:string;
