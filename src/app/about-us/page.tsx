@@ -15,7 +15,7 @@ const AboutUs = () => {
           <AboutUsInfo sections={alternatingData} />
         </div>
         <div>
-          <VideoComponent videoUrl="assets/images/aboutus/automated_blinds.mp4" />
+          <VideoComponent videoUrl="assets/images/aboutus/aboutus.mp4" />
           <SampleGrid sections={sampleGridData} />
         </div>
       </Container>
