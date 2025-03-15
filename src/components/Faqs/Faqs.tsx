@@ -17,8 +17,7 @@ interface FaqsProps {
     };
 
     return (
-      <Container>
-          <section className={`bg-white py-10 md:mt-10 ${className}`}>
+        <Container className={`bg-white py-10 md:mt-10 ${className}`}>
                 <h1 className="text-2xl font-semibold font-inter text-[#1B1139] lg:text-3x text-center md:mb-10 mb-6">
                     FAQ’S
                 </h1>
@@ -52,8 +51,7 @@ interface FaqsProps {
                         </div>
                     ))}
                 </div>
-          </section>
-      </Container>
+        </Container>
     );
 };
 
