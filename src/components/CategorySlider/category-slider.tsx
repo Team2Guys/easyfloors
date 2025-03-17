@@ -15,7 +15,6 @@ const CategorySlider = ({categories}: {categories: Category[]}) => {
     <div className="md:space-y-10 space-y-8">
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
         const shouldEnablePagination = category.subcategories && category.subcategories.length >= 0;
-        console.log(categories,"categories")
         return (
           <div
             key={index}

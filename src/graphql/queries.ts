@@ -181,6 +181,25 @@ export const FETCH_HEADER_CATEGORIES = gql`
       }
     }
 `;
-
+export const FETCHSUBCAT = gql`
+  query SubCategories {
+    subCategories {
+      id
+      name
+      posterImageUrl
+      custom_url
+      products {
+        id
+        name
+      }
+      category {
+        id
+        name
+        custom_url
+        RecallUrl
+      }
+    }
+  }
+`;
 
 
