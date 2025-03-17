@@ -23,7 +23,10 @@ export interface Category {
   subcategories?: {
     id: number | string;
     name: string;
+    posterImageUrl?: ProductImage;
     custom_url: string
+    createdAt: Date;
+  updatedAt: Date;
   }[]
 
   whatAmiImageBanner?:ProductImage
@@ -32,6 +35,8 @@ export interface Category {
 
 export interface EDIT_CATEGORY extends Category {
     id?: number | string
+    custom_url?: string
+    RecallUrl?:string
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -58,8 +63,8 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   id?: number | string
   category:number | string,
   products?:IProduct[]
+  posterImageUrl?: ProductImage;
   createdAt?: Date;
   updatedAt?: Date;
-
-
+  custom_url?: string;
 }

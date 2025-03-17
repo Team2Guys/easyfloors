@@ -16,8 +16,11 @@ const FaqDetail = ({FAQS}:FAQprops) => {
 
 
   return (
-    <>
-    <p className='mx-auto max-w-[72%]  sm:max-w-[25%] pl-1 mb-10 text-14 sm:text-24 font-inter font-medium pt-10'>FAQ’s</p>
+    <div>
+    {
+      FAQS.length > 0 && (
+       <>
+          <p className='mx-auto max-w-[72%]  sm:max-w-[25%] pl-1 mb-10 text-14 sm:text-24 font-inter font-medium pt-10'>FAQ’s</p>
     <div className="max-w-[90%] mx-auto mt-5 font-inter">
       {FAQS.map((faq,index) => (
           <Accordion
@@ -31,7 +34,11 @@ const FaqDetail = ({FAQS}:FAQprops) => {
           </Accordion>
       ))}
     </div>
-    </>
+       </>
+      )
+    }
+ 
+    </div>
   );
 };
 
