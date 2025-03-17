@@ -42,9 +42,9 @@ export class CategoriesService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(customUrl: string) {
     try {
-      return await this.prisma.category.findUnique({ where: { id } });
+      return await this.prisma.category.findFirst({ where: { custom_url:customUrl } });
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }

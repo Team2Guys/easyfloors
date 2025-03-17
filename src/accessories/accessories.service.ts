@@ -9,6 +9,7 @@ export class AccessoriesService {
   constructor(private prisma: PrismaService) { }
   async create(createAccessoryInput: CreateAccessoryInput) {
     const { category,products, ...updateData } = createAccessoryInput;
+
     try {
       return await this.prisma.acessories.create({
         data: {
@@ -32,7 +33,7 @@ export class AccessoriesService {
 
   async findAll() {
     try {
-      return await this.prisma.acessories.findMany()
+      return await this.prisma.acessories.findMany({include:{category:true, products:true}})
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -48,13 +49,16 @@ export class AccessoriesService {
 
   async update(id: number, updateAccessoryInput: UpdateAccessoryInput) {
     try {
-      const { category, id: _, ...updateData } = updateAccessoryInput;
-
-      return await this.prisma.products.update({
+      const { category,products, id: _, ...updateData } = updateAccessoryInput;
+console.log(products, "products")
+      return await this.prisma.acessories.update({
         where: { id },
         data: {
           ...updateData,
           ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
+          ...((products !== undefined && products.length > 0) 
+          ? { products: { connect: products.map((id: string) => ({ id: +id })) } } 
+          : {}),
 
         },
       });

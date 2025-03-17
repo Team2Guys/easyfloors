@@ -23,8 +23,8 @@ export class SubCategoriesResolver {
 
   @Public()
   @Query(() => SubCategory, { name: 'subCategory' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.subCategoriesService.findOne(id);
+  findOne(@Args('customUrl', { type: () => String }) customUrl: string) {
+    return this.subCategoriesService.findOne(customUrl);
   }
 
   @Mutation(() => SubCategory)

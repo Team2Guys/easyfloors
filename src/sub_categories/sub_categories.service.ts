@@ -43,9 +43,9 @@ export class SubCategoriesService {
 
   }
 
-  async findOne(id: number) {
+  async findOne(custom_url: string) {
     try {
-      return await this.prisma.subCategories.findUnique({ where: { id }, include: { category: true, products: true } });
+      return await this.prisma.subCategories.findFirst({ where: { custom_url }, include:{category:true}});
     } catch (error) {
       return customHttpException(`${error.message || JSON.stringify(error)}`, 'GATEWAY_TIMEOUT')
 

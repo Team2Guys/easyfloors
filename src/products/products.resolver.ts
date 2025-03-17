@@ -22,8 +22,8 @@ export class ProductsResolver {
 
   @Public()
   @Query(() => Product, { name: 'product' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.productsService.findOne(id);
+  findOne(@Args('custom_url', { type: () => String }) custom_url: string) {
+    return this.productsService.findOne(custom_url);
   }
 
   @Mutation(() => Product)

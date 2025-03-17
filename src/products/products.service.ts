@@ -37,9 +37,9 @@ export class ProductsService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(custom_url: string) {
     try {
-      return await this.prisma.products.findUnique({ where: { id }, include: { category: true, subcategory: true } });
+      return await this.prisma.products.findFirst({ where: { custom_url }, include:{category:true, subcategory:true}});
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }

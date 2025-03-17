@@ -26,7 +26,7 @@ export class AccessoriesResolver {
 
   @Mutation(() => Accessory)
   updateAccessory(@Args('updateAccessoryInput') updateAccessoryInput: UpdateAccessoryInput) {
-    return this.accessoriesService.update(updateAccessoryInput.id, updateAccessoryInput);
+    return this.accessoriesService.update(+updateAccessoryInput.id, updateAccessoryInput);
   }
 
   @Mutation(() => Accessory)
