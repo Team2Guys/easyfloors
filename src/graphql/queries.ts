@@ -32,6 +32,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         id
         name
         RecallUrl
+        custom_url
       }
       subcategory {
         id
@@ -43,6 +44,7 @@ export const FETCH_ALL_PRODUCTS = gql`
    name
    price
    discountPrice
+   custom_url
 
   posterImageUrl }
     }
@@ -192,4 +194,81 @@ export const FETCH_HEADER_CATEGORIES = gql`
 `;
 
 
+export const FIND_ONE_CATEGORY = gql`
+query GetCategory($customUrl: String!) {
+  category(customUrl: $customUrl) {
+    id
+    name
+         Canonical_Tag
+        Meta_Description
+        Meta_Title
+            posterImageUrl
+            custom_url
+  }}
 
+`
+export const FIND_ONE_SUB_CATEGORY = gql`
+query SubCategory($customUrl: String!) {
+  subCategory(customUrl: $customUrl) {
+    id
+    name
+         Canonical_Tag
+        Meta_Description
+        Meta_Title
+            posterImageUrl
+            custom_url
+              category {
+            custom_url
+        }
+  }}
+
+`
+
+
+
+export const FIND_ONE_PRODUCT = gql`
+query Product($custom_url: String!) {
+  product(custom_url: $custom_url) {
+    id
+    name
+        posterImageUrl
+        Meta_Title
+        Meta_Description
+        Canonical_Tag
+
+          category {
+            RecallUrl
+        }
+        subcategory {
+            custom_url
+        }
+  }}
+
+`
+
+
+export const GET_ADMIN_DATA = gql`
+  query Admin {
+    admin {
+    id
+        fullname
+        email
+        canAddProduct
+        canEditProduct
+        canDeleteProduct
+        canAddCategory
+        canDeleteCategory
+        canEditCategory
+        canCheckProfit
+        canCheckRevenue
+        canCheckVisitors
+        canViewUsers
+        canViewSales
+        canVeiwAdmins
+        canVeiwTotalproducts
+        canVeiwTotalCategories
+        posterImageUrl
+        role
+    }
+  }
+`;

@@ -1,9 +1,11 @@
-import { IReview } from 'types/type';
+import {IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, GET_ALL_ADMINS, } from 'graphql/queries';
+import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
+import { Category } from 'types/cat';
+import { IProduct } from 'types/prod';
 
 
 export const fetchProducts = async () => {
@@ -56,7 +58,6 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
 
     return data?.subCategories || []
   } catch (error) {
-    console.log(error, 'error')
     return []
     throw error
 
@@ -104,7 +105,7 @@ export const get_all_records = async (token: string) => {
 
 export const get_allAdmins = async (token: string | undefined) => {
   try {
-    if (!token) throw new Error("Auntheticatoin token not found")
+
     const { data } = await client.query({
       query: GET_ALL_ADMINS,
       context: {
@@ -115,7 +116,7 @@ export const get_allAdmins = async (token: string | undefined) => {
     })
     return data?.admins || []
   } catch (error) {
-    throw error;
+  return  error;
   }
 
 }
@@ -138,6 +139,62 @@ export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => 
     return data?.accessories || [];
   } catch (error) {
     return []
+    throw error;
+  }
+};
+
+
+
+export  const fetchSingleCategory = async (customUrl: string): Promise<Category | null> => {
+  try {
+    const { data } = await client.query({
+      query: FIND_ONE_CATEGORY,
+      variables: { customUrl },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["categories"] } },
+      },
+
+    });
+    return data?.category;
+  } catch (error) {
+    return null;
+    throw error;
+  }
+};
+
+export  const fetchSingeSubCategory = async (customUrl: string): Promise<Category | null> => {
+  try {
+    const { data } = await client.query({
+      query: FIND_ONE_SUB_CATEGORY  ,
+      variables: { customUrl },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["categories"] } },
+      },
+
+    });
+    return data?.subCategory;
+  } catch (error) {
+    return null;
+    throw error;
+  }
+};
+
+export  const fetchSingeProduct = async (customUrl: string): Promise<IProduct | null> => {
+  try {
+    const { data } = await client.query({
+      query: FIND_ONE_PRODUCT,
+      variables: { custom_url:customUrl },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["products"] } },
+      },
+
+    });
+    return data?.product;
+  } catch (error) {
+    return null;
     throw error;
   }
 };

@@ -1,4 +1,3 @@
-import { getAdminData } from "components/serverActions/fetch";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -17,15 +16,14 @@ export async function middleware(req: NextRequest) {
     if (!token && isProtectedRoute) {
       return NextResponse.redirect(new URL("/dashboard/Admin-login", req.url));
     }
-  
-    const admin = await getAdminData(token)
-  console.log(admin, "admin")
+
     return NextResponse.next();
 
 
   } catch (error) {
-    console.log(error)
+
     return NextResponse.redirect(new URL("/dashboard/Admin-login", req.url));
+    throw error;
 
   }
 

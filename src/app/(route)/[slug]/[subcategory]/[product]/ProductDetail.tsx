@@ -30,7 +30,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
       boxCoverage,
       
     } = calculateProductDetails(area, unit, productData);
-
+console.log(productData, "productData")
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
@@ -74,7 +74,10 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
           </p>
         </div>
         <div className="border-b border-[#D9D9D9]" />
-        <AreaCalculator area={area} unit={unit} setArea={setArea} setUnit={setUnit} requiredBoxes={requiredBoxes} convertedArea={convertedArea} pricePerBox={pricePerBox} squareMeter={squareMeter} accessories={[]}/>
+        <AreaCalculator area={area} unit={unit} setArea={setArea} setUnit={setUnit} requiredBoxes={requiredBoxes} convertedArea={convertedArea} 
+        pricePerBox={pricePerBox} squareMeter={squareMeter} accessories={productData.acessories
+          || []}
+        />
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-5">
           <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">Total : <span>AED</span> <span>{totalPrice}</span></p>

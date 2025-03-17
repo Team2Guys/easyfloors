@@ -1,3 +1,5 @@
+import { IProduct } from "./prod";
+
 export interface SocialLink {
   href: string;
   alt: string;
@@ -178,6 +180,6 @@ export interface AccPoPProduct {
 export interface AccessoriesPopupProps {
   isOpen: boolean;
   onClose: () => void;
-  products: Product[];
+  products:IProduct[];
 }
 

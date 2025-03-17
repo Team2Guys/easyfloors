@@ -67,7 +67,7 @@ const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products
                 <Image
                   width={1000}
                   height={1000}
-                  src={product.image}
+                  src={product.posterImageUrl.imageUrl}
                   alt={product.name}
                   className="w-full h-60 object-cover border border-black"
                 />
