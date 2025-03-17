@@ -101,7 +101,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     try {
       const values = removedValuesHandler(changedValue)
       setcategorySubCatError(initialErrors);
-
+      console.log("values", changedValue)
       if (!selectedCategory) {
         setcategorySubCatError((prev) => ({
           ...prev,
@@ -872,8 +872,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       <FieldArray name="FAQS">
                         {({ push, remove }) => (
                           <div className="flex flex-col gap-2">
-                            {formik.values.FAQS &&
-                              formik.values.FAQS.map(
+                            {
+                              (formik.values.FAQS || []).map(
                                 (model: AdditionalInformation, index: number) => (
                                   <div
                                     key={index}
