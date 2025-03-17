@@ -11,7 +11,8 @@ import { AuthenticatedRequest } from 'type/express';
 @Resolver(() => Admin)
 export class AdminsResolver {
   constructor(private readonly adminsService: AdminsService) { }
-
+  
+ 
   @Mutation(() => Admin)
   createAdmin(@Args('createAdminInput') createAdminInput: CreateAdminInput) {
     return this.adminsService.create(createAdminInput);

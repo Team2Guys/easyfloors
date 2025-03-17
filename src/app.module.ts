@@ -31,9 +31,16 @@ import { AccessoriesModule } from './accessories/accessories.module';
     AccessoriesModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
-    provide: APP_GUARD,
-    useClass: AuthGuard, // ✅ Register AuthGuard globally
-  },],
+  providers: [AppService, 
+    
+  //   {
+  //   provide: APP_GUARD,
+  //   useClass: AuthGuard, // ✅ Register AuthGuard globally
+  // },
+
+]
+  
+  
+  ,
 })
 export class AppModule { }
