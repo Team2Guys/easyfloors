@@ -28,6 +28,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
       totalPrice,
       installments,
       boxCoverage,
+      
     } = calculateProductDetails(area, unit, productData);
 
     return (
@@ -73,7 +74,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
           </p>
         </div>
         <div className="border-b border-[#D9D9D9]" />
-        <AreaCalculator area={area} unit={unit} setArea={setArea} setUnit={setUnit} requiredBoxes={requiredBoxes} convertedArea={convertedArea} pricePerBox={pricePerBox} squareMeter={squareMeter}/>
+        <AreaCalculator area={area} unit={unit} setArea={setArea} setUnit={setUnit} requiredBoxes={requiredBoxes} convertedArea={convertedArea} pricePerBox={pricePerBox} squareMeter={squareMeter} accessories={[]}/>
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-5">
           <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">Total : <span>AED</span> <span>{totalPrice}</span></p>

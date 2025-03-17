@@ -1032,7 +1032,6 @@ export const signupData: SignAuthData = {
   emailPlaceholder: "Enter your email",
   passwordPlaceholder: "Enter your password",
   retypePasswordPlaceholder: "Retype your password",
-  // forgotPasswordText: "Forgot your password?",
   buttonText: "Sign Up",
   footerText: "Already have an account?",
   footerLinkText: "Sign In",
@@ -1042,8 +1041,7 @@ export const signupData: SignAuthData = {
 export const accessoriesProducts: AccPoPProduct[] = [
   {
     id: "1",
-    image: "/images/product1.jpg",
-    features: "Durable and water-resistant",
+    image: "/assets/images/accessories/product/1.png",
     name: "Accessory One",
     price: 50,
     meters: 2,
@@ -1051,8 +1049,7 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
   {
     id: "2",
-    image: "/images/product2.jpg",
-    features: "Eco-friendly material",
+    image: "/assets/images/accessories/product/1.png",
     name: "Accessory Two",
     price: 75,
     meters: 3,
@@ -1060,8 +1057,7 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
   {
     id: "3",
-    image: "/images/product3.jpg",
-    features: "Easy to install",
+    image: "/assets/images/accessories/product/1.png",
     name: "Accessory Three",
     price: 60,
     meters: 2.5,
@@ -1069,8 +1065,7 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
   {
     id: "4",
-    image: "/images/product4.jpg",
-    features: "Scratch-resistant",
+    image: "/assets/images/accessories/product/1.png",
     name: "Accessory Four",
     price: 90,
     meters: 4,
@@ -1078,8 +1073,7 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
   {
     id: "5",
-    image: "/images/product5.jpg",
-    features: "Anti-slip coating",
+    image: "/assets/images/accessories/product/1.png",
     name: "Accessory Five",
     price: 80,
     meters: 3.2,
@@ -1087,8 +1081,7 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
   {
     id: "6",
-    image: "/images/product6.jpg",
-    features: "UV-protected surface",
+    image: "/assets/images/accessories/product/1.png",
     name: "Accessory Six",
     price: 100,
     meters: 5,

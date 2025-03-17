@@ -22,6 +22,7 @@ export interface AreaCalculatorProps {
   unit: string;
   pricePerBox: number;
   squareMeter:number;
+  accessories: string[];
 }
 
 export interface PaymentMethodProps{

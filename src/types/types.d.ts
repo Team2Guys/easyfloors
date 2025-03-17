@@ -169,7 +169,6 @@ export interface AuthFormState {
 export interface AccPoPProduct {
   id: string;
   image: string;
-  features: string;
   name: string;
   price: number;
   meters: number;
