@@ -3,7 +3,7 @@ import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import Filters from "components/sub-category/filters";
 import SubCategory from "components/sub-category/sub-category-product";
-import Modal from "components/ui/modal";
+import Drawer from "components/ui/drawer";
 import Select from "components/ui/Select";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -178,7 +178,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, }: 
                   </span>
                 </button>
 
-                <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)} className="px-2">
+                <Drawer isOpen={isModalOpen} onClose={() => setModalOpen(false)} >
                   <Filters
                     catgories={catgories}
                     category={Data}
@@ -197,7 +197,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, }: 
                     priceValue={priceValue}
                     setPriceValue={setPriceValue}
                   />
-                </Modal>
+                </Drawer>
               </div>
               <div className="flex items-center justify-end gap-2 lg:pt-4">
                 <span className="text-[#191C1F] text-14 hidden lg:block">Sort by:</span>

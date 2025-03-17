@@ -22,11 +22,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, className, wid
 
   return (
     <div
-      className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 ${className}`}
+      className={`fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50   ${className}`}
       onClick={onClose}
     >
       <div
-        className={`bg-white p-4 shadow-lg ${width ? width: "w-[30%]"}  relative animate-fade-in animate-scale-in`}
+        className={`bg-white p-4 shadow-lg max-lg:max-h-[700px] max-lg:overflow-x-scroll ${width ? width: "w-[30%]"}  relative animate-fade-in animate-scale-in`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
