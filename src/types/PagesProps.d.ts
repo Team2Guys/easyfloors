@@ -34,7 +34,6 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     categories: ICategory[], 
     productsData: IProduct[],
     accessories?:IAccessories[]
-    accessoryFlag?:boolean
   }
 
 
@@ -60,7 +59,7 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
 
 
   export interface productCardProps {
-    product: IProduct;
+    product: IProduct | Category;
     isSoldOut?: boolean;
     isAccessories?: boolean;
     sldier?: boolean;
@@ -68,3 +67,9 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     categoryData: ICategory;
     subCategoryData?: ISUBCATEGORY;
   }
+
+  export  interface HeaderProps {
+      RecallUrl: string;
+      custom_url:string;
+      subcategories?: { name: string; custom_url: string; posterImageUrl?: { imageUrl: string } }[];
+    }

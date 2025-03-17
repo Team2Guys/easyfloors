@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
 export const FETCH_ALL_ACCESSORIES = gql`
-query Accessories {
+  query Accessories {
     accessories {
-        id
+     id
         name
         price
         discountPrice
@@ -12,7 +12,6 @@ query Accessories {
         posterImageUrl
         hoverImageUrl
         productImages
-        colors
         createdAt
         updatedAt
         Canonical_Tag
@@ -23,15 +22,24 @@ query Accessories {
         AdditionalInformation
         FAQS
         boxCoverage
-        products {
-            id
-            name
-        }
-        category {
-            id
-            name
-        }
+        featureImages
+      category {
+        id
+        name
+      }
+      products {
+        id
+        name
+      }
     }
-}
+  }
+`;
 
+export const UPDATE_ACCESSORY_MUTATION = gql`
+  mutation UpdateAccessory($input: UpdateAccessoryInput!) {
+    updateAccessory(updateAccessoryInput: $input) {
+      id
+      name
+    }
+  }
 `;

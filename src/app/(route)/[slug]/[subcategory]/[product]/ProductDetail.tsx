@@ -20,8 +20,7 @@ import { detailprops } from 'types/product-detail';
 const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && (product.custom_url) === ProductName)[0];
-    
+    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && (product.custom_url.toLocaleLowerCase()) === ProductName)[0];
     const {
       convertedArea,
       requiredBoxes,
@@ -31,8 +30,6 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
       installments,
       boxCoverage,
     } = calculateProductDetails(area, unit, productData);
-
-    console.log(productData,"productData",ProductInfo)
 
     return (
       <div className="mb-10">
@@ -81,7 +78,6 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-5">
           <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">Total : <span>AED</span> <span>{totalPrice}</span></p>
-          <p className="font-medium text-16 2xl:text-20">(1 packs<span> / </span>{boxCoverage}<span>m<sup>2</sup></span>)</p>
         </div>
         <div className="flex items-center gap-1 sm:gap-3 w-full">
           <button className="max-sm:h-[40px] px-2 py-2 sm:py-3 text-white bg-primary flex items-center gap-2 font-inter text-12 sm:text-16 2xl:text-22 w-7/12">

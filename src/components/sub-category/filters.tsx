@@ -158,7 +158,7 @@ const Filters = ({
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
               {category.subcategories?.map((subCategory: Category, i: number) => (
-                <Link href={`/${category.custom_url}/${subCategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
+                <Link href={`/${category.RecallUrl}/${subCategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
                   {subCategory.name}
                 </Link>
               ))}

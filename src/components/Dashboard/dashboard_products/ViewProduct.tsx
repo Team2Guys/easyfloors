@@ -28,6 +28,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     setSearchTerm(e.target.value);
   };
 
+  
   // const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true )
   const canAddProduct = true;
   // const canDeleteProduct =
@@ -44,8 +45,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 
     return (
       product.name.toLowerCase().includes(searchtext) ||
-      product.description.toLowerCase().includes(searchtext) ||
-      product.price.toString().includes(searchtext) ||
+      product.description?.toLowerCase().includes(searchtext) ||
+      product.price?.toString().includes(searchtext) ||
       product?.discountPrice?.toString().includes(searchtext) ||
       product?.ResidentialWarranty?.toString().includes(searchtext) ||
       product?.plankWidth?.toString().includes(searchtext) ||

@@ -13,7 +13,7 @@ const SampleBanner = () => {
             height={200}
             width={800}
             alt='image'
-            loading='lazy'
+            priority
             className='w-[200px] h-[160px] lg:w-[500px] lg:h-[400px] xl:w-[610px] xl:h-[500px] 2xl:w-[810px] 2xl:h-[669px]'
           />
         </div>
@@ -23,6 +23,7 @@ const SampleBanner = () => {
               height={800}
               width={800}
               alt='image'
+              priority
               className='h-5 w-10 sm:h-[64px] sm:w-24 xl:w-[238px] xl:h-[122px] animate-moveTruck'
             />
           </div>
