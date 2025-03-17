@@ -38,9 +38,19 @@ export const FETCH_ALL_PRODUCTS = gql`
         name
         custom_url
       }
+       acessories {
+  id
+   name
+   price
+   discountPrice
+
+  posterImageUrl }
     }
   }
 `;
+
+
+
 
 export const FETCH_ALL_CATEGORIES = gql`
   query Categories {

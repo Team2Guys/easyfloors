@@ -50,6 +50,7 @@ export interface IProduct {
     FAQS?: AdditionalInformation[];
     boxCoverage?: string;
     featureImages?:ProductImage[]
+    acessories?:IProduct[]
   }
 
   export interface ICart {
