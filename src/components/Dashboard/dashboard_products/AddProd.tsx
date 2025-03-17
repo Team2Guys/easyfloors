@@ -155,7 +155,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     try {
       const values = removedValuesHandler(changedValue);
       setcategorySubCatError(initialErrors);
-
+      console.log("values", changedValue)
       if (!selectedCategory) {
         setcategorySubCatError((prev) => ({
           ...prev,
