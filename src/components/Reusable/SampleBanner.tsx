@@ -23,6 +23,7 @@ const SampleBanner = () => {
               height={800}
               width={800}
               alt='image'
+              priority
               className='h-5 w-10 sm:h-[64px] sm:w-24 xl:w-[238px] xl:h-[122px] animate-moveTruck'
             />
           </div>

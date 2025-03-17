@@ -13,6 +13,7 @@ const FloorItems: React.FC = () => {
             <Image
               src={item.imageUrl}
               alt={item.title}
+              loading='lazy'
               width={800} 
               height={300} 
               className="w-auto h-auto object-fill"
