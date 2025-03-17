@@ -245,7 +245,7 @@ export const heroItems: HeroItem[] = [
     description:
       "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
     buttonText: "EXPLORE PRODUCTS",
-    buttonLink: "/",
+    buttonLink: "/all-collection",
     priceText: "Starting From AED 49/m²",
     flooringType: "SPC Eco • American Walnut", 
     brand: "Polar Flooring",
