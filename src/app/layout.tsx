@@ -19,20 +19,19 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children,
-}: Readonly<{
+  children, 
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body className={`${inter.variable}`}>
-
-    <Customprovider>
+        <Customprovider>
           <PathnameWrapper>
             {children}
             <ToastContainer />
           </PathnameWrapper>
-    </Customprovider>
+        </Customprovider>
       </body>
     </html>
   );

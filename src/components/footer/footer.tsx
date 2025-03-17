@@ -1,4 +1,4 @@
-
+"use client"; 
 import { footerData } from 'data/data';
 import Image from 'next/image';
 import { FaMapMarkerAlt, FaRegEnvelope, FaWhatsapp } from 'react-icons/fa';
