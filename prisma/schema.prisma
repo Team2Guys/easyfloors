@@ -142,6 +142,7 @@ model Acessories {
   boxCoverage           String?
   categoryId            Int?
   short_description     String?
+    featureImages         Json[]         @default([])
   products Products[] @relation("ProductAccessories")
   category Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }

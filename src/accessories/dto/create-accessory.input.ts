@@ -65,6 +65,9 @@ export class CreateAccessoryInput {
   @Field(() => ID, { nullable: true })
   category: Number
 
+  @Field(() => [GraphQLJSON])
+  featureImages: any[]
+
   @Field(() => GraphQLJSON, { nullable: true })
   products: any
 
