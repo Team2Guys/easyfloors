@@ -105,7 +105,7 @@ export const get_all_records = async (token: string) => {
 
 export const get_allAdmins = async (token: string | undefined) => {
   try {
-    if (!token) throw new Error("Auntheticatoin token not found")
+
     const { data } = await client.query({
       query: GET_ALL_ADMINS,
       context: {
@@ -116,7 +116,7 @@ export const get_allAdmins = async (token: string | undefined) => {
     })
     return data?.admins || []
   } catch (error) {
-    throw error;
+  return  error;
   }
 
 }

@@ -245,3 +245,30 @@ query Product($custom_url: String!) {
   }}
 
 `
+
+
+export const GET_ADMIN_DATA = gql`
+  query Admin {
+    admin {
+    id
+        fullname
+        email
+        canAddProduct
+        canEditProduct
+        canDeleteProduct
+        canAddCategory
+        canDeleteCategory
+        canEditCategory
+        canCheckProfit
+        canCheckRevenue
+        canCheckVisitors
+        canViewUsers
+        canViewSales
+        canVeiwAdmins
+        canVeiwTotalproducts
+        canVeiwTotalCategories
+        posterImageUrl
+        role
+    }
+  }
+`;
