@@ -63,7 +63,6 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , su
   if ( !findCategory) {
     return notFound()
   }
-  console.log(catgories,"catgories")
   return (
     <Suspense fallback="Loading .....">
       <Category catgories={catgories} categoryData={findCategory}   isSubCategory />
