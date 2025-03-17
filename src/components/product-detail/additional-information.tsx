@@ -8,12 +8,22 @@ const AdditionalInfo = ({ description, AdditionalInformation,subcategory }:Addit
   return (
     <Tabs defaultValue="description" className='mt-5 max-w-[90%] mx-auto font-inter'>
       <TabsList className='mx-auto w-full flex justify-center gap-5  sm:mb-10'>
-        <TabsTrigger value="description" className='data-[state=active]:text-primary text-12 xs:text-14 sm:text-24'>
-          Description
-        </TabsTrigger>
-        <TabsTrigger value="specifications" className='data-[state=active]:text-primary text-12 xs:text-14 sm:text-24'>
-          Additional Information
-        </TabsTrigger>
+        {
+          description.length > 0 && (
+            <TabsTrigger value="description" className='data-[state=active]:text-primary text-12 xs:text-14 sm:text-24'>
+            Description
+            </TabsTrigger>
+          )
+        }
+    
+        {
+          AdditionalInformation.length > 0 && (
+            <TabsTrigger value="specifications" className='data-[state=active]:text-primary text-12 xs:text-14 sm:text-24'>
+            Additional Information
+            </TabsTrigger>
+          )
+        }
+
       </TabsList>
       <TabsContent value="description">
         <p className='text-12 sm:text-14 2xl:text-16'>

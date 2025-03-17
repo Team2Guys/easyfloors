@@ -1,4 +1,4 @@
-import { fetchCategories, fetchSubCategories } from "config/fetch";
+import { fetchCategories } from "config/fetch";
 import { Suspense } from "react";
 import { Category as ICategory } from "types/cat";
 import { notFound } from "next/navigation";
@@ -56,18 +56,17 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
-  const { slug , subcategory } = await params
-  const [ catgories , subCategories ] = await Promise.all([ fetchCategories() ,fetchSubCategories()]);
+  const { slug } = await params
+  const [ catgories ] = await Promise.all([ fetchCategories() ]);
+  const findCategory = catgories.find((cat: ICategory) => (cat?.RecallUrl ) === slug.trim());
 
-  const findSubCategories = subCategories.find((sub: ICategory) => sub?.custom_url.trim() === subcategory.trim());
-  const findCategory = catgories.find((sub: ICategory) => (sub?.RecallUrl ?sub?.RecallUrl : sub?.custom_url) === slug.trim());
-
-  if ( !findCategory || !findSubCategories) {
+  if ( !findCategory) {
     return notFound()
   }
+  console.log(catgories,"catgories")
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} categoryData={findCategory} subCategoryData={findSubCategories} isSubCategory />
+      <Category catgories={catgories} categoryData={findCategory}   isSubCategory />
     </Suspense>
   );
 };
