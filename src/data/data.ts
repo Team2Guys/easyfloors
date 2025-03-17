@@ -97,8 +97,6 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
-  RecallUrl:""
-
 
 };
 
