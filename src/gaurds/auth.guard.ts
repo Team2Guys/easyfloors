@@ -28,29 +28,29 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException('Unsupported request type');
     }
 
-//     if (!req) {
-//       console.error('[AuthGuard] Request object is undefined.');
-//       throw new UnauthorizedException('Request is undefined');
-//     }
+    if (!req) {
+      console.error('[AuthGuard] Request object is undefined.');
+      throw new UnauthorizedException('Request is undefined');
+    }
 
-//     let token = req.cookies?.admin_access_token || req.cookies?.super_admin_access_token;
+    let token = req.cookies?.admin_access_token || req.cookies?.super_admin_access_token;
 
-//     if (!token) {
-//       const authHeader = req.headers?.Authorization;
-//       if (authHeader?.startsWith('Bearer ')) {
-//         token = authHeader.split(' ')[1]; 
-//       }
-//     }
-// console.log(token, "token")
-//     if (!token) {
-//       console.warn('[AuthGuard] No authentication token found.');
-//       throw new UnauthorizedException('Authentication required');
-//     }
-//     console.log(token, "token")
+    if (!token) {
+      const authHeader = req.headers?.Authorization;
+      if (authHeader?.startsWith('Bearer ')) {
+        token = authHeader.split(' ')[1]; 
+      }
+    }
+console.log(token, "token")
+    if (!token) {
+      console.warn('[AuthGuard] No authentication token found.');
+      throw new UnauthorizedException('Authentication required');
+    }
+    console.log(token, "token")
 
     try {
-      // const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-      // req['user'] = decoded; 
+      const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
+      req['user'] = decoded; 
       return true;
     } catch (err) {
       console.error('[AuthGuard] Token verification failed:', err.message);
