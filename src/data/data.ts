@@ -124,9 +124,6 @@ export interface IProductValues {
 
 }
 
-
-
-
 export const AddproductsinitialValues: IProductValues = {
   id: 0, // Default value for id (should be generated dynamically)
   name: '',
@@ -144,7 +141,7 @@ export const AddproductsinitialValues: IProductValues = {
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',
-  FAQS:[],
+  FAQS: [],
   boxCoverage:"",
   products: [],
 };
