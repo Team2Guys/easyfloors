@@ -19,6 +19,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   setProducts,
   setselecteMenu,
   setEditProduct,
+  accessoryFlag
+  
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeProduct] = useMutation(REMOVE_PRODUCT);
@@ -187,7 +189,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
           <Link
             className="hover:text-black"
             target="_blank"
-            href={`${record.name}`}
+            href={`/${record.category?.RecallUrl+"/"+record.subcategory?.custom_url+"/"+record.custom_url}`}
           >
             <FaRegEye />
           </Link>
@@ -256,7 +258,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
               }
             }}
           >
-            Add Products
+            {`Add ${accessoryFlag?  "Accessory" :   "Products"}`}
           </p>
         </div>
       </div>
