@@ -257,7 +257,7 @@ export interface FormValues {
   variantStockQuantities: { variant: string; quantity: number }[];
   price?: string;
   AdditionalInformation?: [];
-  FAQS:[]
+  FAQS?:[]
   box:string
 }
 

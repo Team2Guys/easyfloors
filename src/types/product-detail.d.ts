@@ -34,4 +34,5 @@ export interface detailprops{
     ProductInfo: IProduct[];
     MainCategory: string;
     subCategory: string;
+    productData:IProduct
 }

@@ -1,13 +1,18 @@
 import React from "react";
 import { fetchProducts } from "config/fetch";
 import ProductDetail from "./ProductDetail";
+import { IProduct } from "types/prod";
+import { notFound } from "next/navigation";
 
-const Product = async ({params}:{params:Promise<{slug:string, subcategory: string, product:string}>}) => {
-  const {slug , subcategory , product} = await params;
-   const ProductInfo = await fetchProducts();
-   console.log(ProductInfo)
+const Product = async ({ params }: { params: Promise<{ slug: string, subcategory: string, product: string }> }) => {
+  const { slug, subcategory, product: paramsprod } = await params;
+  const [ProductInfo] = await Promise.all([fetchProducts()]);
+  const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
+
+  console.log(paramsprod,slug,subcategory,  "accessories",ProductInfo)
+  if (!productData) return notFound()
   return (
-    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={product} ProductInfo={ProductInfo} />
+    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={ProductInfo} productData={productData} />
   );
 };
 

@@ -13,14 +13,13 @@ import { calculateProductDetails, handleAddToStorage } from 'lib/carthelper';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { LuHeart } from 'react-icons/lu';
-import { IProduct } from 'types/prod';
 import { detailprops } from 'types/product-detail';
 
 
-const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detailprops) => {
+const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, productData}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && (product.custom_url.toLocaleLowerCase()) === ProductName)[0];
+ 
     const {
       convertedArea,
       requiredBoxes,
@@ -51,7 +50,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <div className="flex items-center gap-2 sm:gap-4 text-18 2xl:text-23 font-semibold text-primary">
           <p className="text-black">Price Per Sqm :</p>
           <p>
-            <span>AED</span> {productData.price }{" "}
+            <span>AED</span> {productData?.price}{" "}
             <span>
               /m<sup>2</sup>
             </span>
@@ -59,7 +58,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         </div>
         <div className="flex items-center gap-1 text-19">
           <p className="text-14 sm:text-18 2xl:text-23">
-            Stock: <span className="text-[#008000] font-bold">{productData.stock > 0 ? "In Stock" :"Out of Stock"}</span>
+            Stock: <span className="text-[#008000] font-bold">{productData?.stock > 0 ? "In Stock" :"Out of Stock"}</span>
           </p>
           <div className="h-5 w-[2px] bg-black" />
           <p className="text-14 sm:text-18 2xl:text-23 font-bold">
@@ -94,7 +93,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
           </div>
         </Container>
         <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
-          <AdditionalInfo description={productData.description} AdditionalInformation={productData.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
+          <AdditionalInfo description={productData?.description} AdditionalInformation={productData?.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
           <FaqDetail FAQS={productData.FAQS} />
         </div>
   
@@ -102,7 +101,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <Features items={featureItems} />
                                
         </Container>
-        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category} subCategoryData={productData.subcategory} />
+        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category} subCategoryData={productData?.subcategory} />
       </div>
     );
   };
