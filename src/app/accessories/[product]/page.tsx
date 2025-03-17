@@ -4,36 +4,35 @@ import Breadcrumb from "components/Reusable/breadcrumb";
 import Thumbnail from "components/product-detail/thumbnail";
 import SkirtingProductDetail from "components/product-detail/productinfo";
 import Features from "components/Reusable/features";
-import { accessoriesfaqs, accessoriesimages, featureItems, productTabs, ThumnailBottom, ThumnailImage } from "data/data";
-import Faqs from "components/Faqs/Faqs";
-import ProductDetails from "components/Reusable/additinalinfo";
+import { accessoriesimages, featureItems,  } from "data/data";
 import RelatedSlider from 'components/related-slider/related-slider';
-import { fetchSubCategories } from 'config/fetch';
+import { fetchProducts } from 'config/fetch';
+import FaqDetail from "components/product-detail/faq-detail";
+import AdditionalInfo from "components/product-detail/additional-information";
 
-
-const ProductImageGallery = async () => {
-  const subCategories = await fetchSubCategories();
-  console.log("SubCategories Data:", subCategories); // Debugging
-  
-  const products = subCategories?.products || [];
-  console.log("Products Data:", products);
+const ProductImageGallery = async ({params}:{params:Promise<{product:string}>}) => {
+  const { product } = await params;
+  const productData = await fetchProducts();
   return (
     <>
+    <Breadcrumb slug="Accessories" title={product}/>
     <Container>
-    <Breadcrumb />
     <div className="flex flex-col lg:flex-row">
-    <div className="w-full lg:w-8/12">
-    <Thumbnail ThumnailImage={accessoriesimages} ThumnailBottom={ThumnailBottom} hideThumnailBottom={true} />
+    <div className="w-full lg:w-[60%]">
+    <Thumbnail ThumnailImage={accessoriesimages}  hideThumnailBottom imageheight />
     </div>
-    <div className="w-full lg:w-4/12">
+    <div className="w-full lg:w-[40%]">
     <SkirtingProductDetail />
     </div>
     </div>
-    <ProductDetails tabs={productTabs} />
-    <Faqs data={accessoriesfaqs} className="!py-3" />
+    <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
+      <AdditionalInfo description={productData[0].description} AdditionalInformation={productData[0].AdditionalInformation} subcategory={productData[0].subcategory?.name || ""} />
+      <FaqDetail FAQS={productData[0].FAQS} />
+    </div>
+  
     </Container>
     <Features items={featureItems} />
-    <RelatedSlider products={products.slice(0,5)} CategoryData={subCategories.category} />
+    <RelatedSlider products={productData.slice(0,5)} CategoryData={productData.category} subCategoryData={productData.subcategory} />
     </>
   );
 };

@@ -4,7 +4,8 @@ import Image from "next/image";
 import { CiHeart } from "react-icons/ci";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import PaymentMethod from "components/product-detail/payment";
-import { colors, paymentIcons } from "data/data";
+import { colors } from "data/data";
+import { paymentcard } from "data/cart";
 
 const SkirtingProductDetail = () => {
   const pricePerPiece = 84; // Price per piece in AED
@@ -41,7 +42,8 @@ const SkirtingProductDetail = () => {
       </p>
       <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
       </p>
-      <div className="flex border-b-[1px] border-gray-300"></div></div>
+      <div className="flex border-b-[1px] border-gray-300"></div>
+    </div>
 
       {/* Color Selection */}
       <div className="w-full mt-5 h-216 border border-black p-3">
@@ -98,21 +100,18 @@ const SkirtingProductDetail = () => {
       {/* Payment Options */}
       
      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
-     <PaymentMethod/>
-      <p className="font-inter text-16 lg:text-[22.6px] font-semibold mt-5">Buy Now, Pay Later</p>
-      <div className="flex justify-start gap-5 items-start mt-2 lg:mx-auto">
-      {paymentIcons.map((icon, index) => (
-      <Image
-      key={index}
-      src={icon.src}
-      alt={icon.alt}
-      width={1000}
-      height={1000}
-      className="h-[44px] w-14 sm:h-[61px] sm:w-24 lg:w-14 xl:w-[94px]"
-    />
-  ))}
-</div>
-</div>
+     <PaymentMethod installments={200}/>
+       <div className="mt-2 space-y-2">
+       <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
+        <div className='flex justify-between gap-2' >
+        {
+          paymentcard.map((array,index)=>(
+            <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px] shadow' key={index}  width={90} height={60} src={array.image} alt='payment-card'/>
+          ))
+        }
+        </div>
+       </div>
+    </div>
   );
 };
 

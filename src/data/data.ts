@@ -10,7 +10,7 @@ import masterCard from './../../public/assets/images/payment-icons/Mastercard-Lo
 import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 import { StaticImageData } from 'next/image';
-import { EDIT_PRODUCT_PROPS } from 'types/prod';
+import { AdditionalInformation} from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
 
@@ -103,19 +103,36 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
 };
 
 
-export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
+export interface IProductValues {
+  id?: number;
+  name: string;
+  price: number;
+  description: string;
+  stock: number;
+  discountPrice?: number;
+  AdditionalInformation: AdditionalInformation[];
+  custom_url: string;
+  plankWidth?: string;
+  thickness?: string;
+  ResidentialWarranty?: string;
+  CommmericallWarranty?: string;
+  waterproof?: boolean;
+  Meta_Title?: string;
+  Canonical_Tag?: string;
+  Meta_Description?: string;
+  FAQS: AdditionalInformation[];
+  boxCoverage?: string;
+  products: (string | number)[];
+
+}
+
+export const AddproductsinitialValues: IProductValues = {
   id: 0, // Default value for id (should be generated dynamically)
   name: '',
   price: 0,
   description: '',
   stock: 0,
   discountPrice: 0,
-  sale: '', // Added optional property
-  colors: [], // Added optional property
-  spacification: [],
-  posterImageUrl: { imageUrl: "", public_id: "" }, // Must be an array of `ProductImage`
-  productImages: [], // Must be an array of `ProductImage`
-  hoverImageUrl: { imageUrl: "", public_id: "" }, 
   AdditionalInformation: [],
   custom_url: '',
   plankWidth: '',
@@ -126,7 +143,30 @@ export const AddproductsinitialValues: EDIT_PRODUCT_PROPS = {
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',
+  FAQS: [],
+  boxCoverage:"",
+  products: [],
 };
+
+
+export const excludedKeys = [
+  "plankWidth",
+   "boxCoverage",
+   "CommmericallWarranty",
+   "spacification",
+   "ResidentialWarranty",
+   "waterproof",
+   "thickness",
+    "subcategory",
+    "featureImages",
+    "colors"
+  
+  ] 
+export const excludedKeysFroProducts = [
+"product",
+"colors"
+  
+  ] 
 
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),
@@ -245,51 +285,16 @@ export const socialLinks: SocialLink[] = [
   { href: '/faqs', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
 ];
 
-export const menuItems = [
-  {
-    label: 'SPC Flooring',
-    href: '/',
-    submenu: [
-      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Tiles', href: '/spc-tiles', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Tiles', href: '/spc-tiles', image: "/assets/bin/Flooring.png" },
-      { label: 'SPC Wood', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-    ],
-  },
-  {
-    label: 'LVT Flooring',
-    href: '/',
-    submenu: [
-      { label: 'Luxury LVT', href: '/lvt-luxury', image: "/assets/bin/Flooring.png" },
-      { label: 'Waterproof LVT', href: '/lvt-waterproof', image: "/assets/bin/Flooring.png" },
-    ],
-  },
-  {
-    label: 'Richmond Flooring',
-    href: '/',
-    submenu: [
-      { label: 'Richmond Flooring', href: '/spc-wood', image: "/assets/bin/Flooring.png" },
-      { label: 'Richmond Eco SPC', href: '/spc-tiles', image: "/assets/bin/Eco.png" },
-      { label: 'Richmond Herringbone SPC', href: '/spc-wood', image: "/assets/bin/Herringbone.png" },
-      { label: 'Richmond Comfort LVT', href: '/spc-tiles', image: "/assets/bin/Comfort.png" },
-      { label: 'Richmond Luxury LVT', href: '/spc-wood', image: "/assets/bin/Luxury.png" },
-    ],
-  },
-  {
-    label: 'Polar Flooring',
-    href: '/',
-    submenu: [
-      { label: 'Polar Classic', href: '/polar-classic', image: "/assets/bin/Flooring.png" },
-      { label: 'Polar Premium', href: '/polar-premium', image: "/assets/bin/Flooring.png" },
-    ],
-  },
-  { label: 'How to measure', href: '/how-to-measure-your-room', },
-  // { label: 'Estimator', href: '/estimator', },
-  { label: 'Accessories', href: '/accessories', },
-  { label: 'Blogs', href: '/blogs', },
-  { label: 'About Us', href: '/about-us', },
-  { label: 'Contact Us', href: '/contact-us', },
+export  const staticMenuItems = [
+  { label: "SPC Flooring", href: "spc-flooring", submenu: [] },
+  { label: "LVT Flooring", href: "lvt-flooring", submenu: [] },
+  { label: "Richmond Flooring", href: "richmond-flooring", submenu: [] },
+  { label: "Polar Flooring", href: "polar-flooring", submenu: [] },
+  { label: "How to measure", href: "how-to-measure-your-room" },
+  { label: "Accessories", href: "accessories" },
+  { label: "Blogs", href: "blogs" },
+  { label: "About Us", href: "about-us" },
+  { label: "Contact Us", href: "contact-us" },
 ];
 
 
@@ -978,45 +983,14 @@ export const accessoriesText = `
   It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
 `;
 
-//additional info
-export const productTabs=[
-  {
-    title: "Description",
-    heading: "Richmond Eco SPC - Oak History",
-    content: `The SPC Oak mixes warm oak shades with natural woodgrain textures, which makes it a versatile flooring choice. 
-    The SPC planks are tough and capable of resisting scratches and stains. As well as providing excellent grip underfoot, 
-    the top wear layer also prevents slips and falls. This makes it a safer option for families with children or pets. 
-    The oak flooring gives a secure feel compared to the sometimes slippery surface of polished wood floors.
-    
-    How much flooring should I get? Each box covers 2 square meters and comes with nine planks. Each plank is 1220mm long, 
-    183mm wide, and 5.5mm thick. The Oak floors are super easy to put together with a click-lock system. You can install 
-    them over concrete, wood, or tile floors. It's great for homes or rentals because you can take it out quickly and put 
-    it somewhere else. Also, you don't need any glue or adhesives to install - it's completely mess-free.
-    
-    The SPC Oak History is low-maintenance, stain-resistant, and designed to withstand daily rough use. Keeping it 
-    clean is as easy as wiping it with a damp cloth. You can put it anywhere, it's elegant, practical, and easy to maintain.`,
-    bulletpoints: [
-      "Each box contains 9 planks.",
-      "The size of each plank is 1220mm x 183mm x 5.5mm including a 0.5mm wear layer.",
-    ],
-  },
-  {
-    title: "Additional Information",
-    heading: "Richmond Eco SPC - Oak History",
-    content: `- Made with high-quality SPC material.\n- Waterproof and easy to maintain.\n- Ideal for homes and commercial spaces.`,
-    bulletpoints: [
-      "Each box contains 9 planks.",
-      "The size of each plank is 1220mm x 183mm x 5.5mm including a 0.5mm wear layer.",
-    ],
-  },
-];
+
 
 export const accessoriesimages = [
-  { imageUrl: "/assets/images/accessories/product/1.png" },
-  { imageUrl: "/assets/images/accessories/product/2.png" },
-  { imageUrl: "/assets/images/accessories/product/3.png" },
-  { imageUrl: "/assets/images/accessories/product/4.png"},
-  { imageUrl: "/assets/images/accessories/product/5.png"},
+  { imageUrl: "/assets/images/accessories/product/1.png",altText:"thumbnail"  },
+  { imageUrl: "/assets/images/accessories/product/2.png",altText:"thumbnail" },
+  { imageUrl: "/assets/images/accessories/product/3.png",altText:"thumbnail" },
+  { imageUrl: "/assets/images/accessories/product/4.png",altText:"thumbnail"},
+  { imageUrl: "/assets/images/accessories/product/5.png",altText:"thumbnail"},
 ];
 
 export const colors = [
@@ -1038,9 +1012,3 @@ export const colors = [
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
 ];
 
-export const paymentIcons = [
-  { src: "/assets/icons/visa1.png", alt: "Visa" },
-  { src: "/assets/icons/Maestro.png", alt: "Mastercard" },
-  { src: "/assets/icons/pay.png", alt: "Apple Pay" },
-  { src: "/assets/icons/Gpay.png", alt: "Google Pay" }
-];

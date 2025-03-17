@@ -8,20 +8,18 @@ import Thumbnail from 'components/product-detail/thumbnail';
 import RelatedSlider from 'components/related-slider/related-slider';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import Features from 'components/Reusable/features';
-import { featureItems, ThumnailBottom } from 'data/data';
+import { featureItems } from 'data/data';
 import { calculateProductDetails, handleAddToStorage } from 'lib/carthelper';
 import Image from 'next/image';
 import React, { useState } from 'react'
 import { LuHeart } from 'react-icons/lu';
-import { IProduct } from 'types/prod';
 import { detailprops } from 'types/product-detail';
 
 
-const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detailprops) => {
+const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, productData}:detailprops) => {
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
-    const productData = ProductInfo.filter((product: IProduct) => product.custom_url && (product.custom_url) === ProductName)[0];
-    
+ 
     const {
       convertedArea,
       requiredBoxes,
@@ -38,19 +36,21 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
           <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
           {productData && productData.productImages && 
-        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={ThumnailBottom} />
+        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={productData.featureImages} />
         }
           </div>
           <div className="w-full lg:w-[45%] 2xl:w-[40%] space-y-3 xl:space-y-4 mb-2">
-  
+          {productData && productData.name &&
         <h1 className="font-inter text-25 2xl:text-[33px] font-semibold">
           {productData.name}
         </h1>
+        }
+
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-2 sm:gap-4 text-18 2xl:text-23 font-semibold text-primary">
           <p className="text-black">Price Per Sqm :</p>
           <p>
-            <span>AED</span> {productData.price}{" "}
+            <span>AED</span> {productData?.price}{" "}
             <span>
               /m<sup>2</sup>
             </span>
@@ -58,7 +58,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         </div>
         <div className="flex items-center gap-1 text-19">
           <p className="text-14 sm:text-18 2xl:text-23">
-            Stock: <span className="text-[#008000] font-bold">{productData.stock > 0 ? "In Stock" :"Out of Stock"}</span>
+            Stock: <span className="text-[#008000] font-bold">{productData?.stock > 0 ? "In Stock" :"Out of Stock"}</span>
           </p>
           <div className="h-5 w-[2px] bg-black" />
           <p className="text-14 sm:text-18 2xl:text-23 font-bold">
@@ -77,7 +77,6 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-5">
           <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">Total : <span>AED</span> <span>{totalPrice}</span></p>
-          <p className="font-medium text-16 2xl:text-20">(1 packs<span> / </span>{boxCoverage}<span>m<sup>2</sup></span>)</p>
         </div>
         <div className="flex items-center gap-1 sm:gap-3 w-full">
           <button className="max-sm:h-[40px] px-2 py-2 sm:py-3 text-white bg-primary flex items-center gap-2 font-inter text-12 sm:text-16 2xl:text-22 w-7/12">
@@ -94,15 +93,15 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo}:detail
           </div>
         </Container>
         <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
-          <AdditionalInfo description={productData.description} AdditionalInformation={productData.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
-          <FaqDetail />
+          <AdditionalInfo description={productData?.description} AdditionalInformation={productData?.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
+          <FaqDetail FAQS={productData.FAQS} />
         </div>
   
         <Container>
         <Features items={featureItems} />
                                
         </Container>
-        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category} subCategoryData={productData.subcategory} />
+        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category} subCategoryData={productData?.subcategory} />
       </div>
     );
   };

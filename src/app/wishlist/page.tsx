@@ -1,8 +1,19 @@
+"use client"
+import Container from 'components/common/container/Container'
 import React from 'react'
+import Top from './top'
+import { CiHeart } from 'react-icons/ci'
+import ProductList from './productlist'
+
 
 const Wishlist = () => {
   return (
-    <div>Wishlist</div>
+    <Container>
+   <Top heading="Wishlist" Icon={CiHeart} />
+   <div className="p-5">
+      <ProductList />
+    </div>
+    </Container>
   )
 }
 

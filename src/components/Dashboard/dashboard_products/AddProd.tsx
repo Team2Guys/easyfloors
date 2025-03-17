@@ -1,70 +1,115 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Formik, FieldArray, FormikErrors, Form, FormikHelpers, Field, ErrorMessage, FieldProps, FieldInputProps, FormikProps } from 'formik';
-import { RxCross2 } from 'react-icons/rx';
-import Image from 'next/image';
-import { ImageRemoveHandler } from 'utils/helperFunctions';
-import Toaster from 'components/Toaster/Toaster';
-import { IoMdArrowRoundBack } from 'react-icons/io';
-import Loader from 'components/Loader/Loader';
-import { FormValues } from 'types/type';
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Formik,
+  FieldArray,
+  FormikErrors,
+  Form,
+  FormikHelpers,
+  Field,
+  ErrorMessage,
+  FieldProps,
+  FieldInputProps,
+  FormikProps,
+} from "formik";
+import { RxCross2 } from "react-icons/rx";
+import Image from "next/image";
+import { ImageRemoveHandler } from "utils/helperFunctions";
+import Toaster from "components/Toaster/Toaster";
+import { IoMdArrowRoundBack } from "react-icons/io";
+import Loader from "components/Loader/Loader";
+import { FormValues } from "types/type";
 import {
   AddproductsinitialValues,
   AddProductvalidationSchema,
-} from 'data/data';
-import revalidateTag from 'components/ServerActons/ServerAction';
-import { AdditionalInformation, EDIT_PRODUCT_PROPS, ProductImage } from 'types/prod';
-import ImageUploader from 'components/ImageUploader/ImageUploader';
-import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from 'types/PagesProps';
+  excludedKeys,
+  IProductValues,
+} from "data/data";
+import revalidateTag from "components/ServerActons/ServerAction";
+import { AdditionalInformation, ProductImage } from "types/prod";
+import ImageUploader from "components/ImageUploader/ImageUploader";
+import { DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS } from "types/PagesProps";
 import { useMutation } from "@apollo/client";
-import { CREATE_PRODUCT, UPDATE_PRODUCT } from 'graphql/mutations';
-import Cookies from 'js-cookie';
+import {
+  CREATE_ACCESSORIES,
+  CREATE_PRODUCT,
+  UPDATE_PRODUCT,
+} from "graphql/mutations";
+import Cookies from "js-cookie";
+import { UPDATE_ACCESSORY_MUTATION } from "graphql/Accessories";
 
+const initialErrors = {
+  categoryError: "",
+  subCategoryError: "",
+  posterImageError: "",
+  prodImages: "",
+};
 
-const initialErrors = { categoryError: "", subCategoryError: "", posterImageError: "", prodImages: "" }
-
-const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({ EditInitialValues, EditProductValue, setselecteMenu, setEditProduct, categoriesList }) => {
-
-  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>(EditInitialValues ? EditInitialValues?.productImages : [],);
-  const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>(EditInitialValues ? [EditInitialValues?.posterImageUrl] : [],);
-  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(
-    EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : []
+const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
+  EditInitialValues,
+  EditProductValue,
+  setselecteMenu,
+  setEditProduct,
+  categoriesList,
+  products,
+  accessoryFlag,
+}) => {
+  const [imagesUrl, setImagesUrl] = useState<ProductImage[] | undefined>(
+    EditInitialValues ? EditInitialValues?.productImages : []
   );
-
-
-
+  const [posterimageUrl, setposterimageUrl] = useState<
+    ProductImage[] | undefined
+  >(EditInitialValues ? [EditInitialValues?.posterImageUrl] : []);
+  const [hoverImage, sethoverImage] = useState<ProductImage[] | undefined>(
+    EditInitialValues?.hoverImageUrl
+      ? [{ ...EditInitialValues.hoverImageUrl }]
+      : []
+  );
+  const [featureImagesimagesUrl, setfeatureImagesImagesUrl] = useState<
+    ProductImage[] | undefined
+  >(EditInitialValues ? EditInitialValues?.featureImages : []);
   const [loading, setloading] = useState<boolean>(false);
-  const [productInitialValue, setProductInitialValue] = useState<EDIT_PRODUCT_PROPS | null | undefined>(EditProductValue);
+  const [productInitialValue, setProductInitialValue] = useState<
+    IProductValues | null | undefined
+  >(EditProductValue);
   const [imgError, setError] = useState<string | null | undefined>();
-  const [selectedCategory, setSelectedCategory] = useState(EditProductValue ? EditProductValue.category : "");
+  const [selectedCategory, setSelectedCategory] = useState(
+    EditProductValue ? EditProductValue.category : ""
+  );
   const [subcategories, setSubcategories] = useState([]);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(EditProductValue ? EditProductValue?.subcategory : "");
+  const [selectedSubcategory, setSelectedSubcategory] = useState(
+    EditProductValue ? EditProductValue?.subcategory : ""
+  );
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
   const draggedOverImage = useRef<number | null>(null);
-  const token = Cookies.get('2guysAdminToken');
-  const superAdminToken = Cookies.get('superAdminToken');
+  const token = Cookies.get("2guysAdminToken");
+  const superAdminToken = Cookies.get("superAdminToken");
   const finalToken = token ? token : superAdminToken;
 
-
-  const [updateProduct] = useMutation(UPDATE_PRODUCT, {
-    context: {
-      fetchOptions: {
-        credentials: "include",
-      }
-    },
-  });
-
-  const [createProduct] = useMutation(CREATE_PRODUCT, {
-    context: {
-      fetchOptions: {
-        credentials: "include",
+  const [updateProduct] = useMutation(
+    accessoryFlag ? UPDATE_ACCESSORY_MUTATION : UPDATE_PRODUCT,
+    {
+      context: {
+        fetchOptions: {
+          credentials: "include",
+        },
       },
-    },
-  });
+    }
+  );
 
 
+  const [createProduct] = useMutation(
+    accessoryFlag ? CREATE_ACCESSORIES : CREATE_PRODUCT,
+    {
+      context: {
+        fetchOptions: {
+          credentials: "include",
+        },
+      },
+    }
+  );
   function handleSort() {
     if (dragImage.current === null || draggedOverImage.current === null) return;
 
@@ -77,19 +122,24 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setImagesUrl(imagesClone);
   }
 
-
   useEffect(() => {
-
-
     const CategoryHandler = async () => {
       try {
         if (!EditInitialValues) return;
-        const selectedCat = categoriesList?.find((cat) => cat.id === selectedCategory);
+        const selectedCat = categoriesList?.find(
+          (cat) => cat.id === selectedCategory
+        );
         setSubcategories(selectedCat?.subcategories || []);
-        setImagesUrl(EditInitialValues ? EditProductValue?.productImages : [])
-        sethoverImage(EditInitialValues?.hoverImageUrl ? [{ ...EditInitialValues.hoverImageUrl }] : [])
-        setProductInitialValue?.(() => EditProductValue)
-
+        setImagesUrl(EditInitialValues ? EditProductValue?.productImages : []);
+        sethoverImage(
+          EditInitialValues?.hoverImageUrl
+            ? [{ ...EditInitialValues.hoverImageUrl }]
+            : []
+        );
+        setProductInitialValue?.(() => EditProductValue);
+        setfeatureImagesImagesUrl(
+          EditInitialValues ? EditProductValue?.featureImages : []
+        );
       } catch (err) {
         throw err;
       }
@@ -97,10 +147,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
     CategoryHandler();
   }, [EditInitialValues]);
-  const onSubmit = async (values: EDIT_PRODUCT_PROPS, { resetForm }: FormikHelpers<EDIT_PRODUCT_PROPS>) => {
-    try {
-      setcategorySubCatError(initialErrors);
 
+  const onSubmit = async (
+    changedValue: IProductValues,
+    { resetForm }: FormikHelpers<IProductValues>
+  ) => {
+    try {
+      const values = removedValuesHandler(changedValue);
+      setcategorySubCatError(initialErrors);
+      console.log("values", changedValue)
       if (!selectedCategory) {
         setcategorySubCatError((prev) => ({
           ...prev,
@@ -109,7 +164,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         return;
       }
 
-      if (subcategories.length > 0 && !selectedSubcategory) {
+      if (subcategories.length > 0 && !selectedSubcategory && !accessoryFlag) {
         setcategorySubCatError((prev) => ({
           ...prev,
           subCategoryError: "Subcategory is Required",
@@ -136,14 +191,27 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         return;
       }
 
+      const images = {
+        subcategory: +selectedSubcategory,
+      };
+
+      /* eslint-disable */
+
+      const { products, ...restValues } = values;
+      /* eslint-enable */
+
       let newValues = {
-        ...values,
+        ...(accessoryFlag ? values : restValues),
         posterImageUrl,
         hoverImageUrl,
         productImages: imagesUrl,
         category: +selectedCategory,
-        subcategory: +selectedSubcategory,
+        featureImages: featureImagesimagesUrl,
       };
+
+      if (!accessoryFlag) {
+        Object.assign(newValues, images);
+      }
 
       setloading(true);
 
@@ -178,13 +246,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       sethoverImage(undefined);
       setposterimageUrl(undefined);
       setImagesUrl([]);
+      setfeatureImagesImagesUrl([]);
       setselecteMenu("Add All Products");
       if (updateFlag) {
         setEditProduct?.(undefined);
       }
-    }
-    /* eslint-disable */
-    catch (err: any) {
+      /* eslint-disable */
+    } catch (err: any) {
       if (err?.graphQLErrors?.length > 0) {
         setError(err?.graphQLErrors[0].message);
       } else if (err instanceof Error) {
@@ -196,24 +264,41 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       setloading(false);
     }
     /* eslint-enable */
-
   };
-
-
 
   const handleImageAltText = (
     index: number,
     newImageIndex: string,
-    setImagesUrlhandler: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+    setImagesUrlhandler: React.Dispatch<
+      React.SetStateAction<ProductImage[] | undefined>
+    >
   ) => {
     setImagesUrlhandler((prev: ProductImage[] | undefined) => {
       if (!prev) return [];
 
-      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) => i === index ? { ...item, altText: newImageIndex } : item);
+      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
+        i === index ? { ...item, altText: newImageIndex } : item
+      );
       return updatedImagesUrl;
     });
   };
 
+  const handleColorcode = (
+    index: number,
+    newImageIndex: string,
+    setImagesUrlhandler: React.Dispatch<
+      React.SetStateAction<ProductImage[] | undefined>
+    >
+  ) => {
+    setImagesUrlhandler((prev: ProductImage[] | undefined) => {
+      if (!prev) return [];
+
+      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
+        i === index ? { ...item, color: newImageIndex } : item
+      );
+      return updatedImagesUrl;
+    });
+  };
 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value;
@@ -227,13 +312,23 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setSelectedSubcategory("");
   };
 
+  const removedValuesHandler = (ChangedValue: IProductValues) => {
+    const modifiedProductValues = Object.fromEntries(
+      Object.entries(ChangedValue).filter(
+        ([key]) => !excludedKeys.includes(key)
+      )
+    ) as IProductValues;
+    return accessoryFlag
+      ? { ...modifiedProductValues }
+      : ChangedValue;
+  };
 
   return (
     <>
       <p
         className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-black dark:text-white"
         onClick={() => {
-          setselecteMenu('Add All Products');
+          setselecteMenu("Add All Products");
           setEditProduct?.(() => undefined);
         }}
       >
@@ -285,8 +380,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     className="object-cover "
                                     width={300}
                                     height={400}
-                                    loading='lazy'
-
+                                    loading="lazy"
                                     src={item?.imageUrl || ""}
                                     alt={`productImage-${index}`}
                                   />
@@ -302,23 +396,26 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     handleImageAltText(
                                       index,
                                       String(e.target.value),
-                                      setposterimageUrl,
+                                      setposterimageUrl
                                     )
                                   }
                                 />
                               </div>
                             );
                           })}
-
                         </div>
                       ) : (
                         <ImageUploader setposterimageUrl={setposterimageUrl} />
                       )}
                     </div>
-                    {categorySubCatError.posterImageError ? <p className='text-red-500'>{categorySubCatError.posterImageError}</p> : null}
+                    {categorySubCatError.posterImageError ? (
+                      <p className="text-red-500">
+                        {categorySubCatError.posterImageError}
+                      </p>
+                    ) : null}
 
                     <div className="flex flex-col ">
-                      <div className='w-full'>
+                      <div className="w-full">
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                           Product Title
                         </label>
@@ -329,13 +426,20 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               {...field}
                               type="text"
                               placeholder="Title"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error ? "border-red-500" : ""
-                                }`}
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                meta.touched && meta.error
+                                  ? "border-red-500"
+                                  : ""
+                              }`}
                             />
                           )}
                         </Field>
 
-                        <ErrorMessage name="name" component="div" className="text-red-500 dark:text-red-700 text-sm" />
+                        <ErrorMessage
+                          name="name"
+                          component="div"
+                          className="text-red-500 dark:text-red-700 text-sm"
+                        />
                       </div>
 
                       <div>
@@ -349,8 +453,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 {...field}
                                 type="text"
                                 placeholder="Title"
-                                className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error ? "border-red-500" : ""
-                                  }`}
+                                className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                  meta.touched && meta.error
+                                    ? "border-red-500"
+                                    : ""
+                                }`}
                               />
                               {meta.touched && meta.error ? (
                                 <div className="text-red-500 dark:text-red-700 text-sm">
@@ -364,33 +471,34 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                       <div>
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
-                          description{' '}
+                          description{" "}
                         </label>
                         <textarea
                           name="description"
                           onChange={formik.handleChange}
                           value={formik.values.description}
                           placeholder="description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                            formik.touched.description &&
                             formik.errors.description
-                            ? 'border-red-500'
-                            : ''
-                            }`}
+                              ? "border-red-500"
+                              : ""
+                          }`}
                         />
                         {formik.touched.description &&
-                          formik.errors.description ? (
+                        formik.errors.description ? (
                           <div className="text-red-500 dark:text-red-700 text-sm">
                             {
                               formik.errors.description as FormikErrors<
-                                FormValues['description']
+                                FormValues["description"]
                               >
                             }
                           </div>
                         ) : null}
                       </div>
 
-                      <div className="flex full gap-4">
-                        <div className="w-1/2 xs:w-1/3">
+                      <div className="flex full items-center gap-4">
+                        <div className="w-1/3 xs:w-1/3">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                             Price
                           </label>
@@ -402,50 +510,69 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             value={formik.values.price}
                             placeholder="Product Price"
                             min="0"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.price && formik.errors.price
-                              ? 'border-red-500'
-                              : ''
-                              }`}
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                              formik.touched.price && formik.errors.price
+                                ? "border-red-500"
+                                : ""
+                            }`}
                           />
                           {formik.touched.price && formik.errors.price ? (
                             <div className="text-red-500 dark:text-red-700 text-sm">
-                              {' '}
+                              {" "}
                               {
                                 formik.errors.price as FormikErrors<
-                                  FormValues['price']
+                                  FormValues["price"]
                                 >
                               }
                             </div>
                           ) : null}
                         </div>
 
-                        <div className="w-1/2 xs:w-1/3">
+                        <div className="w-1/3 xs:w-1/3">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
                             Discount Price
                           </label>
-                          <input
+
+                          <Field
                             type="number"
                             name="discountPrice"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.discountPrice}
-                            placeholder="Discount Price"
+                            placeholder="How many items available"
                             min="0"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.discountPrice &&
-                              formik.errors.discountPrice
-                              ? 'border-red-500'
-                              : ''
-                              }`}
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                              formik.touched.discountPrice &&
+                              formik.errors?.discountPrice
+                                ? "border-red-500"
+                                : ""
+                            }`}
                           />
-                          {formik.touched.discountPrice &&
-                            formik.errors.discountPrice ? (
-                            <div className="text-red-500 dark:text-red-700 text-sm">
-                              {formik.errors.discountPrice as string}
-                            </div>
-                          ) : null}
+
+                          <ErrorMessage
+                            name="discountPrice"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                        </div>
+
+                        <div className="w-1/3 xs:w-1/3 ">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white mt-4">
+                            Stock
+                          </label>
+
+                          <Field
+                            type="number"
+                            name="stock"
+                            placeholder="How many items available"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
+
+                          <ErrorMessage
+                            name="stock"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
                         </div>
                       </div>
-
 
                       <div className="mt-4 space-y-4">
                         <div className="flex gap-4">
@@ -460,13 +587,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.Meta_Title}
                               placeholder="Meta Title"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                                ? 'border-red-500'
-                                : ''
-                                }`}
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                formik.touched.name && formik.errors.name
+                                  ? "border-red-500"
+                                  : ""
+                              }`}
                             />
                             {formik.touched.Meta_Title &&
-                              formik.errors.Meta_Title ? (
+                            formik.errors.Meta_Title ? (
                               <div className="text-red text-sm">
                                 {formik.errors.Meta_Title as string}
                               </div>
@@ -483,14 +611,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               onChange={formik.handleChange}
                               value={formik.values.Canonical_Tag}
                               placeholder="Canonical Tag"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                                ? 'border-red-500'
-                                : ''
-                                }`}
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                formik.touched.name && formik.errors.name
+                                  ? "border-red-500"
+                                  : ""
+                              }`}
                             />
 
                             {formik.touched.Canonical_Tag &&
-                              formik.errors.Canonical_Tag ? (
+                            formik.errors.Canonical_Tag ? (
                               <div className="text-red text-sm">
                                 {formik.errors.Canonical_Tag as string}
                               </div>
@@ -506,26 +635,24 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             onChange={formik.handleChange}
                             value={formik.values.Meta_Description}
                             placeholder="Meta Description"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                              formik.touched.description &&
                               formik.errors.description
-                              ? 'border-red-500'
-                              : ''
-                              }`}
+                                ? "border-red-500"
+                                : ""
+                            }`}
                           />
                           {formik.touched.Meta_Description &&
-                            formik.errors.Meta_Description ? (
+                          formik.errors.Meta_Description ? (
                             <div className="text-red text-sm">
                               {formik.errors.Meta_Description as string}
                             </div>
                           ) : null}
                         </div>
-
                       </div>
 
                       <div className="flex gap-4 flex-col">
-
                         <div className="w-full">
-
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                             Select Categories & Sub Categories
                           </label>
@@ -546,213 +673,308 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               ))}
                             </select>
 
-                            {categorySubCatError.categoryError ? <p className='text-red-500'>{categorySubCatError.categoryError}</p> : null}
+                            {categorySubCatError.categoryError ? (
+                              <p className="text-red-500">
+                                {categorySubCatError.categoryError}
+                              </p>
+                            ) : null}
                           </div>
 
                           {/* Subcategory Selection */}
-                          {subcategories.length > 0 && (
+
+                          {!accessoryFlag && subcategories.length > 0 && (
                             <div className="mt-4">
-                              <h2 className="text-lg font-medium mb-3">Subcategories</h2>
+                              <h2 className="text-lg font-medium mb-3">
+                                Subcategories
+                              </h2>
                               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <select
                                   name="subcategory"
                                   value={selectedSubcategory}
-                                  onChange={(e) => setSelectedSubcategory(e.target.value)}
+                                  onChange={(e) =>
+                                    setSelectedSubcategory(e.target.value)
+                                  }
                                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                                 >
                                   <option value="" disabled>
                                     Select Subcategory
                                   </option>
-                                  {subcategories.map((subCat: { id: string, name: string }) => (
-                                    <option key={subCat.id} value={subCat.id}>
-                                      {subCat.name}
-                                    </option>
-                                  ))}
+                                  {subcategories.map(
+                                    (subCat: { id: string; name: string }) => (
+                                      <option key={subCat.id} value={subCat.id}>
+                                        {subCat.name}
+                                      </option>
+                                    )
+                                  )}
                                 </select>
                               </div>
                             </div>
                           )}
 
-                          {categorySubCatError.subCategoryError ? <p className='text-red-500'>{categorySubCatError.subCategoryError}</p> : null}
-
+                          {categorySubCatError.subCategoryError ? (
+                            <p className="text-red-500">
+                              {categorySubCatError.subCategoryError}
+                            </p>
+                          ) : null}
                         </div>
 
-
+                        {accessoryFlag ? (
+                          <>
+                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Add Products
+                            </label>
+                            <FieldArray name="products">
+                              {({ push, remove }) => (
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                  {products?.map((product) => {
+                                    const isChecked =
+                                      formik.values.products?.includes(
+                                        product.id.toString()
+                                      );
+                                    return (
+                                      <label
+                                        key={product.id}
+                                        className="flex items-center space-x-2"
+                                      >
+                                        <Field
+                                          type="checkbox"
+                                          name="products"
+                                          value={product.id.toString()}
+                                          checked={isChecked}
+                                          onChange={(
+                                            e: React.ChangeEvent<HTMLInputElement>
+                                          ) => {
+                                            if (e.target.checked) {
+                                              push(product.id.toString());
+                                            } else {
+                                              remove(
+                                                formik.values.products.indexOf(
+                                                  product.id.toString()
+                                                )
+                                              );
+                                            }
+                                          }}
+                                          className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                                        />
+                                        <span className="text-black dark:text-white">
+                                          {product.name}
+                                        </span>
+                                      </label>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </FieldArray>
+                          </>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-5">
-                  <div className="py-4 px-6 rounded-sm border border-stroke">
+                  {!accessoryFlag ? (
+                    <>
+                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                        <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                          Waterproof
+                        </label>
 
-                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                        Add Stock Quantity
-                      </label>
+                        <div className="flex items-center gap-2">
+                          <Field name="waterproof">
+                            {({
+                              field,
+                              form,
+                            }: {
+                              field: FieldInputProps<boolean>;
+                              form: FormikProps<{ waterproof: boolean }>;
+                            }) => (
+                              <input
+                                type="checkbox"
+                                name={field.name}
+                                checked={Boolean(field.value)}
+                                onChange={() =>
+                                  form.setFieldValue(field.name, !field.value)
+                                }
+                                className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
+                              />
+                            )}
+                          </Field>
+                          <span className="text-black dark:text-white">
+                            Is this waterproof?
+                          </span>
+                        </div>
 
-                      <Field
-                        type="number"
-                        name="stock"
-                        placeholder="How many items available"
-                        min="0"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
+                        <ErrorMessage
+                          name="waterproof"
+                          component="div"
+                          className="text-red-500 dark:text-red-700 text-sm"
+                        />
+                      </div>
 
-                      <ErrorMessage name="stock" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                    </div>
-                  </div>
+                      <div className="py-4 px-6 rounded-sm border border-stroke">
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Add Residential Warranty
+                          </label>
 
-                  <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                    <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                      Waterproof
-                    </label>
-
-                    <div className="flex items-center gap-2">
-                      <Field name="waterproof">
-                        {({ field, form }: { field: FieldInputProps<boolean>; form: FormikProps<{ waterproof: boolean }> }) => (
-                          <input
-                            type="checkbox"
-                            name={field.name}
-                            checked={Boolean(field.value)} 
-                            onChange={() => form.setFieldValue(field.name, !field.value)}
-                            className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
+                          <Field
+                            type="text"
+                            name="ResidentialWarranty"
+                            placeholder="5 years"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           />
-                        )}
-                      </Field>
-                      <span className="text-black dark:text-white">Is this waterproof?</span>
-                    </div>
 
-                    <ErrorMessage name="waterproof" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                  </div>
+                          <ErrorMessage
+                            name="ResidentialWarranty"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                        </div>
 
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Add Commercial Warranty
+                          </label>
 
+                          <Field
+                            type="text"
+                            name="CommmericallWarranty"
+                            placeholder="5 years"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
 
-                  <div className="py-4 px-6 rounded-sm border border-stroke">
+                          <ErrorMessage
+                            name="CommmericallWarranty"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                        </div>
 
-                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                        Add Residential Warranty
-                      </label>
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Add Plank Width
+                          </label>
 
-                      <Field
-                        type="text"
-                        name="ResidentialWarranty"
-                        placeholder="5 years"
-                        min="0"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
+                          <Field
+                            type="text"
+                            name="plankWidth"
+                            placeholder="183 mm"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
 
-                      <ErrorMessage name="ResidentialWarranty" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                    </div>
+                          <ErrorMessage
+                            name="plankWidth"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                        </div>
 
-                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                        Add Commmericall Warranty
-                      </label>
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Add Thickness
+                          </label>
 
-                      <Field
-                        type="text"
-                        name="CommmericallWarranty"
-                        placeholder="5 years"
-                        min="0"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
+                          <Field
+                            type="text"
+                            name="thickness"
+                            placeholder="5.5 mm"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
 
-                      <ErrorMessage name="CommmericallWarranty" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                    </div>
+                          <ErrorMessage
+                            name="thickness"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                        </div>
 
-                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                        Add Plank Width
-                      </label>
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Box Coverage
+                          </label>
 
-                      <Field
-                        type="text"
-                        name="plankWidth"
-                        placeholder="183 mm"
-                        min="0"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
+                          <Field
+                            type="text"
+                            name="boxCoverage"
+                            placeholder="2.9"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
 
-                      <ErrorMessage name="plankWidth" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                    </div>
-
-                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                        Add Thickness
-                      </label>
-
-                      <Field
-                        type="text"
-                        name="thickness"
-                        placeholder="5.5 mm"
-                        min="0"
-                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                      />
-
-                      <ErrorMessage name="thickness" component="div" className="text-red-500 dark:text-red-700 text-sm" />
-                    </div>
-
-                  </div>
+                          <ErrorMessage
+                            name="boxCoverage"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    ""
+                  )}
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
                       <h3 className="font-medium text-black dark:text-white">
-                        Color Information
+                        FAQS Details
                       </h3>
                     </div>
-
                     <div className="flex flex-col py-4 px-6">
-                      <FieldArray name="colors">
+                      <FieldArray name="FAQS">
                         {({ push, remove }) => (
                           <div className="flex flex-col gap-2">
-                            {formik.values.colors &&
-                              formik.values.colors.map(
-                                (model: AdditionalInformation, index: number) => (
+                            {formik.values.FAQS &&
+                              formik.values.FAQS.map(
+                                (
+                                  model: AdditionalInformation,
+                                  index: number
+                                ) => (
                                   <div
                                     key={index}
                                     className="flex items-center"
                                   >
                                     <input
                                       type="text"
-                                      name={`colors[${index}].name`}
+                                      name={`FAQS[${index}].name`}
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
-                                      value={
-                                        formik.values.colors[index].name
-                                      }
+                                      value={formik?.values?.FAQS[index].name}
                                       placeholder="Model Name"
-                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                        model.name &&
                                         (
-                                          formik.errors
-                                            .colors as FormikErrors<
-                                              FormValues['colors']
-                                            >
+                                          formik.errors.FAQS as FormikErrors<
+                                            FormValues["FAQS"]
+                                          >
                                         )?.[index]
-                                        ? 'border-red-500 dark:border-white'
-                                        : ''
-                                        }`}
+                                          ? "border-red-500 dark:border-white"
+                                          : ""
+                                      }`}
                                     />
                                     <input
                                       type="text"
-                                      name={`colors[${index}].detail`}
+                                      name={`FAQS[${index}].detail`}
                                       onChange={formik.handleChange}
                                       onBlur={formik.handleBlur}
-                                      value={
-                                        formik.values.colors[
-                                          index
-                                        ].detail
-                                      }
+                                      value={formik.values.FAQS[index].detail}
                                       placeholder="Model Detail"
-                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                        model.detail &&
                                         (
-                                          formik.errors
-                                            .colors as FormikErrors<FormValues['colors']>
+                                          formik.errors.FAQS as FormikErrors<
+                                            FormValues["FAQS"]
+                                          >
                                         )?.[index]
-                                        ? 'border-red-500 dark:border-white'
-                                        : ''
-                                        }`}
+                                          ? "border-red-500 dark:border-white"
+                                          : ""
+                                      }`}
                                     />
                                     <button
                                       type="button"
@@ -765,14 +987,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       />
                                     </button>
                                   </div>
-                                ),
+                                )
                               )}
                             <button
                               type="button"
-                              onClick={() => push({ name: '', detail: '' })}
+                              onClick={() => push({ name: "", detail: "" })}
                               className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
                             >
-                              Add Model
+                              FAQ Details
                             </button>
                           </div>
                         )}
@@ -792,7 +1014,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           <div className="flex flex-col gap-2">
                             {formik.values.AdditionalInformation &&
                               formik.values.AdditionalInformation.map(
-                                (model: AdditionalInformation, index: number) => (
+                                (
+                                  model: AdditionalInformation,
+                                  index: number
+                                ) => (
                                   <div
                                     key={index}
                                     className="flex items-center"
@@ -808,16 +1033,17 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                         ].name
                                       }
                                       placeholder="Model Name"
-                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                        model.name &&
                                         (
                                           formik.errors
                                             .AdditionalInformation as FormikErrors<
-                                              FormValues['AdditionalInformation']
-                                            >
+                                            FormValues["AdditionalInformation"]
+                                          >
                                         )?.[index]
-                                        ? 'border-red-500 dark:border-white'
-                                        : ''
-                                        }`}
+                                          ? "border-red-500 dark:border-white"
+                                          : ""
+                                      }`}
                                     />
                                     <input
                                       type="text"
@@ -830,14 +1056,17 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                         ].detail
                                       }
                                       placeholder="Model Detail"
-                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
+                                        model.detail &&
                                         (
                                           formik.errors
-                                            .AdditionalInformation as FormikErrors<FormValues['AdditionalInformation']>
+                                            .AdditionalInformation as FormikErrors<
+                                            FormValues["AdditionalInformation"]
+                                          >
                                         )?.[index]
-                                        ? 'border-red-500 dark:border-white'
-                                        : ''
-                                        }`}
+                                          ? "border-red-500 dark:border-white"
+                                          : ""
+                                      }`}
                                     />
                                     <button
                                       type="button"
@@ -850,11 +1079,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       />
                                     </button>
                                   </div>
-                                ),
+                                )
                               )}
                             <button
                               type="button"
-                              onClick={() => push({ name: '', detail: '' })}
+                              onClick={() => push({ name: "", detail: "" })}
                               className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
                             >
                               Add Model
@@ -864,11 +1093,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </FieldArray>
                     </div>
                   </div>
-
-
-
-
-
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
@@ -880,7 +1104,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     {hoverImage && hoverImage.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {hoverImage.map((item: ProductImage, index) => {
-
                           return (
                             <div key={index}>
                               <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
@@ -902,8 +1125,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg"
                                   width={100}
                                   height={100}
-                                  loading='lazy'
-                                  src={item?.imageUrl ? item?.imageUrl : ''}
+                                  loading="lazy"
+                                  src={item?.imageUrl ? item?.imageUrl : ""}
                                   alt={`productImage-${index}`}
                                 />
                               </div>
@@ -917,7 +1140,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   handleImageAltText(
                                     index,
                                     String(e.target.value),
-                                    sethoverImage,
+                                    sethoverImage
                                   )
                                 }
                               />
@@ -943,15 +1166,21 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {imagesUrl.map((item: ProductImage, index) => {
                           return (
-                            <div key={index}
+                            <div
+                              key={index}
                               draggable
                               onDragStart={() => (dragImage.current = index)}
-                              onDragEnter={() => (draggedOverImage.current = index)}
+                              onDragEnter={() =>
+                                (draggedOverImage.current = index)
+                              }
                               onDragEnd={handleSort}
                               onDragOver={(e) => e.preventDefault()}
                             >
                               <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
-                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full" draggable>
+                                <div
+                                  className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full"
+                                  draggable
+                                >
                                   <RxCross2
                                     className="cursor-pointer text-red-500 dark:text-red-700"
                                     size={17}
@@ -969,9 +1198,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg"
                                   width={300}
                                   height={200}
-                                  loading='lazy'
+                                  loading="lazy"
                                   src={item?.imageUrl || ""}
-
                                   alt={`productImage-${index}` || ""}
                                 />
                               </div>
@@ -986,23 +1214,114 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   handleImageAltText(
                                     index,
                                     String(e.target.value),
-                                    setImagesUrl,
+                                    setImagesUrl
                                   )
                                 }
                               />
-
                             </div>
                           );
                         })}
                       </div>
                     ) : null}
                   </div>
-                  {categorySubCatError.prodImages ? <p className='text-red-500'>{categorySubCatError.prodImages}</p> : null}
+                  {categorySubCatError.prodImages ? (
+                    <p className="text-red-500">
+                      {categorySubCatError.prodImages}
+                    </p>
+                  ) : null}
 
+                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                    <div className="border-b border-stroke py-4 px-4 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Add Feature Images
+                      </h3>
+                    </div>
+
+                    <ImageUploader setImagesUrl={setfeatureImagesImagesUrl} />
+
+                    {featureImagesimagesUrl &&
+                    featureImagesimagesUrl.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                        {featureImagesimagesUrl.map(
+                          (item: ProductImage, index) => {
+                            return (
+                              <div
+                                key={index}
+                                draggable
+                                onDragStart={() => (dragImage.current = index)}
+                                onDragEnter={() =>
+                                  (draggedOverImage.current = index)
+                                }
+                                onDragEnd={handleSort}
+                                onDragOver={(e) => e.preventDefault()}
+                              >
+                                <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
+                                  <div
+                                    className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full"
+                                    draggable
+                                  >
+                                    <RxCross2
+                                      className="cursor-pointer text-red-500 dark:text-red-700"
+                                      size={17}
+                                      onClick={() => {
+                                        ImageRemoveHandler(
+                                          item.public_id,
+                                          setfeatureImagesImagesUrl,
+                                          finalToken
+                                        );
+                                      }}
+                                    />
+                                  </div>
+                                  <Image
+                                    key={index}
+                                    className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg"
+                                    width={300}
+                                    height={200}
+                                    loading="lazy"
+                                    src={item?.imageUrl || ""}
+                                    alt={`productImage-${index}` || ""}
+                                  />
+                                </div>
+
+                                <input
+                                  className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  placeholder="altText"
+                                  type="text"
+                                  name="altText"
+                                  value={item?.altText || ""}
+                                  onChange={(e) =>
+                                    handleImageAltText(
+                                      index,
+                                      String(e.target.value),
+                                      setfeatureImagesImagesUrl
+                                    )
+                                  }
+                                />
+
+                                {accessoryFlag && (
+                                  <input
+                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    placeholder="color"
+                                    type="text"
+                                    name="color"
+                                    value={item?.color || ""}
+                                    onChange={(e) =>
+                                      handleColorcode(
+                                        index,
+                                        String(e.target.value),
+                                        setfeatureImagesImagesUrl
+                                      )
+                                    }
+                                  />
+                                )}
+                              </div>
+                            );
+                          }
+                        )}
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
-
-
-
               </div>
 
               {imgError ? (
@@ -1016,7 +1335,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md dark:bg-primary dark:border-0"
                 disabled={loading}
               >
-                {loading ? <Loader color="white" /> : 'Submit'}
+                {loading ? <Loader color="white" /> : "Submit"}
               </button>
             </Form>
           );

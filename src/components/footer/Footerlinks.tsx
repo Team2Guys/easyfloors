@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Category } from "types/cat"; 
@@ -40,7 +41,9 @@ const Footerlinks: React.FC<FooterlinksProps> = ({ categories }) => {
             <ul className="space-y-2">
               {section.subcategories?.map((item, i) => (
                 <li key={i} className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
-                  {item.name}
+                  <Link href={`/${section.RecallUrl}/${item.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>

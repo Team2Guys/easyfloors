@@ -5,16 +5,16 @@ import Filters from "components/sub-category/filters";
 import SubCategory from "components/sub-category/sub-category-product";
 import Modal from "components/ui/modal";
 import Select from "components/ui/Select";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { type ISUBCATEGORY, type Category } from "types/cat";
 import { AdditionalInformation, IProduct } from "types/prod";
 import { SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
-interface SUBNCATEGORIES_PAGES_PROPS{ catgories: Category[], categoryData: Category, subCategoryData?: ISUBCATEGORY, isSubCategory: boolean }
+interface SUBNCATEGORIES_PAGES_PROPS{ catgories: Category[], categoryData: Category, subCategoryData?: ISUBCATEGORY, isSubCategory: boolean}
 
-
-const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }:SUBNCATEGORIES_PAGES_PROPS ) => {
+const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -27,6 +27,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }:SU
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
+  const params = useParams<{ slug: string; subcategory: string }>()
   useEffect(() => {
     if (isSubCategory && subCategoryData) {
       setData(subCategoryData);
@@ -34,6 +35,11 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }:SU
       setData(categoryData)
     }
   }, [categoryData, subCategoryData])
+
+  console.log("Data",params.subcategory)
+  useEffect(() => {
+    console.log("Params:", params);
+  }, [params]);
 
   useEffect(() => {
     let filtered = Data?.products;
@@ -197,7 +203,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory }:SU
             </div>
           </div>
           <SubCategory 
-          filteredProducts={filteredProducts}
+            filteredProducts={isSubCategory ? filteredProducts : Data.subcategories || []}
             selectedFilters={selectedFilters}
             setIsWaterProof={setIsWaterProof}
             selectedColor={selectedColors}

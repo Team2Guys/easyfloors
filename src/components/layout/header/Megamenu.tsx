@@ -41,8 +41,8 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu,scrolling }) =
   };
 
   return (
-    <div ref={menuRef} className="relative font-inter font-light" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link className={`text-11 xl:text-14 3xl:text-16 hover:bg-gray-light w-fit ${scrolling ? "pb-7" : "pb-6"}`} href={href}>
+    <div ref={menuRef} className="relative font-inter capitalize font-light" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <Link className={`text-11 xl:text-14 3xl:text-16 capitalize hover:bg-gray-light w-fit ${scrolling ? "pb-7" : "pb-6"}`} href={`/${href}`}>
         {label}
       </Link>
       {submenu && submenu.length > 0 && isOpen && (
@@ -51,9 +51,9 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu,scrolling }) =
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <Container className="grid grid-cols-5 gap-4 my-2 ">
+          <Container className="grid grid-cols-5 gap-4 my-2  capitalize">
             {submenu.map((sub, index) => (
-              <Link key={index} href={sub.href} className="group"  onClick={handleLinkClick}>
+              <Link key={index} href={`${sub.href}`} className="group"  onClick={handleLinkClick}>
                   {sub.image && (
                     <Image src={sub.image} alt={sub.label} width={500} height={500} className="w-full h-[220px]  object-cover" />
                   )}

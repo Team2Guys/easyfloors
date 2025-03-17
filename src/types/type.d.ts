@@ -257,6 +257,8 @@ export interface FormValues {
   variantStockQuantities: { variant: string; quantity: number }[];
   price?: string;
   AdditionalInformation?: [];
+  FAQS?:[]
+  box:string
 }
 
 export interface USRPROPS {
@@ -361,14 +363,4 @@ export interface CartSelectProps {
   select: string[];
   fees: { [key: string]: number };
   onSelect: (state: string, fee: number) => void; //eslint-disable-line
-}
-export interface TabData {
-  title: string;
-  heading?:string;
-  content: string;
-  bulletpoints?:string[];
-}
-
-export interface ProductDetailsProps {
-  tabs: TabData[];
 }

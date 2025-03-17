@@ -18,8 +18,8 @@ export const handleAddToStorage = async (
     const item = {
       id: Number(productData.id),
       name: productData.name,
-      price: productData.price,
-      stock: productData.stock,
+      price: Number(productData.price),
+      stock: Number(productData.stock),
       quantity: 1,
       image: productData.productImages?.[0]?.imageUrl || "",
       subcategories: subCategory,
@@ -44,11 +44,11 @@ export const handleAddToStorage = async (
   };
 
   export const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
-    const boxCoverage = 2.9;
+    const boxCoverage = productData?.boxCoverage;
     const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
-    const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
-    const pricePerBox = productData ? (boxCoverage * productData.price) : 0;
-    const squareMeter = requiredBoxes * boxCoverage;
+    const requiredBoxes = area ? Math.ceil(convertedArea / Number(boxCoverage)) : 0;
+    const pricePerBox = productData && productData.price !== undefined ? (Number(boxCoverage) * productData.price) : 0;
+    const squareMeter = requiredBoxes * Number(boxCoverage ?? 0);
     const totalPrice = productData ? (requiredBoxes * pricePerBox) : 0;
     const installments = totalPrice / 4;
   

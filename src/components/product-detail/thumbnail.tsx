@@ -1,72 +1,83 @@
 'use client'
 import Image from "next/image";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { ThumbnailProps } from "types/product-detail";
+import { ExtendedThumbnailProps } from "types/product-detail";
 
-interface ExtendedThumbnailProps extends ThumbnailProps {
-  hideThumnailBottom?: boolean;
-  imageheight?:string // New prop to control visibility
-}
-
-const Thumbnail: React.FC<ExtendedThumbnailProps> = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false }) => {
-  const [nav1, setNav1] = useState<Slider | null>(null);
-  const [nav2, setNav2] = useState<Slider | null>(null);
+const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight }:ExtendedThumbnailProps) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
-
   const sliderRef1 = useRef<Slider | null>(null);
-  const sliderRef2 = useRef<Slider | null>(null);
 
-  useEffect(() => {
-    setNav1(sliderRef1.current);
-    setNav2(sliderRef2.current);
-  }, []);
-
-  const handleBeforeChange = (current: number, next: number) => {
-    setCurrentSlide(next);
+  const handleThumbnailClick = (index: number) => {
+    setCurrentSlide(index);
+    if (sliderRef1.current) {
+      sliderRef1.current.slickGoTo(index); 
+    }
   };
 
   return (
     <div className="slider-container flex gap-2 sm:gap-4 overflow-hidden">
       <div className="w-2/12">
-        <Slider
-          asNavFor={nav1 || undefined}
-          ref={sliderRef2}
-          slidesToShow={6}
-          infinite
-          swipeToSlide
-          focusOnSelect
-          vertical
-          verticalSwiping
-          dots={false}
-          arrows={false}
-          beforeChange={handleBeforeChange}
-        >
+        <div className="flex flex-col gap-1 sm:gap-2">
           {ThumnailImage.map((product, index) => (
-            <div key={index} className={index === currentSlide ? " p-[2px] sm:p-1 shadow-xl" : "p-[2px] sm:p-1"}>
-              <Image width={150} height={150} src={product.imageUrl} className="w-full h-[35px] sm:h-[73px] md:h-[124px]" alt="image" />
+            <div
+              key={index}
+              onClick={() => handleThumbnailClick(index)}
+              className={`cursor-pointer p-[2px] sm:p-1 ${
+                index === currentSlide ? "shadow-xl" : ""
+              }`}
+            >
+              <Image
+                width={150}
+                height={150}
+                src={product.imageUrl}
+                className={`w-full ${
+                  imageheight
+                    ? "h-[35px] sm:h-[73px] md:h-[230px]"
+                    : "h-[35px] sm:h-[73px] md:h-[124px]"
+                }`}
+                alt={product.altText || 'ThumnailImage'}
+              />
             </div>
           ))}
-        </Slider>
+        </div>
       </div>
+
       <div className="w-10/12">
-        <Slider asNavFor={nav2 || undefined} ref={sliderRef1} dots={false} arrows={false}>
+        <Slider infinite={ThumnailImage.length > 1} ref={sliderRef1} dots={false} arrows={false}>
           {ThumnailImage.map((product, index) => (
             <div key={index}>
-              <Image width={800} height={800} src={product.imageUrl} className="w-full h-[273px] sm:h-[520px] md:h-[830px]" alt="image" />
+              <Image
+                width={800}
+                height={800}
+                src={product.imageUrl}
+                className={`w-full ${
+                  imageheight
+                    ? "h-[273px] sm:h-[520px] md:h-[1218px]"
+                    : "h-[273px] sm:h-[520px] md:h-[830px]"
+                }`}
+                alt={product.altText || 'ThumnailImage'}
+              />
             </div>
           ))}
         </Slider>
 
-        {/* Conditionally render ThumnailBottom based on hideThumnailBottom prop */}
         {!hideThumnailBottom && ThumnailBottom && (
           <div className="grid grid-cols-6 gap-1 sm:gap-3 pt-2 sm:pt-6">
             {ThumnailBottom.map((array, index) => (
               <div key={index} className="text-center">
-                <Image width={150} height={150} src={array.image} alt={array.title} className="w-full max-sm:h-[39px] object-contain " />
-                <p className="font-semibold text-[8px] md:text-14 lg:text-16">{array.title}</p>
+                <Image
+                  width={150}
+                  height={150}
+                  src={array.imageUrl}
+                  alt={array.altText}
+                  className="w-full max-sm:h-[39px] object-contain"
+                />
+                <p className="font-semibold text-[8px] md:text-14 lg:text-16">
+                  {array.title}
+                </p>
               </div>
             ))}
           </div>

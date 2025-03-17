@@ -1,6 +1,11 @@
+export interface ExtendedThumbnailProps extends ThumbnailProps {
+  hideThumnailBottom?: boolean;
+  imageheight?: boolean; 
+}
+
 export interface ThumbnailProps {
-  ThumnailImage: { imageUrl: string }[];
-  ThumnailBottom: { image: string; title: string }[];
+  ThumnailImage: { imageUrl: string,altText:string  }[];
+  ThumnailBottom?: { imageUrl: string; title: string,altText:string }[];
 }
 export interface AdditionalInfoProps {
   description: string;
@@ -29,4 +34,5 @@ export interface detailprops{
     ProductInfo: IProduct[];
     MainCategory: string;
     subCategory: string;
+    productData:IProduct
 }
