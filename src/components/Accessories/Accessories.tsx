@@ -13,7 +13,6 @@ interface ProductCardProps {
 const AccessoriesComp: React.FC<ProductCardProps> = ({ product }) => {
   const [sortOption, setSortOption] = useState<string>("Default");
   const [sortedProducts, setSortedProducts] = useState<IProduct[]>(product);
-
   useEffect(() => {
     let sortedArray = [...product];
     switch (sortOption) {

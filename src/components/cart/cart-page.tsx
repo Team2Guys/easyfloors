@@ -86,7 +86,7 @@ const CartPage = () => {
                       <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m<sup>2</sup></p>
                       <p className='text-12 sm:text-14 2xl:text-17'>Price Per Box: <span className='font-bold'>AED {item.pricePerBox}</span></p>
                       <p className='text-12 sm:text-14 2xl:text-17'>No. Of Boxes: <span className='font-bold'>{item.requiredBoxes ?? 0}</span> ({(item.squareMeter).toFixed(3)} SQM)</p>
-                      <div className='flex lg:hidden gap-5 mt-2 items-center'>
+                      <div className='flex xl:hidden gap-5 mt-2 items-center'>
                       <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                     <button className="px-1 hover:text-black" onClick={() => decrement(item.id)}>
                       <LuMinus />

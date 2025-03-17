@@ -206,7 +206,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, }: 
             </div>
           </div>
           <SubCategory 
-            filteredProducts={isSubCategory ? filteredProducts : Data.subcategories || []}
+            filteredProducts={filteredProducts}
             selectedFilters={selectedFilters}
             setIsWaterProof={setIsWaterProof}
             selectedColor={selectedColors}

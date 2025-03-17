@@ -1,5 +1,5 @@
 'use client';
-import React, { SetStateAction, useEffect, useState } from 'react';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
@@ -17,7 +17,12 @@ import client from 'config/apolloClient';
 import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_CATEGORIES } from 'graphql/queries';
 import Cookies from 'js-cookie';
-
+import ReactCrop, { Crop} from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+import { Modal } from 'antd';
+import { uploadPhotosToBackend } from 'lib/helperFunctions';
+import showToast from 'components/Toaster/Toaster';
+import { centerAspectCrop } from 'types/product-crop';
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -42,8 +47,6 @@ const FormLayout = ({
       custom_url: editCategory.custom_url || "",
       topHeading:editCategory.topHeading || "",
       RecallUrl:editCategory.RecallUrl || "",
-    
-      
     }
     : null;
     const token = Cookies.get('admin_access_token');
@@ -55,7 +58,11 @@ const FormLayout = ({
 
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY | null | undefined>(CategoryName);
-
+  const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [crop, setCrop] = useState<Crop>();
+  const [croppedImage, setCroppedImage] = useState<string | null>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const onSubmit = async (values: EDIT_CATEGORY, { resetForm }: FormikHelpers<EDIT_CATEGORY>) => {
     try {
       setloading(true);
@@ -97,14 +104,116 @@ const FormLayout = ({
       throw err;
     }
   };
-
-
   useEffect(() => {
     setEditCategoryName(CategoryName)
 
   }, [editCategory])
 
+  const handleCropClick = (imageUrl: string) => {
+    setImageSrc(imageUrl);
+    setIsCropModalVisible(true);
+  };
 
+  const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const { width, height } = e.currentTarget;
+    const newCrop = centerAspectCrop(width, height, 16 / 9);
+    setCrop(newCrop);
+  };
+  const onCropComplete = (crop: Crop) => {
+    const image = imgRef.current;
+    if (!image || !crop.width || !crop.height) return;
+  
+    const canvas = document.createElement('canvas');
+    const scaleX = image.naturalWidth / image.width;
+    const scaleY = image.naturalHeight / image.height;
+    const ctx = canvas.getContext('2d');
+  
+    canvas.width = crop.width;
+    canvas.height = crop.height;
+  
+    if (ctx) {
+      ctx.drawImage(
+        image,
+        crop.x * scaleX,
+        crop.y * scaleY,
+        crop.width * scaleX,
+        crop.height * scaleY,
+        0,
+        0,
+        crop.width,
+        crop.height
+      );
+    }
+  
+    const base64Image = canvas.toDataURL('image/jpeg');
+    setCroppedImage(base64Image);
+  };
+  
+
+  const handleCropModalOk = async () => {
+    if (croppedImage && imageSrc) {
+      try {
+        // Convert the cropped image (base64) to a File
+        const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
+  
+        // Upload the cropped image to your backend or Cloudinary
+        const response = await uploadPhotosToBackend([file]);
+  
+        // Use the base URL from your environment variables
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
+        const uploadedImageUrl = response[0].imageUrl;
+        // Append the base URL if needed
+        const newImageUrl = uploadedImageUrl.startsWith('http')
+          ? uploadedImageUrl
+          : `${baseUrl}${uploadedImageUrl}`;
+  
+        const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
+  
+        // First close the modal and reset croppedImage
+        setIsCropModalVisible(false);
+        setCroppedImage(null);
+  
+        // Use a timeout to update states after the modal has closed
+        setTimeout(() => {
+          setposterimageUrl((prevImages) =>
+            prevImages?.map((img) =>
+              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
+            )
+          );
+          setBannerImageUrl((prevImages) =>
+            prevImages?.map((img) =>
+              img.imageUrl === imageSrc ? { ...img, ...newImage } : img
+            )
+          );
+        }, 0);
+      } catch (error) {
+        console.error('Error uploading cropped image:', error);
+        showToast('error', 'Failed to upload cropped image');
+      }
+    }
+  };
+  
+  // Helper function to convert a base64 string to a File object
+  const base64ToFile = (base64: string, filename: string): File => {
+    const arr = base64.split(',');
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : '';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+  
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+  
+    return new File([u8arr], filename, { type: mime });
+  };
+  
+
+  const handleCropModalCancel = () => {
+    setIsCropModalVisible(false);
+    setCroppedImage(null);
+  };
   return (
     <>
       <p
@@ -157,18 +266,19 @@ const FormLayout = ({
                                     }}
                                   />
                                 </div>
+                            
                                 <Image
+                                onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
-                                  className="object-cover w-full h-full dark:bg-black dark:shadow-lg"
+                                  className="object-cover w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
                                   width={300}
                                   height={200}
                                   src={item.imageUrl}
                                   loading='lazy'
                                   alt={`productImage-${index}`}
                                 />
-
-                                
-<input
+                          
+                              <input
                                   className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                   placeholder="Alt Text"
                                   type="text"
@@ -181,7 +291,7 @@ const FormLayout = ({
                                       setposterimageUrl,
                                     )
                                   }
-/>
+                              />
                               </div>
                             );
                           })}
@@ -190,7 +300,32 @@ const FormLayout = ({
                         <ImageUploader setposterimageUrl={setposterimageUrl} />
                       )}
                     </div>
-
+                    <Modal
+                title="Crop Image"
+                open={isCropModalVisible}
+                onOk={handleCropModalOk}
+                onCancel={handleCropModalCancel}
+                width={500}
+                height={400}
+                    >
+                {imageSrc && (
+                  <ReactCrop
+                    crop={crop}
+                    onChange={(newCrop) => setCrop(newCrop)}
+                    onComplete={onCropComplete}
+                  >
+                    <Image
+                    width={500}
+                    height={300}
+                      ref={imgRef}
+                      src={imageSrc}
+                      alt="Crop me"
+                      style={{ maxWidth: '100%' }}
+                      onLoad={onImageLoad}
+                    />
+                  </ReactCrop>
+                )}
+                    </Modal>
                     <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
@@ -217,11 +352,11 @@ const FormLayout = ({
                                       );
                                     }}
                                   />
-
                                 </div>
                                 <Image
+                                onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
-                                  className="w-full h-full dark:bg-black dark:shadow-lg"
+                                  className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
                                   width={200}
                                   height={500}
