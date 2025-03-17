@@ -53,7 +53,7 @@ export interface ISUBCATEGORY extends Category {
   whatamIdetails:AdditionalInformation[]
   Heading?:string
   BannerImage?:ProductImage
-
+  posterImageUrl?: ProductImage;
 }
 
 
