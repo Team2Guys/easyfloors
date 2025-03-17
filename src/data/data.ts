@@ -82,6 +82,7 @@ export const subcategoryValidationSchema = Yup.object({
 export const categoryValidationSchema = Yup.object({
   name: Yup.string().required('Add  Category Name'),
   custom_url: Yup.string().required('Custom URL is required'),
+  RecallUrl: Yup.string().required('Custom URL is required for categories and products'),
 });
 
 export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
@@ -94,7 +95,9 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   category: "",
   Canonical_Tag:"",
   whatamIdetails:[],
-  whatAmiTopHeading:""
+  whatAmiTopHeading:"",
+  Heading:"",
+  RecallUrl:""
 
 
 };
@@ -200,9 +203,9 @@ export const heroItems: HeroItem[] = [
       "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/",
-    priceText: "Only On AED 49/m²",
+    priceText: "Starting From AED 49/m²",
     flooringType: "SPC Eco • American Walnut", 
-    brand: "Polar",
+    brand: "Polar Flooring",
   },
 ];
 
@@ -284,6 +287,7 @@ export const menuItems = [
   { label: 'How to measure', href: '/how-to-measure-your-room', },
   // { label: 'Estimator', href: '/estimator', },
   { label: 'Accessories', href: '/accessories', },
+  { label: 'Blogs', href: '/blogs', },
   { label: 'About Us', href: '/about-us', },
   { label: 'Contact Us', href: '/contact-us', },
 ];
@@ -338,28 +342,6 @@ export const footerData = {
     description:
       'Founded with a passion for quality and design. Easyfloors is committed to craftsmanship, customer satisfaction and great value for money.',
   },
-  links: [
-    {
-      title: 'SPC FLOORING',
-      items: ['Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Polar SPC Herringbone', 'Polar SPC'],
-    },
-    {
-      title: 'LVT FLOORING',
-      items: ['Richmond LVT Comfort', 'Richmond LVT Luxury', 'Polar LVT'],
-    },
-    {
-      title: 'RICHMOND FLOORING',
-      items: ['Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Richmond LVT Comfort', 'Richmond LVT Luxury'],
-    },
-    {
-      title: 'POLAR FLOORING',
-      items: ['Polar SPC', 'Polar SPC Herringbone', 'Polar LVT'],
-    },
-    {
-      title: 'ACCESSORIES',
-      items: ['SPC Skirting', 'L Shape Skirting', 'Stair Nose', 'T Profile', 'Reducer', 'Quarter Round'],
-    },
-  ],
   contact: {
     address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',
     phone: '+971 50 597 4385',
@@ -510,7 +492,7 @@ export const policySections = [
 export const faqs: FAQItem[] = [
   {
     id: 1,
-    question: "Q. What makes vinyl flooring a good choice for high-traffic areas?",
+    question: " What makes vinyl flooring a good choice for high-traffic areas?",
     answer:
       "Vinyl flooring Abu Dhabi is highly durable and resistant to wear and tear, making it ideal for high-traffic areas. Its water-resistant and scratch-resistant properties ensure it maintains its appearance and functionality even in busy environments.",
   },
@@ -1030,11 +1012,11 @@ export const productTabs=[
 ];
 
 export const accessoriesimages = [
-  { image: "/assets/images/accessories/product/1.png" },
-  { image: "/assets/images/accessories/product/2.png" },
-  { image: "/assets/images/accessories/product/3.png" },
-  { image: "/assets/images/accessories/product/4.png"},
-  { image: "/assets/images/accessories/product/5.png"},
+  { imageUrl: "/assets/images/accessories/product/1.png" },
+  { imageUrl: "/assets/images/accessories/product/2.png" },
+  { imageUrl: "/assets/images/accessories/product/3.png" },
+  { imageUrl: "/assets/images/accessories/product/4.png"},
+  { imageUrl: "/assets/images/accessories/product/5.png"},
 ];
 
 export const colors = [

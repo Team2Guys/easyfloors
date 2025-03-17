@@ -24,7 +24,7 @@ const Product = ({ categories, productsData }: DASHBOARD_MAINPAGE_PROPS) => {
     spacification: editProduct && editProduct?.spacification,
     discountPrice: editProduct?.discountPrice,
     category: editProduct && editProduct?.category?.id,
-    subCategory: editProduct && editProduct?.subCategory?.id,
+    subcategory: editProduct && editProduct?.subcategory?.id,
     stock: (editProduct && editProduct.stock) || 0,
     posterImageUrl: editProduct?.posterImageUrl || {},
     productImages: (editProduct && editProduct.productImages) || [],

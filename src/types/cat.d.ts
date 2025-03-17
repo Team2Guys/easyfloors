@@ -17,7 +17,9 @@ export interface Category {
   last_editedBy?: string;
   Recall_Cat?: string;
   products?: Product[];
-
+  RecallUrl?:string
+  Heading?:string
+  BannerImage?:ProductImage
   subcategories?: {
     id: number | string;
     name: string;
@@ -46,6 +48,9 @@ export interface ISUBCATEGORY extends Category {
   homePageImage?:ProductImage;
   whatAmiTopHeading?:string
   whatamIdetails:AdditionalInformation[]
+  Heading?:string
+  BannerImage?:ProductImage
+
 }
 
 

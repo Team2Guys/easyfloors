@@ -1,13 +1,8 @@
-'use client'
-import React, { useState } from "react";
+import React from "react";
+import { AreaCalculatorProps } from "types/product-detail";
 
-const AreaCalculator = () => {
-  const [unit, setUnit] = useState("sqm");
-  const [area, setArea] = useState(""); 
-  const boxCoverage = 2.9;
-  const convertedArea = unit === "sqft" ? parseFloat((parseFloat(area) * 0.092903).toFixed(2)) : parseFloat(area);
-  const requiredBoxes = area ? Math.ceil(convertedArea / boxCoverage) : 0;
-
+const AreaCalculator= ({ setArea, setUnit, requiredBoxes, convertedArea, area, unit, pricePerBox,squareMeter}:AreaCalculatorProps) => {
+ 
   return (
     <div className="space-y-3 my-4">
  <div className="flex sm:flex-col max-sm:items-center gap-4 sm:space-y-3">
@@ -65,8 +60,8 @@ const AreaCalculator = () => {
       <p className="text-16 2xl:text-20 font-medium mt-2">
           You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ?convertedArea : "0"} m²)
       </p>
-        <p className="text-16 2xl:text-20 font-light">No. Of Boxes:0 (0 Square Meter)</p>
-        <p className="text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>180.21</span></span></p>
+        <p className="text-16 2xl:text-20 font-light">No. Of Boxes: {requiredBoxes} ({squareMeter} Square Meter)</p>
+        <p className="text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox}</span></span></p>
       </div>
     </div>
   );

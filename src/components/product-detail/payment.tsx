@@ -6,12 +6,9 @@ import tabbyLogo from "../../../public/assets/images/payment-icons/tabby-logo.pn
 import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.png";
 import Modal from "components/ui/modal";
 import { tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/produuct-detail";
+import { PaymentMethodProps } from "types/product-detail";
 
-interface PaymentMethodProps{
-  showheading?: boolean
-}
-
-const PaymentMethod = ({showheading}:PaymentMethodProps) => {
+const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
   const [tamaraOpen, setTamaraOpen] = useState(false);
   const paymentLabels = ['Today', 'In 1 month', 'In 2 months', 'In 3 months'];
@@ -29,14 +26,13 @@ const PaymentMethod = ({showheading}:PaymentMethodProps) => {
         </div>
       )
     }
-     
       <div className="flex gap-2 pt-4">
         <div className="relative w-1/2 border-4 border-[#00FFBC] p-4  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">
             tabby
           </span>
           <p className=" text-[8px] sm:text-14 font-medium text-[#8D8D8D]">
-             Pay 4 interest-free payments of AED 396.25{' '}
+             Pay 4 interest-free payments of AED {installments}{' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTabbyOpen(true)}
@@ -50,7 +46,7 @@ const PaymentMethod = ({showheading}:PaymentMethodProps) => {
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-[8px] xl:text-10 2xl:text-12">AED 200</p>
+                  <p className="text-[8px] xl:text-10 2xl:text-12">AED {installments}</p>
                   <p className="text-[7px] xltext-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}
@@ -61,7 +57,7 @@ const PaymentMethod = ({showheading}:PaymentMethodProps) => {
             tamara
           </span>
           <p className=" text-[8px] sm:text-14 font-medium text-[#8D8D8D]">
-          Pay 4 interest-free payments of AED 396.25 {' '}
+          Pay 4 interest-free payments of AED {installments} {' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTamaraOpen(true)}
@@ -75,7 +71,7 @@ const PaymentMethod = ({showheading}:PaymentMethodProps) => {
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-[8px] xl:text-10 2xl:text-12">AED 200</p>
+                  <p className="text-[8px] xl:text-10 2xl:text-12">AED {installments}</p>
                   <p className="text-[7px] xltext-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}

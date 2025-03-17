@@ -3,32 +3,7 @@ import masterCard from './../../public/assets/images/payment-icons/Mastercard-Lo
 import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 
-export const ThumnailImage = [
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-]
+
 export const ThumnailBottom = [
   {image:"/assets/bin/thumb1.png" , title:"Click lock system"},
   {image:"/assets/bin/thumb2.png" ,title:"Layers of SPC or LVT"},
@@ -195,20 +170,6 @@ export const tabbyfeature: ITabbyList[] = [
     },
   ];
   
-    export const specifications = [
-      { label: 'TOTAL THICKNESS', value: '4.0MM' },
-      { label: 'VIRGIN STONE/POLYMER CORE', value: '4.0MM VIRGIN WHITE STONE' },
-      { label: 'PRE ATTACHED IXPE UNDERLAY', value: 'NONE' },
-      { label: 'PLANK SIZE', value: '1220X183MM' },
-      { label: 'WEAR LAYER', value: '0.3MM' },
-      { label: 'EDGE DETAILS', value: 'UNILIN CLICK LOCK' },
-      { label: 'FINISH', value: 'MATT' },
-      { label: 'EMBOSSING', value: '3D NATURAL' },
-      { label: 'SQM PER CARTON', value: '2.68' },
-      { label: 'PIECES PER CARTON', value: '12PCS' },
-      { label: 'RESIDENTIAL LIMITED WARRANTY', value: '5 YEAR' },
-      { label: 'COMMERCIAL LIMITED WARRANTY', value: '2 YEAR' },
-    ];
   
    export const faqData = [
       {

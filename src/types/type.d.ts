@@ -35,7 +35,7 @@ export interface CollectionProductCardProps {
   category?: string;
   name?: string;
   price?: string;
-  product: Product[];
+  product: IProduct[];
 }
 export type Block = {
   id: number;

@@ -26,7 +26,7 @@ interface FaqsProps {
                         <div key={faq.id}>
                             <button
                                 onClick={() => toggleFAQ(index)}
-                                className="flex w-full items-center justify-between text-left focus:outline-none p-4"
+                                className="flex w-full items-center justify-between text-left  focus:outline-none p-4"
                             >
                                 <h2 className="md:text-xl text-base text-gray-700 ">
                                     <div className="flex md:items-center gap-3">
@@ -42,8 +42,8 @@ interface FaqsProps {
                                 </h2>
                             </button>
                             {openIndex === index && (
-                                <div className="pt-5 pb-4 flex gap-4 pl-5 text-gray-700  border-t font-normal md:text-lg text-sm">
-                                    <span>A.</span> {faq.answer}
+                                <div className="pt-5 pb-4 flex gap-4 lg:pl-14 pl-5 text-gray-700  border-t font-normal md:text-lg text-sm">
+                                   {faq.answer}
                                 </div>
                             )}
                             <hr className="border-gray-200 " />

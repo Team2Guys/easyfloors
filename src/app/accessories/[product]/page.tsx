@@ -1,4 +1,4 @@
-"use client";
+
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import Thumbnail from "components/product-detail/thumbnail";

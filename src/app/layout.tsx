@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 
 import PathnameWrapper from "components/PathnameWrapper";
 import Customprovider from "../redux/CustomProvider";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
     <Customprovider>
           <PathnameWrapper>
             {children}
+            <ToastContainer />
           </PathnameWrapper>
     </Customprovider>
       </body>

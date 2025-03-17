@@ -29,7 +29,7 @@ const Filters = ({
   setPriceValue,
   priceValue,
   className }: FIlterprops) => {
- console.log(category,'category')
+    
   const [uniqueThickness, setUniqueThickness] = useState<string[]>([]);
   const [uniqueCommmericallWarranty, setUniqueCommmericallWarranty] = useState<string[]>([]);
   const [uniqueResidentialWarranty, setUniqueResidentialWarranty] = useState<string[]>([]);
@@ -157,9 +157,9 @@ const Filters = ({
           <Accordion key={index} title={category.name} >
             <ul className="pl-4 text-sm text-gray-600 space-y-1">
 
-              {category.subcategories?.map((subcategory: Category, i: number) => (
-                <Link href={`/${category.custom_url}/${subcategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
-                  {subcategory.name}
+              {category.subcategories?.map((subCategory: Category, i: number) => (
+                <Link href={`/${category.custom_url}/${subCategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
+                  {subCategory.name}
                 </Link>
               ))}
             </ul>

@@ -31,7 +31,6 @@ export default function Appointment() {
           validationSchema={validationSchema}
           onSubmit={async (values, { setSubmitting,resetForm }) => {
             setSubmitting(true);
-            console.log(values)
             formAction();
             setSubmitting(false);
             resetForm();

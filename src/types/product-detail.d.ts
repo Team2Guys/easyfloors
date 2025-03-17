@@ -1,4 +1,32 @@
 export interface ThumbnailProps {
-  ThumnailImage: { image: string }[];
+  ThumnailImage: { imageUrl: string }[];
   ThumnailBottom: { image: string; title: string }[];
+}
+export interface AdditionalInfoProps {
+  description: string;
+  AdditionalInformation: { name: string; detail: string }[];
+  subcategory:string
+}
+
+export interface AreaCalculatorProps {
+  setArea: React.Dispatch<SetStateAction<string>>;
+  setUnit: React.Dispatch<SetStateAction<string>>; 
+  requiredBoxes: number;
+  convertedArea: number;
+  area: string;
+  unit: string;
+  pricePerBox: number;
+  squareMeter:number;
+}
+
+export interface PaymentMethodProps{
+  showheading?: boolean
+  installments:number
+}
+
+export interface detailprops{
+  ProductName: string;
+    ProductInfo: IProduct[];
+    MainCategory: string;
+    subCategory: string;
 }

@@ -35,6 +35,7 @@ const Thumbnail: React.FC<ExtendedThumbnailProps> = ({ ThumnailImage, ThumnailBo
           asNavFor={nav1 || undefined}
           ref={sliderRef2}
           slidesToShow={6}
+          infinite
           swipeToSlide
           focusOnSelect
           vertical
@@ -45,7 +46,7 @@ const Thumbnail: React.FC<ExtendedThumbnailProps> = ({ ThumnailImage, ThumnailBo
         >
           {ThumnailImage.map((product, index) => (
             <div key={index} className={index === currentSlide ? " p-[2px] sm:p-1 shadow-xl" : "p-[2px] sm:p-1"}>
-              <Image width={150} height={150} src={product.image} className="w-full h-[35px] sm:h-[73px] md:h-[124px]" alt="image" />
+              <Image width={150} height={150} src={product.imageUrl} className="w-full h-[35px] sm:h-[73px] md:h-[124px]" alt="image" />
             </div>
           ))}
         </Slider>
@@ -54,7 +55,7 @@ const Thumbnail: React.FC<ExtendedThumbnailProps> = ({ ThumnailImage, ThumnailBo
         <Slider asNavFor={nav2 || undefined} ref={sliderRef1} dots={false} arrows={false}>
           {ThumnailImage.map((product, index) => (
             <div key={index}>
-              <Image width={800} height={800} src={product.image} className="w-full h-[273px] sm:h-[520px] md:h-[830px]" alt="image" />
+              <Image width={800} height={800} src={product.imageUrl} className="w-full h-[273px] sm:h-[520px] md:h-[830px]" alt="image" />
             </div>
           ))}
         </Slider>

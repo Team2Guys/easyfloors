@@ -47,13 +47,13 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       product.description.toLowerCase().includes(searchtext) ||
       product.price.toString().includes(searchtext) ||
       product?.discountPrice?.toString().includes(searchtext) ||
-      (product.colors &&
-        product.colors.some((color: string) =>
-          color.toLowerCase().includes(searchtext),
-        )) ||
+      product?.ResidentialWarranty?.toString().includes(searchtext) ||
+      product?.plankWidth?.toString().includes(searchtext) ||
+      product?.stock?.toString().includes(searchtext) ||
+   
 
       product.category && product?.category?.name.toLowerCase().includes(searchtext) ||
-      product.subCategory && product.subCategory.name.toLowerCase().includes(searchtext)
+      product.subcategory && product.subcategory.name.toLowerCase().includes(searchtext)
 
     );
   }).sort((a: IProduct, b: IProduct) => {
