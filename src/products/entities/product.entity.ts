@@ -27,14 +27,14 @@ export class Product {
   @Field(() => GraphQLJSON)
   posterImageUrl: any
 
-  @Field(() => GraphQLJSON ,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   hoverImageUrl: any
 
 
   @Field(() => [GraphQLJSON])
   productImages: any[]
 
-  @Field(() => Int, {nullable:true})
+  @Field(() => Int, { nullable: true })
   colorCode?: number
 
   @Field(() => Date, { nullable: true })
@@ -77,7 +77,7 @@ export class Product {
   @Field({ nullable: true })
   CommmericallWarranty: string;
 
-@Field(() => Category, { nullable: true })
+  @Field(() => Category, { nullable: true })
   category?: Category;
 
   @Field(() => SubCategory, { nullable: true })
@@ -88,14 +88,14 @@ export class Product {
 
   @Field(() => [GraphQLJSON])
   FAQS: any[]
-  
+
   @Field({ nullable: true })
   boxCoverage: string
 
   @Field(() => [GraphQLJSON])
   featureImages: any[]
 
-   @Field(()=>Accessory,{nullable:true})
-      acessories:Accessory
-  
+  @Field(() => [Accessory], { nullable: true })
+  acessories?: Accessory[]
+
 }

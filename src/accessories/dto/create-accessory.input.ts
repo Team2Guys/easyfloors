@@ -29,9 +29,6 @@ export class CreateAccessoryInput {
   @Field(() => [GraphQLJSON])
   productImages: any[]
 
-  @Field(() => [GraphQLJSON])
-  colors: any[]
-
   @Field(() => Date, { nullable: true })
   createdAt: Date;
 
@@ -56,8 +53,8 @@ export class CreateAccessoryInput {
   @Field(() => [GraphQLJSON])
   AdditionalInformation: any[]
 
-  @Field(() => [GraphQLJSON])
-  FAQS: any[]
+  @Field(() => [GraphQLJSON],{nullable:true})
+  FAQS?: any[]
 
   @Field({ nullable: true })
   boxCoverage: string
@@ -65,8 +62,8 @@ export class CreateAccessoryInput {
   @Field(() => ID, { nullable: true })
   category: Number
 
-  @Field(() => [GraphQLJSON])
-  featureImages: any[]
+  @Field(() => [GraphQLJSON],{nullable:true})
+  featureImages?: any[]
 
   @Field(() => GraphQLJSON, { nullable: true })
   products: any

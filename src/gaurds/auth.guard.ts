@@ -41,12 +41,11 @@ export class AuthGuard implements CanActivate {
         token = authHeader.split(' ')[1]; 
       }
     }
-console.log(token, "token")
     if (!token) {
       console.warn('[AuthGuard] No authentication token found.');
       throw new UnauthorizedException('Authentication required');
     }
-    console.log(token, "token")
+
 
     try {
       const decoded = jwt.verify(token, process.env.TOKEN_SECRET);

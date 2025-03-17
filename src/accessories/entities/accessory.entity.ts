@@ -37,9 +37,6 @@ export class Accessory {
   @Field(() => [GraphQLJSON])
   productImages: any[]
 
-  @Field(() => [GraphQLJSON])
-  colors: any[]
-
   @Field(() => Date, { nullable: true })
   createdAt: Date;
 
@@ -70,8 +67,8 @@ export class Accessory {
   @Field({ nullable: true })
   boxCoverage: string
 
-  @Field(() => Product, { nullable: true })
-  products: Product
+  @Field(() => [Product], { nullable: true })
+  products?: Product[]
 
   @Field(() => [GraphQLJSON])
   featureImages: any[]
