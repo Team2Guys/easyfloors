@@ -16,6 +16,7 @@ async function bootstrap() {
       
     ],
     credentials: true,
+    allowedHeaders: ["Authorization", "Content-Type"], 
   });
 
   app.use(cookieParser());

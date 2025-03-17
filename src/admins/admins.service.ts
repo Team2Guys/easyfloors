@@ -45,7 +45,7 @@ export class AdminsService {
 
 
         const { password: _, ...userWithoutPassword } = existingUser;
-        const token = jwt.sign({ userWithoutPassword }, process.env.TOKEN_SECRET, {
+        const token = jwt.sign(userWithoutPassword , process.env.TOKEN_SECRET, {
           expiresIn: '24h',
         });
         res.cookie('admin_access_token', token, {
@@ -74,7 +74,6 @@ export class AdminsService {
     try {
       let superAdmin_email = process.env.SUPER_AMDIN_EMAIL || " ";
       let super_admin_pasword = process.env.SUPER_AMDIN_PASSWORD || " ";
-      console.log(superAdmin_email, "superAdmin_email", email)
 
       if (email !== superAdmin_email) {
         return customHttpException('User Not found', 'NOT_FOUND');
@@ -85,6 +84,7 @@ export class AdminsService {
 
 
       let userWithoutPassword = {
+        id:"7",
         fullname: "Shiraz Ossman",
         email: superAdmin_email,
         role: "super_admin"
@@ -127,11 +127,37 @@ export class AdminsService {
     };
   }
 
+
   async findOne(req: AuthenticatedRequest) {
-    const id = req?.user?.id
+    const {id, role }= req.user;
     try {
-      console.log(req.user.userWithoutPassword.id, "id")
-      return await this.prisma.admins.findUnique({ where: { id } })
+      if(role =="super_admin"){
+        let superAdmin_email = process.env.SUPER_AMDIN_EMAIL || " ";
+    return    {
+          "id": 1,
+          "fullname": 'Shiraz Osman',
+          email: superAdmin_email,
+          canAddProduct: true,
+          canEditProduct: true,
+          canDeleteProduct: true,
+          canAddCategory: true,
+          canDeleteCategory: true,
+          canEditCategory: true,
+          canCheckProfit: true,
+          canCheckRevenue: true,
+          canCheckVisitors: true,
+          canViewUsers: true,
+          canViewSales: true,
+          canVeiwAdmins: true,
+          canVeiwTotalproducts: true,
+          canVeiwTotalCategories: true,
+          posterImageUrl: null,
+          role: 'super_admin',
+      }
+    }
+    let admin = await this.prisma.admins.findUnique({ where: { id } })
+    console.log(admin, "admins")
+    return admin
     } catch (error) {
       return customHttpException(error.message,
         'INTERNAL_SERVER_ERROR',

@@ -9,3 +9,6 @@ interface userWithoutPassword {
 export interface AuthenticatedRequest extends Request {
   user?: UserWithoutPassword;
 }
+
+
+

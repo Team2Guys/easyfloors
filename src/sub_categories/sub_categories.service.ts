@@ -32,7 +32,6 @@ export class SubCategoriesService {
 
   async findAll() {
     try {
-      console.log('reqest recieved')
       let categories = await this.prisma.subCategories.findMany({ include: { category: true, products: true } });
       return categories;
     } catch (error: any) {

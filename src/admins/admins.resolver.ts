@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args, Int, Context } from '@nestjs/graphql';
 import { AdminsService } from './admins.service';
-import { Admin, admin_with_token } from './entities/admin.entity';
+import { Admin, admin_with_token, super_admin } from './entities/admin.entity';
 import { Admin_login, CreateAdminInput } from './dto/create-admin.input';
 import { UpdateAdminInput } from './dto/update-admin.input';
 import { Response } from 'express';

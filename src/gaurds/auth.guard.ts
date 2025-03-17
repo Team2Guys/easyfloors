@@ -34,9 +34,8 @@ export class AuthGuard implements CanActivate {
     }
 
     let token = req.cookies?.admin_access_token || req.cookies?.super_admin_access_token;
-
     if (!token) {
-      const authHeader = req.headers?.Authorization;
+      const authHeader = req.headers?.authorization;
       if (authHeader?.startsWith('Bearer ')) {
         token = authHeader.split(' ')[1]; 
       }

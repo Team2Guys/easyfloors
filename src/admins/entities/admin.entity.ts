@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int, PartialType } from '@nestjs/graphql';
+import { ObjectType, Field, Int, PartialType, ID } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
 @ObjectType()
 export class Admin {
@@ -72,3 +72,14 @@ export class admin_with_token extends PartialType(Admin) {
   password?: string;
 }
 
+
+
+@ObjectType()
+export class super_admin {
+  @Field(()=>ID)
+  id:number
+  @Field()
+  email: string;
+  @Field()
+  role: string;
+}
