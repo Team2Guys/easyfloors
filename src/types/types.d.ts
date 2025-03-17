@@ -166,3 +166,19 @@ export interface AuthFormState {
   password: string;
 }
 
+export interface AccPoPProduct {
+  id: string;
+  image: string;
+  features: string;
+  name: string;
+  price: number;
+  meters: number;
+  feet: number;
+}
+
+export interface AccessoriesPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  products: Product[];
+}
+

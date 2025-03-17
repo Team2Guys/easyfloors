@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AccPoPProduct, AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -1042,5 +1042,59 @@ export const signupData: SignAuthData = {
 };
 
 
-
-
+export const accessoriesProducts: AccPoPProduct[] = [
+  {
+    id: "1",
+    image: "/images/product1.jpg",
+    features: "Durable and water-resistant",
+    name: "Accessory One",
+    price: 50,
+    meters: 2,
+    feet: 6.56,
+  },
+  {
+    id: "2",
+    image: "/images/product2.jpg",
+    features: "Eco-friendly material",
+    name: "Accessory Two",
+    price: 75,
+    meters: 3,
+    feet: 9.84,
+  },
+  {
+    id: "3",
+    image: "/images/product3.jpg",
+    features: "Easy to install",
+    name: "Accessory Three",
+    price: 60,
+    meters: 2.5,
+    feet: 8.2,
+  },
+  {
+    id: "4",
+    image: "/images/product4.jpg",
+    features: "Scratch-resistant",
+    name: "Accessory Four",
+    price: 90,
+    meters: 4,
+    feet: 13.1,
+  },
+  {
+    id: "5",
+    image: "/images/product5.jpg",
+    features: "Anti-slip coating",
+    name: "Accessory Five",
+    price: 80,
+    meters: 3.2,
+    feet: 10.5,
+  },
+  {
+    id: "6",
+    image: "/images/product6.jpg",
+    features: "UV-protected surface",
+    name: "Accessory Six",
+    price: 100,
+    meters: 5,
+    feet: 16.4,
+  },
+];
