@@ -4,7 +4,6 @@ import Category from './Category';
 
 const AddCategory = async () => {
   const cetagories = await fetchCategories();
-
   return (
     <Category cetagories={cetagories} />
   );

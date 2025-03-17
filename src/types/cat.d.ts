@@ -10,7 +10,7 @@ export interface Category {
   Meta_Title?: string;
   Canonical_Tag?: string;
   images_alt_text?: string;
-  posterImageUrl?: ProductImage;
+  posterImageUrl: ProductImage;
   custom_url: string
   createdAt: Date;
   updatedAt: Date;
@@ -41,8 +41,6 @@ export interface EDIT_CATEGORY extends Category {
     updatedAt?: Date;
 
 }
-
-
 
 export interface ISUBCATEGORY extends Category {
   id: number | string
