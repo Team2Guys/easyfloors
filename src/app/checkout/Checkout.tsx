@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import PhoneInput from "react-phone-number-input";
@@ -9,26 +9,45 @@ import Image from "next/image";
 import Container from "components/common/container/Container";
 import Link from "next/link";
 import { Checkbox, Collapse } from "antd";
-import productImg from '../../../public/assets/home page images/Group 481.png'
 import secureImg from '../../../public/assets/icons/safe-icon-1.png'
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
-import visa1Img from '../../../public/assets/icons/visa1.png'
-import mastercardImg from '../../../public/assets/icons/mastercard.png'
-import payImg from '../../../public/assets/icons/pay.png'
-import GpayImg from '../../../public/assets/icons/Gpay.png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { cities, emirates } from "data/data";
+import { emirates } from "data/data";
 import { toast } from "react-toastify";
+import { ICart } from "types/prod";
+import { getCart } from "utils/indexedDB";
+import { fees, paymentcard, UAEStates } from "data/cart";
+import PaymentMethod from "components/product-detail/payment";
 
 
 
 const Checkout = () => {
     const [termsAccepted, setTermsAccepted] = useState(false);
     const { Panel } = Collapse;
+    const [cartItems, setCartItems] = useState<ICart[]>([]);
+    const [totalProducts, setTotalProducts] = useState(0);
+    const [subTotal, setSubTotal] = useState(0);
+    const [total, setTotal] = useState(0);
+    const [selectedFee, setSelectedFee] = useState(0);
+    useEffect(() => {
+        const fetchCartItems = async () => {
+            try {
+                const items = await getCart();
+                setCartItems(items);
+                setTotalProducts(items.length);
+                const subTotalPrice = cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity ?? 0), 0);
+                setSubTotal(subTotalPrice)
+            } catch {
+                toast.error("Error fetching cart items:");
+            }
+        };
+
+        fetchCartItems();
+    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -60,6 +79,15 @@ const Checkout = () => {
             console.log('form data', values);
         },
     });
+
+    const handleStateSelect = (state: string) => {
+        const fee = fees[state as keyof typeof fees]
+        setSelectedFee(fee);
+        const totalPrice = subTotal + (fee || 0 );
+            setTotal(totalPrice);
+            console.log(totalPrice , fee)
+    };
+
 
     return (
         <Container>
@@ -144,12 +172,15 @@ const Checkout = () => {
                                 <select
                                     name="city"
                                     className="w-full p-2 border rounded custom-select"
-                                    onChange={formik.handleChange}
+                                    onChange={(e) => {
+                                        formik.handleChange(e);
+                                        handleStateSelect(e.target.value);
+                                    }}
                                     value={formik.values.city}
                                     required
                                 >
                                     <option value="">Select City</option>
-                                    {cities.map((city) => (
+                                    {UAEStates.map((city) => (
                                         <option key={city} value={city}>{city}</option>
                                     ))}
                                 </select>
@@ -196,7 +227,7 @@ const Checkout = () => {
                             />
                         </div>
                         <div className="flex items-center">
-                            <Checkbox onChange={() => setTermsAccepted(!termsAccepted)} className="custom-checkbox text-10 xs:text-12 sm:text-16" checked={termsAccepted}>I have read and agree to the Terms and Conditions</Checkbox>
+                            <Checkbox required onChange={() => setTermsAccepted(!termsAccepted)} className="custom-checkbox text-10 xs:text-12 sm:text-16" checked={termsAccepted}>I have read and agree to the Terms and Conditions</Checkbox>
                         </div>
                     </div>
                 </div>
@@ -205,33 +236,34 @@ const Checkout = () => {
                         <div className="flex items-center gap-4 pb-4 border-b">
                             <h2 className="text-xl xs:text-2xl">Order Summary</h2>
                             <span>
-                                (<span className="text-red-600">*Total 3 Items</span>)
+                                (<span className="text-red-600 pt-1">*Total {totalProducts} Items</span>)
                             </span>
                         </div>
-                        <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3">
-                            {[1, 2, 3].map((item, index) => (
+                        <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3 mt-1">
+                            {cartItems.length > 0 ? cartItems.map((item, index) => (
                                 <div key={index} className="flex items-center border-b pb-4">
                                     <div className="p-1 bg-white border rounded-md">
-                                        <Image src={productImg} alt="Product" width={80} height={80} />
+                                        <Image src={item.image || ''} alt={item.name} width={80} height={80} />
                                     </div>
                                     <div className="ml-4">
-                                        <p className="font-bold text-13 xs:text-16">Richmond SPC Eco - Oak History</p>
-                                        <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">2</span> (2.009 SQM)</p>
+                                        <p className="font-bold text-13 xs:text-16">{item.name}</p>
+                                        <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.quantity}</span> (2.009 SQM)</p>
                                     </div>
-                                    <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED 357.66</p>
+                                    <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.price}</p>
                                 </div>
-                            ))}
+                            )) : <p>Cart is Empty</p>}
                         </div>
                     </div>
                     <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                         <div className="space-y-2 py-4">
-                            <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED 894.15</span></p>
-                            <p className="text-gray-600 flex justify-between"><span className="flex items-center gap-2">Shipping <CiDeliveryTruck size={16} className="mt-1" /></span> <span className="text-black">Enter shipping address</span></p>
-                            <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED 894.15</span></p>
+                            <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal}</span></p>
+                            <p className="text-gray-600 flex justify-between"><span className="flex items-center gap-2">Shipping <CiDeliveryTruck size={16} className="mt-1" /></span> <span className="text-black">{selectedFee > 0 ? selectedFee : 'Enter shipping address'}</span></p>
+                            <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {total}</span></p>
                         </div>
                         <button
                             type="submit"
-                            className="w-full bg-primary text-white p-2"
+                            className={`w-full bg-primary text-white p-2 ${cartItems.length === 0 && 'bg-[#bf69337d]'}`}
+                            disabled={cartItems.length === 0}
                         >
                             Pay Now
                         </button>
@@ -246,7 +278,7 @@ const Checkout = () => {
                                     key="1"
                                     className="!border-b-0"
                                 >
-                                    <div className="bg-white p-2 mt-2 flex gap-2 items-center">
+                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
                                         <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                                         <div>
                                             <strong className="text-15 xs:text-20">Express Shipping:</strong>
@@ -256,7 +288,7 @@ const Checkout = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="bg-white p-2 mt-2 flex gap-2 items-center">
+                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
                                         <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                                         <div>
                                             <strong className="text-15 xs:text-20">Standard Shipping:</strong>
@@ -266,7 +298,7 @@ const Checkout = () => {
                                             </p>
                                         </div>
                                     </div>
-                                    <div className="bg-white p-2 mt-2 flex gap-2 items-center">
+                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
                                         <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
                                         <div>
                                             <strong className="text-15 xs:text-20">Self-Collect:</strong>
@@ -283,7 +315,7 @@ const Checkout = () => {
                                     key="2"
                                     className="!border-b-0"
                                 >
-                                    <div className="bg-white p-2 mt-2 flex gap-2 items-center">
+                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
                                         <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
                                         <div>
                                             <strong className="text-15 xs:text-20">Installation Information:</strong>
@@ -305,43 +337,17 @@ const Checkout = () => {
                         <div className="mt-4">
                             <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
                             <div className="flex gap-2 my-4 mx-auto w-full max-w-xl">
-                                <div className="relative w-1/2 border-4 border-[#00FFBC] px-2 py-3 xs:p-4 rounded-lg shadow">
-                                    <span className="absolute -top-3 left-2 bg-[#00FFBC] text-black px-2 py-1 text-sm font-extrabold">
-                                        tabby
-                                    </span>
-                                    <p className="pt-2 xs:p-0 text-12 xs:text-14 text-slate-500">
-                                        Pay 4 interest-free payments of AED. <Link href='/' target="_blank" className="text-red-600 font-medium" >Learn More</Link>
-                                    </p>
-                                    <div className="flex flex-wrap gap-1 justify-between mt-2">
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">Today</span></p>
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">In 1 month</span></p>
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">In 2 month</span></p>
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">In 3 month</span></p>
-                                    </div>
-                                </div>
-                                <div className="relative w-1/2 border-4 border-[#D47C84] px-2 py-3 xs:p-4 rounded-lg shadow">
-                                    <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1 text-sm">
-                                        tamara
-                                    </span>
-                                    <p className="pt-2 xs:p-0 text-12 xs:text-14 text-slate-500">
-                                        Pay 4 interest-free payments of AED <Link href='/' target="_blank" className="text-red-600 font-medium" >Learn More</Link>
-                                    </p>
-                                    <div className="flex flex-wrap gap-1 justify-between mt-2">
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">Today</span></p>
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">In 1 month</span></p>
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">In 2 month</span></p>
-                                        <p className="flex flex-col"><span className="text-11 font-semibold">AED1200</span> <span className="text-10 text-slate-400">In 3 month</span></p>
-                                    </div>
-                                </div>
+                                <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
                             </div>
                         </div>
                         <div className="mx-auto w-full max-w-xl mt-2">
                             <h3 className="text-20 xs:text-24 font-medium">Buy Now, Pay Later</h3>
                             <div className="flex justify-between flex-wrap gap-2 pt-3">
-                                <Image src={visa1Img} alt='payment icon' className="w-16 xl:w-[100px] h-10 xl:h-[70px] shadow-md border" />
-                                <Image src={mastercardImg} alt='payment icon' className="w-16 xl:w-[100px] h-10 xl:h-[70px] shadow-md border" />
-                                <Image src={payImg} alt='payment icon' className="w-16 xl:w-[100px] h-10 xl:h-[70px] shadow-md border" />
-                                <Image src={GpayImg} alt='payment icon' className="w-16 xl:w-[100px] h-10 xl:h-[70px] shadow-md border" />
+                                {
+                                    paymentcard.map((array, index) => (
+                                        <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px]' key={index} width={90} height={60} src={array.image} alt='payment-card' />
+                                    ))
+                                }
                             </div>
                         </div>
                     </div>

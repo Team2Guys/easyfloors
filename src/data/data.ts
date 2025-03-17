@@ -97,9 +97,6 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
-  RecallUrl:""
-
-
 };
 
 
@@ -1015,5 +1012,4 @@ export const colors = [
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
 ];
 
-export const cities = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Fujairah", "Ras Al Khaimah", "Umm Al Quwain"];
 export const emirates = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Fujairah", "Ras Al Khaimah", "Umm Al Quwain"];
