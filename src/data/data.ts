@@ -97,7 +97,6 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
-
 };
 
 
@@ -944,3 +943,4 @@ export const colors = [
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
 ];
 
+export const emirates = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Fujairah", "Ras Al Khaimah", "Umm Al Quwain"];

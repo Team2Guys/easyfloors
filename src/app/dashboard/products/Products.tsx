@@ -39,7 +39,7 @@ const accessoryFlag = path === "/dashboard/accessories";
     ResidentialWarranty: editProduct && editProduct?.ResidentialWarranty,
     CommmericallWarranty: editProduct && editProduct?.CommmericallWarranty,
     waterproof: editProduct && editProduct?.waterproof,
-    FAQS:editProduct && editProduct?.FAQS,
+    FAQS:editProduct && editProduct?.FAQS || [],
     boxCoverage:editProduct && editProduct?.boxCoverage,
     featureImages:editProduct && editProduct?.featureImages || [],
     //@ts-expect-error added

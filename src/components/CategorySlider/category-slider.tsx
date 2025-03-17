@@ -12,7 +12,7 @@ import { Category } from "types/cat";
 
 const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
-    <div className="md:space-y-10 space-y-8">
+    <div className="space-y-8">
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
         const shouldEnablePagination = category.subcategories && category.subcategories.length >= 0;
         return (

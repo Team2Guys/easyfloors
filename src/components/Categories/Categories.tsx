@@ -12,6 +12,7 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
           src={card?.homePageImage?.imageUrl || ""}
           alt={card?.homePageImage?.altText || "easy Floor"}
           fill
+          loading='lazy'
           style={{ objectFit: "cover" }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
         />

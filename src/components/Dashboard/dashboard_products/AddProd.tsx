@@ -165,7 +165,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     try {
       const values = removedValuesHandler(changedValue);
       setcategorySubCatError(initialErrors);
-      console.log("values", changedValue)
       if (!selectedCategory) {
         setcategorySubCatError((prev) => ({
           ...prev,
@@ -788,7 +787,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <select
                               name="category"
-                              value={selectedCategory}
+                              value={selectedCategory ? selectedCategory : ''}
                               onChange={handleCategoryChange}
                               className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             >
