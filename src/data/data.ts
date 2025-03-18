@@ -232,7 +232,7 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [ 
   {
-    backgroundImage: "/assets/images/Home/hero.png",
+    backgroundImage: "/assets/images/Home/hero-min.webp",
     offerText: "Limited Time Offer",
     title: "High-Quality Flooring Get",
     highlight: "FREE Samples",
@@ -368,7 +368,7 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layer1.png',
+    imageUrl: '/assets/layers/layer1.webp',
   },
   {
     id: 2,
@@ -381,13 +381,13 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layers2.png',
+    imageUrl: '/assets/layers/layers2.webp',
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor.webp' },
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor.webp' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor.webp' },
+  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor_11zon.webp' },
+  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor_11zon.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor_11zon.webp' },
 ];
 
 

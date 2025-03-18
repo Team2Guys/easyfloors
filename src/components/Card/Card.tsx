@@ -30,6 +30,7 @@ const Card: React.FC<productCardProps> = ({
             alt={product.name}
             width={500}
             height={200}
+            loading="lazy"
             className={`w-full object-cover ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"} ${isAccessories ? "border border-gray-700 " : " "}`}
           />
         </Link>
