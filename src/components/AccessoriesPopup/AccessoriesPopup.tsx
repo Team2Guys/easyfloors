@@ -13,26 +13,28 @@ const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products
 
   if (!isOpen) return null;
 
-  const toggleSelect = (id: string) => {
+  const toggleSelect = (id: string | number) => {
+    const idStr = String(id);
     setSelectedProducts((prev) =>
-      prev.includes(id) ? prev.filter((productId) => productId !== id) : [...prev, id]
+      prev.includes(idStr) ? prev.filter((productId) => productId !== idStr) : [...prev, idStr]
     );
   };
-
-  const handleAreaChange = (id: string, value: string) => {
+  
+  const handleAreaChange = (id: string | number, value: string) => {
+    const idStr = String(id);
     setAreas((prev) => ({
       ...prev,
-      [id]: value,
+      [idStr]: value,
     }));
   };
-
-  const handleUnitChange = (id: string, value: "m" | "ft") => {
+  
+  const handleUnitChange = (id: string | number, value: "m" | "ft") => {
+    const idStr = String(id);
     setUnit((prev) => ({
       ...prev,
-      [id]: value,
+      [idStr]: value,
     }));
   };
-
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
       onClose();
@@ -52,14 +54,14 @@ const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products
             <div
               key={product.id}
               className={` p-2 cursor-pointer ${
-                selectedProducts.includes(product.id) ? "border border-orange-500" : "border-gray-300"
+                selectedProducts.includes(String(product.id)) ? "border border-orange-500" : "border-gray-300"
               }`}
               onClick={() => toggleSelect(product.id)}
             >
               <div className="relative">
                 <input
                   type="checkbox"
-                  checked={selectedProducts.includes(product.id)}
+                  checked={selectedProducts.includes(String(product.id))}
                   onChange={() => toggleSelect(product.id)}
                   className="w-5 h-5 absolute top-3 left-3 accent-gray-500 "
                 />

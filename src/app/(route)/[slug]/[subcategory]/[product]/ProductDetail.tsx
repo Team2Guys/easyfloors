@@ -59,7 +59,7 @@ console.log(productData, "productData")
         </div>
         <div className="flex items-center gap-1 text-19">
           <p className="text-14 sm:text-18 2xl:text-23">
-            Stock: <span className="text-[#008000] font-bold">{productData?.stock > 0 ? "In Stock" :"Out of Stock"}</span>
+            Stock: <span className="text-[#008000] font-bold">{productData?.stock && productData?.stock > 0 ? "In Stock" :"Out of Stock"}</span>
           </p>
           <div className="h-5 w-[2px] bg-black" />
           <p className="text-14 sm:text-18 2xl:text-23 font-bold">
@@ -97,7 +97,7 @@ console.log(productData, "productData")
           </div>
         </Container>
         <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
-          <AdditionalInfo description={productData?.description} AdditionalInformation={productData?.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
+          <AdditionalInfo description={productData?.description  || ''} AdditionalInformation={productData?.AdditionalInformation } subcategory={productData.subcategory?.name || ""} />
           <FaqDetail FAQS={productData.FAQS} />
         </div>
   

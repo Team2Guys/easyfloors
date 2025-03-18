@@ -1,4 +1,4 @@
-import { Category, ISUBCATEGORY } from "./cat";
+import { Category, ISUBCATEGORY, ISUBCATEGORY_EDIT } from "./cat";
 import { IProduct } from "./prod";
 
 export interface SubCategoryComponentProps_dashboard {
@@ -65,7 +65,7 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     sldier?: boolean;
     features: Feature[];
     categoryData: ICategory;
-    subCategoryData?: ISUBCATEGORY;
+    subCategoryData?: ISUBCATEGORY_EDIT;
   }
 
   export  interface HeaderProps {

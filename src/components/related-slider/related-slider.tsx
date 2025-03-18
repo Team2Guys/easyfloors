@@ -6,13 +6,13 @@ import Container from "components/common/container/Container";
 import { features } from "data/data";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Category, ISUBCATEGORY } from "types/cat";
+import {  EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "types/cat";
 import { IProduct } from "types/prod";
 
 interface RelatedSliderProps {
   products: IProduct[]; 
-  CategoryData?: Category
-  subCategoryData?: ISUBCATEGORY
+  CategoryData?: EDIT_CATEGORY
+  subCategoryData: ISUBCATEGORY_EDIT
 };
 
 const RelatedSlider = ({ products , CategoryData,subCategoryData }:RelatedSliderProps) => {

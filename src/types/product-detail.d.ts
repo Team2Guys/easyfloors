@@ -1,4 +1,8 @@
-export interface ExtendedThumbnailProps extends ThumbnailProps {
+import { IProduct } from "./prod";
+
+export interface ExtendedThumbnailProps {
+  ThumnailImage: ProductImage[];
+  ThumnailBottom?: ProductImage[];
   hideThumnailBottom?: boolean;
   imageheight?: boolean; 
 }
@@ -9,7 +13,7 @@ export interface ThumbnailProps {
 }
 export interface AdditionalInfoProps {
   description: string;
-  AdditionalInformation: { name: string; detail: string }[];
+  AdditionalInformation?: { name: string; detail: string }[];
   subcategory:string
 }
 
@@ -22,7 +26,7 @@ export interface AreaCalculatorProps {
   unit: string;
   pricePerBox: number;
   squareMeter:number;
-  accessories: string[];
+  accessories: IProduct[];
 }
 
 export interface PaymentMethodProps{
