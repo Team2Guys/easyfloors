@@ -12,7 +12,7 @@ import { IProduct } from "types/prod";
 interface RelatedSliderProps {
   products: IProduct[]; 
   CategoryData?: EDIT_CATEGORY
-  subCategoryData: ISUBCATEGORY_EDIT
+  subCategoryData?: ISUBCATEGORY_EDIT
 };
 
 const RelatedSlider = ({ products , CategoryData,subCategoryData }:RelatedSliderProps) => {
