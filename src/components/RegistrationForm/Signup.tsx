@@ -18,10 +18,12 @@ const SignupForm = () => {
   const { pending } = useFormStatus();
 
   useEffect(() => {
-    if (state?.message) {
-      const isSuccess = state.message.includes("successful");
-      toast[isSuccess ? "success" : "error"](state.message);
-    }
+    if (!state?.message) return;
+  
+    const message = state.message.toLowerCase();
+    const toastType = message.includes("success") ? "success" : "error";
+  
+    toast[toastType](state.message);
   }, [state?.message]);
 
   return (
