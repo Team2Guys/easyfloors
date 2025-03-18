@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const Layers = () => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-2 mt-10 md:mt-16 border border-b-1 mb-10">
+    <div className="grid grid-cols-2 mt-10 md:mt-16 border border-b-1 mb-10">
       {blocksData.map((block, index) => (
         <div
           key={block.id}

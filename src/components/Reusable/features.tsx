@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -42,7 +42,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
 
           return (
             <div key={index} className="sm:px-2 !flex flex-nowrap">
-              
+
               <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-gray-200 xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 xs:p-4  shadow-md xl:shadow-none md:gap-3 xl:pr-4 2xl:pr-5">
                 <Image
                   src={item.icon}
@@ -63,29 +63,33 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
                     <button
                       className="text-gray-700 text-xs mt-1"
                       onClick={() => setExpandedIndex(isExpanded ? null : index)}
+                      aria-expanded={isExpanded}
+                      aria-controls={`item-description-${index}`}
                     >
                       {isExpanded ? "Read Less" : "Read More"}
                     </button>
                   )}
                 </div>
               </div>
-               {!isLastItem && <div className="border-r border-black h-24 hidden xl:block"/>}
+              {!isLastItem && <div className="border-r border-black h-24 hidden xl:block" />}
             </div>
           );
         })}
       </Slider>
       <button
         onClick={() => sliderRef.current?.slickPrev()}
-        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
+        className="absolute -left-1 xs:left-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
+        aria-label="Previous slide"
       >
-        <BiChevronLeft className="text-3xl text-gray-700" />
+        <BiChevronLeft className="text-4xl xs:text-3xl text-gray-700" />
       </button>
 
       <button
         onClick={() => sliderRef.current?.slickNext()}
-        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
+        className="absolute -right-1 xs:right-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
+        aria-label="Next slide"
       >
-        <BiChevronRight className="text-3xl text-gray-700" />
+        <BiChevronRight className="text-4xl xs:text-3xl text-gray-700" />
       </button>
     </div>
   );

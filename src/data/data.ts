@@ -235,7 +235,8 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [ 
   {
-    backgroundImage: "/assets/images/Home/hero-min.webp",
+    // backgroundImage: "/assets/images/Home/hero-min.webp",
+    backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
     offerText: "Limited Time Offer",
     title: "High-Quality Flooring Get",
     highlight: "FREE Samples",
@@ -353,9 +354,9 @@ export const footerData = {
     email: 'cs@easyfloors.ae',
   },
   social: [
-    { icon: FaFacebookF, link: '#' },
-    { icon: FaInstagram, link: '#' },
-    { icon: FaPinterestP, link: '#' },
+    { name: 'Facebook', icon: FaFacebookF, link: '#' },
+    { name: 'Instagram', icon: FaInstagram, link: '#' },
+    { name: 'Pinterest', icon: FaPinterestP, link: '#' },
   ],
   paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
@@ -371,7 +372,7 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layer1.webp',
+    imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291723/layer1_11zon_dfk4er.webp',
   },
   {
     id: 2,
@@ -384,13 +385,13 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layers2.webp',
+    imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291706/layers2_11zon_zatjqm.webp',
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor_11zon.webp' },
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor_11zon.webp' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor_11zon.webp' },
+  { id: 1, title: 'Herringbone Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291431/Herringbone-Floor_11zon_11zon_liydgh.webp' },
+  { id: 2, title: 'Eco Floor ', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291254/Eco-Floor_11zon_11zon_ewhoup.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291406/Prime-Floor_11zon_1__11zon_l98nti.webp' },
 ];
 
 
@@ -415,7 +416,7 @@ export const HomeUserInfo = [
     title: 'Budget Friendly',
     description:
       "High-quality flooring doesn’t have to cost a fortune. Our durable, stylish options are available at factory prices, so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
-    image: '/assets/images/UserInfo/budget.png',
+    image: '/assets/images/UserInfo/budget_11zon.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
   },
@@ -423,7 +424,7 @@ export const HomeUserInfo = [
     title: 'Overlay Ready',
     description:
       "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
-    image: '/assets/images/UserInfo/overlay.webp',
+    image: '/assets/images/UserInfo/overlay_11zon.webp',
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
   },
