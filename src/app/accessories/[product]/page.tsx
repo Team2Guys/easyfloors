@@ -12,7 +12,6 @@ const ProductImageGallery = async ({ params }: { params: Promise<IParams> }) => 
   const ProductInfo = await fetchAccessories();
   const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.custom_url?.trim() === "accessories"));
     if (!productData) return notFound()
-      console.log(productData,"productData")
   return (
     <AccessoriesDetail  ProductName={paramsprod} ProductInfo={ProductInfo} productData={productData}/>
   );
