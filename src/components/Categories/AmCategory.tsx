@@ -1,15 +1,12 @@
 
 import BlogCard from "components/Categories/Categories";
 import Container from "components/common/container/Container";
-import { fetchSubCategories } from "config/fetch";
 import { ISUBCATEGORY } from "types/cat";
 import CustomSwiper from "./Swiper";
 import Popup from "./Popup";
 
 
-export default async function AmCategory() {
-  const subCategories = await fetchSubCategories()
-
+export default async function AmCategory({subCategories}: {subCategories: ISUBCATEGORY[]}) {
   return (
     <Container>
       <div className="font-inter md:mt-20 mt-10 category_slider">
