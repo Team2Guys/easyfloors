@@ -96,33 +96,33 @@ const Footer =  () => {
                 </div>
                 <div className="flex flex-col space-y-3 fixed right-4 bottom-32 md:right-16  z-20">
 
-                    <Link href="tel:+971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
+                    <Link href="tel:+971505974385" aria-label="Call +971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <IoCall size={35} />
                     </Link>
 
-                    <Link href="https://wa.me/971505974385" className="bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center w-12 h-12">
+                    <Link href="https://wa.me/971505974385" aria-label="WhatsApp +971505974385" className="bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <FaWhatsapp size={35} />
                     </Link>
                 </div>
             </Container>
 
-            <div className="border-t border-gray-300 mt-6 pt-4 flex flex-col md:flex-row items-center justify-between px-6 bg-primary pb-4">
-                <div className="container mx-auto md:px-6 flex items-center justify-between w-full">
+            <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row items-center justify-between bg-primary">
+                <Container className="flex items-center justify-between">
                     <div className="flex md:space-x-4 space-x-2">
                         {footerData.social.map((social, index) => (
-                            <a key={index} href={social.link} className="text-gray-600 h-6 w-6 hover:text-gray-900 bg-white p-1">
+                            <a key={index} href={social.link} aria-label={`Visit our ${social.name} page`} className="text-gray-600 h-6 w-6 hover:text-gray-900 bg-white p-1">
                                 <social.icon />
                             </a>
                         ))}
                     </div>
 
-                    <div className="absolute left-1/2 transform -translate-x-1/2">
-                        <p className="text-sm text-white font-inter font-extralight text-center">
+                    <div className="sm:absolute left-1/2 transform sm:-translate-x-1/2">
+                        <p className="text-sm text-white font-inter font-medium xs:font-extralight text-center">
                             Easyfloors.ae ©2025
                         </p>
                     </div>
 
-                </div>
+                </Container>
             </div>
 
         </footer>

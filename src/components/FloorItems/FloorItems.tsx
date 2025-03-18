@@ -16,7 +16,7 @@ const FloorItems = () => {
               loading='lazy'
               width={800} 
               height={300} 
-              className="w-auto h-auto object-fill"
+              className="w-auto h-full"
             />
           </div>
         ))}

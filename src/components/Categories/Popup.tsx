@@ -102,7 +102,7 @@ function Popup() {
             {isMobile && (
               <button
                 onClick={handleReadMoreClick}
-                className="text-primary font-medium underline ml-2"
+                className="text-primary underline ml-2 font-semibold xs:font-medium"
               >
                 {isExpanded ? "Read Less" : "Read More"}
               </button>
