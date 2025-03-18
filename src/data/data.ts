@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
-import { BoxData, CardData, CollectionFeature, CollectionProduct, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
+import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
 import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
@@ -97,9 +97,6 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
-  RecallUrl:""
-
-
 };
 
 
@@ -235,14 +232,14 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [ 
   {
-    backgroundImage: "/assets/images/Home/hero.png",
+    backgroundImage: "/assets/images/Home/hero-min.webp",
     offerText: "Limited Time Offer",
     title: "High-Quality Flooring Get",
     highlight: "FREE Samples",
     description:
       "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
     buttonText: "EXPLORE PRODUCTS",
-    buttonLink: "/",
+    buttonLink: "/all-collection",
     priceText: "Starting From AED 49/m²",
     flooringType: "SPC Eco • American Walnut", 
     brand: "Polar Flooring",
@@ -371,7 +368,7 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layer1.png',
+    imageUrl: '/assets/layers/layer1.webp',
   },
   {
     id: 2,
@@ -384,13 +381,13 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layers2.png',
+    imageUrl: '/assets/layers/layers2.webp',
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor.webp' },
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor.webp' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor.webp' },
+  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor_11zon.webp' },
+  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor_11zon.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor_11zon.webp' },
 ];
 
 
@@ -649,74 +646,8 @@ export const popupCards: CardData[] = [
   },
 ];
 
-export const collectionProducts: CollectionProduct[] = [
-  {
-    id: "1",
-    image: "/assets/allcollection/image1.png",
-    name: "Polar  Herringbone SPC",
-    price: "6 Items",
-  },
-  {
-    id: "2",
-    image: "/assets/allcollection/image1.png",
-    name: "Polar Floorings",
-    price: "25 Items",
-  },
-  {
-    id: "3",
-    image: "/assets/allcollection/image2.png",
-    name: "Polar LVT",
-    price: "10 Items",
-  },
-  {
-    id: "4",
-    image: "/assets/allcollection/image3.png",
-    name: "Polar SPC",
-    price: "9 Items",
-  },
-  {
-    id: "5",
-    image: "/assets/allcollection/image6.png",
-    name: "Richmond Comfort LVT",
-    price: "8 Items",
-  },
-  {
-    id: "6",
-    image: "/assets/allcollection/image6.png",
-    name: "Richmond Eco SPC",
-    price: "10 Items",
-  },
-  {
-    id: "7",
-    image: "/assets/allcollection/image6.png",
-    name: "Richmond Floorings",
-    price: "34 Items",
-  },
-  {
-    id: "8",
-    image: "/assets/allcollection/image7.png",
-    name: "Richmond Herringbone SPC",
-    price: "6 Items",
-  },
-  {
-    id: "9",
-    image: "/assets/allcollection/image9.png",
-    name: "Richmond Luxury LVT",
-    price: "5 Items",
-  },
-  {
-    id: "10",
-    image: "/assets/allcollection/image0.png",
-    name: "Richmond Prime SPC",
-    price: "6 Items",
-  },
-];
 
-export const collectionFeatures: CollectionFeature[] = [
-  { id: 1, icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
-  { id: 2, icon: "/assets/categoryslider/upbottomarrow.png", label: "10mm", width: 10, height: 20 },
-  { id: 3, icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
-];
+
 
 export const faqspage: FAQ[] = [
   { question: "What is your return policy?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
@@ -1012,3 +943,4 @@ export const colors = [
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
 ];
 
+export const emirates = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Fujairah", "Ras Al Khaimah", "Umm Al Quwain"];

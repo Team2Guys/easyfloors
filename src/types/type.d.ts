@@ -28,15 +28,6 @@ interface Color {
 }
 
 
-export interface CollectionProductCardProps {
-  product: FlooringProduct;
-  sldier?: boolean;
-  features: Feature[];
-  category?: string;
-  name?: string;
-  price?: string;
-  product: IProduct[];
-}
 export type Block = {
   id: number;
   heading: string;
@@ -122,20 +113,6 @@ export interface CategoryData {
   description: string;
 }
 
-export interface CollectionProduct {
-  id: string;
-  name: string;
-  price: string;
-  image: string;
-}
-
-export interface CollectionFeature {
-  id: number;
-  label: string;
-  icon: string;
-  width: number;
-  height: number;
-}
 export interface FormState {
   success?: string;
   error?: string;

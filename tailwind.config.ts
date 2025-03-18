@@ -12,6 +12,7 @@ export default {
     extend: {
       screens: {
         '3xl': '1800px',
+        '2md': '890px',
         'xs': '375px',
       },
       fontFamily: {

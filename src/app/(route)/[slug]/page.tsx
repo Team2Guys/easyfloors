@@ -1,4 +1,4 @@
-import { fetchCategories } from "config/fetch";
+import { fetchCategories, fetchSingleCategory } from "config/fetch";
 import { Suspense } from "react";
 import Category from "./Cetagory";
 import { Category as ICategory } from "types/cat";
@@ -8,9 +8,9 @@ import { headers } from "next/headers";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const categories = await fetchCategories()
-  const Category = categories.find((category: ICategory) => category.custom_url === slug);
-  const headersList = await headers();
+  const Category =await fetchSingleCategory(slug)
+if(!Category) return notFound() 
+   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
   const protocol = headersList.get('x-forwarded-proto') || 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
@@ -60,6 +60,9 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
   if(!findCategory) {
    return notFound()
   }
+
+
+
   return (
     <Suspense fallback="Loading .....">
       <Category catgories={catgories} categoryData={findCategory}  isSubCategory={false} />

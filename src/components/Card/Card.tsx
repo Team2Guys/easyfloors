@@ -24,12 +24,13 @@ const Card: React.FC<productCardProps> = ({
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">
-        <Link href={handleNavigate(product as IProduct, categoryData, )} >
+        <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}`: handleNavigate(product as IProduct, categoryData)}>
           <Image
             src={product.posterImageUrl?.imageUrl ?? ''}
             alt={product.name}
             width={500}
             height={200}
+            loading="lazy"
             className={`w-full object-cover ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"} ${isAccessories ? "border border-gray-700 " : " "}`}
           />
         </Link>
@@ -66,11 +67,11 @@ const Card: React.FC<productCardProps> = ({
       </div>
       <div className="p-2 lg:p-4 font-inter font-light">
         <Link
-          href={handleNavigate(product as IProduct, categoryData,)}
+          href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}`: handleNavigate(product as IProduct, categoryData)}
           className={`md:mt-0 mt-1 text-left font-semibold ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55]"
             }`}
         >
-          {isAccessories ? `Accessories: ${product.name}` : product.name}
+          {isAccessories ? `${product.name}` : product.name}
         </Link>
 
         <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between py-2 gap-2 md:gap-4 w-full">
@@ -90,7 +91,7 @@ const Card: React.FC<productCardProps> = ({
                 Out of Stock
               </button>
             ) : (
-              <Link href={handleNavigate(product as IProduct, categoryData,)} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
+              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}`: handleNavigate(product as IProduct, categoryData)} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
                 Shop Now
               </Link>
             )}

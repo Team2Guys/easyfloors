@@ -12,6 +12,7 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
           src={card?.homePageImage?.imageUrl || ""}
           alt={card?.homePageImage?.altText || "easy Floor"}
           fill
+          loading='lazy'
           style={{ objectFit: "cover" }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
         />
@@ -33,7 +34,7 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
           <div className="absolute md:bottom-0  md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <ul className="list-disc pl-5 text-left">
               {categoriesFeatures.map((feature, index) => (
-                <li className="md:text-sm text-[8px]" key={index}>{feature}</li>
+                <li className="text-[8px] md:text-sm" key={index}>{feature}</li>
               ))}
             </ul>
           </div>

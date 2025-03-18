@@ -102,8 +102,33 @@ padding: 4px;
 }
 
 .slick-dots li.slick-active .custom-dot {
-  background-color: var(--primary) !important;; /* Active dot color */
+  background-color: var(--primary) !important;
 }
+
+.custom-checkbox .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: var(--primary) !important;
+  border: var(--primary) !important;
+}
+
+.custom-collapse .ant-collapse-header {
+  border-bottom: 1px solid #DEDEDE;
+  padding-left: 0px !important;
+}
+
+.custom-collapse .ant-collapse-content .ant-collapse-content-box {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.custom-select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; 
+  background-position: right 0.75rem center; 
+  background-repeat: no-repeat;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22%3E%3Cpath d=%22M6 8L2 4h8z%22/%3E%3C/svg%3E'); /* You can use a custom icon here or leave it as is */
+}
+
 
 @media (max-width: 767px) {
   .category_slider .swiper-pagination {
