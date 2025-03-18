@@ -43,13 +43,13 @@ export default function Drawer({
     <>
       {showBackdrop && visible && (
         <div
-          className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300 ${animate ? 'opacity-100' : 'opacity-0'}`}
+          className={`fixed inset-0 bg-black bg-opacity-50 z-40 transition-opacity duration-300  ${animate ? 'opacity-100' : 'opacity-0'}`}
           onClick={onClose}
         />
       )}
       {visible && (
         <div
-          className={`fixed right-0 top-0 pt-14 text-start ${size} h-full bg-white shadow-xl z-50 p-4 transform transition-transform duration-300 ease-in-out ${
+          className={`fixed right-0 top-0 pt-10 text-start overflow-y-scroll max-h-full ${size} h-full bg-white shadow-xl z-50 p-4 transform transition-transform duration-300 ease-in-out ${
             animate ? 'translate-x-0' : 'translate-x-full'
           }`}
         >

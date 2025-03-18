@@ -26,10 +26,12 @@ export const FETCH_ALL_ACCESSORIES = gql`
       category {
         id
         name
+        custom_url
       }
       products {
         id
         name
+        custom_url
       }
     }
   }
