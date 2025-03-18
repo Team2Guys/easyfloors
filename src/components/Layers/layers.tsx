@@ -2,13 +2,13 @@ import { blocksData } from 'data/data';
 import React from 'react';
 import Image from 'next/image';
 
-const Layers: React.FC = () => {
+const Layers = () => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-2 mt-10 md:mt-16 border border-b-1 mb-10">
       {blocksData.map((block, index) => (
         <div
           key={block.id}
-          className={`${index === 0 ? 'border-r-2' : ''}`}
+          className={`${index === 0 ? 'border-r-2 pb-4' : ''}`}
         >
           <h2 className="md:text-5xl text-2xl font-inter font-bold mb-4 bg-primary text-white text-center p-4">
             {block.heading}

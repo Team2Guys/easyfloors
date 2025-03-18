@@ -9,7 +9,7 @@ const SampleBanner = () => {
       <div className='border-t-[1px] border-t-[#00000033] sm:hidden'></div>
       <div className='w-full h-auto mt-7 xl:mt-14'>
         <div className='flex justify-center items-center'>
-          <Image src='/assets/category/newbanner.webp'
+          <Image src='/assets/category/newbanner_11zon.webp'
             height={200}
             width={800}
             alt='image'
