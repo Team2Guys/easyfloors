@@ -1,8 +1,21 @@
-import React from "react";
+import AccessoriesPopup from "components/AccessoriesPopup/AccessoriesPopup";
+import { fetchProducts } from "config/fetch";
+import { useEffect, useState } from "react";
+import { PiQuestionMark } from "react-icons/pi";
 import { AreaCalculatorProps } from "types/product-detail";
 
-const AreaCalculator= ({ setArea, setUnit, requiredBoxes, convertedArea, area, unit, pricePerBox,squareMeter}:AreaCalculatorProps) => {
- 
+const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, unit, pricePerBox, squareMeter, accessories }: AreaCalculatorProps ) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [products, setProducts] = useState([]);
+  console.log(products)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts);
+    };
+    fetchData();
+  }, []);
   return (
     <div className="space-y-3 my-4">
  <div className="flex sm:flex-col max-sm:items-center gap-4 sm:space-y-3">
@@ -45,7 +58,6 @@ const AreaCalculator= ({ setArea, setUnit, requiredBoxes, convertedArea, area, u
         </label>
       </div>
 
-      {/* Input Field */}
       <input
         type="number"
         
@@ -62,7 +74,14 @@ const AreaCalculator= ({ setArea, setUnit, requiredBoxes, convertedArea, area, u
       </p>
         <p className="text-16 2xl:text-20 font-light">No. Of Boxes: {requiredBoxes} ({squareMeter} Square Meter)</p>
         <p className="text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox}</span></span></p>
+        <p className="text-16 2xl:text-20 font-light flex items-center gap-3">
+          Accessories
+          <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">
+            <PiQuestionMark className="text-lg font-extralight" />
+          </button>
+        </p>
       </div>
+      <AccessoriesPopup isOpen={isOpen} onClose={() => setIsOpen(false)} products={accessories} />
     </div>
   );
 };
