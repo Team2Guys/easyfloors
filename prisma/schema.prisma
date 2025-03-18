@@ -146,3 +146,18 @@ model Acessories {
   products              Products[] @relation("ProductAccessories")
   category              Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }
+
+model Appointment {
+  id             Int     @id @default(autoincrement())
+  firstname      String
+  email          String  @unique
+  phoneNumber    String
+  whatsappNumber String?
+  area           String?
+  selectRooms    String?
+  preferredDate  DateTime? @default(now())
+  preferredTime  String?
+  findUs         String?
+  comment        String?
+  contactMethod Json?
+}

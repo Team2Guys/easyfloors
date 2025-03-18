@@ -11,6 +11,7 @@ import { AdminsModule } from './admins/admins.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './gaurds/auth.guard';
 import { AccessoriesModule } from './accessories/accessories.module';
+import { AppointmentsModule } from './appointments/appointments.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AccessoriesModule } from './accessories/accessories.module';
     FileUploadingModule,
     AdminsModule,
     AccessoriesModule,
+    AppointmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService, {
