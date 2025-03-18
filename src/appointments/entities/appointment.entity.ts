@@ -1,7 +1,38 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
 export class Appointment {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+ @Field()
+  firstname: string;
+
+  @Field()
+  email: string;
+
+  @Field()
+  phoneNumber: string;
+
+  @Field({ nullable: true })
+  whatsappNumber?: string;
+
+  @Field({ nullable: true })
+  area?: string;
+
+  @Field({ nullable: true })
+  selectRooms?: string;
+
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  preferredDate?: Date;
+
+  @Field({ nullable: true })
+  preferredTime?: string;
+
+  @Field({ nullable: true })
+  findUs?: string;
+
+  @Field({ nullable: true })
+  comment?: string;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  contactMethod?: any;
 }

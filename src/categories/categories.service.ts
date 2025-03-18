@@ -37,7 +37,9 @@ export class CategoriesService {
         include: {
           subcategory: true
         }
-      }}});
+      }
+    
+    }});
     } catch (error) {
       console.log(error, "error")
       customHttpException(error, 'INTERNAL_SERVER_ERROR');

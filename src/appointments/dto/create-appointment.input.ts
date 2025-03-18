@@ -1,4 +1,5 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Field, GraphQLISODateTime } from '@nestjs/graphql';
+import GraphQLJSON from 'graphql-type-json';
 
 @InputType()
 export class CreateAppointmentInput {
@@ -11,25 +12,27 @@ export class CreateAppointmentInput {
   @Field()
   phoneNumber: string;
 
-  @Field()
-  whatsappNumber: string;
+  @Field({ nullable: true })
+  whatsappNumber?: string;
 
-  @Field()
-  area: string;
+  @Field({ nullable: true })
+  area?: string;
 
-  @Field()
-  selectRooms: string;
-  @Field()
-  preferredDate: Date;
+  @Field({ nullable: true })
+  selectRooms?: string;
 
-  @Field()
-  preferredTime: string;
-  @Field()
-  findUs: string;
-  @Field()
-  comment: string;
-  @Field()
-  contactMethod: string;
+  @Field(() => GraphQLISODateTime, { nullable: true })
+  preferredDate?: Date;
 
+  @Field({ nullable: true })
+  preferredTime?: string;
 
+  @Field({ nullable: true })
+  findUs?: string;
+
+  @Field({ nullable: true })
+  comment?: string;
+
+  @Field(() => GraphQLJSON, { nullable: true })
+  contactMethod?: any;
 }

@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAppointmentInput } from './dto/create-appointment.input';
-import { UpdateAppointmentInput } from './dto/update-appointment.input';
+import { PrismaService } from '../prisma/prisma.service';
+import { customHttpException } from '../utils/helper';
 
 @Injectable()
 export class AppointmentsService {
-  create(createAppointmentInput: CreateAppointmentInput) {
-    return 'This action adds a new appointment';
+  constructor(private prisma: PrismaService) { }
+  async create(createAppointmentInput: CreateAppointmentInput) {
+
+    try {
+      return await this.prisma.appointment.create({ data: createAppointmentInput });
+    } catch (error) {
+      console.log(error, "error")
+      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+
+    }
   }
 
-  findAll() {
-    return `This action returns all appointments`;
+  async findAll() {
+    try {
+      return this.prisma.appointment.findMany()
+
+    } catch (error) {
+      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} appointment`;
+  async findOne(id: number) {
+    try {
+      return await this.prisma.appointment.findUnique({ where: { id } })
+    } catch (error) {
+      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+    }
   }
 
-  update(id: number, updateAppointmentInput: UpdateAppointmentInput) {
-    return `This action updates a #${id} appointment`;
-  }
 
-  remove(id: number) {
-    return `This action removes a #${id} appointment`;
+
+  async remove(id: number) {
+    try {
+      return await this.prisma.appointment.delete({ where: { id } })
+    } catch (error) {
+      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+    }
   }
 }
