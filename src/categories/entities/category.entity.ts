@@ -2,6 +2,7 @@ import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
 import { Product } from '../../products/entities/product.entity';
 import { SubCategory } from '../../sub_categories/entities/sub_category.entity';
+import { Accessory } from 'accessories/entities/accessory.entity';
 
 @ObjectType()
 
@@ -59,6 +60,10 @@ export class Category {
   
   @Field({nullable:true})
   RecallUrl?:string
+
+  
+  @Field(() => [Accessory], { nullable: true })
+  accessories?: Accessory[];
 
 
 

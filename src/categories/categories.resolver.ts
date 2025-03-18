@@ -22,8 +22,12 @@ export class CategoriesResolver {
   
   @Public()
   @Query(() => Category, { name: 'category' })
-  findOne(@Args('customUrl', { type: () => String }) customUrl: string) {
-    return this.categoriesService.findOne(customUrl);
+  findOne(
+    @Args('customUrl', { type: () => String }) customUrl: string,
+    @Args('accessoryFlag', { type: () => Boolean, nullable: true }) accessoryFlag?: boolean
+
+  ) {
+    return this.categoriesService.findOne(customUrl,accessoryFlag);
   }
 
   @Mutation(() => Category)
