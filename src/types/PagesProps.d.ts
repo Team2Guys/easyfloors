@@ -9,7 +9,7 @@ export interface SubCategoryComponentProps_dashboard {
 export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     setMenuType: React.Dispatch<SetStateAction<string>>;
     seteditCategory?: React.Dispatch<SetStateAction<ISUBCATEGORY | undefined | null>>;
-    editCategory?: ISUBCATEGORY | undefined | null;
+    editCategory?: ISUBCATEGORY_EDIT | undefined | null;
     subCategories?: ISUBCATEGORY[];
   }
 
