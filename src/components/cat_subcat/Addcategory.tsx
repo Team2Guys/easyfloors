@@ -188,6 +188,7 @@ const FormLayout = ({
         }, 0);
       } catch {
         showToast('error', 'Failed to upload cropped image');
+        return error
       }
     }
   };

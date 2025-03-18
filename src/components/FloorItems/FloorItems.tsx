@@ -3,7 +3,7 @@ import { FloorItemsData } from 'data/data';
 import Container from 'components/common/container/Container';
 import Image from 'next/image';
 
-const FloorItems: React.FC = () => {
+const FloorItems = () => {
   return (
     <Container>
       <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 md:gap-16 gap-2 ">

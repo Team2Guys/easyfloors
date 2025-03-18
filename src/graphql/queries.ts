@@ -227,6 +227,32 @@ query GetCategory($customUrl: String!) {
   }}
 
 `
+
+export const FIND_ONE_Accessory = gql`
+ query GetCategory($customUrl: String!, $accessoryFlag: Boolean) {
+    category(customUrl: $customUrl, accessoryFlag: $accessoryFlag) {
+   id
+        name
+        description
+        Meta_Title
+        Canonical_Tag
+        whatAmiImageBanner
+        accessories {
+            id
+            name
+            price
+            discountPrice
+            stock
+            posterImageUrl
+            custom_url
+        }
+  }}
+
+`
+
+
+
+
 export const FIND_ONE_SUB_CATEGORY = gql`
 query SubCategory($customUrl: String!) {
   subCategory(customUrl: $customUrl) {
