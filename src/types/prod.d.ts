@@ -52,6 +52,7 @@ export interface IProduct {
     boxCoverage?: string;
     featureImages?:ProductImage[]
     acessories?:IProduct[]
+    colorCode:string;
   }
 
   export interface ICart {

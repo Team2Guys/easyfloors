@@ -120,6 +120,7 @@ export interface IProductValues {
   FAQS: AdditionalInformation[];
   boxCoverage?: string;
   products: (string | number)[];
+  colorCode?:string;
 
 }
 
@@ -143,6 +144,7 @@ export const AddproductsinitialValues: IProductValues = {
   FAQS: [],
   boxCoverage:"",
   products: [],
+  colorCode: "",
 };
 
 

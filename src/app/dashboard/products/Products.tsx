@@ -42,9 +42,9 @@ const accessoryFlag = path === "/dashboard/accessories";
     FAQS:editProduct && editProduct?.FAQS || [],
     boxCoverage:editProduct && editProduct?.boxCoverage,
     featureImages:editProduct && editProduct?.featureImages || [],
+    colorCode:editProduct && editProduct?.colorCode,
     //@ts-expect-error added
-    products: editProduct  && editProduct?.products?.map((value)=>value.id) || [] 
-
+    products: editProduct  && editProduct?.products?.map((value)=>value.id) || [],
   };
 
   

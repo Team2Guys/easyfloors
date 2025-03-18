@@ -942,6 +942,24 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="py-4 px-6 rounded-sm border border-stroke">
+                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Add Color Code
+                          </label>
+                          <Field
+                            type="number"
+                            name="colorCode"
+                            placeholder="enter color code"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
+
+                          <ErrorMessage
+                            name="colorCode"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                      </div>
                         <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                           <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                             Add Residential Warranty
