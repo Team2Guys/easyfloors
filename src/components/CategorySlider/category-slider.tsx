@@ -8,7 +8,7 @@ import "swiper/css/pagination";
 import Link from "next/link";
 import Card from "components/Card/Card";
 import { features } from "data/data";
-import { Category } from "types/cat";
+import { Category, EDIT_CATEGORY } from "types/cat";
 
 const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
@@ -49,7 +49,7 @@ const CategorySlider = ({categories}: {categories: Category[]}) => {
                   1280: { slidesPerView: 3, spaceBetween: 25 },
                 }}
               >
-                {category.subcategories?.map((product: Category, index) => {
+                {category.subcategories?.map((product: EDIT_CATEGORY, index) => {
                 return (
                   <SwiperSlide key={index} className="pb-7">
                     <Card product={product} categoryData={category} features={features} sldier />

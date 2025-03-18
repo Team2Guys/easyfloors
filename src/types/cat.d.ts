@@ -39,6 +39,7 @@ export interface EDIT_CATEGORY extends Category {
     RecallUrl?:string
     createdAt?: Date;
     updatedAt?: Date;
+    posterImageUrl?:ProductImage
 
 }
 

@@ -187,8 +187,8 @@ const FormLayout = ({
           );
         }, 0);
       } catch (error) {
-        console.error('Error uploading cropped image:', error);
         showToast('error', 'Failed to upload cropped image');
+        return error
       }
     }
   };

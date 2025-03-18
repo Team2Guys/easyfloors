@@ -16,8 +16,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             width={1920}
             height={1080}
             loading="eager"
-            priority
-            className="w-full h-full object-cover"
+                        className="w-full h-full object-cover"
           />
           <div className="bg-background">
           <div className="absolute top-[6%] sm:top-[20%] bg-background left-4 sm:left-0 opacity-80 p-2 sm:p-6 md:p-8 w-[50%] xs:w-[70%] sm:w-[270px] md:w-[300px] lg:w-[400px] xl:w-[500px] shadow-md">
