@@ -31,7 +31,9 @@ export class CategoriesService {
 
   async findAll() {
     try {
-      return await this.prisma.category.findMany({include: {subcategories: true,     products: {
+      return await this.prisma.category.findMany({include: {subcategories: true,  
+        accessories:true,
+           products: {
         include: {
           subcategory: true
         }
