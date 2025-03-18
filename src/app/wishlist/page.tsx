@@ -10,9 +10,7 @@ const Wishlist = () => {
   return (
     <Container>
    <Top heading="Wishlist" Icon={CiHeart} />
-   <div className="p-5">
       <ProductList />
-    </div>
     </Container>
   )
 }
