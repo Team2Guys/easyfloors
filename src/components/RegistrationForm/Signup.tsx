@@ -1,15 +1,16 @@
 "use client";
 
-import {  useEffect } from "react";
+import { useEffect } from "react";
+import { Formik, Form } from "formik";
 import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link";
 import InputField from "components/ui/InputField";
 import { useFormState, useFormStatus } from "react-dom";
-import { registerUser } from "app/actions/authActions";
 import { signupData } from "data/data";
 import { BiArrowBack } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { registerUser } from "hooks/authActions";
 
 const SignupForm = () => {
   const data = signupData;
@@ -17,7 +18,6 @@ const SignupForm = () => {
   const { pending } = useFormStatus();
 
   useEffect(() => {
-    console.log("siginup Response:", state);
     if (state?.message) {
       const isSuccess = state.message.includes("successful");
       toast[isSuccess ? "success" : "error"](state.message);
@@ -40,28 +40,54 @@ const SignupForm = () => {
             Back to home
           </Link>
 
-          <h2
-            className="text-4xl font-bold font-inter text-primary text-center mt-20"
-            dangerouslySetInnerHTML={{ __html: data.title }}
-          />
-
+          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20">
+            {data.title}
+          </h2>
           <h3 className="text-4xl font-normal mb-4 mt-14 text-center">{data.subtitle}</h3>
 
-          <form className="mt-10" action={formAction}>
-            <InputField type="text" name="fullName" placeholder={data.fullNamePlaceholder ?? ""} icon={<FaUser />} required />
-            <InputField type="email" name="email" placeholder={data.emailPlaceholder} icon={<FaEnvelope />} required />
-            <InputField type="password" name="password" placeholder={data.passwordPlaceholder} icon={<FaLock />} required />
-            <InputField type="password" name="retypePassword" placeholder={data.retypePasswordPlaceholder ?? ""} icon={<FaLock />} required />
+          <Formik
+            initialValues={{ fullName: "", email: "", password: "", retypePassword: "" }}
+            onSubmit={(values, { setSubmitting }) => {
+              const formData = new FormData();
+              formData.append("fullName", values.fullName);
+              formData.append("email", values.email);
+              formData.append("password", values.password);
+              formData.append("retypePassword", values.retypePassword);
 
-            <div className="pt-7">
-              <button type="submit" className="w-full bg-primary text-white p-3" disabled={pending}>
-                {pending ? "Creating Account..." : "Sign Up"}
-              </button>
-            </div>
-          </form>
+              formAction(formData);
+              setSubmitting(false);
+            }}
+          >
+            {({ isSubmitting }) => (
+              <Form className="mt-10">
+                <InputField type="text" name="fullName" placeholder="Full Name" icon={<FaUser />} />
+                <InputField type="email" name="email" placeholder="Email" icon={<FaEnvelope />} />
+                <InputField type="password" name="password" placeholder="Password" icon={<FaLock />} />
+                <InputField
+                  type="password"
+                  name="retypePassword"
+                  placeholder="Confirm Password"
+                  icon={<FaLock />}
+                />
+
+                <div className="pt-7">
+                  <button
+                    type="submit"
+                    className="w-full bg-primary text-white p-3"
+                    disabled={pending || isSubmitting}
+                  >
+                    {pending || isSubmitting ? "Creating Account..." : "Sign Up"}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
 
           <p className="text-center mt-4">
-            {data.footerText} <Link href="/login" className="text-primary font-semibold hover:underline">{data.footerLinkText}</Link>
+            Already have an account?{" "}
+            <Link href="/login" className="text-primary font-semibold hover:underline">
+              Login
+            </Link>
           </p>
         </div>
       </div>

@@ -953,6 +953,7 @@ export const loginData: AuthData = {
   buttonText: "Sign In",
   footerText: "Don't Have an Account?",
   footerLinkText: "Create account",
+  value: ""
 };
 
 export const signupData: SignAuthData = {

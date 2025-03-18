@@ -1,30 +1,44 @@
 "use client";
 
-import {  useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link";
 import { AuthData } from "types/types";
 import { loginData } from "data/data";
 import InputField from "components/ui/InputField";
 import { useFormState, useFormStatus } from "react-dom";
-import { authenticateUser } from "app/actions/authActions";
 import { BiArrowBack } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { authenticateUser } from "hooks/authActions";
 
 const LoginForm = () => {
   const data: AuthData = loginData;
   const [state, formAction] = useFormState(authenticateUser, { message: "" });
   const { pending } = useFormStatus();
 
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("email", formValues.email);
+    formData.append("password", formValues.password);
+
+    formAction(formData);
+  };
+
   useEffect(() => {
-    console.log("Login Response:", state);
     if (state?.message) {
-      if (state.message.includes("successful")) {
-        toast.success(state.message);
-      } else {
-        toast.error(state.message);
-      }
+      toast[state.message.includes("successful") ? "success" : "error"](state.message);
     }
   }, [state?.message]);
 
@@ -38,7 +52,7 @@ const LoginForm = () => {
       <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
         <div className="w-full max-w-xl">
           <div>
-            <Link href="#" className="flex items-center gap-3 w-fit text-lg">
+            <Link href="/" className="flex items-center gap-3 w-fit text-lg">
               <span className="p-3 text-white bg-primary">
                 <BiArrowBack />
               </span>
@@ -46,16 +60,30 @@ const LoginForm = () => {
             </Link>
           </div>
 
-          <h2
-            className="text-4xl font-bold font-inter text-primary text-center mt-20"
-            dangerouslySetInnerHTML={{ __html: data.title }}
-          />
+          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20">{data.title}</h2>
           <h3 className="text-4xl font-normal mb-4 mt-14 text-center">{data.subtitle}</h3>
           <p className="text-gray-500 mt-2 text-sm text-center">{data.description}</p>
 
-          <form className="mt-12" action={formAction}>
-            <InputField type="email" name="email" placeholder={data.emailPlaceholder} icon={<FaEnvelope />} required />
-            <InputField type="password" name="password" placeholder={data.passwordPlaceholder} icon={<FaLock />} required />
+          <form className="mt-12" onSubmit={handleSubmit}>
+            <InputField
+              type="email"
+              name="email"
+              placeholder={data.emailPlaceholder}
+              icon={<FaEnvelope />}
+              value={formValues.email}
+              onChange={handleChange}
+              required
+            />
+
+            <InputField
+              type="password"
+              name="password"
+              placeholder={data.passwordPlaceholder}
+              icon={<FaLock />}
+              value={formValues.password}
+              onChange={handleChange}
+              required
+            />
 
             <p className="mt-2 text-sm">
               <Link href="/forgot-password" className="text-black hover:underline">

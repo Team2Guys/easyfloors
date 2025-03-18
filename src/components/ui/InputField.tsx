@@ -1,14 +1,16 @@
-import { ReactNode } from "react";
+import React from "react";
+import { InputProps } from "types/types";
 
-interface InputProps {
-  type: string;
-  name: string;
-  placeholder: string;
-  icon: ReactNode;
-  required?: boolean; 
-}
-
-const InputField = ({ type, name, placeholder, icon, required }: InputProps) => {
+const InputField: React.FC<InputProps> = ({
+  type,
+  name,
+  placeholder = "Enter text...",
+  icon,
+  value,
+  onChange,
+  onBlur,
+  required,
+}) => {
   return (
     <div className="relative flex items-center mt-4 p-2">
       <span className="absolute left-3 text-primary">{icon}</span>
@@ -16,7 +18,11 @@ const InputField = ({ type, name, placeholder, icon, required }: InputProps) => 
         type={type}
         name={name}
         placeholder={placeholder}
-        required={required} 
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        required={required}
+        aria-label={name}
         className="w-full pl-8 p-3 border-b shadow-none focus:outline-none focus:ring-0"
       />
     </div>

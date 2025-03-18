@@ -12,7 +12,7 @@ import client from 'config/apolloClient';
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
 
-  const withoutHeaderPages = ['/dashboard', '/thanks' , '/login', '/signup',];
+  const withoutHeaderPages = ['/dashboard', '/thanks' , '/login', '/signup', '/forgot-password'];
   return (
 
     <ApolloProvider client={client}>

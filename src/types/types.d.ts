@@ -148,6 +148,7 @@ export interface AuthData {
   buttonText: string;
   footerText: string;
   footerLinkText: string;
+  value: string;
 }
 export interface SignAuthData {
   title: string;
@@ -181,5 +182,13 @@ export interface AccessoriesPopupProps {
   isOpen: boolean;
   onClose: () => void;
   products:IProduct[];
+}export interface InputProps {
+  type: string;
+  name: string;
+  placeholder?: string;
+  icon: ReactNode;
+  required?: boolean;
+  value?: string;
+  onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (_e: React.FocusEvent<HTMLInputElement>) => void;
 }
-
