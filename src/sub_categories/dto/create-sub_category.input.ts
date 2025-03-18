@@ -63,6 +63,9 @@ export class CreateSubCategoryInput {
     
       @Field(() =>  GraphQLJSON,{nullable:true})
       BannerImage?: any
+
+      @Field(()=>GraphQLJSON)
+      recalledByCategories:any[]
     
 
 

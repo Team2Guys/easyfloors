@@ -31,25 +31,29 @@ export class CategoriesService {
 
   async findAll() {
     try {
-      return await this.prisma.category.findMany({include: {subcategories: true,  
-        accessories:true,
-           products: {
+      return await this.prisma.category.findMany({
         include: {
-          subcategory: true
+          subcategories: true,
+        recalledSubCats:true,
+          accessories: true,
+          products: {
+            include: {
+              subcategory: true
+            }
+          }
+
         }
-      }
-    
-    }});
+      });
     } catch (error) {
       console.log(error, "error")
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
   }
 
-  async findOne(customUrl: string,accessoryFlag?:boolean) {
+  async findOne(customUrl: string, accessoryFlag?: boolean) {
     try {
-      let flag  =  accessoryFlag ? true : false;
-      return await this.prisma.category.findFirst({ where: { custom_url:customUrl }, include:{accessories: flag ? true : false} });
+      let flag = accessoryFlag ? true : false;
+      return await this.prisma.category.findFirst({ where: { custom_url: customUrl }, include: { accessories: flag ? true : false } });
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -68,7 +72,7 @@ export class CategoriesService {
         where: { id: id },
         data: { ...updateCategoryInput, last_editedBy: email, updatedAt: updateDate },
       });
-     console.log(updatedCategory, "updatedCategory")
+      console.log(updatedCategory, "updatedCategory")
 
 
       return updatedCategory

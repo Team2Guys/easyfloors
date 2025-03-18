@@ -5,7 +5,7 @@ import { Product } from '../../products/entities/product.entity';
 
 @ObjectType()
 export class SubCategory {
-  @Field(() => ID,{ nullable: true })
+  @Field(() => ID, { nullable: true })
   id?: number;
 
   @Field()
@@ -14,7 +14,7 @@ export class SubCategory {
   @Field()
   description: string;
 
-  @Field(() =>  GraphQLJSON,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   posterImageUrl?: any
 
   @Field(() => Date, { nullable: true })
@@ -45,32 +45,35 @@ export class SubCategory {
   category?: Category;
 
   @Field({ nullable: true })
-  Recall_subCat?:string
+  Recall_subCat?: string
 
 
   @Field({ nullable: true })
-  short_description?:string
+  short_description?: string
 
-  @Field(() =>  GraphQLJSON,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   whatAmiImage?: any
 
-  @Field(() =>  GraphQLJSON,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   whatAmiImageBanner?: any
 
-  @Field(() =>  GraphQLJSON,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   homePageImage?: any
 
-  @Field(() =>  GraphQLJSON,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   whatamIdetails?: any
 
-  @Field({nullable:true})
-  whatAmiTopHeading?:string
+  @Field({ nullable: true })
+  whatAmiTopHeading?: string
 
-  @Field({nullable:true})
-  Heading?:string
+  @Field({ nullable: true })
+  Heading?: string
 
-  @Field(() =>  GraphQLJSON,{nullable:true})
+  @Field(() => GraphQLJSON, { nullable: true })
   BannerImage?: any
+
+  @Field(() => [Category],{ nullable: true })
+  recalledByCategories?: Category[]
 
 }
 

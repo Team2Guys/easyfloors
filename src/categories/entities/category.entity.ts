@@ -66,6 +66,9 @@ export class Category {
   accessories?: Accessory[];
 
 
+  @Field(()=>[SubCategory],{nullable:true})
+  recalledSubCats?:SubCategory[]
+
 
 }
 

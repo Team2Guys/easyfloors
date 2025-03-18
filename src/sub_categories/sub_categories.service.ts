@@ -11,18 +11,24 @@ export class SubCategoriesService {
 
     try {
       const email = "Admin";
-      const { category, ...updateData } = createSubCategoryInput;
+      const { category,recalledByCategories, ...updateData } = createSubCategoryInput;
 
       let response = await this.prisma.subCategories.create({
         data: {
           ...updateData,
           ...(category !== undefined ? { category: { connect: { id: Number(category) } } } : category ? { category } : undefined),
+          ...(recalledByCategories !== undefined && recalledByCategories.length > 0
+            ? {
+                recalledByCategories: {
+                  connect: recalledByCategories.map((categoryId: number) => ({
+                    id: Number(categoryId),
+                  })),
+                },
+              }
+            : {}),
           last_editedBy: email,
         },
       });
-
-      console.log(response, "response")
-
       return response;
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
@@ -32,19 +38,17 @@ export class SubCategoriesService {
 
   async findAll() {
     try {
-      let categories = await this.prisma.subCategories.findMany({ include: { category: true, products: true } });
+      let categories = await this.prisma.subCategories.findMany({ include: { category: true, products: true, recalledByCategories:true} });
       return categories;
     } catch (error: any) {
       console.log(error, "err")
       return customHttpException(`${error.message || JSON.stringify(error)}`, 'GATEWAY_TIMEOUT')
 
     }
-
   }
-
   async findOne(custom_url: string) {
     try {
-      return await this.prisma.subCategories.findFirst({ where: { custom_url }, include:{category:true}});
+      return await this.prisma.subCategories.findFirst({ where: { custom_url }, include: { category: true } });
     } catch (error) {
       return customHttpException(`${error.message || JSON.stringify(error)}`, 'GATEWAY_TIMEOUT')
 
@@ -54,7 +58,7 @@ export class SubCategoriesService {
   async update(id: number, updateSubCategoryInput: UpdateSubCategoryInput) {
     let updatedAt = new Date();
     try {
-      const { category, id: _, ...updateData } = updateSubCategoryInput;
+      const { category, id: _,recalledByCategories, ...updateData } = updateSubCategoryInput;
 
       console.log(id, "Function Called", updateSubCategoryInput.category);
 
@@ -62,8 +66,15 @@ export class SubCategoriesService {
         where: { id },
         data: {
           ...updateData,
-          ...(category !== undefined
-            ? { category: { connect: { id: Number(category) } } }
+          ...(category !== undefined? { category: { connect: { id: Number(category) } } }: {}),
+          ...(recalledByCategories !== undefined && recalledByCategories.length > 0
+            ? {
+                recalledByCategories: {
+                  set: recalledByCategories.map((categoryId: number) => ({
+                    id: Number(categoryId),
+                  })),
+                },
+              }
             : {}),
           updatedAt,
         },

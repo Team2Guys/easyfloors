@@ -68,32 +68,35 @@ model Category {
   whatAmiImageBanner Json?
   RecallUrl          String?
   accessories        Acessories[]    @relation()
+  recalledSubCats    subCategories[] @relation("RecallCategories")
 }
 
+
+
 model subCategories {
-  id                 Int        @id @default(autoincrement())
-  name               String
-  description        String?
-  products           Products[]
-  createdAt          DateTime?  @default(now())
-  updatedAt          DateTime?  @updatedAt
-  posterImageUrl     Json?
-  last_editedBy      String?
-  short_description  String?
-  Canonical_Tag      String?
-  Meta_Description   String?
-  Meta_Title         String?
-  categoryId         Int?
-  category           Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  custom_url         String
-  Recall_subCat      String?
-  whatAmiImage       Json?
-  homePageImage      Json?
-  whatAmiImageBanner Json?
-  BannerImage        Json?
-  Heading            String?
-  whatAmiTopHeading  String?
-  whatamIdetails     Json[]     @default([])
+  id                   Int        @id @default(autoincrement())
+  name                 String
+  description          String?
+  products             Products[]
+  createdAt            DateTime?  @default(now())
+  updatedAt            DateTime?  @updatedAt
+  posterImageUrl       Json?
+  last_editedBy        String?
+  short_description    String?
+  Canonical_Tag        String?
+  Meta_Description     String?
+  Meta_Title           String?
+  categoryId           Int?
+  category             Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  custom_url           String
+  whatAmiImage         Json?
+  homePageImage        Json?
+  whatAmiImageBanner   Json?
+  BannerImage          Json?
+  Heading              String?
+  whatAmiTopHeading    String?
+  whatamIdetails       Json[]     @default([])
+  recalledByCategories Category[] @relation("RecallCategories")
 }
 
 model Admins {
@@ -148,9 +151,9 @@ model Acessories {
 }
 
 model Appointment {
-  id             Int     @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   firstname      String
-  email          String  @unique
+  email          String    @unique
   phoneNumber    String
   whatsappNumber String?
   area           String?
@@ -159,5 +162,5 @@ model Appointment {
   preferredTime  String?
   findUs         String?
   comment        String?
-  contactMethod Json?
+  contactMethod  Json?
 }
