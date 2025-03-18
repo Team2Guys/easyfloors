@@ -39,7 +39,8 @@ export interface EDIT_CATEGORY extends Category {
     RecallUrl?:string
     createdAt?: Date;
     updatedAt?: Date;
-    posterImageUrl?: ProductImage;
+    posterImageUrl?:ProductImage
+
 }
 
 export interface ISUBCATEGORY extends Category {
@@ -53,7 +54,7 @@ export interface ISUBCATEGORY extends Category {
   whatamIdetails:AdditionalInformation[]
   Heading?:string
   BannerImage?:ProductImage
-
+  posterImageUrl?: ProductImage;
 }
 
 

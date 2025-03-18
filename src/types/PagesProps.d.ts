@@ -1,4 +1,4 @@
-import { Category, ISUBCATEGORY, ISUBCATEGORY_EDIT } from "./cat";
+import { Category, EDIT_CATEGORY, ISUBCATEGORY, ISUBCATEGORY_EDIT } from "./cat";
 import { IProduct } from "./prod";
 
 export interface SubCategoryComponentProps_dashboard {
@@ -55,11 +55,12 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     slug?: string;
     subcategory?: string;
     altText?:string
+    isImagetext?: boolean;
   };
 
 
   export interface productCardProps {
-    product: IProduct | Category;
+    product: IProduct | EDIT_CATEGORY
     isSoldOut?: boolean;
     isAccessories?: boolean;
     sldier?: boolean;

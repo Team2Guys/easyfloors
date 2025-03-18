@@ -61,7 +61,6 @@ const Product = async ({ params }: { params: Promise<IParams> }) => {
   const { slug, subcategory, product: paramsprod } = await params;
   const [ProductInfo] = await Promise.all([fetchProducts()]);
   const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
-
   if (!productData) return notFound()
 
   return (

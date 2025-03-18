@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from 'components/Others/HelperRedux';
-import { loggedInAdminAction } from 'redux/slices/Admin/AdminsSlice';
+import { loggedInAdminAction } from '../redux/slices/Admin/AdminsSlice';
 import Cookies from 'js-cookie';
 import { getAdminData } from 'components/serverActions/fetch';
 

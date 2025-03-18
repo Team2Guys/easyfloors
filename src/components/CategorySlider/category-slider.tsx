@@ -8,14 +8,13 @@ import "swiper/css/pagination";
 import Link from "next/link";
 import Card from "components/Card/Card";
 import { features } from "data/data";
-import { Category } from "types/cat";
+import { Category, EDIT_CATEGORY } from "types/cat";
 
 const CategorySlider = ({categories}: {categories: Category[]}) => {
   return (
-    <div className="md:space-y-10 space-y-8">
+    <div className="space-y-8">
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
         const shouldEnablePagination = category.subcategories && category.subcategories.length >= 0;
-        console.log(categories,"categories")
         return (
           <div
             key={index}
@@ -50,7 +49,7 @@ const CategorySlider = ({categories}: {categories: Category[]}) => {
                   1280: { slidesPerView: 3, spaceBetween: 25 },
                 }}
               >
-                {category.subcategories?.map((product: Category, index) => {
+                {category.subcategories?.map((product: EDIT_CATEGORY, index) => {
                 return (
                   <SwiperSlide key={index} className="pb-7">
                     <Card product={product} categoryData={category} features={features} sldier />

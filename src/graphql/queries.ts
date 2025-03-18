@@ -182,6 +182,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
     categories {
       id
       name
+      custom_url
       RecallUrl
       subcategories {
         id
@@ -192,7 +193,26 @@ export const FETCH_HEADER_CATEGORIES = gql`
       }
     }
 `;
-
+export const FETCHSUBCAT = gql`
+  query SubCategories {
+    subCategories {
+      id
+      name
+      posterImageUrl
+      custom_url
+      products {
+        id
+        name
+      }
+      category {
+        id
+        name
+        custom_url
+        RecallUrl
+      }
+    }
+  }
+`;
 
 export const FIND_ONE_CATEGORY = gql`
 query GetCategory($customUrl: String!) {
