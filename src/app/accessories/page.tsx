@@ -5,6 +5,7 @@ import React from 'react';
 
 const Accessories = async () => {
 const [ accessories ] = await Promise.all([fetchAccessories()]);
+console.log(accessories,"accessories")
   return (
     <>
       <Breadcrumb title="Accessories" image="/assets/images/accessories/Accessories-header-image.png" />
