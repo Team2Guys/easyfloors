@@ -17,6 +17,7 @@ export interface Category {
   last_editedBy?: string;
   Recall_Cat?: string;
   products?: Product[];
+  accessories?: Product[];
   RecallUrl?:string
   Heading?:string
   BannerImage?:ProductImage

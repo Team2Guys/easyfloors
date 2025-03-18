@@ -145,11 +145,11 @@ export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => 
 
 
 
-export  const fetchSingleCategory = async (customUrl: string): Promise<Category | null> => {
+export  const fetchSingleCategory = async (customUrl: string,FIND_ONE_CUSTOM_QUERY?:DocumentNode,accessoryFlag?:boolean): Promise<Category | null> => {
   try {
     const { data } = await client.query({
-      query: FIND_ONE_CATEGORY,
-      variables: { customUrl },
+      query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : FIND_ONE_CATEGORY,
+      variables: { customUrl , accessoryFlag},
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } },
