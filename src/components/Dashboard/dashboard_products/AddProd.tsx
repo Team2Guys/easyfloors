@@ -421,8 +421,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
           );
         
         }, 0);
-      } catch (error) {
-        console.error('Error uploading cropped image:', error);
+      } catch {
         showToast('error', 'Failed to upload cropped image');
       }
     }
@@ -1430,6 +1429,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
 
                                 {accessoryFlag && (
+                                  <>
                                   <input
                                     className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                     placeholder="color"
@@ -1444,6 +1444,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       )
                                     }
                                   />
+                                   <input
+                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    placeholder="colorName"
+                                    type="text"
+                                    name="colorName"
+                                    value={item?.colorName || "Chestnut"}
+                                   
+                                   />
+                                  </>
                                 )}
                               </div>
                             );

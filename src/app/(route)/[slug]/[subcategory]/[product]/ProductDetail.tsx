@@ -83,12 +83,12 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
               <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
               Order Now Free Sample
           </button>
-          <button  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory, MainCategory, "cart")} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
+          <button  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory??"", MainCategory??"", "cart")} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
           <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} />
             Add to Cart
           </button>
         </div>
-        <button className="flex items-center gap-2 text-[#475156]"  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory, MainCategory, "wishlist")}><LuHeart size={20} />Add to Wishlist</button>
+        <button className="flex items-center gap-2 text-[#475156]"  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory??"", MainCategory??"", "wishlist")}><LuHeart size={20} />Add to Wishlist</button>
         <PaymentMethod installments={installments} showheading/>
           </div>
         </Container>

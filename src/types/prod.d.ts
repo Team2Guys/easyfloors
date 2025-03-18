@@ -10,6 +10,7 @@ export interface ProductImage {
     Index?: string;
     size?: string;
     color?: string | number;
+    colorName?: string;
     
   }
 

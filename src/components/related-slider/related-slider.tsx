@@ -13,9 +13,10 @@ interface RelatedSliderProps {
   products: IProduct[]; 
   CategoryData?: Category
   subCategoryData?: ISUBCATEGORY
+  isAccessories?: boolean;
 };
 
-const RelatedSlider = ({ products , CategoryData,subCategoryData }:RelatedSliderProps) => {
+const RelatedSlider = ({ products , CategoryData,subCategoryData,isAccessories}:RelatedSliderProps) => {
   const settings = {
     dots: true,
     infinite: false,
@@ -49,7 +50,7 @@ const RelatedSlider = ({ products , CategoryData,subCategoryData }:RelatedSlider
         <Slider {...settings}>
           {products.map((product: IProduct, index: number) => (
             <div key={index} className="pb-7">
-              <Card product={product} features={features} categoryData={CategoryData} subCategoryData={subCategoryData} sldier />
+              <Card product={product} features={features} categoryData={CategoryData} subCategoryData={subCategoryData} sldier isAccessories={isAccessories} />
             </div>
           ))}
         </Slider>

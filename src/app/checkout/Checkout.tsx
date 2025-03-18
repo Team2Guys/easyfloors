@@ -85,7 +85,6 @@ const Checkout = () => {
         setSelectedFee(fee);
         const totalPrice = subTotal + (fee || 0 );
             setTotal(totalPrice);
-            console.log(totalPrice , fee)
     };
 
 
