@@ -17,14 +17,14 @@ const AccessoriesDetail = ({ProductName,ProductInfo, productData}:detailprops) =
     <Container>
     <div className="flex flex-col lg:flex-row">
     <div className="w-full lg:w-[60%]">
-    <Thumbnail ThumnailImage={productData.productImages}  hideThumnailBottom imageheight />
+    <Thumbnail ThumnailImage={productData.productImages || []}  hideThumnailBottom imageheight />
     </div>
     <div className="w-full lg:w-[40%]">
     <SkirtingProductDetail productData={productData} MainCategory="Accessories" />
     </div>
     </div>
     <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
-      <AdditionalInfo description={productData.description} AdditionalInformation={productData.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
+      <AdditionalInfo description={productData.description || ""} AdditionalInformation={productData.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
       <FaqDetail FAQS={productData.FAQS} />
     </div>
   

@@ -1,21 +1,11 @@
 import AccessoriesPopup from "components/AccessoriesPopup/AccessoriesPopup";
-import { fetchProducts } from "config/fetch";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PiQuestionMark } from "react-icons/pi";
 import { AreaCalculatorProps } from "types/product-detail";
 
 const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, unit, pricePerBox, squareMeter, accessories }: AreaCalculatorProps ) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [products, setProducts] = useState([]);
-  console.log(products)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedProducts = await fetchProducts();
-      setProducts(fetchedProducts);
-    };
-    fetchData();
-  }, []);
+ 
   return (
     <div className="space-y-3 my-4">
  <div className="flex sm:flex-col max-sm:items-center gap-4 sm:space-y-3">
