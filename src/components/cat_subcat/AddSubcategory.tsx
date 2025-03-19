@@ -11,14 +11,14 @@ import showToast from 'components/Toaster/Toaster';
 import Cookies from 'js-cookie';
 import { DASHBOARD_ADD_SUBCATEGORIES_PROPS } from 'types/PagesProps';
 import { AdditionalInformation, ProductImage } from 'types/prod';
-import { ISUBCATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
+import { Category, ISUBCATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import ImageUploader from 'components/ImageUploader/ImageUploader';
 import { useMutation } from '@apollo/client';
 import { CREATE_SUBCATEGORY, UPDATE_SUBCATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import { uploadPhotosToBackend } from 'lib/helperFunctions';
-import ReactCrop, { Crop} from 'react-image-crop';
+import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { centerAspectCrop } from 'types/product-crop';
@@ -42,6 +42,7 @@ const FormLayout = ({
       whatamIdetails: editCategory?.whatamIdetails || [],
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
+      recalledByCategories:editCategory?.recalledByCategories.map((value:Category)=>value.id) || []
 
     }
     : undefined;
@@ -69,8 +70,7 @@ const FormLayout = ({
   const onSubmit = async (values: ISUBCATEGORY_EDIT, { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>) => {
     if (!values.category) {
       return showToast('warn', 'Select parent category!!');
-    }
-    try {
+    }    try {
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
@@ -138,7 +138,7 @@ const FormLayout = ({
     setEditCategoryName(CategoryName)
 
   }, [editCategory])
-  
+
   const handleCropClick = (imageUrl: string) => {
     setImageSrc(imageUrl);
     setIsCropModalVisible(true);
@@ -152,15 +152,15 @@ const FormLayout = ({
   const onCropComplete = (crop: Crop) => {
     const image = imgRef.current;
     if (!image || !crop.width || !crop.height) return;
-  
+
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     const ctx = canvas.getContext('2d');
-  
+
     canvas.width = crop.width;
     canvas.height = crop.height;
-  
+
     if (ctx) {
       ctx.drawImage(
         image,
@@ -174,21 +174,21 @@ const FormLayout = ({
         crop.height
       );
     }
-  
+
     const base64Image = canvas.toDataURL('image/jpeg');
     setCroppedImage(base64Image);
   };
-  
+
 
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
       try {
         // Convert the cropped image (base64) to a File
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-  
+
         // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend([file]);
-  
+
         // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         const uploadedImageUrl = response[0].imageUrl;
@@ -196,13 +196,13 @@ const FormLayout = ({
         const newImageUrl = uploadedImageUrl.startsWith('http')
           ? uploadedImageUrl
           : `${baseUrl}${uploadedImageUrl}`;
-  
+
         const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-  
+
         // First close the modal and reset croppedImage
         setIsCropModalVisible(false);
         setCroppedImage(null);
-  
+
         // Use a timeout to update states after the modal has closed
         setTimeout(() => {
           setposterimageUrl((prevImages) =>
@@ -236,7 +236,7 @@ const FormLayout = ({
       }
     }
   };
-  
+
   // Helper function to convert a base64 string to a File object
   const base64ToFile = (base64: string, filename: string): File => {
     const arr = base64.split(',');
@@ -245,14 +245,14 @@ const FormLayout = ({
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-  
+
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-  
+
     return new File([u8arr], filename, { type: mime });
   };
-  
+
 
   const handleCropModalCancel = () => {
     setIsCropModalVisible(false);
@@ -270,7 +270,7 @@ const FormLayout = ({
       >
         <IoMdArrowRoundBack /> Back
       </p>
-      
+
       <Formik
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
@@ -378,7 +378,7 @@ const FormLayout = ({
 
                                 </div>
                                 <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg"
 
@@ -441,7 +441,7 @@ const FormLayout = ({
 
                                 </div>
                                 <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg"
 
@@ -568,7 +568,7 @@ const FormLayout = ({
 
                                 </div>
                                 <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg"
 
@@ -857,7 +857,6 @@ const FormLayout = ({
 
                             className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                           >
-                            {/* Default option */}
                             <option value="" disabled>
                               Select Category
                             </option>
@@ -874,6 +873,54 @@ const FormLayout = ({
                       </div>
 
                     </div>
+
+
+         
+                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Add Re Category
+                      </label>
+                      <FieldArray name="recalledByCategories">
+                        {({ push, remove }) => (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {categoriesList?.map((cat:Category) => {
+                      
+                              const isChecked =formik.values.recalledByCategories?.includes(cat.id.toString());
+                              console.log(isChecked, "ischeck")
+                              return (
+                                <label
+                                  key={cat.id}
+                                  className="flex items-center space-x-2"
+                                >
+                                  <Field
+                                    type="checkbox"
+                                    name="recalledByCategories"
+                                    value={cat.id.toString()}
+                                    checked={isChecked}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        push(cat.id.toString());
+                                      } else {
+                                        remove(
+                                          formik?.values?.recalledByCategories?.indexOf(
+                                            cat.id.toString()
+                                          )
+                                        );
+                                      }
+                                    }}
+                                    className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                                  />
+                                  <span className="text-black dark:text-white">
+                                    {cat.name}
+                                  </span>
+                                </label>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </FieldArray>
+                  
 
 
                   </div>
@@ -905,8 +952,8 @@ const FormLayout = ({
                     onComplete={onCropComplete}
                   >
                     <Image
-                    width={500}
-                    height={300}
+                      width={500}
+                      height={300}
                       ref={imgRef}
                       src={imageSrc}
                       alt="Crop me"

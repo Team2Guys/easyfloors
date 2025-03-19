@@ -9,7 +9,7 @@ const SampleBanner = () => {
       <div className='border-t-[1px] border-t-[#00000033] sm:hidden'></div>
       <div className='w-full h-auto mt-7 xl:mt-14'>
         <div className='flex justify-center items-center'>
-          <Image src='/assets/category/newbanner_11zon.webp'
+          <Image src='https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291498/newbanner_11zon_11zon_jr57od.webp'
             height={200}
             width={800}
             alt='image'
@@ -19,7 +19,7 @@ const SampleBanner = () => {
         </div>
         <div className='w-full flex justify-between items-center border-b-[1px] sm:border-b-2 border-b-[#00000033] mt-5'>
           <div className="w-5/12 sm:w-9/12 lg:w-2/3 overflow-hidden">
-            <Image src='/assets/category/delivery-truck.png'
+            <Image src='https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291653/delivery-truck_11zon_hsjurq.webp'
               height={800}
               width={800}
               alt='image'

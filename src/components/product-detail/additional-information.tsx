@@ -17,7 +17,7 @@ const AdditionalInfo = ({ description, AdditionalInformation,subcategory }:Addit
         }
     
         {
-          AdditionalInformation.length > 0 && (
+          AdditionalInformation && AdditionalInformation.length > 0 && (
             <TabsTrigger value="specifications" className='data-[state=active]:text-primary text-12 xs:text-14 sm:text-24'>
             Additional Information
             </TabsTrigger>
@@ -37,7 +37,7 @@ const AdditionalInfo = ({ description, AdditionalInformation,subcategory }:Addit
               <th className="py-2 px-4 rounded-tl-md ">ITEM</th>
               <th className="py-2 px-4 rounded-tr-md">{subcategory}</th>
             </tr>
-            {AdditionalInformation.map((spec, index) => (
+            {AdditionalInformation && AdditionalInformation.map((spec, index) => (
               <tr key={index} >
                 <td className="py-2 px-4 border ">{spec.name}</td>
                 <td className="py-2 px-4 border">{spec.detail}</td>

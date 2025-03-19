@@ -1,3 +1,5 @@
+import { IProduct } from "./prod";
+
 export interface SocialLink {
   href: string;
   alt: string;
@@ -129,5 +131,64 @@ export interface MeasurementSection {
   steps: Step[];
   image: string;
 }
+export interface OrderItem {
+  image: string;
+  title: string;
+  boxes: number;
+  sqm: number;
+  price: number;
+}
+export interface AuthData {
+  title: string;
+  subtitle: string;
+  description: string;
+  emailPlaceholder: string;
+  passwordPlaceholder: string;
+  forgotPasswordText: string;
+  buttonText: string;
+  footerText: string;
+  footerLinkText: string;
+  value: string;
+}
+export interface SignAuthData {
+  title: string;
+  subtitle: string;
+  emailPlaceholder: string;
+  passwordPlaceholder: string;
+  // forgotPasswordText?: string; 
+  buttonText: string;
+  footerText: string;
+  footerLinkText: string;
+  fullNamePlaceholder?:string;
+  retypePasswordPlaceholder?:string
+}
 
 
+export interface AuthFormState {
+  email: string;
+  password: string;
+}
+
+export interface AccPoPProduct {
+  id: string;
+  image: string;
+  name: string;
+  price: number;
+  meters: number;
+  feet: number;
+}
+
+export interface AccessoriesPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  products:IProduct[];
+}export interface InputProps {
+  type: string;
+  name: string;
+  placeholder?: string;
+  icon: ReactNode;
+  required?: boolean;
+  value?: string;
+  onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (_e: React.FocusEvent<HTMLInputElement>) => void;
+}

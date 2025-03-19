@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { FAQ, SampleGridData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AccPoPProduct, AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -42,6 +42,8 @@ export const initialValues = {
     telephone: false,
     email: false,
   },
+
+  
 };
 
 export const validationSchema = Yup.object({
@@ -69,8 +71,7 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Meta_Title: '',
   Canonical_Tag: '',
   custom_url: "",
-  topHeading:""
-
+  topHeading:"",
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -97,6 +98,7 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
+  recalledByCategories:[]
 };
 
 
@@ -234,7 +236,8 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [ 
   {
-    backgroundImage: "/assets/images/Home/hero-min.webp",
+    // backgroundImage: "/assets/images/Home/hero-min.webp",
+    backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
     offerText: "Limited Time Offer",
     title: "High-Quality Flooring Get",
     highlight: "FREE Samples",
@@ -352,9 +355,9 @@ export const footerData = {
     email: 'cs@easyfloors.ae',
   },
   social: [
-    { icon: FaFacebookF, link: '#' },
-    { icon: FaInstagram, link: '#' },
-    { icon: FaPinterestP, link: '#' },
+    { name: 'Facebook', icon: FaFacebookF, link: '#' },
+    { name: 'Instagram', icon: FaInstagram, link: '#' },
+    { name: 'Pinterest', icon: FaPinterestP, link: '#' },
   ],
   paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
@@ -370,7 +373,7 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layer1.webp',
+    imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291723/layer1_11zon_dfk4er.webp',
   },
   {
     id: 2,
@@ -383,13 +386,13 @@ export const blocksData = [
       'They provide an easy way for you to present the most important ideas.',
       'The information following each bullet should be brief: ',
     ],
-    imageUrl: '/assets/layers/layers2.webp',
+    imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291706/layers2_11zon_zatjqm.webp',
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone-Floor_11zon.webp' },
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco-Floor_11zon.webp' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime-Floor_11zon.webp' },
+  { id: 1, title: 'Herringbone Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291431/Herringbone-Floor_11zon_11zon_liydgh.webp' },
+  { id: 2, title: 'Eco Floor ', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291254/Eco-Floor_11zon_11zon_ewhoup.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291406/Prime-Floor_11zon_1__11zon_l98nti.webp' },
 ];
 
 
@@ -414,7 +417,7 @@ export const HomeUserInfo = [
     title: 'Budget Friendly',
     description:
       "High-quality flooring doesn’t have to cost a fortune. Our durable, stylish options are available at factory prices, so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
-    image: '/assets/images/UserInfo/budget.png',
+    image: '/assets/images/UserInfo/budget_11zon.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
   },
@@ -422,7 +425,7 @@ export const HomeUserInfo = [
     title: 'Overlay Ready',
     description:
       "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
-    image: '/assets/images/UserInfo/overlay.webp',
+    image: '/assets/images/UserInfo/overlay_11zon.webp',
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
   },
@@ -921,4 +924,81 @@ export const colors = [
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
 ];
 
+
+export const loginData: AuthData = {
+  title: "WELCOME TO <br> EASY FLOORS",
+  subtitle: "Sign In",
+  description: "Please login using account details below.",
+  emailPlaceholder: "Enter your email",
+  passwordPlaceholder: "Enter your password",
+  forgotPasswordText: "Forgot your password?",
+  buttonText: "Sign In",
+  footerText: "Don't Have an Account?",
+  footerLinkText: "Create account",
+  value: ""
+};
+
+export const signupData: SignAuthData = {
+  title: "WELCOME TO <br> EASY FLOORS",
+  subtitle: "Sign Up",
+  fullNamePlaceholder: "Enter your full name",
+  emailPlaceholder: "Enter your email",
+  passwordPlaceholder: "Enter your password",
+  retypePasswordPlaceholder: "Retype your password",
+  buttonText: "Sign Up",
+  footerText: "Already have an account?",
+  footerLinkText: "Sign In",
+};
+
+
+export const accessoriesProducts: AccPoPProduct[] = [
+  {
+    id: "1",
+    image: "/assets/images/accessories/product/1.png",
+    name: "Accessory One",
+    price: 50,
+    meters: 2,
+    feet: 6.56,
+  },
+  {
+    id: "2",
+    image: "/assets/images/accessories/product/1.png",
+    name: "Accessory Two",
+    price: 75,
+    meters: 3,
+    feet: 9.84,
+  },
+  {
+    id: "3",
+    image: "/assets/images/accessories/product/1.png",
+    name: "Accessory Three",
+    price: 60,
+    meters: 2.5,
+    feet: 8.2,
+  },
+  {
+    id: "4",
+    image: "/assets/images/accessories/product/1.png",
+    name: "Accessory Four",
+    price: 90,
+    meters: 4,
+    feet: 13.1,
+  },
+  {
+    id: "5",
+    image: "/assets/images/accessories/product/1.png",
+    name: "Accessory Five",
+    price: 80,
+    meters: 3.2,
+    feet: 10.5,
+  },
+  {
+    id: "6",
+    image: "/assets/images/accessories/product/1.png",
+    name: "Accessory Six",
+    price: 100,
+    meters: 5,
+    feet: 16.4,
+  },
+];
 export const emirates = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Fujairah", "Ras Al Khaimah", "Umm Al Quwain"];

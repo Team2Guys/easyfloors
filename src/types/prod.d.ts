@@ -34,14 +34,14 @@ export interface IProduct {
     AdditionalInformation?: AdditionalInformation[];
     colors?: AdditionalInformation[];
     categoriesId?: number;
-    subcategory?: ISUBCATEGORY_EDIT;
+    subcategory: ISUBCATEGORY_EDIT;
     custom_url?:string;
     thickness?:string;
     ResidentialWarranty?:string;
     CommmericallWarranty?:string;
     plankWidth?:string
     waterproof?:boolean
-    category?:EDIT_CATEGORY
+    category:EDIT_CATEGORY
     Meta_Title?: string;
     Canonical_Tag?: string;
     Meta_Description?: string;

@@ -3,7 +3,7 @@ import Accordion from 'components/ui/accordion';
 import React, { useState } from 'react';
 
 interface FAQprops {
-  FAQS: { name: string; detail: string }[];
+  FAQS?: { name: string; detail: string }[];
 }
 
 const FaqDetail = ({FAQS}:FAQprops) => {
@@ -18,7 +18,7 @@ const FaqDetail = ({FAQS}:FAQprops) => {
   return (
     <div>
     {
-      FAQS.length > 0 && (
+      FAQS && FAQS.length > 0 && (
        <>
           <p className='mx-auto max-w-[72%]  sm:max-w-[25%] pl-1 mb-10 text-14 sm:text-24 font-inter font-medium pt-10'>FAQ’s</p>
     <div className="max-w-[90%] mx-auto mt-5 font-inter">

@@ -56,6 +56,7 @@ export interface ISUBCATEGORY extends Category {
   Heading?:string
   BannerImage?:ProductImage
   posterImageUrl?: ProductImage;
+  recalledByCategories?:Category[]
 }
 
 
@@ -67,4 +68,5 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   createdAt?: Date;
   updatedAt?: Date;
   custom_url?: string;
+  recalledByCategories: string[];
 }

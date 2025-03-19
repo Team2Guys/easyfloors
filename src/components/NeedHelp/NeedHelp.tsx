@@ -25,7 +25,7 @@ const NeedHelp: React.FC = () => {
                             <div className="md:mt-10 mt-4">
                                 <Link
                                     href="#"
-                                    className="md:py-3 py-2 px-2 md:text-lg text-sm md:px-12 bg-primary font-inter font-light text-white"
+                                    className="md:py-3 py-2 px-2 md:text-lg text-sm md:px-12 bg-primary font-inter font-medium xs:font-light text-white"
                                 >
                                     {box.buttonText}
                                 </Link>

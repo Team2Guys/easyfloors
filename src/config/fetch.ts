@@ -58,6 +58,7 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
 
     return data?.subCategories || []
   } catch (error) {
+    console.log(error, "error")
     return []
     throw error
 
