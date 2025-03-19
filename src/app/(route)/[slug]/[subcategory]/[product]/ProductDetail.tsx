@@ -28,8 +28,8 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
       totalPrice,
       installments,
       boxCoverage,
+      
     } = calculateProductDetails(area, unit, productData);
-
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
@@ -58,7 +58,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
         </div>
         <div className="flex items-center gap-1 text-19">
           <p className="text-14 sm:text-18 2xl:text-23">
-            Stock: <span className="text-[#008000] font-bold">{productData?.stock > 0 ? "In Stock" :"Out of Stock"}</span>
+            Stock: <span className="text-[#008000] font-bold">{productData?.stock && productData?.stock > 0 ? "In Stock" :"Out of Stock"}</span>
           </p>
           <div className="h-5 w-[2px] bg-black" />
           <p className="text-14 sm:text-18 2xl:text-23 font-bold">
@@ -73,7 +73,10 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
           </p>
         </div>
         <div className="border-b border-[#D9D9D9]" />
-        <AreaCalculator area={area} unit={unit} setArea={setArea} setUnit={setUnit} requiredBoxes={requiredBoxes} convertedArea={convertedArea} pricePerBox={pricePerBox} squareMeter={squareMeter}/>
+        <AreaCalculator area={area} unit={unit} setArea={setArea} setUnit={setUnit} requiredBoxes={requiredBoxes} convertedArea={convertedArea} 
+        pricePerBox={pricePerBox} squareMeter={squareMeter} accessories={productData.acessories
+          || []}
+        />
         <div className="border-b border-[#D9D9D9]" />
         <div className="flex items-center gap-5">
           <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">Total : <span>AED</span> <span>{totalPrice}</span></p>
@@ -93,7 +96,7 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
           </div>
         </Container>
         <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
-          <AdditionalInfo description={productData?.description} AdditionalInformation={productData?.AdditionalInformation} subcategory={productData.subcategory?.name || ""} />
+          <AdditionalInfo description={productData?.description  || ''} AdditionalInformation={productData?.AdditionalInformation } subcategory={productData.subcategory?.name || ""} />
           <FaqDetail FAQS={productData.FAQS} />
         </div>
   

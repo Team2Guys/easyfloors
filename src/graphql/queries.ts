@@ -72,6 +72,11 @@ export const FETCH_ALL_CATEGORIES = gql`
       whatAmiImageBanner
       topHeading
       RecallUrl
+        recalledSubCats {
+            id
+            name
+            custom_url
+        }
       subcategories {
         id
         name
@@ -136,6 +141,11 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
         name
 
       }
+        recalledByCategories{
+            id
+            name
+              RecallUrl
+        }
     }
   }
 `;
