@@ -122,6 +122,7 @@ export interface IProductValues {
   FAQS: AdditionalInformation[];
   boxCoverage?: string;
   products: (string | number)[];
+  colorCode?:string;
 
 }
 
@@ -145,6 +146,7 @@ export const AddproductsinitialValues: IProductValues = {
   FAQS: [],
   boxCoverage:"",
   products: [],
+  colorCode: "",
 };
 
 
@@ -548,6 +550,7 @@ export const boxData: BoxData[] = [
     description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
     buttonText: 'Learn More',
     icon: '/assets/images/Home/measure1.png',
+    link: '/measurement-appointment',
   },
   {
     id: 2,
@@ -555,6 +558,7 @@ export const boxData: BoxData[] = [
     description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
     buttonText: 'Learn More',
     icon: '/assets/images/Home/Vectorrg.png',
+    link: '/help-with-installations',
   }
 ];
 
@@ -902,30 +906,6 @@ export const measurementData: MeasurementSection[] = [
 ];
 
 
-export const accessoriesText = `
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-  when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-  It has survived not only five centuries, but also the leap into electronic typesetting, 
-  remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets 
-  containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker 
-  including versions of Lorem Ipsum. <br> <br>
-
-  Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer 
-  took a galley of type and scrambled it to make a type specimen book. 
-  It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-`;
-
-
-
-export const accessoriesimages = [
-  { imageUrl: "/assets/images/accessories/product/1.png",altText:"thumbnail"  },
-  { imageUrl: "/assets/images/accessories/product/2.png",altText:"thumbnail" },
-  { imageUrl: "/assets/images/accessories/product/3.png",altText:"thumbnail" },
-  { imageUrl: "/assets/images/accessories/product/4.png",altText:"thumbnail"},
-  { imageUrl: "/assets/images/accessories/product/5.png",altText:"thumbnail"},
-];
 
 export const colors = [
   { code: "3897", color: "/assets/bin/colors/c1.png" },

@@ -60,7 +60,13 @@ export const REMOVE_CATEGORY = gql`
   }
 `;
 
-
+export const REMOVE_ACCESSORY = gql`
+  mutation RemoveAccessory($id: Int!) {
+    removeAccessory(id: $id) {
+      id
+    }
+  }
+`;
 
 
 export const CREATE_SUBCATEGORY = gql`

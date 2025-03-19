@@ -10,13 +10,14 @@ import { fetchCategories } from 'config/fetch';
 import { Category } from 'types/cat';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { FETCH_HEADER_CATEGORIES } from 'graphql/queries';
 
 const Footer =  () => {
     const [categories, setCategories] = useState([]);
   useEffect(() => {
     const getCategories = async () => {
       try {
-        const data = await fetchCategories();
+        const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
         setCategories(data);
       } catch {
         toast.error("Error fetching categories:");
@@ -35,15 +36,27 @@ const Footer =  () => {
 
                 {categories.map((section: Category, index: number) => (
                     <div key={index} className="sm:block hidden">
-                        <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">{section.name}</h3>
+                        <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
+                            {section.name}
+                        </h3>
                         <ul className="mt-4 space-y-2">
-                            {section?.subcategories && section?.subcategories.map((item, i) => (
-                                <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
-                                    <Link href={`/${section.RecallUrl}/${item.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
-                                    {item.name}
-                                    </Link>
-                                </li>
-                            ))}
+                            {section.name === "ACCESSORIES" ? (
+                                (section.accessories ?? []).map((item, i) => (
+                                    <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                        <Link href={`/accessories/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                            {item.name}
+                                        </Link>
+                                    </li>
+                                ))
+                            ) : (
+                                (section.subcategories ?? []).map((item, i) => (
+                                    <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                        <Link href={`/${section.RecallUrl}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                            {item.name}
+                                        </Link>
+                                    </li>
+                                ))
+                            )}
                         </ul>
                     </div>
                 ))}

@@ -42,9 +42,9 @@ const FormLayout = ({
       whatamIdetails: editCategory?.whatamIdetails || [],
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
-      recalledByCategories:editCategory?.recalledByCategories.map((value:Category)=>value.id) || []
+      recalledByCategories:editCategory?.recalledByCategories?.map((value:Category)=>value.id) || []
 
-    }
+    } as ISUBCATEGORY_EDIT
     : undefined;
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined);
@@ -232,8 +232,8 @@ const FormLayout = ({
           );
         }, 0);
       } catch (error) {
-        console.error('Error uploading cropped image:', error);
         showToast('error', 'Failed to upload cropped image');
+        return error
       }
     }
   };
@@ -886,7 +886,7 @@ const FormLayout = ({
                             {categoriesList?.map((cat:Category) => {
                       
                               const isChecked =formik.values.recalledByCategories?.includes(cat.id.toString());
-                              console.log(isChecked, "ischeck")
+             
                               return (
                                 <label
                                   key={cat.id}

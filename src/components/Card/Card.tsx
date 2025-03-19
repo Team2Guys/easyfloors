@@ -77,7 +77,7 @@ const Card: React.FC<productCardProps> = ({
         <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between py-2 gap-2 md:gap-4 w-full">
           {'price' in product && product.price &&
           <p className="text-sm md:text-14 xl:text-base font-bold w-full md:w-full md:text-left">
-            Only AED <span className="text-primary">{product?.price}</span>/m<span className="align-super text-10">2</span>
+            {isAccessories ? '' : 'Only '} AED <span className="text-primary">{product?.price}</span>/m<span className="align-super text-10">2</span>
           </p>
           }
 

@@ -25,8 +25,7 @@ const ForgotPassword = () => {
       try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         toast.success("Password reset successfully!");
-      } catch (error) {
-        console.log(error);
+      } catch {
         toast.error("Something went wrong. Please try again.");
       }
       setSubmitting(false);

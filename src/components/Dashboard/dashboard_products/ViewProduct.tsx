@@ -8,11 +8,12 @@ import { FaRegEye } from 'react-icons/fa';
 import { LiaEdit } from 'react-icons/lia';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
-import { IProduct } from 'types/prod';
+import { IAccessories, IProduct } from 'types/prod';
 import { DASHBOARD_MAIN_PRODUCT_PROPS } from 'types/PagesProps';
 import { useMutation } from '@apollo/client';
-import { REMOVE_PRODUCT } from 'graphql/mutations';
+import { REMOVE_ACCESSORY, REMOVE_PRODUCT } from 'graphql/mutations';
 import { FETCH_ALL_PRODUCTS } from 'graphql/queries';
+import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
@@ -24,6 +25,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeProduct] = useMutation(REMOVE_PRODUCT);
+  const [removeAccessory] = useMutation(REMOVE_ACCESSORY);
 
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,39 +77,52 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 
 
   const confirmDelete = (key: string | number) => {
+    const type = accessoryFlag ? "Accessories" : "product";
     Swal.fire({
       title: 'Are you sure?',
-      text: 'Once deleted, the Product cannot be recovered.',
+      text: `Once deleted, the ${type} cannot be recovered.`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes, delete it!',
       cancelButtonText: 'No, keep it',
     }).then((result) => {
       if (result.isConfirmed) {
-        handleDelete(key);
+        handleDelete(key, type);
       }
     });
   };
-
-  const handleDelete = async (key: string | number) => {
+  
+  const handleDelete = async (key: string | number, type: "product" | "Accessories") => {
     try {
-      removeProduct({ variables: { id: +key }, refetchQueries: [{ query: FETCH_ALL_PRODUCTS }] })
-
-      setProducts((prev: IProduct[]) => prev.filter((item) => item.id !== key) || []);
+      if (type === "product") {
+        await removeProduct({
+          variables: { id: +key },
+          refetchQueries: [{ query: FETCH_ALL_PRODUCTS }],
+        });
+        setProducts((prev: IProduct[]) => prev.filter((item) => item.id !== key) || []);
+      } else {
+        await removeAccessory({
+          variables: { id: +key },
+          refetchQueries: [{ query: FETCH_ALL_ACCESSORIES }],
+        });
+        setProducts((prev: IAccessories[]) => prev.filter((item) => item.id !== key) || []);
+      }
+  
       notification.success({
-        message: 'Product Deleted',
-        description: 'The product has been successfully deleted.',
+        message: `${type.charAt(0).toUpperCase() + type.slice(1)} Deleted`,
+        description: `The ${type} has been successfully deleted.`,
         placement: 'topRight',
       });
     } catch (err) {
       notification.error({
         message: 'Deletion Failed',
-        description: 'There was an error deleting the product.',
+        description: `There was an error deleting the ${type}.`,
         placement: 'topRight',
       });
-      throw err
+      throw err;
     }
   };
+  
 
   const columns = [
     {
