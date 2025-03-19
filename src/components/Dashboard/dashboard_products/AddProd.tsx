@@ -39,7 +39,7 @@ import {
 import Cookies from "js-cookie";
 import { UPDATE_ACCESSORY_MUTATION } from "graphql/Accessories";
 import showToast from "components/Toaster/Toaster";
-import ReactCrop, { Crop} from 'react-image-crop';
+import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { centerAspectCrop } from "types/product-crop";
 import { uploadPhotosToBackend } from "lib/helperFunctions";
@@ -93,7 +93,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   const finalToken = token ? token : superAdminToken;
- const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
+  const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
@@ -330,15 +330,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const onCropComplete = (crop: Crop) => {
     const image = imgRef.current;
     if (!image || !crop.width || !crop.height) return;
-  
+
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     const ctx = canvas.getContext('2d');
-  
+
     canvas.width = crop.width;
     canvas.height = crop.height;
-  
+
     if (ctx) {
       ctx.drawImage(
         image,
@@ -352,21 +352,21 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         crop.height
       );
     }
-  
+
     const base64Image = canvas.toDataURL('image/jpeg');
     setCroppedImage(base64Image);
   };
-  
+
 
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
       try {
         // Convert the cropped image (base64) to a File
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-  
+
         // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend([file]);
-  
+
         // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         const uploadedImageUrl = response[0].imageUrl;
@@ -374,13 +374,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         const newImageUrl = uploadedImageUrl.startsWith('http')
           ? uploadedImageUrl
           : `${baseUrl}${uploadedImageUrl}`;
-  
+
         const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-  
+
         // First close the modal and reset croppedImage
         setIsCropModalVisible(false);
         setCroppedImage(null);
-  
+
         // Use a timeout to update states after the modal has closed
         setTimeout(() => {
           setposterimageUrl((prevImages) =>
@@ -403,14 +403,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               img.imageUrl === imageSrc ? { ...img, ...newImage } : img
             )
           );
-        
+
         }, 0);
       } catch {
         showToast('error', 'Failed to upload cropped image');
       }
     }
   };
-  
+
   // Helper function to convert a base64 string to a File object
   const base64ToFile = (base64: string, filename: string): File => {
     const arr = base64.split(',');
@@ -419,14 +419,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-  
+
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-  
+
     return new File([u8arr], filename, { type: mime });
   };
-  
+
 
   const handleCropModalCancel = () => {
     setIsCropModalVisible(false);
@@ -486,7 +486,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     />
                                   </div>
                                   <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                    onClick={() => handleCropClick(item.imageUrl)}
                                     key={index}
                                     className="object-cover cursor-crosshair"
                                     width={300}
@@ -538,11 +538,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               {...field}
                               type="text"
                               placeholder="Title"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                meta.touched && meta.error
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error
                                   ? "border-red-500"
                                   : ""
-                              }`}
+                                }`}
                             />
                           )}
                         </Field>
@@ -565,11 +564,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 {...field}
                                 type="text"
                                 placeholder="Title"
-                                className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                  meta.touched && meta.error
+                                className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error
                                     ? "border-red-500"
                                     : ""
-                                }`}
+                                  }`}
                               />
                               {meta.touched && meta.error ? (
                                 <div className="text-red-500 dark:text-red-700 text-sm">
@@ -590,15 +588,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           onChange={formik.handleChange}
                           value={formik.values.description}
                           placeholder="description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                            formik.touched.description &&
-                            formik.errors.description
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                              formik.errors.description
                               ? "border-red-500"
                               : ""
-                          }`}
+                            }`}
                         />
                         {formik.touched.description &&
-                        formik.errors.description ? (
+                          formik.errors.description ? (
                           <div className="text-red-500 dark:text-red-700 text-sm">
                             {
                               formik.errors.description as FormikErrors<
@@ -622,11 +619,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             value={formik.values.price}
                             placeholder="Product Price"
                             min="0"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.price && formik.errors.price
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.price && formik.errors.price
                                 ? "border-red-500"
                                 : ""
-                            }`}
+                              }`}
                           />
                           {formik.touched.price && formik.errors.price ? (
                             <div className="text-red-500 dark:text-red-700 text-sm">
@@ -650,12 +646,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             name="discountPrice"
                             placeholder="How many items available"
                             min="0"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.discountPrice &&
-                              formik.errors?.discountPrice
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.discountPrice &&
+                                formik.errors?.discountPrice
                                 ? "border-red-500"
                                 : ""
-                            }`}
+                              }`}
                           />
 
                           <ErrorMessage
@@ -699,14 +694,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.Meta_Title}
                               placeholder="Meta Title"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                formik.touched.name && formik.errors.name
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
                                   ? "border-red-500"
                                   : ""
-                              }`}
+                                }`}
                             />
                             {formik.touched.Meta_Title &&
-                            formik.errors.Meta_Title ? (
+                              formik.errors.Meta_Title ? (
                               <div className="text-red text-sm">
                                 {formik.errors.Meta_Title as string}
                               </div>
@@ -723,15 +717,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               onChange={formik.handleChange}
                               value={formik.values.Canonical_Tag}
                               placeholder="Canonical Tag"
-                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                formik.touched.name && formik.errors.name
+                              className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
                                   ? "border-red-500"
                                   : ""
-                              }`}
+                                }`}
                             />
 
                             {formik.touched.Canonical_Tag &&
-                            formik.errors.Canonical_Tag ? (
+                              formik.errors.Canonical_Tag ? (
                               <div className="text-red text-sm">
                                 {formik.errors.Canonical_Tag as string}
                               </div>
@@ -747,15 +740,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             onChange={formik.handleChange}
                             value={formik.values.Meta_Description}
                             placeholder="Meta Description"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                              formik.touched.description &&
-                              formik.errors.description
+                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
+                                formik.errors.description
                                 ? "border-red-500"
                                 : ""
-                            }`}
+                              }`}
                           />
                           {formik.touched.Meta_Description &&
-                          formik.errors.Meta_Description ? (
+                            formik.errors.Meta_Description ? (
                             <div className="text-red text-sm">
                               {formik.errors.Meta_Description as string}
                             </div>
@@ -833,7 +825,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         {accessoryFlag ? (
                           <>
                             <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                            Add Products
+                              Add Products
                             </label>
                             <FieldArray name="products">
                               {({ push, remove }) => (
@@ -927,7 +919,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="py-4 px-6 rounded-sm border border-stroke">
-                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                           <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                             Add Color Code
                           </label>
@@ -944,7 +936,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             component="div"
                             className="text-red-500 dark:text-red-700 text-sm"
                           />
-                      </div>
+                        </div>
                         <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                           <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                             Add Residential Warranty
@@ -1077,16 +1069,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       onBlur={formik.handleBlur}
                                       value={formik?.values?.FAQS[index].name}
                                       placeholder="Model Name"
-                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                        model.name &&
-                                        (
-                                          formik.errors.FAQS as FormikErrors<
-                                            FormValues["FAQS"]
-                                          >
-                                        )?.[index]
+                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                          (
+                                            formik.errors.FAQS as FormikErrors<
+                                              FormValues["FAQS"]
+                                            >
+                                          )?.[index]
                                           ? "border-red-500 dark:border-white"
                                           : ""
-                                      }`}
+                                        }`}
                                     />
                                     <input
                                       type="text"
@@ -1095,16 +1086,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       onBlur={formik.handleBlur}
                                       value={formik.values.FAQS[index].detail}
                                       placeholder="Model Detail"
-                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                        model.detail &&
-                                        (
-                                          formik.errors.FAQS as FormikErrors<
-                                            FormValues["FAQS"]
-                                          >
-                                        )?.[index]
+                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                          (
+                                            formik.errors.FAQS as FormikErrors<
+                                              FormValues["FAQS"]
+                                            >
+                                          )?.[index]
                                           ? "border-red-500 dark:border-white"
                                           : ""
-                                      }`}
+                                        }`}
                                     />
                                     <button
                                       type="button"
@@ -1163,17 +1153,16 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                         ].name
                                       }
                                       placeholder="Model Name"
-                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                        model.name &&
-                                        (
-                                          formik.errors
-                                            .AdditionalInformation as FormikErrors<
-                                            FormValues["AdditionalInformation"]
-                                          >
-                                        )?.[index]
+                                      className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                          (
+                                            formik.errors
+                                              .AdditionalInformation as FormikErrors<
+                                                FormValues["AdditionalInformation"]
+                                              >
+                                          )?.[index]
                                           ? "border-red-500 dark:border-white"
                                           : ""
-                                      }`}
+                                        }`}
                                     />
                                     <input
                                       type="text"
@@ -1186,17 +1175,16 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                         ].detail
                                       }
                                       placeholder="Model Detail"
-                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${
-                                        model.detail &&
-                                        (
-                                          formik.errors
-                                            .AdditionalInformation as FormikErrors<
-                                            FormValues["AdditionalInformation"]
-                                          >
-                                        )?.[index]
+                                      className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                          (
+                                            formik.errors
+                                              .AdditionalInformation as FormikErrors<
+                                                FormValues["AdditionalInformation"]
+                                              >
+                                          )?.[index]
                                           ? "border-red-500 dark:border-white"
                                           : ""
-                                      }`}
+                                        }`}
                                     />
                                     <button
                                       type="button"
@@ -1326,7 +1314,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   />
                                 </div>
                                 <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
                                   className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                   width={300}
@@ -1352,6 +1340,37 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   )
                                 }
                               />
+                              <input
+                                className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                placeholder="Plank Width"
+                                type="text"
+                                name="plankWidth"
+                                value={item?.plankWidth || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setImagesUrl,
+                                    "plankWidth"
+                                  )
+                                }
+                              />
+                              <input
+                                className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                placeholder="Plank Height"
+                                type="text"
+                                name="plankHeight"
+                                value={item?.plankHeight || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setImagesUrl,
+                                    "plankHeight",
+                                   
+                                  )
+                                }
+                              />
                             </div>
                           );
                         })}
@@ -1374,7 +1393,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     <ImageUploader setImagesUrl={setfeatureImagesImagesUrl} />
 
                     {featureImagesimagesUrl &&
-                    featureImagesimagesUrl.length > 0 ? (
+                      featureImagesimagesUrl.length > 0 ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
                         {featureImagesimagesUrl.map(
                           (item: ProductImage, index) => {
@@ -1407,7 +1426,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     />
                                   </div>
                                   <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
+                                    onClick={() => handleCropClick(item.imageUrl)}
                                     key={index}
                                     className="object-cover w-full h-full md:h-32 dark:bg-black dark:shadow-lg cursor-crosshair"
                                     width={300}
@@ -1506,8 +1525,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                     onComplete={onCropComplete}
                   >
                     <Image
-                    width={500}
-                    height={300}
+                      width={500}
+                      height={300}
                       ref={imgRef}
                       src={imageSrc}
                       alt="Crop me"
