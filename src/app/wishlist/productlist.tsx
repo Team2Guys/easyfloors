@@ -20,7 +20,7 @@ const ProductList = () => {
     <div className="space-y-4">
         <ProductCard   />
     </div>
-  </div>
+    </div>
 );
 };
 
