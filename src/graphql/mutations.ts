@@ -189,6 +189,23 @@ mutation Add_Accessories($input: CreateAccessoryInput!) {
 `
 ;
 
+export const CREATE_APPOINTMENT = gql`
+mutation Created_appointments($input: CreateAppointmentInput!) {
+    Created_appointments( createAppointmentInput: $input ) {
+        firstname
+        email
+        phoneNumber
+        whatsappNumber
+        area
+        selectRooms
+        preferredTime
+        findUs
+        comment
+        contactMethod
+        preferredDate
+    }
+}
+`;
 
 export const UPDATE_ADMIN = gql`
   mutation UpdateAdmin($input: UpdateAdminInput!) {

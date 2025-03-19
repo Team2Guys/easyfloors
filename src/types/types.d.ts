@@ -18,6 +18,8 @@ export interface SocialLink {
     required?: boolean;
     placeholder?: string;
     type?: string;
+    value?: string | number;
+    onChange?: ChangeEvent<HTMLInputElement>
   };
   export interface FAQ {
     question: string;
