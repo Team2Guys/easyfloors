@@ -35,7 +35,7 @@ const SignupForm = () => {
 
       <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
         <div className="w-full max-w-xl">
-          <Link href="#" className="flex items-center gap-3 w-fit text-lg">
+          <Link href="/" className="flex items-center gap-3 w-fit text-lg">
             <span className="p-3 text-white bg-primary">
               <BiArrowBack />
             </span>

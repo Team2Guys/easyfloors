@@ -11,30 +11,30 @@ import { BiChevronDown } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { fetchCategories } from "config/fetch";
 import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
-import { HeaderProps } from "types/PagesProps";
 import { staticMenuItems } from "data/data";
+import { Category, ISUBCATEGORY } from "types/cat";
 import { getCart, getWishlist } from "utils/indexedDB";
 import { ICart } from "types/prod";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
-  const [scrolling, setScrolling] = useState(false);
-  const [categories, setCategories] = useState<HeaderProps[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [cartTotal, setCartTotal] = useState<ICart[]>();
   const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
+        const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
         const items = await getCart();
         const wishlist = await getWishlist();
-        const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
         setCategories(data)
         setCartTotal(items);
         setWishlistTotal(wishlist);
       } catch {
-        toast.error("Error fetching cart items");
+        toast.error("Error fetching items");
       }
     };
   
@@ -55,15 +55,12 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolling(true); 
-      } else {
-        setScrolling(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-    
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -86,18 +83,23 @@ const Navbar = () => {
 
   const menuItems = staticMenuItems.map((staticItem) => {
     const matchedCategory = categories.find((cat) => cat.custom_url === staticItem.href);
+if(!matchedCategory) return staticItem
+const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalledSubCats.length > 0;
+      const subcategories: ISUBCATEGORY[] = (reCallFlag ? matchedCategory.recalledSubCats  : matchedCategory.subcategories) as ISUBCATEGORY[] || [];
     return {
       ...staticItem,
-      submenu: matchedCategory?.subcategories?.map((sub) => ({
+      submenu: subcategories?.map((sub) => ({
         label: sub.name,
-        href: `/${matchedCategory.RecallUrl}/${sub.custom_url}`,
+        href: `/${sub?.category?.RecallUrl ||matchedCategory.RecallUrl}/${sub.custom_url}`,
         image: sub.posterImageUrl?.imageUrl || "/assets/default-image.png", 
       })) || [],
     };
   });
 
+
+
   return (
-    <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg pb-1 sm:pb-2' : 'top-10 pb-1 sm:pb-1'} transition-all font-inter `}>
+    <nav className={`bg-white w-full z-50 font-inter pb-1 ${isScrolled? "bg-white text-black top-0 fixed": "bg-white text-black sticky top-0"}`}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
       <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
         <Link href="/">
@@ -118,7 +120,7 @@ const Navbar = () => {
               label={item.label}
               href={item.href}
               submenu={item.submenu}
-              scrolling={scrolling}
+              scrolling={isScrolled}
             />
           ))}
         </div>
@@ -136,13 +138,13 @@ const Navbar = () => {
                 <Link href={item.href} className="text-14 font-semibold w-fit whitespace-nowrap" onClick={() => setIsOpen(false)}>
                   {item.label}
                 </Link>
-                {item.submenu.length > 0 && (
+                {item?.submenu && item?.submenu.length > 0 && (
                   <button onClick={() => toggleMenu(item.label)} className="w-full flex justify-end">
                     <BiChevronDown className={`w-5 h-5 transition-transform ${openMenus[item.label] ? 'rotate-180' : ''}`} />
                   </button>
                 )}
               </div>
-              {item.submenu.length > 0 && openMenus[item.label] && (
+              {item?.submenu && item?.submenu.length > 0 && openMenus[item.label] && (
                 <div className="grid grid-cols-2 gap-5 pt-2">
                   {item.submenu.map((sub, index) => (
                     <Link href={sub.href} key={index} className="py-1 text-center" onClick={() => setIsOpen(false)}>
@@ -159,7 +161,7 @@ const Navbar = () => {
         </div>
       </div>
       </Container>
-    </div>
+    </nav>
     
   );
 };

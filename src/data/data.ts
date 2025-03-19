@@ -72,6 +72,7 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Canonical_Tag: '',
   custom_url: "",
   topHeading:"",
+  recalledSubCats:[]
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -98,7 +99,8 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
-  recalledByCategories:[]
+  recalledByCategories:[],
+  recalledSubCats:[]
 };
 
 
@@ -550,6 +552,7 @@ export const boxData: BoxData[] = [
     description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
     buttonText: 'Learn More',
     icon: '/assets/images/Home/measure1.png',
+    link: '/measurement-appointment',
   },
   {
     id: 2,
@@ -557,6 +560,7 @@ export const boxData: BoxData[] = [
     description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
     buttonText: 'Learn More',
     icon: '/assets/images/Home/Vectorrg.png',
+    link: '/help-with-installations',
   }
 ];
 
