@@ -67,7 +67,7 @@ export interface IProduct {
     pricePerBox:number,
     squareMeter:number,
     requiredBoxes:number,
-    setCartTotal?:React.Dispatch<React.SetStateAction<number>>
+ 
   }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {

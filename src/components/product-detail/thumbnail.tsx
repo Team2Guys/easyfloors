@@ -6,14 +6,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ExtendedThumbnailProps } from "types/product-detail";
 
-const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight }:ExtendedThumbnailProps) => {
+const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight, onImageChange }: ExtendedThumbnailProps) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const sliderRef1 = useRef<Slider | null>(null);
 
   const handleThumbnailClick = (index: number) => {
     setCurrentSlide(index);
+    onImageChange?.(ThumnailImage[index]); // Pass selected image to parent
     if (sliderRef1.current) {
-      sliderRef1.current.slickGoTo(index); 
+      sliderRef1.current.slickGoTo(index);
     }
   };
 
@@ -46,7 +47,11 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       </div>
 
       <div className="w-10/12">
-        <Slider infinite={ThumnailImage.length > 1} ref={sliderRef1} dots={false} arrows={false}>
+        <Slider infinite={ThumnailImage.length > 1} ref={sliderRef1} dots={false} arrows={false} afterChange={(index) => {
+            setCurrentSlide(index);
+            onImageChange?.(ThumnailImage[index]); 
+          }}
+        >
           {ThumnailImage.map((product, index) => (
             <div key={index}>
               <Image

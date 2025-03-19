@@ -17,6 +17,7 @@ import { detailprops } from 'types/product-detail';
 
 
 const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, productData}:detailprops) => {
+  const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
     const [unit, setUnit] = useState("sqm");
     const [area, setArea] = useState(""); 
  
@@ -30,13 +31,14 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
       boxCoverage,
       
     } = calculateProductDetails(area, unit, productData);
+    console.log(image,"activeImage")
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
         <Container className="flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20">
           <div className=" w-full  lg:w-[55%] 2xl:w-[60%]">
           {productData && productData.productImages && 
-        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={productData.featureImages} />
+        <Thumbnail ThumnailImage={productData.productImages} ThumnailBottom={productData.featureImages} onImageChange={setActiveImage} />
         }
           </div>
           <div className="w-full lg:w-[45%] 2xl:w-[40%] space-y-3 xl:space-y-4 mb-2">
@@ -86,12 +88,12 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
               <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
               Order Now Free Sample
           </button>
-          <button  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory??"", MainCategory??"", "cart")} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
+          <button  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory ?? "", MainCategory ?? "", "cart", image?.imageUrl ?? "" )} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
           <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} />
             Add to Cart
           </button>
         </div>
-        <button className="flex items-center gap-2 text-[#475156]"  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory??"", MainCategory??"", "wishlist")}><LuHeart size={20} />Add to Wishlist</button>
+        <button className="flex items-center gap-2 text-[#475156]"  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory??"", MainCategory??"", "wishlist",image?.imageUrl ?? "" )}><LuHeart size={20} />Add to Wishlist</button>
         <PaymentMethod installments={installments} showheading/>
           </div>
         </Container>
