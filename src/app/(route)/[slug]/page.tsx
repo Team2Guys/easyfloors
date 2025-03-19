@@ -1,10 +1,10 @@
 import { fetchCategories, fetchSingleCategory } from "config/fetch";
 import { Suspense } from "react";
-import Category from "./Cetagory";
 import { Category as ICategory } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
+import Category from "./Cetagory";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -56,16 +56,25 @@ if(!Category) return notFound()
 const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
   const catgories = await fetchCategories();
-  const findCategory = catgories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
+
+  let findCategory = catgories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
   if(!findCategory) {
-   return notFound()
+    return notFound()
+   }
+ 
+  let  mainCategory;
+  const {whatAmiImageBanner, topHeading,description} = findCategory
+  const reCallFlag = findCategory?.recalledSubCats && findCategory?.recalledSubCats.length > 0;
+  if(reCallFlag){
+    const recallCategory = findCategory?.recalledSubCats[0].category.RecallUrl
+    findCategory = catgories.find((cat: ICategory) => (cat.RecallUrl?.trim() ?? '') === recallCategory.trim());
+    mainCategory ={whatAmiImageBanner, topHeading, description}
   }
 
-
-
+  
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} categoryData={findCategory}  isSubCategory={false} />
+      <Category catgories={catgories.filter((value:ICategory)=>value?.name?.trim()?.toLowerCase() !=="accessories") || []} categoryData={findCategory}  isSubCategory={false} mainCategory={mainCategory} />
     </Suspense>
   );
 };

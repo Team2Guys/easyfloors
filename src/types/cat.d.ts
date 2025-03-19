@@ -32,6 +32,7 @@ export interface Category {
 
   whatAmiImageBanner?:ProductImage
   topHeading?:string
+  recalledSubCats:ISUBCATEGORY[]
 }
 
 export interface EDIT_CATEGORY extends Category {
@@ -41,6 +42,7 @@ export interface EDIT_CATEGORY extends Category {
     createdAt?: Date;
     updatedAt?: Date;
     posterImageUrl?:ProductImage
+    recalledSubCats?:ISUBCATEGORY[]
 
 }
 
@@ -69,4 +71,11 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   updatedAt?: Date;
   custom_url?: string;
   recalledByCategories: string[];
+}
+
+
+export interface mainCategory {
+  whatAmiImageBanner:ProductImage,
+  topHeading:string,
+  description:string
 }

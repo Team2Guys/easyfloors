@@ -101,6 +101,7 @@ const FormLayout = ({
       resetForm();
     } catch (err) {
       setloading(false);
+      setposterimageUrl(undefined);
       throw err;
     }
   };

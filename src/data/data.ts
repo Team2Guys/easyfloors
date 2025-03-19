@@ -72,6 +72,7 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Canonical_Tag: '',
   custom_url: "",
   topHeading:"",
+  recalledSubCats:[]
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -98,7 +99,8 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatamIdetails:[],
   whatAmiTopHeading:"",
   Heading:"",
-  recalledByCategories:[]
+  recalledByCategories:[],
+  recalledSubCats:[]
 };
 
 

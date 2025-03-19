@@ -13,7 +13,7 @@ export const ImageRemoveHandler = async (
 ) => {
   try {
     // if(!finalToken) return  toast.success("Token Not found ")
-    const response = await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
+    await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: FILE_DELETION_MUTATION,
         variables: {
@@ -30,10 +30,8 @@ export const ImageRemoveHandler = async (
     );
     
 
+    setterFunction((prev) =>prev?.filter((item) => item.public_id !== imagePublicId));
     
-    if (response.data.data?.DeleteImage) {
-      setterFunction((prev) =>prev?.filter((item) => item.public_id !== imagePublicId));
-    }
   } catch (error) {
 throw error;
  }

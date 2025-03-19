@@ -76,6 +76,9 @@ export const FETCH_ALL_CATEGORIES = gql`
             id
             name
             custom_url
+              category {
+                RecallUrl
+            }
         }
       subcategories {
         id
@@ -103,6 +106,7 @@ export const FETCH_ALL_CATEGORIES = gql`
           name
           custom_url
         }
+          
       }
     }
   }
@@ -200,6 +204,22 @@ export const FETCH_HEADER_CATEGORIES = gql`
         custom_url
         posterImageUrl
       }
+       recalledSubCats {
+            id
+            name
+            custom_url
+              posterImageUrl
+              category {
+                RecallUrl
+                
+            }
+}
+      
+
+
+
+
+
       }
     }
 `;
