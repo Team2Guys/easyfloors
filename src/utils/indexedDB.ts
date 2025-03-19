@@ -30,9 +30,9 @@ export const addToCart = async (product: ICart): Promise<void> => {
     });
 
     if (existingProduct) {
-      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + 1;
+      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + (product.requiredBoxes ?? 1);
     } else {
-      product.requiredBoxes = 1;
+      product.requiredBoxes = product.requiredBoxes ?? 1;
     }
 
     await new Promise<void>((resolve, reject) => {
