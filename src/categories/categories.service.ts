@@ -34,7 +34,11 @@ export class CategoriesService {
       return await this.prisma.category.findMany({
         include: {
           subcategories: true,
-        recalledSubCats:true,
+        recalledSubCats:{
+         include:{
+          category:true
+         } 
+        },
           accessories: true,
           products: {
             include: {

@@ -30,7 +30,6 @@ export class AccessoriesService {
     }
 }
 
-
   async findAll() {
     try {
       return await this.prisma.acessories.findMany({include:{category:true, products:true}})
