@@ -22,8 +22,13 @@ export class ProductsResolver {
 
   @Public()
   @Query(() => Product, { name: 'product' })
-  findOne(@Args('custom_url', { type: () => String }) custom_url: string) {
-    return this.productsService.findOne(custom_url);
+  findOne(
+    @Args('custom_url', { type: () => String }) custom_url: string,
+    @Args('category', { type: () => String }) category: string,
+    @Args('subCategory', { type: () => String }) subCategory: string
+  
+  ) {
+    return this.productsService.findOne(custom_url, category, subCategory);
   }
 
   @Mutation(() => Product)
