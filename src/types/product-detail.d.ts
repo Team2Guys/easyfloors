@@ -37,7 +37,7 @@ export interface PaymentMethodProps{
 export interface detailprops{
   ProductName: string;
     ProductInfo: IProduct[];
-    MainCategory: string;
-    subCategory: string;
+    MainCategory?: string;
+    subCategory?: string;
     productData:IProduct
 }

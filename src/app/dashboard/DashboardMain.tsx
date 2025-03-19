@@ -12,7 +12,7 @@ import { RECORDS } from 'types/type';
 function DashboardMain({records}:{records: RECORDS}) {
   return (
     <DefaultLayout>
-        <ECommerce records={records} />
+      <ECommerce records={records} />
     </DefaultLayout>
   );
 }

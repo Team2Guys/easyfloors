@@ -4,61 +4,56 @@ import Image from "next/image";
 import { CiHeart } from "react-icons/ci";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import PaymentMethod from "components/product-detail/payment";
-import { colors } from "data/data";
 import { paymentcard } from "data/cart";
+import { IProduct } from "types/prod";
+import { handleAddToStorage } from "lib/carthelper";
 
-const SkirtingProductDetail = () => {
-  const pricePerPiece = 84; // Price per piece in AED
-  const fixedLength = 240; // Fixed length in cm
+const SkirtingProductDetail = ({productData,MainCategory}: { productData: IProduct,MainCategory:string }) => {
+
+  const squareMeter = 240; 
   
-  const [length, setLength] = useState(""); // User input for required length
-  const [totalPieces, setTotalPieces] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [length, setLength] = useState("");
+  const [requiredBoxes, setRequiredBoxes] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLength(value);
-
-    // Calculate required pieces based on entered length
     const meters = parseFloat(value);
     if (!isNaN(meters) && meters > 0) {
-      const pieces = Math.ceil((meters * 100) / fixedLength);
-      setTotalPieces(pieces);
-      setTotalAmount(pieces * pricePerPiece);
+      const pieces = Math.ceil((meters * 100) / squareMeter);
+      setRequiredBoxes(pieces);
+      setTotalPrice(pieces * productData.price);
     } else {
-      setTotalPieces(0);
-      setTotalAmount(0);
+      setRequiredBoxes(0);
+      setTotalPrice(0);
     }
   };
-
   return (
     <div className="p-1 lg:px-4">
     <div className="space-y-1 mt-5 lg:mt-0">
-    <h2 className="text-18 lg:text-[33.6px] font-semibold font-inter">Skirting</h2>
+    <h2 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h2>
     <div className="flex border-b-[1px] border-gray-300"></div>
       {/* Price and Stock Info */}
       <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
-        Price Per Piece: <span className="text-primary">AED {pricePerPiece}</span>
+        Price Per Piece: <span className="text-primary">AED {productData.price}</span>
       </p>
       <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
       </p>
       <div className="flex border-b-[1px] border-gray-300"></div>
     </div>
 
-      {/* Color Selection */}
       <div className="w-full mt-5 h-216 border border-black p-3">
         <p className="font-semibold font-inter text-16 xl:text-[23.6px] ">Colour: <span className="font-light text-14 xl:text-[20.6px]">Chestnut</span></p>
         <div className="grid grid-cols-8 gap-2 lg:gap-4 mt-2">
-        {colors.map((col, index) => (
+        {productData?.featureImages && productData.featureImages.map((col, index) => (
          <div key={index} className="text-center">
-         <Image alt="img" src={col.color} height={1000} width={1000} className="h-8 w-full lg:h-12 lg:w-12 mx-auto"/>
-         <p className="text-[8px] sm:text-10 font-inter font-normal mt-1">{col.code}</p>
+         <Image alt="img" src={col.imageUrl} height={1000} width={1000} className="h-8 w-full lg:h-12 lg:w-12 mx-auto"/>
+         <p className="text-[8px] sm:text-10 font-inter font-normal mt-1">{col.color}</p>
          </div>
          ))}
         </div>
       </div>
-
-      {/* Matching Colors */}
       <div className="mt-4 p-3 border border-black">
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
         <p className="font-inter font-light text-12 xl:text-[20.6px]">Cappuccino Colour 2369</p>
@@ -78,7 +73,7 @@ const SkirtingProductDetail = () => {
         /> 
       </div>
       <p className="font-inter font-light tecxt-12 xl:text-sm mt-2">
-        (Selling in fixed length of {fixedLength} cm)
+        (Selling in fixed length of {squareMeter} cm)
       </p>
       <div className="mt-2 font-semibold text-16 lg:text-[23.6px]">
         <p>Height: <span className="font-light text-12 xl:text-[20.6px]">10 cm</span></p>
@@ -86,21 +81,20 @@ const SkirtingProductDetail = () => {
       </div>
       </div>
       <div className="mt-4 p-3 border border-black font-inter text-16 xl:text-[23.6px] font-semibold">
-        <p>Total Required Pieces: <span className="text-12 xl:text-[20.6px] font-light">{totalPieces} Pieces</span></p>
-        <p >Price per piece: <span className="text-12 xl:text-[20.6px] font-light">AED {pricePerPiece}</span></p>
-        <p>Total amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalAmount} ({totalPieces}pieces * AED {pricePerPiece})</span></p>
+        <p>Total Required Pieces: <span className="text-12 xl:text-[20.6px] font-light">{requiredBoxes} Pieces</span></p>
+        <p >Price per piece: <span className="text-12 xl:text-[20.6px] font-light">AED {productData.price}</span></p>
+        <p>Total amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalPrice} ({requiredBoxes}pieces * AED {productData.price})</span></p>
       </div>
 
-      {/* Add to Cart & Wishlist */}
       <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
-        <button className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart")} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
+
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist")} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
       </div>           
 
-      {/* Payment Options */}
-      
+    
      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
-     <PaymentMethod installments={200}/>
+     <PaymentMethod installments={totalPrice/4}/>
        <div className="mt-2 space-y-2">
        <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
         <div className='flex justify-between gap-2' >
