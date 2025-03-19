@@ -220,13 +220,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
                 RecallUrl
                 
             }
-}
-      
-
-
-
-
-
+      }
       }
     }
 `;
@@ -286,9 +280,6 @@ export const FIND_ONE_Accessory = gql`
   }}
 
 `
-
-
-
 
 export const FIND_ONE_SUB_CATEGORY = gql`
 query SubCategory($customUrl: String!) {

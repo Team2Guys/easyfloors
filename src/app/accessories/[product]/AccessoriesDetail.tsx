@@ -13,6 +13,7 @@ import { detailprops } from 'types/product-detail'
 
 const AccessoriesDetail = ({ProductName,ProductInfo, productData}:detailprops) => {
   const [image, setActiveImage] = useState(productData?.productImages?.[0] || undefined);
+  console.log(productData,"productData")
   return (
     <>
     <Breadcrumb slug="Accessories" title={ProductName}/>
