@@ -28,7 +28,6 @@ const CartPage = () => {
     fetchCartItems();
   }, []);
   
-console.log(cartItems,"cartItems")
   const handleRemoveItem = async (id: number) => {
     try {
       await removeCartItem(id); 
@@ -81,7 +80,7 @@ console.log(cartItems,"cartItems")
               <div  className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
                 <div className=' col-span-10 xl:col-span-6'>
                   <div className='flex gap-4'>
-                    <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt='cart'/>
+                    <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart"/>
                     <div>
                       <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                       <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m<sup>2</sup></p>

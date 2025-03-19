@@ -40,9 +40,6 @@ export const addToCart = async (product: ICart): Promise<void> => {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-
-    console.log("Adding to cart:", product);
-
     window.dispatchEvent(new Event("cartUpdated"));
 
   } catch (error) {
@@ -87,7 +84,6 @@ export const addToCart = async (product: ICart): Promise<void> => {
       window.dispatchEvent(new Event("cartUpdated"));
   
     } catch (error) {
-      console.error("Error removing item from cart:", error);
       throw error;
     }
   };

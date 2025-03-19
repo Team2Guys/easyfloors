@@ -31,7 +31,6 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
       boxCoverage,
       
     } = calculateProductDetails(area, unit, productData);
-    console.log(image,"activeImage")
     return (
       <div className="mb-10">
         <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
