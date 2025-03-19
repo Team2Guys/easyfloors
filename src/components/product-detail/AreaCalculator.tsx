@@ -60,10 +60,10 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
 
       <div>
       <p className="text-16 2xl:text-20 font-medium mt-2">
-          You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ?convertedArea : "0"} m²)
+          You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ? convertedArea : "0"} m²)
       </p>
         <p className="text-16 2xl:text-20 font-light">No. Of Boxes: {requiredBoxes} ({squareMeter} Square Meter)</p>
-        <p className="text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox}</span></span></p>
+        <p className="text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox.toFixed(2)}</span></span></p>
         <p className="text-16 2xl:text-20 font-light flex items-center gap-3">
           Accessories
           <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">

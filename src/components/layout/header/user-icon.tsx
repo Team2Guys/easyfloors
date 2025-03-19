@@ -3,8 +3,10 @@ import React from 'react'
 import { LuHeart } from 'react-icons/lu'
 interface UserIconprops{
   className?: string;
+  cartTotal?: number;
+  wishlistTotal?: number;
 }
-const UserIcon = ({className}:UserIconprops) => {
+const UserIcon = ({className,cartTotal,wishlistTotal}:UserIconprops) => {
   return (
     <div className={`flex items-center 2xl:space-x-1 ${className}`}>
 
@@ -16,7 +18,12 @@ const UserIcon = ({className}:UserIconprops) => {
 
 
     <div className=' border-l-2 border-white lg:border-[#464646] h-4 md:h-6'/>
-    <Link href="/wishlist" aria-label='Go to wishlist page' className='lg:bg-white flex justify-center items-center h-7  lg:hover:bg-primary text-white active:text-black focus:text-black max-lg:focus:bg-white lg:text-black hover:text-white p-1'>
+    <Link href="/wishlist" aria-label='Go to wishlist page' className='relative lg:bg-white flex justify-center items-center h-7  lg:hover:bg-primary text-white active:text-black focus:text-black max-lg:focus:bg-white lg:text-black hover:text-white p-1'>
+    {(wishlistTotal ?? 0) > 0 && (
+      <span className='absolute text-xs font-semibold bg-primary text-white -top-1 -right-1 w-4 h-4 flex justify-center items-center'>
+        {wishlistTotal}
+      </span>
+    )}
     <LuHeart className='size-4 xl:size-5' />
     </Link>
 
@@ -65,8 +72,14 @@ const UserIcon = ({className}:UserIconprops) => {
 
 
     </Link>
-    <div className=' border-l-2 border-white lg:border-[#464646] h-4 md:h-6'/>
-    <Link href="/cart" aria-label='Go to cart page' className=' lg:hover:bg-primary fill-white flex justify-center items-center h-7  focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white  p-1'>
+    <div className='  border-l-2 border-white lg:border-[#464646] h-4 md:h-6'/>
+    
+    <Link href="/cart" aria-label='Go to cart page' className='relative lg:hover:bg-primary fill-white flex justify-center items-center h-7  focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white  p-1'>
+    {(cartTotal ?? 0) > 0 && (
+      <span className='absolute text-xs font-semibold bg-primary text-white -top-1 -right-1 w-4 h-4 flex justify-center items-center'>
+        {cartTotal}
+      </span>
+    )}
     <svg  viewBox="0 0 22 18" className='text-15 xl:text-16 2xl:text-20 size-4 xl:size-5' xmlns="http://www.w3.org/2000/svg">
     <path d="M0.875 -0.00777683C0.39375 -0.00777683 0 0.385973 0 0.867223C0 1.34847 0.39375 1.74222 0.875 1.74222H2.81663L5.1135 10.9297C5.30775 11.7085 6.006 12.2422 6.80838 12.2422H17.7188C18.508 12.2422 19.1783 11.719 19.3865 10.9568L21.6563 2.61722H19.824L17.7188 10.4922H6.80838L4.5115 1.30472C4.41687 0.927869 4.19848 0.593684 3.89133 0.355707C3.58418 0.117729 3.20605 -0.0102675 2.8175 -0.00777683H0.875ZM16.625 12.2422C15.1856 12.2422 14 13.4278 14 14.8672C14 16.3066 15.1856 17.4922 16.625 17.4922C18.0644 17.4922 19.25 16.3066 19.25 14.8672C19.25 13.4278 18.0644 12.2422 16.625 12.2422ZM8.75 12.2422C7.31063 12.2422 6.125 13.4278 6.125 14.8672C6.125 16.3066 7.31063 17.4922 8.75 17.4922C10.1894 17.4922 11.375 16.3066 11.375 14.8672C11.375 13.4278 10.1894 12.2422 8.75 12.2422ZM8.75 13.9922C9.24263 13.9922 9.625 14.3755 9.625 14.8672C9.625 15.3598 9.24175 15.7422 8.75 15.7422C8.25738 15.7422 7.875 15.359 7.875 14.8672C7.875 14.3746 8.25825 13.9922 8.75 13.9922ZM16.625 13.9922C17.1176 13.9922 17.5 14.3755 17.5 14.8672C17.5 15.3598 17.1168 15.7422 16.625 15.7422C16.1324 15.7422 15.75 15.359 15.75 14.8672C15.75 14.3746 16.1333 13.9922 16.625 13.9922Z"/>
     </svg>
