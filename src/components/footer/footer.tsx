@@ -1,5 +1,5 @@
-"use client"; 
-import { footerData } from 'data/data';
+"use client";
+import { footerData, staticMenuItems } from 'data/data';
 import Image from 'next/image';
 import { FaMapMarkerAlt, FaRegEnvelope, FaWhatsapp } from 'react-icons/fa';
 import Container from 'components/common/container/Container';
@@ -10,20 +10,30 @@ import { fetchCategories } from 'config/fetch';
 import { Category, ISUBCATEGORY } from 'types/cat';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import { FETCH_HEADER_CATEGORIES } from 'graphql/queries';
+import { Category as ICategory } from "types/cat";
 
-const Footer =  () => {
+
+const Footer = () => {
     const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    const getCategories = async () => {
-      try {
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch {
-        toast.error("Error fetching categories:");
-      }
-    };
-    getCategories();
-  }, []);
+    useEffect(() => {
+        const getCategories = async () => {
+            try {
+                const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
+                  const sortedCategories = data?.sort((a:ICategory, b:ICategory) => {
+                    const indexA = staticMenuItems.findIndex(item => item.label.toLowerCase() === a.name.trim().toLowerCase());
+                    const indexB = staticMenuItems.findIndex(item => item.label.toLowerCase() === b.name.trim().toLowerCase());
+                    
+                    // If the category is not found in staticMenuItems, move it to the end
+                    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                  });
+                setCategories(sortedCategories);
+            } catch {
+                toast.error("Error fetching categories:");
+            }
+        };
+        getCategories();
+    }, []);
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -31,28 +41,40 @@ const Footer =  () => {
                     <Image src="/assets/images/logo.png" alt="Easyfloors" width={120} height={50} className="mb-4" />
                     <p className="mt-2 text-sm">{footerData.company.description}</p>
                 </div>
-                <Footerlinks  categories={categories} />
+                <Footerlinks categories={categories} />
 
                 {categories.map((section: Category, index: number) => {
-                        const reCallFlag = section.recalledSubCats && section.recalledSubCats.length > 0;
-                        const subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats  : section.subcategories) as ISUBCATEGORY[] || [];
-                    
+                    const reCallFlag = section.recalledSubCats && section.recalledSubCats.length > 0;
+                    const subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
+
                     return (
-                    <div key={index} className="sm:block hidden">
-                        <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">{section.name}</h3>
-                        <ul className="mt-4 space-y-2">
-                            {subcategories.map((item:ISUBCATEGORY, i:number) => (
-                                <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
-                                    <Link href={`/${item?.category?.RecallUrl || section.RecallUrl}/${item.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
-                                    {item.name}
-                                    </Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                        <div key={index} className="sm:block hidden">
+                            <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
+                                {section.name}
+                            </h3>
+                            <ul className="mt-4 space-y-2">
+                                {section.name === "ACCESSORIES" ? (
+                                    (section.accessories ?? []).map((item, i) => (
+                                        <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                            <Link href={`/accessories/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                                {item.name}
+                                            </Link>
+                                        </li>
+                                    ))
+                                ) : (
+                                    (subcategories ?? []).map((item, i) => (
+                                        <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                            <Link href={`/${item?.category?.RecallUrl || section.RecallUrl}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                                {item.name}
+                                            </Link>
+                                        </li>
+                                    ))
+                                )}
+                            </ul>
+                        </div>
 
                     )
-})}
+                })}
 
                 <div className="sm:block ">
                     <h3 className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</h3>
@@ -63,7 +85,7 @@ const Footer =  () => {
                         <Link
                             href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D"
                             target="_blank"
-                            rel="noopener noreferrer" 
+                            rel="noopener noreferrer"
                             className="text-gray-700 hover:text-gray-900 md:full w-60"
                         >
                             {footerData.contact.address}

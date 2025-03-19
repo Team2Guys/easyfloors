@@ -95,9 +95,7 @@ const ChartTwo: React.FC = () => {
           },
         },
       );
-      console.log(response.data, 'data');
       const reports = response.data;
-      console.log(reports, 'reports');
 
       const defaultArray = [
         {
@@ -112,13 +110,10 @@ const ChartTwo: React.FC = () => {
 
       setState({ series: defaultArray });
       setLoading(false);
-    } catch (err: unknown) {
-      console.log(err, 'err');
+    } catch {
       setLoading(false);
     }
   };
-
-  console.log(state, 'setState');
 
   useLayoutEffect(() => {
     getWeeklySales();

@@ -96,6 +96,7 @@ export interface BoxData {
   description: string;
   buttonText: string;
   icon: string;
+  link: string;
 }
 
 

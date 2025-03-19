@@ -2,7 +2,7 @@ import { ICart } from "types/prod";
 
 export const openDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("ecommerceDB", 2); // Increment version to 2
+    const request = indexedDB.open("ecommerceDB", 2); 
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains("cart")) {
@@ -37,9 +37,7 @@ export const addToCart = async (product: ICart): Promise<void> => {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-    console.log("Item added to cart successfully:", product); 
   } catch (error) {
-    console.error("Error adding to cart:", error); 
     throw error; 
   }
 };
@@ -89,9 +87,7 @@ export const addToCart = async (product: ICart): Promise<void> => {
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
-      console.log("Item added to wishlist successfully:", product);
     } catch (error) {
-      console.error("Error adding to wishlist:", error);
       throw error;
     }
   };
@@ -109,7 +105,6 @@ export const addToCart = async (product: ICart): Promise<void> => {
         request.onerror = () => reject(request.error);
       });
     } catch (error) {
-      console.error("Error removing item from wishlist:", error);
       throw error;
     }
   };
@@ -125,7 +120,6 @@ export const addToCart = async (product: ICart): Promise<void> => {
         request.onerror = () => reject(request.error);
       });
     } catch (error) {
-      console.error("Error fetching wishlist items:", error);
       throw error;
     }
   };
@@ -141,7 +135,6 @@ export const addToCart = async (product: ICart): Promise<void> => {
         request.onerror = () => reject(request.error);
       });
     } catch (error) {
-      console.error("Error fetching wishlist item:", error);
       throw error;
     }
   };

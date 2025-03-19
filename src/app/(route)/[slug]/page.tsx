@@ -72,6 +72,7 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
   }
 
   
+
   return (
     <Suspense fallback="Loading .....">
       <Category catgories={catgories.filter((value:ICategory)=>value?.name?.trim()?.toLowerCase() !=="accessories") || []} categoryData={findCategory}  isSubCategory={false} mainCategory={mainCategory} />

@@ -39,7 +39,6 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory,main
       setData(categoryData)
     }
   }, [categoryData, subCategoryData])
-
   useEffect(() => {
   let filtered = Data?.products;
   if (params.subcategory) {

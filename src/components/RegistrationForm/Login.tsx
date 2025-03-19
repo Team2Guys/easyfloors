@@ -19,14 +19,14 @@ const LoginForm = () => {
     if (!state.message) return;
     toast[state.message.toLowerCase().includes("success") ? "success" : "error"](state.message);
   }, [state.message]);
-
+       
   return (
     <div className="flex flex-col md:flex-row w-full h-screen">
       <div className="hidden md:block md:w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/assets/images/aboutus/order-free-sample.png')" }} />
 
       <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
         <div className="w-full max-w-xl">
-          <Link href="#" className="flex items-center gap-3 w-fit text-lg">
+          <Link href="/" className="flex items-center gap-3 w-fit text-lg">
             <span className="p-3 text-white bg-primary"><BiArrowBack /></span>
             Back to home
           </Link>

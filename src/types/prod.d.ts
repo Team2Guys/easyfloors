@@ -10,6 +10,7 @@ export interface ProductImage {
     Index?: string;
     size?: string;
     color?: string | number;
+    colorName?: string;
     
   }
 
@@ -51,6 +52,7 @@ export interface IProduct {
     boxCoverage?: string;
     featureImages?:ProductImage[]
     acessories?:IProduct[]
+    colorCode:string;
   }
 
   export interface ICart {

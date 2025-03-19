@@ -421,8 +421,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
           );
         
         }, 0);
-      } catch (error) {
-        console.error('Error uploading cropped image:', error);
+      } catch {
         showToast('error', 'Failed to upload cropped image');
       }
     }
@@ -943,6 +942,24 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="py-4 px-6 rounded-sm border border-stroke">
+                      <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                            Add Color Code
+                          </label>
+                          <Field
+                            type="number"
+                            name="colorCode"
+                            placeholder="enter color code"
+                            min="0"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                          />
+
+                          <ErrorMessage
+                            name="colorCode"
+                            component="div"
+                            className="text-red-500 dark:text-red-700 text-sm"
+                          />
+                      </div>
                         <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                           <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                             Add Residential Warranty
@@ -1430,6 +1447,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 />
 
                                 {accessoryFlag && (
+                                  <>
                                   <input
                                     className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                     placeholder="color"
@@ -1444,6 +1462,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       )
                                     }
                                   />
+                                   <input
+                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    placeholder="colorName"
+                                    type="text"
+                                    name="colorName"
+                                    value={item?.colorName || "Chestnut"}
+                                   
+                                   />
+                                  </>
                                 )}
                               </div>
                             );
