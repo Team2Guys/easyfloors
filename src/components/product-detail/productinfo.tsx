@@ -8,7 +8,7 @@ import { paymentcard } from "data/cart";
 import { IProduct } from "types/prod";
 import { handleAddToStorage } from "lib/carthelper";
 
-const SkirtingProductDetail = ({productData,MainCategory}: { productData: IProduct,MainCategory:string }) => {
+const SkirtingProductDetail = ({productData,MainCategory,image}: { productData: IProduct,MainCategory:string,image?: { imageUrl: string } }) => {
 
   const squareMeter = 240; 
   
@@ -87,9 +87,9 @@ const SkirtingProductDetail = ({productData,MainCategory}: { productData: IProdu
       </div>
 
       <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart")} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart",image?.imageUrl ?? "")} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist")} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist",image?.imageUrl ?? "")} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
       </div>           
 
     

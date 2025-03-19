@@ -280,35 +280,19 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     newImageIndex: string,
     setImagesUrlhandler: React.Dispatch<
       React.SetStateAction<ProductImage[] | undefined>
-    >
+      >,
+      variantType:string
   ) => {
     setImagesUrlhandler((prev: ProductImage[] | undefined) => {
       if (!prev) return [];
 
       const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
-        i === index ? { ...item, altText: newImageIndex } : item
+        i === index ? { ...item, [variantType]: newImageIndex } : item
       );
       return updatedImagesUrl;
     });
   };
-
-  const handleColorcode = (
-    index: number,
-    newImageIndex: string,
-    setImagesUrlhandler: React.Dispatch<
-      React.SetStateAction<ProductImage[] | undefined>
-    >
-  ) => {
-    setImagesUrlhandler((prev: ProductImage[] | undefined) => {
-      if (!prev) return [];
-
-      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
-        i === index ? { ...item, color: newImageIndex } : item
-      );
-      return updatedImagesUrl;
-    });
-  };
-
+ 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
@@ -523,7 +507,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     handleImageAltText(
                                       index,
                                       String(e.target.value),
-                                      setposterimageUrl
+                                      setposterimageUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -1286,7 +1271,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   handleImageAltText(
                                     index,
                                     String(e.target.value),
-                                    sethoverImage
+                                    sethoverImage,
+                                    "altText"
                                   )
                                 }
                               />
@@ -1361,7 +1347,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   handleImageAltText(
                                     index,
                                     String(e.target.value),
-                                    setImagesUrl
+                                    setImagesUrl,
+                                    "altText"
                                   )
                                 }
                               />
@@ -1441,7 +1428,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     handleImageAltText(
                                       index,
                                       String(e.target.value),
-                                      setfeatureImagesImagesUrl
+                                      setfeatureImagesImagesUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -1455,10 +1443,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     name="color"
                                     value={item?.color || ""}
                                     onChange={(e) =>
-                                      handleColorcode(
+                                      handleImageAltText(
                                         index,
                                         String(e.target.value),
-                                        setfeatureImagesImagesUrl
+                                        setfeatureImagesImagesUrl,
+                                        "color"
                                       )
                                     }
                                   />
@@ -1467,8 +1456,15 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     placeholder="colorName"
                                     type="text"
                                     name="colorName"
-                                    value={item?.colorName || "Chestnut"}
-                                   
+                                    value={item?.colorName}
+                                    onChange={(e) =>
+                                      handleImageAltText(
+                                        index,
+                                        String(e.target.value),
+                                        setfeatureImagesImagesUrl,
+                                        "colorName"
+                                      )
+                                    }
                                    />
                                   </>
                                 )}

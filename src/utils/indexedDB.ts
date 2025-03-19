@@ -22,25 +22,31 @@ export const addToCart = async (product: ICart): Promise<void> => {
     const db = await openDB();
     const tx = db.transaction("cart", "readwrite");
     const store = tx.objectStore("cart");
+
     const existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
       const request = store.get(product.id);
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
     });
+
     if (existingProduct) {
-      product.quantity = (existingProduct?.quantity ?? 0) + 1;
+      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + 1;
     } else {
-      product.quantity = 1;
+      product.requiredBoxes = 1;
     }
+
     await new Promise<void>((resolve, reject) => {
       const request = store.put(product);
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
+    window.dispatchEvent(new Event("cartUpdated"));
+
   } catch (error) {
-    throw error; 
+    throw error;
   }
 };
+
 
   export const getCart = async (): Promise<ICart[]> => {
     const db = await openDB();
@@ -65,17 +71,23 @@ export const addToCart = async (product: ICart): Promise<void> => {
   };
   
   export const removeCartItem = async (id: number): Promise<void> => {
-    const db = await openDB();
-    return new Promise((resolve, reject) => {
+    try {
+      const db = await openDB();
       const tx = db.transaction("cart", "readwrite");
       const store = tx.objectStore("cart");
-      const request = store.delete(id);
-      request.onsuccess = () => {
-        tx.oncomplete = () => resolve();
-      };
-      request.onerror = () => reject(request.error);
-    });
+  
+      await new Promise<void>((resolve, reject) => {
+        const request = store.delete(id);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+      window.dispatchEvent(new Event("cartUpdated"));
+  
+    } catch (error) {
+      throw error;
+    }
   };
+  
   
   export const addToWishlist = async (product: ICart): Promise<void> => {
     try {
@@ -87,6 +99,7 @@ export const addToCart = async (product: ICart): Promise<void> => {
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
+      window.dispatchEvent(new Event("wishlistUpdated"));
     } catch (error) {
       throw error;
     }
@@ -95,19 +108,23 @@ export const addToCart = async (product: ICart): Promise<void> => {
   export const removeWishlistItem = async (id: number): Promise<void> => {
     try {
       const db = await openDB();
-      return new Promise((resolve, reject) => {
+      await new Promise<void>((resolve, reject) => {
         const tx = db.transaction("wishlist", "readwrite");
         const store = tx.objectStore("wishlist");
         const request = store.delete(id);
+  
         request.onsuccess = () => {
           tx.oncomplete = () => resolve();
         };
         request.onerror = () => reject(request.error);
       });
+  
+      window.dispatchEvent(new Event("wishlistUpdated"));
     } catch (error) {
       throw error;
     }
   };
+  
 
   export const getWishlist = async (): Promise<ICart[]> => {
     try {

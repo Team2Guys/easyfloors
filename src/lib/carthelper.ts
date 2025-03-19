@@ -9,7 +9,8 @@ export const handleAddToStorage = async (
     requiredBoxes: number,
     subCategory: string,
     MainCategory: string,
-    type: "cart" | "wishlist"
+    type: "cart" | "wishlist",
+    image?: string 
   ) => {
     if (!productData) {
       toast.error("Product is undefined");
@@ -20,8 +21,7 @@ export const handleAddToStorage = async (
       name: productData.name,
       price: Number(productData.price),
       stock: Number(productData.stock),
-      quantity: 1,
-      image: productData.productImages?.[0]?.imageUrl || "",
+      image,
       subcategories: subCategory,
       category: MainCategory,
       totalPrice,

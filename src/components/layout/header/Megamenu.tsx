@@ -42,12 +42,12 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu,scrolling }) =
 
   return (
     <div ref={menuRef} className="relative font-inter capitalize font-light" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      <Link className={`text-11 xl:text-14 3xl:text-16 capitalize hover:bg-gray-light w-fit ${scrolling ? "pb-7" : "pb-6"}`} href={`/${href}`}>
+      <Link className={`text-11 xl:text-13  2xl:text-14 3xl:text-16 capitalize hover:bg-gray-light w-fit ${scrolling ? "pb-7" : "pb-6"}`} href={`/${href}`}>
         {label}
       </Link>
       {submenu && submenu.length > 0 && isOpen && (
         <div
-          className={`fixed left-0 w-[100vw] bg-white shadow z-50 overflow-y-auto ${scrolling ? "top-[8.8%]" : "top-[12.7%]"}`}
+          className={`fixed left-0 w-[100vw] bg-white shadow z-50 overflow-y-auto ${scrolling ? "top-[7.51%]" : "top-[11.58%]"}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
