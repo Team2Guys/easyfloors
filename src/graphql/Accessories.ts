@@ -27,11 +27,13 @@ export const FETCH_ALL_ACCESSORIES = gql`
         id
         name
         custom_url
+        description
       }
       products {
         id
         name
         custom_url
+        
       }
     }
   }

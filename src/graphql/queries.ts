@@ -24,6 +24,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       plankWidth
       ResidentialWarranty
       CommmericallWarranty
+      colorCode
       thickness
       FAQS
         boxCoverage
@@ -95,6 +96,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         custom_url
         waterproof
         plankWidth
+        colorCode
         ResidentialWarranty
         CommmericallWarranty
         thickness
@@ -194,6 +196,11 @@ export const FETCH_HEADER_CATEGORIES = gql`
       name
       custom_url
       RecallUrl
+        accessories {
+      id
+      name
+      custom_url 
+      }
       subcategories {
         id
         name
