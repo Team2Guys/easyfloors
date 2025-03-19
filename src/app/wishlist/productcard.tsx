@@ -34,7 +34,7 @@ const ProductCard = () => {
 
   const updateQuantity = (id: number, index: number) => {
     setWishlistItems(wishlistItems.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(1, (item.quantity ?? 0) + index) } : item
+      item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
     ));
   };
 
@@ -82,7 +82,7 @@ const ProductCard = () => {
                 className=""
               ><FiMinus />
               </button>
-              <span className="mx-5">{product.quantity}</span>
+              <span className="mx-5">{product.requiredBoxes}</span>
               <button
                 onClick={() => increment(product.id)}
                 className=""
@@ -105,7 +105,7 @@ const ProductCard = () => {
                   className=""
                 ><FiMinus />
                 </button>
-                <span className="mx-5">{product.quantity}</span>
+                <span className="mx-5">{product.requiredBoxes}</span>
                 <button
                   onClick={() => increment(product.id)}
                   className=""

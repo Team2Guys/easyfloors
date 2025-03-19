@@ -15,25 +15,25 @@ import { toast } from 'react-toastify';
 const CartPage = () => {
   const [cartItems, setCartItems] = useState<ICart[]>([]); 
   const [selectedFee, setSelectedFee] = useState(0);
-  const [totalProducts, setTotalProducts] = useState(0);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const items = await getCart();
         setCartItems(items);
-        setTotalProducts(items.length);
-      } catch  {
-        toast.error("Error fetching cart items:");
+      } catch {
+        toast.error("Error fetching cart items");
       }
     };
-
+  
     fetchCartItems();
   }, []);
-
+  
+console.log(cartItems,"cartItems")
   const handleRemoveItem = async (id: number) => {
     try {
       await removeCartItem(id); 
-      setCartItems((pre)=>pre.filter((value)=>value.id !==id))
+      const updatedCart = await getCart();
+      setCartItems(updatedCart); 
     } catch {
       toast.error("Error removing item from cart:");
     }
@@ -41,7 +41,7 @@ const CartPage = () => {
 
   const updateQuantity = (id: number, index: number) => {
     setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, quantity: Math.max(1, (item.quantity ?? 0) + index) } : item
+      item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
     ));
   };
   
@@ -51,7 +51,8 @@ const CartPage = () => {
   const handleStateSelect = (state: string, fee: number) => {
     setSelectedFee(fee);
   };
-
+  
+  
   return (
     
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
@@ -84,19 +85,19 @@ const CartPage = () => {
                     <div>
                       <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                       <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m<sup>2</sup></p>
-                      <p className='text-12 sm:text-14 2xl:text-17'>Price Per Box: <span className='font-bold'>AED {item.pricePerBox}</span></p>
-                      <p className='text-12 sm:text-14 2xl:text-17'>No. Of Boxes: <span className='font-bold'>{item.requiredBoxes ?? 0}</span> ({(item.squareMeter).toFixed(3)} SQM)</p>
+                      <p className='text-12 sm:text-14 2xl:text-17'>Price Per Box: <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span></p>
+                      <p className='text-12 sm:text-14 2xl:text-17'>No. Of Boxes: <span className='font-bold'>{item.requiredBoxes ?? 0}</span> ({(item.squareMeter).toFixed(2)} SQM)</p>
                       <div className='flex xl:hidden gap-5 mt-2 items-center'>
                       <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                     <button className="px-1 hover:text-black" onClick={() => decrement(item.id)}>
                       <LuMinus />
                     </button>
-                    <span className="text-16 text-purple px-1">{item.quantity}</span>
+                    <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
                     <button className="px-1 hover:text-black" onClick={() => increment(item.id)}>
                       <LuPlus />
                     </button>
                       </div>
-                      <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.totalPrice * (item.quantity ?? 0)).toFixed(2)}</span></p>
+                      <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.pricePerBox * (item.requiredBoxes ?? 0)).toFixed(2)}</span></p>
                       </div>
                     </div>
                   </div>
@@ -106,14 +107,14 @@ const CartPage = () => {
                     <button className="px-3 hover:text-black" onClick={() => decrement(item.id)}>
                       <LuMinus />
                     </button>
-                    <span className="text-16 text-purple px-2 2xl:px-3">{item.quantity}</span>
+                    <span className="text-16 text-purple px-2 2xl:px-3">{item.requiredBoxes}</span>
                     <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(item.id)}>
                       <LuPlus />
                     </button>
                   </div>
                 </div>
                 <div className='col-span-2 text-center hidden xl:block'>
-                  <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice * (item.quantity ?? 0)).toFixed(2)}</span></p>
+                  <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.pricePerBox * (item.requiredBoxes ?? 0)).toFixed(2)}</span></p>
                 </div>
                 <div className='col-span-2 text-end lg:pr-5'>
                   <button className='text-primary' onClick={() => handleRemoveItem(item.id)}>
@@ -133,22 +134,22 @@ const CartPage = () => {
           <div className='w-full md:w-[45%] xl:w-[30%] 2xl:w-[35%] bg-background p-3 sm:p-5 space-y-5 h-fit'>
             <div className='flex gap-2 md:gap-5 items-center max-sm:justify-between'>
             <h2 className=' text-18 md:text-20 2xl:text-28'>Order Summary</h2>
-            <p className='text-14 text-[#FF0004]'>(*Total {totalProducts} Items)</p>
+            <p className='text-14 text-[#FF0004]'>(*Total {cartItems.length} {cartItems.length === 1 ? "Item" : " Items"})</p>
             </div>
             <div className='border border-b border-[#DEDEDE]'/>
 
             <div className='flex items-center justify-between text-16 lg:text-20'>
             <p>Subtotal:</p>
-            <p>AED {cartItems.reduce((total, item) => total + item.totalPrice * (item.quantity ?? 0), 0).toFixed(2)}</p>
+            <p>AED {cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0).toFixed(2)}</p>
             </div>
             <CartSelect select={UAEStates} fees={fees} onSelect={handleStateSelect} />
             <div className='border border-b border-[#DEDEDE]'/>
             <div className='flex items-center justify-between text-16 lg:text-20'>
             <p>Subtotal Incl. VAT</p>
-            <p>AED {(cartItems.reduce((total, item) => total + item.totalPrice * (item.quantity ?? 0), 0) + selectedFee).toFixed(2)}</p>
+            <p>AED {(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0) + selectedFee).toFixed(2)}</p>
             </div>
             <button className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20'>Proceed to Checkout</button>
-            <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.totalPrice * (item.quantity ?? 0), 0) + selectedFee) / 4}/>
+            <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0) + selectedFee) / 4}/>
             <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
               <div className='flex justify-between gap-2' >
             {

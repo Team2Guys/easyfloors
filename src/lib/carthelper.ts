@@ -20,7 +20,6 @@ export const handleAddToStorage = async (
       name: productData.name,
       price: Number(productData.price),
       stock: Number(productData.stock),
-      quantity: 1,
       image: productData.productImages?.[0]?.imageUrl || "",
       subcategories: subCategory,
       category: MainCategory,

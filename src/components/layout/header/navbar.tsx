@@ -13,24 +13,45 @@ import { fetchCategories } from "config/fetch";
 import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
 import { HeaderProps } from "types/PagesProps";
 import { staticMenuItems } from "data/data";
+import { getCart, getWishlist } from "utils/indexedDB";
+import { ICart } from "types/prod";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [scrolling, setScrolling] = useState(false);
   const [categories, setCategories] = useState<HeaderProps[]>([]);
+  const [cartTotal, setCartTotal] = useState<ICart[]>();
+  const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
 
   useEffect(() => {
-    const getCategories = async () => {
+    const fetchItems = async () => {
       try {
+        const items = await getCart();
+        const wishlist = await getWishlist();
         const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-        setCategories(data);
+        setCategories(data)
+        setCartTotal(items);
+        setWishlistTotal(wishlist);
       } catch {
-        toast.error("Error fetching categories:");
+        toast.error("Error fetching cart items");
       }
     };
-    getCategories();
+  
+    fetchItems();
+  const handleCartUpdate = () => fetchItems();
+  const handleWishlistUpdate = () => fetchItems();
+
+  window.addEventListener("cartUpdated", handleCartUpdate);
+  window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+
+  return () => {
+    window.removeEventListener("cartUpdated", handleCartUpdate);
+    window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+  };
+
   }, []);
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -105,7 +126,7 @@ const Navbar = () => {
       </div>
       <div className="w-2/12 lg:w-[20%] 2xl:w-[20%] 3xl:w-[23%]  text-end flex items-center gap-2 justify-between max-lg:justify-end">
         <SearchBar className="lg:block hidden" />
-        <UserIcon className="hidden lg:flex" />
+        <UserIcon className="hidden lg:flex" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} />
         <div className="lg:hidden flex justify-end">
           <FaBars onClick={() => setIsOpen(true)} size={20} />
           <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>

@@ -308,7 +308,22 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       return updatedImagesUrl;
     });
   };
-
+  const handleColorname = (
+    index: number,
+    newColorName: string,
+    setImagesUrlhandler: React.Dispatch<
+      React.SetStateAction<ProductImage[] | undefined>
+    >
+  ) => {
+    setImagesUrlhandler((prev: ProductImage[] | undefined) => {
+      if (!prev) return [];
+  
+      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
+        i === index ? { ...item, colorName: newColorName } : item
+      );
+      return updatedImagesUrl;
+    });
+  };
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
@@ -1467,8 +1482,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     placeholder="colorName"
                                     type="text"
                                     name="colorName"
-                                    value={item?.colorName || "Chestnut"}
-                                   
+                                    value={item?.colorName}
+                                    onChange={(e) =>
+                                      handleColorname(
+                                        index,
+                                        String(e.target.value),
+                                        setfeatureImagesImagesUrl
+                                      )
+                                    }
                                    />
                                   </>
                                 )}
