@@ -33,7 +33,7 @@ const FormLayout = ({
     ? {
       name: editCategory.name,
       description: editCategory.description || '',
-      category: editCategory?.category || 0,
+      category: editCategory?.category.id || 0,
       Meta_Title: editCategory.Meta_Title || '',
       short_description: editCategory.short_description || '',
       Meta_Description: editCategory.Meta_Description || '',
@@ -42,9 +42,7 @@ const FormLayout = ({
       whatamIdetails: editCategory?.whatamIdetails || [],
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
-      recalledByCategories: Array.isArray(editCategory?.recalledByCategories)
-        ? editCategory.recalledByCategories
-        : [],
+      recalledByCategories:editCategory?.recalledByCategories.map((value:Category)=>value.id) || []
 
     }
     : undefined;
