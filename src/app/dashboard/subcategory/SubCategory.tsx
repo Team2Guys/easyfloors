@@ -4,7 +4,7 @@ import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import ProtectedRoute from 'hooks/AuthHookAdmin';
 import { useEffect, useState } from 'react';
 import ViewSubcategries from 'components/cat_subcat/ViewSubcategries';
-import {ISUBCATEGORY_EDIT } from 'types/cat';
+import {ISUBCATEGORY } from 'types/cat';
 import dynamic from 'next/dynamic';
 import { SubCategoryComponentProps_dashboard } from 'types/PagesProps';
 const AddSubcategory = dynamic(() => import('components/cat_subcat/AddSubcategory'),);
@@ -14,7 +14,7 @@ const SubCategoryComponent = ({
   cetagories,
 }: SubCategoryComponentProps_dashboard) => {
   const [menuType, setMenuType] = useState<string>('Sub Categories');
-  const [editCategory, seteditCategory] = useState<ISUBCATEGORY_EDIT | null | undefined>();
+  const [editCategory, seteditCategory] = useState<ISUBCATEGORY |null| undefined>();
   const [updatedsubCategories, setUpdatedCategories] = useState(subCategories);
 
 
