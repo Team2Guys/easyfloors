@@ -2,9 +2,9 @@
 import { Formik, Form, Field } from "formik";
 import Input from "./Input";
 import { useFormState } from "react-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Select from "./Select";
-import {Appointmentlocation, FindUs, initialValues, validationSchema } from "data/data";
+import { Appointmentlocation, FindUs, initialValues, validationSchema } from "data/data";
 import Checkbox from "./checkbox";
 import { FormState } from "types/type";
 
@@ -16,7 +16,15 @@ async function handleSubmit(): Promise<FormState> {
 
 export default function Appointment() {
   const [formState, formAction] = useFormState(handleSubmit, {});
+  const [time, setTime] = useState<string>("");
 
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedTime = e.target.value;
+    if (selectedTime) {
+      const [hours] = selectedTime.split(":");
+      setTime(`${hours}:00`);
+    }
+  };
   useEffect(() => {
     if (formState?.success) {
       alert(formState.success);
@@ -29,7 +37,7 @@ export default function Appointment() {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={async (values, { setSubmitting,resetForm }) => {
+          onSubmit={async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             formAction();
             setSubmitting(false);
@@ -39,36 +47,44 @@ export default function Appointment() {
           {({ isSubmitting }) => (
             <Form className="space-y-2">
               <div className="grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-2 lg:gap-4 mb-3">
-                <Input type="text"  label="Name" name="firstname" placeholder="Enter Your Full Name" required/>
-                <Input type="number" label="Phone No" name="phoneNumber"placeholder=" Type Your Phone No  " required/>
-                <Input type="number" label="WhatsApp No. If Different"  placeholder=" Type Your WhatsApp No"  name="whatsappNumber"  /> 
-                <Input type="email"  label="Email"  name="email"  placeholder="Enter Your Full Name"  required  />
-                <Select  name="area" label="Area" placeholder="Select Location Area"  required options={Appointmentlocation}/>
+                <Input type="text" label="Name" name="firstname" placeholder="Enter Your Full Name" required />
+                <Input type="number" label="Phone No" name="phoneNumber" placeholder=" Type Your Phone No  " required />
+                <Input type="number" label="WhatsApp No. If Different" placeholder=" Type Your WhatsApp No" name="whatsappNumber" />
+                <Input type="email" label="Email" name="email" placeholder="Enter Your Full Name" required />
+                <Select name="area" label="Area" placeholder="Select Location Area" required options={Appointmentlocation} />
                 <Input type="text" label="Select Rooms" name="selectRooms" placeholder="How Many Rooms? " required />
                 <Input type="date" label="Preferred Date" name="preferredDate" required />
-                <Select name="preferredTime" label="Preferred Time" placeholder="Am / Pm"  
+                <Input
+                  type="time"
+                  label="Preferred Time"
+                  name="preferredTime"
+                  value={time}
+                  onChange={handleTimeChange}
+                  required
+                />
+                {/* <Select name="preferredTime" label="Preferred Time" placeholder="Am / Pm"  
                   options={[
                     { value: "Am", label: "Am" },
                     { value: "Pm", label: "Pm" },
                   ]}
-                />
+                /> */}
                 <Select name="findUs" label="How did you find us?" placeholder="Google Search" options={FindUs} />
-               
+
               </div>
               <div className="pb-2">
-              <label className="text-13 font-medium font-inter ">How shall we contact you?</label>
-              <div className="flex gap-4 items-center pt-2">
-              <Field name="contactMethod.whatsapp" component={Checkbox} label="WhatsApp" />
-              <Field name="contactMethod.telephone" component={Checkbox} label="Telephone" />
-              <Field name="contactMethod.email" component={Checkbox} label="Email" />
-              </div>
+                <label className="text-13 font-medium font-inter ">How shall we contact you?</label>
+                <div className="flex gap-4 items-center pt-2">
+                  <Field name="contactMethod.whatsapp" component={Checkbox} label="WhatsApp" />
+                  <Field name="contactMethod.telephone" component={Checkbox} label="Telephone" />
+                  <Field name="contactMethod.email" component={Checkbox} label="Email" />
+                </div>
               </div>
               <div className="space-y-2">
-              <label className="text-13 font-medium font-inter">What is your query regarding?</label>
-              <Field as="textarea"name="comment" className="w-full pt-3 p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-13 placeholder:font-light placeholder:text-[#828282] h-52">
+                <label className="text-13 font-medium font-inter">What is your query regarding?</label>
+                <Field as="textarea" name="comment" className="w-full pt-3 p-2 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-13 placeholder:font-light placeholder:text-[#828282] h-52">
 
-              </Field>
-              </div>           
+                </Field>
+              </div>
               <SubmitButton isSubmitting={isSubmitting} />
             </Form>
           )}
@@ -80,14 +96,14 @@ export default function Appointment() {
 
 function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
   return (
-   <div className="text-center">
-     <button
-      type="submit"
-      disabled={isSubmitting}
-      className="w-fit bg-primary text-white p-2 lg:py-3 px-4 sm:px-10 font-inter text-15"
-     >
-      {isSubmitting ? "Submitting..." : "BOOK A FREE APPOINTMENT"}
-     </button>
-   </div>
+    <div className="text-center">
+      <button
+        type="submit"
+        disabled={isSubmitting}
+        className="w-fit bg-primary text-white p-2 lg:py-3 px-4 sm:px-10 font-inter text-15"
+      >
+        {isSubmitting ? "Submitting..." : "BOOK A FREE APPOINTMENT"}
+      </button>
+    </div>
   );
 }
