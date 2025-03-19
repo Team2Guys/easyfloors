@@ -14,7 +14,7 @@ const SubCategoryComponent = ({
   cetagories,
 }: SubCategoryComponentProps_dashboard) => {
   const [menuType, setMenuType] = useState<string>('Sub Categories');
-  const [editCategory, seteditCategory] = useState<ISUBCATEGORY | undefined>();
+  const [editCategory, seteditCategory] = useState<ISUBCATEGORY |null| undefined>();
   const [updatedsubCategories, setUpdatedCategories] = useState(subCategories);
 
 
