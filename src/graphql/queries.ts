@@ -310,8 +310,8 @@ query SubCategory($customUrl: String!) {
 
 
 export const FIND_ONE_PRODUCT = gql`
-query Product($custom_url: String!) {
-  product(custom_url: $custom_url) {
+query Product($custom_url: String!,$category: String!,$subCategory: String!) {
+  product(custom_url: $custom_url, ,category:$category,subCategory:$subCategory) {
     id
     name
         posterImageUrl

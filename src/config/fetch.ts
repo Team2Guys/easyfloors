@@ -58,7 +58,6 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
 
     return data?.subCategories || []
   } catch (error) {
-    console.log(error, "error")
     return []
     throw error
 
@@ -182,11 +181,11 @@ export  const fetchSingeSubCategory = async (customUrl: string): Promise<Categor
   }
 };
 
-export  const fetchSingeProduct = async (customUrl: string): Promise<IProduct | null> => {
+export  const fetchSingeProduct = async (customUrl: string, category:string, subCategory:string): Promise<IProduct | null> => {
   try {
     const { data } = await client.query({
       query: FIND_ONE_PRODUCT,
-      variables: { custom_url:customUrl },
+      variables: { custom_url:customUrl,category, subCategory },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["products"] } },

@@ -10,8 +10,8 @@ interface IParams { slug: string, subcategory: string, product: string }
 
 export async function generateMetadata({ params }: { params: Promise<IParams> }): Promise<Metadata> {
   const { slug, subcategory, product: paramsprod } = await params;
-  const productData = await fetchSingeProduct(paramsprod.trim())    
-  if (!productData || productData.category?.RecallUrl?.trim() !== slug || productData.subcategory?.custom_url?.trim() !==subcategory) return notFound()
+  const productData = await fetchSingeProduct(paramsprod.trim(),slug.trim(), subcategory.trim())   
+  if (!productData) return notFound()
 
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
