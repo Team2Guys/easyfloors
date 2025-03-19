@@ -42,7 +42,7 @@ const FormLayout = ({
       whatamIdetails: editCategory?.whatamIdetails || [],
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
-      recalledByCategories:editCategory?.recalledByCategories?.map((value:Category)=>value.id) || []
+      recalledByCategories: editCategory?.recalledByCategories?.map((value: Category) => value.id) || []
 
     } as ISUBCATEGORY_EDIT
     : undefined;
@@ -70,7 +70,7 @@ const FormLayout = ({
   const onSubmit = async (values: ISUBCATEGORY_EDIT, { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>) => {
     if (!values.category) {
       return showToast('warn', 'Select parent category!!');
-    }    try {
+    } try {
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
@@ -876,52 +876,52 @@ const FormLayout = ({
                     </div>
 
 
-         
-                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                        Add Re Category
-                      </label>
-                      <FieldArray name="recalledByCategories">
-                        {({ push, remove }) => (
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {categoriesList?.map((cat:Category) => {
-                      
-                              const isChecked =formik.values.recalledByCategories?.includes(cat.id.toString());
-             
-                              return (
-                                <label
-                                  key={cat.id}
-                                  className="flex items-center space-x-2"
-                                >
-                                  <Field
-                                    type="checkbox"
-                                    name="recalledByCategories"
-                                    value={cat.id.toString()}
-                                    checked={isChecked}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        push(cat.id.toString());
-                                      } else {
-                                        remove(
-                                          formik?.values?.recalledByCategories?.indexOf(
-                                            cat.id.toString()
-                                          )
-                                        );
-                                      }
-                                    }}
-                                    className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
-                                  />
-                                  <span className="text-black dark:text-white">
-                                    {cat.name}
-                                  </span>
-                                </label>
-                              );
-                            })}
-                          </div>
-                        )}
-                      </FieldArray>
-                  
+
+                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                      Add Re Category
+                    </label>
+                    <FieldArray name="recalledByCategories">
+                      {({ push, remove }) => (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {categoriesList?.map((cat: Category) => {
+
+                            const isChecked = formik.values.recalledByCategories?.includes(cat.id.toString());
+
+                            return (
+                              <label
+                                key={cat.id}
+                                className="flex items-center space-x-2"
+                              >
+                                <Field
+                                  type="checkbox"
+                                  name="recalledByCategories"
+                                  value={cat.id.toString()}
+                                  checked={isChecked}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      push(cat.id.toString());
+                                    } else {
+                                      remove(
+                                        formik?.values?.recalledByCategories?.indexOf(
+                                          cat.id.toString()
+                                        )
+                                      );
+                                    }
+                                  }}
+                                  className="w-4 h-4 text-primary border-gray-300 rounded focus:ring-primary"
+                                />
+                                <span className="text-black dark:text-white">
+                                  {cat.name}
+                                </span>
+                              </label>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </FieldArray>
+
 
 
                   </div>
