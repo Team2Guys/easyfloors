@@ -5,10 +5,7 @@ import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { Skeleton } from 'antd';
 
-interface ChartThreeState {
-  series: number[];
-}
-
+const series= [65, 34, 12, 56]
 const options: ApexOptions = {
   chart: {
     fontFamily: 'Satoshi, sans-serif',
@@ -52,10 +49,7 @@ const options: ApexOptions = {
 };
 
 const ChartThree: React.FC = () => {
-  const [state, setState] = useState<ChartThreeState>({
-    series: [65, 34, 12, 56],
-  });
-  console.log(setState, 'setState');
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -118,7 +112,7 @@ const ChartThree: React.FC = () => {
           ) : (
             <ReactApexChart
               options={options}
-              series={state.series}
+              series={series}
               type="donut"
             />
           )}
