@@ -11,7 +11,8 @@ export interface ProductImage {
     size?: string;
     color?: string | number;
     colorName?: string;
-    
+    plankWidth?: string;
+    plankHeight?: string;
   }
 
 export interface AdditionalInformation {
