@@ -13,36 +13,54 @@ import { fetchCategories } from "config/fetch";
 import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
 import { staticMenuItems } from "data/data";
 import { Category, ISUBCATEGORY } from "types/cat";
+import { getCart, getWishlist } from "utils/indexedDB";
+import { ICart } from "types/prod";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
-  const [scrolling, setScrolling] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [cartTotal, setCartTotal] = useState<ICart[]>();
+  const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
 
   useEffect(() => {
-    const getCategories = async () => {
+    const fetchItems = async () => {
       try {
         const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-        setCategories(data);
+        const items = await getCart();
+        const wishlist = await getWishlist();
+        setCategories(data)
+        setCartTotal(items);
+        setWishlistTotal(wishlist);
       } catch {
-        toast.error("Error fetching categories:");
+        toast.error("Error fetching items");
       }
     };
-    getCategories();
+  
+    fetchItems();
+  const handleCartUpdate = () => fetchItems();
+  const handleWishlistUpdate = () => fetchItems();
+
+  window.addEventListener("cartUpdated", handleCartUpdate);
+  window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+
+  return () => {
+    window.removeEventListener("cartUpdated", handleCartUpdate);
+    window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+  };
+
   }, []);
+  
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 0) {
-        setScrolling(true); 
-      } else {
-        setScrolling(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
-    
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
@@ -81,7 +99,7 @@ const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalled
 
 
   return (
-    <div className={`bg-white fixed w-full z-50 ${scrolling ? 'top-0 shadow-lg pb-1 sm:pb-2' : 'top-10 pb-1 sm:pb-1'} transition-all font-inter `}>
+    <nav className={`bg-white w-full z-50 font-inter pb-1 ${isScrolled? "bg-white text-black top-0 fixed": "bg-white text-black sticky top-0"}`}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
       <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
         <Link href="/">
@@ -95,14 +113,14 @@ const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalled
         </Link>
       </div>
       <div className="w-8/12 lg:w-[68%] 2xl:w-[70%] 3xl:w-[67%]  max-lg:flex max-lg:justify-center">
-        <div className="hidden lg:flex items-center gap-2 lg:gap-4 2xl:gap-6 w-fit  justify-between capitalize font-light whitespace-nowrap">
+        <div className="hidden lg:flex items-center gap-2 lg:gap-4 2xl:gap-6 w-fit  justify-between capitalize font-light whitespace-nowrap relative">
           {menuItems.map((item, index) => (
             <Megamenu
               key={index}
               label={item.label}
               href={item.href}
               submenu={item.submenu}
-              scrolling={scrolling}
+              scrolling={isScrolled}
             />
           ))}
         </div>
@@ -110,7 +128,7 @@ const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalled
       </div>
       <div className="w-2/12 lg:w-[20%] 2xl:w-[20%] 3xl:w-[23%]  text-end flex items-center gap-2 justify-between max-lg:justify-end">
         <SearchBar className="lg:block hidden" />
-        <UserIcon className="hidden lg:flex" />
+        <UserIcon className="hidden lg:flex" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} />
         <div className="lg:hidden flex justify-end">
           <FaBars onClick={() => setIsOpen(true)} size={20} />
           <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
@@ -143,7 +161,7 @@ const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalled
         </div>
       </div>
       </Container>
-    </div>
+    </nav>
     
   );
 };

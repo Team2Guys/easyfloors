@@ -10,7 +10,7 @@ const TopNav = () => {
   const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER;
   const email = process.env.NEXT_PUBLIC_EMAIL;
   return (
-    <div className="bg-primary py-2">
+    <div className="bg-primary py-2 relative">
       <Container className="flex justify-between items-center">
         <div>
           <SocialIcon className=" lg:hidden" />

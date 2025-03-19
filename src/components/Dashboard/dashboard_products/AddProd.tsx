@@ -280,37 +280,19 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     newImageIndex: string,
     setImagesUrlhandler: React.Dispatch<
       React.SetStateAction<ProductImage[] | undefined>
-    >,
-    newImageWidth?: string,
-    newImageHeight?: string,
+      >,
+      variantType:string
   ) => {
     setImagesUrlhandler((prev: ProductImage[] | undefined) => {
       if (!prev) return [];
 
       const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
-        i === index ? { ...item, altText: newImageIndex, plankWidth: newImageWidth || '', plankHeight: newImageHeight || '' } : item
+        i === index ? { ...item, [variantType]: newImageIndex } : item
       );
       return updatedImagesUrl;
     });
   };
-
-  const handleColorcode = (
-    index: number,
-    newImageIndex: string,
-    setImagesUrlhandler: React.Dispatch<
-      React.SetStateAction<ProductImage[] | undefined>
-    >
-  ) => {
-    setImagesUrlhandler((prev: ProductImage[] | undefined) => {
-      if (!prev) return [];
-
-      const updatedImagesUrl = prev?.map((item: ProductImage, i: number) =>
-        i === index ? { ...item, color: newImageIndex } : item
-      );
-      return updatedImagesUrl;
-    });
-  };
-
+ 
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
@@ -525,7 +507,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     handleImageAltText(
                                       index,
                                       String(e.target.value),
-                                      setposterimageUrl
+                                      setposterimageUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -1276,7 +1259,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   handleImageAltText(
                                     index,
                                     String(e.target.value),
-                                    sethoverImage
+                                    sethoverImage,
+                                    "altText"
                                   )
                                 }
                               />
@@ -1351,7 +1335,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   handleImageAltText(
                                     index,
                                     String(e.target.value),
-                                    setImagesUrl
+                                    setImagesUrl,
+                                    "altText"
                                   )
                                 }
                               />
@@ -1364,9 +1349,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 onChange={(e) =>
                                   handleImageAltText(
                                     index,
-                                    item?.altText || '',
+                                    String(e.target.value),
                                     setImagesUrl,
-                                    String(e.target.value)
+                                    "plankWidth"
                                   )
                                 }
                               />
@@ -1379,10 +1364,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 onChange={(e) =>
                                   handleImageAltText(
                                     index,
-                                    item?.altText || '',
+                                    String(e.target.value),
                                     setImagesUrl,
-                                    item?.plankWidth || '',
-                                    String(e.target.value)
+                                    "plankHeight",
+                                   
                                   )
                                 }
                               />
@@ -1462,35 +1447,44 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     handleImageAltText(
                                       index,
                                       String(e.target.value),
-                                      setfeatureImagesImagesUrl
+                                      setfeatureImagesImagesUrl,
+                                      "altText"
                                     )
                                   }
                                 />
 
                                 {accessoryFlag && (
                                   <>
-                                    <input
-                                      className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                      placeholder="color"
-                                      type="text"
-                                      name="color"
-                                      value={item?.color || ""}
-                                      onChange={(e) =>
-                                        handleColorcode(
-                                          index,
-                                          String(e.target.value),
-                                          setfeatureImagesImagesUrl
-                                        )
-                                      }
-                                    />
-                                    <input
-                                      className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                      placeholder="colorName"
-                                      type="text"
-                                      name="colorName"
-                                      value={item?.colorName || "Chestnut"}
-
-                                    />
+                                  <input
+                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    placeholder="color"
+                                    type="text"
+                                    name="color"
+                                    value={item?.color || ""}
+                                    onChange={(e) =>
+                                      handleImageAltText(
+                                        index,
+                                        String(e.target.value),
+                                        setfeatureImagesImagesUrl,
+                                        "color"
+                                      )
+                                    }
+                                  />
+                                   <input
+                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    placeholder="colorName"
+                                    type="text"
+                                    name="colorName"
+                                    value={item?.colorName}
+                                    onChange={(e) =>
+                                      handleImageAltText(
+                                        index,
+                                        String(e.target.value),
+                                        setfeatureImagesImagesUrl,
+                                        "colorName"
+                                      )
+                                    }
+                                   />
                                   </>
                                 )}
                               </div>

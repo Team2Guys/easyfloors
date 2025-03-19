@@ -65,11 +65,10 @@ export interface IProduct {
     category?:string;
     image?: string
     quantity?:number ;
-    totalPrice:number,
     pricePerBox:number,
     squareMeter:number,
     requiredBoxes:number,
-
+ 
   }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {
