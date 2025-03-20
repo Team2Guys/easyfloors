@@ -30,9 +30,9 @@ export const addToCart = async (product: ICart): Promise<void> => {
     });
 
     if (existingProduct) {
-      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + 1;
+      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + (product.requiredBoxes ?? 1);
     } else {
-      product.requiredBoxes = 1;
+      product.requiredBoxes = product.requiredBoxes ?? 1;
     }
 
     await new Promise<void>((resolve, reject) => {
@@ -94,12 +94,26 @@ export const addToCart = async (product: ICart): Promise<void> => {
       const db = await openDB();
       const tx = db.transaction("wishlist", "readwrite");
       const store = tx.objectStore("wishlist");
+  
+      const existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
+        const request = store.get(product.id);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+  
+      if (existingProduct) {
+        product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + (product.requiredBoxes ?? 1);
+      } else {
+        product.requiredBoxes = product.requiredBoxes ?? 1;
+      }
+  
       await new Promise<void>((resolve, reject) => {
         const request = store.put(product);
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
       window.dispatchEvent(new Event("wishlistUpdated"));
+  
     } catch (error) {
       throw error;
     }
