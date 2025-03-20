@@ -22,7 +22,7 @@ const LoginForm = () => {
        
   return (
     <div className="flex flex-col md:flex-row w-full h-screen">
-      <div className="hidden md:block md:w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/assets/images/aboutus/order-free-sample.png')" }} />
+      <div className="hidden md:block md:w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/assets/images/login.webp')" }} />
 
       <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
         <div className="w-full max-w-xl">
