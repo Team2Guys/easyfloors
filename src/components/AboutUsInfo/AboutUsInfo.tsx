@@ -20,7 +20,6 @@ const AboutUsInfo: React.FC<TAboutUsProps> = ({ sections }) => {
                             height={400}
                             className="w-full h-auto rounded-sm shadow-sm"
                         />
-
                     </div>
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-4">
                         <h2 className="md:text-3xl text-xl font-bold text-gray-600">{section.heading}</h2>

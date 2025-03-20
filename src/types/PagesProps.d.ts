@@ -67,4 +67,5 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     features: Feature[];
     categoryData: ICategory;
     subCategoryData?: ISUBCATEGORY_EDIT;
+    productData:IProduct;
   }

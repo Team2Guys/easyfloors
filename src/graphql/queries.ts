@@ -108,6 +108,14 @@ export const FETCH_ALL_CATEGORIES = gql`
           name
           custom_url
         }
+        acessories {
+          id
+          name
+          price
+          discountPrice
+          custom_url
+          posterImageUrl 
+        }
           
       }
     }
