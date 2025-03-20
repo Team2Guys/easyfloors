@@ -179,3 +179,12 @@ export interface AccessoriesPopupProps {
   onChange?: (_e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur?: (_e: React.FocusEvent<HTMLInputElement>) => void;
 }
+
+export interface ProductFilterParams {
+  products: IProductFilter[] | undefined;
+  priceValue: [number, number];
+  sortOption: string;
+  selectedProductFilters: FilterState;
+  isWaterProof: boolean | null | undefined;
+  subcategory?: string;
+}

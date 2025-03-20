@@ -29,16 +29,20 @@ const Filters = ({
     plankWidth: [] as string[],
     colors: [] as string[],
   });
-  const [polarCategory, setPolarCategory] = useState<Category>();
-  const [richmondCategory, setRichmondCategory] = useState<Category>();
+  const [categoryState, setCategoryState] = useState<{
+    polar?: Category;
+    richmond?: Category;
+  }>({});
   const path = usePathname();
-
   useEffect(() => {
-    const polar = catgories.find((cat: Category) => cat.name.toLowerCase() === 'polar flooring');
-    setPolarCategory(polar);
-    const richmond = catgories.find((cat: Category) => cat.name.toLowerCase() === 'richmond flooring');
-    setRichmondCategory(richmond);
-  }, [catgories])
+    const polar = catgories.find(
+      (cat: Category) => cat.name.toLowerCase() === "polar flooring"
+    );
+    const richmond = catgories.find(
+      (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
+    );
+    setCategoryState({ polar, richmond });
+  }, [catgories]);
 
   const filterTitles = {
     colors: "Colors",
@@ -137,42 +141,32 @@ const Filters = ({
 
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
-            {richmondCategory &&
-              <li>
-                <Link href={`/${richmondCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
-                  {richmondCategory.name}
-                </Link>
-              </li>}
-
-            {polarCategory &&
-              <li>
-                <Link href={`/${polarCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
-                  {polarCategory.name}
-                </Link>
-              </li>}
+            {Object.values(categoryState).map((item) => {
+              return (
+                <li key={item.custom_url}>
+                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block capitalize">
+                    {item.name.toLowerCase()}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </Accordion>
 
         <Accordion title='Style' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
-            {richmondCategory?.subcategories &&
-              richmondCategory?.subcategories.map((item, index) => (
-                <li key={index}>
-                  <Link href={`/${richmondCategory.custom_url}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
-                    {item.name}
-                  </Link>
-                </li>
-              ))
-            }
-            {polarCategory?.subcategories &&
-              polarCategory?.subcategories.map((item, index) => (
-                <li key={index}>
-                  <Link href={`/${polarCategory.custom_url}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
-                    {item.name}
-                  </Link>
-                </li>
-              ))
-            }
+            {Object.values(categoryState).map((item) => {
+              return (
+                item.subcategories?.map((sub) => (
+                  <li key={sub.custom_url}>
+                    <Link href={`/${item.custom_url}/${sub.custom_url}`} className="cursor-pointer hover:text-primary block capitalize">
+                      {item.name.toLowerCase()}
+                    </Link>
+                  </li>
+                ))
+
+              );
+            })}
           </ul>
         </Accordion>
 
@@ -210,8 +204,8 @@ const Filters = ({
                       className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState].some(
                         (val: string) => val === item
                       )
-                          ? "text-primary"
-                          : "text-gray-600 hover:text-primary"
+                        ? "text-primary"
+                        : "text-gray-600 hover:text-primary"
                         }`}
                       onClick={() => handleFilterSelection(filterKey as keyof FilterState, item)}
                     >
@@ -247,15 +241,17 @@ const Filters = ({
       <div className="border-b-2 pb-5">
         <p className="text-16 font-medium uppercase pb-5  text-[#191C1F]">popular Brands</p>
         <div className="flex gap-4 flex-wrap items-center">
-          {richmondCategory &&
-            <Link href={`/${richmondCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
-              <Checkbox label={richmondCategory.name} isActive={path === `/${richmondCategory.custom_url}`} />
-            </Link>}
-
-          {polarCategory &&
-            <Link href={`/${polarCategory.custom_url}`} className="cursor-pointer hover:text-primary block">
-              <Checkbox label={polarCategory.name} isActive={path === `/${polarCategory.custom_url}`} />
-            </Link>}
+          <ul className="space-y-3">
+            {Object.values(categoryState).map((item) => {
+              return (
+                <li key={item.custom_url}>
+                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                    <Checkbox label={item.name} isActive={path === `/${item.custom_url}`} />
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </div>
       <div className="pb-5">
