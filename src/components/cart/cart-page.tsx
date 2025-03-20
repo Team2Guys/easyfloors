@@ -9,10 +9,15 @@ import { FaArrowLeftLong } from 'react-icons/fa6';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import CartSelect from './cart-select';
 import { getCart, removeCartItem } from 'utils/indexedDB';
-import { ICart } from 'types/prod';
+import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
+import RelatedSlider from 'components/related-slider/related-slider';
 
-const CartPage = () => {
+interface CartPageProps {
+  products: IProduct[];
+}
+
+const CartPage = ({products}:CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]); 
   const [selectedFee, setSelectedFee] = useState(0);
   useEffect(() => {
@@ -50,8 +55,22 @@ const CartPage = () => {
   const handleStateSelect = (state: string, fee: number) => {
     setSelectedFee(fee);
   };
-  
-  
+  const extractCategories = (cartItems: ICart[]) => {
+    const cat = [...new Set(cartItems.map(item => item.category))];
+    const subcat = [...new Set(cartItems.map(item => item.subcategories))];
+
+    return { cat, subcat };
+};
+
+const { cat, subcat } = extractCategories(cartItems);
+const matchingProduct = products.find(
+    (product) => cat.includes(product.category?.RecallUrl) && subcat.includes(product.subcategory?.custom_url)
+);
+const CategoryData = matchingProduct?.category
+    ? { name: matchingProduct.category.name ?? "Unknown", RecallUrl: matchingProduct.category.RecallUrl ?? "" }
+    : { name: "Unknown", RecallUrl: "" };
+
+
   return (
     
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
@@ -162,6 +181,10 @@ const CartPage = () => {
         </div>
         }
         
+        <RelatedSlider
+    products={products.slice(0, 5)}
+    CategoryData={CategoryData}
+        />
     </Container>
   )
 }

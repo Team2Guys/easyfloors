@@ -211,6 +211,15 @@ export const FETCH_HEADER_CATEGORIES = gql`
         custom_url
         posterImageUrl
       }
+         products {
+        id
+        name
+        price
+        discountPrice
+        stock
+        posterImageUrl
+
+      }
        recalledSubCats {
             id
             name

@@ -104,9 +104,9 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
   
         <Container>
         <Features items={featureItems} />
-                               
+                          
         </Container>
-        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category} subCategoryData={productData?.subcategory} />
+        <RelatedSlider products={ProductInfo.slice(0,5)} CategoryData={productData.category}  />
       </div>
     );
   };
