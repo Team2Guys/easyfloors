@@ -56,6 +56,10 @@ export interface IProduct {
     colorCode:string;
   }
 
+  export interface IProductFilter extends IProduct {
+    [key: string]: string;
+  }
+
   export interface ICart {
     id: number ;
     name: string;
