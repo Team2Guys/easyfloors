@@ -1,4 +1,4 @@
-"use client";
+"use client ";
 
 import Image from "next/image";
 import { TAboutUsProps } from "types/types";
@@ -9,7 +9,7 @@ const AboutUsInfo: React.FC<TAboutUsProps> = ({ sections }) => {
             {sections.map((section, index) => (
                 <div
                     key={section.id}
-                    className={`flex flex-col md:flex-row items-center md:gap-20 gap-10 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                    className={`flex flex-col md:flex-row items-center  md:gap-20 gap-10 ${index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                         }`}
                 >
                     <div className="w-full md:w-1/2">
