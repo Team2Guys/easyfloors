@@ -1,6 +1,6 @@
 import { IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, } from 'graphql/queries';
+import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
@@ -61,6 +61,27 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
     return []
     throw error
 
+  }
+};
+
+export const fetchAppointments = async (token: string | undefined) => {
+  try {
+    const { data } = await client.query({
+      query: FETCH_ALL_APPOINTMENTS,
+      fetchPolicy: "no-cache",
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        fetchOptions: { 
+          next: { tags: ["appointments"] }
+        },
+      },
+    });
+    return data?.appointments || [];
+  } catch (error) {
+    return []
+    throw error;
   }
 };
 
