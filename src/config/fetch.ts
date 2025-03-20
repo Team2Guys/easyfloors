@@ -1,6 +1,6 @@
-import {IReview } from 'types/type';
+import { IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, } from 'graphql/queries';
+import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
@@ -64,6 +64,27 @@ export const fetchSubCategories = async (FETCHSUBCAT?: DocumentNode) => {
   }
 };
 
+export const fetchAppointments = async (token: string | undefined) => {
+  try {
+    const { data } = await client.query({
+      query: FETCH_ALL_APPOINTMENTS,
+      fetchPolicy: "no-cache",
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        fetchOptions: { 
+          next: { tags: ["appointments"] }
+        },
+      },
+    });
+    return data?.appointments || [];
+  } catch (error) {
+    return []
+    throw error;
+  }
+};
+
 
 export const fetchReviews = async (): Promise<IReview[]> => {
   const response = await axios.get(
@@ -116,7 +137,7 @@ export const get_allAdmins = async (token: string | undefined) => {
     })
     return data?.admins || []
   } catch (error) {
-  return  error;
+    return error;
   }
 
 }
@@ -145,11 +166,11 @@ export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => 
 
 
 
-export  const fetchSingleCategory = async (customUrl: string,FIND_ONE_CUSTOM_QUERY?:DocumentNode,accessoryFlag?:boolean): Promise<Category | null> => {
+export const fetchSingleCategory = async (customUrl: string, FIND_ONE_CUSTOM_QUERY?: DocumentNode, accessoryFlag?: boolean): Promise<Category | null> => {
   try {
     const { data } = await client.query({
       query: FIND_ONE_CUSTOM_QUERY ? FIND_ONE_CUSTOM_QUERY : FIND_ONE_CATEGORY,
-      variables: { customUrl , accessoryFlag},
+      variables: { customUrl, accessoryFlag },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } },
@@ -163,10 +184,10 @@ export  const fetchSingleCategory = async (customUrl: string,FIND_ONE_CUSTOM_QUE
   }
 };
 
-export  const fetchSingeSubCategory = async (customUrl: string): Promise<Category | null> => {
+export const fetchSingeSubCategory = async (customUrl: string): Promise<Category | null> => {
   try {
     const { data } = await client.query({
-      query: FIND_ONE_SUB_CATEGORY  ,
+      query: FIND_ONE_SUB_CATEGORY,
       variables: { customUrl },
       fetchPolicy: "no-cache",
       context: {
@@ -181,11 +202,11 @@ export  const fetchSingeSubCategory = async (customUrl: string): Promise<Categor
   }
 };
 
-export  const fetchSingeProduct = async (customUrl: string, category:string, subCategory:string): Promise<IProduct | null> => {
+export const fetchSingeProduct = async (customUrl: string, category: string, subCategory: string): Promise<IProduct | null> => {
   try {
     const { data } = await client.query({
       query: FIND_ONE_PRODUCT,
-      variables: { custom_url:customUrl,category, subCategory },
+      variables: { custom_url: customUrl, category, subCategory },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["products"] } },

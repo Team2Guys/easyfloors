@@ -163,6 +163,25 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
     }
   }
 `;
+
+export const FETCH_ALL_APPOINTMENTS = gql`
+  query appointments {
+    appointments {
+      firstname
+      email
+      phoneNumber
+      whatsappNumber
+      area
+      selectRooms
+      preferredTime
+      findUs
+      comment
+      contactMethod
+      preferredDate
+    }
+  }
+`;
+
 export const GET_ADMIN_DETAILS = gql`
   query GetAdmin {
     admin {
