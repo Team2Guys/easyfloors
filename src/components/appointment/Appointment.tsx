@@ -31,7 +31,7 @@ export default function Appointment() {
           onSubmit={async (values, { setSubmitting, resetForm }) => {
             setSubmitting(true);
             try {
-              const { data } = await createAppointment({
+            await createAppointment({
                 variables: {
                   input: {
                     ...values,
@@ -41,15 +41,18 @@ export default function Appointment() {
                   },
                 },
               });
-              console.log(data, 'Appointment')
-              toast.success("Appointment booked successfully!");
-            } catch (error) {
-              console.error("Error submitting appointment:", error);
-              toast.error("Failed to book appointment. Please try again.");
-            }
-            setSubmitting(false);
+         
             resetForm();
             setTime('');
+              toast.success("Appointment booked successfully!");
+            } catch (error) {
+              toast.error("Failed to book appointment. Please try again.");
+              return error
+            }finally{
+              setSubmitting(false);
+
+            }
+ 
           }}
         >
           {({ values, handleChange, isSubmitting }) => (
@@ -61,7 +64,7 @@ export default function Appointment() {
                 <Input type="email" label="Email" name="email" placeholder="Enter Your Full Name" required value={values.email} onChange={handleChange} />
                 <Select name="area" label="Area" placeholder="Select Location Area" required options={Appointmentlocation} />
                 <Input type="text" label="Select Rooms" name="selectRooms" placeholder="How Many Rooms? " required value={values.selectRooms} onChange={handleChange} />
-                <Input type="date" label="Preferred Date" name="preferredDate" required value={values.preferredDate} onChange={handleChange} />
+                <Input type="date" label="Preferred Date" name="preferredDate" required value={values.preferredDate} onChange={handleChange} min={new Date().toISOString().split("T")[0]} />
                 <Input type="time" label="Preferred Time" name="preferredTime" value={time} onChange={handleTimeChange} required />
                 <Select name="findUs" label="How did you find us?" placeholder="Select Platform" options={FindUs} />
               </div>
