@@ -10,7 +10,7 @@ import Drawer from "components/ui/drawer";
 import { BiChevronDown } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { fetchCategories, fetchProducts } from "config/fetch";
-import { FETCH_HEADER_CATEGORIES } from "graphql/queries";
+import {FETCH_HEADER_CATEGORIES, FETCH_HEADER_PRODUCTS,  } from "graphql/queries";
 import { staticMenuItems } from "data/data";
 import { Category, ISUBCATEGORY } from "types/cat";
 import { getCart, getWishlist } from "utils/indexedDB";
@@ -29,7 +29,7 @@ const Navbar = () => {
     const fetchItems = async () => {
       try {
         const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-        const product = await fetchProducts();
+        const product = await fetchProducts(FETCH_HEADER_PRODUCTS);
         const items = await getCart();
         const wishlist = await getWishlist();
         setCategories(data)
