@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAppointmentInput } from './dto/create-appointment.input';
 import { PrismaService } from '../prisma/prisma.service';
-import { customHttpException } from '../utils/helper';
+import { customHttpException, sendResetEmail } from '../utils/helper';
 
 @Injectable()
 export class AppointmentsService {
@@ -9,7 +9,10 @@ export class AppointmentsService {
   async create(createAppointmentInput: CreateAppointmentInput) {
 
     try {
-      return await this.prisma.appointment.create({ data: createAppointmentInput });
+      console.log(createAppointmentInput.email, "email")
+      await sendResetEmail(createAppointmentInput.email);
+      const appointments = await this.prisma.appointment.create({ data: createAppointmentInput });
+      return appointments;
     } catch (error) {
       console.log(error, "error")
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
