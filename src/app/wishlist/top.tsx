@@ -6,9 +6,9 @@ interface TopProps {
   Icon: React.ElementType;
 }
 
-const Top: React.FC<TopProps> = ({ heading, Icon }) => {
+const Top1: React.FC<TopProps> = ({ heading, Icon }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-[150px] lg:h-[200px]">
+    <div className="flex flex-col items-center justify-center h-[100px] lg:h-[200px]">
       <div className="text-3xl transition-colors duration-300">
         <Icon className="h-10 w-10 lg:h-14 lg:w-14" />
       </div>
@@ -19,4 +19,4 @@ const Top: React.FC<TopProps> = ({ heading, Icon }) => {
   );
 };
 
-export default Top;
+export default Top1;
