@@ -1,6 +1,11 @@
-import LottieCustom from "components/Lottie/error-gif";
+"use client"
+
 import Link from "next/link";
 import animationData from "../../public/assets/images//json/404.json"; 
+import dynamic from "next/dynamic";
+const LottieCustom = dynamic(() => import('components/Lottie/error-gif'), {
+  ssr:false
+})
 
 export default function NotFound() {
   return (
