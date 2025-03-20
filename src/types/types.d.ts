@@ -20,6 +20,7 @@ export interface SocialLink {
     type?: string;
     value?: string | number;
     onChange?: ChangeEvent<HTMLInputElement>
+    min?: string
   };
   export interface FAQ {
     question: string;

@@ -2,7 +2,7 @@ import { Field, ErrorMessage } from "formik";
 import React from "react";
 import { TextInputProps } from "types/types";
 
-const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeholder = "", type = "text" , value , onChange }) => {
+const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeholder = "", type = "text" , value , onChange , min }) => {
   return (
     <div className="flex flex-col mb-1">
       <label htmlFor={name} className="text-13 font-medium font-inter">
@@ -39,6 +39,7 @@ const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeh
             type === "number" ? " pl-10 md:pl-14" : "" 
           }`}
           value={value}
+          min={min}
           onChange={onChange}
         />
       </div>
