@@ -79,3 +79,18 @@ export interface mainCategory {
   topHeading:string,
   description:string
 }
+
+export interface SUBNCATEGORIES_PAGES_PROPS {
+  catgories: Category[], categoryData: Category, subCategoryData?: ISUBCATEGORY,
+  isSubCategory: boolean
+  mainCategory?: mainCategory
+
+}
+
+export type FilterState = {
+  colors: string[];
+  thicknesses: string[];
+  commercialWarranty: string[];
+  residentialWarranty: string[];
+  plankWidth: string[];
+};

@@ -7,25 +7,23 @@ import Drawer from "components/ui/drawer";
 import Select from "components/ui/Select";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { type ISUBCATEGORY, type Category, mainCategory } from "types/cat";
-import { AdditionalInformation, IProduct } from "types/prod";
+import { type ISUBCATEGORY, type Category, FilterState, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
+import { IProduct } from "types/prod";
 import { SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
-interface SUBNCATEGORIES_PAGES_PROPS{ catgories: Category[], categoryData: Category, subCategoryData?: ISUBCATEGORY,
-   isSubCategory: boolean
-   mainCategory?:mainCategory
-  
-  }
 
-const Category = ({ catgories, categoryData, subCategoryData, isSubCategory,mainCategory}: SUBNCATEGORIES_PAGES_PROPS) => {
+
+const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mainCategory }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [selectedThicknesses, setSelectedThicknesses] = useState<string[]>([]);
-  const [selectedCommmericallWarranty, setSelectedCommmericallWarranty] = useState<string[]>([]);
-  const [selectedResidentialWarranty, setSelectedResidentialWarranty] = useState<string[]>([]);
-  const [selectedPlankWidth, setSelectedPlankWidth] = useState<string[]>([]);
+  const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
+    colors: [],
+    thicknesses: [],
+    commercialWarranty: [],
+    residentialWarranty: [],
+    plankWidth: [],
+  });
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
@@ -39,101 +37,71 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory,main
       setData(categoryData)
     }
   }, [categoryData, subCategoryData])
+
   useEffect(() => {
-  let filtered = Data?.products;
-  if (params.subcategory) {
-    filtered = filtered?.filter(product => 
-      product.subcategory?.custom_url === params.subcategory
-    );
-  }
-
-  const selectedFilter = [];
-
-  filtered = filtered?.filter(product => {
-    const price = parseFloat(product.price);
-    return price >= priceValue[0] && price <= priceValue[1];
-  });
-
-  ProductsSorting(filtered || [], sortOption);
-
-  if (
-    sortOption &&
-    selectedColors.length === 0 &&
-    selectedThicknesses.length === 0 &&
-    selectedCommmericallWarranty.length === 0 &&
-    selectedResidentialWarranty.length === 0 &&
-    selectedPlankWidth.length === 0 &&
-    isWaterProof === null
-  ) {
+    let filtered = Data?.products;
+  
+    if (params.subcategory) {
+      filtered = filtered?.filter(
+        product => product.subcategory?.custom_url === params.subcategory
+      );
+    }
+  
+    const appliedFilters: SelectedFilter[] = [];
+  
+    filtered = filtered?.filter(product => {
+      const price = parseFloat(product.price);
+      return price >= priceValue[0] && price <= priceValue[1];
+    });
+  
+    ProductsSorting(filtered || [], sortOption);
+  
+    const { colors, thicknesses, commercialWarranty, residentialWarranty, plankWidth } = selectedProductFilters;
+  
+    if (
+      sortOption &&
+      colors.length === 0 &&
+      thicknesses.length === 0 &&
+      commercialWarranty.length === 0 &&
+      residentialWarranty.length === 0 &&
+      plankWidth.length === 0 &&
+      isWaterProof === null
+    ) {
+      setFilteredProducts(filtered || []);
+      setSelectedFilters([]);
+      return;
+    }
+  
+    if (isWaterProof === true || isWaterProof === false) {
+      filtered = filtered?.filter(product => product.waterproof === isWaterProof);
+      appliedFilters.push({ name: "isWaterProof", value: isWaterProof });
+    }
+  
+    const filterMapping: { key: keyof FilterState; productKey: string }[] = [
+      { key: "colors", productKey: "colors" },
+      { key: "thicknesses", productKey: "thickness" },
+      { key: "commercialWarranty", productKey: "CommmericallWarranty" },
+      { key: "residentialWarranty", productKey: "ResidentialWarranty" },
+      { key: "plankWidth", productKey: "plankWidth" },
+    ];
+  
+    filterMapping.forEach(({ key, productKey }) => {
+      if (selectedProductFilters[key].length > 0) {
+        filtered = filtered?.filter(product =>
+          selectedProductFilters[key].includes(product[productKey] || "")
+        );
+        selectedProductFilters[key].forEach((value: string) => {
+          appliedFilters.push({ name: key, value });
+        });
+      }
+    });
+  
     setFilteredProducts(filtered || []);
-    setSelectedFilters([]);
-    return;
-  }
+    setSelectedFilters(appliedFilters);
+  }, [selectedProductFilters, priceValue, sortOption, Data?.products, params.subcategory, isWaterProof]);
+  
 
-  if (isWaterProof !== null) {
-    filtered = filtered?.filter(product => product.waterproof === isWaterProof);
-    selectedFilter.push({ name: "isWaterProof", value: isWaterProof });
-  }
 
-  if (selectedColors.length > 0) {
-    filtered = filtered?.filter(product =>
-      product.colors?.some((color: AdditionalInformation) => selectedColors.includes(color.name))
-    );
-    selectedColors.forEach(color => {
-      selectedFilter.push({ name: "selectedColors", value: color });
-    });
-  }
-
-  if (selectedThicknesses.length > 0) {
-    filtered = filtered?.filter(product =>
-      selectedThicknesses.includes(product.thickness || '')
-    );
-    selectedThicknesses.forEach(thickness => {
-      selectedFilter.push({ name: "selectedThicknesses", value: thickness });
-    });
-  }
-
-  if (selectedCommmericallWarranty.length > 0) {
-    filtered = filtered?.filter(product =>
-      selectedCommmericallWarranty.includes(product.CommmericallWarranty || '')
-    );
-    selectedCommmericallWarranty.forEach(warranty => {
-      selectedFilter.push({ name: "selectedCommmericallWarranty", value: warranty });
-    });
-  }
-
-  if (selectedResidentialWarranty.length > 0) {
-    filtered = filtered?.filter(product =>
-      selectedResidentialWarranty.includes(product.ResidentialWarranty || '')
-    );
-    selectedResidentialWarranty.forEach(warranty => {
-      selectedFilter.push({ name: "selectedResidentialWarranty", value: warranty });
-    });
-  }
-
-  if (selectedPlankWidth.length > 0) {
-    filtered = filtered?.filter(product =>
-      selectedPlankWidth.includes(product.plankWidth || '')
-    );
-    selectedPlankWidth.forEach(width => {
-      selectedFilter.push({ name: "selectedPlankWidth", value: width });
-    });
-  }
-
-  setFilteredProducts(filtered || []);
-  setSelectedFilters(selectedFilter);
-}, [
-  isWaterProof,
-  selectedColors,
-  selectedThicknesses,
-  selectedCommmericallWarranty,
-  selectedResidentialWarranty,
-  selectedPlankWidth,
-  priceValue,
-  sortOption,
-  Data?.products,
-  params.subcategory
-]);
 
 
 
@@ -148,23 +116,15 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory,main
             category={Data}
             isWaterProof={isWaterProof}
             setIsWaterProof={setIsWaterProof}
-            selectedColor={selectedColors}
-            setSelectedColor={setSelectedColors}
-            selectedThickness={selectedThicknesses}
-            setSelectedThickness={setSelectedThicknesses}
-            selectedPlankWidth={selectedPlankWidth}
-            setSelectedPlankWidth={setSelectedPlankWidth}
-            selectedResidentialWarranty={selectedResidentialWarranty}
-            setSelectedResidentialWarranty={setSelectedResidentialWarranty}
-            selectedCommmericallWarranty={selectedCommmericallWarranty}
-            setSelectedCommmericallWarranty={setSelectedCommmericallWarranty}
+            selectedProductFilters={selectedProductFilters}
+            setSelectedProductFilters={setSelectedProductFilters}
             priceValue={priceValue}
             setPriceValue={setPriceValue}
           />
         </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-            <h1 className="text-34 font-bold">{mainCategory?.topHeading || Data?.topHeading || Data?.Heading  || Data.name}</h1>
+            <h1 className="text-34 font-bold">{mainCategory?.topHeading || Data?.topHeading || Data?.Heading || Data.name}</h1>
             <p
               className="text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter"
               dangerouslySetInnerHTML={{ __html: mainCategory?.description || Data?.description || "" }}
@@ -188,16 +148,8 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory,main
                     category={Data}
                     isWaterProof={isWaterProof}
                     setIsWaterProof={setIsWaterProof}
-                    selectedColor={selectedColors}
-                    setSelectedColor={setSelectedColors}
-                    selectedThickness={selectedThicknesses}
-                    setSelectedThickness={setSelectedThicknesses}
-                    selectedPlankWidth={selectedPlankWidth}
-                    setSelectedPlankWidth={setSelectedPlankWidth}
-                    selectedResidentialWarranty={selectedResidentialWarranty}
-                    setSelectedResidentialWarranty={setSelectedResidentialWarranty}
-                    selectedCommmericallWarranty={selectedCommmericallWarranty}
-                    setSelectedCommmericallWarranty={setSelectedCommmericallWarranty}
+                    selectedProductFilters={selectedProductFilters}
+                    setSelectedProductFilters={setSelectedProductFilters}
                     priceValue={priceValue}
                     setPriceValue={setPriceValue}
                   />
@@ -209,20 +161,11 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory,main
               </div>
             </div>
           </div>
-          <SubCategory 
+          <SubCategory
             filteredProducts={filteredProducts}
             selectedFilters={selectedFilters}
             setIsWaterProof={setIsWaterProof}
-            selectedColor={selectedColors}
-            setSelectedColor={setSelectedColors}
-            selectedThickness={selectedThicknesses}
-            setSelectedThickness={setSelectedThicknesses}
-            selectedPlankWidth={selectedPlankWidth}
-            setSelectedPlankWidth={setSelectedPlankWidth}
-            selectedResidentialWarranty={selectedResidentialWarranty}
-            setSelectedResidentialWarranty={setSelectedResidentialWarranty}
-            selectedCommmericallWarranty={selectedCommmericallWarranty}
-            setSelectedCommmericallWarranty={setSelectedCommmericallWarranty}
+            setSelectedProductFilters={setSelectedProductFilters}
             categoryData={categoryData}
             subCategoryData={subCategoryData}
           />
