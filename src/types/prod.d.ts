@@ -68,6 +68,7 @@ export interface IProduct {
     pricePerBox:number,
     squareMeter:number,
     requiredBoxes:number,
+    boxCoverage?:string,
  
   }
 

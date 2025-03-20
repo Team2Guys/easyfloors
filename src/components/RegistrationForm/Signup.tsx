@@ -6,7 +6,7 @@ import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link";
 import InputField from "components/ui/InputField";
 import { useFormState, useFormStatus } from "react-dom";
-import { signupData } from "data/data";
+import { loginData, signupData } from "data/data";
 import { BiArrowBack } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,10 +19,10 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (!state?.message) return;
-  
+
     const message = state.message.toLowerCase();
     const toastType = message.includes("success") ? "success" : "error";
-  
+
     toast[toastType](state.message);
   }, [state?.message]);
 
@@ -30,7 +30,7 @@ const SignupForm = () => {
     <div className="flex flex-col md:flex-row w-full h-screen">
       <div
         className="hidden md:block md:w-1/2 bg-cover bg-center"
-        style={{ backgroundImage: "url('/assets/images/aboutus/order-free-sample.png')" }}
+        style={{ backgroundImage: "url('/assets/images/login.webp')" }}
       />
 
       <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
@@ -42,9 +42,8 @@ const SignupForm = () => {
             Back to home
           </Link>
 
-          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20">
-            {data.title}
-          </h2>
+          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20" dangerouslySetInnerHTML={{ __html: loginData.title }} />
+
           <h3 className="text-4xl font-normal mb-4 mt-14 text-center">{data.subtitle}</h3>
 
           <Formik

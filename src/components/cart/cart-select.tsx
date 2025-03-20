@@ -17,7 +17,7 @@ const CartSelect = ({ select, fees, onSelect }: CartSelectProps) => {
 
   return (
     <div className="flex justify-between text-16 lg:text-20">
-      <p>Subtotal:</p>
+      <p>Shipping</p>
       <div>
         <div className="border bg-white text-[#BBBBBB] text-12 xl:text-15  2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 w-full mb-2">
           United Arab Emirates
