@@ -8,7 +8,7 @@ import RelatedSlider from 'components/related-slider/related-slider';
 import { featureItems } from 'data/data';
 import React from 'react';
 import { detailprops } from 'types/product-detail';
-import ProductContainer from 'components/ProdutDetailContainer.tsx/ProductContainer';
+import ProductContainer from 'components/ProdutDetailContainer/ProductContainer';
 
 const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, productData }: detailprops) => {
   return (
