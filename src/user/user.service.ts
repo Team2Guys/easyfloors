@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserInput } from './dto/create-user.input';
+import { CreateUserInput, UserLogin } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { customHttpException } from '../utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
@@ -22,6 +22,25 @@ export class UserService {
     }
   }
 
+
+  async userLogin(createUserInput: UserLogin) {
+    try {
+      const {email, password } = createUserInput
+      const existingUser = await this.prisma.user.findUnique({ where: { email } });
+      if (!existingUser) {
+        return customHttpException("User already exists!", 'BAD_REQUEST');
+      }
+
+      if(existingUser.email !== email && existingUser.password !==password){
+      return customHttpException("Invalid User name or passowrd", 'UNAUTHORIZED');   
+      }
+
+    return  existingUser;
+
+    } catch (error) {
+      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+    }
+  }
   async findAll() {
 
     try {
@@ -31,6 +50,8 @@ export class UserService {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
   }
+
+
 
   async findOne(email: string) {
 

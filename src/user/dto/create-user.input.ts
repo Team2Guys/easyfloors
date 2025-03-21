@@ -19,3 +19,15 @@ export class CreateUserInput {
   userImageUrl: string;
 
 }
+
+
+
+@InputType()
+export class UserLogin {
+  @Field(() => String, { description: 'user email' })
+  email: string;
+
+  @Field(() => String, { description: 'user email' })
+  password: string;
+
+}
