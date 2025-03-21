@@ -10,6 +10,7 @@ interface CustomUser extends User {
   id: string;
   name: string;
   email: string;
+  customtoken: string
 }
 
 export const authOptions = {
@@ -33,7 +34,9 @@ export const authOptions = {
               id: data.userLogin.id,
               name: data.userLogin.name,
               email: data.userLogin.email,
+              customtoken: data.userLogin.token,
               image: data.userLogin.userImageUrl || null
+
             } as CustomUser;
           }
 
@@ -46,12 +49,13 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: JWT; user?: User }) {
+    async jwt({ token, user }: { token: JWT; user?: CustomUser }) {
       if (user) {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.picture = user.image
+        token.picture = user.image,
+      token.customtoken = user.customtoken,
       }
       return token;
     },
