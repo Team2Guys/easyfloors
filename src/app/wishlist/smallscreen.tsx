@@ -42,10 +42,7 @@ const WishlistSmall: React.FC = () => {
         item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
       ));
     };
-  
-    const increment = (id: number) => updateQuantity(id, 1);
-    const decrement = (id: number) => updateQuantity(id, -1);
-
+    
     const handleAddToCart = async (product: ICart) => {
       try {
         await saveToCart(product); // 
