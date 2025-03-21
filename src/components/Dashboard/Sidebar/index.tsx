@@ -435,6 +435,66 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
               <SidebarLinkGroup
+                activeCondition={pathname === '/dashboard/abundant'}
+              >
+                {(handleClick, open) => {
+                  return (
+                    <>
+                      <Link
+                        href="/dashboard"
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/abundant' &&
+                          'bg-black dark:bg-primary'
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent default link behavior
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
+                        }}
+                      >
+                        <TbGardenCartOff size={20} className="text-white" />
+                        Appointments
+                        <MdOutlineKeyboardArrowDown
+                          size={30}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
+                            }`}
+                        />
+                      </Link>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                          }`}
+                      >
+                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
+                          <li>
+                            <Link
+                              href="/dashboard/measurement-appointment"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/abundant' &&
+                                'text-white'
+                                } `}
+                            >
+                              View Measurement Appointment
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/dashboard/installation-appointments"
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/abundant' &&
+                                'text-white'
+                                } `}
+                            >
+                              View Installation Appointment
+                            </Link>
+                          </li>
+                        </ul>
+                      </div>
+                    </>
+                  );
+                }}
+              </SidebarLinkGroup>
+              <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/usernewsletter'}
               >
                 {(handleClick, open) => {

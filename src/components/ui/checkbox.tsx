@@ -17,12 +17,11 @@ const Checkbox: React.FC<CheckboxProps> = ({ label , isActive }) => {
   };
 
   return (
-    <label className="flex items-center cursor-pointer space-x-2">
+    <label className="flex items-center cursor-pointer space-x-2" onClick={handleChange}>
       <div
         className={`w-5 h-5 border-2  flex items-center justify-center transition-colors duration-200 ${
           isChecked ? 'bg-orange-600 border-orange-600 text-white' : 'border-primary'
         }`}
-        onClick={handleChange}
       >
         {isChecked && (
           <svg

@@ -10,12 +10,18 @@ export const handleAddToStorage = async (
     subCategory: string,
     MainCategory: string,
     type: "cart" | "wishlist",
-    image?: string 
+    image?: string,
+    boxCoverage?: string,
+
   ) => {
     if (!productData) {
       toast.error("Product is undefined");
       return;
     }
+    const adjustedRequiredBoxes = requiredBoxes > 0 ? requiredBoxes : 1;
+    const adjustedtotalPrice = totalPrice > 0 ? totalPrice : pricePerBox;
+    const adjustedsquareMeter = squareMeter > 0 ? squareMeter : Number(boxCoverage);
+
     const item = {
       id: Number(productData.id),
       name: productData.name,
@@ -24,10 +30,11 @@ export const handleAddToStorage = async (
       image,
       subcategories: subCategory,
       category: MainCategory,
-      totalPrice,
+      boxCoverage,
+      totalPrice:adjustedtotalPrice,
       pricePerBox,
-      squareMeter,
-      requiredBoxes,
+      squareMeter:adjustedsquareMeter,
+      requiredBoxes:adjustedRequiredBoxes,
     };
   
     try {
