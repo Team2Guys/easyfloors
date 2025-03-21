@@ -2,7 +2,7 @@ import { ICart } from "types/prod";
 
 export const openDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("ecommerceDB", 2); 
+    const request = indexedDB.open("ecommerceDB", 3); 
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains("cart")) {
@@ -10,6 +10,9 @@ export const openDB = (): Promise<IDBDatabase> => {
       }
       if (!db.objectStoreNames.contains("wishlist")) {
         db.createObjectStore("wishlist", { keyPath: "id" });
+      }
+      if (!db.objectStoreNames.contains("freeSample")) {
+        db.createObjectStore("freeSample", { keyPath: "id" });
       }
     };
     request.onsuccess = () => resolve(request.result);
@@ -169,3 +172,94 @@ export const addToCart = async (product: ICart): Promise<void> => {
       throw error;
     }
   };
+
+
+  export const addToFreeSample= async (product: ICart): Promise<void> => {
+    console.log("Product before adding:", product);
+    try {
+      const db = await openDB();
+      const tx = db.transaction("freeSample", "readwrite");
+      const store = tx.objectStore("freeSample");
+  
+      // Get all samples
+      const samples: ICart[] = await new Promise((resolve, reject) => {
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+  
+      // Check if the user has already added 5 samples
+      if (samples.length >= 5) {
+        alert("You can only add up to 5 free samples.");
+        return;
+      }
+  
+      // Check if the product already exists
+      const existingProduct = samples.find((item) => item.id === product.id);
+      if (existingProduct) {
+        alert("This sample is already added.");
+        return;
+      }
+  
+      // Ensure requiredBoxes is always 1
+      product.requiredBoxes = 1;
+      
+      // Set price and total price to 0
+      product.price = 0;
+      product.totalPrice = 0;
+      // console.log(product,"freesampledata")
+      // Add the sample
+      await new Promise<void>((resolve, reject) => {
+        const request = store.put(product);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+   
+      // Notify the app that the sample list has been updated
+      window.dispatchEvent(new Event("freeSampleUpdated"));
+  
+      // Show success message
+      alert("Sample added successfully.");
+  
+    } catch (error) {
+      console.error("Error adding free sample:", error);
+    }
+  };
+
+
+// Remove a free sample item
+  export const removeFreeSample = async (id: number): Promise<void> => {
+  try {
+    const db = await openDB();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction("freeSample", "readwrite");
+      const store = tx.objectStore("freeSample");
+      const request = store.delete(id);
+
+      request.onsuccess = () => {
+        tx.oncomplete = () => resolve();
+      };
+      request.onerror = () => reject(request.error);
+    });
+
+    window.dispatchEvent(new Event("freeSampleUpdated"));
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Get all free sample items
+export const getFreeSamples = async (): Promise<ICart[]> => {
+  try {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction("freeSample", "readonly");
+      const store = tx.objectStore("freeSample");
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    throw error;
+  }
+};

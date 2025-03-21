@@ -30,6 +30,7 @@ interface ProductTableProps {
 const ProductTable: React.FC<ProductTableProps> = ({ columns, products, isSamplePage = false }) => {
   const pathname = usePathname();
   const [wishlistItems, setWishlistItems] = useState<ICart[]>([]);
+  const [freeSampleItems, setfreeSampleItems]= useState<ICart[]>([]);
     useEffect(() => {
       const fetchCartItems = async () => {
         try {
@@ -78,49 +79,46 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, products, isSample
           <h1 className="text-center xl:text-[48px]">Your Shopping Cart</h1>
           <p className="text-center text-[24px] pt-10">Wishlist is empty</p>
           <Link href="/" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
-            <FaArrowLeftLong /> Go Back to Shop
+            <FaArrowLeftLong />Go Back to Shop
           </Link>
         </div>
       ) : (
         <table className="min-w-full border-b border-gray-300 bg-white">
           <thead>
-          <tr className="text-12 xl:text-24 font-semibold font-inter text-left border-b">
-  {columns
-    .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
-    .map((col, index) => (
-      <th
+          <tr className="text-12 xl:text-20 2xl:text-24 font-semibold font-inter text-left border-b">
+         {columns.filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true)).map((col, index) => (
+         <th
         key={index}
-        className={`${pathname === "/freesample" ? "p-3 xl:p-4" : "p-2 xl:p-6"} 
-                    ${index === columns.length - 1 ? "text-center" : "text-left"}`}
-      >
-        {col}
-      </th>
-    ))}
-</tr>
-
+        className={`${pathname === "/freesample" ? "p-3 xl:p-4" : "p-2"} 
+                    ${index === columns.length - 1 ? "text-center" : "text-left"}`}>{col}</th>))}
+        </tr>
           </thead>
           <tbody>
             {wishlistItems.slice(0, 5).map((product) => (
               <tr key={product.id} className="border-t">
                 {/* ✅ Product Name & Image */}
-                <td className="p-3 flex items-center gap-3 md:w-[50%]">
-                  <Image height={64} width={64}  src={product.image || "/assets/images/default.png"} alt={product.name} className="xl:h-[151px] xl:w-[194px] md:h-[100px] md:w-[100px] object-cover" />
-                  <div className="text-12 xl:text-24 font-inter font-normal items-center w-full">{product.name}</div>
+                <td className="p-3 flex items-center gap-3 md:w-full">
+                  <Image height={64} width={64}  src={product.image || "/assets/images/default.png"} alt={product.name} className="xl:h-[151px] xl:w-[194px] md:h-[100px] md:w-[70px] object-cover" />
+                  <div className="w-[100%] md:text-10 lg:text-12 xl:text-20 2xl:text-24 font-inter font-normal items-center">
+                    <p>{product.name}</p>
+                    <p className="md:text-[10px] lg:text-12 xl:text-18 2xl:tetx-20">No. of boxes: {product.requiredBoxes}</p>
+                    <p className="md:text-[9px] lg:text-12 xl:text-20">Box Coverage: {product.boxCoverage}</p>
+                    </div>
                 </td>
 
                 {/* ✅ Price Column (Shows 'Free' on Sample Page) */}
-                <td className="md:p-3 xl:pl-6 font-inter text-12 xl:text-24 font-normal md:w-[17%]">
+                <td className="md:p-3 xl:pl-6 font-inter text-12 xl:text-20 2xl:text-24 font-normal md:w-[17%]">
                   {pathname === "/freesample" ? "Free" : product.price}
                 </td>
 
                 {/* ✅ Hide QTY Column on Free Sample Page */}
                 {pathname !== "/freesample" && (
-                  <td className="md:w-[20%]">
-                    <div className="flex justify-center items-center text-12 xl:text-24 bg-gray-200 px-3 py-2 w-fit ">
+                  <td className="md:w-[20%] xl:w-[15%]">
+                    <div className="flex justify-center items-center text-12 xl:text-20 2xl:text-24 bg-gray-200 px-3 py-2 w-fit ">
                       <button onClick={() => decrement(product.id)} className="lg:px-2 text-gray-700">
                         <FiMinus />
                       </button>
-                      <span className="px-2 text-black text-12 xl:text-24 font-semibold">{product.requiredBoxes}</span>
+                      <span className="px-2 text-black text-12 xl:text-20 2xl:text-24 font-semibold">{product.requiredBoxes}</span>
                       <button onClick={() => increment(product.id)} className="lg:px-2 text-gray-700">
                         <GoPlus />
                       </button>
@@ -129,17 +127,17 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, products, isSample
                 )}
 
                 {/* ✅ Stock Status */}
-                <td className="md:p-3 font-400 font-inter text-12 xl:text-24 md:w-[15%] xl:w-[16%]">
+                <td className="md:p-3 font-400 font-inter md:text-11 lg:text-12 xl:text-20 2xl:text-24 md:w-[15%] xl:w-[13%]">
                   {product.stock > 0 ? "In Stock" : "Out of Stock"}
                 </td>
 
                 {/* ✅ Action Buttons */}
                 <td className="p-3">
                   <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center">
-                    <button  onClick={() => handleAddToCart(product)}  className="bg-black text-white text-12 xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
+                    <button  onClick={() => handleAddToCart(product)}  className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
                       <GrCart /> Add to Cart
                     </button>
-                    <button  onClick={() => handleRemoveItem(product.id)} className="h-6 w-6 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
+                    <button  onClick={() => handleRemoveItem(product.id)} className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
                       <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
                     </button>
                   </div>

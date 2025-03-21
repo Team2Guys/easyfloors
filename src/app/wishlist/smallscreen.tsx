@@ -72,6 +72,8 @@ const WishlistSmall: React.FC = () => {
                   <Image src={product.image || "/image.png"} alt={product.name} width={80} height={80} className="object-cover w-20 h-20" />
                   <div className="text-14 font-inter font-normal flex-grow">
                     <p className="font-semibold text-lg">{product.name}</p>
+                    <p className="text-12 font-normal font-inter">No. of boxes: {product.requiredBoxes}</p>
+                    <p className="text-12 font-normal font-inter">Box Coverage: {product.boxCoverage}</p>
                     <p className="text-14 font-semibold font-inter">
                     {pathname === "/freesample" ? "Free" : `AED ${product.price}`}
                     </p>
