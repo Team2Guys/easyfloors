@@ -27,7 +27,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
 
   return (
     <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20 ${className}`}>
-      <div className="w-full lg:w-[55%] 2xl:w-[60%]">
+      <div className="w-full 2xl:w-[60%] lg:w-[55%]">
         {productData?.productImages && (
           <Thumbnail
             ThumnailImage={productData.productImages}
@@ -36,12 +36,12 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           />
         )}
       </div>
-      <div className="w-full lg:w-[45%] 2xl:w-[40%] space-y-3 xl:space-y-4 mb-2">
+      <div className="w-full 2xl:w-[40%] lg:w-[45%] mb-2 space-y-3 xl:space-y-4">
         {productData?.name && (
-          <h1 className="font-inter text-25 2xl:text-[33px] font-semibold">{productData.name}</h1>
+          <h1 className="text-25 2xl:text-[33px] font-inter font-semibold">{productData.name}</h1>
         )}
-        <div className="border-b border-[#D9D9D9]" />
-        <div className="flex items-center gap-2 sm:gap-4 text-18 2xl:text-23 font-semibold text-primary">
+        <div className="border-[#D9D9D9] border-b" />
+        <div className="flex text-18 text-primary 2xl:text-23 font-semibold gap-2 items-center sm:gap-4">
           <p className="text-black">Price Per Sqm :</p>
           <p>
             <span>AED</span> {productData?.price}{" "}
@@ -50,26 +50,26 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
             </span>
           </p>
         </div>
-        <div className="flex items-center gap-1 text-19">
-          <p className="text-14 sm:text-18 2xl:text-23">
+        <div className="flex text-19 gap-1 items-center">
+          <p className="text-14 2xl:text-23 sm:text-18">
             Stock:{" "}
             <span className="text-[#008000] font-bold">
               {productData?.stock && productData?.stock > 0 ? "In Stock" : "Out of Stock"}
             </span>
           </p>
-          <div className="h-5 w-[2px] bg-black" />
-          <p className="text-14 sm:text-18 2xl:text-23 font-bold">
+          <div className="bg-black h-5 w-[2px]" />
+          <p className="text-14 2xl:text-23 font-bold sm:text-18">
             Box Coverage:{" "}
             <span className="font-normal">
               {boxCoverage} m<sup>2</sup>
             </span>
           </p>
-          <div className="h-5 w-[2px] bg-black" />
-          <p className="text-14 sm:text-18 2xl:text-23 font-bold">
+          <div className="bg-black h-5 w-[2px]" />
+          <p className="text-14 2xl:text-23 font-bold sm:text-18">
             Box: <span className="font-normal">1</span>
           </p>
         </div>
-        <div className="border-b border-[#D9D9D9]" />
+        <div className="border-[#D9D9D9] border-b" />
         <AreaCalculator
           area={area}
           unit={unit}
@@ -81,14 +81,14 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           squareMeter={squareMeter}
           accessories={productData.acessories || []}
         />
-        <div className="border-b border-[#D9D9D9]" />
-        <div className="flex items-center gap-5">
-          <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">
+        <div className="border-[#D9D9D9] border-b" />
+        <div className="flex gap-5 items-center">
+          <p className="text-16 2xl:text-33 font-black lg:text-28 sm:text-20">
             Total : <span>AED</span> <span>{totalPrice.toFixed(2)}</span>
           </p>
         </div>
-        <div className="flex items-center gap-1 sm:gap-3 w-full">
-          <button className="max-sm:h-[40px] px-2 py-2 sm:py-3 text-white bg-primary flex items-center gap-2 font-inter text-12 sm:text-16 2xl:text-22 w-7/12">
+        <div className="flex w-full gap-1 items-center sm:gap-3">
+          <button className="flex bg-primary text-12 text-white w-7/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16">
             <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
             Order Now Free Sample
           </button>
@@ -106,14 +106,14 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
                 image?.imageUrl ?? ""
               )
             }
-            className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12"
+            className="flex bg-black justify-center text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           >
             <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} />
             Add to Cart
           </button>
         </div>
         <button
-          className="flex items-center gap-2 text-[#475156]"
+          className="flex text-[#475156] gap-2 items-center"
           onClick={() =>
             handleAddToStorage(
               productData,

@@ -15,7 +15,6 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
     <div className="mb-10">
       <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
       <ProductContainer 
-        // accessories={productData?.acessories || []} 
         MainCategory={MainCategory} 
         subCategory={subCategory} 
         ProductName={ProductName} 
@@ -23,7 +22,7 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
         ProductInfo={ProductInfo}  
       />
 
-      <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
+      <div className="lg:max-w-[80%] max-w-[95%] mb-10 mx-auto sm:max-w-[90%]">
         <AdditionalInfo 
           description={productData?.description || ''} 
           AdditionalInformation={productData?.AdditionalInformation} 
