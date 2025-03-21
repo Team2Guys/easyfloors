@@ -3,20 +3,12 @@ import Card from "components/Card/Card";
 import { features } from "data/data";
 import React, { useEffect, useState } from "react";
 import { FiX } from "react-icons/fi";
-import { SelectedFilter, SubCategoryProps } from "types/types";
+import { FilterState } from "types/cat";
+import { SubCategoryProps } from "types/types";
 
 const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
   selectedFilters,
-  setSelectedColor,
-  selectedColor,
-  setSelectedThickness,
-  selectedThickness,
-  setSelectedCommmericallWarranty,
-  selectedCommmericallWarranty,
-  setSelectedResidentialWarranty,
-  selectedResidentialWarranty,
-  setSelectedPlankWidth,
-  selectedPlankWidth,
+  setSelectedProductFilters,
   setIsWaterProof,
   categoryData,
   subCategoryData
@@ -28,26 +20,19 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
     }
   }, [filteredProducts])
 
-  const handleRemoveFilter = (item: SelectedFilter) => {
-    if (item.name === "selectedColors") {
-      const filterColors = selectedColor.filter((col) => col !== item.value);
-      setSelectedColor(filterColors)
-    } else if (item.name === "selectedThicknesses") {
-      const filterThickness = selectedThickness.filter((col) => col !== item.value);
-      setSelectedThickness(filterThickness)
-    } else if (item.name === "selectedCommmericallWarranty") {
-      const filterCommmerical = selectedCommmericallWarranty.filter((col) => col !== item.value);
-      setSelectedCommmericallWarranty(filterCommmerical)
-    } else if (item.name === "selectedResidentialWarranty") {
-      const filterResidential = selectedResidentialWarranty.filter((col) => col !== item.value);
-      setSelectedResidentialWarranty(filterResidential)
-    } else if (item.name === "selectedPlankWidth") {
-      const filterPlankWidth = selectedPlankWidth.filter((col) => col !== item.value);
-      setSelectedPlankWidth(filterPlankWidth)
-    } else if (item.name === "isWaterProof") {
+  const handleRemoveFilter = (item: { name: "isWaterProof"; value: boolean }
+    | { name: keyof FilterState; value: string }) => {
+    if (item.name === "isWaterProof") {
       setIsWaterProof(null)
+    } else {
+      setSelectedProductFilters((prevFilters) => ({
+        ...prevFilters,
+        [item.name]: (prevFilters[item.name] as string[]).filter(
+          (val) => val !== item.value
+        ),
+      }));
     }
-  }
+  };
   return (
     <div className="pt-5 lg:mb-20">
       {/* <div className="hidden lg:flex items-center border border-gray-300 px-2 py-2 w-full max-w-md focus-within:ring-2 focus-within:ring-primary hover:border-primary transition">
@@ -66,8 +51,13 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
             <div className="flex items-center flex-wrap gap-x-3 gap-y-1 px-3 py-1  text-[#191C1F] text-[8px] md:text-14">
               {selectedFilters.map((item, index) => (
                 <div key={index} className="flex items-center gap-2 flex-nowrap">
-                  <span>{item.value === true ? 'Yes' : item.value === false ? 'No' : item.value}</span>
-                  <FiX className="text-gray-500 cursor-pointer hover:text-red-500" onClick={() => handleRemoveFilter(item)} />
+                  <span>
+                    {item.value === true ? 'Yes' : item.value === false ? 'No' : item.value}
+                  </span>
+                  <FiX
+                    className="text-gray-500 cursor-pointer hover:text-red-500"
+                    onClick={() => handleRemoveFilter(item)}
+                  />
                 </div>
               ))}
             </div>
@@ -80,21 +70,21 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-  {products.length > 0 ? (
-    products.map((product, index) => (
-      <Card 
-        key={index} 
-        product={product} 
-        features={features} 
-        categoryData={categoryData} 
-        subCategoryData={subCategoryData} 
-        isSoldOut={false} 
-        isAccessories={false} 
-      />
-    ))
-  ) : (
-    <p>No Product found</p>
-  )}
+        {products.length > 0 ? (
+          products.map((product, index) => (
+            <Card
+              key={index}
+              product={product}
+              features={features}
+              categoryData={categoryData}
+              subCategoryData={subCategoryData}
+              isSoldOut={false}
+              isAccessories={false}
+            />
+          ))
+        ) : (
+          <p>No Product found</p>
+        )}
       </div>
     </div>
   );

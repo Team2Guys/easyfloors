@@ -55,7 +55,7 @@ if(!subCategory) return notFound()
 }
 
 const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
-  const { slug } = await params
+  const { slug , subcategory } = await params
   const [ catgories ] = await Promise.all([ fetchCategories() ]);
   const findCategory = catgories.find((cat: ICategory) => (cat?.RecallUrl ) === slug.trim());
 
@@ -64,7 +64,7 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , su
   }
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} categoryData={findCategory}   isSubCategory />
+      <Category catgories={catgories} categoryData={findCategory}  slug={slug} subcategory={subcategory} isSubCategory />
     </Suspense>
   );
 };
