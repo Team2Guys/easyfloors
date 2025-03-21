@@ -25,10 +25,11 @@ export class ProductsResolver {
   findOne(
     @Args('custom_url', { type: () => String }) custom_url: string,
     @Args('category', { type: () => String }) category: string,
-    @Args('subCategory', { type: () => String }) subCategory: string
+    @Args('subCategory', { type: () => String }) subCategory: string,
+    @Args('acessories', { type: () => Boolean,nullable:true }) acessories?: boolean
   
   ) {
-    return this.productsService.findOne(custom_url, category, subCategory);
+    return this.productsService.findOne(custom_url, category, subCategory,acessories);
   }
 
   @Mutation(() => Product)

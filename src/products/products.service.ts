@@ -37,17 +37,19 @@ export class ProductsService {
     }
   }
 
-  async findOne(custom_url: string,category:string, subCategory:string) {
+  async findOne(custom_url: string,category:string, subCategory:string,acessories?:boolean) {
     try {
-      console.log(category, subCategory, )
+   
+      
+      let flag = acessories ? true : false;
       return await this.prisma.products.findFirst({ where: { custom_url, category:{
         RecallUrl:category
       },
       subcategory:{
         custom_url:subCategory
-      }
+      },
     
-    }, include:{category:true, subcategory:true}});
+    }, include:{category:true, subcategory:true, acessories: flag? true : false}, });
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
