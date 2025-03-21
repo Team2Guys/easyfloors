@@ -22,6 +22,7 @@ export const LOGIN_USER = gql`
       email
       name
       phone
+      userImageUrl
     }
   }
 `;

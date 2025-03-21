@@ -29,10 +29,10 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
             setProfilePhoto(() => imageUrl && imageUrl.length > 0 ? imageUrl[0] : undefined)
         }
     };
-
     useEffect(() => {
         if (loggedInUser?.user) {
-            // setProfilePhoto(loggedInUser?.user?.image || undefined);
+            const images = loggedInUser?.user?.image 
+            setProfilePhoto( images || undefined as any) //eslint-disable-line
             setFormData({ name: loggedInUser?.user.name || "", email: loggedInUser?.user.email || "" });
         }
     }, [loggedInUser]);

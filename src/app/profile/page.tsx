@@ -14,6 +14,9 @@ if(!session){
   redirect('/login')
 }
 
+
+
+
   return (
     <ProfileComponent loggedInUser={session}/>
   )

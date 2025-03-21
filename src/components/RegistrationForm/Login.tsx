@@ -41,7 +41,7 @@ const LoginForm = () => {
               });
 
               if (res?.error) {
-                console.error("Login failed:", res.error);
+                  return res?.error;
               }
               setSubmitting(false);
             }}

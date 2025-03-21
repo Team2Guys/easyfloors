@@ -33,6 +33,7 @@ export const authOptions = {
               id: data.userLogin.id,
               name: data.userLogin.name,
               email: data.userLogin.email,
+              image: data.userLogin.userImageUrl || null
             } as CustomUser;
           }
 
@@ -50,6 +51,7 @@ export const authOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
+        token.picture = user.image
       }
       return token;
     },
@@ -57,6 +59,7 @@ export const authOptions = {
       if (session.user) {
         session.user.email = token.email;
         session.user.name = token.name;
+        session.user.image = token.picture || "/default-avatar.png";
         // token.exp = Math.floor(Date.now() / 1000) + 60 * 60; // 1 hour expiration
 
         token.exp = Math.floor(Date.now() / 1000) + 5 * 60;
