@@ -1,30 +1,23 @@
 "use client";
 
-import { useEffect } from "react";
-import { Formik, Form } from "formik";
-import { FaUser, FaEnvelope, FaLock } from "react-icons/fa";
+import { Formik, Form, Field } from "formik";
 import Link from "next/link";
-import InputField from "components/ui/InputField";
-import { useFormState, useFormStatus } from "react-dom";
-import { loginData, signupData } from "data/data";
 import { BiArrowBack } from "react-icons/bi";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerUser } from "hooks/authActions";
+
+import client from "config/apolloClient";
+import { CREATE_USER } from "graphql/user_mutation";
+
 
 const SignupForm = () => {
-  const data = signupData;
-  const [state, formAction] = useFormState(registerUser, { message: "" });
-  const { pending } = useFormStatus();
-
-  useEffect(() => {
-    if (!state?.message) return;
-
-    const message = state.message.toLowerCase();
-    const toastType = message.includes("success") ? "success" : "error";
-
-    toast[toastType](state.message);
-  }, [state?.message]);
+  const formValues ={
+    name: "",
+    email: "",
+    password: "",
+    retypePassword: "",
+    phone: "",
+  };
 
   return (
     <div className="flex flex-col md:flex-row w-full h-screen">
@@ -42,42 +35,52 @@ const SignupForm = () => {
             Back to home
           </Link>
 
-          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20" dangerouslySetInnerHTML={{ __html: loginData.title }} />
-
-          <h3 className="text-4xl font-normal mb-4 mt-14 text-center">{data.subtitle}</h3>
+          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20">
+            Sign Up
+          </h2>
 
           <Formik
-            initialValues={{ fullName: "", email: "", password: "", retypePassword: "" }}
-            onSubmit={(values, { setSubmitting }) => {
-              const formData = new FormData();
-              formData.append("fullName", values.fullName);
-              formData.append("email", values.email);
-              formData.append("password", values.password);
-              formData.append("retypePassword", values.retypePassword);
+            initialValues={formValues}
+            onSubmit={async (values, { setSubmitting }) => {
 
-              formAction(formData);
+           await client.mutate({
+                mutation: CREATE_USER,
+                variables: {createUser: values, 
+              },
+              });
+
               setSubmitting(false);
             }}
           >
             {({ isSubmitting }) => (
               <Form className="mt-10">
-                <InputField type="text" name="fullName" placeholder="Full Name" icon={<FaUser />} />
-                <InputField type="email" name="email" placeholder="Email" icon={<FaEnvelope />} />
-                <InputField type="password" name="password" placeholder="Password" icon={<FaLock />} />
-                <InputField
-                  type="password"
-                  name="retypePassword"
-                  placeholder="Confirm Password"
-                  icon={<FaLock />}
-                />
+
+                <div className="mb-4">
+                  <Field type="text" name="name" placeholder="Full Name" className="w-full p-3 border rounded" />
+                </div>
+
+                <div className="mb-4">
+                  <Field type="email" name="email" placeholder="Email" className="w-full p-3 border rounded" />
+                </div>
+
+                <div className="mb-4">
+                  <Field type="password" name="password" placeholder="Password" className="w-full p-3 border rounded" />
+                </div>
+                
+                <div className="mb-4">
+                  <Field type="number" name="phone" placeholder="Phone Number" className="w-full p-3 border rounded" />
+                </div>
+                <div className="mb-4">
+                  <Field type="password" name="retypePassword" placeholder="Confirm Password" className="w-full p-3 border rounded" />
+                </div>
 
                 <div className="pt-7">
                   <button
                     type="submit"
                     className="w-full bg-primary text-white p-3"
-                    disabled={pending || isSubmitting}
+                    disabled={isSubmitting}
                   >
-                    {pending || isSubmitting ? "Creating Account..." : "Sign Up"}
+                    {isSubmitting ? "Creating Account..." : "Sign Up"}
                   </button>
                 </div>
               </Form>
@@ -85,7 +88,7 @@ const SignupForm = () => {
           </Formik>
 
           <p className="text-center mt-4">
-            Already have an account?{" "}
+            Already have an account? {" "}
             <Link href="/login" className="text-primary font-semibold hover:underline">
               Login
             </Link>
