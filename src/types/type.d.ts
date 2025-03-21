@@ -339,6 +339,7 @@ export interface ITamaraList {
 
 export interface CartSelectProps {
   select: string[];
+  selectedFee: number;
   fees: { [key: string]: number };
-  onSelect: (state: string, fee: number) => void; //eslint-disable-line
+  onSelect: (_state: string, _fee: number) => void;
 }

@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import CartSelect from './cart-select';
-import { getCart, removeCartItem } from 'utils/indexedDB';
+import { addToCart, getCart, removeCartItem } from 'utils/indexedDB';
 import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
 import RelatedSlider from 'components/related-slider/related-slider';
@@ -30,9 +30,15 @@ const CartPage = ({products}:CartPageProps) => {
       }
     };
   
-    fetchCartItems();
-  }, []);
+    fetchCartItems(); 
   
+    const handleCartUpdate = () => fetchCartItems();
+    window.addEventListener("cartUpdated", handleCartUpdate);
+  
+    return () => {
+      window.removeEventListener("cartUpdated", handleCartUpdate);
+    };
+  }, []);
   const handleRemoveItem = async (id: number) => {
     try {
       await removeCartItem(id); 
@@ -43,18 +49,42 @@ const CartPage = ({products}:CartPageProps) => {
     }
   };
 
-  const updateQuantity = (id: number, index: number) => {
-    setCartItems(cartItems.map(item =>
-      item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
-    ));
+  const updateQuantity = async (id: number, change: number) => {
+    try {
+      const updatedCart = cartItems.map((item) => {
+        if (item.id === id) {
+          const newRequiredBoxes = Math.max(1, (item.requiredBoxes ?? 0) + change);
+          return {
+            ...item,
+            requiredBoxes: newRequiredBoxes,
+            totalPrice: item.pricePerBox * newRequiredBoxes,
+            squareMeter: Number(item.boxCoverage) * newRequiredBoxes,
+          };
+        }
+        return item;
+      });
+  
+      setCartItems(updatedCart);
+  
+      const updatedItem = updatedCart.find((item) => item.id === id);
+      if (updatedItem) {
+        await addToCart(updatedItem);
+      }
+    } catch (error) {
+      toast.error("Failed to update item quantity.");
+      throw error;
+    }
   };
   
   const increment = (id: number) => updateQuantity(id, 1);
   const decrement = (id: number) => updateQuantity(id, -1);
+  
 
   const handleStateSelect = (state: string, fee: number) => {
-    setSelectedFee(fee);
+    const subtotal = cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0);
+    setSelectedFee(subtotal > 1000 ? 0 : fee);
   };
+  
   const extractCategories = (cartItems: ICart[]) => {
     const cat = [...new Set(cartItems.map(item => item.category))];
     const subcat = [...new Set(cartItems.map(item => item.subcategories))];
@@ -77,6 +107,7 @@ const CategoryData = matchingProduct?.category
         <h1 className='text-center xl:text-[48px]'>Your Shopping Cart</h1>
         {
           cartItems.length === 0 ?
+    
           <div className='text-center'>
           <p className='text-center text-[24px] pt-10'>Cart is empty</p>
           <Link href='/' className='text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4'>
@@ -84,7 +115,8 @@ const CategoryData = matchingProduct?.category
           </Link>
           </div>
           :
-        <div className='mt-10 flex flex-wrap md:flex-nowrap gap-5 '>
+          <>
+          <div className='mt-10 flex flex-wrap md:flex-nowrap gap-5 '>
           <div className=' w-full md:w-[55%] xl:w-[70%] 2xl:w-[65%] px-2'>
           <div className=' max-h-[590px] overflow-x-auto pr-4'>
             <div className=' hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
@@ -116,7 +148,7 @@ const CategoryData = matchingProduct?.category
                       <LuPlus />
                     </button>
                       </div>
-                      <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.pricePerBox * (item.requiredBoxes ?? 0)).toFixed(2)}</span></p>
+                      <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{item.totalPrice.toFixed(2)}</span></p>
                       </div>
                     </div>
                   </div>
@@ -133,7 +165,7 @@ const CategoryData = matchingProduct?.category
                   </div>
                 </div>
                 <div className='col-span-2 text-center hidden xl:block'>
-                  <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.pricePerBox * (item.requiredBoxes ?? 0)).toFixed(2)}</span></p>
+                  <p className='text-16 2xl:text-20 font-semibold'>AED <span>{item.totalPrice.toFixed(2)}</span></p>
                 </div>
                 <div className='col-span-2 text-end lg:pr-5'>
                   <button className='text-primary' onClick={() => handleRemoveItem(item.id)}>
@@ -161,14 +193,15 @@ const CategoryData = matchingProduct?.category
             <p>Subtotal:</p>
             <p>AED {cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0).toFixed(2)}</p>
             </div>
-            <CartSelect select={UAEStates} fees={fees} onSelect={handleStateSelect} />
+            <CartSelect select={UAEStates} fees={fees} selectedFee={selectedFee}  onSelect={handleStateSelect} />
             <div className='border border-b border-[#DEDEDE]'/>
             <div className='flex items-center justify-between text-16 lg:text-20'>
             <p>Subtotal Incl. VAT</p>
-            <p>AED {(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0) + selectedFee).toFixed(2)}</p>
+            <p>AED {(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)).toFixed(2)}</p>
+
             </div>
-            <button className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20'>Proceed to Checkout</button>
-            <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0) + selectedFee) / 4}/>
+            <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
+            <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)) / 4}/>
             <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
               <div className='flex justify-between gap-2' >
             {
@@ -178,13 +211,14 @@ const CategoryData = matchingProduct?.category
             }
               </div>
           </div>
-        </div>
-        }
-        
+          </div>
         <RelatedSlider
-    products={products.slice(0, 5)}
-    CategoryData={CategoryData}
+        products={products.slice(0, 5)}
+        CategoryData={CategoryData}
         />
+          </>
+          }
+        
     </Container>
   )
 }

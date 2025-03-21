@@ -69,7 +69,7 @@ export interface IProduct {
     subcategory?: string;
     category?:string;
     image?: string
-    quantity?:number ;
+    totalPrice:number ;
     pricePerBox:number,
     squareMeter:number,
     requiredBoxes:number,
