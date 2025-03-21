@@ -1,25 +1,20 @@
 "use client";
-
-import { useEffect } from "react";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+// import { FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link";
-import { useFormState, useFormStatus } from "react-dom";
 import { BiArrowBack } from "react-icons/bi";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { authenticateUser } from "hooks/authActions";
 import { loginData } from "data/data";
-import InputField from "components/ui/InputField";
+import { Field, Form, Formik } from "formik";
+import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
-  const [state, formAction] = useFormState(authenticateUser, { message: "" });
-  const { pending } = useFormStatus();
 
-  useEffect(() => {
-    if (!state.message) return;
-    toast[state.message.toLowerCase().includes("success") ? "success" : "error"](state.message);
-  }, [state.message]);
-       
+  const formValues = {
+    email: "",
+    password: ""
+  };
+
   return (
     <div className="flex flex-col md:flex-row w-full h-screen">
       <div className="hidden md:block md:w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/assets/images/login.webp')" }} />
@@ -35,20 +30,44 @@ const LoginForm = () => {
           <h3 className="text-4xl font-normal mb-4 mt-14 text-center">{loginData.subtitle}</h3>
           <p className="text-gray-500 mt-2 text-sm text-center">{loginData.description}</p>
 
-          <form className="mt-12" action={formAction}>
-            <InputField type="email" name="email" placeholder={loginData.emailPlaceholder} icon={<FaEnvelope />} required />
-            <InputField type="password" name="password" placeholder={loginData.passwordPlaceholder} icon={<FaLock />} required />
+          <Formik
+            initialValues={formValues}
+            onSubmit={async (values, { setSubmitting }) => {
+              const res = await signIn("credentials", {
+                email: values.email,
+                password: values.password,
+                redirect: true,
 
-            <p className="mt-2 text-sm">
-              <Link href="/forgot-password" className="text-black hover:underline">
-                {loginData.forgotPasswordText}
-              </Link>
-            </p>
+              });
 
-            <button type="submit" className="w-full bg-primary text-white p-3 mt-5" disabled={pending}>
-              {pending ? "Signing In..." : "Sign In"}
-            </button>
-          </form>
+              if (res?.error) {
+                console.error("Login failed:", res.error);
+              }
+              setSubmitting(false);
+            }}
+          >
+
+            {({ isSubmitting }) => (
+              <Form className="mt-12">
+                <div className="mb-4">
+                  <Field type="email" name="email" placeholder="Email" className="w-full p-3 border rounded" />
+                </div>
+
+                <div className="mb-4">
+                  <Field type="password" name="password" placeholder="Password" className="w-full p-3 border rounded" />
+                </div>
+                <p className="mt-2 text-sm">
+                  <Link href="/forgot-password" className="text-black hover:underline">
+                    {loginData.forgotPasswordText}
+                  </Link>
+                </p>
+
+                <button type="submit" className="w-full bg-primary text-white p-3 mt-5" disabled={isSubmitting}>
+                  {isSubmitting ? "Signing In..." : "Sign In"}
+                </button>
+              </Form>
+            )}
+          </Formik>
 
           <p className="text-center mt-4">
             {loginData.footerText}{" "}
