@@ -61,8 +61,8 @@ const Card: React.FC<productCardProps> = ({
           onClick={() => setIsModalOpen(false)}
         >
           <div
-            className="bg-white h-auto rounded-lg shadow-lg w-full max-w-[100vw] md:max-h-[90vh] md:max-w-7xl overflow-x-hidden overflow-y-auto relative"
-            onClick={(e) => e.stopPropagation()}
+      className="bg-white h-auto rounded-lg shadow-lg w-full max-w-[90vw] md:max-h-[90vh] md:max-w-[1400px] overflow-x-hidden overflow-y-auto relative"
+      onClick={(e) => e.stopPropagation()}
           >
             <button
               className="bg-gray-100 rounded-full text-4xl text-gray-700 -right-1 -top-1 absolute font-bold hover:text-red-500 px-2 py-0"

@@ -13,30 +13,30 @@ const UserIcon = ({className,cartTotal,wishlistTotal}:UserIconprops) => {
   return (
     <div className={`flex items-center 2xl:space-x-1 ${className}`}>
 
-    <Link href="/profile" aria-label='Go to profile page' className=' lg:hover:bg-primary flex justify-center items-center h-7 fill-white focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white  p-1'>
+    <Link href="/login" aria-label='Go to profile page' className='flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white'>
       <ProfileIcon/>
     </Link>
 
 
-    <div className=' border-l-2 border-white lg:border-[#464646] h-4 md:h-6'/>
-    <Link href="/wishlist" aria-label='Go to wishlist page' className='relative lg:bg-white flex justify-center items-center h-7  lg:hover:bg-primary text-white active:text-black focus:text-black max-lg:focus:bg-white lg:text-black hover:text-white p-1'>
+    <div className='border-l-2 border-white h-4 lg:border-[#464646] md:h-6'/>
+    <Link href="/wishlist" aria-label='Go to wishlist page' className='flex h-7 justify-center p-1 text-white active:text-black focus:text-black hover:text-white items-center lg:bg-white lg:hover:bg-primary lg:text-black max-lg:focus:bg-white relative'>
     {(wishlistTotal ?? 0) > 0 && (
-      <span className='absolute text-xs font-semibold bg-primary text-white -top-1 -right-1 w-4 h-4 flex justify-center items-center'>
+      <span className='flex bg-primary h-4 justify-center text-white text-xs w-4 -right-1 -top-1 absolute font-semibold items-center'>
         {wishlistTotal}
       </span>
     )}
     <LuHeart className='size-4 xl:size-5' />
     </Link>
 
-    <div className=' border-l-2 border-white lg:border-[#464646] h-4 md:h-6'/>
-    <Link href="/" aria-label='Go to free sample page' className=' lg:hover:bg-primary fill-white flex justify-center items-center h-7 focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white  p-1'>
+    <div className='border-l-2 border-white h-4 lg:border-[#464646] md:h-6'/>
+    <Link href="/" aria-label='Go to free sample page' className='flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white'>
     <FreeSample/>
     </Link>
-    <div className='  border-l-2 border-white lg:border-[#464646] h-4 md:h-6'/>
+    <div className='border-l-2 border-white h-4 lg:border-[#464646] md:h-6'/>
     
-    <Link href="/cart" aria-label='Go to cart page' className='relative lg:hover:bg-primary fill-white flex justify-center items-center h-7  focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white  p-1'>
+    <Link href="/cart" aria-label='Go to cart page' className='flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white relative'>
     {(cartTotal ?? 0) > 0 && (
-      <span className='absolute text-xs font-semibold bg-primary text-white -top-1 -right-1 w-4 h-4 flex justify-center items-center'>
+      <span className='flex bg-primary h-4 justify-center text-white text-xs w-4 -right-1 -top-1 absolute font-semibold items-center'>
         {cartTotal}
       </span>
     )}

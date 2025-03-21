@@ -1,5 +1,5 @@
 "use client";
-// import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
 import { ToastContainer } from "react-toastify";
@@ -7,8 +7,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginData } from "data/data";
 import { Field, Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { useState } from "react";
 
 const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
 
   const formValues = {
     email: "",
@@ -16,19 +19,19 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen">
-      <div className="hidden md:block md:w-1/2 bg-cover bg-center" style={{ backgroundImage: "url('/assets/images/login.webp')" }} />
+    <div className="flex flex-col h-screen w-full md:flex-row">
+      <div className="bg-center bg-cover hidden md:block md:w-1/2" style={{ backgroundImage: "url('/assets/images/login.webp')" }} />
 
-      <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
+      <div className="flex justify-center p-6 w-full items-start md:p-12 md:w-1/2">
         <div className="w-full max-w-xl">
-          <Link href="/" className="flex items-center gap-3 w-fit text-lg">
-            <span className="p-3 text-white bg-primary"><BiArrowBack /></span>
+          <Link href="/" className="flex text-lg w-fit gap-3 items-center">
+            <span className="bg-primary p-3 text-white"><BiArrowBack /></span>
             Back to home
           </Link>
 
-          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20" dangerouslySetInnerHTML={{ __html: loginData.title }} />
-          <h3 className="text-4xl font-normal mb-4 mt-14 text-center">{loginData.subtitle}</h3>
-          <p className="text-gray-500 mt-2 text-sm text-center">{loginData.description}</p>
+          <h2 className="text-4xl text-center text-primary font-bold font-inter mt-20" dangerouslySetInnerHTML={{ __html: loginData.title }} />
+          <h3 className="text-4xl text-center font-normal mb-4 mt-14">{loginData.subtitle}</h3>
+          <p className="text-center text-gray-500 text-sm mt-2">{loginData.description}</p>
 
           <Formik
             initialValues={formValues}
@@ -49,20 +52,31 @@ const LoginForm = () => {
 
             {({ isSubmitting }) => (
               <Form className="mt-12">
-                <div className="mb-4">
-                  <Field type="email" name="email" placeholder="Email" className="w-full p-3 border rounded" />
+                <div className="flex border-b items-center mb-4">
+                <FaEnvelope className="text-primary" />
+                  <Field type="email" name="email" placeholder="Email" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
 
-                <div className="mb-4">
-                  <Field type="password" name="password" placeholder="Password" className="w-full p-3 border rounded" />
+                <div className="flex border-b justify-between items-center relative">
+                  <div className="flex w-full items-center">
+                  <FaLock className="text-primary" />
+                    <Field type={showPassword ? "text" : "password"} name="password"  placeholder="Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4"/>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
+                  >
+                    {showPassword ? <BsEyeSlash /> : <BsEye />}
+                  </button>
                 </div>
-                <p className="mt-2 text-sm">
+                <p className="text-sm mt-2">
                   <Link href="/forgot-password" className="text-black hover:underline">
                     {loginData.forgotPasswordText}
                   </Link>
                 </p>
 
-                <button type="submit" className="w-full bg-primary text-white p-3 mt-5" disabled={isSubmitting}>
+                <button type="submit" className="bg-primary p-3 text-white w-full mt-5" disabled={isSubmitting}>
                   {isSubmitting ? "Signing In..." : "Sign In"}
                 </button>
               </Form>
