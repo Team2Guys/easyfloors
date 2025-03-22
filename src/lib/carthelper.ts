@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { IProduct } from 'types/prod';
-import { addToCart, addTofreeSample, addToWishlist } from 'utils/indexedDB';
+import { addToCart,addToFreeSample,addToWishlist } from 'utils/indexedDB';
 export const handleAddToStorage = async (
     productData: IProduct,
     totalPrice: number,
@@ -43,7 +43,7 @@ export const handleAddToStorage = async (
         toast.success("Product added to cart!");
       } 
       else if (type === "freeSample"){
-        await addTofreeSample(item);
+        await addToFreeSample(item);
         toast.success("Product added to freeSample!");
       }
       else {
