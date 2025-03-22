@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { getWishlist, removeWishlistItem } from "utils/indexedDB";
+import { getWishlist, openDB, removeFreeSample, removeWishlistItem, getFreeSamples } from "utils/indexedDB";
 import { addToCart as saveToCart } from "utils/indexedDB";
 import { toast } from "react-toastify";
 import { FiMinus } from "react-icons/fi";
@@ -12,50 +12,84 @@ import { GoPlus } from "react-icons/go";
 import { GrCart } from "react-icons/gr";
 import { usePathname } from "next/navigation";
 
-const WishlistSmall: React.FC = () => {
-   const pathname = usePathname();
-  const [wishlistItems, setWishlistItems] = useState<ICart[]>([]);
-    useEffect(() => {
-      const fetchCartItems = async () => {
-        try {
-          const items = await getWishlist();
-          setWishlistItems(items);
-        } catch {
-          toast.error("Error fetching cart items:");
+const SmallScreen: React.FC = () => {
+  const pathname = usePathname();
+  const isSamplePage = pathname === "/freesample";
+  const [items, setItems] = useState<ICart[]>([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        if (isSamplePage) {
+          const samples = await getFreeSamples();
+          setItems(samples);
+        } else {
+          const wishlist = await getWishlist();
+          setItems(wishlist);
         }
-      };
-  
-      fetchCartItems();
-    }, []);
-  
-    const handleRemoveItem = async (id: number) => {
-      try {
-        await removeWishlistItem(id);
-        setWishlistItems((pre) => pre.filter((value) => value.id !== id))
       } catch {
-        toast.error("Error removing item from cart:");
-      }
-    };
-  
-    const updateQuantity = (id: number, index: number) => {
-      setWishlistItems(wishlistItems.map(item =>
-        item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
-      ));
-    };
-    
-    const handleAddToCart = async (product: ICart) => {
-      try {
-        await saveToCart(product); // 
-        setWishlistItems((prev) => prev.filter((item) => item.id !== product.id)); 
-        toast.success(`Product added to cart!`);
-      } catch {
-        toast.error("Error adding item to cart.");
+        toast.error("Error fetching items.");
       }
     };
 
+    fetchItems();
+  }, [isSamplePage]);
+
+  const updateQuantity = (id: number, index: number) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
+      )
+    );
+  };
+
+  const handleRemoveItem = async (id: number) => {
+    try {
+      if (isSamplePage) {
+        await removeFreeSample(id);
+      } else {
+        await removeWishlistItem(id);
+      }
+      setItems((prev) => prev.filter((item) => item.id !== id));
+    } catch {
+      toast.error("Error removing item.");
+    }
+  };
+
+  const handleAddToCart = async (product: ICart) => {
+    try {
+      if (isSamplePage) {
+        const db = await openDB();
+        const tx = db.transaction("cart", "readonly");
+        const store = tx.objectStore("cart");
+        const existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
+          const request = store.get(product.id);
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+
+        if (existingProduct) {
+          toast.info("Product already exists in the cart.");
+          return;
+        }
+
+        await saveToCart(product);
+        await removeFreeSample(product.id);
+        toast.success("Product added to cart successfully!");
+      } else {
+        await saveToCart(product);
+        toast.success("Product added to cart successfully!");
+      }
+
+      setItems((prev) => prev.filter((item) => item.id !== product.id));
+    } catch {
+      toast.error("Error adding item.");
+    }
+  };
+
   return (
     <div>
-      {wishlistItems.length === 0 ? (
+      {items.length === 0 ? (
         <div className="text-center mt-5 mb-10">
           <h1 className="text-2xl font-bold">Wishlist is Empty</h1>
           <Link href="/" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
@@ -64,9 +98,9 @@ const WishlistSmall: React.FC = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {wishlistItems.map((product) => (
+          {items.map((product) => (
             <div key={product.id} className="border-b border-gray-300 py-4 flex flex-col gap-4 relative bg-white">
-              {/* ❇ Product Image */}
+              {/* Product Image */}
               <div className="flex justify-between items-start gap-2 w-full">
                 <div className="flex flex-row gap-2">
                   <Image src={product.image || "/image.png"} alt={product.name} width={80} height={80} className="object-cover w-20 h-20" />
@@ -75,7 +109,7 @@ const WishlistSmall: React.FC = () => {
                     <p className="text-12 font-normal font-inter">No. of boxes: {product.requiredBoxes}</p>
                     <p className="text-12 font-normal font-inter">Box Coverage: {product.boxCoverage}</p>
                     <p className="text-14 font-semibold font-inter">
-                    {pathname === "/freesample" ? "Free" : `AED ${product.price}`}
+                      {isSamplePage ? "Free" : `AED ${product.price}`}
                     </p>
                     <p>{product.stock > 0 ? "In Stock" : "Out of Stock"}</p>
                   </div>
@@ -90,26 +124,22 @@ const WishlistSmall: React.FC = () => {
                   </svg>
                 </button>
               </div>
-
-              {/* ❇ Quantity Selector & Add to Cart */}
               <div className="flex gap-2 w-full justify-between mt-3">
-              {pathname !== "/freesample" && ( // Correct conditional rendering
-    <div className="flex items-center text-14 bg-[#F0F0F0] text-black justify-center w-fit px-4 py-2">
-      <button onClick={() => updateQuantity(product.id, -1)} className="p-2">
-        <FiMinus />
-      </button>
-      <span className="px-3 font-semibold">{product.requiredBoxes}</span>
-      <button onClick={() => updateQuantity(product.id, 1)} className="p-2">
-        <GoPlus />
-      </button>
-    </div>
-  )}
-  
-  <div className="bg-black flex gap-2 justify-center items-center text-white font-inter font-normal text-14 whitespace-nowrap">
-                  <button onClick={() => handleAddToCart(product)} className="bg-black text-white flex items-center gap-2 px-4 py-2 whitespace-nowrap">
-                    <GrCart /> Add to Cart
-                  </button>
-                </div>
+                {!isSamplePage && (
+                  <div className="flex items-center bg-[#F0F0F0] text-black px-4 py-2">
+                    <button onClick={() => updateQuantity(product.id, -1)} className="p-2">
+                      <FiMinus />
+                    </button>
+                    <span className="px-3 font-semibold">{product.requiredBoxes}</span>
+                    <button onClick={() => updateQuantity(product.id, 1)} className="p-2">
+                      <GoPlus />
+                    </button>
+                  </div>
+                )}
+
+                <button onClick={() => handleAddToCart(product)} className="bg-black text-white flex items-center gap-2 px-4 py-2">
+                  <GrCart /> Add to Cart
+                </button>
               </div>
             </div>
           ))}
@@ -119,4 +149,4 @@ const WishlistSmall: React.FC = () => {
   );
 };
 
-export default WishlistSmall;
+export default SmallScreen;

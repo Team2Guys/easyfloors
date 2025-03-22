@@ -181,54 +181,36 @@ export const addToCart = async (product: ICart): Promise<void> => {
       const db = await openDB();
       const tx = db.transaction("freeSample", "readwrite");
       const store = tx.objectStore("freeSample");
-  
-      // Get all samples
+
       const samples: ICart[] = await new Promise((resolve, reject) => {
         const request = store.getAll();
         request.onsuccess = () => resolve(request.result);
         request.onerror = () => reject(request.error);
       });
   
-      // Check if the user has already added 5 samples
       if (samples.length >= 5) {
         toast.error("You can only add up to 5 free samples.");
         return;
       }
   
-      // Check if the product already exists
-      const existingProduct = samples.find((item) => item.id === product.id);
-      if (existingProduct) {
-        toast.info("This sample is already added.");
-        return;
-      }
-  
-      // Ensure requiredBoxes is always 1
       product.requiredBoxes = 1;
-  
-      // Set price and total price to 0
       product.price = 0;
       product.totalPrice = 0;
-  
-      // Add the sample
+
       await new Promise<void>((resolve, reject) => {
         const request = store.put(product);
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
-  
-      // Notify the app that the sample list has been updated
+      
       window.dispatchEvent(new Event("freeSampleUpdated"));
-  
-      // Show success message
-      toast.success("Sample added successfully.");
+
     } catch (error) {
       console.error("Error adding free sample:", error);
       toast.error("Error adding free sample.");
     }
   };
   
-
-// Remove a free sample item
   export const removeFreeSample = async (id: number): Promise<void> => {
   try {
     const db = await openDB();
@@ -249,7 +231,6 @@ export const addToCart = async (product: ICart): Promise<void> => {
   }
 };
 
-// Get all free sample items
 export const getFreeSamples = async (): Promise<ICart[]> => {
   try {
     const db = await openDB();

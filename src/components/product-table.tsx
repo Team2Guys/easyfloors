@@ -8,22 +8,12 @@ import { GrCart } from "react-icons/gr";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample} from "utils/indexedDB";
-import { addToCart as saveToCart, addToFreeSample } from "utils/indexedDB";
+import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, openDB} from "utils/indexedDB";
+import { addToCart as saveToCart} from "utils/indexedDB";
 import { toast } from "react-toastify";
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  price: string;
-  stock: number;
-  quantity: number;
-}
 
 interface ProductTableProps {
   columns: string[];
-  products: Product[];
   isSamplePage?: boolean;
 }
 
@@ -49,7 +39,6 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
     fetchItems();
   }, [isSamplePage]);
 
-  // ✅ Common function to update quantity
   const updateQuantity = (id: number, index: number) => {
     setItems((prevItems) =>
       prevItems.map((item) =>
@@ -61,7 +50,6 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   const increment = (id: number) => updateQuantity(id, 1);
   const decrement = (id: number) => updateQuantity(id, -1);
 
-  // ✅ Remove functions based on page type
   const handleRemoveItem = async (id: number) => {
     try {
       if (isSamplePage) {
@@ -75,16 +63,32 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
     }
   };
 
-  // ✅ Add to cart / Free Sample functions based on page type
   const handleAddToCart = async (product: ICart) => {
     try {
       if (isSamplePage) {
-        await addToFreeSample(product);
-        toast.success("Added to Free Samples!");
-      } else {
+        const db = await openDB();
+        const tx = db.transaction("cart", "readonly");
+        const store = tx.objectStore("cart");
+        const existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
+          const request = store.get(product.id);
+          request.onsuccess = () => resolve(request.result);
+          request.onerror = () => reject(request.error);
+        });
+  
+        if (existingProduct) {
+          toast.info("Product already exists in the cart."); 
+          return;
+        }
+  
         await saveToCart(product);
-        toast.success("Added to Cart!");
+        await removeFreeSample(product.id); 
+        toast.success("Product added to cart successfully!");
+      } else {
+  
+        await saveToCart(product);
+        toast.success("Product added to cart successfully!");
       }
+  
       setItems((prev) => prev.filter((item) => item.id !== product.id));
     } catch {
       toast.error("Error adding item.");
@@ -119,7 +123,6 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           <tbody>
             {items.slice(0, 5).map((product) => (
               <tr key={product.id} className="border-t">
-                {/* ✅ Product Name & Image */}
                 <td className="p-3 flex items-center gap-3 md:w-full">
                   <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="xl:h-[151px] xl:w-[194px] md:h-[100px] md:w-[70px] object-cover" />
                   <div className="w-[100%] md:text-10 lg:text-12 xl:text-20 2xl:text-24 font-inter font-normal items-center">
@@ -128,13 +131,9 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     <p className="md:text-[9px] lg:text-12 xl:text-20">Box Coverage: {product.boxCoverage}</p>
                   </div>
                 </td>
-
-                {/* ✅ Price Column (Shows 'Free' on Sample Page) */}
                 <td className="md:p-3 xl:pl-6 font-inter text-12 xl:text-20 2xl:text-24 font-normal md:w-[17%]">
                   {pathname === "/freesample" ? "Free" : product.price}
                 </td>
-
-                {/* ✅ Hide QTY Column on Free Sample Page */}
                 {pathname !== "/freesample" && (
                   <td className="md:w-[20%] xl:w-[15%]">
                     <div className="flex justify-center items-center text-12 xl:text-20 2xl:text-24 bg-gray-200 px-3 py-2 w-fit ">
@@ -149,16 +148,14 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   </td>
                 )}
 
-                {/* ✅ Stock Status */}
                 <td className="md:p-3 font-400 font-inter md:text-11 lg:text-12 xl:text-20 2xl:text-24 md:w-[15%] xl:w-[13%]">
                   {product.stock > 0 ? "In Stock" : "Out of Stock"}
                 </td>
 
-                {/* ✅ Action Buttons */}
                 <td className="p-3">
                   <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center">
                     <button onClick={() => handleAddToCart(product)} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
-                      <GrCart /> {isSamplePage ? "Add to Free Sample" : "Add to Cart"}
+                      <GrCart /> {isSamplePage ? "Add to Cart" : "Add to Cart"}
                     </button>
                     <button onClick={() => handleRemoveItem(product.id)} className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
                       <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
