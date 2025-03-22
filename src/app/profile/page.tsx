@@ -1,8 +1,8 @@
 import React from 'react'
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../../app/api/auth/[...nextauth]/route"; 
 import ProfileComponent from './profileComponent';
 import { redirect } from 'next/navigation';
+import { authOptions } from 'auth/authOptions';
 
 
 
