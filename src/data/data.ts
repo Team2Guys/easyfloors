@@ -1005,4 +1005,4 @@ export const accessoriesProducts: AccPoPProduct[] = [
     feet: 16.4,
   },
 ];
-export const emirates = ["Dubai", "Abu Dhabi", "Sharjah", "Ajman", "Fujairah", "Ras Al Khaimah", "Umm Al Quwain"];
+export const emirates = ["United Arab Emirates"];

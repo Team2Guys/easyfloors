@@ -16,7 +16,7 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates } from "data/data";
+// import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
@@ -61,9 +61,8 @@ const Checkout = () => {
             email: "",
             phone: "",
             country: "United Arab Emirates",
-            postalCode: '',
             city: "",
-            emirate: "",
+            // emirate: "",
             address: "",
             note: "",
         },
@@ -73,7 +72,7 @@ const Checkout = () => {
             email: Yup.string().email("Invalid email address").required("Email is required"),
             phone: Yup.string().required("Phone number is required"),
             city: Yup.string().required("City is required"),
-            emirate: Yup.string().required("Emirate is required"),
+            // emirate: Yup.string().required("Emirate is required"),
             address: Yup.string().required("Address is required"),
         }),
         onSubmit: (values) => {
@@ -81,7 +80,7 @@ const Checkout = () => {
                 toast.warn("You must agree to the terms and conditions.");
                 return;
             }
-            console.log('form data', values);
+            console.log('formdata', {...values, products: cartItems});
         },
     });
 
@@ -193,6 +192,26 @@ const Checkout = () => {
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+{/* These added for confirmation */}
+
+                        {/* <div className="flex-1">
+                                <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
+                                <select
+                                    name="emirate"
+                                    className="w-full p-2 border rounded custom-select"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.emirate}
+                                    defaultValue="United Arab Emirates"
+                                    required
+                                >
+                                    <option value="">Select Emirate</option>
+                                    {emirates.map((emirate) => (
+                                        <option key={emirate} value={emirate}>{emirate}</option>
+                                    ))}
+                                </select>
+                        </div>  */}
+
                             <div className="flex-1">
                                 <label className="block font-medium">City <span className="text-primary">*</span></label>
                                 <select
@@ -212,21 +231,6 @@ const Checkout = () => {
                                 </select>
                             </div>
 
-                            <div className="flex-1">
-                                <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
-                                <select
-                                    name="emirate"
-                                    className="w-full p-2 border rounded custom-select"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.emirate}
-                                    required
-                                >
-                                    <option value="">Select Emirate</option>
-                                    {emirates.map((emirate) => (
-                                        <option key={emirate} value={emirate}>{emirate}</option>
-                                    ))}
-                                </select>
-                            </div>
                         </div>
 
                         <div>
