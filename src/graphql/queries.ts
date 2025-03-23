@@ -51,8 +51,39 @@ export const FETCH_ALL_PRODUCTS = gql`
     }
   }
 `;
+export const FETCH_HEADER_PRODUCTS = gql`
+  query Products {
+    products {
+      id
+      name
+      price
+      discountPrice
+      description
+      stock
+      posterImageUrl
+      custom_url
+      category {
+        id
+        name
+        RecallUrl
+        custom_url
+      }
+      subcategory {
+        id
+        name
+        custom_url
+      }
+       acessories {
+        id
+        name
+        price
+        discountPrice
+        custom_url
 
-
+        posterImageUrl
+         }
+          }
+        }`;
 
 
 export const FETCH_ALL_CATEGORIES = gql`
@@ -229,6 +260,15 @@ export const FETCH_HEADER_CATEGORIES = gql`
         name
         custom_url
         posterImageUrl
+      }
+         products {
+        id
+        name
+        price
+        discountPrice
+        stock
+        posterImageUrl
+
       }
        recalledSubCats {
             id

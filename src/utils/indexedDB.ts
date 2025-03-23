@@ -30,9 +30,9 @@ export const addToCart = async (product: ICart): Promise<void> => {
     });
 
     if (existingProduct) {
-      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + (product.requiredBoxes ?? 1);
+      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? existingProduct.requiredBoxes ?? 1);
     } else {
-      product.requiredBoxes = product.requiredBoxes ?? 1;
+      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? 1);
     }
 
     await new Promise<void>((resolve, reject) => {
@@ -40,8 +40,8 @@ export const addToCart = async (product: ICart): Promise<void> => {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-    window.dispatchEvent(new Event("cartUpdated"));
 
+    window.dispatchEvent(new Event("cartUpdated"));
   } catch (error) {
     throw error;
   }

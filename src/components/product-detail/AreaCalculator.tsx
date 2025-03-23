@@ -18,6 +18,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             checked={unit === "sqm"}
             onChange={() => setUnit("sqm")}
             className="hidden"
+            min="0"
           />
           <span
             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
@@ -36,6 +37,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             checked={unit === "sqft"}
             onChange={() => setUnit("sqft")}
             className="hidden"
+            min="0"
           />
           <span
             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
@@ -53,6 +55,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
         
         placeholder={`Enter Area ${unit === "sqm" ? "m²" : "ft²"}`}
         value={area}
+        min="0"
         onChange={(e) => setArea(e.target.value)}
         className=" p-2 border border-[#9E9E9E] focus:outline-none focus:ring-2 focus:ring-orange-500 w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
       />

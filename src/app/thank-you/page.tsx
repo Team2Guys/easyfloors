@@ -14,7 +14,6 @@ const ThankYou = async () => {
       <RelatedSlider 
         products={productData.slice(0, 5)} 
         CategoryData={productData.category} 
-        subCategoryData={productData.subcategory} 
       />
     </>
   );

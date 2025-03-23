@@ -8,10 +8,10 @@ import { Category } from 'types/cat';
 import { IProduct } from 'types/prod';
 
 
-export const fetchProducts = async () => {
+export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCH_ALL_PRODUCTS,
+      query: CUSTOMIZE_QUERY ? CUSTOMIZE_QUERY : FETCH_ALL_PRODUCTS,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: {

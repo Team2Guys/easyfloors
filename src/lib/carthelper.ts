@@ -19,7 +19,7 @@ export const handleAddToStorage = async (
       return;
     }
     const adjustedRequiredBoxes = requiredBoxes > 0 ? requiredBoxes : 1;
-    const adjustedtotalPrice = totalPrice > 0 ? totalPrice : pricePerBox;
+    const adjustedtotalPrice = totalPrice > 0 ? pricePerBox * requiredBoxes : pricePerBox;
     const adjustedsquareMeter = squareMeter > 0 ? squareMeter : Number(boxCoverage);
 
     const item = {
