@@ -37,7 +37,6 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
       <RelatedSlider 
         products={ProductInfo.slice(0, 5)} 
         CategoryData={productData?.category} 
-        subCategoryData={productData?.subcategory} 
       />
     </div>
   );

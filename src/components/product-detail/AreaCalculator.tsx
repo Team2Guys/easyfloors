@@ -19,7 +19,6 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             onChange={() => setUnit("sqm")}
             min="0" 
             className="hidden"
-            min="0"
           />
           <span
             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
@@ -39,7 +38,6 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             min="0"
             onChange={() => setUnit("sqft")}
             className="hidden"
-            min="0"
           />
           <span
             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
