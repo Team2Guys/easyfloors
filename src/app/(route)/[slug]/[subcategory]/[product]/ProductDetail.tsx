@@ -84,10 +84,10 @@ const ProductDetail = ({MainCategory,subCategory,ProductName,ProductInfo, produc
           <p className="font-black text-16 sm:text-20 lg:text-28 2xl:text-33">Total : <span>AED</span> <span>{totalPrice.toFixed(2)}</span></p>
         </div>
         <div className="flex items-center gap-1 sm:gap-3 w-full">
-          <button className="max-sm:h-[40px] px-2 py-2 sm:py-3 text-white bg-primary flex items-center gap-2 font-inter text-12 sm:text-16 2xl:text-22 w-7/12">
-              <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
+        <button  className="max-sm:h-[40px] px-2 py-2 sm:py-3 text-white bg-primary flex items-center gap-2 font-inter text-12 sm:text-16 2xl:text-22 w-7/12"  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory??"", MainCategory??"", "freeSample",image?.imageUrl ?? "",boxCoverage ?? "" )}>
+        <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
               Order Now Free Sample
-          </button>
+        </button>
           <button  onClick={() => handleAddToStorage(productData, totalPrice, pricePerBox, squareMeter, requiredBoxes, subCategory ?? "", MainCategory ?? "", "cart", image?.imageUrl ?? "",boxCoverage ?? "" )} className="max-sm:h-[40px] px-2 xl:px-10 py-2 sm:py-3 bg-black text-white  font-inter text-12 sm:text-16 2xl:text-22 flex items-center gap-2 w-5/12">
           <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} />
             Add to Cart
