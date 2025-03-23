@@ -31,10 +31,11 @@ export class UserResolver {
   findOne(@Args('email', { type: () => String }) email: string) {
     return this.userService.findOne(email);
   }
-
+  
+  @Public()
   @Mutation(() => User)
   updateUser(@Args('updateUser') updateUserInput: UpdateUserInput) {
-    return this.userService.update(updateUserInput.id, updateUserInput);
+    return this.userService.update(updateUserInput);
   }
 
   @Mutation(() => User,{name:"remove_user"})
