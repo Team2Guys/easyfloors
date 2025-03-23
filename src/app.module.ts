@@ -13,6 +13,7 @@ import { AuthGuard } from './gaurds/auth.guard';
 import { AccessoriesModule } from './accessories/accessories.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { UserModule } from './user/user.module';
+import { SalesProductsModule } from './sales-products/sales-products.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UserModule } from './user/user.module';
     AccessoriesModule,
     AppointmentsModule,
     UserModule,
+    SalesProductsModule,
   ],
   controllers: [AppController],
   providers: [AppService, {

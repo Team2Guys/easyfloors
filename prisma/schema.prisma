@@ -175,3 +175,32 @@ model User {
   phone             String?
   userImageUrl      Json?
 }
+
+
+model salesProducts {
+  id              String   @unique
+  firstName       String
+  lastName        String
+  email           String
+  phone           String
+  city            String
+  country         String
+  address         String?
+  orderId         String    @unique
+  checkout        Boolean   @default(false)
+  paymentStatus   Boolean   @default(false)
+  isRefund        Boolean   @default(false)
+  currency        String?
+  transactionId   String?
+  integrationId   String?
+  amountCents     String?
+  success         Boolean   @default(false)
+  pending         Boolean   @default(false)
+  is3DSecure      Boolean?
+  checkoutDate    DateTime  @default(now())
+  transactionDate DateTime?
+  shipmentFee     String?
+  deliveryStatus  Boolean   @default(false)
+  cardLastDigits  String?
+  products  Json[] @default([])
+}
