@@ -41,4 +41,6 @@ export interface detailprops{
     MainCategory?: string;
     subCategory?: string;
     productData:IProduct
-}
+    accessories?: string;
+    className?: string;
+  }

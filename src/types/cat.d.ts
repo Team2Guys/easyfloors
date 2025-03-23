@@ -43,6 +43,7 @@ export interface EDIT_CATEGORY extends Category {
     updatedAt?: Date;
     posterImageUrl?:ProductImage
     recalledSubCats?:ISUBCATEGORY[]
+    subcategory?: ISUBCATEGORY_EDIT;
 
 }
 
