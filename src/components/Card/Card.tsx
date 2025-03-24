@@ -1,10 +1,18 @@
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+import { MouseEvent, useState } from "react";
 import { FiEye, FiHeart } from "react-icons/fi";
 import { Category } from "types/cat";
 import { productCardProps } from "types/PagesProps";
 import { IProduct } from "types/prod";
-
+import { fetchSingeProduct } from "config/fetch";
+import { generateSlug } from "data/data";
+import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
+import { toast } from "react-toastify";
+const ProductContainer = dynamic(
+  () => import("components/ProdutDetailContainer/ProductContainer")
+);
 const Card: React.FC<productCardProps> = ({
   product,
   features,
@@ -13,6 +21,28 @@ const Card: React.FC<productCardProps> = ({
   isAccessories = false,
   isSoldOut = false,
 }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData , setModalData] = useState<IProduct | undefined>(undefined)
+
+  const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    try {
+      const productData = await fetchSingeProduct(
+        product.custom_url || '',
+        generateSlug(categoryData.RecallUrl),
+        generateSlug(product.subcategory?.custom_url || ''),
+        true,
+        FIND_QUICK_VIEW_PRODUCT
+      );
+  
+      setModalData(productData || undefined);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching single product:", error);
+      toast.error("Error fetching single product");
+    }
+  };
+
   const handleNavigate = (product: IProduct , categoryData: Category ) => {
     if (product.subcategory) {
       return `/${categoryData?.RecallUrl || product?.custom_url}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
@@ -20,11 +50,10 @@ const Card: React.FC<productCardProps> = ({
       return `/${categoryData?.RecallUrl || product?.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
-
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">
-        <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}`: handleNavigate(product as IProduct, categoryData)}>
+        <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
           <Image
             src={product.posterImageUrl?.imageUrl ?? ''}
             alt={product.name}
@@ -35,63 +64,88 @@ const Card: React.FC<productCardProps> = ({
           />
         </Link>
         {isAccessories && isSoldOut && (
-          <div className="absolute top-1 right-0 bg-red-500 text-white text-xs px-2 py-1 ">
+          <div className="bg-red-500 text-white text-xs absolute px-2 py-1 right-0 top-1">
             Sold Out
           </div>
         )}
-      {!sldier &&
-        <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Link href="/wishlist" className="p-1 bg-white shadow hover:bg-primary hover:text-white transition">
-            <FiHeart size={20} />
-          </Link>
-          <button className="p-1 bg-white shadow hover:bg-primary hover:text-white transition">
-            <FiEye size={20} />
-          </button>
-        </div>
-      }
+        {!sldier &&
+          <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
+            <Link href="/wishlist" className="bg-white p-1 shadow hover:bg-primary hover:text-white transition">
+              <FiHeart size={20} />
+            </Link>
+            <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
+              <FiEye size={20} />
+            </button>
+          </div>
+        }
       </div>
+      {isModalOpen && (
+        <div
+          className="flex bg-black bg-opacity-50 justify-center p-4 fixed inset-0 items-center z-50"
+          onClick={() => setIsModalOpen(false)}
+        >
+          <div
+            className="bg-white h-auto rounded-lg shadow-lg w-full max-w-[100vw] md:max-h-[90vh] md:max-w-7xl overflow-x-hidden overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              className="bg-gray-100 rounded-full text-4xl text-gray-700 -right-1 -top-1 absolute font-bold hover:text-red-500 px-2 py-0"
+              onClick={() => setIsModalOpen(false)}
+            >
+              &times;
+            </button>
+            <ProductContainer className="2xl:gap-0 xl:px-0"
+              MainCategory={categoryData?.name || ""}
+              subCategory={product?.subcategory?.name || ""}
+              ProductName={product?.name || ""}
+              productData={modalData as IProduct || []}
+              ProductInfo={[]}
+            />
 
+          </div>
+        </div>
+      )}
       <div className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light  ${isAccessories ? "py-3 justify-around " : " justify-evenly"}`}>
         {features.map((feature, index) => (
-          <div key={index} className="flex items-center justify-between gap-1">
+          <div key={index} className="flex justify-between gap-1 items-center">
             <Image
               src={feature.icon}
               alt="Icon"
               width={feature.width}
               height={feature.height}
-              className="cursor-pointer text-gray-500 hover:text-red-500"
+              className="text-gray-500 cursor-pointer hover:text-red-500"
             />
-            <span className="md:text-[12px] text-[7px] text-black">{feature.label}</span>
+            <span className="text-[7px] text-black md:text-[12px]">{feature.label}</span>
           </div>
         ))}
       </div>
-      <div className="p-2 lg:p-4 font-inter font-light">
+      <div className="p-2 font-inter font-light lg:p-4">
         <Link
-          href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}`: handleNavigate(product as IProduct, categoryData)}
+          href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
           className={`md:mt-0 mt-1 text-left font-semibold ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55]"
             }`}
         >
           {isAccessories ? `${product.name}` : product.name}
         </Link>
 
-        <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between py-2 gap-2 md:gap-4 w-full">
+        <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start py-2">
           {'price' in product && product.price &&
-          <p className="text-sm md:text-14 xl:text-base font-bold w-full md:w-full md:text-left">
-            {isAccessories ? '' : 'Only '} AED <span className="text-primary">{product?.price}</span>/m<span className="align-super text-10">2</span>
-          </p>
+            <p className="text-sm w-full font-bold md:text-14 md:text-left md:w-full xl:text-base">
+              {isAccessories ? '' : 'Only '} AED <span className="text-primary">{product?.price}</span>/m<span className="align-super text-10">2</span>
+            </p>
           }
 
           <div className="w-full md:text-right">
             {isSoldOut ? (
-              <button disabled className="text-white px-3 md:px-1 xl:px-3 py-1.5 xl:py-2 text-[10px] md:text-[10px] lg:text-sm border border-[#FC3D3D] bg-[#FC3D3D] transition whitespace-nowrap">
+              <button disabled className="bg-[#FC3D3D] border border-[#FC3D3D] text-[10px] text-white lg:text-sm md:px-1 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap xl:px-3 xl:py-2">
                 Sold Out
               </button>
             ) : (product as IProduct).stock === 0 && !isAccessories ? (
-              <button disabled className="text-white px-3 md:px-1 xl:px-3 py-1.5 xl:py-2 text-[10px] md:text-[10px] lg:text-sm border border-black bg-black transition whitespace-nowrap">
+              <button disabled className="bg-black border border-black text-[10px] text-white lg:text-sm md:px-1 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap xl:px-3 xl:py-2">
                 Out of Stock
               </button>
             ) : (
-              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}`: handleNavigate(product as IProduct, categoryData)} className="text-black px-3 md:px-3 py-1.5 md:py-2 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary">
+              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="border border-primary text-[10px] text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap">
                 Shop Now
               </Link>
             )}

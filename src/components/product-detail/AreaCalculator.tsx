@@ -17,8 +17,8 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             value="sqm"
             checked={unit === "sqm"}
             onChange={() => setUnit("sqm")}
+            min="0" 
             className="hidden"
-            min="0"
           />
           <span
             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
@@ -35,9 +35,9 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             type="radio"
             value="sqft"
             checked={unit === "sqft"}
+            min="0"
             onChange={() => setUnit("sqft")}
             className="hidden"
-            min="0"
           />
           <span
             className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
@@ -51,8 +51,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
       </div>
 
       <input
-        type="number"
-        
+        type="number"        
         placeholder={`Enter Area ${unit === "sqm" ? "m²" : "ft²"}`}
         value={area}
         min="0"
