@@ -8,10 +8,7 @@ import { GrCart } from "react-icons/gr";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample } from "utils/indexedDB";
-import { addToCart as saveToCart } from "utils/indexedDB";
-import { toast } from "react-toastify";
-
+import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
 interface ProductTableProps {
   columns: string[];
   isSamplePage?: boolean;
@@ -22,55 +19,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   const [items, setItems] = useState<ICart[]>([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        if (isSamplePage) {
-          const samples = await getFreeSamples();
-          setItems(samples);
-        } else {
-          const wishlist = await getWishlist();
-          setItems(wishlist);
-        }
-      } catch {
-        toast.error("Error fetching items.");
-      }
-    };
-
-    fetchItems();
+    fetchItems(isSamplePage, setItems);
   }, [isSamplePage]);
-
-  const updateQuantity = (id: number, index: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
-      )
-    );
-  };
-
-  const handleRemoveItem = async (id: number) => {
-    try {
-      if (isSamplePage) {
-        await removeFreeSample(id);
-      } else {
-        await removeWishlistItem(id);
-      }
-      setItems((prev) => prev.filter((item) => item.id !== id));
-    } catch {
-      toast.error("Error removing item.");
-    }
-  };
-
-  const handleAddToCart = async (product: ICart) => {
-    try {
-      await saveToCart(product);
-      handleRemoveItem(product.id);
-      toast.success("Product added to cart successfully!");
-      window.dispatchEvent(new Event("freeSampleUpdated"));
-      setItems((prev) => prev.filter((item) => item.id !== product.id));
-    } catch {
-      toast.error("Error adding item.");
-    }
-  };
 
   return (
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[400px] overflow-y-auto" : ""}`}>
@@ -114,11 +64,11 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                 {pathname !== "/freesample" && (
                   <td className="p-3">
                     <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
-                      <button onClick={() => updateQuantity(product.id, -1)} className="px-2 text-gray-700">
+                      <button onClick={() => updateQuantity(product.id, -1, setItems)}  className="px-2 text-gray-700">
                         <FiMinus />
                       </button>
                       <span className="px-2 text-black font-semibold">{product.requiredBoxes}</span>
-                      <button onClick={() => updateQuantity(product.id, 1)} className="px-2 text-gray-700">
+                      <button onClick={() => updateQuantity(product.id, 1, setItems )}  className="px-2 text-gray-700">
                         <GoPlus />
                       </button>
                     </div>
@@ -129,10 +79,10 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                 </td>
                 <td className="p-3">
                   <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center">
-                    <button onClick={() => handleAddToCart(product)} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
+                    <button onClick={() => handleAddToCart(product, isSamplePage, setItems)} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
                       <GrCart /> {isSamplePage ? "Add to Cart" : "Add to Cart"}
                     </button>
-                    <button onClick={() => handleRemoveItem(product.id)} className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
+                    <button onClick={() =>  handleRemoveItem(product.id, isSamplePage, setItems)}  className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
                       <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
                     </button>
                   </div>

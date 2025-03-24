@@ -1,11 +1,12 @@
-"use client"
-import Container from 'components/common/container/Container'
+import dynamic from 'next/dynamic';
 import React from 'react'
 import { CiHeart } from 'react-icons/ci'
-import ProductTable from '../../components/product-table'
-import WishlistSmall from '../../components/smallscreen'
-import Top from '../../components/top'
-import Breadcrumb from 'components/Reusable/breadcrumb'
+// Dynamic Imports
+const ProductTable = dynamic(() => import("components/product-table"));
+const WishlistSmall = dynamic(() => import("components/smallscreen"));
+const Container = dynamic(() => import("components/common/container/Container"));
+const Breadcrumb = dynamic(() => import("components/Reusable/breadcrumb"));
+const Top = dynamic(() => import("components/top"));
 
 const Wishlist = () => {
   return (
