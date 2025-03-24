@@ -15,7 +15,6 @@ interface FormValues {
   message: string;
 }
 
-// Validation schema using Yup
 const validationSchema = Yup.object({
   firstName: Yup.string()
     .min(2, "First name must be at least 2 characters")
@@ -38,7 +37,6 @@ const validationSchema = Yup.object({
     .required("Message is required"),
 });
 
-// Initial form values
 const initialValues: FormValues = {
   firstName: "",
   LastName: "",
@@ -49,15 +47,16 @@ const initialValues: FormValues = {
 
 const ContactForm: React.FC = () => {
   const [sendContactEmail, { loading, error }] = useMutation(CONTACT_US_EMAIL_MUTATION);
-  
+
   const handleSubmit = async (values: FormValues, { resetForm }: { resetForm: () => void }) => {
     try {
 
-       await sendContactEmail({variables: {contactUsEmail: values}});
-    toast.success("Message sent successfully");
+      await sendContactEmail({ variables: { contactUsEmail: values } });
+      toast.success("Message sent successfully");
       resetForm();
     } catch (error) {
-      console.error("Submission error:", error);
+
+      throw error;
     }
   };
 
@@ -184,8 +183,8 @@ const ContactForm: React.FC = () => {
               disabled={isSubmitting || loading}
               className="w-[200px] sm:w-[300px] h-[50px] sm:h-[83px] border border-primary text-black hover:text-white font-medium font-inter hover:bg-primary hover:bg-primary-dark duration-300 ease-in-out text-16 sm:text-20 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-               
-               {isSubmitting || loading ? "Sending..." : "Send Message"}
+
+              {isSubmitting || loading ? "Sending..." : "Send Message"}
             </button>
           </div>
         </Form>

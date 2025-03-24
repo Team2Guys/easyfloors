@@ -45,10 +45,14 @@ export const handleAddToStorage = async (
       else if (type === "freeSample") {
         const existingSamples = await getFreeSamples(); 
         if (existingSamples.length >= 5) {
-          toast.warn("You can add only up to 5 free samples.");
+          toast.error("You can add only up to 5 free samples.");
           return;
         }
-    
+  if(existingSamples.some((sample) => sample.id === item.id)){
+  
+    toast.error("Product already added to freeSample!")
+  return ;
+  }
         await addToFreeSample(item);
         toast.success("Product added to freeSample!");
       } 
