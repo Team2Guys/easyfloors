@@ -38,16 +38,21 @@ const router = useRouter()
           <Formik
             initialValues={formValues}
             onSubmit={async (values, { setSubmitting }) => {
-              const res = await signIn("credentials", {
-                email: values.email,
-                password: values.password,
-                redirect: false,
-
-
-              });
-              if (res?.ok) {
-               router.replace("/profile"); // Redirect to profile page
+              try {
+              await signIn("credentials", {
+                  email: values.email,
+                  password: values.password,
+                  redirect: false,
+  
+  
+                });
+               
+                 router.replace("/profile");
+              } catch (err)  {
+                return err;
               }
+          
+              
 
           
               setSubmitting(false);

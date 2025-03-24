@@ -12,10 +12,12 @@ import { FaEnvelope, FaLock, FaPhoneAlt, FaUser } from "react-icons/fa";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
 
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
     const [showPassword, setShowPassword] = useState(false);
   
+const router = useRouter();
   const formValues ={
     name: "",
     email: "",
@@ -47,17 +49,14 @@ const SignupForm = () => {
           <Formik
             initialValues={formValues}
             onSubmit={async (values, { setSubmitting }) => {
-
+const {retypePassword, phone, ...newValues} = values;
+console.log(retypePassword, "retreive password")
            await client.mutate({
-            mutation: CREATE_USER,
-            variables: {
-              createUser: {
-                ...values,
-                phone: values.phone.toString(),
+                mutation: CREATE_USER,
+                variables: {createUser: {...newValues, phone: phone.toString()}, 
               },
-            },
               });
-
+              router.push('/login');
               setSubmitting(false);
             }}
           >
