@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAppointmentInput } from './dto/create-appointment.input';
 import { PrismaService } from '../prisma/prisma.service';
-import { customHttpException, sendResetEmail } from '../utils/helper';
+import { customHttpException, sendAppointmentEmail } from '../utils/helper';
 
 @Injectable()
 export class AppointmentsService {
@@ -10,7 +10,7 @@ export class AppointmentsService {
 
     try {
       console.log(createAppointmentInput.email, "email")
-      await sendResetEmail(createAppointmentInput.email);
+      await sendAppointmentEmail(createAppointmentInput);
       const appointments = await this.prisma.appointment.create({ data: createAppointmentInput });
       return appointments;
     } catch (error) {

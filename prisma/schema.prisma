@@ -150,6 +150,11 @@ model Acessories {
   category              Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }
 
+ enum AppointsType {
+      installations
+      appointments
+     }
+
 model Appointment {
   id             Int       @id @default(autoincrement())
   firstname      String
@@ -163,6 +168,7 @@ model Appointment {
   findUs         String?
   comment        String?
   contactMethod  Json?
+  AppointsType   AppointsType @default(installations)
 }
 
 

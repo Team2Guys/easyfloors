@@ -1,5 +1,18 @@
-import { InputType, Field, GraphQLISODateTime } from '@nestjs/graphql';
+import { InputType, Field, GraphQLISODateTime, registerEnumType } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
+
+
+export enum AppointsType {
+  INSTALLATIONS = 'installations',
+  APPOINTMENTS = 'appointments',
+}
+
+
+registerEnumType(AppointsType, {
+  name: 'AppointsType', 
+  description: 'The type of appointment',
+});
+
 
 @InputType()
 export class CreateAppointmentInput {
@@ -35,4 +48,11 @@ export class CreateAppointmentInput {
 
   @Field(() => GraphQLJSON, { nullable: true })
   contactMethod?: any;
+
+  @Field(() => AppointsType, { nullable: true })
+  appointsType?: AppointsType;
+
+  
 }
+
+
