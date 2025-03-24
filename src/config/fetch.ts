@@ -1,6 +1,6 @@
 import { IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, } from 'graphql/queries';
+import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
@@ -102,25 +102,25 @@ export const TrimUrlHandler = (name: string | undefined) => {
 
 
 export const get_all_records = async (token: string) => {
-  return [token]
-  // try {
-  //   const response = await fetch(
-  //     `${process.env.NEXT_PUBLIC_BASE_URL}/api/sales-record/get_all_records`,
-  //     {
-  //       headers: token
-  //     }
-  //   );
+  try {
+    const { data } = await client.query({
+      query: GET_ALL_RECORDS,
+      fetchPolicy: "no-cache",
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        fetchOptions: { 
+          next: { tags: ["states_records"] }
+        },
+      },
+    });
+    return data?.GET_ALL_RECORDS;
+  } catch (error) {
+    return []
+    throw error;
+  }
 
-  //   if (!response.ok) {
-  //     throw new Error(`HTTP error! Status: ${response.status}`);
-  //   }
-
-  //   const record = await response.json();
-  //   return record;
-  // } catch (err) {
-  //   console.error("Error fetching records:", err);
-  //   return null;
-  // }
 };
 
 
