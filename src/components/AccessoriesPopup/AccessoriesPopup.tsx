@@ -143,13 +143,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
            <div className="py-2">
              <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
              <p className="text-gray-700 font-medium">Price Per m: AED {product.price}</p>
-             <div className="mt-4 text-left">
-                  <p className="text-lg font-semibold">Summary:</p>
-                  <p>Required Boxes: {requiredBoxes[product.id] || 0}</p>
-                  <p>Boxes Covergae: 240</p>
-                  <p>Total Length: {areas[product.id] || 0} {unit[product.id] || "m"}</p>
-                  <p>Total Price: AED {totalPrice[product.id] || 0}</p>
-             </div>
              <p className="text-base text-gray-800 font-medium">You Require:</p>
          
              <div className="flex gap-4 items-center mb-2">

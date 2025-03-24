@@ -43,11 +43,10 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
       return false; // Prevents showing success toast
     }
 
-    // Update total price based on the new quantity
     const updatedProduct = {
       ...product,
       requiredBoxes: newRequiredBoxes,
-      totalPrice: product.pricePerBox * newRequiredBoxes, // Updated total price
+      totalPrice: product.pricePerBox * newRequiredBoxes, 
     };
 
     await new Promise<void>((resolve, reject) => {
@@ -59,7 +58,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
     window.dispatchEvent(new Event("cartUpdated"));
     return true; // Indicates success
   } catch (error) {
-    console.error("Error adding to cart:", error);
+    throw error
     return false;
   }
 };
@@ -222,8 +221,8 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
       window.dispatchEvent(new Event("freeSampleUpdated"));
 
     } catch (error) {
-      console.error("Error adding free sample:", error);
       toast.error("Error adding free sample.");
+      throw error;
     }
   };
   
