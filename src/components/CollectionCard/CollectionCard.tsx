@@ -7,6 +7,7 @@ const CollectionCard = ({ subcategory }: { subcategory: ISUBCATEGORY }) => {
     <div className="overflow-hidden md:px-2 hover:bg-[#FFF9F5]">
       <Link 
              href={`/${subcategory.category.RecallUrl}/${subcategory.custom_url}`}
+             
       >
         <Image
           src={subcategory.posterImageUrl?.imageUrl || '/default-image.jpg'}
