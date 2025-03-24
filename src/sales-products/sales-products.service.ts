@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { CreateSalesProductInput } from './dto/create-sales-product.input';
-import { customHttpException } from 'utils/helper';
+import { contactUsEmailInput, CreateSalesProductInput } from './dto/create-sales-product.input';
+import { contactusEmail, customHttpException } from 'utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class SalesProductsService {
-    constructor(private prisma: PrismaService) { }
-  
+  constructor(private prisma: PrismaService) { }
+
   create(createSalesProductInput: CreateSalesProductInput) {
     return 'This action adds a new salesProduct';
   }
@@ -28,8 +28,8 @@ export class SalesProductsService {
       let totalUsers = await this.prisma.user.count({});
       let totalAdmins = await this.prisma.admins.count({});
       let totalAccessories = await this.prisma.acessories.count({});
-      let sales =[];
-      
+      let sales = [];
+
       // await this.prisma.sales_record.findMany({
       //   include: { products: true },
       // });
@@ -90,5 +90,22 @@ export class SalesProductsService {
   }
 
 
-  
+
+  async contactUs(userDetails : contactUsEmailInput) {
+    try {
+      let message = await contactusEmail(userDetails);
+
+      return {
+        'message': "Email sent successfully"
+      }
+    }
+    catch (error) {
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+    }
+  }
+
+
+
+
+
 }

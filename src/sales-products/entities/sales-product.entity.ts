@@ -35,4 +35,10 @@ export class ALL_RECORDS {
 
 }
 
+@ObjectType()
+export class contactUsEmail {
+    @Field()
+    message: string;
+}
+
 

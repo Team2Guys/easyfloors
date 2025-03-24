@@ -32,3 +32,21 @@ export class CreateSalesProductInput {
   products: any[];
 
 }
+
+
+
+@InputType()
+export class contactUsEmailInput {
+    @Field()
+    firstName: string;
+    @Field()
+    LastName: string;
+    @Field()
+    email: string;
+    @Field()
+    phoneNumber: string;
+    @Field()
+    message: string;
+}
+
+
