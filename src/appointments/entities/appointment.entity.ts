@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
+import { AppointsType } from 'appointments/dto/create-appointment.input';
 import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
@@ -35,4 +36,7 @@ export class Appointment {
 
   @Field(() => GraphQLJSON, { nullable: true })
   contactMethod?: any;
+
+   @Field(() => AppointsType, { nullable: true })
+    AppointsType?: AppointsType;
 }
