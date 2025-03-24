@@ -21,7 +21,7 @@ interface Appointment {
    contactMethod?: Record<string, boolean>;
 }
 
-const Measurement = ({ appointments , title }: { appointments: Appointment[] , title: string }) => {
+const Measurement = ({ appointments, title }: { appointments: Appointment[], title: string }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
 
@@ -77,7 +77,7 @@ const Measurement = ({ appointments , title }: { appointments: Appointment[] , t
          dataIndex: "preferredDate",
          key: "preferredDate",
          width: 180,
-         render: (date: string) => new Date(date).toLocaleDateString(), // Formatting date
+         render: (date: string) => new Date(date).toLocaleDateString(),
       },
       {
          title: "View",
@@ -112,7 +112,14 @@ const Measurement = ({ appointments , title }: { appointments: Appointment[] , t
                         <p><strong>WhatsApp Number:</strong> {selectedAppointment.whatsappNumber || "-"}</p>
                         <p><strong>Area:</strong> {selectedAppointment.area || "-"}</p>
                         <p><strong>Rooms:</strong> {selectedAppointment.selectRooms || "-"}</p>
-                        <p><strong>Preferred Time:</strong> {selectedAppointment.preferredTime || "-"}</p>
+                        <p><strong>Preferred Time:</strong> {selectedAppointment?.preferredDate
+                           ? new Date(selectedAppointment.preferredDate).toLocaleTimeString("en-US", {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                              hour12: true, // ✅ Ensures AM/PM format
+                           })
+                           : "-"}
+                        </p>
                         <p><strong>Preferred Date:</strong> {selectedAppointment.preferredDate
                            ? new Date(selectedAppointment.preferredDate).toLocaleDateString()
                            : "-"}
