@@ -42,10 +42,11 @@ const SignupForm = () => {
           <Formik
             initialValues={formValues}
             onSubmit={async (values, { setSubmitting }) => {
-
+const {retypePassword, phone, ...newValues} = values;
+console.log(retypePassword, "retreive password")
            await client.mutate({
                 mutation: CREATE_USER,
-                variables: {createUser: values, 
+                variables: {createUser: {...newValues, phone: phone.toString()}, 
               },
               });
 
