@@ -71,7 +71,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   };
 
   return (
-    <div className={`overflow-x-auto px-4 ${!isSamplePage && items.length > 5 ? "max-h-[400px] overflow-y-auto" : ""}`}>
+    <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[400px] overflow-y-auto" : ""}`}>
       {items.length === 0 ? (
         <div className="text-center">
           <h1 className="text-center xl:text-[48px]">Your Shopping Cart</h1>
@@ -111,7 +111,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                 </td>
                 {pathname !== "/freesample" && (
                   <td className="p-3">
-                    <div className="flex justify-center items-center bg-gray-200 px-3 py-2 w-fit">
+                    <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
                       <button onClick={() => updateQuantity(product.id, -1)} className="px-2 text-gray-700">
                         <FiMinus />
                       </button>
@@ -122,7 +122,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     </div>
                   </td>
                 )}
-                <td className="p-3 text-center font-inter text-12 xl:text-20 font-normal">
+                <td className="p-3 text-start font-inter text-12 xl:text-20 font-normal">
                   {product.stock > 0 ? "In Stock" : "Out of Stock"}
                 </td>
                 <td className="p-3">
