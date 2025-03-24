@@ -1,8 +1,8 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { SalesProductsService } from './sales-products.service';
-import { SalesProduct } from './entities/sales-product.entity';
+import { ALL_RECORDS, SalesProduct } from './entities/sales-product.entity';
 import { CreateSalesProductInput } from './dto/create-sales-product.input';
-import { UpdateSalesProductInput } from './dto/update-sales-product.input';
+import { Public } from '../decorators/public.decorator';
 
 @Resolver(() => SalesProduct)
 export class SalesProductsResolver {
@@ -23,13 +23,9 @@ export class SalesProductsResolver {
     return this.salesProductsService.findOne(id);
   }
 
-  @Mutation(() => SalesProduct)
-  updateSalesProduct(@Args('updateSalesProductInput') updateSalesProductInput: UpdateSalesProductInput) {
-    return this.salesProductsService.update(updateSalesProductInput.id, updateSalesProductInput);
+  @Query(() => ALL_RECORDS, { name: 'GET_ALL_RECORDS' })
+  get_all_records() {
+    return this.salesProductsService.get_all_records();
   }
 
-  @Mutation(() => SalesProduct)
-  removeSalesProduct(@Args('id', { type: () => Int }) id: number) {
-    return this.salesProductsService.remove(id);
-  }
 }
