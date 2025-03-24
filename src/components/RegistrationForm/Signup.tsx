@@ -53,7 +53,7 @@ const SignupForm = () => {
             variables: {
               createUser: {
                 ...values,
-                phone: String(values.phone),
+                phone: values.phone.toString(),
               },
             },
               });
