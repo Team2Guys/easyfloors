@@ -8,9 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 import client from "config/apolloClient";
 import { CREATE_USER } from "graphql/user_mutation";
-
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
+const router = useRouter();
   const formValues ={
     name: "",
     email: "",
@@ -49,7 +50,7 @@ console.log(retypePassword, "retreive password")
                 variables: {createUser: {...newValues, phone: phone.toString()}, 
               },
               });
-
+              router.push('/login');
               setSubmitting(false);
             }}
           >
