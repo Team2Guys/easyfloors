@@ -8,15 +8,13 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import CartSelect from './cart-select';
-import { addToCart, getCart, removeCartItem } from 'utils/indexedDB';
+import {  getCart, openDB, removeCartItem } from 'utils/indexedDB';
 import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
 import RelatedSlider from 'components/related-slider/related-slider';
-
 interface CartPageProps {
   products: IProduct[];
 }
-
 const CartPage = ({products}:CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]); 
   const [selectedFee, setSelectedFee] = useState(0);
@@ -51,30 +49,54 @@ const CartPage = ({products}:CartPageProps) => {
 
   const updateQuantity = async (id: number, change: number) => {
     try {
-      const updatedCart = cartItems.map((item) => {
-        if (item.id === id) {
-          const newRequiredBoxes = Math.max(1, (item.requiredBoxes ?? 0) + change);
-          return {
-            ...item,
-            requiredBoxes: newRequiredBoxes,
-            totalPrice: item.pricePerBox * newRequiredBoxes,
-            squareMeter: Number(item.boxCoverage) * newRequiredBoxes,
-          };
-        }
-        return item;
-      });
-  
-      setCartItems(updatedCart);
-  
-      const updatedItem = updatedCart.find((item) => item.id === id);
-      if (updatedItem) {
-        await addToCart(updatedItem);
+      const item = cartItems.find((item) => item.id === id);
+      if (!item) {
+        toast.error("Item not found in cart.");
+        return;
       }
+  
+      const newRequiredBoxes = (item.requiredBoxes || 0) + change;
+      if (newRequiredBoxes < 1) {
+        toast.error("Minimum quantity is 1 box.");
+        return;
+      }
+      if (newRequiredBoxes > item.stock) {
+        toast.error(`Cannot add more than ${item.stock} boxes.`);
+        return;
+      }
+  
+      const newTotalPrice = item.pricePerBox * newRequiredBoxes;
+  
+      const updatedItem = {
+        ...item,
+        requiredBoxes: newRequiredBoxes,
+        totalPrice: newTotalPrice, 
+        squareMeter: Number(item.boxCoverage) * newRequiredBoxes,
+      };
+  
+      const db = await openDB();
+      const tx = db.transaction("cart", "readwrite");
+      const store = tx.objectStore("cart");
+      await new Promise<void>((resolve, reject) => {
+        const request = store.put(updatedItem);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+      setCartItems((prevCart) =>
+        prevCart.map((cartItem) => 
+          cartItem.id === id ? { ...cartItem, requiredBoxes: newRequiredBoxes, totalPrice: newTotalPrice } : cartItem
+        )
+      );
+  
+      // Dispatch event for cart update
+      window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       toast.error("Failed to update item quantity.");
-      throw error;
+      console.error(error);
     }
   };
+  
+  
   
   const increment = (id: number) => updateQuantity(id, 1);
   const decrement = (id: number) => updateQuantity(id, -1);
@@ -99,8 +121,6 @@ const matchingProduct = products.find(
 const CategoryData = matchingProduct?.category
     ? { name: matchingProduct.category.name ?? "Unknown", RecallUrl: matchingProduct.category.RecallUrl ?? "" }
     : { name: "Unknown", RecallUrl: "" };
-
-
   return (
     
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>

@@ -19,9 +19,12 @@ export const handleAddToStorage = async (
       return;
     }
     const adjustedRequiredBoxes = requiredBoxes > 0 ? requiredBoxes : 1;
-    const adjustedtotalPrice = totalPrice > 0 ? pricePerBox * requiredBoxes : pricePerBox;
+    const adjustedtotalPrice = totalPrice > 0 ? pricePerBox * adjustedRequiredBoxes : pricePerBox;
     const adjustedsquareMeter = squareMeter > 0 ? squareMeter : Number(boxCoverage);
-
+    if (adjustedRequiredBoxes > Number(productData.stock)) {
+      toast.error("Requested Box exceeds available stock!");
+      return;
+    }
     const item = {
       id: Number(productData.id),
       name: productData.name,
@@ -38,15 +41,15 @@ export const handleAddToStorage = async (
     };
   
     try {
-      if (type === "cart") {
-        await addToCart(item);
-        toast.success("Product added to cart!");
-      } 
-      else if (type === "freeSample"){
-        await addToFreeSample(item);
-        toast.success("Product added to freeSample!");
-      }
-      else {
+      if (type === "cart" || type === "freeSample") {
+        const success = type === "cart" ? await addToCart(item) : await addToFreeSample(item);
+  
+        if (success && type === "cart") {
+          toast.success("Product added to cart!");
+        } else if (type === "freeSample") {
+          toast.success("Product added to free samples!");
+        }
+      } else {
         await addToWishlist(item);
         toast.success("Product added to wishlist!");
       }

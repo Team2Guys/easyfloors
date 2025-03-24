@@ -20,7 +20,7 @@ export const openDB = (): Promise<IDBDatabase> => {
   });
 };
   
-export const addToCart = async (product: ICart): Promise<void> => {
+export const addToCart = async (product: ICart): Promise<boolean> => {
   try {
     const db = await openDB();
     const tx = db.transaction("cart", "readwrite");
@@ -32,23 +32,39 @@ export const addToCart = async (product: ICart): Promise<void> => {
       request.onerror = () => reject(request.error);
     });
 
+    let newRequiredBoxes = product.requiredBoxes || 1;
+
     if (existingProduct) {
-      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? existingProduct.requiredBoxes ?? 1);
-    } else {
-      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? 1);
+      newRequiredBoxes += existingProduct.requiredBoxes || 0;
     }
 
+    if (newRequiredBoxes > product.stock) {
+      toast.error(`Cannot add more than ${product.stock} boxes.`);
+      return false; // Prevents showing success toast
+    }
+
+    // Update total price based on the new quantity
+    const updatedProduct = {
+      ...product,
+      requiredBoxes: newRequiredBoxes,
+      totalPrice: product.pricePerBox * newRequiredBoxes, // Updated total price
+    };
+
     await new Promise<void>((resolve, reject) => {
-      const request = store.put(product);
+      const request = store.put(updatedProduct);
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
 
     window.dispatchEvent(new Event("cartUpdated"));
+    return true; // Indicates success
   } catch (error) {
-    throw error;
+    console.error("Error adding to cart:", error);
+    return false;
   }
 };
+
+
 
 
   export const getCart = async (): Promise<ICart[]> => {

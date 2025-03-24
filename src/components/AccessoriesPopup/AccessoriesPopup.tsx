@@ -1,45 +1,102 @@
 "use client";
 
 import { features } from "data/data";
+import { handleAddToStorage } from "lib/carthelper";
 import Image from "next/image";
-import { FC, useState } from "react";
+import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { AccessoriesPopupProps } from "types/types";
 
-const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products }) => {
+
+const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) => {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [unit, setUnit] = useState<{ [key: string]: "m" | "ft" }>({});
+  const [unit, setUnit] = useState<{ [key: string]: "m" | "ft" }>(
+    Object.fromEntries(products.map((product) => [String(product.id), "m"]))
+  );
   const [areas, setAreas] = useState<{ [key: string]: string }>({});
+  const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
+  const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
+ 
 
   if (!isOpen) return null;
-
+  const boxCoverage = 2.4;
   const toggleSelect = (id: string | number) => {
     const idStr = String(id);
     setSelectedProducts((prev) =>
       prev.includes(idStr) ? prev.filter((productId) => productId !== idStr) : [...prev, idStr]
     );
   };
-  
-  const handleAreaChange = (id: string | number, value: string) => {
-    const idStr = String(id);
-    setAreas((prev) => ({
-      ...prev,
-      [idStr]: value,
-    }));
-  };
-  
+
   const handleUnitChange = (id: string | number, value: "m" | "ft") => {
     const idStr = String(id);
     setUnit((prev) => ({
       ...prev,
       [idStr]: value,
     }));
+
+    if (areas[idStr]) {
+      handleAreaChange(idStr, areas[idStr]);
+    }
   };
+
+  const handleAreaChange = (id: string | number, value: string) => {
+    const boxCoverage = 2.4;
+    const idStr = String(id);
+    setAreas((prev) => ({
+      ...prev,
+      [idStr]: value,
+    }));
+
+    const meters = parseFloat(value);
+    if (!isNaN(meters) && meters > 0) {
+      const isFeet = unit[idStr] === "ft";
+      const coverage = isFeet ? boxCoverage * 10.764 : boxCoverage; // Convert if in feet
+      const pieces = Math.ceil(meters / coverage); // Calculate required boxes
+
+      setRequiredBoxes((prev) => ({
+        ...prev,
+        [idStr]: pieces,
+      }));
+
+      const product = products.find((p) => String(p.id) === idStr);
+      setTotalPrice((prev) => ({
+        ...prev,
+        [idStr]: pieces * (product?.price || 0),
+      }));
+    } else {
+      setRequiredBoxes((prev) => ({ ...prev, [idStr]: 0 }));
+      setTotalPrice((prev) => ({ ...prev, [idStr]: 0 }));
+    }
+  };
+
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
       onClose();
     }
   };
+
+  const handleAddSelectedToCart = () => {
+    selectedProducts.forEach((productId) => {
+      const product = products.find((p) => String(p.id) === productId);
+      if (product) {
+        const squareMeter = boxCoverage * (requiredBoxes[productId] || 1);
+        handleAddToStorage(
+          product,
+          totalPrice[productId] || 0,
+          product.price,
+          squareMeter, // Updated Calculation
+          requiredBoxes[productId] || 1,
+          "",
+          product.category?.name ?? product?.__typename,
+          "cart",
+          product.posterImageUrl.imageUrl ?? "",
+          String(boxCoverage)
+        );
+      }
+    });
+    onClose();
+  };
+  
 
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
@@ -62,7 +119,8 @@ const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products
                type="checkbox"
                checked={selectedProducts.includes(String(product.id))}
                onChange={() => toggleSelect(product.id)}
-               className="w-5 h-5 absolute top-3 left-3 accent-white cursor-pointer"
+               className={`w-5 h-5 absolute top-3 left-3 accent-white ${Number(product.stock) >0 ? "cursor-pointer" : "cursor-not-allowed"}`}
+               disabled={Number(product.stock) <= 0}
              />
          
              <Image
@@ -85,6 +143,13 @@ const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products
            <div className="py-2">
              <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
              <p className="text-gray-700 font-medium">Price Per m: AED {product.price}</p>
+             <div className="mt-4 text-left">
+                  <p className="text-lg font-semibold">Summary:</p>
+                  <p>Required Boxes: {requiredBoxes[product.id] || 0}</p>
+                  <p>Boxes Covergae: 240</p>
+                  <p>Total Length: {areas[product.id] || 0} {unit[product.id] || "m"}</p>
+                  <p>Total Price: AED {totalPrice[product.id] || 0}</p>
+             </div>
              <p className="text-base text-gray-800 font-medium">You Require:</p>
          
              <div className="flex gap-4 items-center mb-2">
@@ -124,7 +189,11 @@ const AccessoriesPopup: FC<AccessoriesPopupProps> = ({ isOpen, onClose, products
         </div>
 
         <button
-          className="mt-4 w-fit px-10 mx-auto py-3 bg-black text-white font-semibold flex items-center justify-center gap-2"
+          className={`mt-4 w-fit px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2
+            ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}
+          `}
+          onClick={handleAddSelectedToCart}
+          disabled={selectedProducts.length === 0}
         >
           <Image src="/assets/images/icon/cart.png" alt="cart" width={28} height={28} />
           Add to Cart
