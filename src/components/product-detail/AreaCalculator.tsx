@@ -54,7 +54,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
         type="number"        
         placeholder={`Enter Area ${unit === "sqm" ? "m²" : "ft²"}`}
         value={area}
-       min="0"    
+        min="0"
         onChange={(e) => setArea(e.target.value)}
         className=" p-2 border border-[#9E9E9E] focus:outline-none focus:ring-2 focus:ring-orange-500 w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
       />

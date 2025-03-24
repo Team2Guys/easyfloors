@@ -88,10 +88,10 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           </p>
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">
-        <button className="flex bg-primary justify-center text-[clamp(12px,2vw,18px)] text-white w-7/12 font-inter gap-2 items-center max-sm:h-[40px] mx-auto px-2 py-2 sm:py-3 whitespace-nowrap">
-        <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
+          <button className="flex bg-primary text-12 text-white w-7/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16">
+            <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
             Order Now Free Sample
-        </button>
+          </button>
           <button
             onClick={() =>
               handleAddToStorage(

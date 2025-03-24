@@ -7,11 +7,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { loginData } from "data/data";
 import { Field, Form, Formik } from "formik";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+const router = useRouter() 
+ const [showPassword, setShowPassword] = useState(false);
 
   const formValues = {
     email: "",
@@ -39,13 +41,15 @@ const LoginForm = () => {
               const res = await signIn("credentials", {
                 email: values.email,
                 password: values.password,
-                redirect: true,
+                redirect: false,
+
 
               });
-
-              if (res?.error) {
-                  return res?.error;
+              if (res?.ok) {
+               router.replace("/profile"); // Redirect to profile page
               }
+
+          
               setSubmitting(false);
             }}
           >

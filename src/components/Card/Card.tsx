@@ -1,12 +1,18 @@
-import ProductContainer from "components/ProdutDetailContainer.tsx/ProductContainer";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import dynamic from "next/dynamic";
+import { MouseEvent, useState } from "react";
 import { FiEye, FiHeart } from "react-icons/fi";
 import { Category } from "types/cat";
 import { productCardProps } from "types/PagesProps";
 import { IProduct } from "types/prod";
-
+import { fetchSingeProduct } from "config/fetch";
+import { generateSlug } from "data/data";
+import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
+import { toast } from "react-toastify";
+const ProductContainer = dynamic(
+  () => import("components/ProdutDetailContainer/ProductContainer")
+);
 const Card: React.FC<productCardProps> = ({
   product,
   features,
@@ -16,8 +22,26 @@ const Card: React.FC<productCardProps> = ({
   isSoldOut = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData , setModalData] = useState<IProduct | undefined>(undefined)
 
-
+  const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    try {
+      const productData = await fetchSingeProduct(
+        product.custom_url || '',
+        generateSlug(categoryData.RecallUrl),
+        generateSlug(product.subcategory?.custom_url || ''),
+        true,
+        FIND_QUICK_VIEW_PRODUCT
+      );
+  
+      setModalData(productData || undefined);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error("Error fetching single product:", error);
+      toast.error("Error fetching single product");
+    }
+  };
 
   const handleNavigate = (product: IProduct , categoryData: Category ) => {
     if (product.subcategory) {
@@ -49,7 +73,7 @@ const Card: React.FC<productCardProps> = ({
             <Link href="/wishlist" className="bg-white p-1 shadow hover:bg-primary hover:text-white transition">
               <FiHeart size={20} />
             </Link>
-            <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => setIsModalOpen(true)} >
+            <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
               <FiEye size={20} />
             </button>
           </div>
@@ -72,9 +96,9 @@ const Card: React.FC<productCardProps> = ({
             </button>
             <ProductContainer className="2xl:gap-0 xl:px-0"
               MainCategory={categoryData?.name || ""}
-              subCategory={(product as IProduct)?.subcategory?.name || ""}
+              subCategory={product?.subcategory?.name || ""}
               ProductName={product?.name || ""}
-              productData={product as IProduct}
+              productData={modalData as IProduct || []}
               ProductInfo={[]}
             />
 

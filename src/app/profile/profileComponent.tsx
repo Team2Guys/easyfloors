@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -11,9 +10,12 @@ import showToast from 'components/Toaster/Toaster';
 import Container from 'components/common/container/Container';
 import { ProductImage } from 'types/prod';
 import { Session } from 'next-auth';
+import { useMutation } from '@apollo/client';
+import { UPDATE_USER } from 'graphql/user_mutation';
 
 
 function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | undefined }) {
+    const [updateUser] = useMutation(UPDATE_USER);
 
     const router = useRouter();
     const [formData, setFormData] = useState({ name: '', email: '' });
@@ -66,18 +68,21 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
+        console.log(formData, "formdata", profilePhoto)
+
         const userDetails = {
             ...formData,
             userImageUrl: profilePhoto
         };
 
         try {
-            const res = await axios.post(
-                `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/edit-user`,
-                userDetails,
-            );
-
-            showToast('success', res.data.message);
+          await updateUser({
+                variables: {
+                  updateUser: userDetails
+                },
+              });
+        
+            showToast('success', "details has been updated");
         } catch (err) {
             return err;
 

@@ -8,10 +8,10 @@ import { Category } from 'types/cat';
 import { IProduct } from 'types/prod';
 
 
-export const fetchProducts = async () => {
+export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCH_ALL_PRODUCTS,
+      query: CUSTOMIZE_QUERY ? CUSTOMIZE_QUERY : FETCH_ALL_PRODUCTS,
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: {
@@ -202,11 +202,11 @@ export const fetchSingeSubCategory = async (customUrl: string): Promise<Category
   }
 };
 
-export const fetchSingeProduct = async (customUrl: string, category: string, subCategory: string): Promise<IProduct | null> => {
+export const fetchSingeProduct = async (customUrl: string, category: string, subCategory: string , acessories?: boolean, FIND_QUICK_VIEW_PRODUCT?: DocumentNode): Promise<IProduct | null> => {
   try {
     const { data } = await client.query({
-      query: FIND_ONE_PRODUCT,
-      variables: { custom_url: customUrl, category, subCategory },
+      query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : FIND_ONE_PRODUCT,
+      variables: { custom_url: customUrl, category, subCategory , acessories },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["products"] } },

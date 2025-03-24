@@ -2,7 +2,7 @@ import { ICart } from "types/prod";
 
 export const openDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open("ecommerceDB", 2); 
+    const request = indexedDB.open("ecommerceDB", 3); 
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains("cart")) {
@@ -10,6 +10,9 @@ export const openDB = (): Promise<IDBDatabase> => {
       }
       if (!db.objectStoreNames.contains("wishlist")) {
         db.createObjectStore("wishlist", { keyPath: "id" });
+      }
+      if (!db.objectStoreNames.contains("freeSample")) {
+        db.createObjectStore("freeSample", { keyPath: "id" });
       }
     };
     request.onsuccess = () => resolve(request.result);
@@ -30,9 +33,9 @@ export const addToCart = async (product: ICart): Promise<void> => {
     });
 
     if (existingProduct) {
-      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + (product.requiredBoxes ?? 1);
+      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? existingProduct.requiredBoxes ?? 1);
     } else {
-      product.requiredBoxes = product.requiredBoxes ?? 1;
+      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? 1);
     }
 
     await new Promise<void>((resolve, reject) => {
@@ -40,8 +43,8 @@ export const addToCart = async (product: ICart): Promise<void> => {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-    window.dispatchEvent(new Event("cartUpdated"));
 
+    window.dispatchEvent(new Event("cartUpdated"));
   } catch (error) {
     throw error;
   }
@@ -169,3 +172,76 @@ export const addToCart = async (product: ICart): Promise<void> => {
       throw error;
     }
   };
+
+
+  import { toast } from "react-toastify";
+
+  export const addToFreeSample = async (product: ICart): Promise<void> => {
+    try {
+      const db = await openDB();
+      const tx = db.transaction("freeSample", "readwrite");
+      const store = tx.objectStore("freeSample");
+
+      const samples: ICart[] = await new Promise((resolve, reject) => {
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+  
+      if (samples.length >= 5) {
+        toast.error("You can only add up to 5 free samples.");
+        return;
+      }
+  
+      product.requiredBoxes = 1;
+      product.price = 0;
+      product.totalPrice = 0;
+
+      await new Promise<void>((resolve, reject) => {
+        const request = store.put(product);
+        request.onsuccess = () => resolve();
+        request.onerror = () => reject(request.error);
+      });
+      
+      window.dispatchEvent(new Event("freeSampleUpdated"));
+
+    } catch (error) {
+      console.error("Error adding free sample:", error);
+      toast.error("Error adding free sample.");
+    }
+  };
+  
+  export const removeFreeSample = async (id: number): Promise<void> => {
+  try {
+    const db = await openDB();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction("freeSample", "readwrite");
+      const store = tx.objectStore("freeSample");
+      const request = store.delete(id);
+
+      request.onsuccess = () => {
+        tx.oncomplete = () => resolve();
+      };
+      request.onerror = () => reject(request.error);
+    });
+
+    window.dispatchEvent(new Event("freeSampleUpdated"));
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getFreeSamples = async (): Promise<ICart[]> => {
+  try {
+    const db = await openDB();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction("freeSample", "readonly");
+      const store = tx.objectStore("freeSample");
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    throw error;
+  }
+};

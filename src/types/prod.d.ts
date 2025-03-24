@@ -54,6 +54,7 @@ export interface IProduct {
     featureImages?:ProductImage[]
     acessories?:IProduct[]
     colorCode:string;
+    __typename?:string;
   }
 
   export interface IProductFilter extends IProduct {
@@ -68,12 +69,12 @@ export interface IProduct {
     subcategory?: string;
     category?:string;
     image?: string
-    quantity?:number ;
+    totalPrice:number ;
     pricePerBox:number,
     squareMeter:number,
     requiredBoxes:number,
     boxCoverage?:string,
- 
+    subcategories?:string
   }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {

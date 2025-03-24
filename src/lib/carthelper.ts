@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { IProduct } from 'types/prod';
-import { addToCart, addToWishlist } from 'utils/indexedDB';
+import { addToCart,addToFreeSample,addToWishlist } from 'utils/indexedDB';
 export const handleAddToStorage = async (
     productData: IProduct,
     totalPrice: number,
@@ -9,7 +9,7 @@ export const handleAddToStorage = async (
     requiredBoxes: number,
     subCategory: string,
     MainCategory: string,
-    type: "cart" | "wishlist",
+    type: "cart" | "wishlist"|"freeSample",
     image?: string,
     boxCoverage?: string,
 
@@ -19,7 +19,7 @@ export const handleAddToStorage = async (
       return;
     }
     const adjustedRequiredBoxes = requiredBoxes > 0 ? requiredBoxes : 1;
-    const adjustedtotalPrice = totalPrice > 0 ? totalPrice : pricePerBox;
+    const adjustedtotalPrice = totalPrice > 0 ? pricePerBox * requiredBoxes : pricePerBox;
     const adjustedsquareMeter = squareMeter > 0 ? squareMeter : Number(boxCoverage);
 
     const item = {
@@ -41,7 +41,12 @@ export const handleAddToStorage = async (
       if (type === "cart") {
         await addToCart(item);
         toast.success("Product added to cart!");
-      } else {
+      } 
+      else if (type === "freeSample"){
+        await addToFreeSample(item);
+        toast.success("Product added to freeSample!");
+      }
+      else {
         await addToWishlist(item);
         toast.success("Product added to wishlist!");
       }

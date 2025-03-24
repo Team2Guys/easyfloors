@@ -51,11 +51,11 @@ export const cartData= [
   ];
   
   export const fees = {
-    "Abu Dhabi": 25,
-    "Dubai": 20,
-    "Sharjah": 20,
-    "Ajman": 15,
-    "Umm Al-Quwain": 15,
-    "Ras Al Khaimah": 18,
-    "Fujairah": 17
+    "Abu Dhabi": 150,
+    "Dubai": 100,
+    "Sharjah": 150,
+    "Ajman": 150,
+    "Umm Al-Quwain": 150,
+    "Ras Al Khaimah": 150,
+    "Fujairah": 150,
   };

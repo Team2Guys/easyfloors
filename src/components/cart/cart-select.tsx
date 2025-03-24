@@ -3,23 +3,22 @@ import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { CartSelectProps } from "types/type";
 
-
-
-const CartSelect = ({ select, fees, onSelect }: CartSelectProps) => {
+const CartSelect = ({ select, fees, onSelect, selectedFee }: CartSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedState, setSelectedState] = useState("City");
 
   const handleSelect = (state: string) => {
     setSelectedState(state);
     setIsOpen(false);
-    onSelect(state, fees[state]);
+    const fee = selectedFee > 1000 ? 0 : fees[state]; 
+    onSelect(state, fee);
   };
 
   return (
     <div className="flex justify-between text-16 lg:text-20">
       <p>Shipping</p>
       <div>
-        <div className="border bg-white text-[#BBBBBB] text-12 xl:text-15  2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 w-full mb-2">
+        <div className="border bg-white text-[#BBBBBB] text-12 xl:text-15 2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 w-full mb-2">
           United Arab Emirates
         </div>
         <div className="relative w-full font-inter">
@@ -31,7 +30,7 @@ const CartSelect = ({ select, fees, onSelect }: CartSelectProps) => {
             <span>{isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}</span>
           </div>
           {isOpen && (
-            <div className=" z-10 w-full bg-white border border-t-0 max-h-[90px] overflow-x-auto">
+            <div className="z-10 w-full bg-white border border-t-0 max-h-[90px] overflow-x-auto">
               {select.map((state, index) => (
                 <div
                   key={index}
@@ -45,7 +44,9 @@ const CartSelect = ({ select, fees, onSelect }: CartSelectProps) => {
           )}
         </div>
       </div>
-      <p className="hidden md:block">AED {fees[selectedState] || 0}</p>
+      {/* <p className="hidden md:block">
+        {selectedFee === 0 ? "Free" : `AED ${selectedFee}`}
+      </p> */}
     </div>
   );
 };
