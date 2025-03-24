@@ -1,17 +1,22 @@
+import dynamic from 'next/dynamic';
+const ECommerce = dynamic(() => import('components/Dashboard/E-commerce'));
+import DefaultLayout from 'components/Dashboard/DefaultLayout';
+import { get_all_records } from 'config/fetch';
+import { cookies } from 'next/headers';
 
-import DashboardMain from "./DashboardMain";
-import { Suspense } from "react";
-import Loader from "components/Loader/Loader";
+async function DashboardMain() {
+  const cookie = await cookies()
+  const token = cookie.get('admin_access_token')?.value;
+  const superAdmin = cookie.get('super_admin_access_token')?.value;
+  const  finaltoken = token || superAdmin  || "";
+const records = await get_all_records(finaltoken)
 
-async function Home() {
 
- /* eslint-disable */
-  const records:any = [] //eslint-
   return (
-    <Suspense fallback={<Loader />}>
-        <DashboardMain records={records} />
-    </Suspense>
+    <DefaultLayout>
+      <ECommerce records={records} />
+    </DefaultLayout>
   );
 }
 
-export default Home;
+export default DashboardMain;

@@ -145,7 +145,7 @@ export interface RECORDS {
   totalProfit: string;
   totalSales: string;
   totalRevenue: string;
-  total_sub_categories: string;
+  totalSubCategories: string;
   Total_abandant_order: string;
 }
 
