@@ -68,7 +68,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        console.log(formData, "formdata", profilePhoto)
+        console.log(formData, "profilePhoto", profilePhoto)
 
         const userDetails = {
             ...formData,
@@ -130,7 +130,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                         </Link>
                         <Link
                             className="border border-gray p-2 max-w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold shadow"
-                            href='/about'
+                            href='/about-us'
                         >
                             About Us
                         </Link>
@@ -155,6 +155,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                                     width={55}
                                     height={55}
                                     alt={loggedInUser?.user?.name ?? "Profile Photo"}
+                                    
                                 />
                             </div>
 

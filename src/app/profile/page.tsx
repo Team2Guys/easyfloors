@@ -10,6 +10,7 @@ import { authOptions } from 'auth/authOptions';
 
 const Profile = async() => {
   const session = await getServerSession(authOptions)
+  console.log(session, "session", session)
 if(!session){
   redirect('/login')
 }
