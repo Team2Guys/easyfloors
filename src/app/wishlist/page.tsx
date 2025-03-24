@@ -21,8 +21,8 @@ const Wishlist = () => {
    <div className="block md:hidden">
    <WishlistSmall />
    </div>
-    </Container>
-    </>
+  </Container>
+   </>
   )
 }
 

@@ -8,7 +8,7 @@ import { GrCart } from "react-icons/gr";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, openDB } from "utils/indexedDB";
+import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, } from "utils/indexedDB";
 import { addToCart as saveToCart } from "utils/indexedDB";
 import { toast } from "react-toastify";
 
