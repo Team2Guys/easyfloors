@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import { CreateAppointmentInput } from 'appointments/dto/create-appointment.input';
+import { CreateAppointmentInput } from '../appointments/dto/create-appointment.input';
 import nodemailer from 'nodemailer';
-import { contactUsEmailInput } from 'sales-products/dto/create-sales-product.input';
+import { contactUsEmailInput } from '../sales-products/dto/create-sales-product.input';
 
 
 export const customHttpException = (error: any, status?: string) => {
