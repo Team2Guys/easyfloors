@@ -11,6 +11,7 @@ import { IoBagOutline } from 'react-icons/io5';
 import { BiCategory } from 'react-icons/bi';
 import { GrDocumentPerformance } from 'react-icons/gr';
 import { RECORDS } from 'types/type';
+import ProtectedRoute from 'hooks/AuthHookAdmin';
 
 const ECommerce = ({records}: {records: RECORDS}) => {
   const { loggedInUser } = useAppSelector((state) => state.usersSlice);
@@ -53,8 +54,8 @@ const ECommerce = ({records}: {records: RECORDS}) => {
               <CardDataStats
                 title="Total Sub Categories"
                 total={
-                  records?.total_sub_categories
-                    ? records?.total_sub_categories
+                  records?.totalSubCategories
+                    ? records?.totalSubCategories
                     : ''
                 }
               >
@@ -145,4 +146,4 @@ const ECommerce = ({records}: {records: RECORDS}) => {
   );
 };
 
-export default ECommerce;
+export default ProtectedRoute(ECommerce);

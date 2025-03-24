@@ -261,3 +261,13 @@ export const CREATE_ADMIN = gql`
   }
 `;
 
+
+
+export const CONTACT_US_EMAIL_MUTATION = gql`
+  mutation ContactEmail($contactUsEmail: contactUsEmailInput!) {
+    Contact_email(contactUsEmail: $contactUsEmail) {
+      message
+    }
+  }
+`;
+
