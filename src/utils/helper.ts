@@ -52,7 +52,7 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
     findUs,
     comment,
     contactMethod,
-    appointsType,
+    AppointsType,
   } = appointmentData;
 
   const htmlTemplate = `
@@ -118,7 +118,7 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
 
             <div class="field">
               <span class="label">Appointment Type:</span> 
-              ${appointsType ? appointsType.toUpperCase() : "Not specified"}
+              ${AppointsType ? AppointsType.toUpperCase() : "Not specified"}
             </div>
 
             <div class="field">
@@ -194,7 +194,7 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: email,
-      subject: `Appointment Request Confirmation - ${appointsType || "General"}`,
+      subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
       html: htmlTemplate,
     });
   } catch (error) {
