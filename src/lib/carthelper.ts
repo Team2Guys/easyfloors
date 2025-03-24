@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { IProduct } from 'types/prod';
-import { addToCart,addToFreeSample,addToWishlist } from 'utils/indexedDB';
+import { addToCart,addToFreeSample,addToWishlist, getFreeSamples } from 'utils/indexedDB';
 export const handleAddToStorage = async (
     productData: IProduct,
     totalPrice: number,
@@ -46,9 +46,15 @@ export const handleAddToStorage = async (
   
         if (success && type === "cart") {
           toast.success("Product added to cart!");
-        } else if (type === "freeSample") {
-          toast.success("Product added to free samples!");
-        }
+        }  else if (type === "freeSample") {
+          const existingSamples = await getFreeSamples(); 
+          if (existingSamples.length >= 5) {
+            toast.warn("You can add only up to 5 free samples.");
+            return;
+          }
+          await addToFreeSample(item);
+          toast.success("Product added to freeSample!");
+        } 
       } else {
         await addToWishlist(item);
         toast.success("Product added to wishlist!");
@@ -56,6 +62,7 @@ export const handleAddToStorage = async (
     } catch {
       toast.error(`Error adding product to ${type}`);
     }
+    
   };
 
   export const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
