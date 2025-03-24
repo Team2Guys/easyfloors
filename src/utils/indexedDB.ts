@@ -33,9 +33,9 @@ export const addToCart = async (product: ICart): Promise<void> => {
     });
 
     if (existingProduct) {
-      product.requiredBoxes = (existingProduct?.requiredBoxes ?? 0) + (product.requiredBoxes ?? 1);
+      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? existingProduct.requiredBoxes ?? 1);
     } else {
-      product.requiredBoxes = product.requiredBoxes ?? 1;
+      product.requiredBoxes = Math.max(1, product.requiredBoxes ?? 1);
     }
 
     await new Promise<void>((resolve, reject) => {
@@ -43,8 +43,8 @@ export const addToCart = async (product: ICart): Promise<void> => {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
-    window.dispatchEvent(new Event("cartUpdated"));
 
+    window.dispatchEvent(new Event("cartUpdated"));
   } catch (error) {
     throw error;
   }
@@ -234,14 +234,28 @@ export const addToCart = async (product: ICart): Promise<void> => {
 export const getFreeSamples = async (): Promise<ICart[]> => {
   try {
     const db = await openDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction("freeSample", "readonly");
-      const store = tx.objectStore("freeSample");
-      const request = store.getAll();
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
+
+    if (!db.objectStoreNames.contains("freeSample")) {
+      console.warn("Object store 'freeSample' does not exist.");
+      return [];
+    }
+
+    const tx = db.transaction("freeSample", "readonly");
+    const store = tx.objectStore("freeSample");
+    const request = store.getAll();
+
+    return await new Promise<ICart[]>((resolve, reject) => {
+      request.onsuccess = () => {
+        console.log("Retrieved Free Samples:", request.result);
+        resolve(request.result);
+      };
+      request.onerror = () => {
+        console.error("Error fetching free samples:", request.error);
+        reject(request.error);
+      };
     });
   } catch (error) {
-    throw error;
+    console.error("Database error:", error);
+    return []; 
   }
 };

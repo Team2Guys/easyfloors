@@ -16,7 +16,7 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates } from "data/data";
+// import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
@@ -33,14 +33,19 @@ const Checkout = () => {
     const [subTotal, setSubTotal] = useState(0);
     const [total, setTotal] = useState(0);
     const [selectedFee, setSelectedFee] = useState(0);
+    const [selectedShipping, setSelectedShipping] = useState<"express" | "standard" | null>(null);
+
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
                 const items = await getCart();
                 setCartItems(items);
                 setTotalProducts(items.length);
-                const subTotalPrice = cartItems.reduce((total, item) => total + (item.price || 0) * (item.quantity ?? 0), 0);
-                setSubTotal(subTotalPrice)
+                const subTotalPrice = items.reduce(
+                    (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 
+                    0
+                );
+                setSubTotal(subTotalPrice);
             } catch {
                 toast.error("Error fetching cart items:");
             }
@@ -56,9 +61,8 @@ const Checkout = () => {
             email: "",
             phone: "",
             country: "United Arab Emirates",
-            postalCode: '',
             city: "",
-            emirate: "",
+            // emirate: "",
             address: "",
             note: "",
         },
@@ -68,7 +72,7 @@ const Checkout = () => {
             email: Yup.string().email("Invalid email address").required("Email is required"),
             phone: Yup.string().required("Phone number is required"),
             city: Yup.string().required("City is required"),
-            emirate: Yup.string().required("Emirate is required"),
+            // emirate: Yup.string().required("Emirate is required"),
             address: Yup.string().required("Address is required"),
         }),
         onSubmit: (values) => {
@@ -76,7 +80,7 @@ const Checkout = () => {
                 toast.warn("You must agree to the terms and conditions.");
                 return;
             }
-            console.log('form data', values);
+            console.log('formdata', {...values, products: cartItems});
         },
     });
 
@@ -86,7 +90,29 @@ const Checkout = () => {
         const totalPrice = subTotal + (fee || 0 );
             setTotal(totalPrice);
     };
-
+    
+    useEffect(() => {
+        handleShippingSelect("standard"); 
+    }, []);
+    const handleShippingSelect = (type: "express" | "standard") => {
+        setSelectedShipping(type);
+    
+        let fee = 0;
+    
+        if (type === "express") {
+            if (!formik.values.city || formik.values.city === "Select City") {
+                fee = 0;
+            } else {
+                fee = subTotal >= 1000 ? 0 : formik.values.city === "Dubai" ? 100 : 150;
+            }
+        } else {
+            fee = 0; // Standard shipping is always free
+        }
+    
+        setSelectedFee(fee);
+        setTotal(subTotal + (fee > 0 ? fee : 0)); // Ignore placeholder (-1)
+    };
+    
 
     return (
         <Container>
@@ -166,6 +192,26 @@ const Checkout = () => {
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+{/* These added for confirmation */}
+
+                        {/* <div className="flex-1">
+                                <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
+                                <select
+                                    name="emirate"
+                                    className="w-full p-2 border rounded custom-select"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.emirate}
+                                    defaultValue="United Arab Emirates"
+                                    required
+                                >
+                                    <option value="">Select Emirate</option>
+                                    {emirates.map((emirate) => (
+                                        <option key={emirate} value={emirate}>{emirate}</option>
+                                    ))}
+                                </select>
+                        </div>  */}
+
                             <div className="flex-1">
                                 <label className="block font-medium">City <span className="text-primary">*</span></label>
                                 <select
@@ -185,21 +231,6 @@ const Checkout = () => {
                                 </select>
                             </div>
 
-                            <div className="flex-1">
-                                <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
-                                <select
-                                    name="emirate"
-                                    className="w-full p-2 border rounded custom-select"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.emirate}
-                                    required
-                                >
-                                    <option value="">Select Emirate</option>
-                                    {emirates.map((emirate) => (
-                                        <option key={emirate} value={emirate}>{emirate}</option>
-                                    ))}
-                                </select>
-                            </div>
                         </div>
 
                         <div>
@@ -246,18 +277,29 @@ const Checkout = () => {
                                     </div>
                                     <div className="ml-4">
                                         <p className="font-bold text-13 xs:text-16">{item.name}</p>
-                                        <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.quantity}</span> (2.009 SQM)</p>
+                                        <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter} SQM)</p>
                                     </div>
-                                    <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.price}</p>
+                                    <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.totalPrice.toFixed(2)}</p>
                                 </div>
                             )) : <p>Cart is Empty</p>}
                         </div>
                     </div>
                     <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                         <div className="space-y-2 py-4">
-                            <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal}</span></p>
-                            <p className="text-gray-600 flex justify-between"><span className="flex items-center gap-2">Shipping <CiDeliveryTruck size={16} className="mt-1" /></span> <span className="text-black">{selectedFee > 0 ? selectedFee : 'Enter shipping address'}</span></p>
-                            <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {total}</span></p>
+                            <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal.toFixed(2)}</span></p>
+                            <p className="text-gray-600 flex justify-between">
+                            <span className="flex items-center gap-2">
+                                Shipping <CiDeliveryTruck size={16} className="mt-1" />
+                            </span> 
+                            <span className="text-black">
+                            {selectedShipping === "standard"
+                                ? "Free"
+                                : selectedFee === 0
+                                ? "Enter shipping address"
+                                : `AED ${selectedFee}`}
+                            </span>
+                            </p>
+                            <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {total.toFixed(2)}</span></p>
                         </div>
                         <button
                             type="submit"
@@ -277,26 +319,39 @@ const Checkout = () => {
                                     key="1"
                                     className="!border-b-0"
                                 >
-                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                        <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                                        <div>
-                                            <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                                            <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
-                                            <p className="text-11 xs:text-16">
-                                                <span>Delivery Cost:</span> <strong>AED 150</strong>
-                                            </p>
-                                        </div>
+                                    <div
+                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
+                                        selectedShipping === "express" ? "border-primary" : "border-transparent"
+                                    }`}
+                                    onClick={() => handleShippingSelect("express")}
+                                    >
+                                    <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
+                                    <div>
+                                        <strong className="text-15 xs:text-20">Express Shipping:</strong>
+                                        <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
+                                        <p className="text-11 xs:text-16">
+                                            <span>Delivery Cost:</span> <strong>AED 150</strong>
+                                        </p>
                                     </div>
-                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                        <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                                        <div>
-                                            <strong className="text-15 xs:text-20">Standard Shipping:</strong>
-                                            <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
-                                            <p className="text-11 xs:text-16">
-                                                <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500  Only In Dubai  </strong>
-                                            </p>
-                                        </div>
                                     </div>
+
+                                <div
+                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
+                                        selectedShipping === "standard" ? "border-primary" : "border-transparent"
+                                    }`}
+                                    onClick={() => handleShippingSelect("standard")}
+                                >
+                                    <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
+                                    <div>
+                                        <strong className="text-15 xs:text-20">Standard Shipping:</strong>
+                                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                                        <p className="text-11 xs:text-16">
+                                            <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500 Only In Dubai</strong>
+                                        </p>
+                                    </div>
+                                </div>
+
+
                                     <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
                                         <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
                                         <div>

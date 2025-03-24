@@ -1,8 +1,10 @@
 "use server";
-
 import * as Yup from "yup";
 
-const validationSchema = Yup.object({
+
+
+
+export const validationSchema = Yup.object({
   fullName: Yup.string()
     .min(3, "Full Name must be at least 3 characters")
     .required("Full Name is required"),
@@ -30,30 +32,6 @@ const forgotPasswordSchema = Yup.object({
     .required("Please retype the new password"),
 });
 
-export const registerUser = async (
-  prevState: { message: string },
-  formData: FormData
-): Promise<{ message: string }> => {
-  const fullName = formData.get("fullName") as string;
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
-  const retypePassword = formData.get("retypePassword") as string;
-
-  try {
-    await validationSchema.validate({ fullName, email, password, retypePassword }, { abortEarly: false });
-  } catch (error) {
-    if (error instanceof Yup.ValidationError) {
-      return { message: error.errors.join(", ") };
-    }
-    return { message: "An unexpected error occurred." };
-  }
-
-  if (email === "test@example.com") {
-    return { message: "User already exists." };
-  }
-
-  return { message: "Registration successful!" };
-};
 
 export const authenticateUser = async (
   prevState: { message: string },

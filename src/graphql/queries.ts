@@ -51,8 +51,39 @@ export const FETCH_ALL_PRODUCTS = gql`
     }
   }
 `;
+export const FETCH_HEADER_PRODUCTS = gql`
+  query Products {
+    products {
+      id
+      name
+      price
+      discountPrice
+      description
+      stock
+      posterImageUrl
+      custom_url
+      category {
+        id
+        name
+        RecallUrl
+        custom_url
+      }
+      subcategory {
+        id
+        name
+        custom_url
+      }
+       acessories {
+        id
+        name
+        price
+        discountPrice
+        custom_url
 
-
+        posterImageUrl
+         }
+          }
+        }`;
 
 
 export const FETCH_ALL_CATEGORIES = gql`
@@ -107,6 +138,14 @@ export const FETCH_ALL_CATEGORIES = gql`
           id
           name
           custom_url
+        }
+        acessories {
+          id
+          name
+          price
+          discountPrice
+          custom_url
+          posterImageUrl 
         }
           
       }
@@ -230,6 +269,15 @@ export const FETCH_HEADER_CATEGORIES = gql`
         custom_url
         posterImageUrl
       }
+         products {
+        id
+        name
+        price
+        discountPrice
+        stock
+        posterImageUrl
+
+      }
        recalledSubCats {
             id
             name
@@ -321,7 +369,7 @@ query SubCategory($customUrl: String!) {
 
 export const FIND_ONE_PRODUCT = gql`
 query Product($custom_url: String!,$category: String!,$subCategory: String!) {
-  product(custom_url: $custom_url, ,category:$category,subCategory:$subCategory) {
+  product(custom_url: $custom_url, category:$category,subCategory:$subCategory) {
     id
     name
         posterImageUrl
@@ -336,6 +384,53 @@ query Product($custom_url: String!,$category: String!,$subCategory: String!) {
             custom_url
         }
   }}
+
+`
+
+export const FIND_QUICK_VIEW_PRODUCT = gql`
+query Product($custom_url: String!,$category: String!,$subCategory: String!, $acessories: Boolean!) {
+  product(custom_url: $custom_url, category:$category,subCategory:$subCategory , acessories:$acessories) {
+    id
+    name
+    price
+    discountPrice
+    description
+    stock
+    posterImageUrl
+    hoverImageUrl
+    productImages
+    custom_url
+    waterproof
+    AdditionalInformation
+    plankWidth
+    ResidentialWarranty
+    CommmericallWarranty
+    colorCode
+    thickness
+    FAQS
+    boxCoverage
+    featureImages
+    category {
+      id
+      name
+      RecallUrl
+      custom_url
+    }
+    subcategory {
+      id
+      name
+      custom_url
+    }
+    acessories {
+      id
+      name
+      price
+      discountPrice
+      custom_url
+      posterImageUrl 
+    }
+  }
+}
 
 `
 
