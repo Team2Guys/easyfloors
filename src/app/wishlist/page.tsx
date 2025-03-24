@@ -5,10 +5,13 @@ import { CiHeart } from 'react-icons/ci'
 import ProductTable from '../../components/product-table'
 import WishlistSmall from '../../components/smallscreen'
 import Top from '../../components/top'
+import Breadcrumb from 'components/Reusable/breadcrumb'
 
 const Wishlist = () => {
   return (
-    <Container>
+   <>
+  <Breadcrumb title="Wishlist" />
+  <Container>
    <Top heading="Wishlist" Icon={CiHeart} />
    <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10">
    <ProductTable 
@@ -19,6 +22,7 @@ const Wishlist = () => {
    <WishlistSmall />
    </div>
     </Container>
+    </>
   )
 }
 

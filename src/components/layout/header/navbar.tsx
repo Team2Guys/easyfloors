@@ -13,7 +13,7 @@ import { fetchCategories, fetchProducts } from "config/fetch";
 import {FETCH_HEADER_CATEGORIES, FETCH_HEADER_PRODUCTS,  } from "graphql/queries";
 import { staticMenuItems } from "data/data";
 import { Category, ISUBCATEGORY } from "types/cat";
-import { getCart, getWishlist } from "utils/indexedDB";
+import { getCart, getFreeSamples, getWishlist } from "utils/indexedDB";
 import { ICart, IProduct } from "types/prod";
 
 const Navbar = () => {
@@ -24,7 +24,7 @@ const Navbar = () => {
   const [products, setProducts] = useState<IProduct[]>([]);
   const [cartTotal, setCartTotal] = useState<ICart[]>();
   const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
-
+  const [freeSampleTotal, setfreeSampleTotal] = useState<ICart[]>();
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -32,10 +32,12 @@ const Navbar = () => {
         const product = await fetchProducts(FETCH_HEADER_PRODUCTS);
         const items = await getCart();
         const wishlist = await getWishlist();
+        const freesample = await getFreeSamples();
         setCategories(data)
         setProducts(product)
         setCartTotal(items);
         setWishlistTotal(wishlist);
+        setfreeSampleTotal(freesample); 
       } catch {
         toast.error("Error fetching items");
       }
@@ -44,13 +46,16 @@ const Navbar = () => {
     fetchItems();
   const handleCartUpdate = () => fetchItems();
   const handleWishlistUpdate = () => fetchItems();
+  const handlefreeSampleUpdate = () => fetchItems();
 
   window.addEventListener("cartUpdated", handleCartUpdate);
   window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+  window.addEventListener("freeSampleUpdated", handlefreeSampleUpdate);
 
   return () => {
     window.removeEventListener("cartUpdated", handleCartUpdate);
     window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+    window.removeEventListener("freeSampleUpdated", handlefreeSampleUpdate);
   };
 
   }, []);
@@ -129,7 +134,7 @@ const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalled
       </div>
       <div className="w-2/12 lg:w-[20%] 2xl:w-[20%] 3xl:w-[23%]  text-end flex items-center gap-2 justify-between max-lg:justify-end">
         <SearchBar className="lg:block hidden" productData={products} />
-        <UserIcon className="hidden lg:flex" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} />
+        <UserIcon className="hidden lg:flex" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} freeSampleTotal={freeSampleTotal?.length} />
         <div className="lg:hidden flex justify-end">
           <FaBars onClick={() => setIsOpen(true)} size={20} />
           <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>

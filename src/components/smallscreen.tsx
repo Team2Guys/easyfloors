@@ -22,7 +22,7 @@ const SmallScreen: React.FC = () => {
       try {
         if (isSamplePage) {
           const samples = await getFreeSamples();
-          setItems(samples);
+          setItems(samples.slice(0, 5)); // Limit Free Sample to 5 items
         } else {
           const wishlist = await getWishlist();
           setItems(wishlist);
@@ -91,14 +91,16 @@ const SmallScreen: React.FC = () => {
     <div>
       {items.length === 0 ? (
         <div className="text-center mt-5 mb-10">
-          <h1 className="text-2xl font-bold">Wishlist is Empty</h1>
+          <h1 className="text-2xl font-bold">
+            {isSamplePage ? "Free Sample is Empty" : "Wishlist is Empty"}
+          </h1>
           <Link href="/" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
             <FaArrowLeftLong /> Go Back to Shop
           </Link>
         </div>
       ) : (
-        <div className="space-y-6">
-          {items.map((product) => (
+        <div className={`space-y-6 ${!isSamplePage ? "max-h-[500px] overflow-y-auto" : ""}`}>
+          {items.slice(0, isSamplePage ? 5 : items.length).map((product) => (
             <div key={product.id} className="border-b border-gray-300 py-4 flex flex-col gap-4 relative bg-white">
               {/* Product Image */}
               <div className="flex justify-between items-start gap-2 w-full">
