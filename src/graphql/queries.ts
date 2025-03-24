@@ -460,3 +460,18 @@ export const GET_ADMIN_DATA = gql`
     }
   }
 `;
+
+export const GET_ALL_RECORDS = gql`
+  query GET_ALL_RECORDS {
+    GET_ALL_RECORDS {
+    totalSubCategories
+        totalProducts
+        totalCategories
+        totalAdmins
+        totalRevenue
+        totalSales
+        totalUsers
+        Total_abandant_order
+    }
+  }
+`;

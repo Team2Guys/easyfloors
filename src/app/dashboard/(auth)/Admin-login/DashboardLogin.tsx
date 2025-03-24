@@ -53,10 +53,7 @@ const DashboardLogin = () => {
 const Admin_type = adminFlag ? "adminLogin" :"superAdminLogin"
 
       const response = adminFlag ? await adminLogin({
-        variables: { email, password },
-      }) : await superadminLogin({
-        variables: { email, password },
-      })
+        variables: { email, password }}) : await superadminLogin({variables: { email, password },})
       dispatch(loggedInAdminAction(response.data[Admin_type]));
       Cookies.set(
         adminType == 'Admin' ? 'admin_access_token' : 'super_admin_access_token',
