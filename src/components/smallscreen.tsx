@@ -22,7 +22,7 @@ const SmallScreen: React.FC = () => {
       try {
         if (isSamplePage) {
           const samples = await getFreeSamples();
-          setItems(samples.slice(0, 5)); // Limit Free Sample to 5 items
+          setItems(samples.slice(0, 5)); 
         } else {
           const wishlist = await getWishlist();
           setItems(wishlist);

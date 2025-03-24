@@ -12,39 +12,39 @@ import client from 'config/apolloClient';
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
 
-  const withoutHeaderPages = ['/dashboard', '/thanks' , '/login', '/signup', '/forgot-password'];
+  const withoutHeaderPages = ['/dashboard', '/thanks', '/login', '/signup', '/forgot-password'];
   return (
 
     <ApolloProvider client={client}>
-    <>
-      {withoutHeaderPages.includes(pathname) ||
-      pathname.split('/').includes('dashboard') ? (
-        pathname === '/dashboard/Admin-login' ? (
+      <>
+        {withoutHeaderPages.includes(pathname) ||
+          pathname.split('/').includes('dashboard') ? (
+          pathname === '/dashboard/Admin-login' ? (
+            <Header />
+          ) : null
+        ) : (
           <Header />
-        ) : null
-      ) : (
-        <Header />
-      )}
-      {children}
-      {pathname !== '/' &&
-      (withoutHeaderPages.includes(pathname) ||
-        pathname.split('/').includes('dashboard')) ? (
-        pathname === '/dashboard/Admin-login' ? (
+        )}
+        {children}
+        {pathname !== '/' &&
+          (withoutHeaderPages.includes(pathname) ||
+            pathname.split('/').includes('dashboard')) ? (
+          pathname === '/dashboard/Admin-login' ? (
+            <>
+              <NeedHelp />
+              <Footer />
+            </>
+          ) : null
+        ) : (
           <>
-          <NeedHelp />
-          <Footer />
+            <NeedHelp />
+            <Footer />
           </>
-        ) : null
-      ) : (
-        <>
-        <NeedHelp />
-        <Footer />
-        </>
-      )}
-    </>
+        )}
+      </>
 
 
-    </ApolloProvider> 
+    </ApolloProvider>
   );
 };
 

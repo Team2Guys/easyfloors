@@ -8,7 +8,7 @@ import { GrCart } from "react-icons/gr";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, } from "utils/indexedDB";
+import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample } from "utils/indexedDB";
 import { addToCart as saveToCart } from "utils/indexedDB";
 import { toast } from "react-toastify";
 
@@ -63,7 +63,9 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   const handleAddToCart = async (product: ICart) => {
     try {
       await saveToCart(product);
+      handleRemoveItem(product.id);
       toast.success("Product added to cart successfully!");
+      window.dispatchEvent(new Event("freeSampleUpdated"));
       setItems((prev) => prev.filter((item) => item.id !== product.id));
     } catch {
       toast.error("Error adding item.");
