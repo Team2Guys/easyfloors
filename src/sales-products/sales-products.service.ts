@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { contactUsEmailInput, CreateSalesProductInput } from './dto/create-sales-product.input';
-import { contactusEmail, customHttpException } from 'utils/helper';
+import { contactusEmail, customHttpException } from '../utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
