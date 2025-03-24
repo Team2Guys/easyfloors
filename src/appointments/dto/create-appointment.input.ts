@@ -50,7 +50,7 @@ export class CreateAppointmentInput {
   contactMethod?: any;
 
   @Field(() => AppointsType, { nullable: true })
-  appointsType?: AppointsType;
+  AppointsType?: AppointsType;
 
   
 }
