@@ -202,3 +202,7 @@ export interface AccordionProps {
   detailpage?: boolean;
   showPlusMinus?: boolean;
 }
+export interface RelatedSliderProps {
+  products: IProduct[]; 
+  isAccessories?: boolean;
+};

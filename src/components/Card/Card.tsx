@@ -45,11 +45,12 @@ const Card: React.FC<productCardProps> = ({
 
   const handleNavigate = (product: IProduct , categoryData: Category ) => {
     if (product.subcategory) {
-      return `/${categoryData?.RecallUrl || product?.custom_url}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
+      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
     }  else {
-      return `/${categoryData?.RecallUrl || product?.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
+      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
+  console.log(product,"product")
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">
