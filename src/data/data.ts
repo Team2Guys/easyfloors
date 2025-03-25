@@ -13,6 +13,7 @@ import { StaticImageData } from 'next/image';
 import { AdditionalInformation} from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
+import parsePhoneNumberFromString from 'libphonenumber-js/min';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -46,22 +47,29 @@ export const initialValues = {
   
 };
 
-export const validationSchema = Yup.object({
-  firstname: Yup.string().required("Name is required"),
-  phoneNumber: Yup.string()
-    .matches(/^\d{10}$/, "Invalid phone number")
-    .required("Phone number is required"),
-  whatsappNumber: Yup.string().matches(
-    /^\d{10}$/,
-    "Invalid WhatsApp number"
-  ),
-  email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
-  area: Yup.string().required("Area is required"),
-  selectRooms: Yup.string().required("Select the number of rooms"),
-  preferredDate: Yup.string().required("Preferred date is required"),
-});
+const phoneValidation = Yup.string()
+  .test("valid-phone", "Invalid phone number", (value) => {
+    if (!value) return false; // Required field
+    const phoneNumber = parsePhoneNumberFromString(value);
+    return phoneNumber && phoneNumber.isValid(); // Checks if phone is valid
+  })
+  .required("Phone number is required");
+
+  export const validationSchema = Yup.object({
+    firstname: Yup.string().required("Name is required"),
+    phoneNumber: phoneValidation,
+    whatsappNumber: Yup.string()
+      .test("valid-whatsapp", "Invalid WhatsApp number", (value) => {
+        if (!value) return true; // WhatsApp number is optional
+        const phoneNumber = parsePhoneNumberFromString(value);
+        return phoneNumber && phoneNumber.isValid();
+      }),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    area: Yup.string().required("Location is required"),
+    selectRooms: Yup.string().required("Select the number of rooms"),
+    preferredDate: Yup.string().required("Preferred date is required"),
+    preferredTime: Yup.string().required("Preferred Time is required"),
+  });
 
 export const categoryInitialValues: EDIT_CATEGORY = {
   name: '',

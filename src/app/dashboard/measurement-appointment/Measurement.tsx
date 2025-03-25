@@ -6,26 +6,14 @@ import DefaultLayout from 'components/Dashboard/DefaultLayout'
 import ProtectedRoute from 'hooks/AuthHookAdmin'
 import React, { useState } from 'react'
 import { FaRegEye } from 'react-icons/fa'
+import { IAppointment } from 'types/types'
 
-interface Appointment {
-   firstname: string;
-   email: string;
-   phoneNumber: string;
-   whatsappNumber?: string;
-   area?: string;
-   selectRooms?: string;
-   preferredTime?: string;
-   preferredDate?: string;
-   findUs?: string;
-   comment?: string;
-   contactMethod?: Record<string, boolean>;
-}
 
-const Measurement = ({ appointments , title }: { appointments: Appointment[] , title: string }) => {
+const Measurement = ({ appointments , title }: { appointments: IAppointment[] , title: string }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+   const [selectedAppointment, setSelectedAppointment] = useState<IAppointment | null>(null);
 
-   const showModal = (record: Appointment) => {
+   const showModal = (record: IAppointment) => {
       setSelectedAppointment(record);
       setIsModalOpen(true);
    };
@@ -35,7 +23,7 @@ const Measurement = ({ appointments , title }: { appointments: Appointment[] , t
       setSelectedAppointment(null);
    };
 
-   const columns: ColumnsType<Appointment> = [
+   const columns: ColumnsType<IAppointment> = [
       {
          title: "Name",
          dataIndex: "firstname",
@@ -84,7 +72,7 @@ const Measurement = ({ appointments , title }: { appointments: Appointment[] , t
          dataIndex: "view",
          key: "view",
          width: 100,
-         render: (_: unknown, record: Appointment) => (
+         render: (_: unknown, record: IAppointment) => (
             <button onClick={() => showModal(record)}>
                <FaRegEye />
             </button>

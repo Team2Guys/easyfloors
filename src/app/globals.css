@@ -129,6 +129,12 @@ padding: 4px;
   background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 12 12%22%3E%3Cpath d=%22M6 8L2 4h8z%22/%3E%3C/svg%3E'); /* You can use a custom icon here or leave it as is */
 }
 
+.custom-input-phone-wrapper .PhoneInput {
+  height: 44px;
+  border: 1px solid #d1d5db;
+  padding: 8px;
+}
+
 
 @media (max-width: 767px) {
   .category_slider .swiper-pagination {

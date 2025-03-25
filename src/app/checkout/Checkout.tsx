@@ -88,6 +88,7 @@ const Checkout = () => {
         const fee = fees[state as keyof typeof fees]
         setSelectedFee(fee);
         const totalPrice = subTotal + (fee || 0 );
+        
             setTotal(totalPrice);
     };
     

@@ -188,3 +188,19 @@ export interface ProductFilterParams {
   isWaterProof: boolean | null | undefined;
   subcategory?: string;
 }
+
+
+export interface IAppointment {
+  firstname: string;
+  email: string,
+  phoneNumber: string,
+  whatsappNumber: string,
+  area: string,
+  selectRooms: string,
+  preferredTime: string,
+  findUs: string,
+  comment?: string,
+  contactMethod: { email: boolean, whatsapp: boolean, telephone: boolean },
+  preferredDate: string,
+  AppointsType: string,
+}
