@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int, GraphQLISODateTime } from '@nestjs/graphql';
-import { AppointsType } from 'appointments/dto/create-appointment.input';
+import { AppointsType } from '../../appointments/dto/create-appointment.input';
 import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
