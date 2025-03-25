@@ -47,7 +47,7 @@ export const initialValues = {
   
 };
 
-const phoneValidation = Yup.string()
+export const phoneValidation = Yup.string()
   .test("valid-phone", "Invalid phone number", (value) => {
     if (!value) return false; // Required field
     const phoneNumber = parsePhoneNumberFromString(value);
@@ -1013,4 +1013,12 @@ export const accessoriesProducts: AccPoPProduct[] = [
     feet: 16.4,
   },
 ];
-export const emirates = ["United Arab Emirates"];
+export const emirates = [
+  { value: "Abu Dhabi", label: "Abu Dhabi" },
+  { value: "Dubai", label: "Dubai" },
+  { value: "Sharjah", label: "Sharjah" },
+  { value: "Ajman", label: "Ajman" },
+  { value: "Umm Al-Quwain", label: "Umm Al-Quwain" },
+  { value: "Ras Al Khaimah", label: "Ras Al Khaimah" },
+  { value: "Fujairah", label: "Fujairah" }
+];

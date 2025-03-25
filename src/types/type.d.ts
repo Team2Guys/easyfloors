@@ -8,7 +8,7 @@ export interface Feature {
   label: string;
   width: number;
   height: number;
-  
+
 }
 export interface FlooringType {
   name?: string;
@@ -236,15 +236,15 @@ export interface FormValues {
   variantStockQuantities: { variant: string; quantity: number }[];
   price?: string;
   AdditionalInformation?: [];
-  FAQS?:[]
-  box:string
+  FAQS?: []
+  box: string
 }
 
 export interface USRPROPS {
   handleSubmit: FormEventHandler<HTMLFormElement>;
   error: string | null | undefined;
   loading: boolean | null | undefined;
-  inputFields: any;  
+  inputFields: any;
   buttonTitle: string;
   title?: string;
   descrition?: string;
@@ -252,7 +252,7 @@ export interface USRPROPS {
   routingText?: string;
   navigationLink?: string;
   navigationTxt?: string;
-  SelectComonent?: any;  
+  SelectComonent?: any;
   setadminType?: React.Dispatch<SetStateAction<string | undefined>>;
   adminType?: string | undefined;
 }
@@ -339,7 +339,10 @@ export interface ITamaraList {
 }
 
 export interface CartSelectProps {
-  select: string[];
+  select: {
+    value: string;
+    label: string;
+  }[];
   selectedFee: number;
   fees: { [key: string]: number };
   onSelect: (_state: string, _fee: number) => void;

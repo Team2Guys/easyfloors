@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useFormik } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -16,25 +16,35 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates } from "data/data";
+import { emirates, phoneValidation } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
-import { fees, paymentcard, UAEStates } from "data/cart";
+import { paymentcard, UAEStates } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
+import Input from "components/appointment/Input";
+import Select from "components/appointment/Select";
+import CustomSelect from "components/appointment/custom-select";
 
 
+const validationSchema = Yup.object({
+    firstName: Yup.string().required("First Name is required"),
+    lastName: Yup.string().required("Last Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    phone: phoneValidation,
+    emirate: Yup.string().required("Emirate is required"),
+    address: Yup.string().required("Address is required"),
+});
 
 const Checkout = () => {
-    const [termsAccepted, setTermsAccepted] = useState(false);
     const { Panel } = Collapse;
     const [cartItems, setCartItems] = useState<ICart[]>([]);
     const [totalProducts, setTotalProducts] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [total, setTotal] = useState(0);
     const [selectedFee, setSelectedFee] = useState(0);
-    const [selectedShipping, setSelectedShipping] = useState<"express" | "standard" | null>(null);
-
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -42,7 +52,7 @@ const Checkout = () => {
                 setCartItems(items);
                 setTotalProducts(items.length);
                 const subTotalPrice = items.reduce(
-                    (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 
+                    (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
                     0
                 );
                 setSubTotal(subTotalPrice);
@@ -54,64 +64,45 @@ const Checkout = () => {
         fetchCartItems();
     }, []);
 
-    const formik = useFormik({
-        initialValues: {
-            firstName: '',
-            lastName: '',
-            email: "",
-            phone: "",
-            country: "United Arab Emirates",
-            city: "",
-            emirate: "",
-            address: "",
-            note: "",
-        },
-        validationSchema: Yup.object({
-            firstName: Yup.string().required("First name is required"),
-            lastName: Yup.string().required("Last name is required"),
-            email: Yup.string().email("Invalid email address").required("Email is required"),
-            phone: Yup.string().required("Phone number is required"),
-            city: Yup.string().required("City is required"),
-            emirate: Yup.string().required("Emirate is required"),
-            address: Yup.string().required("Address is required"),
-        }),
-        onSubmit: (values) => {
-            if (!termsAccepted) {
-                toast.warn("You must agree to the terms and conditions.");
-                return;
-            }
-            console.log('formdata', {...values, products: cartItems, shipmentFee:selectedFee });
-        },
-    });
-
-    const handleStateSelect = (state: string) => {
-        const fee = fees[state as keyof typeof fees]
-        setSelectedFee(fee);
-        const totalPrice = subTotal + (fee || 0 );
-        
-            setTotal(totalPrice);
-    };
-    
     useEffect(() => {
-        handleShippingSelect("standard"); 
+        handleShippingSelect("standard");
     }, []);
-    const handleShippingSelect = (type: "express" | "standard") => {
-        setSelectedShipping(type);
-        let fee = 0;
-        if (type === "express") {
-            if (!formik.values.city || formik.values.city === "Select City") {
-                fee = 0;
-            } else {
-                fee = subTotal >= 1000 ? 0 : formik.values.city === "Dubai" ? 100 : 150;
-            }
-        } else {
-            fee = 0;
+
+    const handleShippingSelect = (type: string) => {
+        if (!selectedCity) return;
+    
+        let fee = 150;
+        if (type === 'standard' && selectedCity === 'Dubai') {
+            fee = subTotal > 1000 ? 0 : 100;
         }
     
         setSelectedFee(fee);
-        setTotal(subTotal + (fee > 0 ? fee : 0));
+    
+        const totalBeforeTax = subTotal + fee;
+        const taxAmount = totalBeforeTax * 0.05;
+        setTotal(totalBeforeTax + taxAmount);
+    
+        setSelectedShipping(type);
     };
     
+
+    useEffect(() => {
+        if (!selectedCity) return;
+    
+        let fee = 150;
+        if (selectedShipping === 'standard') {
+            fee = selectedCity === 'Dubai' ? (subTotal > 1000 ? 0 : 100) : 150;
+        }
+    
+        setSelectedFee(fee);
+    
+        const totalBeforeTax = subTotal + fee;
+        const taxAmount = totalBeforeTax * 0.05;
+        setTotal(totalBeforeTax + taxAmount);
+    }, [selectedCity, selectedShipping, subTotal]);
+    
+
+
 
     return (
         <Container>
@@ -123,288 +114,225 @@ const Checkout = () => {
                 </svg>
                 <span className='text-13 sm:text-slate-500'>Payment</span>
             </div>
-            <form onSubmit={formik.handleSubmit} className="grid grid-cols-1 2md:grid-cols-2 gap-5 lg:gap-10 min-h-screen mb-20">
-                <div className="bg-white pb-4 px-2 sm:px-0 sm:pb-8 shadow-lg rounded-lg sm:shadow-none">
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="flex justify-between items-center"><span className="font-medium">First Name <span className="text-primary">*</span></span></label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter first name"
-                                    name="firstName"
-                                    className="w-full p-2 border rounded"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.firstName}
-                                    required
-                                />
-                            </div>
-                            <div>
-                                <label className="flex justify-between items-center"><span className="font-medium">Last Name <span className="text-primary">*</span></span><span className="font-thin text-11 hidden">Do you have an account? <Link href='/' className="text-primary">Login</Link></span></label>
-                                <input
-                                    type="text"
-                                    placeholder="Enter last name"
-                                    name="lastName"
-                                    className="w-full p-2 border rounded"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.lastName}
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label className="block font-medium">Email Address <span className="text-primary">*</span></label>
-                            <input
-                                type="email"
-                                placeholder="Enter email address"
-                                name="email"
-                                className="w-full p-2 border rounded"
-                                onChange={formik.handleChange}
-                                value={formik.values.email}
-                                required
-                            />
-                        </div>
+            <Formik
+                initialValues={{
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    phone: "",
+                    emirate: "",
+                    city: "",
+                    country: "United Arab Emirates",
+                    address: "",
+                    note: "",
+                    terms: false,
+                }}
+                validationSchema={validationSchema}
+                onSubmit={(values, { setSubmitting }) => {
+                    const NewValues = { ...values, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: cartItems }
 
-                        <div>
-                            <label className="block font-medium">Phone Number <span className="text-primary">*</span></label>
-                            <PhoneInput
-                                international
-                                defaultCountry="AE"
-                                name="phone"
-                                className="w-full p-2 border rounded"
-                                onChange={(value) => formik.setFieldValue("phone", value)}
-                                value={formik.values.phone}
-                                required
-                            />
-                        </div>
-                        <div className="flex-1">
-                            <label className="block font-medium">Country <span className="text-primary">*</span></label>
-                            <select
-                                name="emirate"
-                                className="w-full p-2 pe-4 border rounded custom-select"
-                                onChange={formik.handleChange}
-                                value={formik.values.country}
-                                defaultValue='United Arab Emirates'
-                            >
-                                <option value='United Arab Emirates'>United Arab Emirates</option>
-                            </select>
-                        </div>
+                    console.log("🚀 Form is submitting with values:", NewValues);
+                    setSubmitting(true);
+                }}
+            >
+                {({ values, handleChange, setFieldValue, isSubmitting }) => (
+                    <Form className="grid grid-cols-1 2md:grid-cols-2 gap-5 lg:gap-10 min-h-screen mb-20">
+                        <div className="bg-white pb-4 px-2 sm:px-0 sm:pb-8 shadow-lg rounded-lg sm:shadow-none">
+                            <div className="space-y-4">
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-
-                        <div className="flex-1">
-                                <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
-                                <select
-                                    name="emirate"
-                                    className="w-full p-2 border rounded custom-select"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.emirate}
-                                    defaultValue="United Arab Emirates"
-                                    required
-                                >
-                                    <option value="">Select Emirate</option>
-                                    {emirates.map((emirate) => (
-                                        <option key={emirate} value={emirate}>{emirate}</option>
-                                    ))}
-                                </select>
-                        </div> 
-
-                            <div className="flex-1">
-                                <label className="block font-medium">City <span className="text-primary">*</span></label>
-                                <select
-                                    name="city"
-                                    className="w-full p-2 border rounded custom-select"
-                                    onChange={(e) => {
-                                        formik.handleChange(e);
-                                        handleStateSelect(e.target.value);
-                                    }}
-                                    value={formik.values.city}
-                                    required
-                                >
-                                    <option value="">Select City</option>
-                                    {UAEStates.map((city) => (
-                                        <option key={city} value={city}>{city}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                        </div>
-
-                        <div>
-                            <label className="block font-medium">Address <span className="text-primary">*</span></label>
-                            <input
-                                type="text"
-                                placeholder="Enter Your Full Address"
-                                name="address"
-                                className="w-full p-2 border rounded"
-                                onChange={formik.handleChange}
-                                value={formik.values.address}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label className="block font-medium">Additional Information</label>
-                            <input
-                                type="text"
-                                placeholder="Apartment Suite Etc. "
-                                name="note"
-                                className="w-full p-2 border rounded"
-                                onChange={formik.handleChange}
-                                value={formik.values.note}
-                            />
-                        </div>
-                        <div className="flex items-center">
-                            <Checkbox required onChange={() => setTermsAccepted(!termsAccepted)} className="custom-checkbox text-10 xs:text-12 sm:text-16" checked={termsAccepted}>I have read and agree to the Terms and Conditions</Checkbox>
-                        </div>
-                    </div>
-                </div>
-                <div className="bg-[#FFF9F5] w-full">
-                    <div className="p-2 xs:p-4 sm:p-8">
-                        <div className="flex items-center gap-4 pb-4 border-b">
-                            <h2 className="text-xl xs:text-2xl">Order Summary</h2>
-                            <span>
-                                (<span className="text-red-600 pt-1">*Total {totalProducts} Items</span>)
-                            </span>
-                        </div>
-                        <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3 mt-1">
-                            {cartItems.length > 0 ? cartItems.map((item, index) => (
-                                <div key={index} className="flex items-center border-b pb-4">
-                                    <div className="p-1 bg-white border rounded-md">
-                                        <Image src={item.image || ''} alt={item.name} width={80} height={80} />
-                                    </div>
-                                    <div className="ml-4">
-                                        <p className="font-bold text-13 xs:text-16">{item.name}</p>
-                                        <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter} SQM)</p>
-                                    </div>
-                                    <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.totalPrice.toFixed(2)}</p>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <Input type="text" label="First Name" required name="firstName" placeholder="Enter first name" value={values.firstName} onChange={handleChange} />
+                                    <Input type="text" label="Last Name" required name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
                                 </div>
-                            )) : <p>Cart is Empty</p>}
-                        </div>
-                    </div>
-                    <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
-                        <div className="space-y-2 py-4">
-                            <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal.toFixed(2)}</span></p>
-                            <p className="text-gray-600 flex justify-between">
-                            <span className="flex items-center gap-2">
-                                Shipping <CiDeliveryTruck size={16} className="mt-1" />
-                            </span> 
-                            <span className="text-black">
-                            {selectedShipping === "standard"
-                                ? "Free"
-                                : selectedFee === 0
-                                ? "Enter shipping address"
-                                : `AED ${selectedFee}`}
-                            </span>
-                            </p>
-                            <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {total.toFixed(2)}</span></p>
-                        </div>
-                        <button
-                            type="submit"
-                            className={`w-full bg-primary text-white p-2 ${cartItems.length === 0 && 'bg-[#bf69337d]'}`}
-                            disabled={cartItems.length === 0}
-                        >
-                            Pay Now
-                        </button>
-                        <div className="flex justify-center items-center gap-2 mt-4">
-                            <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
-                            <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
-                        </div>
-                        <div className="border-b">
-                            <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
-                                <Panel
-                                    header={<span className="text-slate-500">Shipping Options</span>}
-                                    key="1"
-                                    className="!border-b-0"
-                                >
-                                    <div
-                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
-                                        selectedShipping === "express" ? "border-primary" : "border-transparent"
-                                    }`}
-                                    onClick={() => handleShippingSelect("express")}
+
+
+                                <Input type="email" label="Email Address" required name="email" placeholder="Enter email" value={values.email} onChange={handleChange} />
+
+
+                                <div className="custom-input-phone-wrapper">
+                                    <label htmlFor='phone' className="text-13 font-medium font-inter">Phone No <span className="text-red-500">*</span></label>
+                                    <PhoneInput
+                                        international
+                                        defaultCountry="AE"
+                                        name="phone"
+                                        placeholder="Type Your Phone No"
+                                        value={values.phone}
+                                        onChange={(value) => setFieldValue("phone", value)}
+                                    />
+                                </div>
+
+                                <Select name="country" label="Country" placeholder="Select Country" required options={[{ value: "United Arab Emirates", label: "United Arab Emirates" }]} />
+
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} />
+                                    <div>
+                                        <CustomSelect name="city" label="City" required placeholder="Select City" options={UAEStates} value={selectedCity}
+                                            onChange={(value) => setSelectedCity(value)}
+                                        />
+                                        {isSubmitting && !selectedCity && <div className="text-red-500 text-sm">City is required</div>}
+
+                                    </div>
+                                </div>
+
+
+                                <Input type="text" label="Address" required name="address" placeholder="Enter Address" value={values.address} onChange={handleChange} />
+                                <Input type="text" label="Additional Information" name="note" placeholder="Apartment, Suite, etc." value={values.note} onChange={handleChange} />
+
+
+                                <div className="flex items-center">
+                                    <Checkbox
+                                        required
+                                        name="terms"
+                                        onChange={(e) => setFieldValue("terms", e.target.checked)}
+                                        checked={values.terms}
+                                        className="custom-checkbox"
                                     >
-                                    <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                                    <div>
-                                        <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                                        <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
-                                        <p className="text-11 xs:text-16">
-                                            <span>Delivery Cost:</span> <strong>AED 150</strong>
-                                        </p>
-                                    </div>
-                                    </div>
+                                        I have read and agree to the Terms and Conditions
+                                    </Checkbox>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-[#FFF9F5] w-full">
+                            <div className="p-2 xs:p-4 sm:p-8">
+                                <div className="flex items-center gap-4 pb-4 border-b">
+                                    <h2 className="text-xl xs:text-2xl">Order Summary</h2>
+                                    <span>
+                                        (<span className="text-red-600 pt-1">*Total {totalProducts} Items</span>)
+                                    </span>
+                                </div>
+                                <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3 mt-1">
+                                    {cartItems.length > 0 ? cartItems.map((item, index) => (
+                                        <div key={index} className="flex items-center border-b pb-4">
+                                            <div className="p-1 bg-white border rounded-md">
+                                                <Image src={item.image || ''} alt={item.name} width={80} height={80} />
+                                            </div>
+                                            <div className="ml-4">
+                                                <p className="font-bold text-13 xs:text-16">{item.name}</p>
+                                                <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter} SQM)</p>
+                                            </div>
+                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.totalPrice.toFixed(2)}</p>
+                                        </div>
+                                    )) : <p>Cart is Empty</p>}
+                                </div>
+                            </div>
+                            <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
+                                <div className="space-y-2 py-4">
+                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal.toFixed(2)}</span></p>
+                                    <p className="text-gray-600 flex justify-between">
+                                        <span className="flex items-center gap-2">
+                                            Shipping <CiDeliveryTruck size={16} className="mt-1" />
+                                        </span>
+                                        <span className="text-black">
+                                            {!selectedCity ? 'Enter shipping address' : selectedFee > 0 ? `AED ${selectedFee}` : 'Free'}
+                                        </span>
+                                    </p>
+                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
+                                </div>
+                                <div className="pb-10 border-t-2 pt-4">
+                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
+                                        {isSubmitting ? "Processing..." : "Pay Now"}
+                                    </button>
+                                </div>
+                                <div className="flex justify-center items-center gap-2 mt-4">
+                                    <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
+                                    <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
+                                </div>
+                                <div className="border-b">
+                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                                        <Panel
+                                            header={<span className="text-slate-500">Shipping Options</span>}
+                                            key="1"
+                                            className="!border-b-0"
+                                        >
+                                            <div
+                                                className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"
+                                                    }`}
+                                                onClick={() => handleShippingSelect("express")}
+                                            >
+                                                <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
+                                                <div>
+                                                    <strong className="text-15 xs:text-20">Express Shipping:</strong>
+                                                    <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
+                                                    <p className="text-11 xs:text-16">
+                                                        <span>Delivery Cost:</span> <strong>AED 150</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
 
-                                <div
-                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
-                                        selectedShipping === "standard" ? "border-primary" : "border-transparent"
-                                    }`}
-                                    onClick={() => handleShippingSelect("standard")}
-                                >
-                                    <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                                    <div>
-                                        <strong className="text-15 xs:text-20">Standard Shipping:</strong>
-                                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
-                                        <p className="text-11 xs:text-16">
-                                            <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500 Only In Dubai</strong>
-                                        </p>
+                                            <div
+                                                className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
+                                                    }`}
+                                                onClick={() => handleShippingSelect("standard")}
+                                            >
+                                                <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
+                                                <div>
+                                                    <strong className="text-15 xs:text-20">Standard Shipping:</strong>
+                                                    <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                                                    <p className="text-11 xs:text-16">
+                                                        <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500 Only In Dubai</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+
+
+                                            <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                                                <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
+                                                <div>
+                                                    <strong className="text-15 xs:text-20">Self-Collect:</strong>
+                                                    <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(10am-6pm)</strong></p>
+                                                    <p className="text-11 xs:text-16">
+                                                        <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Panel>
+
+                                        <Panel
+                                            header={<span className="text-slate-500">Installation</span>}
+                                            key="2"
+                                            className="!border-b-0"
+                                        >
+                                            <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                                                <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
+                                                <div>
+                                                    <strong className="text-15 xs:text-20">Installation Information:</strong>
+                                                    <p className="text-11 xs:text-16">Installation Information is simply dummy text of the printing and</p>
+                                                    <p className="text-11 xs:text-16">
+                                                        <span>Delivery Cost:</span> <strong>AED 150</strong>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Panel>
+
+                                        <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
+                                            <p className="text-gray-500">
+                                                This is our example return policy which is everything you need to know about our returns.
+                                            </p>
+                                        </Panel>
+                                    </Collapse>
+                                </div>
+                                <div className="mt-4">
+                                    <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
+                                    <div className="flex gap-2 my-4 mx-auto w-full max-w-xl">
+                                        <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
                                     </div>
                                 </div>
-
-
-                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                        <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
-                                        <div>
-                                            <strong className="text-15 xs:text-20">Self-Collect:</strong>
-                                            <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(10am-6pm)</strong></p>
-                                            <p className="text-11 xs:text-16">
-                                                <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
-                                            </p>
-                                        </div>
+                                <div className="mx-auto w-full max-w-xl mt-2">
+                                    <h3 className="text-20 xs:text-24 font-medium">Buy Now, Pay Later</h3>
+                                    <div className="flex justify-between flex-wrap gap-2 pt-3">
+                                        {
+                                            paymentcard.map((array, index) => (
+                                                <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px]' key={index} width={90} height={60} src={array.image} alt='payment-card' />
+                                            ))
+                                        }
                                     </div>
-                                </Panel>
-
-                                <Panel
-                                    header={<span className="text-slate-500">Installation</span>}
-                                    key="2"
-                                    className="!border-b-0"
-                                >
-                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                        <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
-                                        <div>
-                                            <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                            <p className="text-11 xs:text-16">Installation Information is simply dummy text of the printing and</p>
-                                            <p className="text-11 xs:text-16">
-                                                <span>Delivery Cost:</span> <strong>AED 150</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Panel>
-
-                                <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
-                                    <p className="text-gray-500">
-                                        This is our example return policy which is everything you need to know about our returns.
-                                    </p>
-                                </Panel>
-                            </Collapse>
-                        </div>
-                        <div className="mt-4">
-                            <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
-                            <div className="flex gap-2 my-4 mx-auto w-full max-w-xl">
-                                <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
+                                </div>
                             </div>
                         </div>
-                        <div className="mx-auto w-full max-w-xl mt-2">
-                            <h3 className="text-20 xs:text-24 font-medium">Buy Now, Pay Later</h3>
-                            <div className="flex justify-between flex-wrap gap-2 pt-3">
-                                {
-                                    paymentcard.map((array, index) => (
-                                        <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px]' key={index} width={90} height={60} src={array.image} alt='payment-card' />
-                                    ))
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                    </Form>
+                )}
+            </Formik>
         </Container>
     );
 };
