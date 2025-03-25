@@ -57,11 +57,12 @@ const UserIcon = ({ className, cartTotal, wishlistTotal,freeSampleTotal }: UserI
       >
         {session?.user?.image ? (
           <Image
-            src="/assets/images/dummy-avatar.jpg"
+          src={session?.user?.image || "/assets/images/dummy-avatar.jpg"}
+          // src={session?.user?.image ? session.user.imageurl : "/assets/images/dummy-avatar.jpg"}
             alt="User Profile"
             width={50}
             height={50}
-            className="rounded-full h-full w-5 md:w-28 "
+            className="rounded-full h-full w-5 md:w-32 "
           />
         ) : (
           <ProfileIcon />

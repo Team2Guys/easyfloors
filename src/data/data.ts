@@ -1,6 +1,5 @@
-import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AccPoPProduct, AuthData, FAQ, OrderHistory, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AccPoPProduct, AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -284,10 +283,11 @@ export const featureItems = [
 
 
 export const socialLinks: SocialLink[] = [
-  { href: '/shpping', alt: 'facebook', className: 'w-[6px] h-[9px] sm:w-[8px] sm:h-[15px]' },
-  { href: '/return', alt: 'instagram', className: 'w-[10px] h-[10px] sm:w-[16px] sm:h-[16px]' },
-  { href: '/faqs', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
+  { href: 'https://www.facebook.com/easyfloorsuae', alt: 'facebook', className: 'w-[6px] h-[9px] sm:w-[8px] sm:h-[15px]' },
+  { href: 'https://www.instagram.com/easyfloorsuae/?hl=en', alt: 'instagram', className: 'w-[10px] h-[10px] sm:w-[16px] sm:h-[16px]' },
+  { href: 'https://www.pinterest.com/easyfloorsuae/', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
 ];
+
 
 export  const staticMenuItems = [
   { label: "SPC Flooring", href: "spc-flooring", submenu: [] },
@@ -356,11 +356,6 @@ export const footerData = {
     phone: '+971 50 597 4385',
     email: 'cs@easyfloors.ae',
   },
-  social: [
-    { name: 'Facebook', icon: FaFacebookF, link: '#' },
-    { name: 'Instagram', icon: FaInstagram, link: '#' },
-    { name: 'Pinterest', icon: FaPinterestP, link: '#' },
-  ],
   paymentMethods: ['visa', 'apple-pay', 'tabby', 'mastercard', 'g-pay', 'tamara'],
 };
 export const blocksData = [
@@ -1006,24 +1001,3 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
 ];
 export const emirates = ["United Arab Emirates"];
-
-
-
-export const orders: OrderHistory[] = [
-  {
-    id: "ORD123456",
-    email: "john.doe@example.com",
-    address: "123 Main Street, New York, NY",
-    phone: "+1 234 567 890",
-    paymentStatus: "Paid",
-    createdAt: "2024-03-24",
-  },
-  {
-    id: "ORD789012",
-    email: "jane.smith@example.com",
-    address: "456 Elm Street, Los Angeles, CA",
-    phone: "+1 987 654 321",
-    paymentStatus: "Pending",
-    createdAt: "2024-03-23",
-  },
-];

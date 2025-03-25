@@ -15,10 +15,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
-    const [showPassword, setShowPassword] = useState(false);
-  
-const router = useRouter();
-  const formValues ={
+  const [showPassword, setShowPassword] = useState(false);
+
+  const router = useRouter();
+  const formValues = {
     name: "",
     email: "",
     password: "",
@@ -49,12 +49,13 @@ const router = useRouter();
           <Formik
             initialValues={formValues}
             onSubmit={async (values, { setSubmitting }) => {
-const {retypePassword, phone, ...newValues} = values;
-console.log(retypePassword, "retreive password")
-           await client.mutate({
+              const { retypePassword, phone, ...newValues } = values;
+              console.log(retypePassword, "retreive password")
+              await client.mutate({
                 mutation: CREATE_USER,
-                variables: {createUser: {...newValues, phone: phone.toString()}, 
-              },
+                variables: {
+                  createUser: { ...newValues, phone: phone.toString() },
+                },
               });
               router.push('/login');
               setSubmitting(false);
@@ -64,7 +65,7 @@ console.log(retypePassword, "retreive password")
               <Form className="mt-10">
 
                 <div className="flex border-b items-center mb-4">
-                   <FaUser className="text-primary" />
+                  <FaUser className="text-primary" />
                   <Field type="text" name="name" placeholder="Full Name" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
 
@@ -73,23 +74,23 @@ console.log(retypePassword, "retreive password")
                   <Field type="email" name="email" placeholder="Email" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
                 <div className="flex border-b items-center mb-4">
-                  <FaPhoneAlt  className="text-primary" />
+                  <FaPhoneAlt className="text-primary" />
                   <Field type="number" name="phone" placeholder="Phone Number" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
                 <div className="flex border-b justify-between items-center relative">
                   <div className="flex w-full items-center">
                     <FaLock className="text-primary" />
                     <Field type={showPassword ? "text" : "password"} name="password" placeholder="Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
-                  </div> 
+                  </div>
                   <button
-                                      type="button"
-                                      onClick={() => setShowPassword(!showPassword)}
-                                      className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
                   >
-                                      {showPassword ? <BsEyeSlash /> : <BsEye />}
+                    {showPassword ? <BsEyeSlash /> : <BsEye />}
                   </button>
                 </div>
-                <div className="flex border-b justify-between items-center relative">            
+                <div className="flex border-b justify-between items-center relative">
                   <div className="flex w-full items-center">
                     <FaLock className="text-primary" />
                     <Field type={showPassword ? "text" : "password"} name="retypePassword" placeholder="Confirm Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />

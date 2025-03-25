@@ -67,9 +67,6 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-
-        console.log(formData, "profilePhoto", profilePhoto)
-
         const userDetails = {
             ...formData,
             userImageUrl: profilePhoto
