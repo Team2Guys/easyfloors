@@ -8,33 +8,37 @@ import "react-phone-number-input/style.css";
 import Image from "next/image";
 import Container from "components/common/container/Container";
 import Link from "next/link";
-import { Checkbox, Collapse } from "antd";
 import secureImg from '../../../public/assets/icons/safe-icon-1.png'
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+// import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 // import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
 import { fees, paymentcard, UAEStates } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
+import Checkbox from "components/ui/checkbox";
+import Accordion from "components/ui/accordion";
 
 
 
 const Checkout = () => {
     const [termsAccepted, setTermsAccepted] = useState(false);
-    const { Panel } = Collapse;
     const [cartItems, setCartItems] = useState<ICart[]>([]);
     const [totalProducts, setTotalProducts] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [total, setTotal] = useState(0);
     const [selectedFee, setSelectedFee] = useState(0);
     const [selectedShipping, setSelectedShipping] = useState<"express" | "standard" | null>(null);
+    const [openAccordion, setOpenAccordion] = useState<string | null>('1');
 
+    const handleToggle = (key: string) => {
+      setOpenAccordion(openAccordion === key ? null : key);
+    };
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -106,7 +110,6 @@ const Checkout = () => {
         } else {
             fee = 0;
         }
-    
         setSelectedFee(fee);
         setTotal(subTotal + (fee > 0 ? fee : 0));
     };
@@ -254,9 +257,11 @@ const Checkout = () => {
                                 value={formik.values.note}
                             />
                         </div>
-                        <div className="flex items-center">
-                            <Checkbox required onChange={() => setTermsAccepted(!termsAccepted)} className="custom-checkbox text-10 xs:text-12 sm:text-16" checked={termsAccepted}>I have read and agree to the Terms and Conditions</Checkbox>
-                        </div>
+                        <Checkbox 
+                        label="I have read and agree to the Terms and Conditions" 
+                        isActive={termsAccepted} 
+                        onChange={setTermsAccepted}
+                        />
                     </div>
                 </div>
                 <div className="bg-[#FFF9F5] w-full">
@@ -310,19 +315,19 @@ const Checkout = () => {
                             <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
                             <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
                         </div>
-                        <div className="border-b">
-                            <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
-                                <Panel
-                                    header={<span className="text-slate-500">Shipping Options</span>}
-                                    key="1"
-                                    className="!border-b-0"
-                                >
-                                    <div
+                        <div>
+                        <Accordion 
+                            label="Shipping Options" 
+                            isOpen={openAccordion === '1'} 
+                            onToggle={() => handleToggle('1')}
+                            showPlusMinus
+                        >
+                            <div
                                     className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
                                         selectedShipping === "express" ? "border-primary" : "border-transparent"
                                     }`}
                                     onClick={() => handleShippingSelect("express")}
-                                    >
+                            >
                                     <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                                     <div>
                                         <strong className="text-15 xs:text-20">Express Shipping:</strong>
@@ -331,7 +336,7 @@ const Checkout = () => {
                                             <span>Delivery Cost:</span> <strong>AED 150</strong>
                                         </p>
                                     </div>
-                                    </div>
+                            </div>
 
                                 <div
                                     className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
@@ -360,31 +365,39 @@ const Checkout = () => {
                                             </p>
                                         </div>
                                     </div>
-                                </Panel>
+                        </Accordion>
+                        <Accordion 
+                            label="Installation" 
+                            isOpen={openAccordion === '2'} 
+                            onToggle={() => handleToggle('2')}
+                            showPlusMinus
+                        >
+                            <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                            <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
+                            <div>
+                                <strong className="text-15 xs:text-20">Installation Information:</strong>
+                                <p className="text-11 xs:text-16">Installation Information is simply dummy text of the printing and</p>
+                                <p className="text-11 xs:text-16">
+                                <span>Delivery Cost:</span> <strong>AED 150</strong>
+                                </p>
+                                <Link target="_blank" rel="noopener noreferrer" className="hover:text-primary" href="/measurement-appointment">Book Free Installation Appointment</Link>
+                            </div>
+                            </div>
+                        </Accordion>
+                        <Accordion 
+                        label="Return Policy" 
+                        isOpen={openAccordion === '5'} 
+                        onToggle={() => handleToggle('5')}
+                        showPlusMinus
+                        >
+                        <div className=" border-b  pb-2">
 
-                                <Panel
-                                    header={<span className="text-slate-500">Installation</span>}
-                                    key="2"
-                                    className="!border-b-0"
-                                >
-                                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                        <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
-                                        <div>
-                                            <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                            <p className="text-11 xs:text-16">Installation Information is simply dummy text of the printing and</p>
-                                            <p className="text-11 xs:text-16">
-                                                <span>Delivery Cost:</span> <strong>AED 150</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Panel>
+                        <p className="text-gray-500">
+                            This is our example return policy which is everything you need to know about our returns.
+                        </p>
+                        </div>
+                        </Accordion>
 
-                                <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
-                                    <p className="text-gray-500">
-                                        This is our example return policy which is everything you need to know about our returns.
-                                    </p>
-                                </Panel>
-                            </Collapse>
                         </div>
                         <div className="mt-4">
                             <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>

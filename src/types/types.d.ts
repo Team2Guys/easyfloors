@@ -188,3 +188,17 @@ export interface ProductFilterParams {
   isWaterProof: boolean | null | undefined;
   subcategory?: string;
 }
+
+export interface CheckboxProps {
+  label: string;
+  isActive?: boolean;
+  onChange?: React.Dispatch<React.SetStateAction<boolean>>
+}
+export interface AccordionProps {
+  label: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  detailpage?: boolean;
+  showPlusMinus?: boolean;
+}

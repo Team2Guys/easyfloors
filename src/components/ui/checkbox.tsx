@@ -1,26 +1,26 @@
-"use client"
-import { useEffect, useState } from 'react';
+"use client";
 
-interface CheckboxProps {
-  label: string;
-  isActive?: boolean
-}
+import { useEffect, useState } from "react";
+import { CheckboxProps } from "types/types";
 
-const Checkbox: React.FC<CheckboxProps> = ({ label , isActive }) => {
+const Checkbox = ({ label, isActive, onChange }:CheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   useEffect(() => {
-    setIsChecked(isActive || false)
-  },[isActive])
+    setIsChecked(isActive || false);
+  }, [isActive]);
+
   const handleChange = () => {
-    setIsChecked(!isChecked);
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    onChange?.(newCheckedState);
   };
 
   return (
     <label className="flex items-center cursor-pointer space-x-2" onClick={handleChange}>
       <div
-        className={`w-5 h-5 border-2  flex items-center justify-center transition-colors duration-200 ${
-          isChecked ? 'bg-orange-600 border-orange-600 text-white' : 'border-primary'
+        className={`w-5 h-5 border-2 flex items-center justify-center transition-colors duration-200 ${
+          isChecked ? "bg-orange-600 border-orange-600 text-white" : "border-primary"
         }`}
       >
         {isChecked && (
@@ -32,11 +32,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ label , isActive }) => {
             stroke="currentColor"
             strokeWidth={3}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 13l4 4L19 7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         )}
         {!isChecked && (
@@ -48,15 +44,11 @@ const Checkbox: React.FC<CheckboxProps> = ({ label , isActive }) => {
             stroke="currentColor"
             strokeWidth={3}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M5 13l4 4L19 7"
-            />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         )}
       </div>
-      <span className={`text-black font-inter text-14 ${isChecked ? 'font-medium' : 'font-normal'}`}>
+      <span className={`text-black font-inter text-14 ${isChecked ? "font-medium" : "font-normal"}`}>
         {label}
       </span>
     </label>
