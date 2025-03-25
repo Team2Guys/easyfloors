@@ -19,8 +19,8 @@ const Wishlist = () => {
             columns={["Product", "Price Per Box", "QTY(m/m2)", "Stock Status", "Action"]}
           />
         </div>
-        <div className="block md:hidden">
-          <WishlistSmall />
+        <div className="block md:hidden mb-5">
+          <WishlistSmall/>
         </div>
       </Container>
     </>

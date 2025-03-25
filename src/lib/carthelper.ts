@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { IProduct } from 'types/prod';
 import { addToCart,addToFreeSample,addToWishlist, getFreeSamples } from 'utils/indexedDB';
+
 export const handleAddToStorage = async (
     productData: IProduct,
     totalPrice: number,

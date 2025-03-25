@@ -34,9 +34,9 @@ const SmallScreen: React.FC = () => {
           </Link>
         </div>
       ) : (
-        <div className={`space-y-6 ${!isSamplePage ? "max-h-[500px] overflow-y-auto" : ""}`}>
+        <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
           {items.slice(0, isSamplePage ? 5 : items.length).map((product) => (
-            <div key={product.id} className="border-b border-gray-300 py-4 flex flex-col gap-4 relative bg-white">
+            <div key={product.id} className="border-b border-gray-300 py-4 flex flex-col gap-4 relative bg-white ">
               {/* Product Image */}
               <div className="flex justify-between items-start gap-2 w-full">
                 <div className="flex flex-row gap-2">
