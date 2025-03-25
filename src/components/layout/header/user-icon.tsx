@@ -15,9 +15,10 @@ interface UserIconProps {
   className?: string;
   cartTotal?: number;
   wishlistTotal?: number;
+  freeSampleTotal?:number;
 }
 
-const UserIcon = ({ className, cartTotal, wishlistTotal }: UserIconProps) => {
+const UserIcon = ({ className, cartTotal, wishlistTotal,freeSampleTotal }: UserIconProps) => {
   const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -138,6 +139,7 @@ const UserIcon = ({ className, cartTotal, wishlistTotal }: UserIconProps) => {
         aria-label="Go to free sample page"
         className="flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white"
       >
+        {freeSampleTotal}
         <FreeSample />
       </Link>
 

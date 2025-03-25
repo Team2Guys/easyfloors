@@ -88,7 +88,21 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           </p>
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">
-          <button className="flex bg-primary text-12 text-white w-7/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16">
+          <button className="flex bg-primary text-12 text-white w-7/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"   onClick={() =>
+            handleAddToStorage(
+              productData,
+              totalPrice,
+              pricePerBox,
+              squareMeter,
+              requiredBoxes,
+              subCategory ?? "",
+              MainCategory ?? "",
+              "freeSample",
+              image?.imageUrl ?? "",
+              boxCoverage
+            )
+          }
+          >
             <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
             Order Now Free Sample
           </button>
@@ -103,7 +117,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
                 subCategory ?? "",
                 MainCategory ?? "",
                 "cart",
-                image?.imageUrl ?? ""
+                image?.imageUrl ?? "",
+                boxCoverage,
               )
             }
             className="flex bg-black justify-center text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
@@ -124,7 +139,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
               subCategory ?? "",
               MainCategory ?? "",
               "wishlist",
-              image?.imageUrl ?? ""
+              image?.imageUrl ?? "",
+              boxCoverage
             )
           }
         >

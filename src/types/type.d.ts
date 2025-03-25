@@ -136,6 +136,7 @@ export interface SelectProps {
 export interface Appointmentprops {
   title?: string;
   description?: string;
+  AppointsType: string;
 }
 export interface RECORDS {
   totalAdmins: string;

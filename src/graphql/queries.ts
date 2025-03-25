@@ -41,13 +41,15 @@ export const FETCH_ALL_PRODUCTS = gql`
         custom_url
       }
        acessories {
-  id
-   name
-   price
-   discountPrice
-   custom_url
-
-  posterImageUrl }
+        id
+        name
+        price
+        discountPrice
+        custom_url
+        stock
+        posterImageUrl
+        
+      }
     }
   }
 `;
@@ -77,6 +79,7 @@ export const FETCH_HEADER_PRODUCTS = gql`
         id
         name
         price
+        stock
         discountPrice
         custom_url
 
