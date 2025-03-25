@@ -184,7 +184,7 @@ model User {
 
 
 model salesProducts {
-  id              String   @unique
+  id              Int   @id @default(autoincrement())
   firstName       String
   lastName        String
   email           String
@@ -205,8 +205,11 @@ model salesProducts {
   is3DSecure      Boolean?
   checkoutDate    DateTime  @default(now())
   transactionDate DateTime?
-  shipmentFee     String?
+  shipmentFee     Int?
   deliveryStatus  Boolean   @default(false)
   cardLastDigits  String?
   products  Json[] @default([])
+  note String?
+  emirate   String?
+  totalPrice       Int
 }

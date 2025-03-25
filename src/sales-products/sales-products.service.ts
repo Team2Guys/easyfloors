@@ -1,14 +1,89 @@
 import { Injectable } from '@nestjs/common';
-import { contactUsEmailInput, CreateSalesProductInput } from './dto/create-sales-product.input';
+import { contactUsEmailInput, CreateOrderInput } from './dto/create-sales-product.input';
 import { contactusEmail, customHttpException } from '../utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
+import { PaymobService } from './paymob.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SalesProductsService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService,
+    private readonly paymobService: PaymobService) { }
 
-  create(createSalesProductInput: CreateSalesProductInput) {
-    return 'This action adds a new salesProduct';
+  async create(createSalesProductInput: CreateOrderInput) {
+    try {
+      const { totalPrice, shipmentFee, products, ...billing_data } = createSalesProductInput;
+      const orderId = `ORD-${Date.now()}`;
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", `Token ${process.env.PAYMOB_SECRET_KEY}`);
+      myHeaders.append("Content-Type", "application/json");
+
+      const staticProduct = { name: 'Shipping Fee', amount: shipmentFee * 100, };
+      const tax = { name: 'tax Fee', amount: Math.ceil(((shipmentFee + totalPrice) * 0.05) * 100)};
+      const totalAmount = [{ name: 'tax Fee', amount: Math.ceil(totalPrice * 100)}];
+
+      const changedProducts = products.map(product => ({
+        ...product,
+        amount: Math.ceil(product.totalPrice * 100),
+        totalPrice: Math.ceil(product.totalPrice * 100),
+      }));
+console.log(changedProducts, "changedProducts", billing_data) 
+      const updatedProducts = [...changedProducts, staticProduct, tax];
+      let raw = JSON.stringify({
+        "amount": Math.ceil(totalPrice * 100),
+        "currency": process.env.PAYMOD_CURRENCY,
+        "payment_methods": [
+          158,
+          49727,
+          52742,
+          52741,
+          52992,
+          53201
+        ],
+        "items": totalAmount,
+        "billing_data": {
+          ...billing_data,
+          first_name:billing_data.firstName,
+          last_name:billing_data.lastName,
+          email:billing_data.email,
+          phone_number:billing_data.phone
+        
+        },
+        "special_reference": orderId,
+        "redirection_url": "https://easyfloors.vercel.app/thank-you" as RequestRedirect
+      });
+
+      var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow' as RequestRedirect
+      };
+
+
+      let response = await fetch("https://uae.paymob.com/v1/intention/", requestOptions)
+      console.log(response, "response")
+
+      let result = await response.json();
+
+
+      await this.prisma.salesProducts.create({
+        data: {
+          ...createSalesProductInput,
+          orderId: orderId,
+          checkout: true,
+          currency: 'AED',
+          products: createSalesProductInput.products,
+        }
+      })
+
+      console.log(result, "result")
+      return { paymentKey: result };
+    } catch (error) {
+      console.log(error, "error")
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+    }
+
   }
 
   findAll() {
@@ -91,7 +166,7 @@ export class SalesProductsService {
 
 
 
-  async contactUs(userDetails : contactUsEmailInput) {
+  async contactUs(userDetails: contactUsEmailInput) {
     try {
       let message = await contactusEmail(userDetails);
 

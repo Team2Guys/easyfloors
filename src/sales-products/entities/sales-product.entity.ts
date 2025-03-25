@@ -3,13 +3,9 @@ import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
 export class SalesProduct {
-@Field(()=>GraphQLJSON)
-result:any
-
-
+    @Field(() => GraphQLJSON)
+    paymentKey: any
 }
-
-
 
 @ObjectType()
 export class ALL_RECORDS {
@@ -17,7 +13,7 @@ export class ALL_RECORDS {
     totalSubCategories: number;
     @Field(() => Int)
     totalProducts: number;
-    
+
     @Field(() => Int)
     totalCategories: number;
     @Field(() => Int)
