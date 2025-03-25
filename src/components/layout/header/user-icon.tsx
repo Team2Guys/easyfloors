@@ -60,7 +60,7 @@ const UserIcon = ({ className, cartTotal, wishlistTotal }: UserIconProps) => {
             alt="User Profile"
             width={50}
             height={50}
-            className="rounded-full h-full w-5 "
+            className="rounded-full h-full w-5 md:w-28 "
           />
         ) : (
           <ProfileIcon />

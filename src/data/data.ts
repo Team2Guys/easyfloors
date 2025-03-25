@@ -1,6 +1,6 @@
 import { FaFacebookF, FaInstagram, FaPinterestP } from 'react-icons/fa';
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AccPoPProduct, AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AccPoPProduct, AuthData, FAQ, OrderHistory, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -1006,3 +1006,24 @@ export const accessoriesProducts: AccPoPProduct[] = [
   },
 ];
 export const emirates = ["United Arab Emirates"];
+
+
+
+export const orders: OrderHistory[] = [
+  {
+    id: "ORD123456",
+    email: "john.doe@example.com",
+    address: "123 Main Street, New York, NY",
+    phone: "+1 234 567 890",
+    paymentStatus: "Paid",
+    createdAt: "2024-03-24",
+  },
+  {
+    id: "ORD789012",
+    email: "jane.smith@example.com",
+    address: "456 Elm Street, Los Angeles, CA",
+    phone: "+1 987 654 321",
+    paymentStatus: "Pending",
+    createdAt: "2024-03-23",
+  },
+];

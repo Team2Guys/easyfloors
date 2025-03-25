@@ -188,3 +188,12 @@ export interface ProductFilterParams {
   isWaterProof: boolean | null | undefined;
   subcategory?: string;
 }
+
+export type OrderHistory = {
+  id: string;
+  email: string;
+  address: string;
+  phone: string;
+  paymentStatus: string;
+  createdAt: string;
+};
