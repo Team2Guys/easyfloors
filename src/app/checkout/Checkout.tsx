@@ -21,13 +21,13 @@ import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
 import { paymentcard, UAEStates } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
-import Checkbox from "components/ui/checkbox";
-import Accordion from "components/ui/accordion";
 import { useMutation } from "@apollo/client";
 import { INITIATE_PAYMENT } from "graphql/mutations";
 import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
 import CustomSelect from "components/appointment/custom-select";
+import Checkbox from "components/ui/checkbox";
+import { Collapse } from "antd";
 
 
 const validationSchema = Yup.object({
@@ -75,9 +75,6 @@ const Checkout = () => {
         }
     };
 
-    const handleToggle = (key: string) => {
-      setOpenAccordion(openAccordion === key ? null : key);
-    };
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -108,7 +105,6 @@ const Checkout = () => {
         if (type === 'standard' && selectedCity === 'Dubai') {
             fee = subTotal > 1000 ? 0 : 100;
         }
-
         setSelectedFee(fee);
 
         const totalBeforeTax = subTotal + fee;
@@ -344,6 +340,7 @@ const Checkout = () => {
                                                     <p className="text-11 xs:text-16">
                                                         <span>Delivery Cost:</span> <strong>AED 150</strong>
                                                     </p>
+                                                    <Link target="_blank" rel="noopener noreferrer" className="hover:text-primary" href="/measurement-appointment">Book Free Installation Appointment</Link>
                                                 </div>
                                             </div>
                                         </Panel>
@@ -370,13 +367,13 @@ const Checkout = () => {
                                             ))
                                         }
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Form>
+                                </div >
+                            </div >
+                        </div >
+                    </Form >
                 )}
-            </Formik>
-        </Container>
+            </Formik >
+        </Container >
     );
 };
 

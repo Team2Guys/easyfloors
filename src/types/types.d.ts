@@ -204,3 +204,24 @@ export interface IAppointment {
   preferredDate: string,
   AppointsType: string,
 }
+export interface CheckboxProps {
+  label: string;
+  isActive?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement> | boolean) => void; // eslint-disable-line
+  children?: ReactNode;
+  className?: string; 
+  required?: boolean;
+    name: string;
+}
+export interface AccordionProps {
+  label: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  detailpage?: boolean;
+  showPlusMinus?: boolean;
+}
+export interface RelatedSliderProps {
+  products: IProduct[]; 
+  isAccessories?: boolean;
+};

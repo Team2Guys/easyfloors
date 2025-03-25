@@ -1,23 +1,49 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CheckboxProps } from "types/types";
+import { ReactNode } from "react";
 
-const Checkbox = ({ label, isActive, onChange }:CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+export interface CheckboxProps {
+  name?: string; 
+  checked?: boolean; 
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; //eslint-disable-line
+  children?: ReactNode; 
+  className?: string; 
+  required?: boolean; 
+}
+
+const Checkbox = ({
+  name,
+  checked,
+  onChange,
+  children,
+  className,
+  required,
+}: CheckboxProps) => {
+  const [isChecked, setIsChecked] = useState<boolean>(checked || false);
 
   useEffect(() => {
-    setIsChecked(isActive || false);
-  }, [isActive]);
+    setIsChecked(checked || false);
+  }, [checked]);
 
-  const handleChange = () => {
-    const newCheckedState = !isChecked;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newCheckedState = e.target.checked;
     setIsChecked(newCheckedState);
-    onChange?.(newCheckedState);
+    if (onChange) {
+      onChange(e); 
+    }
   };
 
   return (
-    <label className="flex items-center cursor-pointer space-x-2" onClick={handleChange}>
+    <label className={`flex items-center cursor-pointer space-x-2 ${className || ''}`}>
+      <input
+        type="checkbox"
+        name={name}
+        checked={isChecked}
+        onChange={handleChange}
+        required={required}
+        className="hidden" 
+      />
       <div
         className={`w-5 h-5 border-2 flex items-center justify-center transition-colors duration-200 ${
           isChecked ? "bg-orange-600 border-orange-600 text-white" : "border-primary"
@@ -48,9 +74,15 @@ const Checkbox = ({ label, isActive, onChange }:CheckboxProps) => {
           </svg>
         )}
       </div>
-      <span className={`text-black font-inter text-14 ${isChecked ? "font-medium" : "font-normal"}`}>
-        {label}
-      </span>
+      {children && (
+        <span
+          className={`text-black font-inter text-14 ${
+            isChecked ? "font-medium" : "font-normal"
+          }`}
+        >
+          {children}
+        </span>
+      )}
     </label>
   );
 };
