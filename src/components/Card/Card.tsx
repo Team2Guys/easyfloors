@@ -50,7 +50,8 @@ const Card: React.FC<productCardProps> = ({
       return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
-  console.log(product,"product")
+
+
   return (
     <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div className="relative">

@@ -10,7 +10,7 @@ import { CREATE_APPOINTMENT } from "graphql/mutations";
 import { toast } from "react-toastify";
 
 
-export default function Appointment() {
+export default function Appointment({AppointsType}: {AppointsType: string}) {
   const [time, setTime] = useState<string>("");
   const [createAppointment] = useMutation(CREATE_APPOINTMENT);
 
@@ -19,7 +19,9 @@ export default function Appointment() {
     if (selectedTime) {
       const [hours] = selectedTime.split(":");
       setTime(`${hours}:00`);
+      
     }
+    console.log(selectedTime,'selectedTime')
   };
 
   return (
@@ -38,7 +40,9 @@ export default function Appointment() {
                     preferredTime: time,
                     phoneNumber: String(values.phoneNumber),
                     whatsappNumber: String(values.whatsappNumber),
+                    AppointsType: AppointsType,
                   },
+
                 },
               });
          

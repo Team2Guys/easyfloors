@@ -5,13 +5,15 @@ import { FaMapMarkerAlt, FaRegEnvelope, FaWhatsapp } from 'react-icons/fa';
 import Container from 'components/common/container/Container';
 import Link from 'next/link';
 import { IoCall } from 'react-icons/io5';
-import Footerlinks from './Footerlinks';
 import { fetchCategories } from 'config/fetch';
 import { Category, ISUBCATEGORY } from 'types/cat';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { FETCH_HEADER_CATEGORIES } from 'graphql/queries';
 import { Category as ICategory } from "types/cat";
+import dynamic from 'next/dynamic';
+const Footerlinks =  dynamic(() => import('./Footerlinks'));
+
 
 
 const Footer = () => {
@@ -20,13 +22,11 @@ const Footer = () => {
         const getCategories = async () => {
             try {
                 const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-                  const sortedCategories = data?.sort((a:ICategory, b:ICategory) => {
+                const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
                     const indexA = staticMenuItems.findIndex(item => item.label.toLowerCase() === a.name.trim().toLowerCase());
                     const indexB = staticMenuItems.findIndex(item => item.label.toLowerCase() === b.name.trim().toLowerCase());
-                    
-                    // If the category is not found in staticMenuItems, move it to the end
                     return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-                  });
+                });
                 setCategories(sortedCategories);
             } catch {
                 toast.error("Error fetching categories:");
@@ -34,6 +34,7 @@ const Footer = () => {
         };
         getCategories();
     }, []);
+    
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -49,9 +50,10 @@ const Footer = () => {
 
                     return (
                         <div key={index} className="sm:block hidden">
-                            <h3 className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
+                            <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
                                 {section.name}
-                            </h3>
+                            </Link>
+
                             <ul className="mt-4 space-y-2">
                                 {section.name === "ACCESSORIES" ? (
                                     (section.accessories ?? []).map((item, i) => (
