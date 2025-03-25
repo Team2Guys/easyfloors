@@ -62,9 +62,11 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , su
   if ( !findCategory) {
     return notFound()
   }
+  const filteredCategories = catgories.filter((value:ICategory)=>value?.name?.trim() !=="ACCESSORIES") || []
+
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories} categoryData={findCategory}  slug={slug} subcategory={subcategory} isSubCategory />
+      <Category catgories={filteredCategories} categoryData={findCategory}  slug={slug} subcategory={subcategory} isSubCategory />
     </Suspense>
   );
 };

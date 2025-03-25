@@ -71,11 +71,10 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
     mainCategory ={whatAmiImageBanner, topHeading, description}
   }
 
-  
-
+  const filteredCategories = catgories.filter((value:ICategory)=>value?.name?.trim() !=="ACCESSORIES") || []
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={catgories.filter((value:ICategory)=>value?.name?.trim()?.toLowerCase() !=="accessories") || []} categoryData={findCategory}  isSubCategory={false} mainCategory={mainCategory} slug={slug} />
+      <Category catgories={filteredCategories} categoryData={findCategory}  isSubCategory={false} mainCategory={mainCategory} slug={slug} />
     </Suspense>
   );
 };
