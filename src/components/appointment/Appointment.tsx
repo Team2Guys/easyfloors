@@ -14,15 +14,15 @@ export default function Appointment({AppointsType}: {AppointsType: string}) {
   const [time, setTime] = useState<string>("");
   const [createAppointment] = useMutation(CREATE_APPOINTMENT);
 
-  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedTime = e.target.value;
-    if (selectedTime) {
-      const [hours] = selectedTime.split(":");
-      setTime(`${hours}:00`);
+  // const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedTime = e.target.value;
+  //   if (selectedTime) {
+  //     const [hours] = selectedTime.split(":");
+  //     setTime(`${hours}:00`);
       
-    }
-    console.log(selectedTime,'selectedTime')
-  };
+  //   }
+  //   console.log(selectedTime,'selectedTime')
+  // };
 
   return (
     <div className="pt-10">
@@ -69,8 +69,15 @@ export default function Appointment({AppointsType}: {AppointsType: string}) {
                 <Select name="area" label="Area" placeholder="Select Location Area" required options={Appointmentlocation} />
                 <Input type="text" label="Select Rooms" name="selectRooms" placeholder="How Many Rooms? " required value={values.selectRooms} onChange={handleChange} />
                 <Input type="date" label="Preferred Date" name="preferredDate" required value={values.preferredDate} onChange={handleChange} min={new Date().toISOString().split("T")[0]} />
-                <Input type="time" label="Preferred Time" name="preferredTime" value={time} onChange={handleTimeChange} required />
-                <Select name="findUs" label="How did you find us?" placeholder="Select Platform" options={FindUs} />
+                <Select label="Preferred Time" name="preferredTime" placeholder="Select a Time Slot" required
+                options={[
+                { value: "9-11", label: "9 AM - 11 AM" },
+                { value: "11-1", label: "11 AM - 1 PM" },
+                { value: "1-3", label: "1 PM - 3 PM" },
+                { value: "3-6", label: "3 PM - 6 PM" },
+                ]}
+                />
+              <Select name="findUs" label="How did you find us?" placeholder="Select Platform" options={FindUs} />
               </div>
               <div className="pb-2">
                 <label className="text-13 font-medium font-inter ">How shall we contact you?</label>
