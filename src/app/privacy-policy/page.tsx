@@ -2,9 +2,8 @@ import Container from 'components/common/container/Container';
 import { privacyPolicyData } from 'data/privacy-policy';
 import Link from 'next/link';
 import React from 'react';
-import { PrivacyPolicyProps } from 'types/type';
 
-const PrivacyPolicy = ({ data = privacyPolicyData }: PrivacyPolicyProps) => {
+const PrivacyPolicy = () => {
   const renderLinkableText = (text: string) => {
     const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
     const phoneRegex = /(\+\d{10,15})/g;
@@ -59,38 +58,38 @@ const PrivacyPolicy = ({ data = privacyPolicyData }: PrivacyPolicyProps) => {
       </p>
       
       <ol className="pl-4 sm:pl-6 space-y-6">
-        {data.map((item, index) => (
+        {privacyPolicyData.map((item, index) => (
           <li key={index} className="list-decimal">
             <h2 className="text-lg sm:text-2xl font-bold mb-2">{item.title}</h2>
             
-            {item.content?.map((paragraph, pIndex) => (
-              <p key={`p-${pIndex}`} className="text-12 sm:text-lg font-normal mt-2">
+            {item.content?.map((paragraph, index) => (
+              <p key={index} className="text-12 sm:text-lg font-normal mt-2">
                 {renderLinkableText(paragraph)}
               </p>
             ))}
             
-            {item.heading?.map((title, hIndex) => (
-              <h3 key={`h-${hIndex}`} className="text-base sm:text-xl font-semibold mt-3">
+            {item.heading?.map((title, index) => (
+              <h3 key={index} className="text-base sm:text-xl font-semibold mt-3">
                 {renderLinkableText(title)}
               </h3>
             ))}
-            {item.Links?.map((link, lIndex) => (
-              <p key={`l-${lIndex}`} className="text-12 sm:text-lg font-normal mt-2">
+            {item.Links?.map((link, index) => (
+              <p key={index} className="text-12 sm:text-lg font-normal mt-2">
                 {renderLinkableText(link)}
               </p>
             ))}
             {item.subItems && (
               <ul className="pl-4 sm:pl-6 list-disc space-y-1 mt-2">
-                {item.subItems.map((subItem, sIndex) => (
-                  <li key={`s-${sIndex}`} className="text-12 sm:text-lg font-normal">
+                {item.subItems.map((subItem, index) => (
+                  <li key={index} className="text-12 sm:text-lg font-normal">
                     {renderLinkableText(subItem)}
                   </li>
                 ))}
               </ul>
             )}
             
-            {item.contentend?.map((paragraph, eIndex) => (
-              <p key={`e-${eIndex}`} className="text-12 sm:text-lg font-normal mt-2">
+            {item.contentend?.map((paragraph, index) => (
+              <p key={index} className="text-12 sm:text-lg font-normal mt-2">
                 {renderLinkableText(paragraph)}
               </p>
             ))}

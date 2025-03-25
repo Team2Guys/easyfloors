@@ -2,9 +2,7 @@ import Container from 'components/common/container/Container';
 import { termsConditionsData } from 'data/terms-condition';
 import Link from 'next/link';
 import React from 'react';
-import { PrivacyPolicyProps } from 'types/type';
-
-const TermsAndConditions = ({ data = termsConditionsData }: PrivacyPolicyProps) => {
+const TermsAndConditions = () => {
     const renderLinkableText = (text: string) => {
       const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
       const phoneRegex = /(\+\d{10,15})/g;
@@ -54,7 +52,7 @@ const TermsAndConditions = ({ data = termsConditionsData }: PrivacyPolicyProps) 
         <h1 className='text-2xl sm:text-4xl font-bold text-center'>Terms & Conditions</h1>
         
         <ol className="pl-4 sm:pl-6 space-y-6">
-          {data.map((item, index) => (
+          {termsConditionsData.map((item, index) => (
             <li key={index} className={item.title}>
               {item.title && (
                 <h2 className="text-lg sm:text-2xl font-bold mb-2">{item.title}</h2>
