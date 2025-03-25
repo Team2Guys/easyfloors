@@ -9,7 +9,7 @@ import masterCard from './../../public/assets/images/payment-icons/Mastercard-Lo
 import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
 import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 import { StaticImageData } from 'next/image';
-import { AdditionalInformation} from 'types/prod';
+import { AdditionalInformation } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
 
@@ -42,7 +42,7 @@ export const initialValues = {
     email: false,
   },
 
-  
+
 };
 
 export const validationSchema = Yup.object({
@@ -70,8 +70,8 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Meta_Title: '',
   Canonical_Tag: '',
   custom_url: "",
-  topHeading:"",
-  recalledSubCats:[]
+  topHeading: "",
+  recalledSubCats: []
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -94,12 +94,12 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   Meta_Title: '',
   custom_url: "",
   category: "",
-  Canonical_Tag:"",
-  whatamIdetails:[],
-  whatAmiTopHeading:"",
-  Heading:"",
-  recalledByCategories:[],
-  recalledSubCats:[]
+  Canonical_Tag: "",
+  whatamIdetails: [],
+  whatAmiTopHeading: "",
+  Heading: "",
+  recalledByCategories: [],
+  recalledSubCats: []
 };
 
 
@@ -123,7 +123,7 @@ export interface IProductValues {
   FAQS: AdditionalInformation[];
   boxCoverage?: string;
   products: (string | number)[];
-  colorCode?:string;
+  colorCode?: string;
 
 }
 
@@ -140,12 +140,12 @@ export const AddproductsinitialValues: IProductValues = {
   thickness: '',
   ResidentialWarranty: '',
   CommmericallWarranty: '',
-  waterproof:false,
+  waterproof: false,
   Meta_Title: '',
   Canonical_Tag: '',
   Meta_Description: '',
   FAQS: [],
-  boxCoverage:"",
+  boxCoverage: "",
   products: [],
   colorCode: "",
 };
@@ -153,22 +153,22 @@ export const AddproductsinitialValues: IProductValues = {
 
 export const excludedKeys = [
   "plankWidth",
-   "boxCoverage",
-   "CommmericallWarranty",
-   "spacification",
-   "ResidentialWarranty",
-   "waterproof",
-   "thickness",
-    "subcategory",
-    "featureImages",
-    "colors"
-  
-  ] 
+  "boxCoverage",
+  "CommmericallWarranty",
+  "spacification",
+  "ResidentialWarranty",
+  "waterproof",
+  "thickness",
+  "subcategory",
+  "featureImages",
+  "colors"
+
+]
 export const excludedKeysFroProducts = [
-"product",
-"colors"
-  
-  ] 
+  "product",
+  "colors"
+
+]
 
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),
@@ -235,19 +235,19 @@ export const FindUs = [
 ]
 
 
-export const heroItems: HeroItem[] = [ 
+export const heroItems: HeroItem[] = [
   {
     // backgroundImage: "/assets/images/Home/hero-min.webp",
     backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
     offerText: "Limited Time Offer",
-    title: "High-Quality Flooring Get",
-    highlight: "FREE Samples",
+    title: "Starting From Just AED (Xx) Per Square Meter",
+    highlight: "",
     description:
-      "is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
+      "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/all-collection",
     priceText: "Starting From AED 49/m²",
-    flooringType: "SPC Eco • American Walnut", 
+    flooringType: "SPC Eco • American Walnut",
     brand: "Polar Flooring",
   },
 ];
@@ -256,25 +256,25 @@ export const featureItems = [
   {
     title: "Free Samples",
     description:
-      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      "Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy.",
     icon: "/assets/images/Home/free.png",
   },
   {
     title: "Easy payment",
     description:
-      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      "With Tabby or Tamara, split your payment into four easy installments — no hassle, no hidden fees.",
     icon: "/assets/images/Home/card.png",
   },
   {
     title: "Delivery",
     description:
-      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      "Choose Express for a small fee for next-day delivery, or enjoy standard delivery in just 3-4 days anywhere in the UAE.",
     icon: "/assets/images/Home/truck.png",
   },
   {
     title: "Factory Prices",
     description:
-      "Spread the cost of your new wood flooring via our low rate finance options 0% interest available at checkout with PayPal credit.",
+      "No middlemen, just high-quality flooring at factory - direct prices. Best value without compromise.",
     icon: "/assets/images/Home/factory.png",
   },
 ];
@@ -289,7 +289,7 @@ export const socialLinks: SocialLink[] = [
 ];
 
 
-export  const staticMenuItems = [
+export const staticMenuItems = [
   { label: "SPC Flooring", href: "spc-flooring", submenu: [] },
   { label: "LVT Flooring", href: "lvt-flooring", submenu: [] },
   { label: "Richmond Flooring", href: "richmond-flooring", submenu: [] },
@@ -310,38 +310,38 @@ export const features: Feature[] = [
 
 
 export const ThumnailImage = [
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
-  {image:"/assets/bin/slider.png"},
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
+  { image: "/assets/bin/slider.png" },
 ]
 export const ThumnailBottom = [
-  {image:"/assets/bin/thumb1.png" , title:"Click lock system"},
-  {image:"/assets/bin/thumb2.png" ,title:"Layers of SPC or LVT"},
-  {image:"/assets/bin/thumb2.png" ,title:"Waterproof"},
-  {image:"/assets/bin/thumb4.png" ,title:"Easy to clean"},
-  {image:"/assets/bin/thumb5.png" ,title:"Scratch resistant"},
-  {image:"/assets/bin/thumb6.png" ,title:"the packaging"},
+  { image: "/assets/bin/thumb1.png", title: "Click lock system" },
+  { image: "/assets/bin/thumb2.png", title: "Layers of SPC or LVT" },
+  { image: "/assets/bin/thumb2.png", title: "Waterproof" },
+  { image: "/assets/bin/thumb4.png", title: "Easy to clean" },
+  { image: "/assets/bin/thumb5.png", title: "Scratch resistant" },
+  { image: "/assets/bin/thumb6.png", title: "the packaging" },
 
 ]
 
@@ -361,27 +361,27 @@ export const footerData = {
 export const blocksData = [
   {
     id: 1,
-    heading: 'SPC',
+    heading: 'SPC Flooring',
     points: [
-      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
-      'They provide an easy way for you to present the most important ideas.',
-      'The information following each bullet should be brief: ',
-      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
-      'They provide an easy way for you to present the most important ideas.',
-      'The information following each bullet should be brief: ',
+      'UV layer that protects against fading and surface wear.',
+      'Wear a layer that is transparent and highly resistant to damage.',
+      'A click-lock system is integrated into its installation structure.',
+      'Decorative layer with high-resolution wood or stone designs.',
+      'The core layer is made from rigid stone-plastic composite material.',
+      'A base layer that adds foundational stability and durability.',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291723/layer1_11zon_dfk4er.webp',
   },
   {
     id: 2,
-    heading: 'LVT',
+    heading: 'LVT Flooring',
     points: [
-      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
-      'They provide an easy way for you to present the most important ideas.',
-      'The information following each bullet should be brief: ',
-      'Bullet points (also called simply “bullets”) draw the reader’s attention.',
-      'They provide an easy way for you to present the most important ideas.',
-      'The information following each bullet should be brief: ',
+      'Protective UV coating that prevents discolouration and wear.',
+      'Durable wear layer that provides scratch and scuff resistance.',
+      'Authentic printed decor layer that mimics natural textures.',
+      'Middle stability layer that provides flexibility and structure.',
+      'Bottom vinyl layer that enhances resilience and overall strength.',
+      'A click-lock system uses glue-down or floating installation methods. ',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291706/layers2_11zon_zatjqm.webp',
   },
@@ -413,7 +413,7 @@ export const HomeUserInfo = [
   {
     title: 'Budget Friendly',
     description:
-      "High-quality flooring doesn’t have to cost a fortune. Our durable, stylish options are available at factory prices, so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
+      "High-quality flooring doesn't have to cost a fortune. Our durable, stylish options are available at factory prices so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
     image: '/assets/images/UserInfo/budget_11zon.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
@@ -496,26 +496,20 @@ export const policySections = [
 export const faqs: FAQItem[] = [
   {
     id: 1,
-    question: " What makes vinyl flooring a good choice for high-traffic areas?",
+    question: "Do I need underlay for click-lock flooring?",
     answer:
-      "Vinyl flooring Abu Dhabi is highly durable and resistant to wear and tear, making it ideal for high-traffic areas. Its water-resistant and scratch-resistant properties ensure it maintains its appearance and functionality even in busy environments.",
+      "The underlay is built into our Richmond flooring, and we will provide it free of charge for our Polar range to add comfort and reduce sound. An underlay can help improve a floor's sound insulation and give it a smoother look and feel.",
   },
   {
     id: 2,
-    question: "How long until we deliver your first blog post?",
+    question: "What are the best types of flooring for Dubai's climate?",
     answer:
-      "Your first consultation will include a comprehensive discussion about your health history and a tailored treatment plan.",
+      "High temperatures and humidity in Dubai make SPC and LVT flooring ideal. These types of flooring are water-resistant, durable, and won’t warp or expand due to temperature changes.",
   },
   {
     id: 3,
-    question: "How long until we deliver your first blog post?",
-    answer: "We are open Monday to Friday from 9 AM to 6 PM.",
-  },
-  {
-    id: 4,
-    question: "Do I need a referral?",
-    answer:
-      "No referral is needed. You can directly book an appointment with us.",
+    question: "How do I know which flooring material is best for my space?",
+    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and herringbone patterns add a decorative touch. If unsure, consult with a trusted flooring company for expert recommendations.",
   },
 ];
 
@@ -544,15 +538,15 @@ export const boxData: BoxData[] = [
   {
     id: 1,
     title: 'Need help with measurement?',
-    description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
+    description: `We have a detailed How to Measure Guide to make it easy. If you need further assistance, feel free to contact us—we're here to help!`,
     buttonText: 'Learn More',
     icon: '/assets/images/Home/measure1.png',
     link: '/measurement-appointment',
   },
   {
     id: 2,
-    title: 'Need help with installation',
-    description: `is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,`,
+    title: 'Need help with installation?',
+    description: `Our easy click-lock system makes installation simple—no glue or nails are required. We can connect you with trusted installers for professional assistance.`,
     buttonText: 'Learn More',
     icon: '/assets/images/Home/Vectorrg.png',
     link: '/help-with-installations',
@@ -564,88 +558,88 @@ export const popupCards: CardData[] = [
     id: 1,
     heading: "Richmond <br /> SPC Eco",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Integrated IXPE underlay",
+      "SPC core construction",
+      "Realistic Wood Grain Finish",
+      "Affordable price from AED 109",
+      "DIY-friendly installation",
     ],
   },
   {
     id: 2,
-    heading: "Richmond  <br /> SPC Prime",
+    heading: "Richmond <br /> SPC Prime",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Premium designs",
+      "Acoustic IXPE underlay",
+      "Longer Planks for a more authentic wood finish",
+      "A wide range of natural finishes",
+      "Durable & water-resistant",
     ],
   },
   {
     id: 3,
     heading: "Richmond SPC <br /> Herringbone",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Elegant herringbone pattern",
+      "Wide range of colours",
+      "Integrated IXPE sound barrier",
+      "Durable 0.5mm wear layer",
+      "Easy payment options",
     ],
   },
   {
     id: 4,
     heading: "Richmond LVT <br /> Comfort",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Wood-inspired finishes",
+      "Durable 0.55mm wear layer",
+      "Easy installation",
+      "Wide range of colours",
+      "Perfect for home or office",
     ],
   },
   {
     id: 5,
     heading: "Richmond LVT <br /> Luxury",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Premium, wood-like designs",
+      "Scratch and stain-resistant",
+      "Extra-wide planks",
+      "15-year warranty",
+      "Free samples, fast delivery",
     ],
   },
   {
     id: 6,
     heading: "Polar <br /> SPC",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Lots of timeless styles",
+      "Wood grain finishes",
+      "Water-resistant",
+      "Affordable from AED 49.00",
+      "Modern and classic",
     ],
   },
   {
     id: 7,
     heading: "Polar SPC <br /> Herringbone",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Herringbone zig-zag pattern",
+      "Free underlay on all orders",
+      "Wood-like embossed texture",
+      "Multi-colour options",
+      "3mm wear layer",
     ],
   },
   {
-    id: 7,
+    id: 8,
     heading: "Polar <br /> LVT",
     content: [
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Cras ornare tristique elit.",
-      "Nunc dignissim risus id is",
-      "Nunc dignissim risus id is",
+      "Wood-like textured finish",
+      "Durable with 0.3mm wear layer",
+      "1220mm x 180mm plank size",
+      "Free UAE delivery",
+      "15-year warranty",
     ],
   },
 ];
@@ -654,18 +648,20 @@ export const popupCards: CardData[] = [
 
 
 export const faqspage: FAQ[] = [
-  { question: "What is your return policy?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
-  { question: "Do you offer international shipping?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
-  { question: "How can I contact customer support?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
-  { question: "What payment methods do you accept?", answer: "Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: Bullet points (also called simply “bullets”) draw the reader’s attention. They provide an easy way for you to present the most important ideas.The information following each bullet should be brief: " },
-  { question: "Do you have a physical store?", answer: "No, we are an online-only store." },
-  { question: "How long does delivery take?", answer: "Standard shipping takes 5-7 business days." },
-  { question: "Can I modify my order after placing it?", answer: "Yes, within 24 hours of order confirmation." },
-  { question: "Are your products covered by a warranty?", answer: "Yes, all products come with a 1-year warranty." },
-  { question: "Do you offer bulk discounts?", answer: "Yes, we provide bulk discounts on large orders." },
-  { question: "Is my personal data secure?", answer: "Yes, we use advanced encryption for data security." },
-  { question: "Can I track my order?", answer: "Yes, we provide tracking details once shipped." },
-  { question: "What happens if I receive a damaged product?", answer: "Contact us immediately for a replacement." },
+  { question: "Can you put SPC flooring on concrete?", answer: "We often receive this question from our customers. The answer is definitely yes. Stone plastic composite (SPC) looks great on concrete subfloors. By creating a solid foundation, it reduces the possibility of warping or buckling over time. So we have to use a completely flat surface for installation." },
+  { question: "When can you walk on LVT flooring after the installation process?", answer: "Our planks have a four-side click lock system for easy installation, and you can walk on them right away after the installation process. However, you should wait 48 hours before walking on glue-down LVT flooring textures, although some manufacturers recommend waiting longer." },
+  { question: "Is SPC flooring slippery?", answer: "SPC flooring features a nonslip surface material. Since SPC flooring has a low heat transfer coefficient, it provides excellent anti-skid properties. A few drops of water on SPC flooring will make it feel less slippery than ordinary tile and stone." },
+  { question: "Can heavy furniture be placed on oak SPC flooring?", answer: "Yes. The strong and resilient core layer of oak SPC flooring allows it to support heavy furniture. Compared to thinner choices (3 mm), a thicker SPC core (5 mm or more) is better able to resist dents and warping. Because of its stability, the flooring won't buckle or move even when heavy furniture is placed on it. Further, SPC flooring is more durable and impact-resistant than laminate flooring, making it a better option for spaces with heavy furniture. " },
+  { question: "Is SPC flooring fireproof?", answer: "Fire-retardant SPC flooring is capable of withstanding flames and delaying the spread of fire. In some ways, this flooring type has stood the test of time over other types since it has proven to be more resistant to extreme temperatures. " },
+  { question: "What are the advantages of SPC flooring?", answer: "The dark or light tone wood grain finish of SPC flooring offers a classic and bold look. SPC floor coverings contain a pre-attached IXPE or EVA foam underlay for sound insulation and a soft underfoot feel. These are used in different residential and commercial buildings. It significantly reduces the need for frequent repairs and replacements as well as guarantees the safety of children." },
+  { question: "Can I request samples?", answer: "Yes! We offer free flooring samples across our full range. Simply add the samples to your basket and checkout. Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy." },
+  { question: "Is there a warranty on your products?", answer: "A luxury vinyl plank flooring manufacturer's warranty varies from product to product and is included with all of our flooring. Our polar products have a two-year commercial warranty and a five-year residential warranty, while our Richmond SPC and LVT floorings have a ten-year domestic warranty and a five-year commercial warranty. " },
+  { question: "Is oak SPC flooring pet-friendly?", answer: "All of our durable floors are designed to withstand the rigours of kids and pets. Our flooring is completely free of formaldehyde, ensuring a safe and healthy indoor environment. We also have antibacterial coating on floors that provides excellent antibacterial properties, keeping your space clean and hygienic." },
+  { question: "Does Polar LVT flooring fade under sunlight?", answer: "Our Polar LVT Flooring UAE does not fade under sunlight. We can use them for locations that receive direct sunlight, such as sunrooms or rooms with wide windows. The reason is that it contains UV protection, which prevents fading and discolouration caused by exposure to sunshine. The floors' deep antique tones remained after years of exposure to direct sunlight, giving the spaces an energetic and appealing look." },
+  { question: "Can I install SPC flooring myself?", answer: "Yes. SPC flooring is an excellent option for do-it-yourself installation because of its simple 4-side click-lock mechanism. Before beginning, just make sure your subfloor is dry, clean, and level. With basic equipment like a rubber mallet, tape measure, and utility knife, the planks may be easily snapped together without the need for glue or nails. However, if you have any concerns or want a flawless finish, it's always a good idea to contact an expert." },
+  { question: "Does SPC flooring feel cold?", answer: "There's nothing better than SPC flooring underfoot, no matter what the weather is like. It is made of stone plastic composite with wear layers, which maintains a neutral temperature in summer and a slight warmth in winter to retain heat. The warmth of this flooring makes stepping out of bed in a bedroom more comfortable than stepping on cold tiles. In homes with kids or older adults who may be sensitive to extreme temperatures, this feature is really handy." },
+  { question: "Can I use SPC flooring in the bathroom?", answer: "Of course. Because SPC flooring is water-resistant, it's a great option for bathrooms. It is resistant to warping, swelling, and moisture damage, unlike laminate or conventional wood. Even in regions with high humidity, its strong core and protective outer shell offer exceptional longevity. Selecting textured SPC planks will increase safety by preventing slippage in damp areas." },
+  { question: "Is SPC or LVT flooring suitable for UAE climates?", answer: "Yes. The UAE's humid and hot atmosphere is something that our Richmond SPC or LVT flooring is made to resist. It is a dependable option for both residential and commercial applications because of its heat- and water-resistant qualities. SPC and LVT provide long-term durability since they do not expand or contract in response to temperature variations like regular wood flooring does. " }
 ];
 
 export const tabbyfeature: ITabbyList[] = [
@@ -719,59 +715,59 @@ export const tamarafeature: ITamaraList[] = [
   },
 ];
 
-  export const specifications = [
-    { label: 'TOTAL THICKNESS', value: '4.0MM' },
-    { label: 'VIRGIN STONE/POLYMER CORE', value: '4.0MM VIRGIN WHITE STONE' },
-    { label: 'PRE ATTACHED IXPE UNDERLAY', value: 'NONE' },
-    { label: 'PLANK SIZE', value: '1220X183MM' },
-    { label: 'WEAR LAYER', value: '0.3MM' },
-    { label: 'EDGE DETAILS', value: 'UNILIN CLICK LOCK' },
-    { label: 'FINISH', value: 'MATT' },
-    { label: 'EMBOSSING', value: '3D NATURAL' },
-    { label: 'SQM PER CARTON', value: '2.68' },
-    { label: 'PIECES PER CARTON', value: '12PCS' },
-    { label: 'RESIDENTIAL LIMITED WARRANTY', value: '5 YEAR' },
-    { label: 'COMMERCIAL LIMITED WARRANTY', value: '2 YEAR' },
-  ];
+export const specifications = [
+  { label: 'TOTAL THICKNESS', value: '4.0MM' },
+  { label: 'VIRGIN STONE/POLYMER CORE', value: '4.0MM VIRGIN WHITE STONE' },
+  { label: 'PRE ATTACHED IXPE UNDERLAY', value: 'NONE' },
+  { label: 'PLANK SIZE', value: '1220X183MM' },
+  { label: 'WEAR LAYER', value: '0.3MM' },
+  { label: 'EDGE DETAILS', value: 'UNILIN CLICK LOCK' },
+  { label: 'FINISH', value: 'MATT' },
+  { label: 'EMBOSSING', value: '3D NATURAL' },
+  { label: 'SQM PER CARTON', value: '2.68' },
+  { label: 'PIECES PER CARTON', value: '12PCS' },
+  { label: 'RESIDENTIAL LIMITED WARRANTY', value: '5 YEAR' },
+  { label: 'COMMERCIAL LIMITED WARRANTY', value: '2 YEAR' },
+];
 
- export const faqData = [
-    {
-      id: 'adhesives',
-      label: 'Do I Need Any Adhesives to Stick the Planks?',
-      content: 'No, you don\'t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you\'re not someone who likes to do things themselves, the click-lock feature makes it great for DIY.',
-    },
-    {
-      id: 'fade',
-      label: 'Will The Color and Texture Fade Over Time?',
-      content: 'Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its color and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it\'s great for busy households and businesses.',
-    },
-    {
-      id: 'planks',
-      label: 'How many planks come in a box, and what\'s the coverage area?',
-      content: 'The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you\'ll need multiple boxes depending on the total area.',
-    },
-  ];
+export const faqData = [
+  {
+    id: 'adhesives',
+    label: 'Do I Need Any Adhesives to Stick the Planks?',
+    content: 'No, you don\'t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you\'re not someone who likes to do things themselves, the click-lock feature makes it great for DIY.',
+  },
+  {
+    id: 'fade',
+    label: 'Will The Color and Texture Fade Over Time?',
+    content: 'Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its color and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it\'s great for busy households and businesses.',
+  },
+  {
+    id: 'planks',
+    label: 'How many planks come in a box, and what\'s the coverage area?',
+    content: 'The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you\'ll need multiple boxes depending on the total area.',
+  },
+];
 export const alternatingData: TAboutUs[] = [
   {
     id: 1,
     image: "/assets/images/aboutus/about2.png",
     alt: "First Image",
-    heading: "A satisfactory flooring is our glory",
-    paragraph: "Donec sed lorem dapibus, posuere dui eget, molestie ante. Vivamus aliquam gravida nibh, et aliquam risus fringilla aliquam. Cras ornare ac sem ut malesuada. Nulla ut sodales magna. Quisque venenatis sapien vulputate pellentesque.",
+    heading: "Your Trusted Online Flooring Store",
+    paragraph: "We’re the leading online flooring store in the UAE, offering our valued customers top-quality products from the Richmond and Polar collections. With years of experience, we've earned a solid reputation for being reliable, efficient, and customer satisfaction-centric. Our Jebel Ali warehouse in Dubai holds 60,000 sqm of stock, so we can deliver fast anywhere in the UAE.",
   },
   {
     id: 2,
     image: "/assets/images/aboutus/about3.png",
     alt: "Second Image",
-    heading: "Best flooring at affordable prices",
-    paragraph: "Morbi in risus in nisi eleifend convallis. Etiam pretium varius quam in aliquam. Curabitur malesuada elit sed enim placerat, vitae interdum erat cursus. Morbi laoreet sapien id scelerisque dapibus. Aliquam purus erat volutpat.",
+    heading: "For Homes And Businesses In The UAE",
+    paragraph: "We cater to a range of customers, including homeowners, commercial properties like schools and offices, flooring contractors, and interior designers. With a direct factory connection and years of hands-on experience, we’ve designed our flooring materials to handle the tough climate of Dubai and the UAE",
   },
   {
     id: 3,
     image: "/assets/images/aboutus/about1.png",
     alt: "Third Image",
-    heading: "Flooring that meets your needs",
-    paragraph: "Nunc consequat nibh ut pretium vestibulum. Nulla facilisi. Cras porttitor lacus dolor, quis tincidunt nisl vestibulum at. Mauris tristique diam ex, eget dignissim enim scelerisque non. Pellentesque aliquam nulla nisi, id tristique",
+    heading: "Why Choose Easy Floors",
+    paragraph: "At Easy Floors, we understand that choosing the right flooring is a big decision. We offer many premium options to fit any space and budget, along with a 15-year residential and 5-year commercial warranty enabling you to choose with confidence. Our focus on quality, transparency, and customer satisfaction sets us apart.",
   },
 ];
 
@@ -779,18 +775,18 @@ export const alternatingData: TAboutUs[] = [
 export const sampleGridData: SampleGridData[] = [
   {
     id: 1,
-    title: "Order 5 free samples",
+    title: "Try Before You Buy",
     description:
-      "Order as many free samples as you like to find your style! Free next-day delivery included.",
+      "Order up to 5 free samples, delivered FREE of charge across the UAE to find the perfect match.",
     buttonText: "Order free samples",
     image: "/assets/images/aboutus/order-free-sample.png",
     alt: "Free sample order",
   },
   {
     id: 2,
-    title: "Discover your new favourite floor",
+    title: "Got Questions? Ask Away!",
     description:
-      "Need some advice? Request a callback to speak to one of our friendly flooring experts.",
+      "Contact our friendly support team for expert advice on all your flooring needs.",
     buttonText: "Request a callback",
     image: "/assets/images/aboutus/request-call-back.png",
     alt: "Free sample order",
@@ -907,7 +903,7 @@ export const measurementData: MeasurementSection[] = [
 export const colors = [
   { code: "3897", color: "/assets/bin/colors/c1.png" },
   { code: "3895", color: "/assets/bin/colors/c2.png" },
-  { code: "2868", color: "/assets/bin/colors/c3.png"},
+  { code: "2868", color: "/assets/bin/colors/c3.png" },
   { code: "6661", color: "/assets/bin/colors/c4.png" },
   { code: "2636", color: "/assets/bin/colors/c5.png" },
   { code: "X8355-9", color: "/assets/bin/colors/c6.png" },
@@ -917,7 +913,7 @@ export const colors = [
   { code: "2869", color: "/assets/bin/colors/c10.png" },
   { code: "6661", color: "/assets/bin/colors/c11.png" },
   { code: "2634", color: "/assets/bin/colors/c12.png" },
-  { code: "X8365-9", color: "/assets/bin/colors/c13.png"},
+  { code: "X8365-9", color: "/assets/bin/colors/c13.png" },
   { code: "FC5943", color: "/assets/bin/colors/c14.png" },
   { code: "FC5943", color: "/assets/bin/colors/c15.png" },
   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
