@@ -13,26 +13,28 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
   const [searchText, setSearchText] = useState("");
   const [isProductListOpen, setIsProductListOpen] = useState(false);
   const filteredItems =
-    productData?.flatMap((product) => {
-      const searchTerm = searchText.trim().toLowerCase();
-      const productMatches =
-        product.name.toLowerCase().includes(searchTerm) ||
+  productData?.flatMap((product) => {
+    const searchTerm = searchText.trim().toLowerCase();
+    const isExplicitSearch = searchTerm.length >= 4;
+    const productMatches =
+      ((product.stock && product.stock > 0) || isExplicitSearch) &&
+      (product.name.toLowerCase().includes(searchTerm) ||
         product.price.toString().includes(searchTerm) ||
         product.description?.toString().includes(searchTerm) ||
-        product.stock?.toString().includes(searchTerm) ||
         product.discountPrice?.toString().includes(searchTerm) ||
         product.category.RecallUrl?.toString().includes(searchTerm) ||
-        product.subcategory.custom_url?.toString().includes(searchTerm);
+        product.subcategory.custom_url?.toString().includes(searchTerm));
+    const matchingAccessories =
+      product.acessories?.filter(
+        (acc) =>
+          ((acc.stock && acc.stock > 0) || isExplicitSearch) &&
+          acc.name.toLowerCase().includes(searchTerm)
+      ) || [];
 
-      const matchingAccessories =
-        product.acessories?.filter(
-          (acc) =>
-            acc.name.toLowerCase().includes(searchTerm) ||
-            acc.price.toString().includes(searchTerm)
-        ) || [];
+    return productMatches ? [product, ...matchingAccessories] : matchingAccessories;
+  }) || [];
 
-      return productMatches ? [product, ...matchingAccessories] : matchingAccessories;
-    }) || [];
+
 
   const uniqueItems = filteredItems.filter(
     (item, index, self) =>
@@ -65,6 +67,7 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-[310px] sm:w-[350px] xl:w-[400px] 2xl:w-[500px] bg-white border border-[#afa183] border-opacity-30 rounded-2xl mt-2 sm:mt-6 z-20">
             <div className="flex justify-end mb-2 sticky top-0 p-2 z-30 bg-white rounded-t-2xl">
               <svg
+              className="cursor-pointer"
                 onClick={() => setIsProductListOpen(false)}
                 width="28"
                 height="28"

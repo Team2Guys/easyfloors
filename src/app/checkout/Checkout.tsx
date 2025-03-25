@@ -96,9 +96,7 @@ const Checkout = () => {
     }, []);
     const handleShippingSelect = (type: "express" | "standard") => {
         setSelectedShipping(type);
-    
         let fee = 0;
-    
         if (type === "express") {
             if (!formik.values.city || formik.values.city === "Select City") {
                 fee = 0;
@@ -106,11 +104,11 @@ const Checkout = () => {
                 fee = subTotal >= 1000 ? 0 : formik.values.city === "Dubai" ? 100 : 150;
             }
         } else {
-            fee = 0; // Standard shipping is always free
+            fee = 0;
         }
     
         setSelectedFee(fee);
-        setTotal(subTotal + (fee > 0 ? fee : 0)); // Ignore placeholder (-1)
+        setTotal(subTotal + (fee > 0 ? fee : 0));
     };
     
 
@@ -313,7 +311,7 @@ const Checkout = () => {
                             <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
                         </div>
                         <div className="border-b">
-                            <Collapse accordion defaultActiveKey={["1"]} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                            <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                                 <Panel
                                     header={<span className="text-slate-500">Shipping Options</span>}
                                     key="1"
@@ -358,14 +356,14 @@ const Checkout = () => {
                                             <strong className="text-15 xs:text-20">Self-Collect:</strong>
                                             <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(10am-6pm)</strong></p>
                                             <p className="text-11 xs:text-16">
-                                                <span>Location:</span> <strong><a target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</a></strong>
+                                                <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
                                             </p>
                                         </div>
                                     </div>
                                 </Panel>
 
                                 <Panel
-                                    header={<span className="text-slate-500">Shipping Options</span>}
+                                    header={<span className="text-slate-500">Installation</span>}
                                     key="2"
                                     className="!border-b-0"
                                 >

@@ -10,18 +10,21 @@ import { handleAddToStorage } from "lib/carthelper";
 
 const SkirtingProductDetail = ({productData,MainCategory,image}: { productData: IProduct,MainCategory:string,image?: { imageUrl: string } }) => {
 
-  const squareMeter = 240; 
-  
   const [length, setLength] = useState("");
   const [requiredBoxes, setRequiredBoxes] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const boxCoverage = 2.4;
+  const calculateSquareMeter = (boxes: number) => {
+    return boxCoverage * boxes;
+  };
+  const squareMeter = calculateSquareMeter(requiredBoxes); 
   const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLength(value);
+
     const meters = parseFloat(value);
     if (!isNaN(meters) && meters > 0) {
-      const pieces = Math.ceil((meters * 100) / squareMeter);
+      const pieces = Math.ceil(meters / boxCoverage);
       setRequiredBoxes(pieces);
       setTotalPrice(pieces * productData.price);
     } else {
@@ -34,7 +37,6 @@ const SkirtingProductDetail = ({productData,MainCategory,image}: { productData: 
     <div className="space-y-1 mt-5 lg:mt-0">
     <h2 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h2>
     <div className="flex border-b-[1px] border-gray-300"></div>
-      {/* Price and Stock Info */}
       <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
         Price Per Piece: <span className="text-primary">AED {productData.price}</span>
       </p>
@@ -73,7 +75,7 @@ const SkirtingProductDetail = ({productData,MainCategory,image}: { productData: 
         /> 
       </div>
       <p className="font-inter font-light tecxt-12 xl:text-sm mt-2">
-        (Selling in fixed length of {squareMeter} cm)
+        (Selling in fixed length of 240cm)
       </p>
       <div className="mt-2 font-semibold text-16 lg:text-[23.6px]">
         <p>Height: <span className="font-light text-12 xl:text-[20.6px]">10 cm</span></p>
@@ -83,13 +85,13 @@ const SkirtingProductDetail = ({productData,MainCategory,image}: { productData: 
       <div className="mt-4 p-3 border border-black font-inter text-16 xl:text-[23.6px] font-semibold">
         <p>Total Required Pieces: <span className="text-12 xl:text-[20.6px] font-light">{requiredBoxes} Pieces</span></p>
         <p >Price per piece: <span className="text-12 xl:text-[20.6px] font-light">AED {productData.price}</span></p>
-        <p>Total amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalPrice} ({requiredBoxes}pieces * AED {productData.price})</span></p>
+        <p>Total amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalPrice} ({requiredBoxes} pieces * AED {productData.price})</span></p>
       </div>
 
       <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart",image?.imageUrl ?? "")} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart",image?.imageUrl ?? "",boxCoverage.toString())} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22}/>Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist",image?.imageUrl ?? "")} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist",image?.imageUrl ?? "",boxCoverage.toString())} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
       </div>           
 
     
