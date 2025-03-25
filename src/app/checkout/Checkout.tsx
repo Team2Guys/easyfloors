@@ -14,8 +14,7 @@ import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
-// import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-// import { emirates } from "data/data";
+import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
@@ -66,7 +65,7 @@ const Checkout = () => {
             phone: "",
             country: "United Arab Emirates",
             city: "",
-            // emirate: "",
+            emirate: "",
             address: "",
             note: "",
         },
@@ -76,7 +75,7 @@ const Checkout = () => {
             email: Yup.string().email("Invalid email address").required("Email is required"),
             phone: Yup.string().required("Phone number is required"),
             city: Yup.string().required("City is required"),
-            // emirate: Yup.string().required("Emirate is required"),
+            emirate: Yup.string().required("Emirate is required"),
             address: Yup.string().required("Address is required"),
         }),
         onSubmit: (values) => {
@@ -84,7 +83,7 @@ const Checkout = () => {
                 toast.warn("You must agree to the terms and conditions.");
                 return;
             }
-            console.log('formdata', {...values, products: cartItems});
+            console.log('formdata', {...values, products: cartItems, shipmentFee:selectedFee });
         },
     });
 
@@ -194,9 +193,8 @@ const Checkout = () => {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
-{/* These added for confirmation */}
 
-                        {/* <div className="flex-1">
+                        <div className="flex-1">
                                 <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
                                 <select
                                     name="emirate"
@@ -211,7 +209,7 @@ const Checkout = () => {
                                         <option key={emirate} value={emirate}>{emirate}</option>
                                     ))}
                                 </select>
-                        </div>  */}
+                        </div> 
 
                             <div className="flex-1">
                                 <label className="block font-medium">City <span className="text-primary">*</span></label>
