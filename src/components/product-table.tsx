@@ -9,6 +9,7 @@ import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
 import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import Container from "./common/container/Container";
 interface ProductTableProps {
   columns: string[];
   isSamplePage?: boolean;
@@ -23,7 +24,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   }, [isSamplePage]);
 
   return (
-    <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[400px] overflow-y-auto" : ""}`}>
+    <Container>
+    <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
       {items.length === 0 ? (
         <div className="text-center">
           <h1 className="text-center xl:text-[48px]">Your Shopping Cart</h1>
@@ -37,11 +39,11 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
       ) : (
         <table className="min-w-full border-b border-gray-300 bg-white">
           <thead>
-            <tr className="text-12 xl:text-20 2xl:text-24 font-semibold font-inter text-left border-b">
+            <tr className="text-12 font-semibold font-inter text-left border-b">
               {columns
                 .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
                 .map((col, index) => (
-                  <th key={index} className="p-3 xl:p-4 text-left">
+                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left" : "xl:text-18 2xl:text-24 p-3 2xl:p-4 text-left"}`}>
                     {col}
                   </th>
                 ))}
@@ -93,6 +95,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
         </table>
       )}
     </div>
+    </Container>
   );
 };
 

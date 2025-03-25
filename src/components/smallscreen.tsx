@@ -9,6 +9,7 @@ import { GoPlus } from "react-icons/go";
 import { GrCart } from "react-icons/gr";
 import { usePathname } from "next/navigation";
 import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import Container from "./common/container/Container";
 
 
 const SmallScreen: React.FC = () => {
@@ -21,6 +22,7 @@ const SmallScreen: React.FC = () => {
   }, [isSamplePage]);
 
   return (
+    <Container>
     <div>
       {items.length === 0 ? (
         <div className="text-center mt-5 mb-10">
@@ -81,6 +83,7 @@ const SmallScreen: React.FC = () => {
         </div>
       )}
     </div>
+    </Container>
   );
 };
 
