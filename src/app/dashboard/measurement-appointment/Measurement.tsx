@@ -77,7 +77,7 @@ const Measurement = ({ appointments , title }: { appointments: Appointment[] , t
          dataIndex: "preferredDate",
          key: "preferredDate",
          width: 180,
-         render: (date: string) => new Date(date).toLocaleDateString(), // Formatting date
+         render: (date: string) => new Date(date).toLocaleDateString(),
       },
       {
          title: "View",

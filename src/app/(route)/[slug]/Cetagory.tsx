@@ -58,10 +58,6 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mai
   ]);
 
 
-
-
-
-
   return (
     <>
       <Breadcrumb image={mainCategory ? mainCategory.whatAmiImageBanner?.imageUrl : Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={mainCategory?.whatAmiImageBanner.altText || Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} title={subcategory} isImagetext />
