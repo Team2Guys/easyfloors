@@ -9,7 +9,7 @@ import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
 import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
-import Container from "./common/container/Container";
+
 interface ProductTableProps {
   columns: string[];
   isSamplePage?: boolean;
@@ -24,7 +24,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   }, [isSamplePage]);
 
   return (
-    <Container>
+  
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
       {items.length === 0 ? (
         <div className="text-center">
@@ -53,7 +53,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
             {items.map((product) => (
               <tr key={product.id} className="border-t">
                 <td className="p-3 flex items-center gap-3">
-                  <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="xl:h-[151px] xl:w-[194px] object-cover" />
+                  <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover border border-red-700" />
                   <div className="text-12 xl:text-20 font-inter font-normal">
                     <p>{product.name}</p>
                     <p>No. of boxes: {product.requiredBoxes}</p>
@@ -95,7 +95,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
         </table>
       )}
     </div>
-    </Container>
+   
   );
 };
 
