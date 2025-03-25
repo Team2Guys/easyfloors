@@ -11,7 +11,6 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
   setSelectedProductFilters,
   setIsWaterProof,
   categoryData,
-  subCategoryData
 }) => {
   const [products, setProducts] = useState(filteredProducts);
   useEffect(() => {
@@ -35,14 +34,6 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
   };
   return (
     <div className="pt-5 lg:mb-20">
-      {/* <div className="hidden lg:flex items-center border border-gray-300 px-2 py-2 w-full max-w-md focus-within:ring-2 focus-within:ring-primary hover:border-primary transition">
-        <input
-          type="text"
-          placeholder="Search for anything..."
-          className="flex-1 px-2 outline-none bg-transparent"
-        />
-        <FiSearch className="text-gray-500" size={20} />
-      </div> */}
 
       <div className={`flex ${selectedFilters.length > 0 ? 'justify-between items-center' : 'justify-end items-center'}  bg-[#F2F4F5] p-2 md:p-3 rounded-md w-full min-h-14`}>
         {selectedFilters.length > 0 &&
@@ -77,7 +68,6 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
               product={product}
               features={features}
               categoryData={categoryData}
-              subCategoryData={subCategoryData}
               isSoldOut={false}
               isAccessories={false}
             />

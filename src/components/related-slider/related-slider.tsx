@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { IProduct } from "types/prod";
 import { RelatedSliderProps } from "types/types";
 
+
 const RelatedSlider = ({ products ,isAccessories}:RelatedSliderProps) => {
   const settings = {
     dots: true,

@@ -92,7 +92,7 @@ const CartPage = ({products}:CartPageProps) => {
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       toast.error("Failed to update item quantity.");
-      console.error(error);
+      throw error;
     }
   };
   
@@ -106,23 +106,6 @@ const CartPage = ({products}:CartPageProps) => {
     const subtotal = cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0);
     setSelectedFee(subtotal > 1000 ? 0 : fee);
   };
-  
-  const extractCategories = (cartItems: ICart[]) => {
-    const cat = [...new Set(cartItems.map(item => item.category))];
-    const subcat = [...new Set(cartItems.map(item => item.subcategories))];
-
-    return { cat, subcat };
-};
-
-const { cat, subcat } = extractCategories(cartItems);
-const matchingProduct = products.find(
-    (product) => cat.includes(product.category?.RecallUrl) && subcat.includes(product.subcategory?.custom_url)
-);
-const CategoryData = matchingProduct?.category
-    ? { name: matchingProduct.category.name ?? "Unknown", RecallUrl: matchingProduct.category.RecallUrl ?? "" }
-    : { name: "Unknown", RecallUrl: "" };
-
-    console.log(cartItems,"cartItems")
   return (
     
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
@@ -236,7 +219,6 @@ const CategoryData = matchingProduct?.category
           </div>
         <RelatedSlider
         products={products.slice(0, 5)}
-        CategoryData={CategoryData}
         />
           </>
           }

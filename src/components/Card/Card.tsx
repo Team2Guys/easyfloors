@@ -38,8 +38,8 @@ const Card: React.FC<productCardProps> = ({
       setModalData(productData || undefined);
       setIsModalOpen(true);
     } catch (error) {
-      console.error("Error fetching single product:", error);
       toast.error("Error fetching single product");
+      throw error;
     }
   };
 
