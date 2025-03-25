@@ -271,3 +271,10 @@ export const CONTACT_US_EMAIL_MUTATION = gql`
   }
 `;
 
+
+export const INITIATE_PAYMENT = gql`
+mutation CreateSalesProduct($createSalesProductInput: CreateOrderInput!) {
+  createSalesProduct(createSalesProductInput: $createSalesProductInput) {
+    paymentKey
+  }
+}`

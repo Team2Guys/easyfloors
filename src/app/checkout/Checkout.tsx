@@ -22,6 +22,8 @@ import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
 import { fees, paymentcard, UAEStates } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
+// import { useMutation } from "@apollo/client";
+// import { INITIATE_PAYMENT } from "graphql/mutations";
 
 
 
@@ -42,7 +44,7 @@ const Checkout = () => {
                 setCartItems(items);
                 setTotalProducts(items.length);
                 const subTotalPrice = items.reduce(
-                    (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 
+                    (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
                     0
                 );
                 setSubTotal(subTotalPrice);
@@ -80,19 +82,20 @@ const Checkout = () => {
                 toast.warn("You must agree to the terms and conditions.");
                 return;
             }
-            console.log('formdata', {...values, products: cartItems, shipmentFee:selectedFee });
+            console.log('formdata', { ...values, products: cartItems, shipmentFee: selectedFee });
+            // handlePayment()
         },
     });
 
     const handleStateSelect = (state: string) => {
         const fee = fees[state as keyof typeof fees]
         setSelectedFee(fee);
-        const totalPrice = subTotal + (fee || 0 );
-            setTotal(totalPrice);
+        const totalPrice = subTotal + (fee || 0);
+        setTotal(totalPrice);
     };
-    
+
     useEffect(() => {
-        handleShippingSelect("standard"); 
+        handleShippingSelect("standard");
     }, []);
     const handleShippingSelect = (type: "express" | "standard") => {
         setSelectedShipping(type);
@@ -106,11 +109,11 @@ const Checkout = () => {
         } else {
             fee = 0;
         }
-    
+
         setSelectedFee(fee);
         setTotal(subTotal + (fee > 0 ? fee : 0));
     };
-    
+
 
     return (
         <Container>
@@ -192,7 +195,7 @@ const Checkout = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 
 
-                        <div className="flex-1">
+                            <div className="flex-1">
                                 <label className="block font-medium">Emirate <span className="text-primary">*</span></label>
                                 <select
                                     name="emirate"
@@ -207,7 +210,7 @@ const Checkout = () => {
                                         <option key={emirate} value={emirate}>{emirate}</option>
                                     ))}
                                 </select>
-                        </div> 
+                            </div>
 
                             <div className="flex-1">
                                 <label className="block font-medium">City <span className="text-primary">*</span></label>
@@ -285,16 +288,16 @@ const Checkout = () => {
                         <div className="space-y-2 py-4">
                             <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal.toFixed(2)}</span></p>
                             <p className="text-gray-600 flex justify-between">
-                            <span className="flex items-center gap-2">
-                                Shipping <CiDeliveryTruck size={16} className="mt-1" />
-                            </span> 
-                            <span className="text-black">
-                            {selectedShipping === "standard"
-                                ? "Free"
-                                : selectedFee === 0
-                                ? "Enter shipping address"
-                                : `AED ${selectedFee}`}
-                            </span>
+                                <span className="flex items-center gap-2">
+                                    Shipping <CiDeliveryTruck size={16} className="mt-1" />
+                                </span>
+                                <span className="text-black">
+                                    {selectedShipping === "standard"
+                                        ? "Free"
+                                        : selectedFee === 0
+                                            ? "Enter shipping address"
+                                            : `AED ${selectedFee}`}
+                                </span>
                             </p>
                             <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {total.toFixed(2)}</span></p>
                         </div>
@@ -317,36 +320,34 @@ const Checkout = () => {
                                     className="!border-b-0"
                                 >
                                     <div
-                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
-                                        selectedShipping === "express" ? "border-primary" : "border-transparent"
-                                    }`}
-                                    onClick={() => handleShippingSelect("express")}
+                                        className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"
+                                            }`}
+                                        onClick={() => handleShippingSelect("express")}
                                     >
-                                    <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                                    <div>
-                                        <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                                        <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
-                                        <p className="text-11 xs:text-16">
-                                            <span>Delivery Cost:</span> <strong>AED 150</strong>
-                                        </p>
-                                    </div>
+                                        <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
+                                        <div>
+                                            <strong className="text-15 xs:text-20">Express Shipping:</strong>
+                                            <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
+                                            <p className="text-11 xs:text-16">
+                                                <span>Delivery Cost:</span> <strong>AED 150</strong>
+                                            </p>
+                                        </div>
                                     </div>
 
-                                <div
-                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
-                                        selectedShipping === "standard" ? "border-primary" : "border-transparent"
-                                    }`}
-                                    onClick={() => handleShippingSelect("standard")}
-                                >
-                                    <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                                    <div>
-                                        <strong className="text-15 xs:text-20">Standard Shipping:</strong>
-                                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
-                                        <p className="text-11 xs:text-16">
-                                            <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500 Only In Dubai</strong>
-                                        </p>
+                                    <div
+                                        className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
+                                            }`}
+                                        onClick={() => handleShippingSelect("standard")}
+                                    >
+                                        <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
+                                        <div>
+                                            <strong className="text-15 xs:text-20">Standard Shipping:</strong>
+                                            <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                                            <p className="text-11 xs:text-16">
+                                                <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500 Only In Dubai</strong>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
 
 
                                     <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
