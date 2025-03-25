@@ -10,6 +10,7 @@ import { fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
+import { handleAddToStorage } from "lib/carthelper";
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
@@ -72,9 +73,29 @@ const Card: React.FC<productCardProps> = ({
         )}
         {!sldier &&
           <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-            <Link href="/wishlist" className="bg-white p-1 shadow hover:bg-primary hover:text-white transition">
+           <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
+            if ("price" in product) {
+              console.log("product", product);
+              handleAddToStorage
+              (
+              product, 
+              product.price ?? 0,
+              0, 
+              0, 
+              1, 
+              product.subcategory?.name || "", 
+              categoryData?.name || "", 
+              "wishlist",
+              product.posterImageUrl?.imageUrl ?? "",
+              product?.boxCoverage,
+              );
+            } else {
+            }
+            }}
+            >
               <FiHeart size={20} />
-            </Link>
+              </button>
+
             <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
               <FiEye size={20} />
             </button>

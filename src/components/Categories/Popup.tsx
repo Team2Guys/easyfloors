@@ -40,7 +40,7 @@ function Popup() {
   return (
   <>
       <h1
-          className="relative text-center md:text-5xl text-2xl md:max-w-3xl w-full font-bold text-white py-7 mx-auto bg-cover bg-center"
+          className="relative text-center  md:text-5xl text-2xl md:max-w-3xl w-full font-bold text-white py-7 mx-auto bg-cover bg-center"
           style={{ 
             backgroundImage: `url(${categoryData.backgroundImage})`,
             backgroundSize: "100%", 
@@ -48,6 +48,7 @@ function Popup() {
             backgroundPosition: "center" 
           }}
       >
+        <div className="flex justify-center items-center gap-3">
           {categoryData.title}{" "}
           <span
             onClick={handleOpenModal}
@@ -55,6 +56,7 @@ function Popup() {
           >
             {categoryData.subtitle}
           </span>
+          </div>
       </h1>
 
         {isModalOpen && (

@@ -50,7 +50,7 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
     <div className="relative top-[32px]">
     {submenu && submenu.length > 0 && isOpen && (
      <div
-     className={`fixed top-auto left-1/2 transform -translate-x-1/2 bg-white shadow z-50 overflow-y-auto border-primary border-t ${
+     className={`fixed top-auto left-0 transform bg-white shadow z-50 overflow-y-auto border-primary border-t ${
        submenu.length === 3 ? "w-[50%]" : "w-[100vw]"
      }`}
      onMouseEnter={handleMouseEnter}
