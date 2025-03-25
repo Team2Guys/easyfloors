@@ -29,7 +29,7 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
 
       <div ref={dropdownRef} className="relative w-full mt-1">
         <Field name={name}>
-          {({ field, form }: { field: any; form: any }) => (
+          {({ field, form }: { field: any; form: any }) => (// eslint-disable-line
             <div className="relative">
              
               <input

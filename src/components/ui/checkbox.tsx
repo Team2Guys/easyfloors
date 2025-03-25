@@ -19,6 +19,7 @@ const Checkbox = ({
   children,
   className,
   required,
+  
 }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(checked || false);
 

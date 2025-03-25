@@ -11,8 +11,8 @@ import { CREATE_USER } from "graphql/user_mutation";
 import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
-const router = useRouter();
-  const formValues ={
+  const router = useRouter();
+  const formValues = {
     name: "",
     email: "",
     password: "",
@@ -43,12 +43,13 @@ const router = useRouter();
           <Formik
             initialValues={formValues}
             onSubmit={async (values, { setSubmitting }) => {
-const {retypePassword, phone, ...newValues} = values;
-console.log(retypePassword, "retreive password")
-           await client.mutate({
+              const { retypePassword, phone, ...newValues } = values;
+              console.log(retypePassword, "retreive password")
+              await client.mutate({
                 mutation: CREATE_USER,
-                variables: {createUser: {...newValues, phone: phone.toString()}, 
-              },
+                variables: {
+                  createUser: { ...newValues, phone: phone.toString() },
+                },
               });
               router.push('/login');
               setSubmitting(false);
@@ -68,7 +69,7 @@ console.log(retypePassword, "retreive password")
                 <div className="mb-4">
                   <Field type="password" name="password" placeholder="Password" className="w-full p-3 border rounded" />
                 </div>
-                
+
                 <div className="mb-4">
                   <Field type="number" name="phone" placeholder="Phone Number" className="w-full p-3 border rounded" />
                 </div>

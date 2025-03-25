@@ -23,7 +23,7 @@ const Card: React.FC<productCardProps> = ({
   isSoldOut = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalData , setModalData] = useState<IProduct | undefined>(undefined)
+  const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
 
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -35,7 +35,7 @@ const Card: React.FC<productCardProps> = ({
         true,
         FIND_QUICK_VIEW_PRODUCT
       );
-  
+
       setModalData(productData || undefined);
       setIsModalOpen(true);
     } catch (error) {
@@ -44,10 +44,10 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
-  const handleNavigate = (product: IProduct , categoryData: Category ) => {
+  const handleNavigate = (product: IProduct, categoryData: Category) => {
     if (product.subcategory) {
       return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
-    }  else {
+    } else {
       return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
@@ -73,28 +73,28 @@ const Card: React.FC<productCardProps> = ({
         )}
         {!sldier &&
           <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-           <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
-            if ("price" in product) {
-              console.log("product", product);
-              handleAddToStorage
-              (
-              product, 
-              product.price ?? 0,
-              0, 
-              0, 
-              1, 
-              product.subcategory?.name || "", 
-              categoryData?.name || "", 
-              "wishlist",
-              product.posterImageUrl?.imageUrl ?? "",
-              product?.boxCoverage,
-              );
-            } else {
-            }
+            <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
+              if ("price" in product) {
+                console.log("product", product);
+                handleAddToStorage
+                  (
+                    product,
+                    product.price ?? 0,
+                    0,
+                    0,
+                    1,
+                    product.subcategory?.name || "",
+                    categoryData?.name || "",
+                    "wishlist",
+                    product.posterImageUrl?.imageUrl ?? "",
+                    product?.boxCoverage,
+                  );
+              } else {
+              }
             }}
             >
               <FiHeart size={20} />
-              </button>
+            </button>
 
             <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
               <FiEye size={20} />
