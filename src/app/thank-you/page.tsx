@@ -11,10 +11,7 @@ const ThankYou = async () => {
     <>
       <Breadcrumb title="Thank You" />
       <ThankYouComp />
-      <RelatedSlider 
-        products={productData.slice(0, 5)} 
-        CategoryData={productData.category} 
-      />
+      <RelatedSlider  products={productData.slice(0, 5)} />
     </>
   );
 };

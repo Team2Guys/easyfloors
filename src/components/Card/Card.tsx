@@ -39,16 +39,16 @@ const Card: React.FC<productCardProps> = ({
       setModalData(productData || undefined);
       setIsModalOpen(true);
     } catch (error) {
-      console.error("Error fetching single product:", error);
       toast.error("Error fetching single product");
+      throw error;
     }
   };
 
   const handleNavigate = (product: IProduct , categoryData: Category ) => {
     if (product.subcategory) {
-      return `/${categoryData?.RecallUrl || product?.custom_url}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
+      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
     }  else {
-      return `/${categoryData?.RecallUrl || product?.custom_url}/${product.custom_url?.toLowerCase() ?? ''}`;
+      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
 

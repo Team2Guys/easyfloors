@@ -34,10 +34,7 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
       <Container>
         <Features items={featureItems} />
       </Container>
-      <RelatedSlider 
-        products={ProductInfo.slice(0, 5)} 
-        CategoryData={productData?.category} 
-      />
+      <RelatedSlider products={ProductInfo.slice(0, 5)}/>
     </div>
   );
 };

@@ -8,7 +8,6 @@ import "react-phone-number-input/style.css";
 import Image from "next/image";
 import Container from "components/common/container/Container";
 import Link from "next/link";
-import { Checkbox, Collapse } from "antd";
 import secureImg from '../../../public/assets/icons/safe-icon-1.png'
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
@@ -22,6 +21,8 @@ import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
 import { paymentcard, UAEStates } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
+import Checkbox from "components/ui/checkbox";
+import Accordion from "components/ui/accordion";
 import { useMutation } from "@apollo/client";
 import { INITIATE_PAYMENT } from "graphql/mutations";
 import Input from "components/appointment/Input";
@@ -74,6 +75,9 @@ const Checkout = () => {
         }
     };
 
+    const handleToggle = (key: string) => {
+      setOpenAccordion(openAccordion === key ? null : key);
+    };
     useEffect(() => {
         const fetchCartItems = async () => {
             try {

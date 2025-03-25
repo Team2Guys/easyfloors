@@ -347,3 +347,14 @@ export interface CartSelectProps {
   fees: { [key: string]: number };
   onSelect: (_state: string, _fee: number) => void;
 }
+export interface PrivacyPolicyItem {
+  title?: string;
+  content?: string[];
+  subItems?: string[];
+  heading?: string[];
+  contentend?: string[];
+  Links?: string[];
+}
+export interface PrivacyPolicyProps {
+  data?: PrivacyPolicyItem[];
+}
