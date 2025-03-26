@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { contactUsEmailInput, CreateOrderInput } from './dto/create-sales-product.input';
-import { contactusEmail, customHttpException } from '../utils/helper';
+import { contactUsEmailInput, CreateOrderInput, orderEmailInput, PaymentQueryDto, ProductInput } from './dto/create-sales-product.input';
+import { contactusEmail, customHttpException, sendEmailHandler } from '../utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
-import { PaymobService } from './paymob.service';
 import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class SalesProductsService {
-  constructor(private prisma: PrismaService,
-    private readonly paymobService: PaymobService) { }
+  constructor(private prisma: PrismaService) { }
 
   async create(createSalesProductInput: CreateOrderInput) {
     try {
@@ -18,17 +16,9 @@ export class SalesProductsService {
       myHeaders.append("Authorization", `Token ${process.env.PAYMOB_SECRET_KEY}`);
       myHeaders.append("Content-Type", "application/json");
 
-      const staticProduct = { name: 'Shipping Fee', amount: shipmentFee * 100, };
-      const tax = { name: 'tax Fee', amount: Math.ceil(((shipmentFee + totalPrice) * 0.05) * 100)};
-      const totalAmount = [{ name: 'tax Fee', amount: Math.ceil(totalPrice * 100)}];
+      const totalAmount = [{ name: 'tax Fee', amount: Math.ceil(totalPrice * 100) }];
 
-      const changedProducts = products.map(product => ({
-        ...product,
-        amount: Math.ceil(product.totalPrice * 100),
-        totalPrice: Math.ceil(product.totalPrice * 100),
-      }));
-console.log(changedProducts, "changedProducts", billing_data) 
-      const updatedProducts = [...changedProducts, staticProduct, tax];
+
       let raw = JSON.stringify({
         "amount": Math.ceil(totalPrice * 100),
         "currency": process.env.PAYMOD_CURRENCY,
@@ -43,11 +33,11 @@ console.log(changedProducts, "changedProducts", billing_data)
         "items": totalAmount,
         "billing_data": {
           ...billing_data,
-          first_name:billing_data.firstName,
-          last_name:billing_data.lastName,
-          email:billing_data.email,
-          phone_number:billing_data.phone
-        
+          first_name: billing_data.firstName,
+          last_name: billing_data.lastName,
+          email: billing_data.email,
+          phone_number: billing_data.phone
+
         },
         "special_reference": orderId,
         "redirection_url": "https://easyfloors.vercel.app/thank-you" as RequestRedirect
@@ -70,7 +60,7 @@ console.log(changedProducts, "changedProducts", billing_data)
       await this.prisma.salesProducts.create({
         data: {
           ...createSalesProductInput,
-          orderId: orderId,
+          orderId: String(result.intention_order_id),
           checkout: true,
           currency: 'AED',
           products: createSalesProductInput.products,
@@ -165,6 +155,50 @@ console.log(changedProducts, "changedProducts", billing_data)
   }
 
 
+  async postpaymentStatus(postpayment: PaymentQueryDto) {
+    try {
+      const { orderId } = postpayment;
+
+      let existingOrder = await this.prisma.salesProducts.findFirst({ where: { orderId } })
+      if (!existingOrder) {
+        customHttpException("Order not found", 'NOT_FOUND');
+        return;
+      }
+
+      // if (existingOrder.paymentStatus) {
+      //   console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
+      //   customHttpException("Payment status already updated", 'BAD_REQUEST');
+      // }
+
+      const paymentStatus = await this.prisma.salesProducts.update({
+        where: { orderId },
+        data: { ...postpayment, checkout: false, paymentStatus: true, transactionDate: new Date() },
+      });
+
+      const products: ProductInput[] = JSON.parse(JSON.stringify(existingOrder.products)) as ProductInput[];
+
+
+      if (Array.isArray(products) && products.length > 0) {
+        for (const prod of products) {
+          await this.prisma.products.update({
+            where: { id: prod.id },
+            data: {
+              stock: {
+                decrement: prod.requiredBoxes,
+              },
+            },
+          });
+        }
+      }
+      sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email, );
+      sendEmailHandler(existingOrder as orderEmailInput,);
+
+      return existingOrder;
+    } catch (error) {
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+    }
+
+  }
 
   async contactUs(userDetails: contactUsEmailInput) {
     try {

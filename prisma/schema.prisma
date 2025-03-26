@@ -204,7 +204,7 @@ model salesProducts {
   amountCents     String?
   success         Boolean   @default(false)
   pending         Boolean   @default(false)
-  is3DSecure      Boolean?
+  is3DSecure      String?
   checkoutDate    DateTime  @default(now())
   transactionDate DateTime?
   shipmentFee     Int?
@@ -214,4 +214,6 @@ model salesProducts {
   note String?
   emirate   String?
   totalPrice       Int
+  pay_methodType   String?
+  paymethod_sub_type String?
 }

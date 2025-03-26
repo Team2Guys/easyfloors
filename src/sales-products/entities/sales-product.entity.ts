@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import GraphQLJSON from 'graphql-type-json';
 
 @ObjectType()
@@ -37,4 +37,87 @@ export class contactUsEmail {
     message: string;
 }
 
+@ObjectType()
+export class Products {
+    @Field(() => Int)
+    id: number;
+
+    @Field()
+    name: string;
+
+    @Field(() => Float)
+    price: number;
+
+    @Field(() => Int)
+    stock: number;
+
+    @Field()
+    image: string;
+
+    @Field()
+    subcategories: string;
+
+    @Field()
+    category: string;
+
+    @Field()
+    boxCoverage: string;
+
+    @Field(() => Float)
+    totalPrice: number;
+
+    @Field(() => Float)
+    pricePerBox: number;
+
+    @Field()
+    squareMeter: string;
+
+    @Field(() => Int)
+    requiredBoxes: number;
+}
+
+@ObjectType()
+export class paymentStatus {
+    @Field()
+    firstName: string;
+
+    @Field()
+    lastName: string;
+
+    @Field()
+    email: string;
+
+    @Field()
+    country: string;
+
+    @Field()
+    city: string;
+
+    @Field()
+    address: string;
+
+    @Field()
+    note: string;
+
+    @Field()
+    phone: string;
+
+    @Field()
+    emirate: string;
+
+    @Field()
+    orderId: string;
+
+    @Field()
+    transactionDate: Date;
+
+    @Field(() => [Products])
+    products?: Products[] | undefined;
+
+    @Field(() => Float)
+    shipmentFee: number;
+
+    @Field(() => Float)
+    totalPrice: number;
+}
 

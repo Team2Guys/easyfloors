@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { SalesProductsService } from './sales-products.service';
-import { ALL_RECORDS, contactUsEmail, SalesProduct } from './entities/sales-product.entity';
-import { contactUsEmailInput, CreateOrderInput, } from './dto/create-sales-product.input';
+import { ALL_RECORDS, contactUsEmail, paymentStatus, SalesProduct } from './entities/sales-product.entity';
+import { contactUsEmailInput, CreateOrderInput, PaymentQueryDto, } from './dto/create-sales-product.input';
 import { Public } from '../decorators/public.decorator';
 
 @Resolver(() => SalesProduct)
@@ -12,6 +12,12 @@ export class SalesProductsResolver {
   @Mutation(() => SalesProduct)
   createSalesProduct(@Args('createSalesProductInput') createSalesProductInput: CreateOrderInput) {
     return this.salesProductsService.create(createSalesProductInput);
+  }
+
+  @Public()
+  @Mutation(() => paymentStatus)
+  postpaymentStatus(@Args('postpaymentStatus') updatepaymentstatusInput: PaymentQueryDto) {
+    return this.salesProductsService.postpaymentStatus(updatepaymentstatusInput);
   }
 
   @Public()
