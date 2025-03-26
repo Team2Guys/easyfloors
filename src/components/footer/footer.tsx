@@ -14,6 +14,9 @@ import { Category as ICategory } from "types/cat";
 import dynamic from 'next/dynamic';
 const Footerlinks =  dynamic(() => import('./Footerlinks'));
 
+import SocialIcon from 'components/Reusable/social-icon';
+
+
 const Footer = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
@@ -153,11 +156,7 @@ const Footer = () => {
             <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row items-center justify-between bg-primary">
                 <Container className="flex items-center justify-between">
                     <div className="flex md:space-x-4 space-x-2">
-                        {footerData.social.map((social, index) => (
-                            <a key={index} href={social.link} aria-label={`Visit our ${social.name} page`} className="text-gray-600 h-6 w-6 hover:text-gray-900 bg-white p-1">
-                                <social.icon />
-                            </a>
-                        ))}
+                        <SocialIcon/>
                     </div>
 
                     <div className="sm:absolute left-1/2 transform sm:-translate-x-1/2">

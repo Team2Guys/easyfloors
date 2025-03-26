@@ -32,8 +32,6 @@ export const FETCH_ALL_ACCESSORIES = gql`
       products {
         id
         name
-        custom_url
-        colorCode
         colors
       }
     }
