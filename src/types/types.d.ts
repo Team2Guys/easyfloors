@@ -189,16 +189,6 @@ export interface ProductFilterParams {
   subcategory?: string;
 }
 
-export type OrderHistory = {
-  id: string;
-  email: string;
-  address: string;
-  phone: string;
-  paymentStatus: string;
-  createdAt: string;
-};
-
-
 
 export interface IAppointment {
   firstname: string;
@@ -234,4 +224,14 @@ export interface AccordionProps {
 export interface RelatedSliderProps {
   products: IProduct[]; 
   isAccessories?: boolean;
+};
+
+
+export type OrderHistory = {
+  id: string;
+  email: string;
+  address: string;
+  phone: string;
+  paymentStatus: string;
+  createdAt: string;
 };

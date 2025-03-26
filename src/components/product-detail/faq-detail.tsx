@@ -11,7 +11,7 @@ const FaqDetail = ({ FAQS }: FAQprops) => {
 
   useEffect(() => {
     if (FAQS && FAQS.length > 0) {
-      setOpenAccordions(FAQS.map((faq) => faq.name)); // Open all accordions by default
+      setOpenAccordions(FAQS.map((faq) => faq.name)); 
     }
   }, [FAQS]);
 
