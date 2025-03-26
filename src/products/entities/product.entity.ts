@@ -97,5 +97,8 @@ export class Product {
 
   @Field(() => [Accessory], { nullable: true })
   acessories?: Accessory[]
+  
+  @Field(() => [GraphQLJSON])
+  colors: any[]
 
 }

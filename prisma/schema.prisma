@@ -46,6 +46,8 @@ model Products {
   subcategory           subCategories? @relation(fields: [subCategoryId], references: [id], onDelete: SetNull)
   featureImages         Json[]         @default([])
   acessories            Acessories[]   @relation("ProductAccessories")
+  colors                Json[]         @default([])
+
 }
 
 model Category {

@@ -90,6 +90,9 @@ export class CreateProductInput {
   
   @Field(() => [GraphQLJSON])
   featureImages: any[]
+
+  @Field(() => [GraphQLJSON])
+  colors: any[]
   
     @Field(()=>ID,{nullable:true})
     acessories?:number
