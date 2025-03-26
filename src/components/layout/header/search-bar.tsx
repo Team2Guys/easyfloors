@@ -131,7 +131,11 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
                  )
               })
               ) : (
-                <div className="text-start p-2">No product is found</div>
+                <div className="w-full animate-pulse px-2">
+                {[...Array(3)].map((_, i) => (
+                  <div key={i} className="h-28 w-full bg-gray-300 rounded mb-3"></div>
+                ))}
+                </div>
               )}
             </div>
           </div>

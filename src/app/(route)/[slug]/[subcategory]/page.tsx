@@ -63,10 +63,13 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , su
     return notFound()
   }
   const filteredCategories = catgories.filter((value:ICategory)=>value?.name?.trim() !=="ACCESSORIES") || []
-
+  const getMatchingSubCategory = (subcategories: ICategory[], subCategoryUrl: string) => {
+    return subcategories.filter((sub) => sub.custom_url === subCategoryUrl);
+  };
+  const matchingSubCategory = getMatchingSubCategory(findCategory.subcategories, subcategory);
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={filteredCategories} categoryData={findCategory}  slug={slug} subcategory={subcategory} isSubCategory />
+      <Category catgories={filteredCategories} categoryData={findCategory}  slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
     </Suspense>
   );
 };

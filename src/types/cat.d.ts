@@ -89,6 +89,7 @@ export interface SUBNCATEGORIES_PAGES_PROPS {
   mainCategory?: mainCategory;
   slug: string; 
   subcategory?: string;
+  subdescription?: ICategory;
 }
 
 export type FilterState = {
