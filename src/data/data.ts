@@ -12,6 +12,8 @@ import { StaticImageData } from 'next/image';
 import { AdditionalInformation } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
+import parsePhoneNumberFromString from "libphonenumber-js/core";
+import metadata from 'libphonenumber-js/metadata.min.json';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -41,9 +43,15 @@ export const initialValues = {
     telephone: false,
     email: false,
   },
-
-
 };
+
+export const phoneValidation = Yup.string()
+  .test("valid-phone", "Invalid phone number", (value) => {
+    if (!value) return false; // Required field
+    const phoneNumber = parsePhoneNumberFromString(value, metadata);
+    return phoneNumber && phoneNumber.isValid(); // Checks if phone is valid
+  })
+  .required("Phone number is required");
 
 export const validationSchema = Yup.object({
   firstname: Yup.string().required("Name is required"),
@@ -638,6 +646,13 @@ export const popupCards: CardData[] = [
       "15-year warranty",
     ],
   },
+];
+
+export const timeSlots = [
+  { value: "9am-11am", label: "9am-11am" },
+  { value: "11am-1pm", label: "11am-1pm" },
+  { value: "1pm-3pm", label: "1pm-3pm" },
+  { value: "3pm-6pm", label: "3pm-6pm" },
 ];
 
 
