@@ -1,8 +1,9 @@
 "use client";
 import Card from "components/Card/Card";
 import Container from "components/common/container/Container";
+import CardSkeleton from "components/skaletons/card-skaleton";
 import Select from "components/ui/Select";
-import {features } from "data/data";
+import { features } from "data/data";
 import React, { useState, useEffect } from "react";
 import { IProduct } from "types/prod";
 
@@ -38,29 +39,37 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <Container>
       <div className="lg:mt-14 mt-5 py-4 font-inter">
-        <p className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: product[1]?.category?.description || "" }} />
+        <p
+          className="text-lg leading-relaxed"
+          dangerouslySetInnerHTML={{
+            __html: product[1]?.category?.description || "",
+          }}
+        />
       </div>
-      <div className="flex items-center justify-end gap-2 lg:py-8"> 
+      <div className="flex items-center justify-end gap-2 lg:py-8">
         <span className="text-[#191C1F] text-14 hidden lg:block">Sort by:</span>
         <Select
-          options={["Default", "A to Z", "Z to A", "Low to High", "High to Low"]}
+          options={["Default","A to Z","Z to A","Low to High","High to Low",]}
           onChange={setSortOption}
           sortOption={sortOption}
         />
       </div>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 lg:mb-16">
-        {sortedProducts?.map((product, index) => (
-          <Card 
-            key={index} 
-            product={product} 
-            categoryData={product.category} 
-            isAccessories 
-            isSoldOut={index === 0} 
-            features={features} 
-          />
-        ))}
-      </div>
+      {sortedProducts.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 lg:mb-16">
+          {sortedProducts?.map((product, index) => (
+            <Card
+              key={index}
+              product={product}
+              categoryData={product.category}
+              isAccessories
+              isSoldOut={index === 0}
+              features={features}
+            />
+          ))}
+        </div>
+      ) : (
+        <CardSkeleton length={5} />
+      )}
     </Container>
   );
 };

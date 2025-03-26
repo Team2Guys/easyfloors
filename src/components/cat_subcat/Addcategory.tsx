@@ -23,6 +23,7 @@ import { Modal } from 'antd';
 import { uploadPhotosToBackend } from 'lib/helperFunctions';
 import showToast from 'components/Toaster/Toaster';
 import { centerAspectCrop } from 'types/product-crop';
+import TinyMCEEditor from 'components/Dashboard/tinyMc/MyEditor';
 
 interface editCategoryProps {
   seteditCategory: React.Dispatch<SetStateAction<Category | undefined | null>>;
@@ -455,13 +456,7 @@ const FormLayout = ({
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
                           Category Description
                         </label>
-                        <Field
-                          as="textarea"
-                          name="description"
-                          placeholder="Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:text-white dark:focus:border-primary ${formik.touched.description && formik.errors.description ? "border-red-500" : ""
-                            }`}
-                        />
+                        <TinyMCEEditor name="description" />
                         <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
                       </div>
 
