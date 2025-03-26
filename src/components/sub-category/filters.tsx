@@ -246,7 +246,16 @@ const Filters = ({
               return (
                 <li key={item.custom_url}>
                   <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
-                    <Checkbox label={item.name} isActive={path === `/${item.custom_url}`} />
+
+                    <Checkbox
+                    checked={path === `/${item.custom_url}`}
+                      required
+                      name="terms"
+                 
+                      className="custom-checkbox"
+                    >
+                   {item.name}
+                    </Checkbox>
                   </Link>
                 </li>
               );

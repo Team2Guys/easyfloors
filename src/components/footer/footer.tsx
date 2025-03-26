@@ -21,20 +21,25 @@ const Footer = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
         const getCategories = async () => {
-            try {
-                const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-                const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
-                    const indexA = staticMenuItems.findIndex(item => item.label.toLowerCase() === a.name.trim().toLowerCase());
-                    const indexB = staticMenuItems.findIndex(item => item.label.toLowerCase() === b.name.trim().toLowerCase());
-                    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-                });
-                setCategories(sortedCategories);
-            } catch {
-                toast.error("Error fetching categories:");
-            }
+          try {
+            const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
+            const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
+              const indexA = staticMenuItems.findIndex(
+                (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+              );
+              const indexB = staticMenuItems.findIndex(
+                (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+              );
+              return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+            });
+    
+            setCategories(sortedCategories);
+          } catch {
+            toast.error("Error fetching categories:");
+          } 
         };
         getCategories();
-    }, []);
+      }, []);
     
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
@@ -44,41 +49,52 @@ const Footer = () => {
                     <p className="mt-2 text-sm">{footerData.company.description}</p>
                 </div>
                 <Footerlinks categories={categories} />
+                {categories.length > 0 ? (
+                    categories.map((section: Category, index: number) => {
+                        const reCallFlag = section.recalledSubCats && section.recalledSubCats.length > 0;
+                        const subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
 
-                {categories.map((section: Category, index: number) => {
-                    const reCallFlag = section.recalledSubCats && section.recalledSubCats.length > 0;
-                    const subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
+                        return (
+                            <div key={index} className="sm:block hidden">
+                                <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
+                                    {section.name}
+                                </Link>
 
-                    return (
-                        <div key={index} className="sm:block hidden">
-                            <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
-                                {section.name}
-                            </Link>
+                                <ul className="mt-4 space-y-2">
+                                    {section.name === "ACCESSORIES" ? (
+                                        (section.accessories ?? []).map((item, i) => (
+                                            <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                                <Link href={`/accessories/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                                    {item.name}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    ) : (
+                                        (subcategories ?? []).map((item, i) => (
+                                            <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                                                <Link href={`/${item?.category?.RecallUrl || section.RecallUrl}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                                    {item.name}
+                                                </Link>
+                                            </li>
+                                        ))
+                                    )}
+                                </ul>
+                            </div>
 
-                            <ul className="mt-4 space-y-2">
-                                {section.name === "ACCESSORIES" ? (
-                                    (section.accessories ?? []).map((item, i) => (
-                                        <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
-                                            <Link href={`/accessories/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
-                                                {item.name}
-                                            </Link>
-                                        </li>
-                                    ))
-                                ) : (
-                                    (subcategories ?? []).map((item, i) => (
-                                        <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
-                                            <Link href={`/${item?.category?.RecallUrl || section.RecallUrl}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
-                                                {item.name}
-                                            </Link>
-                                        </li>
-                                    ))
-                                )}
-                            </ul>
-                        </div>
-
-                    )
-                })}
-
+                        )
+                    })
+                ):(
+                    <>
+                    {[...Array(5)].map((_, index) => (
+                      <div key={index} className="hidden sm:block w-full animate-pulse">
+                        {[...Array(5)].map((_, i) => (
+                          <div key={i} className="h-6 w-full bg-gray-300 rounded mb-3"></div>
+                        ))}
+                      </div>
+                    ))}
+                    </>
+                )}
+             
                 <div className="sm:block ">
                     <h3 className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</h3>
                     <div className="text-sm mt-3 flex items-start gap-2">

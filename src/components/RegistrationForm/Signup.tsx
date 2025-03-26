@@ -17,8 +17,8 @@ import { useRouter } from "next/navigation";
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const router = useRouter();
-  const formValues = {
+    const router = useRouter();
+  const formValues =  {
     name: "",
     email: "",
     password: "",
@@ -77,7 +77,7 @@ const SignupForm = () => {
                   <FaPhoneAlt className="text-primary" />
                   <Field type="number" name="phone" placeholder="Phone Number" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
-                <div className="flex border-b justify-between items-center relative">
+<div className="flex border-b justify-between items-center relative">
                   <div className="flex w-full items-center">
                     <FaLock className="text-primary" />
                     <Field type={showPassword ? "text" : "password"} name="password" placeholder="Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />

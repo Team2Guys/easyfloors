@@ -32,7 +32,7 @@ const AccessoriesDetail = ({ProductName,ProductInfo, productData}:detailprops) =
   
     </Container>
     <Features items={featureItems} />
-    <RelatedSlider products={ProductInfo.slice(0,5)}  CategoryData={productData.category} isAccessories/>
+    <RelatedSlider products={ProductInfo.slice(0,5)} isAccessories/>
     </>
   )
 }

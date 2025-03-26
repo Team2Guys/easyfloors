@@ -1,24 +1,19 @@
 import React from "react";
 import { IoChevronDown } from "react-icons/io5";
 
-interface AccordionProps {
-  label: string;
-  children: React.ReactNode;
-  isOpen: boolean;
-  onToggle: () => void;
-  detailpage?: boolean;
-}
+import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { AccordionProps } from "types/types";
 
-const Accordion = ({ label, children, isOpen, onToggle, detailpage }: AccordionProps) => {
+const Accordion = ({ label, children, isOpen, onToggle,  detailpage, showPlusMinus }: AccordionProps) => {
   return (
     <div className={`py-2 ${detailpage ? "border" : "border-b-0"}`}>
       <div className="flex justify-between items-center">
-        <button
+        <div
           onClick={onToggle}
           className={`text-14 lg:text-16 font-semibold flex items-center w-full text-left gap-3 px-2 transition-all
           ${isOpen ? "pb-2 border-b" : "pb-0 border-b-0"}`}
         >
-          {detailpage && <div className="h-[2px] w-6 bg-primary" />}
+          {detailpage && <div className="h-[2px] w-6 bg-primary"  />}
           {label}
           {!detailpage && (
             <IoChevronDown

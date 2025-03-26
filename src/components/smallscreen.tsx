@@ -4,13 +4,13 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { getWishlist, openDB, removeFreeSample, removeWishlistItem, getFreeSamples } from "utils/indexedDB";
-import { addToCart as saveToCart } from "utils/indexedDB";
-import { toast } from "react-toastify";
 import { FiMinus } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import { GrCart } from "react-icons/gr";
 import { usePathname } from "next/navigation";
+import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import Container from "./common/container/Container";
+
 
 const SmallScreen: React.FC = () => {
   const pathname = usePathname();
@@ -18,76 +18,11 @@ const SmallScreen: React.FC = () => {
   const [items, setItems] = useState<ICart[]>([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        if (isSamplePage) {
-          const samples = await getFreeSamples();
-          setItems(samples.slice(0, 5)); 
-        } else {
-          const wishlist = await getWishlist();
-          setItems(wishlist);
-        }
-      } catch {
-        toast.error("Error fetching items.");
-      }
-    };
-
-    fetchItems();
+    fetchItems(isSamplePage, setItems);
   }, [isSamplePage]);
 
-  const updateQuantity = (id: number, index: number) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
-      )
-    );
-  };
-
-  const handleRemoveItem = async (id: number) => {
-    try {
-      if (isSamplePage) {
-        await removeFreeSample(id);
-      } else {
-        await removeWishlistItem(id);
-      }
-      setItems((prev) => prev.filter((item) => item.id !== id));
-    } catch {
-      toast.error("Error removing item.");
-    }
-  };
-
-  const handleAddToCart = async (product: ICart) => {
-    try {
-      if (isSamplePage) {
-        const db = await openDB();
-        const tx = db.transaction("cart", "readonly");
-        const store = tx.objectStore("cart");
-        const existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
-          const request = store.get(product.id);
-          request.onsuccess = () => resolve(request.result);
-          request.onerror = () => reject(request.error);
-        });
-
-        if (existingProduct) {
-          toast.info("Product already exists in the cart.");
-          return;
-        }
-
-        await saveToCart(product);
-        await removeFreeSample(product.id);
-        toast.success("Product added to cart successfully!");
-      } else {
-        await saveToCart(product);
-        toast.success("Product added to cart successfully!");
-      }
-
-      setItems((prev) => prev.filter((item) => item.id !== product.id));
-    } catch {
-      toast.error("Error adding item.");
-    }
-  };
-
   return (
+    <Container>
     <div>
       {items.length === 0 ? (
         <div className="text-center mt-5 mb-10">
@@ -99,9 +34,9 @@ const SmallScreen: React.FC = () => {
           </Link>
         </div>
       ) : (
-        <div className={`space-y-6 ${!isSamplePage ? "max-h-[500px] overflow-y-auto" : ""}`}>
+        <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
           {items.slice(0, isSamplePage ? 5 : items.length).map((product) => (
-            <div key={product.id} className="border-b border-gray-300 py-4 flex flex-col gap-4 relative bg-white">
+            <div key={product.id} className="border-b border-gray-300 py-4 flex flex-col gap-4 relative bg-white ">
               {/* Product Image */}
               <div className="flex justify-between items-start gap-2 w-full">
                 <div className="flex flex-row gap-2">
@@ -116,7 +51,7 @@ const SmallScreen: React.FC = () => {
                     <p>{product.stock > 0 ? "In Stock" : "Out of Stock"}</p>
                   </div>
                 </div>
-                <button onClick={() => handleRemoveItem(product.id)} className="text-gray-500 hover:text-red-500">
+                <button onClick={() => handleRemoveItem(product.id, isSamplePage, setItems)} className="text-gray-500 hover:text-red-500">
                   <svg className="w-6 h-6" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.5" y="0.5" width="47" height="47" stroke="#424542" />
                     <path
@@ -129,17 +64,17 @@ const SmallScreen: React.FC = () => {
               <div className="flex gap-2 w-full justify-between mt-3">
                 {!isSamplePage && (
                   <div className="flex items-center bg-[#F0F0F0] text-black px-4 py-2">
-                    <button onClick={() => updateQuantity(product.id, -1)} className="p-2">
+                    <button onClick={() => updateQuantity(product.id, -1, setItems)} className="p-2">
                       <FiMinus />
                     </button>
                     <span className="px-3 font-semibold">{product.requiredBoxes}</span>
-                    <button onClick={() => updateQuantity(product.id, 1)} className="p-2">
+                    <button onClick={() => updateQuantity(product.id, 1, setItems )} className="p-2">
                       <GoPlus />
                     </button>
                   </div>
                 )}
 
-                <button onClick={() => handleAddToCart(product)} className="bg-black text-white flex items-center gap-2 px-4 py-2">
+                <button onClick={() => handleAddToCart(product, isSamplePage, setItems)}  className="bg-black text-white flex items-center gap-2 px-4 py-2">
                   <GrCart /> Add to Cart
                 </button>
               </div>
@@ -148,6 +83,7 @@ const SmallScreen: React.FC = () => {
         </div>
       )}
     </div>
+    </Container>
   );
 };
 

@@ -35,9 +35,9 @@ const CartSelect = ({ select, fees, onSelect, selectedFee }: CartSelectProps) =>
                 <div
                   key={index}
                   className="px-5 py-1 border-b text-[#BBBBBB] hover:text-black cursor-pointer text-12 xl:text-15"
-                  onClick={() => handleSelect(state)}
+                  onClick={() => handleSelect(state.value)}
                 >
-                  {state}
+                  {state.value}
                 </div>
               ))}
             </div>
