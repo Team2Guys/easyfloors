@@ -58,7 +58,6 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , su
   const { slug , subcategory } = await params
   const [ catgories ] = await Promise.all([ fetchCategories() ]);
   const findCategory = catgories.find((cat: ICategory) => (cat?.RecallUrl ) === slug.trim());
-
   if ( !findCategory) {
     return notFound()
   }

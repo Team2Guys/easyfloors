@@ -33,7 +33,8 @@ export const FETCH_ALL_ACCESSORIES = gql`
         id
         name
         custom_url
-        
+        colorCode
+        colors
       }
     }
   }

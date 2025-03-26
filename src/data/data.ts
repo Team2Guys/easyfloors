@@ -133,7 +133,7 @@ export interface IProductValues {
   boxCoverage?: string;
   products: (string | number)[];
   colorCode?:string;
-
+  colors?:  AdditionalInformation[]
 }
 
 export const AddproductsinitialValues: IProductValues = {
@@ -157,6 +157,7 @@ export const AddproductsinitialValues: IProductValues = {
   boxCoverage:"",
   products: [],
   colorCode: "",
+  colors: []
 };
 
 

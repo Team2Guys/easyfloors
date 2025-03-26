@@ -134,6 +134,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         waterproof
         plankWidth
         colorCode
+        colors
         ResidentialWarranty
         CommmericallWarranty
         thickness

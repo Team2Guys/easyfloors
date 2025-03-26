@@ -77,7 +77,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mai
         </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-            <h1 className="text-34 font-bold">{mainCategory?.topHeading || Data?.topHeading || Data?.Heading || Data.name}</h1>
+            <h1 className="text-34 font-bold">{isSubCategory ? subCategoryData?.name : mainCategory?.topHeading}</h1>
             <p
               className="text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter"
               dangerouslySetInnerHTML={{ __html: mainCategory?.description || Data?.description || "" }}

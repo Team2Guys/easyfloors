@@ -48,6 +48,7 @@ const Checkout = () => {
     const [selectedFee, setSelectedFee] = useState(0);
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
+    const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
 
     type FormInitialValues = {
         firstName: string;
@@ -99,18 +100,19 @@ const Checkout = () => {
     }, []);
 
     const handleShippingSelect = (type: string) => {
-        if (!selectedCity) return;
+        if (selectedCity) {
+            let fee = 150;
+            if (type === 'standard' || type === 'self-collect') {
+                fee = 0;
+            } else {
+                fee = subTotal > 1000 ? 0 : 150;
+            }
+            setSelectedFee(fee);
 
-        let fee = 150;
-        if (type === 'standard' && selectedCity === 'Dubai') {
-            fee = subTotal > 1000 ? 0 : 100;
+            const totalBeforeTax = subTotal + fee;
+            const taxAmount = totalBeforeTax * 0.05;
+            setTotal(totalBeforeTax + taxAmount);
         }
-        setSelectedFee(fee);
-
-        const totalBeforeTax = subTotal + fee;
-        const taxAmount = totalBeforeTax * 0.05;
-        setTotal(totalBeforeTax + taxAmount);
-
         setSelectedShipping(type);
     };
 
@@ -120,8 +122,10 @@ const Checkout = () => {
         if (!selectedCity) return;
 
         let fee = 150;
-        if (selectedShipping === 'standard') {
-            fee = selectedCity === 'Dubai' ? (subTotal > 1000 ? 0 : 100) : 150;
+        if (selectedShipping === 'standard' || selectedShipping === 'self-collect') {
+            fee = 0;
+        } else {
+            fee = subTotal > 1000 ? 0 : 150;
         }
 
         setSelectedFee(fee);
@@ -131,7 +135,19 @@ const Checkout = () => {
         setTotal(totalBeforeTax + taxAmount);
     }, [selectedCity, selectedShipping, subTotal]);
 
-
+    useEffect(() => {
+        let shippingData;
+    
+        if (selectedShipping === "standard") {
+            shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
+        } else if (selectedShipping === "express") {
+            shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
+        } else if (selectedShipping === "self-collect") {
+            shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
+        }
+    
+        setShipping(shippingData);
+    }, [selectedShipping]);
 
 
     return (
@@ -161,7 +177,8 @@ const Checkout = () => {
                 onSubmit={(values, { setSubmitting }) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
-                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: cartItems }
+                        // const shippingOption = { name:  } 
+                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: cartItems , shippingMethod: shipping }
 
                         handlePayment(NewValues);
                         setSubmitting(true);
@@ -263,7 +280,7 @@ const Checkout = () => {
                                             Shipping <CiDeliveryTruck size={16} className="mt-1" />
                                         </span>
                                         <span className="text-black">
-                                            {!selectedCity ? 'Enter shipping address' : selectedFee > 0 ? `AED ${selectedFee}` : 'Free'}
+                                            {!selectedCity ? 'Select shipping city' : selectedFee > 0 ? `AED ${selectedFee}` : 'Free'}
                                         </span>
                                     </p>
                                     <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
@@ -292,9 +309,9 @@ const Checkout = () => {
                                                 <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
                                                     <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                                                    <p className="text-11 xs:text-16">Receive within <strong>one working day</strong></p>
+                                                    <p className="text-11 xs:text-16">delivery <strong>Next day</strong></p>
                                                     <p className="text-11 xs:text-16">
-                                                        <span>Delivery Cost:</span> <strong>AED 150</strong>
+                                                        <span>Delivery Cost:</span> <strong>AED 150</strong>, <span>Free shipping for all orders above <strong>AED 1000</strong></span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -309,17 +326,19 @@ const Checkout = () => {
                                                     <strong className="text-15 xs:text-20">Standard Shipping:</strong>
                                                     <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
                                                     <p className="text-11 xs:text-16">
-                                                        <span>Delivery Cost:</span> <strong>Free Shipping Over AED 1500 Only In Dubai</strong>
+                                                        <span>Delivery Cost:</span> <strong>Free</strong>
                                                     </p>
                                                 </div>
                                             </div>
 
 
-                                            <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                                            <div className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "self-collect" ? "border-primary" : "border-transparent"
+                                                }`} onClick={() => handleShippingSelect("self-collect")}
+                                            >
                                                 <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
                                                     <strong className="text-15 xs:text-20">Self-Collect:</strong>
-                                                    <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(10am-6pm)</strong></p>
+                                                    <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(9am-6pm)</strong></p>
                                                     <p className="text-11 xs:text-16">
                                                         <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
                                                     </p>
