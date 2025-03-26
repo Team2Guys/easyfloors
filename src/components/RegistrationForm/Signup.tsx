@@ -8,9 +8,15 @@ import "react-toastify/dist/ReactToastify.css";
 
 import client from "config/apolloClient";
 import { CREATE_USER } from "graphql/user_mutation";
+import { FaEnvelope, FaLock, FaPhoneAlt, FaUser } from "react-icons/fa";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { useState } from "react";
+
 import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const formValues = {
     name: "",
@@ -21,22 +27,22 @@ const SignupForm = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row w-full h-screen">
+    <div className="flex flex-col h-screen w-full md:flex-row">
       <div
-        className="hidden md:block md:w-1/2 bg-cover bg-center"
+        className="bg-center bg-cover hidden md:block md:w-1/2"
         style={{ backgroundImage: "url('/assets/images/login.webp')" }}
       />
 
-      <div className="w-full md:w-1/2 flex items-start justify-center p-6 md:p-12">
+      <div className="flex justify-center p-6 w-full items-start md:p-12 md:w-1/2">
         <div className="w-full max-w-xl">
-          <Link href="/" className="flex items-center gap-3 w-fit text-lg">
-            <span className="p-3 text-white bg-primary">
+          <Link href="/" className="flex text-lg w-fit gap-3 items-center">
+            <span className="bg-primary p-3 text-white">
               <BiArrowBack />
             </span>
             Back to home
           </Link>
 
-          <h2 className="text-4xl font-bold font-inter text-primary text-center mt-20">
+          <h2 className="text-4xl text-center text-primary font-bold font-inter mt-20">
             Sign Up
           </h2>
 
@@ -58,29 +64,42 @@ const SignupForm = () => {
             {({ isSubmitting }) => (
               <Form className="mt-10">
 
-                <div className="mb-4">
-                  <Field type="text" name="name" placeholder="Full Name" className="w-full p-3 border rounded" />
+                <div className="flex border-b items-center mb-4">
+                  <FaUser className="text-primary" />
+                  <Field type="text" name="name" placeholder="Full Name" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
 
-                <div className="mb-4">
-                  <Field type="email" name="email" placeholder="Email" className="w-full p-3 border rounded" />
+                <div className="flex border-b items-center mb-4">
+                  <FaEnvelope className="text-primary" />
+                  <Field type="email" name="email" placeholder="Email" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
-
-                <div className="mb-4">
-                  <Field type="password" name="password" placeholder="Password" className="w-full p-3 border rounded" />
+                <div className="flex border-b items-center mb-4">
+                  <FaPhoneAlt className="text-primary" />
+                  <Field type="number" name="phone" placeholder="Phone Number" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
                 </div>
-
-                <div className="mb-4">
-                  <Field type="number" name="phone" placeholder="Phone Number" className="w-full p-3 border rounded" />
+                <div className="flex border-b justify-between items-center relative">
+                  <div className="flex w-full items-center">
+                    <FaLock className="text-primary" />
+                    <Field type={showPassword ? "text" : "password"} name="password" placeholder="Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
+                  >
+                    {showPassword ? <BsEyeSlash /> : <BsEye />}
+                  </button>
                 </div>
-                <div className="mb-4">
-                  <Field type="password" name="retypePassword" placeholder="Confirm Password" className="w-full p-3 border rounded" />
+                <div className="flex border-b justify-between items-center relative">
+                  <div className="flex w-full items-center">
+                    <FaLock className="text-primary" />
+                    <Field type={showPassword ? "text" : "password"} name="retypePassword" placeholder="Confirm Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
+                  </div>
                 </div>
-
                 <div className="pt-7">
                   <button
                     type="submit"
-                    className="w-full bg-primary text-white p-3"
+                    className="bg-primary p-3 text-white w-full"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Creating Account..." : "Sign Up"}

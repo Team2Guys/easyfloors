@@ -1,4 +1,4 @@
-import { OrderItem } from "types/types";
+import { OrderHistory, OrderItem } from "types/types";
 
 export const orderSummary: OrderItem[] = [
     {
@@ -37,3 +37,23 @@ export const orderSummary: OrderItem[] = [
       price: 199.50,
     },
   ];
+
+  export const orders: OrderHistory[] = [
+    {
+      id: "ORD123456",
+      email: "john.doe@example.com",
+      address: "123 Main Street, New York, NY",
+      phone: "+1 234 567 890",
+      paymentStatus: "Paid",
+      createdAt: "2024-03-24",
+    },
+    {
+      id: "ORD789012",
+      email: "jane.smith@example.com",
+      address: "456 Elm Street, Los Angeles, CA",
+      phone: "+1 987 654 321",
+      paymentStatus: "Pending",
+      createdAt: "2024-03-23",
+    },
+  ];
+  

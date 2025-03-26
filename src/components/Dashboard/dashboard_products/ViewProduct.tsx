@@ -55,21 +55,26 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       product?.ResidentialWarranty?.toString().includes(searchtext) ||
       product?.plankWidth?.toString().includes(searchtext) ||
       product?.stock?.toString().includes(searchtext) ||
-   
-
       product.category && product?.category?.name.toLowerCase().includes(searchtext) ||
       product.subcategory && product.subcategory.name.toLowerCase().includes(searchtext)
-
     );
   }).sort((a: IProduct, b: IProduct) => {
     const searchText = searchTerm.trim().toLowerCase();
-
+    
+    // First sort by whether the name starts with the search term
     const aStartsWith = a.name.toLowerCase().startsWith(searchText) ? -1 : 1;
     const bStartsWith = b.name.toLowerCase().startsWith(searchText) ? -1 : 1;
-
+  
+    // Then sort by creation date (newest first)
     const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
     const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-
+  
+    // If search term is empty, sort by date only (newest first)
+    if (!searchText) {
+      return dateB - dateA;
+    }
+  
+    // Otherwise, sort by search match first, then by date
     return aStartsWith - bStartsWith || dateB - dateA;
   }) || [];
 
@@ -164,32 +169,19 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Create At',
       dataIndex: 'createdAt',
-      key: 'date',
-      render: (text: string, record: IProduct) => {
-        if (!record?.createdAt) {
-          return
-        }
-        const createdAt = new Date(record?.createdAt);
-        const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
-          createdAt.getDate(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedDate}</span>;
-      },
+      key: 'createdAt',
+      render: (text: string, record: IProduct) => 
+        record?.createdAt ? new Date(record.createdAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
     },
-
+    
     {
       title: 'Updated At',
-      dataIndex: 'createdAt',
-      key: 'date',
-      render: (text: string, record: IProduct) => {
-        if (!record.updatedAt) return
-        const createdAt = new Date(record.updatedAt);
-        const formattedDate = `${createdAt.getFullYear()}-${String(createdAt.getMonth() + 1).padStart(2, '0')}-${String(
-          createdAt.getDate(),
-        ).padStart(2, '0')}`;
-        return <span>{formattedDate}</span>;
-      },
-    },
+      dataIndex: 'updatedAt',
+      key: 'updatedAt',
+      render: (text: string, record: IProduct) => 
+        record?.updatedAt ? new Date(record.updatedAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
+    },  
+    
     {
       title: 'Edited By',
       dataIndex: 'last_editedBy',
