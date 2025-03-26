@@ -5,6 +5,7 @@ export interface SocialLink {
   href: string;
   alt: string;
   className?: string; // Applying class directly to the icon component
+  target?: string;
 }
   export interface MenuItemProps {
     label: string;
@@ -119,6 +120,7 @@ export interface MeasurementSection {
   image: string;
 }
 export interface OrderItem {
+  
   image: string;
   title: string;
   boxes: number;
@@ -235,3 +237,63 @@ export type OrderHistory = {
   paymentStatus: string;
   createdAt: string;
 };
+
+export interface TPayment {
+  cardImage: string
+  cardLastFour: string
+  amount: number
+  currency: string
+}
+
+export interface TDelivery {
+  name: string
+  phone: string
+  address: string
+}
+
+export interface OrderData {
+  orderId: string
+  orderDate: string
+  estimatedDelivery: string
+  status: "confirmed" | "ready" | "delivered"
+  items: TOrderItem[]
+  payment: TPayment
+  delivery: TDelivery
+  
+}
+
+// types.ts
+export interface TOrderItem {
+  name: string
+  image: string
+  price: number
+  currency: string
+  quantity: number;
+  sqmts:number;
+  title: string;
+  boxes:number;
+
+}
+
+export interface TPayment {
+  cardImage: string
+  cardLastFour: string
+  amount: number
+  currency: string
+}
+
+export interface TDelivery {
+  name: string
+  phone: string
+  address: string
+}
+
+export interface OrderData {
+  orderId: string
+  orderDate: string
+  estimatedDelivery: string
+  status: "confirmed" | "ready" | "delivered"
+  items: TOrderItem[]
+  payment: TPayment
+  delivery: TDelivery
+}
