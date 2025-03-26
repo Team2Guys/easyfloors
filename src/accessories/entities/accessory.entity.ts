@@ -76,4 +76,7 @@ export class Accessory {
   @Field(() => Category, { nullable: true })
   category: Category
 
+  @Field(() => Int, { nullable: true })
+  colorCode?: number
+
 }
