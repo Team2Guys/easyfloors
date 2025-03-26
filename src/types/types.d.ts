@@ -225,3 +225,13 @@ export interface RelatedSliderProps {
   products: IProduct[]; 
   isAccessories?: boolean;
 };
+
+
+export type OrderHistory = {
+  id: string;
+  email: string;
+  address: string;
+  phone: string;
+  paymentStatus: string;
+  createdAt: string;
+};
