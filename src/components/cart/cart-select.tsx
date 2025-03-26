@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { CartSelectProps } from "types/type";
 
-const CartSelect = ({ select, fees, onSelect, selectedFee }: CartSelectProps) => {
+const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedState, setSelectedState] = useState("City");
 
   const handleSelect = (state: string) => {
     setSelectedState(state);
     setIsOpen(false);
-    const fee = selectedFee > 1000 ? 0 : fees[state]; 
+    const fee = selectedFee > 1000 ? 0 : state === 'Dubai' ? 100 : 150; 
     onSelect(state, fee);
   };
 

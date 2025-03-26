@@ -36,8 +36,6 @@ const ThankYou = async ({ searchParams }: ThankYouProps) => {
     paymethod_sub_type: params["source_data.sub_type"] || undefined
   };
 
-  console.log(params, "extractedParams from ThankYou") 
-
   return (
     <>
       <Breadcrumb title="Thank You" />

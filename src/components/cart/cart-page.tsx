@@ -1,7 +1,7 @@
 "use client";
 import Container from 'components/common/container/Container';
 import PaymentMethod from 'components/product-detail/payment';
-import { fees, paymentcard, UAEStates } from 'data/cart';
+import { paymentcard, UAEStates } from 'data/cart';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -198,7 +198,7 @@ const CartPage = ({products}:CartPageProps) => {
             <p>Subtotal:</p>
             <p>AED {cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0).toFixed(2)}</p>
             </div>
-            <CartSelect select={UAEStates} fees={fees} selectedFee={selectedFee}  onSelect={handleStateSelect} />
+            <CartSelect select={UAEStates} selectedFee={selectedFee}  onSelect={handleStateSelect} />
             <div className='border border-b border-[#DEDEDE]'/>
             <div className='flex items-center justify-between text-16 lg:text-20'>
             <p>Subtotal Incl. VAT</p>

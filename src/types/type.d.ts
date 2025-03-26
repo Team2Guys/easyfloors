@@ -344,7 +344,7 @@ export interface CartSelectProps {
     label: string;
   }[];
   selectedFee: number;
-  fees: { [key: string]: number };
+  // fees: { [key: string]: number };
   onSelect: (_state: string, _fee: number) => void;
 }
 export interface PrivacyPolicyItem {

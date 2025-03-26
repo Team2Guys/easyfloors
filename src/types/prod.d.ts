@@ -59,6 +59,9 @@ export interface IProduct {
     squareMeter?:number
   }
 
+ export interface IProductAccessories extends IProduct {
+    products?: IProduct[];
+  }
   export interface IProductFilter extends IProduct {
     [key: string]: string;
   }
