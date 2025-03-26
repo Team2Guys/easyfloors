@@ -96,7 +96,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     });
     onClose();
   };
-  
 
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
@@ -105,8 +104,11 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           <AiOutlineClose size={20} />
         </button>
         <h2 className="text-xl font-semibold mb-4 text-left">Accessories</h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto thin-scrollbar">
+        { products.length === 0 ? (
+          <p className="text-center text-gray-700">No accessory available.</p>
+        ) : (
+          <>
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto thin-scrollbar">
           {products.map((product) => (
            <div
            key={product.id}
@@ -179,7 +181,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
            </div>
          
           ))}
-        </div>
+             </div>
 
         <button
           className={`mt-4 w-fit px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2
@@ -191,6 +193,9 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           <Image src="/assets/images/icon/cart.png" alt="cart" width={28} height={28} />
           Add to Cart
         </button>
+          </>
+        )}
+     
       </div>
     </div>
   );

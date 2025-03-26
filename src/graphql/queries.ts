@@ -213,6 +213,7 @@ export const FETCH_ALL_APPOINTMENTS = gql`
       comment
       contactMethod
       preferredDate
+      AppointsType
     }
   }
 `;

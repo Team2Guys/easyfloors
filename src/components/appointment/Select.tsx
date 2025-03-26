@@ -35,7 +35,7 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
               <input
                 type="text"
                 {...field}
-                value={search}
+                value={options.find((option) => option.value === field.value)?.label || ""}
                 onChange={(e) => {
                   setSearch(e.target.value);
                   form.setFieldValue(name, e.target.value); 

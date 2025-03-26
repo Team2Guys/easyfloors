@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { MenuItemProps } from "types/types";
 import Container from "components/common/container/Container";
 
+
 const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = () => {
@@ -21,26 +21,17 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
     }, 200);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   const handleLinkClick = () => {
-    setIsOpen(false);
+    setTimeout(() => {
+      setIsOpen(false);
+    }, 50);
   };
 
   return (
     <>
-    <div ref={menuRef} className="relative font-inter capitalize font-light " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <div  className="relative font-inter capitalize font-light " onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={handleMouseLeave}>
       <Link className="text-11 xl:text-13  2xl:text-13 3xl:text-16 capitalize hover:bg-gray-light pb-6 " href={`/${href}`}>
         {label}
       </Link>  

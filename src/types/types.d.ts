@@ -189,3 +189,50 @@ export interface ProductFilterParams {
   isWaterProof: boolean | null | undefined;
   subcategory?: string;
 }
+
+
+export interface IAppointment {
+  firstname: string;
+  email: string,
+  phoneNumber: string,
+  whatsappNumber: string,
+  area: string,
+  selectRooms: string,
+  preferredTime: string,
+  findUs: string,
+  comment?: string,
+  contactMethod: { email: boolean, whatsapp: boolean, telephone: boolean },
+  preferredDate: string,
+  AppointsType: string,
+}
+export interface CheckboxProps {
+  label: string;
+  isActive?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement> | boolean) => void; // eslint-disable-line
+  children?: ReactNode;
+  className?: string; 
+  required?: boolean;
+    name: string;
+}
+export interface AccordionProps {
+  label: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onToggle: () => void;
+  detailpage?: boolean;
+  showPlusMinus?: boolean;
+}
+export interface RelatedSliderProps {
+  products: IProduct[]; 
+  isAccessories?: boolean;
+};
+
+
+export type OrderHistory = {
+  id: string;
+  email: string;
+  address: string;
+  phone: string;
+  paymentStatus: string;
+  createdAt: string;
+};

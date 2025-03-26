@@ -6,16 +6,11 @@ import Container from "components/common/container/Container";
 import { features } from "data/data";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {  EDIT_CATEGORY } from "types/cat";
 import { IProduct } from "types/prod";
+import { RelatedSliderProps } from "types/types";
 
-interface RelatedSliderProps {
-  products: IProduct[]; 
-  CategoryData?: EDIT_CATEGORY
-  isAccessories?: boolean;
-};
 
-const RelatedSlider = ({ products , CategoryData,isAccessories}:RelatedSliderProps) => {
+const RelatedSlider = ({ products ,isAccessories}:RelatedSliderProps) => {
   const settings = {
     dots: true,
     infinite: false,
@@ -49,7 +44,7 @@ const RelatedSlider = ({ products , CategoryData,isAccessories}:RelatedSliderPro
         <Slider {...settings}>
           {products.map((product: IProduct, index: number) => (
             <div key={index} className="pb-7">
-              <Card product={product} features={features} categoryData={CategoryData} sldier isAccessories={isAccessories} />
+              <Card product={product} features={features} sldier isAccessories={isAccessories} />
             </div>
           ))}
         </Slider>
