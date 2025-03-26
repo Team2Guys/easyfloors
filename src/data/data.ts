@@ -13,6 +13,7 @@ import { StaticImageData } from 'next/image';
 import { AdditionalInformation} from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
+import { prefetchDNS } from 'react-dom';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -51,16 +52,16 @@ export const validationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(/^\d{10}$/, "Invalid phone number")
     .required("Phone number is required"),
-  whatsappNumber: Yup.string().matches(
-    /^\d{10}$/,
-    "Invalid WhatsApp number"
-  ),
+    whatsappNumber: Yup.string()
+    .matches(/^\d{10}$/, "Invalid WhatsApp number")
+    .required("WhatsApp number is required"),
   email: Yup.string()
     .email("Invalid email")
     .required("Email is required"),
   area: Yup.string().required("Area is required"),
   selectRooms: Yup.string().required("Select the number of rooms"),
   preferredDate: Yup.string().required("Preferred date is required"),
+  preferredTime: Yup.string().required("Preferred time is required"),
 });
 
 export const categoryInitialValues: EDIT_CATEGORY = {

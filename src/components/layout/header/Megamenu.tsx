@@ -5,8 +5,6 @@ import Image from "next/image";
 import { MenuItemProps } from "types/types";
 import Container from "components/common/container/Container";
 
-
-
 const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu }) => {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);

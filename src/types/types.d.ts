@@ -22,6 +22,7 @@ export interface SocialLink {
     value?: string | number;
     onChange?: ChangeEvent<HTMLInputElement>
     min?: string
+    onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
   };
   export interface FAQ {
     question: string;
