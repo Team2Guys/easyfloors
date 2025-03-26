@@ -118,13 +118,6 @@ export interface MeasurementSection {
   steps: Step[];
   image: string;
 }
-export interface OrderItem {
-  image: string;
-  title: string;
-  boxes: number;
-  sqm: number;
-  price: number;
-}
 export interface AuthData {
   title: string;
   subtitle: string;

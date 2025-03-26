@@ -55,6 +55,8 @@ export interface IProduct {
     acessories?:IProduct[]
     colorCode:string;
     __typename?:string;
+    requiredBoxes?:number
+    squareMeter?:number
   }
 
   export interface IProductFilter extends IProduct {

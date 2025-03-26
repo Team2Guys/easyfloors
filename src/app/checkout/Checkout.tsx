@@ -278,6 +278,7 @@ const Checkout = () => {
                                     <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
                                 </div>
                                 <div className="border-b">
+
                                     <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                                         <Panel
                                             header={<span className="text-slate-500">Shipping Options</span>}

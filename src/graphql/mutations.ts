@@ -278,3 +278,26 @@ mutation CreateSalesProduct($createSalesProductInput: CreateOrderInput!) {
     paymentKey
   }
 }`
+
+
+
+export  const POST_PAYMENT_STATUS = gql`
+mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
+  postpaymentStatus(postpaymentStatus: $postpaymentStatus) {
+      products {
+        name
+        price
+        image
+        boxCoverage
+        totalPrice
+        pricePerBox
+        squareMeter
+        requiredBoxes
+    }
+    email
+    lastName
+    firstName
+    totalPrice
+  }
+}
+`;
