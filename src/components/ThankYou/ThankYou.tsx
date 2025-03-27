@@ -9,13 +9,14 @@ import { PaymentQueryParams } from "app/thank-you/page";
 import { useMutation } from "@apollo/client";
 import { IProduct } from "types/prod";
 import { POST_PAYMENT_STATUS } from "graphql/mutations";
+import CardSkeleton from "components/skaletons/card-skaleton";
 
 const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extractedParams }) => {
     const hasRun = useRef(false);
     const [postPaymentStatus, { data, loading, error }] = useMutation(POST_PAYMENT_STATUS);
 
     useEffect(() => {
-        if (!hasRun.current) {
+        if (!hasRun.current && extractedParams.success) {
             postPaymentStatus({ variables: { postpaymentStatus: extractedParams } });
             hasRun.current = true;
         }
@@ -23,9 +24,18 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
     const productlength = data?.postpaymentStatus?.products?.length || 0
     return (
 
-        loading ? <p>....loading</p> : error ? <p>{error?.message}</p> :
+        loading ? <CardSkeleton length={3}/> : error || !extractedParams.success ?
 
-
+            <div className="flex justify-center my-20 '">
+                <div className="w-full max-w-md">
+                    <div className="border-b-4 border-red shadow-lg p-12 text-center flex flex-col items-center">
+                        <Image className='flex justify-center' src='/assets/remove.png' alt='remove image' height={50} width={50} />
+                        <h2 className="text-4xl font-bold mt-2 mb-3">Payment Unsuccessful</h2>
+                        <p className="text-lg text-gray-700 font-medium"> Your payment was not completed. Please try again or contact our support team for assistance.</p>
+                    </div>
+                </div>
+            </div>
+            :
             data &&
             <div className="max-w-4xl mx-auto md:p-0 p-2">
                 <h1 className="md:text-6xl text-3xl font-bold text-center font-inter">THANK YOU!</h1>

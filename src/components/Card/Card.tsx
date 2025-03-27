@@ -6,7 +6,7 @@ import { FiEye, FiHeart } from "react-icons/fi";
 import { Category } from "types/cat";
 import { productCardProps } from "types/PagesProps";
 import { IProduct } from "types/prod";
-import { fetchSingeProduct } from "config/fetch";
+import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
@@ -14,12 +14,15 @@ import { handleAddToStorage } from "lib/carthelper";
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
+const AccessoriesContainer = dynamic(
+  () => import("components/accessoriesDetailProduct/AccessoriesContainer")
+);
 const Card: React.FC<productCardProps> = ({
   product,
   features,
   sldier,
   categoryData,
-  isAccessories = false,
+  isAccessories,
   isSoldOut = false,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -27,15 +30,21 @@ const Card: React.FC<productCardProps> = ({
 
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    try {
-      const productData = await fetchSingeProduct(
-        product.custom_url || '',
-        generateSlug(categoryData.RecallUrl),
-        generateSlug(product.subcategory?.custom_url || ''),
-        true,
-        FIND_QUICK_VIEW_PRODUCT
-      );
 
+    try {
+      let productData;
+      if (isAccessories) {
+        const ProductInfo = await fetchAccessories();
+          productData = ProductInfo.find((prod: IProduct) => (prod?.custom_url?.trim() == product?.custom_url?.trim() && prod?.category?.custom_url?.trim() === "accessories"));
+      } else {
+        productData = await fetchSingeProduct(
+          product.custom_url || '',
+          generateSlug(categoryData.RecallUrl),
+          generateSlug(product.subcategory?.custom_url || ''),
+          true,
+          FIND_QUICK_VIEW_PRODUCT
+        );
+      }
       setModalData(productData || undefined);
       setIsModalOpen(true);
     } catch (error) {
@@ -76,7 +85,6 @@ const Card: React.FC<productCardProps> = ({
           <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
             <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
               if ("price" in product) {
-                console.log("product", product);
                 handleAddToStorage
                   (
                     product,
@@ -105,12 +113,12 @@ const Card: React.FC<productCardProps> = ({
      </div>
       {isModalOpen && (
         <div
-          className="flex bg-black bg-opacity-50 justify-center p-4 fixed inset-0 items-center z-50"
+          className="flex bg-black bg-opacity-50 justify-center px-1 py-4 xs:p-4 fixed inset-0 items-center z-50"
           onClick={() => setIsModalOpen(false)}
         >
           <div
-      className="bg-white h-auto rounded-lg shadow-lg w-full max-w-[90vw] md:max-h-[90vh] md:max-w-[1400px] overflow-x-hidden overflow-y-auto relative"
-      onClick={(e) => e.stopPropagation()}
+            className="bg-white rounded-lg shadow-lg w-full xs:max-w-[90vw] max-h-[90vh] md:max-w-[1400px] overflow-x-hidden overflow-y-auto relative"
+            onClick={(e) => e.stopPropagation()}
           >
             <button
               className="bg-gray-100 rounded-full text-4xl text-gray-700 -right-1 -top-1 absolute font-bold hover:text-red-500 px-2 py-0"
@@ -118,14 +126,20 @@ const Card: React.FC<productCardProps> = ({
             >
               &times;
             </button>
+            {isAccessories ?
+            <AccessoriesContainer productData={modalData as IProduct} />
+            :
             <ProductContainer className="2xl:gap-0 xl:px-0"
-              MainCategory={categoryData?.name || ""}
-              subCategory={product?.subcategory?.name || ""}
-              ProductName={product?.name || ""}
-              productData={modalData as IProduct || []}
-              ProductInfo={[]}
+            MainCategory={categoryData?.name || ""}
+            subCategory={product?.subcategory?.name || ""}
+            ProductName={product?.name || ""}
+            productData={modalData as IProduct || []}
+            ProductInfo={[]}
+            isQuickView
             />
 
+            }
+            
           </div>
         </div>
       )}
