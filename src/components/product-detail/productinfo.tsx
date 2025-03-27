@@ -51,12 +51,12 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
     if (selectedColor?.color) {
       const filterColor = productData?.products
         ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
-  
+
       setMatchingColor(filterColor || []);
     }
   }, [selectedColor, productData]);
-  
-  
+
+
 
   const handleColorClick = (color: ProductImage) => {
     setSelectedColor(color)
@@ -76,19 +76,24 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
       <div className="w-full mt-5 h-216 border border-black p-3">
         <p className="font-semibold font-inter text-16 xl:text-[23.6px] ">Colour: <span className="font-light text-14 xl:text-[20.6px]">{selectedColor?.colorName}</span></p>
-        <div className="grid grid-cols-8 gap-2 lg:gap-4 mt-2">
-          {uniqueFeatureImages.map((col, index) => (
-            <div key={index} className={`text-center border cursor-pointer w-full lg:w-12 ${selectedColor?.color === col.color ? 'border-black' : 'border-transparent'}`} onClick={() => handleColorClick(col)}>
-              <Image alt="img" src={col.imageUrl} height={1000} width={1000} className="h-auto w-full lg:h-12" />
-              <p className="text-[8px] sm:text-10 font-inter font-normal">{col.color}</p>
-            </div>
-          ))}
-        </div>
+        {uniqueFeatureImages.length > 0 ?
+          <div className="grid grid-cols-8 gap-2 lg:gap-4 mt-2">
+            {uniqueFeatureImages.map((col, index) => (
+              <div key={index} className={`text-center border cursor-pointer w-full lg:w-12 ${selectedColor?.color === col.color ? 'border-black' : 'border-transparent'}`} onClick={() => handleColorClick(col)}>
+                <Image alt="img" src={col.imageUrl} height={1000} width={1000} className="h-auto w-full lg:h-12" />
+                <p className="text-[8px] sm:text-10 font-inter font-normal">{col.color}</p>
+              </div>
+            ))}
+          </div>
+          :
+          <p>No colour found</p>
+        }
+
       </div>
       <div className="mt-4 p-3 border border-black">
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
         {matchingColor.length ?
-          matchingColor.map((item , index) => (
+          matchingColor.map((item, index) => (
             <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name} Colour {item.detail}</p>
           ))
           : <p className="font-inter font-light text-12 xl:text-[20.6px]">No color match</p>}

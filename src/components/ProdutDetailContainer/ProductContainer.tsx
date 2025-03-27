@@ -9,12 +9,11 @@ import { calculateProductDetails, handleAddToStorage } from "lib/carthelper";
 import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
 
-const ProductContainer = ({ MainCategory, subCategory, productData, className }: detailprops) => {
+const ProductContainer = ({ MainCategory, subCategory, productData, className , isQuickView }: detailprops) => {
     // console.log( MainCategory, subCategory, productData, 'className')
   const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
   const [unit, setUnit] = useState("sqm");
   const [area, setArea] = useState("");
-
   const {
     convertedArea,
     requiredBoxes,
@@ -26,8 +25,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
   } = calculateProductDetails(area, unit, productData);
 
   return (
-    <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 2xl:gap-20 ${className}`}>
-      <div className="w-full 2xl:w-[60%] lg:w-[55%]">
+    <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 ${isQuickView ? '2xl:gap-10' : '2xl:gap-20' }  ${className}`}>
+      <div className={`w-full ${!isQuickView && '2xl:w-[60%]' } lg:w-[55%]`}>
         {productData?.productImages && (
           <Thumbnail
             ThumnailImage={productData.productImages}
@@ -36,7 +35,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           />
         )}
       </div>
-      <div className="w-full 2xl:w-[40%] lg:w-[45%] mb-2 space-y-3 xl:space-y-4">
+      <div className={`w-full ${!isQuickView && '2xl:w-[40%]'} lg:w-[45%] mb-2 space-y-3 xl:space-y-4`}>
         {productData?.name && (
           <h1 className="text-25 2xl:text-[33px] font-inter font-semibold">{productData.name}</h1>
         )}
@@ -51,21 +50,21 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           </p>
         </div>
         <div className="flex text-19 gap-1 items-center">
-          <p className="text-14 2xl:text-23 sm:text-18">
+          <p className="text-12 xs:text-14 2xl:text-23 sm:text-18">
             Stock:{" "}
             <span className="text-[#008000] font-bold">
               {productData?.stock && productData?.stock > 0 ? "In Stock" : "Out of Stock"}
             </span>
           </p>
           <div className="bg-black h-5 w-[2px]" />
-          <p className="text-14 2xl:text-23 font-bold sm:text-18">
+          <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
             Box Coverage:{" "}
             <span className="font-normal">
               {boxCoverage} m<sup>2</sup>
             </span>
           </p>
           <div className="bg-black h-5 w-[2px]" />
-          <p className="text-14 2xl:text-23 font-bold sm:text-18">
+          <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
             Box: <span className="font-normal">1</span>
           </p>
         </div>
@@ -88,7 +87,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
           </p>
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">
-          <button className="flex bg-primary text-12 text-white w-7/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"   onClick={() =>
+          <button className="flex bg-primary text-11 xs:text-12 text-white w-7/12 2xl:text-22 font-inter gap-1 xs:gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"   onClick={() =>
             handleAddToStorage(
               productData,
               totalPrice,
@@ -103,7 +102,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
             )
           }
           >
-            <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} />
+            <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
             Order Now Free Sample
           </button>
           <button
@@ -121,9 +120,9 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className }:
                 boxCoverage,
               )
             }
-            className="flex bg-black justify-center text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+            className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           >
-            <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} />
+            <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7" />
             Add to Cart
           </button>
         </div>

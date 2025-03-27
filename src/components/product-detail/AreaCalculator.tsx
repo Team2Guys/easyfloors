@@ -8,9 +8,9 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
  
   return (
     <div className="space-y-3 my-4">
- <div className="flex sm:flex-col max-sm:items-center gap-4 sm:space-y-3">
+ <div className="flex sm:flex-col flex-wrap max-sm:items-center gap-2 xs:gap-4 sm:space-y-3">
  <p className="text-lg font-semibold">Area:</p>
-      <div className="flex gap-4 items-center">
+      <div className="flex gap-2 xs:gap-4 items-center">
         <label className="flex items-center space-x-2 cursor-pointer">
           <input
             type="radio"
