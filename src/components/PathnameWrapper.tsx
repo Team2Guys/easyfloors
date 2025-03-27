@@ -7,45 +7,36 @@ import NeedHelp from './NeedHelp/NeedHelp';
 import { ApolloProvider } from '@apollo/client';
 import client from 'config/apolloClient';
 
-
-
 const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
 
   const withoutHeaderPages = ['/dashboard', '/thanks', '/login', '/signup', '/forgot-password'];
-  return (
+  const hideNeedHelpOn = ['/track-order']; 
 
+  return (
     <ApolloProvider client={client}>
       <>
         {withoutHeaderPages.includes(pathname) ||
-          pathname.split('/').includes('dashboard') ? (
-          pathname === '/dashboard/Admin-login' ? (
-            <Header />
-          ) : null
+        pathname.split('/').includes('dashboard') ? (
+          pathname === '/dashboard/Admin-login' ? <Header /> : null
         ) : (
           <Header />
         )}
+
         {children}
+
+        {!hideNeedHelpOn.includes(pathname) && <NeedHelp />}
+
         {pathname !== '/' &&
-          (withoutHeaderPages.includes(pathname) ||
-            pathname.split('/').includes('dashboard')) ? (
-          pathname === '/dashboard/Admin-login' ? (
-            <>
-              <NeedHelp />
-              <Footer />
-            </>
-          ) : null
+        (withoutHeaderPages.includes(pathname) ||
+          pathname.split('/').includes('dashboard')) ? (
+          pathname === '/dashboard/Admin-login' ? <Footer /> : null
         ) : (
-          <>
-            <NeedHelp />
-            <Footer />
-          </>
+          <Footer />
         )}
       </>
-
-
     </ApolloProvider>
   );
 };
 
-export default PathnameWrapper
+export default PathnameWrapper;

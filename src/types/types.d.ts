@@ -239,20 +239,8 @@ export type OrderHistory = {
   createdAt: string;
 };
 
-export interface TPayment {
-  cardImage: string
-  cardLastFour: string
-  amount: number
-  currency: string
-}
 
-export interface TDelivery {
-  name: string
-  phone: string
-  address: string
-}
-
-export interface OrderData {
+export interface TrackOrderData {
   orderId: string
   orderDate: string
   estimatedDelivery: string
@@ -260,6 +248,8 @@ export interface OrderData {
   items: TOrderItem[]
   payment: TPayment
   delivery: TDelivery
+  products: IProduct[]; 
+  totalPrice: number; 
   
 }
 
@@ -285,16 +275,6 @@ export interface TPayment {
 
 export interface TDelivery {
   name: string
-  phone: string
+  email: string
   address: string
-}
-
-export interface OrderData {
-  orderId: string
-  orderDate: string
-  estimatedDelivery: string
-  status: "confirmed" | "ready" | "delivered"
-  items: TOrderItem[]
-  payment: TPayment
-  delivery: TDelivery
 }
