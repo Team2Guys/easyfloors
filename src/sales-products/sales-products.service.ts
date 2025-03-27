@@ -78,7 +78,7 @@ export class SalesProductsService {
 
   async findAll() {
     try {
-     return  await this.prisma.salesProducts.findMany()
+      return await this.prisma.salesProducts.findMany()
     } catch (error) {
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
 
@@ -87,7 +87,7 @@ export class SalesProductsService {
 
   async findOne(id: string) {
     try {
-     return  await this.prisma.salesProducts.findUnique({
+      return await this.prisma.salesProducts.findUnique({
         where: { orderId: id }
       })
     } catch (error) {

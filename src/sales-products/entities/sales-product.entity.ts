@@ -155,4 +155,8 @@ export class paymentStatus {
 
     @Field({nullable:true})
     checkoutDate: Date;
+
+
+    @Field(() => GraphQLJSON,{nullable:true})
+      shippingMethod: any
 }

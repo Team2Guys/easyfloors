@@ -38,6 +38,10 @@ export class CreateOrderInput {
 
   @Field(() => Float)
   totalPrice: number;
+
+  @Field(() => GraphQLJSON)
+  shippingMethod: any;
+  
 }
 
 

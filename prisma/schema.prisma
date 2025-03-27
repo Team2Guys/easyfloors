@@ -47,7 +47,6 @@ model Products {
   featureImages         Json[]         @default([])
   acessories            Acessories[]   @relation("ProductAccessories")
   colors                Json[]         @default([])
-
 }
 
 model Category {
@@ -72,8 +71,6 @@ model Category {
   accessories        Acessories[]    @relation()
   recalledSubCats    subCategories[] @relation("RecallCategories")
 }
-
-
 
 model subCategories {
   id                   Int        @id @default(autoincrement())
@@ -152,20 +149,20 @@ model Acessories {
   category              Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 }
 
- enum AppointsType {
-      installations
-      appointments
-     }
+enum AppointsType {
+  installations
+  appointments
+}
 
 model Appointment {
-  id             Int       @id @default(autoincrement())
+  id             Int          @id @default(autoincrement())
   firstname      String
-  email          String   
+  email          String
   phoneNumber    String
   whatsappNumber String?
   area           String?
   selectRooms    String?
-  preferredDate  DateTime? @default(now())
+  preferredDate  DateTime?    @default(now())
   preferredTime  String?
   findUs         String?
   comment        String?
@@ -173,47 +170,45 @@ model Appointment {
   AppointsType   AppointsType @default(installations)
 }
 
-
-
 model User {
-  id                Int       @id @default(autoincrement())
-  name              String
-  email             String    @unique
-  password          String
-  phone             String?
-  userImageUrl      Json?
+  id           Int     @id @default(autoincrement())
+  name         String
+  email        String  @unique
+  password     String
+  phone        String?
+  userImageUrl Json?
 }
 
-
 model salesProducts {
-  id              Int   @id @default(autoincrement())
-  firstName       String
-  lastName        String
-  email           String
-  phone           String
-  city            String
-  country         String
-  address         String?
-  orderId         String    @unique
-  checkout        Boolean   @default(false)
-  paymentStatus   Boolean   @default(false)
-  isRefund        Boolean   @default(false)
-  currency        String?
-  transactionId   String?
-  integrationId   String?
-  amountCents     String?
-  success         Boolean   @default(false)
-  pending         Boolean   @default(false)
-  is3DSecure      String?
-  checkoutDate    DateTime  @default(now())
-  transactionDate DateTime?
-  shipmentFee     Int?
-  deliveryStatus  Boolean   @default(false)
-  cardLastDigits  String?
-  products  Json[] @default([])
-  note String?
-  emirate   String?
-  totalPrice       Int
-  pay_methodType   String?
+  id                 Int       @id @default(autoincrement())
+  firstName          String
+  lastName           String
+  email              String
+  phone              String
+  city               String
+  country            String
+  address            String?
+  orderId            String    @unique
+  checkout           Boolean   @default(false)
+  paymentStatus      Boolean   @default(false)
+  isRefund           Boolean   @default(false)
+  currency           String?
+  transactionId      String?
+  integrationId      String?
+  amountCents        String?
+  success            Boolean   @default(false)
+  pending            Boolean   @default(false)
+  is3DSecure         String?
+  checkoutDate       DateTime  @default(now())
+  transactionDate    DateTime?
+  shipmentFee        Int?
+  deliveryStatus     Boolean   @default(false)
+  cardLastDigits     String?
+  products           Json[]    @default([])
+  note               String?
+  emirate            String?
+  totalPrice         Int
+  pay_methodType     String?
   paymethod_sub_type String?
+  shippingMethod     Json?
 }
