@@ -136,11 +136,15 @@ const UserIcon = ({ className, cartTotal, wishlistTotal,freeSampleTotal }: UserI
 
       {/* Free Sample */}
       <Link
-        href="/"
+        href="/freesample"
         aria-label="Go to free sample page"
-        className="flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white"
+        className="relative flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white"
       >
-        {freeSampleTotal}
+        {(freeSampleTotal ?? 0) > 0 && (
+          <span className="absolute flex bg-primary h-4 justify-center text-white text-xs w-4 -right-1 -top-1 font-semibold items-center">
+            {freeSampleTotal}
+          </span>
+        )}
         <FreeSample />
       </Link>
 
