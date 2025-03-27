@@ -256,7 +256,7 @@ export interface TrackOrderData {
   delivery: TDelivery
   products: IProduct[]; 
   totalPrice: number; 
-  
+  postpaymentStatus: postpaymentStatus;
 }
 
 // types.ts

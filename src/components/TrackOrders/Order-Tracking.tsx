@@ -100,6 +100,7 @@ export default function OrderTracking({ order }: { order: TrackOrderData }) {
           </div>
         </div>
 
+          
         {/* ✅ Order Summary directly from `order` */}
         <div className="md:w-1/2 sm:w-full md:order-2 order-1">
           <OrderSummary data={order} />
