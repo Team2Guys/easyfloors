@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, {useRef } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 import { FeaturesProps } from "types/type";
@@ -7,16 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const Features: React.FC<FeaturesProps> = ({ items }) => {
-  const [isSmallScreen, setIsSmallScreen] = useState(false);
   const sliderRef = useRef<Slider>(null);
-
-  useEffect(() => {
-    const checkScreenSize = () => setIsSmallScreen(window.innerWidth < 768);
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
-
   const sliderSettings = {
     dots: false,
     infinite: items.length > 4,
