@@ -43,12 +43,12 @@ export const handleAddToStorage = async (
   
     try {
       if (type === "cart" || type === "freeSample") {
-        const success = type === "cart" ? await addToCart(item) : await addToFreeSample(item);
+        const success = type === "cart" && await addToCart(item)
   
         if (success && type === "cart") {
           toast.success("Product added to cart!");
         } else if (type === "freeSample") {
-          const existingSamples = await getFreeSamples(); 
+          const existingSamples = await getFreeSamples();
           if (existingSamples.length >= 5) {
             toast.error("You can add only up to 5 free samples.");
             return;
