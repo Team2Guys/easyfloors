@@ -12,7 +12,8 @@ import { StaticImageData } from 'next/image';
 import { AdditionalInformation } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
-import parsePhoneNumberFromString from 'libphonenumber-js/min';
+import parsePhoneNumberFromString from "libphonenumber-js/core";
+import metadata from 'libphonenumber-js/metadata.min.json';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -42,33 +43,28 @@ export const initialValues = {
     telephone: false,
     email: false,
   },
-
-
 };
 
 export const phoneValidation = Yup.string()
   .test("valid-phone", "Invalid phone number", (value) => {
     if (!value) return false; // Required field
-    const phoneNumber = parsePhoneNumberFromString(value);
+    const phoneNumber = parsePhoneNumberFromString(value, metadata);
     return phoneNumber && phoneNumber.isValid(); // Checks if phone is valid
   })
   .required("Phone number is required");
 
-  export const validationSchema = Yup.object({
-    firstname: Yup.string().required("Name is required"),
-    phoneNumber: phoneValidation,
-    whatsappNumber: Yup.string()
-      .test("valid-whatsapp", "Invalid WhatsApp number", (value) => {
-        if (!value) return true; // WhatsApp number is optional
-        const phoneNumber = parsePhoneNumberFromString(value);
-        return phoneNumber && phoneNumber.isValid();
-      }),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    area: Yup.string().required("Location is required"),
-    selectRooms: Yup.string().required("Select the number of rooms"),
-    preferredDate: Yup.string().required("Preferred date is required"),
-    preferredTime: Yup.string().required("Preferred Time is required"),
-  });
+export const validationSchema = Yup.object({
+  firstname: Yup.string().required("Name is required"),
+  phoneNumber: Yup.string().required("Phone number is required"),
+  whatsappNumber: Yup.string().required("WhatsApp number is required"),
+  email: Yup.string()
+    .email("Invalid email")
+    .required("Email is required"),
+  area: Yup.string().required("Area is required"),
+  selectRooms: Yup.string().required("Select the number of rooms"),
+  preferredDate: Yup.string().required("Preferred date is required"),
+  preferredTime: Yup.string().required("Preferred time is required"),
+});
 
 export const categoryInitialValues: EDIT_CATEGORY = {
   name: '',
@@ -651,6 +647,13 @@ export const popupCards: CardData[] = [
       "15-year warranty",
     ],
   },
+];
+
+export const timeSlots = [
+  { value: "9am-11am", label: "9am-11am" },
+  { value: "11am-1pm", label: "11am-1pm" },
+  { value: "1pm-3pm", label: "1pm-3pm" },
+  { value: "3pm-6pm", label: "3pm-6pm" },
 ];
 
 
