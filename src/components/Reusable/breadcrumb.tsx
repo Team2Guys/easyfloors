@@ -11,7 +11,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
       <div className="bg-background text-black py-3 font-inter">
         <Container className="text-lg flex items-center gap-2 sm:gap-4">
           {/* Home Link */}
-          <Link href="/" className="hover:underline text-[8px] sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
+          <Link href="/" className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
             Home
           </Link>
 
@@ -25,12 +25,12 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
               {subcategory ? (
                 <Link
                   href={`/${slug === "richmond" ? "richmond-flooring" : slug === "polar" ? "polar-flooring" : slug}`}
-                  className="hover:underline text-[8px] sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize"
+                  className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize"
                 >
                   {slug}
                 </Link>
               ) : (
-                <span className="text-black font-inter text-[8px] sm:text-12 md:text-14 font-bold capitalize">{slug}</span>
+                <span className="text-black font-inter text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{slug}</span>
               )}
             </>
           )}
@@ -45,7 +45,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
                 
                 {title ? (
                   <>
-                    <Link href={subcategory === "accessories" ? "/accessories" : `/${slug}/${subcategory}`} className="hover:underline text-[8px] sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
+                    <Link href={subcategory === "accessories" ? "/accessories" : `/${slug}/${subcategory}`} className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
                     {subcategory}
                     </Link>
                     <svg viewBox="0 0 7 12" className="text-black fill-black w-[5px] sm:w-[7px]" xmlns="http://www.w3.org/2000/svg">
@@ -53,12 +53,12 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
                     </svg>
                   </>
                 ) : (
-                  <span className="text-black font-inter text-[8px] sm:text-12 md:text-14 font-bold capitalize">{subcategory}</span>
+                  <span className="text-black font-inter text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{subcategory}</span>
                 
                 )}
               </>
             )}
-          <span className="text-[8px] sm:text-12 md:text-14 font-bold capitalize">{title}</span>
+          <span className="text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{title}</span>
         </Container>
       </div>
 
