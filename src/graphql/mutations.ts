@@ -298,6 +298,8 @@ mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
     lastName
     firstName
     totalPrice
+    shippingMethod
+    transactionDate
   }
 }
 `;

@@ -5,6 +5,7 @@ export interface SocialLink {
   href: string;
   alt: string;
   className?: string; // Applying class directly to the icon component
+  target?: string;
 }
   export interface MenuItemProps {
     label: string;
@@ -118,6 +119,14 @@ export interface MeasurementSection {
   description: string;
   steps: Step[];
   image: string;
+}
+export interface OrderItem {
+  
+  image: string;
+  title: string;
+  boxes: number;
+  sqm: number;
+  price: number;
 }
 export interface AuthData {
   title: string;
@@ -235,4 +244,43 @@ export interface INavbar{
   cartTotal: ICart[];
   wishlistTotal: ICart[];
   freeSampleTotal: ICart[];
+}
+
+export interface TrackOrderData {
+  orderId: string
+  orderDate: string
+  estimatedDelivery: string
+  status: "confirmed" | "ready" | "delivered"
+  items: TOrderItem[]
+  payment: TPayment
+  delivery: TDelivery
+  products: IProduct[]; 
+  totalPrice: number; 
+  
+}
+
+// types.ts
+export interface TOrderItem {
+  name: string
+  image: string
+  price: number
+  currency: string
+  quantity: number;
+  sqmts:number;
+  title: string;
+  boxes:number;
+
+}
+
+export interface TPayment {
+  cardImage: string
+  cardLastFour: string
+  amount: number
+  currency: string
+}
+
+export interface TDelivery {
+  name: string
+  email: string
+  address: string
 }
