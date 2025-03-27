@@ -8,7 +8,9 @@ import { useMutation } from "@apollo/client";
 import { POST_PAYMENT_STATUS } from "graphql/mutations";
 import OrderSummary from "./OrderSummary";
 import CardSkeleton from "components/skaletons/card-skaleton";
+import { getExpectedDeliveryDate } from "utils/helperFunctions";
 import Image from "next/image";
+
 const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extractedParams }) => {
     const hasRun = useRef(false);
     const [postPaymentStatus, { data, loading, error }] = useMutation(POST_PAYMENT_STATUS);
@@ -20,8 +22,12 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
             hasRun.current = true;
         }
     }, []);
-    return (
+    const productlength = data?.postpaymentStatus?.products?.length || 0
+const ExpectedDeliveryDAte = getExpectedDeliveryDate(data?.postpaymentStatus?.shippingMethod.name, new Date(data?.postpaymentStatus?.transactionDate));
 
+return (
+
+        loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?
         loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?
 
             <div className="flex justify-center my-20 '">

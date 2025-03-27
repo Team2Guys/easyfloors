@@ -49,16 +49,23 @@ const Footerlinks: React.FC<FooterlinksProps> = ({ categories }) => {
                 }`}
               >
                 <ul className="space-y-2">
-                  {subcategories.map((item, i) => (
-                    <li key={i} className="text-sm text-gray-600 hover:text-gray-900 cursor-pointer">
-                      <Link
-                        href={`/${section.RecallUrl}/${item.custom_url}`}
-                        className="cursor-pointer hover:text-primary block"
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  ))}
+                {section.name === "ACCESSORIES" ? (
+                    (section.accessories ?? []).map((item, i) => (
+                        <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                            <Link href={`/accessories/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))
+                ) : (
+                    (subcategories ?? []).map((item, i) => (
+                        <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
+                            <Link href={`/${item?.category?.RecallUrl || section.RecallUrl}/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))
+                )}
                 </ul>
               </div>
             </div>

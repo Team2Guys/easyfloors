@@ -4,12 +4,11 @@ import axios from 'axios';
 import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
 import { IProduct, ProductImage } from 'types/prod';
-// import { toast } from 'react-toastify';
 
 export const ImageRemoveHandler = async (
   imagePublicId: string,
   setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
-  finalToken?:string
+  finalToken?: string
 ) => {
   try {
     // if(!finalToken) return  toast.success("Token Not found ")
@@ -18,7 +17,7 @@ export const ImageRemoveHandler = async (
         query: FILE_DELETION_MUTATION,
         variables: {
           public_id: imagePublicId,
-        },  
+        },
       },
       {
         headers: {
@@ -28,13 +27,13 @@ export const ImageRemoveHandler = async (
         withCredentials: true,
       }
     );
-    
 
-    setterFunction((prev) =>prev?.filter((item) => item.public_id !== imagePublicId));
-    
+
+    setterFunction((prev) => prev?.filter((item) => item.public_id !== imagePublicId));
+
   } catch (error) {
-throw error;
- }
+    throw error;
+  }
 };
 
 
@@ -52,10 +51,10 @@ export const handleImageAltText = (
 };
 
 
-export const TrimerHandler = (value:string)=>{
-  if(!value) return 
+export const TrimerHandler = (value: string) => {
+  if (!value) return
 
-return value.trim().toLowerCase()
+  return value.trim().toLowerCase()
 
 
 
@@ -80,7 +79,7 @@ export const ProductsSorting = (filtered: IProduct[], sortOption: string) => {
       break;
 
     case "Low to High":
-      filtered = filtered?.sort((a:IProduct, b) => {
+      filtered = filtered?.sort((a: IProduct, b) => {
         const priceA = a.price
         const priceB = b.price
 
@@ -102,39 +101,49 @@ export const ProductsSorting = (filtered: IProduct[], sortOption: string) => {
       break;
   }
 }
+export function getExpectedDeliveryDate(
+  shippingMethod: "Standard Shipping" | "Express Shipping" | "Self Collect",
+  orderTime: Date
+): string {
+  const orderHour = orderTime.getHours();
+  const currentDate = new Date(orderTime); 
 
+  if (shippingMethod === "Express Shipping") {
+    currentDate.setDate(currentDate.getDate() + (orderHour < 13 ? 1 : 2));
+    return `Expected delivery: ${formatDate(currentDate)}`;
+  }
 
+  else if (shippingMethod === "Standard Shipping") {
+    let daysToAdd = 0;
+    const deliveryDates: string[] = [];
 
+    // **Skip the next day after order date**
+    currentDate.setDate(currentDate.getDate() + 1);
 
+    while (daysToAdd < 2) {
+      currentDate.setDate(currentDate.getDate() + 1);
+      
+      if (currentDate.getDay() !== 6 && currentDate.getDay() !== 0) {
+        deliveryDates.push(formatDate(new Date(currentDate)));
+        daysToAdd++;
+      }
+    }
 
-// export const getPRODUCTS = async (
-//   setTotalProducts: setTotalProducts,
-//   setError: setError,
-//   setLoading: setLoading,
-//   pageNumber: number,
-//   setTotalPage?: setTotalPage,
-   
-//   setTotalProductscount?: any,
-// ) => {
-//   // try {
-//   //   setLoading(true);
-//   //   const { products, totalPages, totalProducts } =
-//   //     await getPaginatedproducts(pageNumber);
-//   //   setTotalProducts(products);
-     
-//   //   setTotalPage && setTotalPage(totalPages);
-     
-//   //   setTotalProductscount && setTotalProductscount(totalProducts);
-     
-//   // } catch (err: any) {
-//   //   if (err.response && err.response.data && err.response.data.message) {
-//   //     setError(err.response.data.message);
-//   //   } else if (err.message) {
-//   //     setError(err.message);
-//   //   } else {
-//   //     setError('An unexpected error occurred.');
-//   //   }
-//   // } finally {
-//   //   setLoading(false);
-//   // }
-// };
+    return "Expected delivery Within "  + deliveryDates.join(" to ");
+  }
+
+  const newDate = new Date(currentDate.setDate(currentDate.getDate() + 2))
+  const twoDayEarlierDate = new Date(currentDate.setDate(currentDate.getDate() + 1))
+
+  return "Available for self collection within " + formatDate(newDate) + " to " + formatDate(twoDayEarlierDate);
+}
+
+// **Formats Date Correctly** (e.g., "Monday, Mar 31 2025")
+function formatDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}

@@ -37,10 +37,10 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
       </div>
       <div className={`w-full ${!isQuickView && '2xl:w-[40%]'} lg:w-[45%] mb-2 space-y-3 xl:space-y-4`}>
         {productData?.name && (
-          <h1 className="text-25 2xl:text-[33px] font-inter font-semibold">{productData.name}</h1>
+          <h1 className="text-18 sm:text-25 2xl:text-[33px] font-inter font-semibold">{productData.name}</h1>
         )}
         <div className="border-[#D9D9D9] border-b" />
-        <div className="flex text-18 text-primary 2xl:text-23 font-semibold gap-2 items-center sm:gap-4">
+        <div className="flex text-14 sm:text-18 text-primary 2xl:text-23 font-semibold gap-2 items-center sm:gap-4">
           <p className="text-black">Price Per Sqm :</p>
           <p>
             <span>AED</span> {productData?.price}{" "}
@@ -68,7 +68,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
             Box: <span className="font-normal">1</span>
           </p>
         </div>
-        <div className="border-[#D9D9D9] border-b" />
+        <div className="border-[#501e1e] border-b" />
         <AreaCalculator
           area={area}
           unit={unit}
@@ -87,7 +87,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
           </p>
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">
-          <button className="flex bg-primary text-11 xs:text-12 text-white w-7/12 2xl:text-22 font-inter gap-1 xs:gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"   onClick={() =>
+          <button className="flex justify-center bg-primary text-11 xs:text-12 text-white w-7/12 2xl:text-22 font-inter gap-1 xs:gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"   onClick={() =>
             handleAddToStorage(
               productData,
               totalPrice,
@@ -103,7 +103,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
           }
           >
             <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
-            Order Now Free Sample
+            <p className="text-10 xs:text-12 sm:text-14 xl:text-20">Order Now <strong><em>Free</em></strong> Sample</p>
           </button>
           <button
             onClick={() =>
@@ -122,7 +122,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
             }
             className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           >
-            <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7" />
+            <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7 text-11 xs:text-14 xl:text-20" />
             Add to Cart
           </button>
         </div>

@@ -11,9 +11,9 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
 
   const withoutHeaderPages = ['/dashboard', '/thanks', '/login', '/signup', '/forgot-password'];
-  const hideNeedHelpOn = ['/track-order']; 
-
+  const hideNeedHelpPages = ['/privacy-policy', '/terms-and-conditions','/return-and-refund-policy','/how-to-measure-your-room','/shipping-policy','/faqs','/measurement-appointment',"/checkout",'/contact-us'];
   return (
+
     <ApolloProvider client={client}>
       <>
         {withoutHeaderPages.includes(pathname) ||
@@ -32,7 +32,10 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
           pathname.split('/').includes('dashboard')) ? (
           pathname === '/dashboard/Admin-login' ? <Footer /> : null
         ) : (
-          <Footer />
+          <>
+            {!hideNeedHelpPages.includes(pathname) && <NeedHelp />} 
+            <Footer />
+          </>
         )}
       </>
     </ApolloProvider>
