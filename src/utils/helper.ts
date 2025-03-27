@@ -6,56 +6,56 @@ import { contactUsEmailInput, orderEmailInput } from '../sales-products/dto/crea
 
 
 export const customHttpException = (error: any, status?: string) => {
-  if (error instanceof Prisma.PrismaClientKnownRequestError) {
-    switch (error.code) {
-      case 'P2002': // Unique constraint violation
-        throw new HttpException(
-          'A record with this value already exists.',
-          HttpStatus.BAD_REQUEST
-        );
-      case 'P2025': // Record not found
-        throw new HttpException(
-          'The requested record does not exist.',
-          HttpStatus.NOT_FOUND
-        );
-      default:
-        throw new HttpException('A database error occurred.', HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+   if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      switch (error.code) {
+         case 'P2002': // Unique constraint violation
+            throw new HttpException(
+               'A record with this value already exists.',
+               HttpStatus.BAD_REQUEST
+            );
+         case 'P2025': // Record not found
+            throw new HttpException(
+               'The requested record does not exist.',
+               HttpStatus.NOT_FOUND
+            );
+         default:
+            throw new HttpException('A database error occurred.', HttpStatus.INTERNAL_SERVER_ERROR);
+      }
 
-  }
-  throw new HttpException(error || 'An unexpected error occurred.', status ? HttpStatus[status] : HttpStatus.INTERNAL_SERVER_ERROR
-  );
+   }
+   throw new HttpException(error || 'An unexpected error occurred.', status ? HttpStatus[status] : HttpStatus.INTERNAL_SERVER_ERROR
+   );
 };
 
 const transporter = nodemailer.createTransport({
-  host: 'mail.blindsandcurtains.ae',
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+   host: 'mail.blindsandcurtains.ae',
+   port: 587,
+   secure: false,
+   auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+   },
 });
 
 
 
 export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInput) => {
-  const {
-    firstname,
-    email,
-    phoneNumber,
-    whatsappNumber,
-    area,
-    selectRooms,
-    preferredDate,
-    preferredTime,
-    findUs,
-    comment,
-    contactMethod,
-    AppointsType,
-  } = appointmentData;
+   const {
+      firstname,
+      email,
+      phoneNumber,
+      whatsappNumber,
+      area,
+      selectRooms,
+      preferredDate,
+      preferredTime,
+      findUs,
+      comment,
+      contactMethod,
+      AppointsType,
+   } = appointmentData;
 
-  const htmlTemplate = ` <!DOCTYPE html>
+   const htmlTemplate = ` <!DOCTYPE html>
     <html>
       <head>
         <meta charset="UTF-8">
@@ -189,23 +189,23 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
     </html>
   `;
 
-  try {
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: email,
-      subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
-      html: htmlTemplate,
-    });
-  } catch (error) {
-    console.error("Error sending appointment email:", error);
-    throw new Error("Failed to send appointment confirmation email");
-  }
+   try {
+      await transporter.sendMail({
+         from: process.env.EMAIL_USER,
+         to: email,
+         subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
+         html: htmlTemplate,
+      });
+   } catch (error) {
+      console.error("Error sending appointment email:", error);
+      throw new Error("Failed to send appointment confirmation email");
+   }
 };
 
 export const contactusEmail = async (data: contactUsEmailInput) => {
-  const { firstName, LastName, email, phoneNumber, message } = data;
+   const { firstName, LastName, email, phoneNumber, message } = data;
 
-  const htmlTemplate = `
+   const htmlTemplate = `
     <!DOCTYPE html>
     <html>
       <head>
@@ -273,29 +273,29 @@ export const contactusEmail = async (data: contactUsEmailInput) => {
     </html>
   `;
 
-  await transporter.sendMail({
-    from: process.env.EMAIL_USER,
-    to: process.env.CONTACT_US_EMAIL,
-    subject: `New Contact Form Submission from ${firstName} ${LastName}`,
-    html: htmlTemplate,
-  });
+   await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.CONTACT_US_EMAIL,
+      subject: `New Contact Form Submission from ${firstName} ${LastName}`,
+      html: htmlTemplate,
+   });
 };
 
 
 export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEmail?: string,) => {
-  const { products, firstName, lastName, orderId, email, phone, address, emirate, totalPrice, shipmentFee } = orderDetails;
+   const { products, firstName, lastName, orderId, email, phone, address, emirate, totalPrice, shipmentFee } = orderDetails;
 
-  const formattedDate = new Date().toLocaleDateString("en-US", {
-    month: "short",
-    day: "2-digit",
-    year: "numeric",
-  }).toUpperCase();
-  const mailOptions = {
-   from: process.env.EMAIL_USER,
-    to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1}`,
-    subject: `Order has been confirmed against Order # ${orderId}`,
+   const formattedDate = new Date().toLocaleDateString("en-US", {
+      month: "short",
+      day: "2-digit",
+      year: "numeric",
+   }).toUpperCase();
+   const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1}`,
+      subject: `Order has been confirmed against Order # ${orderId}`,
 
-    html: `<!DOCTYPE html>
+      html: `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -727,11 +727,10 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
        </div>
 </body>
 <div class="categories">
- <a target="_blank" href="https://interiorfilm.ae/products?category=metal-series">METAL</a>
- <a target="_blank" href="https://easyfloors.ae/spc-flooring">SPC Flooring</a>
- <a target="_blank" href="hthttps://easyfloors.ae/lvt-flooring">LVT Flooring    </a>
- <a target="_blank" href=https://easyfloors.ae/richmond-flooring">Richmond Flooring</a>
- <a target="_blank" href=https://easyfloors.ae/polar-flooring">Polar Flooring </a>
+ <a target="_blank" href=https://easyfloors.ae/spc-flooring>SPC Flooring</a>
+ <a target="_blank" href=https://easyfloors.ae/lvt-flooring>LVT Flooring    </a>
+ <a target="_blank" href=https://easyfloors.ae/richmond-flooring> Richmond Flooring </a>
+ <a target="_blank" href=https://easyfloors.ae/polar-flooring>Polar Flooring </a>
 
 </div>
 <div class="social-icons">
@@ -745,23 +744,23 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
 </body>
 
 </html>`
-  };
+   };
 
 
-  try {
-    transporter.sendMail(mailOptions, function (error, info) {
-      if (error) {
-        console.error('Error sending email:', error);
-        throw new Error(error.message || JSON.stringify(error))
+   try {
+      transporter.sendMail(mailOptions, function (error, info) {
+         if (error) {
+            console.error('Error sending email:', error);
+            throw new Error(error.message || JSON.stringify(error))
 
-      } else {
-        console.log('Email sent:', info.response);
-        return info.response
-      }
-    });
-  } catch (error) {
-    throw new Error(error.message)
-  }
+         } else {
+            console.log('Email sent:', info.response);
+            return info.response
+         }
+      });
+   } catch (error) {
+      throw new Error(error.message)
+   }
 
 
 };
