@@ -56,7 +56,9 @@ export interface IProduct {
     colorCode:string;
     __typename?:string;
     requiredBoxes?:number
-    squareMeter?:number
+    squareMeter?:number;
+    totalPrice?:number
+
   }
 
  export interface IProductAccessories extends IProduct {
@@ -79,7 +81,7 @@ export interface IProduct {
     squareMeter:number,
     requiredBoxes:number,
     boxCoverage?:string,
-    subcategories?:string
+    subcategories?:string,
   }
 
   export interface EDIT_PRODUCT_PROPS extends IProduct {

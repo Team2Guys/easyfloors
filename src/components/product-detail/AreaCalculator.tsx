@@ -8,9 +8,9 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
  
   return (
     <div className="space-y-3 my-4">
- <div className="flex sm:flex-col flex-wrap max-sm:items-center gap-2 xs:gap-4 sm:space-y-3">
- <p className="text-lg font-semibold">Area:</p>
-      <div className="flex gap-2 xs:gap-4 items-center">
+ <div className="flex sm:flex-col max-sm:items-center gap-4 sm:space-y-3">
+ <p className="text-14 sm:text-lg font-semibold">Area:</p>
+      <div className="flex gap-4 items-center">
         <label className="flex items-center space-x-2 cursor-pointer">
           <input
             type="radio"
@@ -27,7 +27,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
           >
             {unit === "sqm" && <span className="w-2 h-2 bg-orange-500 rounded-full"></span>}
           </span>
-          <span className="text-md">m²</span>
+          <span className="text-12 sm:text-md">m²</span>
         </label>
 
         <label className="flex items-center space-x-2 cursor-pointer">
@@ -46,7 +46,7 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
           >
             {unit === "sqft" && <span className="w-2 h-2 bg-orange-500 rounded-full"></span>}
           </span>
-          <span className="text-md">ft²</span>
+          <span className="text-12 sm:text-md">ft²</span>
         </label>
       </div>
 
@@ -56,17 +56,17 @@ const AreaCalculator=  ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
         value={area}
         min="0"
         onChange={(e) => setArea(e.target.value)}
-        className=" p-2 border border-[#9E9E9E] focus:outline-none focus:ring-2 focus:ring-orange-500 w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
+        className=" p-2 border border-[#9E9E9E] tetx-14 sm:text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
       />
  </div>
 
       <div>
-      <p className="text-16 2xl:text-20 font-medium mt-2">
+      <p className="text-14 sm:text-16 2xl:text-20 font-medium mt-2">
           You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ? convertedArea : "0"} m²)
       </p>
-        <p className="text-16 2xl:text-20 font-light">No. Of Boxes: {requiredBoxes} ({squareMeter.toFixed(2)} Square Meter)</p>
-        <p className="text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox.toFixed(2)}</span></span></p>
-        <p className="text-16 2xl:text-20 font-light flex items-center gap-3">
+        <p className="text-12 sm:text-16 2xl:text-20 font-light">No. Of Boxes: {requiredBoxes} ({squareMeter.toFixed(2)} Square Meter)</p>
+        <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox.toFixed(2)}</span></span></p>
+        <p className="text-12 sm:text-16 2xl:text-20 font-light flex items-center gap-3">
           Accessories
           <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">
             <PiQuestionMark className="text-lg font-extralight" />
