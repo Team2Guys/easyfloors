@@ -29,7 +29,7 @@ export class CreateProductInput {
   @Field(() => [GraphQLJSON])
   productImages: any[]
 
-  @Field(() => Int, {nullable:true})
+  @Field(() => Int, { nullable: true })
   colorCode?: number
 
 
@@ -87,14 +87,14 @@ export class CreateProductInput {
 
   @Field({ nullable: true })
   boxCoverage: string
-  
+
   @Field(() => [GraphQLJSON])
   featureImages: any[]
 
   @Field(() => [GraphQLJSON])
   colors: any[]
-  
-    @Field(()=>ID,{nullable:true})
-    acessories?:number
+
+  @Field(() => ID, { nullable: true })
+  acessories?: number
 
 }

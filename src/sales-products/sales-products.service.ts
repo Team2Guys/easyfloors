@@ -87,7 +87,8 @@ export class SalesProductsService {
 
   async findOne(id: string) {
     try {
-      return await this.prisma.salesProducts.findUnique({
+      
+    return  await this.prisma.salesProducts.findFirst({
         where: { orderId: id }
       })
     } catch (error) {
@@ -99,9 +100,9 @@ export class SalesProductsService {
   async findOrderByMail(email: string) {
     try {
       console.log(email, "email")
-   let users =  await this.prisma.salesProducts.findMany({where: { email }})
-console.log(users, "users")
-   return users;
+      let users = await this.prisma.salesProducts.findMany({ where: { email } })
+      console.log(users, "users")
+      return users;
     } catch (error) {
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
 
