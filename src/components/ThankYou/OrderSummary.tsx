@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import { IProduct } from "types/prod";
+import { getExpectedDeliveryDate } from "utils/helperFunctions";
+import { ORDERS_PROD, PostPaymentStatusResponse } from "types/OrdersProd";
 
-const OrderSummary: React.FC = ({ data}) => {
+const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data}) => {
     const productlength = data?.postpaymentStatus?.products?.length || 0
 
+    const ExpectedDeliveryDAte = getExpectedDeliveryDate(data?.postpaymentStatus?.shippingMethod.name, new Date(data?.postpaymentStatus?.transactionDate));
     return (
 
         <div className="bg-[#FFF9F5]  ">
@@ -13,7 +15,7 @@ const OrderSummary: React.FC = ({ data}) => {
             </div>
             <div className="md:p-10 p-2">
                 <div className="max-h-72 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
-                    {data?.postpaymentStatus?.products?.map((item: IProduct, index: number) => (
+                    {data?.postpaymentStatus?.products?.map((item: ORDERS_PROD, index: number) => (
                         <div key={index} className="md:pr-6">
                             <div className="flex items-center justify-between border-b gap-5 pb-4 mb-4">
                                 <div className="flex items-center md:gap-5 gap-2">
@@ -36,7 +38,7 @@ const OrderSummary: React.FC = ({ data}) => {
                         <p className="lg:text-xl text-lg font-bold whitespace-nowrap">AED {data?.postpaymentStatus?.totalPrice}</p>
                     </div>
                     <div className="border-t md:mt-12 mt-3  ">
-                        <p className="text-left mt-2 md:text-xl text-base">Expected delivery date is s simply dummy text of the printing and</p>
+                        <p className="text-left mt-2 md:text-xl text-base">{ExpectedDeliveryDAte}</p>
                     </div>
                 </div>
 

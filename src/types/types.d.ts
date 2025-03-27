@@ -245,3 +245,42 @@ export interface INavbar{
   wishlistTotal: ICart[];
   freeSampleTotal: ICart[];
 }
+
+export interface TrackOrderData {
+  orderId: string
+  orderDate: string
+  estimatedDelivery: string
+  status: "confirmed" | "ready" | "delivered"
+  items: TOrderItem[]
+  payment: TPayment
+  delivery: TDelivery
+  products: IProduct[]; 
+  totalPrice: number; 
+  
+}
+
+// types.ts
+export interface TOrderItem {
+  name: string
+  image: string
+  price: number
+  currency: string
+  quantity: number;
+  sqmts:number;
+  title: string;
+  boxes:number;
+
+}
+
+export interface TPayment {
+  cardImage: string
+  cardLastFour: string
+  amount: number
+  currency: string
+}
+
+export interface TDelivery {
+  name: string
+  email: string
+  address: string
+}

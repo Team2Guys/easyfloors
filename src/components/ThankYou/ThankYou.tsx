@@ -8,9 +8,7 @@ import { useMutation } from "@apollo/client";
 import { POST_PAYMENT_STATUS } from "graphql/mutations";
 import OrderSummary from "./OrderSummary";
 import CardSkeleton from "components/skaletons/card-skaleton";
-import { getExpectedDeliveryDate } from "utils/helperFunctions";
 import Image from "next/image";
-
 const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extractedParams }) => {
     const hasRun = useRef(false);
     const [postPaymentStatus, { data, loading, error }] = useMutation(POST_PAYMENT_STATUS);
@@ -22,12 +20,9 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
             hasRun.current = true;
         }
     }, []);
-    const productlength = data?.postpaymentStatus?.products?.length || 0
-const ExpectedDeliveryDAte = getExpectedDeliveryDate(data?.postpaymentStatus?.shippingMethod.name, new Date(data?.postpaymentStatus?.transactionDate));
 
 return (
 
-        loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?
         loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?
 
             <div className="flex justify-center my-20 '">
@@ -40,7 +35,7 @@ return (
                 </div>
             </div>
             :
-            data &&
+ (           data &&
             <div className="max-w-4xl mx-auto md:p-0 p-2">
                 <h1 className="md:text-6xl text-3xl font-bold text-center font-inter">THANK YOU!</h1>
                 <p className="text-center mt-2 md:text-xl text-base md:px-0 px-4">Say thanks, confirm the payment, provide the order ID and mention that the order confirmation email has been sent.</p>
@@ -51,7 +46,7 @@ return (
                 <OrderSummary data={data} />
 
 
-            </div>
+            </div>)
 
 
 
