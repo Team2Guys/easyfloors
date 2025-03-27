@@ -105,8 +105,6 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   recalledByCategories: [],
   recalledSubCats: []
 };
-
-
 export interface IProductValues {
   id?: number;
   name: string;

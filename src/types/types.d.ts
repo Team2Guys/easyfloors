@@ -229,3 +229,10 @@ export type OrderHistory = {
   paymentStatus: string;
   createdAt: string;
 };
+export interface INavbar{
+  categories?: Category[];
+  products?: IProduct[];
+  cartTotal: ICart[];
+  wishlistTotal: ICart[];
+  freeSampleTotal: ICart[];
+}
