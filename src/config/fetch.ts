@@ -1,6 +1,6 @@
 import { IReview } from 'types/type';
 import axios from 'axios';
-import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS, } from 'graphql/queries';
+import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_ORDERS, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
@@ -79,6 +79,28 @@ export const fetchAppointments = async (token: string | undefined) => {
       },
     });
     return data?.appointments || [];
+  } catch (error) {
+    return []
+    throw error;
+  }
+};
+
+
+export const fetchOrders = async (token: string | undefined) => {
+  try {
+    const { data } = await client.query({
+      query: FETCH_ALL_ORDERS,
+      fetchPolicy: "no-cache",
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        fetchOptions: { 
+          next: { tags: ["orders"] }
+        },
+      },
+    });
+    return data?.AllOrders || [];
   } catch (error) {
     return []
     throw error;

@@ -1,7 +1,20 @@
+import { cookies } from "next/headers";
+import { fetchOrders } from "config/fetch";
+import Order from "./Order";
+import { Order as ProdOrder } from "types/prod";
+
+
+
 
 const Abandoned= async () => {
-
-  return <div>Order</div> ;
+   const allCookies = await cookies();
+   const token =
+     allCookies.get("super_admin_access_token")?.value ||
+     allCookies.get("admin_access_token")?.value;
+   
+  const ordersData = await fetchOrders(token);
+  const abandonedOrder = ordersData.filter((item: ProdOrder) => (item.paymentStatus === false) && (item.checkout === false));
+  return <Order title="Abandoned Order" ordersData={abandonedOrder} />
 };
 
 export default Abandoned;
