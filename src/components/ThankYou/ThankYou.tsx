@@ -10,6 +10,7 @@ import { useMutation } from "@apollo/client";
 import { IProduct } from "types/prod";
 import { POST_PAYMENT_STATUS } from "graphql/mutations";
 import CardSkeleton from "components/skaletons/card-skaleton";
+import { getExpectedDeliveryDate } from "utils/helperFunctions";
 
 const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extractedParams }) => {
     const hasRun = useRef(false);
@@ -22,9 +23,11 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
         }
     }, []);
     const productlength = data?.postpaymentStatus?.products?.length || 0
-    return (
+const ExpectedDeliveryDAte = getExpectedDeliveryDate(data?.postpaymentStatus?.shippingMethod.name, new Date(data?.postpaymentStatus?.transactionDate));
 
-        loading ? <CardSkeleton length={3}/> : error || !extractedParams.success ?
+return (
+
+        loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?
 
             <div className="flex justify-center my-20 '">
                 <div className="w-full max-w-md">
@@ -74,7 +77,7 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
                                 <p className="lg:text-xl text-lg font-bold whitespace-nowrap">AED {data?.postpaymentStatus?.totalPrice}</p>
                             </div>
                             <div className="border-t md:mt-12 mt-3  ">
-                                <p className="text-left mt-2 md:text-xl text-base">Expected delivery date is s simply dummy text of the printing and</p>
+                                <p className="text-left mt-2 md:text-xl text-base">{ExpectedDeliveryDAte}.</p>
                             </div>
                         </div>
 
