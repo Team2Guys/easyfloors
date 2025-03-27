@@ -108,7 +108,7 @@ export class paymentStatus {
     @Field()
     orderId: string;
 
-    @Field()
+    @Field({nullable:true})
     transactionDate: Date;
 
     @Field(() => [Products])

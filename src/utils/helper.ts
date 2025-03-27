@@ -675,7 +675,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                             <th style="padding: 5px 5px 0px 5px;" class="table-font">Name:</th>
                          </tr>
                          <tr>
-                            <td style="padding: 0px 5px 5px 5px; width: 100%;" class="table-font">${(firstName || "") + lastName}</td>
+                            <td style="padding: 0px 5px 5px 5px; width: 100%;" class="table-font">${(firstName || "")+ "" + lastName}</td>
                          </tr>
                          <tr>
                             <th style="padding: 5px 5px 0px 5px;" class="table-font">Email:</th>
@@ -695,6 +695,16 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                          <tr>
                             <td style="padding: 0px 5px 5px 5px; width: 100%;" class="table-font">${address}, ${emirate}</td>
                          </tr>
+
+                          <tr>
+                            <th style="padding: 5px 5px 0px 5px;" class="table-font">Shipping Type:</th>
+                         </tr>
+                         <tr>
+                            <td style="padding: 0px 5px 5px 5px; width: 100%;" class="table-font">${orderDetails?.shippingMethod?.name}</td>
+                         </tr>
+
+
+
                       </table>
                    </td>
 
