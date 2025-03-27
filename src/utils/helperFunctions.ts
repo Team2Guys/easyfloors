@@ -116,8 +116,6 @@ export function getExpectedDeliveryDate(
   else if (shippingMethod === "Standard Shipping") {
     let daysToAdd = 0;
     const deliveryDates: string[] = [];
-
-    // **Skip the next day after order date**
     currentDate.setDate(currentDate.getDate() + 1);
 
     while (daysToAdd < 2) {
@@ -129,16 +127,15 @@ export function getExpectedDeliveryDate(
       }
     }
 
-    return "Expected delivery Within "  + deliveryDates.join(" to ");
+    return "Expected delivery "  + deliveryDates.join(" to ");
   }
 
   const newDate = new Date(currentDate.setDate(currentDate.getDate() + 2))
   const twoDayEarlierDate = new Date(currentDate.setDate(currentDate.getDate() + 1))
 
-  return "Available for self collection within " + formatDate(newDate) + " to " + formatDate(twoDayEarlierDate);
+  return "Available for self collection " + formatDate(newDate) + " to " + formatDate(twoDayEarlierDate);
 }
 
-// **Formats Date Correctly** (e.g., "Monday, Mar 31 2025")
 function formatDate(date: Date): string {
   return date.toLocaleDateString("en-US", {
     weekday: "long",
