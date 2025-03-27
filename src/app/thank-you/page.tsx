@@ -5,27 +5,41 @@ import { fetchProducts } from 'config/fetch';
 import React from 'react';
 
 export interface PaymentQueryParams {
-  id: string | null;
-  amount_cents: string | null;
-  success: string | null
-  integration_id: string | null,
-  currency: string | null,
-  is_refund: string | null,
-  order_id: string | null,
-  pending: string | null,
-  is_3d_secure: string | null,
-  created_at: string | null
+
+  success: boolean
+  integrationId: string | undefined,
+  orderId: string | undefined,
+  pending: boolean,
+  is3DSecure: string | undefined,
+  pay_methodType: string | undefined
+  cardLastDigits: string | undefined
+  paymethod_sub_type: string | undefined
 
 }
 
-const ThankYou = async () => { 
-  const productData = await fetchProducts();
+interface ThankYouProps {
+searchParams: Promise<Record<string, string | null>>;}
 
+
+const ThankYou = async ({ searchParams }: ThankYouProps) => { 
+  const productData = await fetchProducts();
+  const params = await searchParams
+
+  const extractedParams: PaymentQueryParams = {
+    success: params.success === 'true', 
+    integrationId: params.integration_id || undefined,
+    orderId: params.order || undefined, 
+    pending: params.pending === 'true', 
+    is3DSecure: params.is_3d_secure || undefined,
+    pay_methodType: params["source_data.type"] || undefined,
+    cardLastDigits: params["source_data.pan"] || undefined,
+    paymethod_sub_type: params["source_data.sub_type"] || undefined
+  };
 
   return (
     <>
       <Breadcrumb title="Thank You" />
-      <ThankYouComp />
+      <ThankYouComp extractedParams={extractedParams} />
       <RelatedSlider  products={productData.slice(0, 5)} />
     </>
   );

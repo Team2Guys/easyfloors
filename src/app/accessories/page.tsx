@@ -64,7 +64,7 @@ if(!category) return notFound()
   return (
     <>
       <Breadcrumb title={category.name} image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"}/>
-      <AccessoriesComp product={category.accessories || []}  /> 
+      <AccessoriesComp product={category.accessories || []} category={category}  /> 
     </>
   );
 };
