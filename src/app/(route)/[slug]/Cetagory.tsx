@@ -59,7 +59,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mai
 
   return (
     <>
-      <Breadcrumb imageClass="h-[70px] xs:h-auto" image={mainCategory ? mainCategory.whatAmiImageBanner?.imageUrl : Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={mainCategory?.whatAmiImageBanner.altText || Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} title={subcategory} isImagetext />
+      <Breadcrumb imageClass="h-[70px] xs:h-auto" image={mainCategory ? mainCategory.whatAmiImageBanner?.imageUrl : Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={mainCategory?.whatAmiImageBanner.altText || Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
         <div className=" lg:w-[20%] ">
           <Filters
