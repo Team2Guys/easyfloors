@@ -119,5 +119,40 @@ export class paymentStatus {
 
     @Field(() => Float)
     totalPrice: number;
-}
 
+
+    @Field({nullable:true})
+    pay_methodType: string;
+
+    @Field({nullable:true})
+    paymethod_sub_type: string;
+
+    @Field(()=>Int,{nullable:true})
+    cardLastDigits: number;
+
+
+    @Field(()=>Boolean,{nullable:true})
+    checkout: boolean;
+    
+    @Field(()=>Boolean,{nullable:true})
+    paymentStatus: boolean;
+
+    @Field(()=>Boolean,{nullable:true})
+    isRefund: boolean;
+
+    @Field(()=>Boolean,{nullable:true})
+    success: boolean;
+
+    @Field(()=>Boolean,{nullable:true})
+    pending: boolean;
+
+    @Field({nullable:true})
+    currency: string;
+
+    @Field({nullable:true})
+    is3DSecure: string;
+
+
+    @Field({nullable:true})
+    checkoutDate: Date;
+}

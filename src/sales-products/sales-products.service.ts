@@ -76,12 +76,24 @@ export class SalesProductsService {
 
   }
 
-  findAll() {
-    return `This action returns all salesProducts`;
+  async findAll() {
+    try {
+     return  await this.prisma.salesProducts.findMany()
+    } catch (error) {
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} salesProduct`;
+  async findOne(id: string) {
+    try {
+     return  await this.prisma.salesProducts.findUnique({
+        where: { orderId: id }
+      })
+    } catch (error) {
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+
+    }
   }
 
 
@@ -190,7 +202,7 @@ export class SalesProductsService {
           });
         }
       }
-      sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email, );
+      sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email,);
       sendEmailHandler(existingOrder as orderEmailInput,);
 
       return existingOrder;

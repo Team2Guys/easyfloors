@@ -21,14 +21,15 @@ export class SalesProductsResolver {
   }
 
   @Public()
-  @Query(() => [SalesProduct], { name: 'salesProducts' })
+  @Query(() => [paymentStatus], { name: 'AllOrders' })
   findAll() {
     return this.salesProductsService.findAll();
   }
 
-  @Query(() => SalesProduct, { name: 'salesProduct' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.salesProductsService.findOne(id);
+  @Public()
+  @Query(() => paymentStatus, { name: 'Order' })
+  findOne(@Args('orderId', { type: () => String }) orderId: string) {
+    return this.salesProductsService.findOne(orderId);
   }
 
   @Query(() => ALL_RECORDS, { name: 'GET_ALL_RECORDS' })
