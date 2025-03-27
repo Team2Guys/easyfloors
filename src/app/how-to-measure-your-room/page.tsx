@@ -8,7 +8,7 @@ const MeasureRoom = () => {
   return (
    <>
  
-    <Breadcrumb title=" How to Measure Your Room?" image="/assets/images/how-to-measure-your-room/Measure-Your-Room.jpg" />
+    <Breadcrumb imageClass='h-[180px]' title=" How to Measure Your Room?" image="/assets/images/how-to-measure-your-room/Measure-Your-Room.jpg" />
     <RoomMeasurement/>
     
     <div className='lg:px-4'>

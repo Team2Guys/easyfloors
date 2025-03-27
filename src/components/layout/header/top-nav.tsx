@@ -5,8 +5,10 @@ import Image from "next/image";
 import TopLink from "./top-link";
 import SocialIcon from "components/Reusable/social-icon";
 import UserIcon from "./user-icon";
+import { INavbar } from "types/types";
 
-const TopNav = () => {
+
+const TopNav = ({cartTotal,wishlistTotal,freeSampleTotal}:INavbar) => {
   const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER;
   const email = process.env.NEXT_PUBLIC_EMAIL;
   return (
@@ -40,7 +42,7 @@ const TopNav = () => {
         </div>
         <div className="flex items-center gap-5">
           <TopLink className="hidden lg:flex" />
-          <UserIcon className="flex lg:hidden" />
+          <UserIcon className="flex lg:hidden" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} freeSampleTotal={freeSampleTotal?.length} />
           <SocialIcon className="hidden lg:flex" />
         </div>
       </Container>
