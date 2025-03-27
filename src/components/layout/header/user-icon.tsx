@@ -141,7 +141,7 @@ const UserIcon = ({ className, cartTotal, wishlistTotal,freeSampleTotal }: UserI
         className="relative flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white"
       >
         {(freeSampleTotal ?? 0) > 0 && (
-          <span className="absolute flex bg-primary h-4 justify-center text-white text-xs w-4 -right-1 -top-1 font-semibold items-center">
+          <span className="absolute flex bg-white lg:bg-primary h-3 sm:h-4 justify-center text-black lg:text-white text-xs w-3 sm:w-4 right-1 sm:-right-1 -top-1 font-semibold items-center">
             {freeSampleTotal}
           </span>
         )}

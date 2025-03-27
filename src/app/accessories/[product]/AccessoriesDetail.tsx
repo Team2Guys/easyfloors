@@ -15,7 +15,7 @@ const AccessoriesDetail = ({ProductName,ProductInfo, productData}:detailprops) =
 
   return (
     <>
-    <Breadcrumb slug="Accessories" title={ProductName}/>
+    <Breadcrumb subcategory="accessories" title={ProductName}/>
     <AccessoriesContainer productData={productData as IProduct} />
     <Container>
     <div className="mb-10 max-w-[95%] sm:max-w-[90%] lg:max-w-[80%] mx-auto">
