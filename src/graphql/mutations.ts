@@ -303,3 +303,38 @@ mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
   }
 }
 `;
+
+
+export const ORDER_QUERY = gql`
+  query Order($orderId: String!) {
+    Order(orderId: $orderId) {
+      firstName
+      lastName
+      email
+      country
+      city
+      address
+      phone
+      orderId
+      totalPrice
+      paymentStatus
+
+            products {
+        name
+        price
+        image
+        boxCoverage
+        totalPrice
+        pricePerBox
+        squareMeter
+        requiredBoxes
+    }
+    totalPrice
+    shippingMethod
+    transactionDate
+    address
+    cardLastDigits
+    currency
+    }
+  }
+`;

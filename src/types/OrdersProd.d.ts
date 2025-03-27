@@ -24,6 +24,10 @@ export interface ORDERS_PROD {
     totalPrice: number;
     shippingMethod: ShippingMethod;
     transactionDate: string;
+    orderId:string;
+    address:string
+    cardLastDigits:number
+    currency:string
     __typename: string;
   }
   
@@ -31,5 +35,6 @@ export interface ORDERS_PROD {
     data: {
       postpaymentStatus: PostPaymentStatus;
     };
+    trackingOrer?:boolean
   }
   

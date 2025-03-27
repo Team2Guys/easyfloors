@@ -6,6 +6,7 @@ import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
 import { Category } from 'types/cat';
 import { IProduct } from 'types/prod';
+import { ORDER_QUERY } from 'graphql/mutations';
 
 
 export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
@@ -217,5 +218,24 @@ export const fetchSingeProduct = async (customUrl: string, category: string, sub
   } catch (error) {
     return null;
     throw error;
+  }
+};
+
+
+export const fetchSingleOrder = async (orderId: string) => {
+  try {
+    const { data } = await client.query({
+      query: ORDER_QUERY,
+      variables: { orderId },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: { next: { tags: ["orders"] } },
+      },
+    });
+
+    return data?.Order || null;
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    return null;
   }
 };
