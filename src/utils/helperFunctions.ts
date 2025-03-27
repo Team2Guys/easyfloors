@@ -170,7 +170,7 @@ export function trackingOrder(
   const newDate = new Date(currentDate.setDate(currentDate.getDate() + 2))
   const twoDayEarlierDate = new Date(currentDate.setDate(currentDate.getDate() + 1))
 
-  return "Available for self collection within 2-3 days i.e:" + formatDate(newDate) + " to " + formatDate(twoDayEarlierDate);
+  return   formatDate(newDate) + " to " + formatDate(twoDayEarlierDate);
 }
 
 

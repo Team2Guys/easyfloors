@@ -318,6 +318,7 @@ export const ORDER_QUERY = gql`
       orderId
       totalPrice
       paymentStatus
+      shipmentFee
 
             products {
         name

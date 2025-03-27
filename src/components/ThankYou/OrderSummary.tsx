@@ -3,10 +3,15 @@ import Image from "next/image";
 import { getExpectedDeliveryDate } from "utils/helperFunctions";
 import { ORDERS_PROD, PostPaymentStatusResponse } from "types/OrdersProd";
 
-const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data,trackingOrer}) => {
+const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer }) => {
     const productlength = data?.postpaymentStatus?.products?.length || 0
 
     const ExpectedDeliveryDAte = getExpectedDeliveryDate(data?.postpaymentStatus?.shippingMethod.name, new Date(data?.postpaymentStatus?.transactionDate));
+
+    const productsPrice = data?.postpaymentStatus.products.reduce((accume, value) => {
+        return accume += value.price;
+    }, 0)
+
     return (
 
         <div className="bg-[#FFF9F5]  ">
@@ -31,17 +36,38 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data,trackingOrer})
                     ))}
                 </div>
 
-              {trackingOrer && 
                 <div className="mt-6 text-right">
+                    {trackingOrer &&   
+                    <>
+                       <div className="flex justify-between">
+                        <p className=" whitespace-nowrap font-inter text-20 text-[#818EA1] ">Subtotal</p>
+                        <p className=" whitespace-nowrap font-inter text-20 font-normal">AED {productsPrice}</p>
+
+                       </div>
+
+                    <div className="flex justify-between mt-5">
+                        <p className=" whitespace-nowrap font-inter text-20 text-[#818EA1] ">Shipping</p>
+                        <p className=" whitespace-nowrap font-inter text-20 font-normal">AED {data.postpaymentStatus.shipmentFee == 0 ? "Free" : data.postpaymentStatus.shipmentFee}</p>
+
+                    </div>
+                    </>
+                    }
+
                     <div className="flex items-center gap-4 mt-4">
+
+
                         <p className="md:text-2xl text-xl whitespace-nowrap font-bold">Total Incl. VAT</p>
                         <span className="flex-grow border-b"></span>
                         <p className="lg:text-xl text-lg font-bold whitespace-nowrap">AED {data?.postpaymentStatus?.totalPrice}</p>
+
                     </div>
-                    <div className="border-t md:mt-12 mt-3  ">
+
+
+
+                    {!trackingOrer && <div className="border-t md:mt-12 mt-3  ">
                         <p className="text-left mt-2 md:text-xl text-base">{ExpectedDeliveryDAte}</p>
-                    </div>
-                </div>}
+                                      </div>}
+                </div>
 
             </div>
 

@@ -28,6 +28,7 @@ export interface ORDERS_PROD {
     address:string
     cardLastDigits:number
     currency:string
+    shipmentFee:number
     __typename: string;
   }
   

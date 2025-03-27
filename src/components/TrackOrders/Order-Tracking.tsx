@@ -11,20 +11,24 @@ import { SiVisa } from "react-icons/si";
 
 
 export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
-const NewDatas =  {
-  postpaymentStatus:data
-}
+  const NewDatas = {
+    postpaymentStatus: data
+  }
 
-const date = new Date(data.transactionDate)
-const formatedDate = formatDate(date)
+  const date = new Date(data.transactionDate)
+  const formatedDate = formatDate(date)
 
-const TrackingOrder  = trackingOrder(data.shippingMethod.name,date)
+  const TrackingOrder = trackingOrder(data.shippingMethod.name, date)
 
-const currentDate = new Date();
-const isSameDate = formatDate(currentDate);
+  const currentDate = new Date();
 
 
-const sameDate = isSameDate == formatedDate
+
+  const isSameDate = formatDate(currentDate);
+
+  const sameDate = isSameDate == formatedDate
+
+  console.log(formatedDate == TrackingOrder, TrackingOrder, "tomorrow", isSameDate)
   return (
     <Container className="w-full py-5 md:py-10 space-y-3 sm:space-y-5 lg:space-y-10">
       <div className="text-center">
@@ -42,7 +46,7 @@ const sameDate = isSameDate == formatedDate
         <div className="flex gap-2 items-center">
           <BsTruck className="w-4 h-4 sm:w-7 sm:h-7 2xl:w-[42px] 2xl:h-[42px] text-primary" />
           <p className="text-10 sm:text-14 md:text-16 2xl:text-[20px] font-semibold text-primary">
-            Estimated delivery: <span className="text-black">{data.orderId}</span>
+            Estimated delivery: <span className="text-black">{TrackingOrder}</span>
           </p>
         </div>
       </div>
@@ -61,7 +65,7 @@ const sameDate = isSameDate == formatedDate
               <p className="text-12 sm:text-14 md:text-20 2xl:text-[24px] py-1 text-primary font-semibold">
                 {stage}
               </p>
-              <div className={`w-[14px] h-[14px] lg:mx-5 sm:w-[20px] sm:h-[20px] md:w-[30px] md:h-[30px] 2xl:w-[35px] 2xl:h-[35px] rounded-full relative z-10 bg-[#D0D5DD] ${sameDate && stage == "Confirmed" || stage == "Shipped" ? "bg-primary" : ""} `}></div>
+              <div className={`w-[14px] h-[14px] lg:mx-5 sm:w-[20px] sm:h-[20px] md:w-[30px] md:h-[30px] 2xl:w-[35px] 2xl:h-[35px] rounded-full relative z-10 bg-[#D0D5DD] ${(sameDate && (stage == "Confirmed" || stage == "Shipped")) || ((isSameDate == TrackingOrder) && (stage == "Delivered")) ? "bg-primary" : ""} `}></div>
               <p className="text-10 sm:text-14 md:text-18 2xl:text-[24px] font-semibold text-[#95989C] h-[30px]">
                 {index === 2 ? `Expected by, ${TrackingOrder} ` : formatedDate}
               </p>
@@ -100,7 +104,7 @@ const sameDate = isSameDate == formatedDate
               <div className="text-base font-semibold">
                 <h2 className="text-lg text-gray-400">Payment</h2>
                 <div className="flex items-center gap-2">
-                  <SiVisa  className="text-blue text-4xl shadow px-1 py-0 h-auto w-10" />
+                  <SiVisa className="text-blue text-4xl shadow px-1 py-0 h-auto w-10" />
                   <p className="text-black">
                     ending with {data.cardLastDigits} -{" "}
                     {data.currency} {data.totalPrice}
@@ -118,7 +122,7 @@ const sameDate = isSameDate == formatedDate
         </div>
 
         <div className="md:w-1/2 sm:w-full md:order-2 order-1">
-          <OrderSummary data={NewDatas} trackingOrer/>
+          <OrderSummary data={NewDatas} trackingOrer />
         </div>
       </div>
     </Container>
