@@ -23,6 +23,7 @@ export interface SocialLink {
     value?: string | number;
     onChange?: ChangeEvent<HTMLInputElement>
     min?: string
+    onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void; // eslint-disable-line
   };
   export interface FAQ {
     question: string;

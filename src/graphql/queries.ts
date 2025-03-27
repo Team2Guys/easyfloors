@@ -120,6 +120,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         name
         posterImageUrl
         custom_url
+        description
       }
       products {
         id
@@ -134,6 +135,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         waterproof
         plankWidth
         colorCode
+        colors
         ResidentialWarranty
         CommmericallWarranty
         thickness
@@ -142,6 +144,7 @@ export const FETCH_ALL_CATEGORIES = gql`
           id
           name
           custom_url
+          
         }
         acessories {
           id

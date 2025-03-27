@@ -280,8 +280,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     newImageIndex: string,
     setImagesUrlhandler: React.Dispatch<
       React.SetStateAction<ProductImage[] | undefined>
-      >,
-      variantType:string
+    >,
+    variantType: string
   ) => {
     setImagesUrlhandler((prev: ProductImage[] | undefined) => {
       if (!prev) return [];
@@ -292,7 +292,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       return updatedImagesUrl;
     });
   };
- 
+
   const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
@@ -539,8 +539,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               type="text"
                               placeholder="Title"
                               className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error
-                                  ? "border-red-500"
-                                  : ""
+                                ? "border-red-500"
+                                : ""
                                 }`}
                             />
                           )}
@@ -565,8 +565,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 type="text"
                                 placeholder="Title"
                                 className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${meta.touched && meta.error
-                                    ? "border-red-500"
-                                    : ""
+                                  ? "border-red-500"
+                                  : ""
                                   }`}
                               />
                               {meta.touched && meta.error ? (
@@ -589,9 +589,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           value={formik.values.description}
                           placeholder="description"
                           className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
-                              formik.errors.description
-                              ? "border-red-500"
-                              : ""
+                            formik.errors.description
+                            ? "border-red-500"
+                            : ""
                             }`}
                         />
                         {formik.touched.description &&
@@ -620,8 +620,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             placeholder="Product Price"
                             min="0"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.price && formik.errors.price
-                                ? "border-red-500"
-                                : ""
+                              ? "border-red-500"
+                              : ""
                               }`}
                           />
                           {formik.touched.price && formik.errors.price ? (
@@ -647,9 +647,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             placeholder="How many items available"
                             min="0"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.discountPrice &&
-                                formik.errors?.discountPrice
-                                ? "border-red-500"
-                                : ""
+                              formik.errors?.discountPrice
+                              ? "border-red-500"
+                              : ""
                               }`}
                           />
 
@@ -695,8 +695,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               value={formik.values.Meta_Title}
                               placeholder="Meta Title"
                               className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                                  ? "border-red-500"
-                                  : ""
+                                ? "border-red-500"
+                                : ""
                                 }`}
                             />
                             {formik.touched.Meta_Title &&
@@ -718,8 +718,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               value={formik.values.Canonical_Tag}
                               placeholder="Canonical Tag"
                               className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
-                                  ? "border-red-500"
-                                  : ""
+                                ? "border-red-500"
+                                : ""
                                 }`}
                             />
 
@@ -741,9 +741,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             value={formik.values.Meta_Description}
                             placeholder="Meta Description"
                             className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.description &&
-                                formik.errors.description
-                                ? "border-red-500"
-                                : ""
+                              formik.errors.description
+                              ? "border-red-500"
+                              : ""
                               }`}
                           />
                           {formik.touched.Meta_Description &&
@@ -919,6 +919,69 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </div>
 
                       <div className="py-4 px-6 rounded-sm border border-stroke">
+                        <div className="rounded-sm border border-stroke bg-white mb-4 dark:bg-black">
+                          <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                            <h3 className="font-medium text-black dark:text-white">
+                              Add Colors
+                            </h3>
+                          </div>
+                          <div className="flex flex-col py-4 px-6">
+                            <FieldArray name="colors">
+                              {({ push, remove }) => (
+                                <div className="flex flex-col gap-2">
+                                  {formik.values.colors &&
+                                    formik.values.colors.map(
+                                      (
+                                        model: AdditionalInformation,
+                                        index: number
+                                      ) => (
+                                        <div
+                                          key={index}
+                                          className="flex items-center"
+                                        >
+                                          <input
+                                            type="text"
+                                            name={`colors[${index}].name`}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik?.values?.colors?.[index].name}
+                                            placeholder="color Name"
+                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                          />
+                                          <input
+                                            type="text"
+                                            name={`colors[${index}].detail`}
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.colors?.[index].detail}
+                                            placeholder="add code"
+                                            className="w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                          />
+                                          <button
+                                            type="button"
+                                            onClick={() => remove(index)}
+                                            className="ml-2 text-red-500 "
+                                          >
+                                            <RxCross2
+                                              className="text-red-500 dark:text-white"
+                                              size={25}
+                                            />
+                                          </button>
+                                        </div>
+                                      )
+                                    )}
+                                  <button
+                                    type="button"
+                                    onClick={() => push({ name: "", detail: "" })}
+                                    className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
+                                  >
+                                    Add color
+                                  </button>
+                                </div>
+                              )}
+                            </FieldArray>
+                          </div>
+                        </div>
                         <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                           <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                             Add Color Code
@@ -1070,13 +1133,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       value={formik?.values?.FAQS[index].name}
                                       placeholder="Model Name"
                                       className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
-                                          (
-                                            formik.errors.FAQS as FormikErrors<
-                                              FormValues["FAQS"]
-                                            >
-                                          )?.[index]
-                                          ? "border-red-500 dark:border-white"
-                                          : ""
+                                        (
+                                          formik.errors.FAQS as FormikErrors<
+                                            FormValues["FAQS"]
+                                          >
+                                        )?.[index]
+                                        ? "border-red-500 dark:border-white"
+                                        : ""
                                         }`}
                                     />
                                     <input
@@ -1087,13 +1150,13 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       value={formik.values.FAQS[index].detail}
                                       placeholder="Model Detail"
                                       className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
-                                          (
-                                            formik.errors.FAQS as FormikErrors<
-                                              FormValues["FAQS"]
-                                            >
-                                          )?.[index]
-                                          ? "border-red-500 dark:border-white"
-                                          : ""
+                                        (
+                                          formik.errors.FAQS as FormikErrors<
+                                            FormValues["FAQS"]
+                                          >
+                                        )?.[index]
+                                        ? "border-red-500 dark:border-white"
+                                        : ""
                                         }`}
                                     />
                                     <button
@@ -1154,14 +1217,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       }
                                       placeholder="Model Name"
                                       className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
-                                          (
-                                            formik.errors
-                                              .AdditionalInformation as FormikErrors<
-                                                FormValues["AdditionalInformation"]
-                                              >
-                                          )?.[index]
-                                          ? "border-red-500 dark:border-white"
-                                          : ""
+                                        (
+                                          formik.errors
+                                            .AdditionalInformation as FormikErrors<
+                                              FormValues["AdditionalInformation"]
+                                            >
+                                        )?.[index]
+                                        ? "border-red-500 dark:border-white"
+                                        : ""
                                         }`}
                                     />
                                     <input
@@ -1176,14 +1239,14 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                       }
                                       placeholder="Model Detail"
                                       className={`w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
-                                          (
-                                            formik.errors
-                                              .AdditionalInformation as FormikErrors<
-                                                FormValues["AdditionalInformation"]
-                                              >
-                                          )?.[index]
-                                          ? "border-red-500 dark:border-white"
-                                          : ""
+                                        (
+                                          formik.errors
+                                            .AdditionalInformation as FormikErrors<
+                                              FormValues["AdditionalInformation"]
+                                            >
+                                        )?.[index]
+                                        ? "border-red-500 dark:border-white"
+                                        : ""
                                         }`}
                                     />
                                     <button
@@ -1367,7 +1430,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     String(e.target.value),
                                     setImagesUrl,
                                     "plankHeight",
-                                   
+
                                   )
                                 }
                               />
@@ -1455,36 +1518,36 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                                 {accessoryFlag && (
                                   <>
-                                  <input
-                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                    placeholder="color"
-                                    type="text"
-                                    name="color"
-                                    value={item?.color || ""}
-                                    onChange={(e) =>
-                                      handleImageAltText(
-                                        index,
-                                        String(e.target.value),
-                                        setfeatureImagesImagesUrl,
-                                        "color"
-                                      )
-                                    }
-                                  />
-                                   <input
-                                    className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                    placeholder="colorName"
-                                    type="text"
-                                    name="colorName"
-                                    value={item?.colorName}
-                                    onChange={(e) =>
-                                      handleImageAltText(
-                                        index,
-                                        String(e.target.value),
-                                        setfeatureImagesImagesUrl,
-                                        "colorName"
-                                      )
-                                    }
-                                   />
+                                    <input
+                                      className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                      placeholder="color"
+                                      type="text"
+                                      name="color"
+                                      value={item?.color || ""}
+                                      onChange={(e) =>
+                                        handleImageAltText(
+                                          index,
+                                          String(e.target.value),
+                                          setfeatureImagesImagesUrl,
+                                          "color"
+                                        )
+                                      }
+                                    />
+                                    <input
+                                      className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                      placeholder="colorName"
+                                      type="text"
+                                      name="colorName"
+                                      value={item?.colorName}
+                                      onChange={(e) =>
+                                        handleImageAltText(
+                                          index,
+                                          String(e.target.value),
+                                          setfeatureImagesImagesUrl,
+                                          "colorName"
+                                        )
+                                      }
+                                    />
                                   </>
                                 )}
                               </div>

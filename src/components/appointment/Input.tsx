@@ -2,7 +2,7 @@ import { Field, ErrorMessage } from "formik";
 import React from "react";
 import { TextInputProps } from "types/types";
 
-const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeholder = "", type = "text" , value , onChange , min }) => {
+const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeholder = "", type = "text" , value , onChange , min,  onFocus }) => {
   return (
     <div className="flex flex-col mb-1">
       <label htmlFor={name} className="text-13 font-medium font-inter">
@@ -41,6 +41,7 @@ const Input: React.FC<TextInputProps> = ({ label, name, required = false, placeh
           value={value}
           min={min}
           onChange={onChange}
+          onFocus={onFocus}
         />
       </div>
       <ErrorMessage name={name} component="div" className="text-red-500 text-sm" />

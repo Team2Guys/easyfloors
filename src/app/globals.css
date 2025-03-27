@@ -64,6 +64,22 @@
   background: #000000; 
 }
 
+.transparentScroll::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+.transparentScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.transparentScroll::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.transparentScroll::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
 .category_slider .swiper-pagination-bullet {
   background: black !important;
   width: 10px;
