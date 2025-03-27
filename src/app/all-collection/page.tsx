@@ -1,4 +1,5 @@
 import CollectionCard from "components/CollectionCard/CollectionCard";
+import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import { fetchSubCategories } from "config/fetch";
 import { FETCHSUBCAT } from "graphql/queries";
@@ -10,8 +11,8 @@ const AllCollection= async () => {
   return (
     <div>
       <Breadcrumb title="All Collections" image='/assets/images/category/allcollection.png' />
-      <div className="container mx-auto px-4 md:mt-10 mt-8 ">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md:gap-6 gap-2 justify-items-center place-items-center  w-full mx-auto">
+      <Container className="md:mt-10 mt-8 mb-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 md:gap-6 gap-2 w-full">
           {subcategories && subcategories.map((subcategory: ISUBCATEGORY, index:number) => (
             <div key={index} >
               <CollectionCard subcategory={subcategory}  />
@@ -19,7 +20,7 @@ const AllCollection= async () => {
           ))}
         </div>
 
-      </div>
+      </Container>
     </div>
 
   );

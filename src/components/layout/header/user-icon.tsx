@@ -125,7 +125,7 @@ const UserIcon = ({ className, cartTotal, wishlistTotal,freeSampleTotal }: UserI
         className="relative flex h-7 justify-center p-1 text-white active:text-black focus:text-black hover:text-white items-center lg:bg-white lg:hover:bg-primary lg:text-black max-lg:focus:bg-white"
       >
         {(wishlistTotal ?? 0) > 0 && (
-          <span className="absolute flex bg-primary h-4 justify-center text-white text-xs w-4 -right-1 -top-1 font-semibold items-center">
+          <span className="absolute flex bg-white lg:bg-primary h-3 sm:h-4 justify-center text-black lg:text-white text-xs w-3 sm:w-4 -right-1 -top-1 font-semibold items-center">
             {wishlistTotal}
           </span>
         )}
@@ -150,10 +150,10 @@ const UserIcon = ({ className, cartTotal, wishlistTotal,freeSampleTotal }: UserI
       <Link
         href="/cart"
         aria-label="Go to cart page"
-        className="relative flex h-7 justify-center p-1 fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white"
+        className="relative flex h-7 justify-center p-1 fill-white focus:bg-white  focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white"
       >
         {(cartTotal ?? 0) > 0 && (
-          <span className="absolute flex bg-primary h-4 justify-center text-white text-xs w-4 -right-1 -top-1 font-semibold items-center">
+          <span className="absolute flex bg-white lg:bg-primary h-3 sm:h-4 justify-center text-black lg:text-white text-10 sm:text-xs w-3 sm:w-4 -right-1 -top-1 font-semibold items-center">
             {cartTotal}
           </span>
         )}

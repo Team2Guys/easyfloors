@@ -8,59 +8,17 @@ import Megamenu from "./Megamenu";
 import { FaBars } from "react-icons/fa6";
 import Drawer from "components/ui/drawer";
 import { BiChevronDown } from "react-icons/bi";
-import { toast } from "react-toastify";
-import { fetchCategories, fetchProducts } from "config/fetch";
-import { FETCH_HEADER_CATEGORIES, FETCH_HEADER_PRODUCTS, } from "graphql/queries";
 import { staticMenuItems } from "data/data";
-import { Category, ISUBCATEGORY } from "types/cat";
-import { getCart, getFreeSamples, getWishlist } from "utils/indexedDB";
-import { ICart, IProduct } from "types/prod";
+import { ISUBCATEGORY } from "types/cat";
+import { INavbar } from "types/types";
 
-const Navbar = () => {
+
+
+const Navbar = ({categories,products,cartTotal,wishlistTotal,freeSampleTotal}:INavbar) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [isScrolled, setIsScrolled] = useState(false);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [cartTotal, setCartTotal] = useState<ICart[]>();
-  const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
-  const [freeSampleTotal, setfreeSampleTotal] = useState<ICart[]>();
-  useEffect(() => {
-    const fetchItems = async () => {
-      try {
-        const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-        const product = await fetchProducts(FETCH_HEADER_PRODUCTS);
-        const items = await getCart();
-        const wishlist = await getWishlist();
-        const freesample = await getFreeSamples();
-
-        setCategories(data)
-        setProducts(product)
-        setCartTotal(items);
-        setWishlistTotal(wishlist);
-        setfreeSampleTotal(freesample);
-      } catch {
-        toast.error("Error fetching items");
-      }
-    };
-
-    fetchItems();
-    const handleCartUpdate = () => fetchItems();
-    const handleWishlistUpdate = () => fetchItems();
-    const handlefreeSampleUpdate = () => fetchItems();
-
-    window.addEventListener("cartUpdated", handleCartUpdate);
-    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
-    window.addEventListener("freeSampleUpdated", handlefreeSampleUpdate);
-
-    return () => {
-      window.removeEventListener("cartUpdated", handleCartUpdate);
-      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
-      window.removeEventListener("freeSampleUpdated", handlefreeSampleUpdate);
-    };
-
-  }, []);
-
+ 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -90,7 +48,7 @@ const Navbar = () => {
   };
 
   const menuItems = staticMenuItems.map((staticItem) => {
-    const matchedCategory = categories.find((cat) => cat.custom_url === staticItem.href);
+    const matchedCategory = categories?.find((cat) => cat.custom_url === staticItem.href);
     if (!matchedCategory) return staticItem
     const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalledSubCats.length > 0;
     const subcategories: ISUBCATEGORY[] = (reCallFlag ? matchedCategory.recalledSubCats : matchedCategory.subcategories) as ISUBCATEGORY[] || [];

@@ -54,8 +54,9 @@ const Card: React.FC<productCardProps> = ({
 
 
   return (
-    <div className={`overflow-hidden group ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
-      <div className="relative">
+    <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
+     <div>
+     <div className="relative">
         <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
           <Image
             src={product.posterImageUrl?.imageUrl ?? ''}
@@ -101,7 +102,7 @@ const Card: React.FC<productCardProps> = ({
             </button>
           </div>
         }
-      </div>
+     </div>
       {isModalOpen && (
         <div
           className="flex bg-black bg-opacity-50 justify-center p-4 fixed inset-0 items-center z-50"
@@ -145,15 +146,17 @@ const Card: React.FC<productCardProps> = ({
       <div className="p-2 font-inter font-light lg:p-4">
         <Link
           href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
-          className={`md:mt-0 mt-1 text-left font-semibold ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55]"
+          className={`md:mt-0 mt-1 text-left font-semibold  ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55] text-12 sm:text-base"
             }`}
         >
           {isAccessories ? `${product.name}` : product.name}
         </Link>
-
-        <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start py-2">
+      </div>
+     </div>
+        <div className="p-2 font-inter font-light lg:p-4">
+        <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start sm:py-2 max-sm:text-primary">
           {'price' in product && product.price &&
-            <p className="text-sm w-full font-bold md:text-14 md:text-left md:w-full xl:text-base">
+            <p className="text-12 w-full font-bold md:text-14 md:text-left md:w-full xl:text-base">
               {isAccessories ? '' : 'Only '} AED <span className="text-primary">{product?.price}</span>/m<span className="align-super text-10">2</span>
             </p>
           }
@@ -175,7 +178,7 @@ const Card: React.FC<productCardProps> = ({
 
           </div>
         </div>
-      </div>
+        </div>
     </div>
   );
 };
