@@ -96,6 +96,18 @@ export class SalesProductsService {
     }
   }
 
+  async findOrderByMail(email: string) {
+    try {
+      console.log(email, "email")
+   let users =  await this.prisma.salesProducts.findMany({where: { email }})
+console.log(users, "users")
+   return users;
+    } catch (error) {
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+
+    }
+  }
+
 
   async get_all_records() {
     try {

@@ -32,6 +32,12 @@ export class SalesProductsResolver {
     return this.salesProductsService.findOne(orderId);
   }
 
+  @Public()
+  @Query(() => [paymentStatus], { name: 'usersOrders' })
+  OrdersMyMail(@Args('email', { type: () => String }) email: string) {
+    return this.salesProductsService.findOrderByMail(email);
+  }
+
   @Query(() => ALL_RECORDS, { name: 'GET_ALL_RECORDS' })
   get_all_records() {
     return this.salesProductsService.get_all_records();
@@ -42,5 +48,7 @@ export class SalesProductsResolver {
   Contact_email(@Args('contactUsEmail') contactUsEmail: contactUsEmailInput) {
     return this.salesProductsService.contactUs(contactUsEmail);
   }
+
+
 
 }
