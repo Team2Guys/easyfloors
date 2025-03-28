@@ -48,8 +48,6 @@ const accessoryFlag = path === "/dashboard/accessories";
     products: editProduct  && editProduct?.products?.map((value)=>value.id) || [],
   };
 
-  
-
   useEffect(() => {
     setProducts((accessoryFlag && accessories) ? accessories : productsData);
   }, [productsData, accessories]);

@@ -25,6 +25,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       ResidentialWarranty
       CommmericallWarranty
       colorCode
+      colors
       thickness
       FAQS
         boxCoverage
@@ -220,6 +221,95 @@ export const FETCH_ALL_APPOINTMENTS = gql`
     }
   }
 `;
+
+export const FETCH_ALL_ORDERS = gql`
+query AllOrders {
+    AllOrders {
+        firstName
+        lastName
+        email
+        country
+        city
+        address
+        note
+        phone
+        emirate
+        orderId
+        transactionDate
+        shipmentFee
+        totalPrice
+        checkout
+        paymentStatus
+        isRefund
+        success
+        pending
+        currency
+        is3DSecure
+        checkoutDate
+        shippingMethod
+        products {
+            id
+            name
+            price
+            stock
+            image
+            subcategories
+            category
+            boxCoverage
+            totalPrice
+            pricePerBox
+            squareMeter
+            requiredBoxes
+        }
+    }
+}
+`
+
+export const GET_ORDER_HISTORY = gql`
+query UsersOrders($email: String!) {
+    usersOrders(email: $email) {
+        firstName
+        lastName
+        email
+        country
+        city
+        address
+        note
+        phone
+        emirate
+        orderId
+        transactionDate
+        shipmentFee
+        totalPrice
+        pay_methodType
+        paymethod_sub_type
+        cardLastDigits
+        checkout
+        paymentStatus
+        isRefund
+        success
+        pending
+        currency
+        is3DSecure
+        checkoutDate
+        shippingMethod
+        products {
+            id
+            name
+            price
+            stock
+            image
+            subcategories
+            category
+            boxCoverage
+            totalPrice
+            pricePerBox
+            squareMeter
+            requiredBoxes
+        }
+    }
+}
+`
 
 export const GET_ADMIN_DETAILS = gql`
   query GetAdmin {

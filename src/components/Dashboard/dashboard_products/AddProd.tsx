@@ -216,6 +216,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         productImages: imagesUrl,
         category: +selectedCategory,
         featureImages: featureImagesimagesUrl,
+        colorCode: values.colorCode === '' ? undefined : values.colorCode
       };
 
       if (!accessoryFlag) {
