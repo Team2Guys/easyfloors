@@ -139,8 +139,7 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
                   onFocus={(e) => e.target.showPicker()}
                   min={new Date().toISOString().split("T")[0]}
                 />
-
-                {/* Preferred Time Dropdown with Fix */}
+                
                 <Select
                   label="Preferred Time"
                   name="preferredTime"

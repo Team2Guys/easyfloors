@@ -9,9 +9,8 @@ const AboutUs = () => {
   return (
     <>
       <Breadcrumb title="About Us" image="/assets/images/aboutus/banner.png" />
-
       <Container>
-        <div className="container mx-auto py-12">
+        <div className="py-12">
           <AboutUsInfo sections={alternatingData} />
         </div>
         <div>
