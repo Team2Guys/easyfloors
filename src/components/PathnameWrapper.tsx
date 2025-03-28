@@ -24,9 +24,6 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
         )}
 
         {children}
-
-        {!hideNeedHelpPages.includes(pathname) && <NeedHelp />}
-
         {pathname !== '/' &&
         (withoutHeaderPages.includes(pathname) ||
           pathname.split('/').includes('dashboard')) ? (

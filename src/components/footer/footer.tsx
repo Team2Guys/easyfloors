@@ -153,18 +153,22 @@ const Footer = () => {
                 </div>
             </Container>
 
-            <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row items-center justify-between bg-primary">
-                <Container className="flex items-center justify-between">
+            <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
+                <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
                     <div className="flex md:space-x-4 space-x-2">
                         <SocialIcon/>
                     </div>
-
-                    <div className="sm:absolute left-1/2 transform sm:-translate-x-1/2">
-                        <p className="text-sm text-white font-inter font-medium xs:font-extralight text-center">
+                    <div className='text-start sm:text-center'>
+                        <p className="text-sm text-white font-inter font-medium xs:font-extralight ">
                             Easyfloors.ae ©2025
                         </p>
                     </div>
-
+                    <div className="sm:space-x-4 max-sm:gap-2 text-white text-12 2xl:text-16 font-inter font-light flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-end xl:whitespace-nowrap w-full">
+                     <Link className='w-full text-start sm:w-fit' href="/terms-and-conditions">Terms & Conditions</Link>
+                     <Link className='w-full text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
+                     <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
+                     <Link className='w-full text-start sm:w-fit' href="/return-and-refund-policy">Return & Refund policy</Link>
+                    </div>
                 </Container>
             </div>
 
