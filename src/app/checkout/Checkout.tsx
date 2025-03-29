@@ -356,7 +356,7 @@ const Checkout = () => {
                                                 <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
                                                     <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                                    <p className="text-11 xs:text-16">`Installation charge for straight planks is AED 25 per metre square, and for herringbone is AED 35 per metre square. We're based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.`
+                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is AED 25 per metre square, and for herringbone is AED 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
                                                     </p>
                                                     <Link target="_blank" rel="noopener noreferrer" className="hover:text-primary" href="/measurement-appointment">Book Free Installation Appointment</Link>
                                                 </div>
