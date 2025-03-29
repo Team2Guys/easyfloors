@@ -31,9 +31,8 @@ const router = useRouter()
             Back to home
           </Link>
 
-          <h2 className="text-4xl text-center text-primary font-bold font-inter mt-20" dangerouslySetInnerHTML={{ __html: loginData.title }} />
-          <h3 className="text-4xl text-center font-normal mb-4 mt-14">{loginData.subtitle}</h3>
-          <p className="text-center text-gray-500 text-sm mt-2">{loginData.description}</p>
+          <h2 className="sm:text-4xl text-2xl text-center text-primary font-bold font-inter sm:mt-20 mt-10" dangerouslySetInnerHTML={{ __html: loginData.title }} />
+          <h3 className="sm:text-4xl text-2xl text-center font-bold font-inter sm:mt-20 mt-10">{loginData.subtitle}</h3>
 
           <Formik
             initialValues={formValues}
