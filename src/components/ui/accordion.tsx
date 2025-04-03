@@ -3,7 +3,9 @@ import React from "react";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { AccordionProps } from "types/types";
 
+
 const Accordion = ({ label, children, isOpen, onToggle,  detailpage, showPlusMinus }: AccordionProps) => {
+  
   return (
     <div className={`py-2 ${showPlusMinus ? '' : detailpage ? 'border px-2' : 'border-b'}`}>
       <div className="flex justify-between items-center">

@@ -50,10 +50,12 @@ export interface SampleGridData {
   buttonText: string;
   image: string;
   alt: string;
+  href:string;
 }
 
 export interface SampleGridProps {
   sections: SampleGridData[];
+
 }
 
 export interface TAutoVideoProps {

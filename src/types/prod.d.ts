@@ -13,6 +13,7 @@ export interface ProductImage {
   colorName?: string;
   plankWidth?: string;
   plankHeight?: string;
+  isBlurred?: boolean; 
 }
 
 export interface AdditionalInformation {

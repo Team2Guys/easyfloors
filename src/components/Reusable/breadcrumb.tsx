@@ -65,7 +65,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
       {image && (
         <div className="relative mt-2">
           <Image
-            className={`object-fill w-full sm:h-[200px] xl:h-[332px] ${imageClass}`}
+            className={`object-fill w-full h-[110px] sm:h-[200px] xl:h-[332px] ${imageClass}`}
             width={1400}
             height={400}
             src={image}
@@ -73,7 +73,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
           />
           {!isImagetext && (
             <div className="absolute inset-0 flex justify-center items-center text-white text-center">
-              <h1 className="text-30 md:text-[42.6px] font-bold">{title}</h1>
+              <h1 className="text-25 md:text-[42.6px] font-bold">{title}</h1>
             </div>
           )}
         </div>
