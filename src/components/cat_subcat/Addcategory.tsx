@@ -291,6 +291,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setposterimageUrl,
+                                      "altText"
                                     )
                                   }
                               />
@@ -377,6 +378,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setBannerImageUrl,
+                                      "altText"
                                     )
                                   }
                                 />

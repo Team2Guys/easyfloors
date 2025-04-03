@@ -181,7 +181,6 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       whatAmiImage
       whatamIdetails
       whatAmiTopHeading
-      whatAmiImage
       whatAmiImageBanner
       homePageImage
       Heading
