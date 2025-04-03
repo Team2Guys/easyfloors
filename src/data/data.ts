@@ -262,7 +262,7 @@ export const featureItems = [
     title: "Free Samples",
     description:
       "Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy.",
-    icon: "/assets/images/Home/free.png",
+    icon: "/assets/images/Home/freee.png",
   },
   {
     title: "Easy payment",
@@ -777,7 +777,7 @@ export const alternatingData: TAboutUs[] = [
   },
   {
     id: 3,
-    image: "/assets/images/aboutus/about1.png",
+    image: "/assets/images/aboutus/third.webp",
     alt: "Third Image",
     heading: "Why Choose Easy Floors",
     paragraph: "At Easy Floors, we understand that choosing the right flooring is a big decision. We offer many premium options to fit any space and budget, along with a 15-year residential and 5-year commercial warranty enabling you to choose with confidence. Our focus on quality, transparency, and customer satisfaction sets us apart.",
