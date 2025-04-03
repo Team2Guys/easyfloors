@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     domains: [
       'res.cloudinary.com'
     ],
-   
+   unoptimized:true
   },
 };
 

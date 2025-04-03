@@ -44,6 +44,7 @@ const accessoryFlag = path === "/dashboard/accessories";
     featureImages:editProduct && editProduct?.featureImages || [],
     colorCode:editProduct && editProduct?.colorCode,
     colors: editProduct && editProduct?.colors,
+    updatedAt: editProduct && editProduct?.updatedAt,
     //@ts-expect-error added
     products: editProduct  && editProduct?.products?.map((value)=>value.id) || [],
   };

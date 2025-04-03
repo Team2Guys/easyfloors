@@ -3,7 +3,7 @@ import React from 'react'
 
 const Installation = () => {
   return (
-  <AppointmentMain AppointsType='INSTALLATIONS' title='Installation Appointment' description='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.'/>
+  <AppointmentMain AppointsType='INSTALLATIONS' title='Installation Appointment' description='You can book an appointment with us, and once the booking is made, we will contact you to confirm the location, preferred date, and time for the service. Our professional team will then visit the site to complete the installation. The installation charges are AED 25 per square metre for straight planks and AED 35 per square metre for herringbone patterns. Please note that these rates are applicable within Dubai. If you are located in other areas of the Emirates, additional charges may apply. Please feel free to contact us via call or email for more detailed information.'/>
   )
 }
 

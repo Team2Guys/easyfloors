@@ -51,7 +51,7 @@ export interface ISUBCATEGORY extends Category {
   id: number | string
   category:EDIT_CATEGORY,
   products?:IProduct[]
-  whatAmiImage?:ProductImage;
+  whatAmiImage?:ProductImage[];
   whatAmiImageBanner?:ProductImage;
   homePageImage?:ProductImage;
   whatAmiTopHeading?:string
