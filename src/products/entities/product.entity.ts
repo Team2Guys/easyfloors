@@ -100,5 +100,7 @@ export class Product {
   
   @Field(() => [GraphQLJSON])
   colors: any[]
+  @Field(() => [GraphQLJSON],{nullable:true})
+  sizes?: any[]
 
 }

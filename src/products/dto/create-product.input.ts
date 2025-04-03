@@ -96,5 +96,8 @@ export class CreateProductInput {
 
   @Field(() => ID, { nullable: true })
   acessories?: number
+  
+  @Field(() => [GraphQLJSON],{nullable:true})
+  sizes?: any[]
 
 }
