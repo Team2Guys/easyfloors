@@ -339,6 +339,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setposterimageUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -401,6 +402,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setBannerImageUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -464,7 +466,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setWhatamIImageUrl,
-
+                                      "altText"
                                     )
                                   }
                                 />
@@ -528,7 +530,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setBannerImage,
-
+                                      "altText"
                                     )
                                   }
                                 />
@@ -591,7 +593,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       sethomePagemageUrl,
-
+                                      "altText"
                                     )
                                   }
                                 />
