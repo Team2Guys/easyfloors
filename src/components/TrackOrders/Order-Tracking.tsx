@@ -121,6 +121,7 @@ export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
           </div>
         </div>
 
+          
         <div className="md:w-1/2 sm:w-full md:order-2 order-1">
           <OrderSummary data={NewDatas} trackingOrer />
         </div>

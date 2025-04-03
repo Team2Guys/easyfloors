@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { FETCH_HEADER_CATEGORIES } from 'graphql/queries';
 import { Category as ICategory } from "types/cat";
 import dynamic from 'next/dynamic';
-const Footerlinks =  dynamic(() => import('./Footerlinks'));
+const Footerlinks = dynamic(() => import('./Footerlinks'));
 
 import SocialIcon from 'components/Reusable/social-icon';
 
@@ -21,26 +21,26 @@ const Footer = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
         const getCategories = async () => {
-          try {
-            const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-            const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
-              const indexA = staticMenuItems.findIndex(
-                (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
-              );
-              const indexB = staticMenuItems.findIndex(
-                (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
-              );
-              return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-            });
-    
-            setCategories(sortedCategories);
-          } catch {
-            toast.error("Error fetching categories:");
-          } 
+            try {
+                const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
+                const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
+                    const indexA = staticMenuItems.findIndex(
+                        (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+                    );
+                    const indexB = staticMenuItems.findIndex(
+                        (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+                    );
+                    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                });
+
+                setCategories(sortedCategories);
+            } catch {
+                toast.error("Error fetching categories:");
+            }
         };
         getCategories();
-      }, []);
-    
+    }, []);
+
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -83,18 +83,18 @@ const Footer = () => {
 
                         )
                     })
-                ):(
+                ) : (
                     <>
-                    {[...Array(5)].map((_, index) => (
-                      <div key={index} className="hidden sm:block w-full animate-pulse">
-                        {[...Array(5)].map((_, i) => (
-                          <div key={i} className="h-6 w-full bg-gray-300 rounded mb-3"></div>
+                        {[...Array(5)].map((_, index) => (
+                            <div key={index} className="hidden sm:block w-full animate-pulse">
+                                {[...Array(5)].map((_, i) => (
+                                    <div key={i} className="h-6 w-full bg-gray-300 rounded mb-3"></div>
+                                ))}
+                            </div>
                         ))}
-                      </div>
-                    ))}
                     </>
                 )}
-             
+
                 <div className="sm:block ">
                     <h3 className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</h3>
                     <div className="text-sm mt-3 flex items-start gap-2">
@@ -153,21 +153,23 @@ const Footer = () => {
                 </div>
             </Container>
 
-            <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
-                <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
-                    <div className="flex md:space-x-4 space-x-2">
-                        <SocialIcon/>
+            <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-row md:flex-row sm:items-center justify-between bg-primary">
+                <Container className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
+                    <div className='flex items-center sm:justify-between md:gap-0 gap-10 justify-start w-full lg:order-1 order-2'>
+                        <div className="flex md:space-x-4 space-x-2">
+                            <SocialIcon className='sm:pl-0 pl-2' />
+                        </div>
+                        <div className='text-start sm:text-center'>
+                            <p className="text-sm text-white font-inter font-medium xs:font-extralight ">
+                                Easyfloors.ae ©2025
+                            </p>
+                        </div>
                     </div>
-                    <div className='text-start sm:text-center'>
-                        <p className="text-sm text-white font-inter font-medium xs:font-extralight ">
-                            Easyfloors.ae ©2025
-                        </p>
-                    </div>
-                    <div className="sm:space-x-4 max-sm:gap-2 text-white text-12 2xl:text-16 font-inter font-light flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-end xl:whitespace-nowrap w-full">
-                     <Link className='w-full text-start sm:w-fit' href="/terms-and-conditions">Terms & Conditions</Link>
-                     <Link className='w-full text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
-                     <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
-                     <Link className='w-full text-start sm:w-fit' href="/return-and-refund-policy">Return & Refund policy</Link>
+                    <div className="sm:space-x-4 max-sm:gap-2 text-white text-13 2xl:text-sm sm:text-13 font-inter font-medium xs:font-extralight flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-end xl:whitespace-nowrap w-full lg:order-2 order-1">
+                        <Link className='w-fit text-start sm:w-fit ' href="/terms-and-conditions">Terms & Conditions</Link>
+                        <Link className='w-fit text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
+                        <Link className='w-fit text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
+                        <Link className='w-fit text-start sm:w-fit' href="/return-and-refund-policy">Return & Refund policy</Link>
                     </div>
                 </Container>
             </div>
