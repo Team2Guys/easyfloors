@@ -35,7 +35,7 @@ const Card: React.FC<productCardProps> = ({
       let productData;
       if (isAccessories) {
         const ProductInfo = await fetchAccessories();
-          productData = ProductInfo.find((prod: IProduct) => (prod?.custom_url?.trim() == product?.custom_url?.trim() && prod?.category?.custom_url?.trim() === "accessories"));
+        productData = ProductInfo.find((prod: IProduct) => (prod?.custom_url?.trim() == product?.custom_url?.trim() && prod?.category?.custom_url?.trim() === "accessories"));
       } else {
         productData = await fetchSingeProduct(
           product.custom_url || '',
@@ -64,110 +64,133 @@ const Card: React.FC<productCardProps> = ({
 
   return (
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
-     <div>
-     <div className="relative">
-        <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
-          <Image
-            src={product.posterImageUrl?.imageUrl ?? ''}
-            alt={product.name}
-            width={500}
-            height={200}
-            loading="lazy"
-            className={`w-full object-cover ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"} ${isAccessories ? "border border-gray-700 " : " "}`}
-          />
-        </Link>
-        {isAccessories && isSoldOut && (
-          <div className="bg-red-500 text-white text-xs absolute px-2 py-1 right-0 top-1">
-            Sold Out
+      <div>
+        <div className="relative">
+          <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
+            <Image
+              src={product.posterImageUrl?.imageUrl ?? ''}
+              alt={product.name}
+              width={500}
+              height={200}
+              loading="lazy"
+              className={`w-full object-cover ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"} ${isAccessories ? "border border-gray-700 " : " "}`}
+            />
+          </Link>
+          {isAccessories && isSoldOut && (
+            <div className="bg-red-500 text-white text-xs absolute px-2 py-1 right-0 top-1">
+              Sold Out
+            </div>
+          )}
+          {!sldier &&
+            <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
+              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
+                if ("price" in product) {
+                  handleAddToStorage
+                    (
+                      product,
+                      product.price ?? 0,
+                      0,
+                      0,
+                      1,
+                      product.subcategory?.name || "",
+                      categoryData?.name || "",
+                      "wishlist",
+                      product.posterImageUrl?.imageUrl ?? "",
+                      product?.boxCoverage,
+                    );
+                } else {
+                }
+              }}
+              >
+                <FiHeart size={20} />
+              </button>
+
+              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
+                <FiEye size={20} />
+              </button>
+            </div>
+          }
+        </div>
+        {isModalOpen && (
+          <div
+            className="flex bg-black bg-opacity-50 justify-center px-1 py-4 xs:p-4 fixed inset-0 items-center z-50"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <div
+              className="bg-white rounded-lg shadow-lg w-full xs:max-w-[90vw] max-h-[90vh] md:max-w-[1400px] overflow-x-hidden overflow-y-auto relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="bg-gray-100 rounded-full text-4xl text-gray-700 -right-1 -top-1 absolute font-bold hover:text-red-500 px-2 py-0"
+                onClick={() => setIsModalOpen(false)}
+              >
+                &times;
+              </button>
+              {isAccessories ?
+                <AccessoriesContainer productData={modalData as IProduct} />
+                :
+                <ProductContainer className="2xl:gap-0 xl:px-0"
+                  MainCategory={categoryData?.name || ""}
+                  subCategory={product?.subcategory?.name || ""}
+                  ProductName={product?.name || ""}
+                  productData={modalData as IProduct || []}
+                  ProductInfo={[]}
+                  isQuickView
+                />
+
+              }
+
+            </div>
           </div>
         )}
-        {!sldier &&
-          <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-            <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
-              if ("price" in product) {
-                handleAddToStorage
-                  (
-                    product,
-                    product.price ?? 0,
-                    0,
-                    0,
-                    1,
-                    product.subcategory?.name || "",
-                    categoryData?.name || "",
-                    "wishlist",
-                    product.posterImageUrl?.imageUrl ?? "",
-                    product?.boxCoverage,
-                  );
-              } else {
-              }
-            }}
-            >
-              <FiHeart size={20} />
-            </button>
+        {(product.sizes && product.sizes.length > 0) && <div className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light  ${isAccessories ? "py-3 justify-around " : " justify-evenly"}`}>
+          {product.sizes.map((feature, index) => (
+            <>
+              <div key={index} className="flex justify-between gap-1 items-center">
+                <Image
+                  src={features[0].icon}
+                  alt="Icon"
+                  width={features[0].width}
+                  height={features[0].height}
+                  className="text-gray-500 cursor-pointer hover:text-red-500"
+                />
+                <span className="text-[7px] text-black md:text-[12px]">{feature.width}mm</span>
+              </div>
+              <div key={index} className="flex justify-between gap-1 items-center">
+                <Image
+                  src={features[1].icon}
+                  alt="Icon"
+                  width={features[1].width}
+                  height={features[1].height}
+                  className="text-gray-500 cursor-pointer hover:text-red-500"
+                />
+                <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}mm</span>
+              </div>
+              <div key={index} className="flex justify-between gap-1 items-center">
+                <Image
+                  src={features[2].icon}
+                  alt="Icon"
+                  width={features[2].width}
+                  height={features[2].height}
+                  className="text-gray-500 cursor-pointer hover:text-red-500"
+                />
+                <span className="text-[7px] text-black md:text-[12px]">{feature.height}mm</span>
+              </div>
+            </>
+          ))}
+        </div>}
 
-            <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
-              <FiEye size={20} />
-            </button>
-          </div>
-        }
-     </div>
-      {isModalOpen && (
-        <div
-          className="flex bg-black bg-opacity-50 justify-center px-1 py-4 xs:p-4 fixed inset-0 items-center z-50"
-          onClick={() => setIsModalOpen(false)}
-        >
-          <div
-            className="bg-white rounded-lg shadow-lg w-full xs:max-w-[90vw] max-h-[90vh] md:max-w-[1400px] overflow-x-hidden overflow-y-auto relative"
-            onClick={(e) => e.stopPropagation()}
+        <div className="p-2 font-inter font-light lg:p-4">
+          <Link
+            href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
+            className={`md:mt-0 mt-1 text-left font-semibold  ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55] text-12 sm:text-base"
+              }`}
           >
-            <button
-              className="bg-gray-100 rounded-full text-4xl text-gray-700 -right-1 -top-1 absolute font-bold hover:text-red-500 px-2 py-0"
-              onClick={() => setIsModalOpen(false)}
-            >
-              &times;
-            </button>
-            {isAccessories ?
-            <AccessoriesContainer productData={modalData as IProduct} />
-            :
-            <ProductContainer className="2xl:gap-0 xl:px-0"
-            MainCategory={categoryData?.name || ""}
-            subCategory={product?.subcategory?.name || ""}
-            ProductName={product?.name || ""}
-            productData={modalData as IProduct || []}
-            ProductInfo={[]}
-            isQuickView
-            />
-
-            }
-            
-          </div>
+            {isAccessories ? `${product.name}` : product.name}
+          </Link>
         </div>
-      )}
-      <div className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light  ${isAccessories ? "py-3 justify-around " : " justify-evenly"}`}>
-        {features.map((feature, index) => (
-          <div key={index} className="flex justify-between gap-1 items-center">
-            <Image
-              src={feature.icon}
-              alt="Icon"
-              width={feature.width}
-              height={feature.height}
-              className="text-gray-500 cursor-pointer hover:text-red-500"
-            />
-            <span className="text-[7px] text-black md:text-[12px]">{feature.label}</span>
-          </div>
-        ))}
       </div>
       <div className="p-2 font-inter font-light lg:p-4">
-        <Link
-          href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
-          className={`md:mt-0 mt-1 text-left font-semibold  ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55] text-12 sm:text-base"
-            }`}
-        >
-          {isAccessories ? `${product.name}` : product.name}
-        </Link>
-      </div>
-     </div>
-        <div className="p-2 font-inter font-light lg:p-4">
         <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start sm:py-2 max-sm:text-primary">
           {'price' in product && product.price &&
             <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
@@ -192,7 +215,7 @@ const Card: React.FC<productCardProps> = ({
 
           </div>
         </div>
-        </div>
+      </div>
     </div>
   );
 };
