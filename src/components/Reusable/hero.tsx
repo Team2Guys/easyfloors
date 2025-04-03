@@ -40,16 +40,19 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
           </div>
           
           <div className="absolute bottom-4 sm:bottom-5 right-3 sm:right-5 xl:right-14 bg-background opacity-90 xs:opacity-95 p-1 sm:p-4 md:p-5 shadow-md w-[170px] h-[63px] sm:h-auto sm:w-[180px] md:w-[220px] lg:w-[314px] sm:space-y-1 xl:space-y-2 justify-start text-start">
+            <Link href="/polar-flooring" aria-label='Visit american walnut product page'>
             <h3 className="sm:text-sm lg:text-[28px] font-medium">
               {item.brand} 
             </h3>
             {/* <p className="text-[10px] lg:text-base">{item.flooringType}</p> */}
-            <p className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2">
+            
+            <p className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2 mt-3 ">
               {item.priceText}
-              <Link href="/polar/spc/american-walnut" aria-label='Visit american walnut product page' className="text-[16px] lg:text-[30px]">
+              <div className="text-[16px] lg:text-[30px]">
                 <TiArrowRight />
-              </Link>
+              </div>
             </p>
+            </Link>
           </div>
   
         </div>

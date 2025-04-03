@@ -158,6 +158,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     CategoryHandler();
   }, [EditInitialValues]);
 
+  console.log(productInitialValue,'productInitialValue')
+
   const onSubmit = async (
     changedValue: IProductValues,
     { resetForm }: FormikHelpers<IProductValues>
@@ -218,6 +220,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         featureImages: featureImagesimagesUrl,
         colorCode: values.colorCode === '' ? undefined : values.colorCode
       };
+      console.log('productInitialValue', newValues);
 
       if (!accessoryFlag) {
         Object.assign(newValues, images);
@@ -882,6 +885,57 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 <div className="flex flex-col gap-5">
                   {!accessoryFlag ? (
                     <>
+                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                          <h3 className="font-medium text-black dark:text-white">
+                            Add Dimentions
+                          </h3>
+                        </div>
+                        <div className="py-4 px-6">
+                          <div>
+                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                              Width
+                            </label>
+                            <input
+                              type="text"
+                              name="sizes[0].width"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.sizes?.at(0)?.width}
+                              placeholder="Add Width"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                              Height
+                            </label>
+                            <input
+                              type="text"
+                              name="sizes[0].height"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.sizes?.at(0)?.height}
+                              placeholder="Add Height"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                          <div>
+                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                            Thickness
+                            </label>
+                            <input
+                              type="text"
+                              name="sizes[0].thickness"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.sizes?.at(0)?.thickness}
+                              placeholder="Add Thickness"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                        </div>
+                      </div>
                       <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                         <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                           Waterproof

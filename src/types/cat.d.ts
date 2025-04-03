@@ -1,4 +1,4 @@
-import { AdditionalInformation, IProduct, ProductImage } from "./prod";
+import { AdditionalInformation, IProduct, ProductImage, Sizes } from "./prod";
 import { Product } from "./type";
 
 export interface Category {
@@ -44,6 +44,7 @@ export interface EDIT_CATEGORY extends Category {
     posterImageUrl?:ProductImage
     recalledSubCats?:ISUBCATEGORY[]
     subcategory?: ISUBCATEGORY_EDIT;
+    sizes?: Sizes[];
 
 }
 

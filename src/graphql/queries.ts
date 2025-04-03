@@ -27,6 +27,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       colorCode
       colors
       thickness
+      sizes
       FAQS
         boxCoverage
         featureImages
@@ -141,6 +142,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         CommmericallWarranty
         thickness
         boxCoverage
+        sizes
         subcategory {
           id
           name
@@ -507,6 +509,7 @@ query Product($custom_url: String!,$category: String!,$subCategory: String!, $ac
     FAQS
     boxCoverage
     featureImages
+    sizes
     category {
       id
       name

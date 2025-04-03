@@ -11,9 +11,12 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
         <Image
           src={card?.homePageImage?.imageUrl || ""}
           alt={card?.homePageImage?.altText || "easy Floor"}
-          fill
+          width={2000}
+          height={2000}
+          quality={100} 
+          unoptimized
           loading='lazy'
-          style={{ objectFit: "cover" }}
+          style={{ objectFit: "cover", width: "100%", height: "100%" }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
         />
 

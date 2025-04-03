@@ -141,7 +141,7 @@ const Footer = () => {
                     </div>
 
                 </div>
-                <div className="flex flex-col space-y-3 fixed right-4 bottom-32 md:right-16  z-20">
+                <div className="flex flex-col space-y-3 fixed right-4 bottom-10 md:right-16  z-20">
 
                     <Link href="tel:+971505974385" aria-label="Call +971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <IoCall size={35} />
@@ -161,24 +161,24 @@ const Footer = () => {
                     </div>
                     </div>
                     <div className='text-start sm:text-center hidden sm:block'>
-                        <p className="text-sm text-white font-inter font-medium xs:font-extralight ">
+                        <p className="text-12 sm:text-13 text-white font-inter font-medium xs:font-extralight ">
                             Easyfloors.ae ©2025
                         </p>
                     </div>
                     <div className="text-white  font-inter flex flex-wrap lg:flex-nowrap  lg:justify-end  w-full">
-                    <div className='flex justify-between xs:justify-center items-center text-12 2xl:text-16 font-light flex-nowrap xl:whitespace-nowrap gap-2 sm:gap-0 w-full sm:space-x-4'> <Link className='w-full text-start sm:w-fit text-nowrap xs:text-wrap xl:text-nowrap' href="/terms-and-conditions">Terms & Conditions</Link>
+                    <div className='flex justify-between xs:justify-center items-center text-12 sm:text-13 font-light flex-nowrap xl:whitespace-nowrap gap-2 sm:gap-0 w-full sm:space-x-4'> <Link className='w-full text-start sm:w-fit text-nowrap xs:text-wrap xl:text-nowrap' href="/terms-and-conditions">Terms & Conditions</Link>
                      <Link className='w-full text-center sm:text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
                      <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
-                     <Link className='w-full text-center font-light text-12 2xl:text-16  sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
+                     <Link className='w-full text-center sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
                     </div>
-                     <Link className='w-full text-center font-light text-12 sm:text-start sm:w-fit block sm:hidden mt-3 ' href="/return-and-refund-policy">Return & Refund policy</Link>
+                     <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light' href="/return-and-refund-policy">Return & Refund policy</Link>
                     </div>
                     <div className='block sm:hidden w-full'>
-                    <div className='flex justify-between items-center'>
-                    <div className="flex space-x-2 w-[35%] xs:w-[40%]">
+                    <div className='flex justify-start items-center'>
+                    <div className="flex space-x-2 w-[32%] xs:w-[40%]">
                         <SocialIcon/>
                     </div>
-                    <p className="text-10 xs:text-12 text-white font-inter font-light w-[65%] text-nowrap xs:w-[60%]">
+                    <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">
                             Easyfloors.ae ©2025
                     </p>
                    
