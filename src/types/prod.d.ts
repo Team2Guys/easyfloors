@@ -59,8 +59,10 @@ export interface IProduct {
     requiredBoxes?:number
     squareMeter?:number;
     totalPrice?:number
-
+    sizes?: Sizes[]
   }
+
+export interface Sizes { width: string, height: string, thickness: string }
 
 export interface IProductAccessories extends IProduct {
   products?: IProduct[];
