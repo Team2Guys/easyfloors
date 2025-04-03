@@ -13,6 +13,7 @@ import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useState } from "react";
 
 import { useRouter } from "next/navigation";
+import { loginData } from "data/data";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,8 +42,9 @@ const SignupForm = () => {
             </span>
             Back to home
           </Link>
+          <h2 className="sm:text-4xl text-2xl text-center text-primary font-bold font-inter mt-8" dangerouslySetInnerHTML={{ __html: loginData.title }} />
 
-          <h2 className="text-4xl text-center text-primary font-bold font-inter mt-20">
+          <h2 className="sm:text-4xl text-2xl text-center font-bold font-inter mt-8">
             Sign Up
           </h2>
 

@@ -25,11 +25,11 @@ const FAQsList: React.FC<FAQsListProps> = ({ faqspage }) => {
                             <div key={actualIndex} className="shadow-lg md:mt-6 mt-4 rounded-md md:py-5 py-3 border-gray-50">
                                 <button
                                     onClick={() => toggleFAQ(actualIndex)}
-                                    className="flex w-full items-center justify-between text-left focus:outline-none md:py-5 md:px-5 pt-2 px-5 font-inter font-semibold"
+                                    className="flex w-full items-center justify-between text-left focus:outline-none md:py-5 md:px-5 pt-2 px-3 font-inter font-semibold"
                                 >
                                     <h2 className="md:text-xl text-base text-[#1B1139]">
-                                        <div className="flex text-10 sm:text-base font-semibold font-inter md:items-center gap-5 text-[#1B1139]">
-                                            <div className="text-10">
+                                        <div className="flex text-13 sm:text-base font-semibold font-inter md:items-center sm:gap-5 gap-x-3 text-[#1B1139]">
+                                            <div className="text-13">
                                                 {openIndex === actualIndex ? (
                                                     <HiMinus size={30} className="md:w-[25px] w-[20px] font-light text-primary" />
                                                 ) : (
@@ -42,10 +42,10 @@ const FAQsList: React.FC<FAQsListProps> = ({ faqspage }) => {
                                 </button>
                                 <div
                                     className={`overflow-hidden transition-all duration-300 ease-in-out md:px-12 px-5 ${
-                                        openIndex === actualIndex ? "max-h-[500px] opacity-100 pb-2 md:pl-16 pl-16" : "max-h-0 opacity-0"
+                                        openIndex === actualIndex ? "max-h-[500px] opacity-100 pb-2 md:pl-16 pl-12" : "max-h-0 opacity-0"
                                     }`}
                                 >
-                                    <p className="font-normal text-[8px] font-inter md:text-lg sm:text-sm md:pt-0 pt-2 text-justify md:text-left">{faq.answer}</p>
+                                    <p className="font-normal text-12 font-inter md:text-lg sm:text-sm md:pt-0 pt-2 text-justify md:text-left">{faq.answer}</p>
                                 </div>
                             </div>
                         );

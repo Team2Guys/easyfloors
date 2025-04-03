@@ -25,7 +25,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
             className="md:flex block items-center md:text-black text-white w-full overflow-hidden md:bg-background bg-primary category_slider"
           >
             <div className="p-4 text-center md:text-start w-full md:w-1/4 font-inter sm:pl-10 md:pl-6 lg:pl-10 xl:pl-24">
-              <Link href={`/${category?.custom_url}`} className="text-2xl lg:text-4xl font-semibold">
+              <Link href={`/${category?.custom_url}`} className="text-lg lg:text-4xl font-semibold">
                 {category.name}
               </Link>
               <p className="text-sm lg:text-base md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">

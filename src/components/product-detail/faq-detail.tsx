@@ -25,7 +25,7 @@ const FaqDetail = ({ FAQS }: FAQprops) => {
     <div>
       {FAQS && FAQS.length > 0 && (
         <>
-          <p className="mx-auto max-w-[72%] sm:max-w-[25%] pl-1 mb-10 text-14 sm:text-24 font-inter font-medium pt-10">
+          <p className="mx-auto max-w-[72%] text-center sm:max-w-[25%] pl-1 mb-10 text-base sm:text-24 font-inter font-medium pt-10">
             FAQ’s
           </p>
           <div className="max-w-[90%] mx-auto mt-5 font-inter">
