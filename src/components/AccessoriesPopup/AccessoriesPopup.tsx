@@ -169,14 +169,17 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                ))}
              </div>
          
-             <input
-               type="number"
-               placeholder={`Enter Area (${unit[product.id] || "m"})`}
-               value={areas[product.id] || ""}
-               onChange={(e) => handleAreaChange(product.id, e.target.value)}
-               min="0" 
-               className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
-             />
+              <input
+                type="number"
+                placeholder={`Enter Area (${unit[product.id] || "m"})`}
+                value={areas[product.id] || ""}
+                onChange={(e) => handleAreaChange(product.id, e.target.value)}
+                min="0"
+                disabled={!selectedProducts.includes(String(product.id))} // Disable if not selected
+                className={`p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black ${
+                  !selectedProducts.includes(String(product.id)) ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              />
            </div>
            </div>
          
