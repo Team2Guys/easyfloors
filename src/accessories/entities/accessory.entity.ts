@@ -76,6 +76,9 @@ export class Accessory {
   @Field(() => Category, { nullable: true })
   category: Category
 
+  @Field(() => [GraphQLJSON],{nullable:true})
+  sizes?: any[]
+
   @Field(() => Int, { nullable: true })
   colorCode?: number
 

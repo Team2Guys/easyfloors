@@ -65,6 +65,9 @@ export class CreateAccessoryInput {
   @Field(() => [GraphQLJSON],{nullable:true})
   featureImages?: any[]
 
+  @Field(() => [GraphQLJSON],{nullable:true})
+  sizes?: any[]
+  
   @Field(() => GraphQLJSON, { nullable: true })
   products: any
 
