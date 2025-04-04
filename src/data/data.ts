@@ -127,6 +127,7 @@ export interface IProductValues {
   products: (string | number)[];
   colorCode?:string;
   colors?:  AdditionalInformation[]
+  sizes?: { width: string, height: string, thickness: string }[]
 }
 
 export const AddproductsinitialValues: IProductValues = {
@@ -150,7 +151,8 @@ export const AddproductsinitialValues: IProductValues = {
   boxCoverage: "",
   products: [],
   colorCode: "",
-  colors: []
+  colors: [],
+  sizes: []
 };
 
 
@@ -243,7 +245,7 @@ export const heroItems: HeroItem[] = [
     // backgroundImage: "/assets/images/Home/hero-min.webp",
     backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
     offerText: "Limited Time Offer",
-    title: "Starting From Just AED (Xx) Per Square Meter",
+    title: "Starting From Just AED 49 Per Square Meter",
     highlight: "",
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
@@ -421,6 +423,7 @@ export const HomeUserInfo = [
     image: '/assets/images/UserInfo/budget_11zon.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
+    href: 'about-us'
   },
   {
     title: 'Overlay Ready',
@@ -792,6 +795,7 @@ export const sampleGridData: SampleGridData[] = [
     buttonText: "Order free samples",
     image: "/assets/images/aboutus/order-free-sample.png",
     alt: "Free sample order",
+    href: 'all-collection'
   },
   {
     id: 2,
@@ -801,6 +805,7 @@ export const sampleGridData: SampleGridData[] = [
     buttonText: "Request a callback",
     image: "/assets/images/aboutus/request-call-back.png",
     alt: "Free sample order",
+    href: 'contact-us'
   },
 ];
 

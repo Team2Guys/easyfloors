@@ -49,7 +49,7 @@ const FormLayout = ({
     : undefined;
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined);
-  const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ? [editCategory?.whatAmiImage] : undefined);
+  const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ? editCategory?.whatAmiImage : undefined);
   const [homePagemageUrl, sethomePagemageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.homePageImage ? [editCategory?.homePageImage] : undefined);
   const [bannerImage, setBannerImage] = useState<ProductImage[] | undefined>(editCategory && editCategory?.BannerImage ? [editCategory?.BannerImage] : undefined);
   const [isCropModalVisible, setIsCropModalVisible] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const FormLayout = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      const whatIamIImage = WhatamIImageUrl && WhatamIImageUrl[0];
+      const whatIamIImage = WhatamIImageUrl && WhatamIImageUrl;
       const homePageImage = homePagemageUrl && homePagemageUrl[0];
       const NewbannerImage = bannerImage && bannerImage[0];
 
@@ -116,7 +116,7 @@ const FormLayout = ({
       seteditCategory?.(undefined);
       setposterimageUrl(undefined);
       setBannerImageUrl(undefined)
-      setWhatamIImageUrl(undefined)
+      setWhatamIImageUrl([])
       sethomePagemageUrl(undefined)
       setBannerImage(undefined)
       resetForm();
@@ -129,16 +129,15 @@ const FormLayout = ({
     }
   }
   useEffect(() => {
-
     setposterimageUrl((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
     setBannerImageUrl(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined)
-    setWhatamIImageUrl(editCategory && editCategory?.whatAmiImage ? [editCategory?.whatAmiImage] : undefined)
+    setWhatamIImageUrl(editCategory && editCategory?.whatAmiImage ? editCategory?.whatAmiImage : [])
     sethomePagemageUrl(editCategory && editCategory?.homePageImage ? [editCategory?.homePageImage] : undefined)
     setBannerImage(editCategory && editCategory?.BannerImage ? [editCategory?.BannerImage] : undefined)
 
     setEditCategoryName(CategoryName)
-
   }, [editCategory])
+
 
   const handleCropClick = (imageUrl: string) => {
     setImageSrc(imageUrl);
@@ -339,6 +338,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setposterimageUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -401,6 +401,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setBannerImageUrl,
+                                      "altText"
                                     )
                                   }
                                 />
@@ -419,13 +420,14 @@ const FormLayout = ({
                         <h3 className="font-medium text-black dark:text-white">
                           what Am I Image
                         </h3>
+                        <ImageUploader setImagesUrl={setWhatamIImageUrl} />
                       </div>
-                      {WhatamIImageUrl?.[0] && WhatamIImageUrl?.length > 0 ? (
-                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                      {WhatamIImageUrl && WhatamIImageUrl?.length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4 h-auto relative">
                           {WhatamIImageUrl.map((item: ProductImage, index: number) => {
                             return (
                               <div
-                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                className="relative group rounded-lg shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
                                 key={index}
                               >
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
@@ -445,7 +447,7 @@ const FormLayout = ({
                                 <Image
                                   onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
-                                  className="w-full h-full dark:bg-black dark:shadow-lg"
+                                  className="w-full h-[180px] lg:h-[110px] dark:bg-black dark:shadow-lg"
 
                                   width={200}
                                   height={500}
@@ -464,7 +466,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setWhatamIImageUrl,
-
+                                      "altText"
                                     )
                                   }
                                 />
@@ -472,13 +474,11 @@ const FormLayout = ({
                             );
                           })}
                         </div>
-                      ) : (
-                        <ImageUploader setposterimageUrl={setWhatamIImageUrl} />
-                      )}
+                      ) : null}
                     </div>
 
 
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark mt-5">
                       <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Banner Image
@@ -528,7 +528,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       setBannerImage,
-
+                                      "altText"
                                     )
                                   }
                                 />
@@ -591,7 +591,7 @@ const FormLayout = ({
                                       index,
                                       String(e.target.value),
                                       sethomePagemageUrl,
-
+                                      "altText"
                                     )
                                   }
                                 />

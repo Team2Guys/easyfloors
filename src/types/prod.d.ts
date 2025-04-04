@@ -13,6 +13,7 @@ export interface ProductImage {
   colorName?: string;
   plankWidth?: string;
   plankHeight?: string;
+  isBlurred?: boolean; 
 }
 
 export interface AdditionalInformation {
@@ -58,8 +59,10 @@ export interface IProduct {
     requiredBoxes?:number
     squareMeter?:number;
     totalPrice?:number
-
+    sizes?: Sizes[]
   }
+
+export interface Sizes { width: string, height: string, thickness: string }
 
 export interface IProductAccessories extends IProduct {
   products?: IProduct[];
