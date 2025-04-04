@@ -89,7 +89,12 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   );
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
+  const dragFeatureImage = useRef<number | null>(null);
+
   const draggedOverImage = useRef<number | null>(null);
+  const draggedOverfeatureImage = useRef<number | null>(null);
+
+
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   const finalToken = token ? token : superAdminToken;
@@ -130,6 +135,18 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     imagesClone[draggedOverImage.current] = temp;
 
     setImagesUrl(imagesClone);
+  }
+
+  function handleFeatreSort() {
+    if (dragFeatureImage.current === null || draggedOverfeatureImage.current === null) return;
+
+    const imagesClone = featureImagesimagesUrl && featureImagesimagesUrl.length > 0 ? [...featureImagesimagesUrl] : [];
+
+    const temp = imagesClone[dragFeatureImage.current];
+    imagesClone[dragFeatureImage.current] = imagesClone[draggedOverfeatureImage.current];
+    imagesClone[draggedOverfeatureImage.current] = temp;
+
+    setfeatureImagesImagesUrl(imagesClone);
   }
 
   useEffect(() => {
@@ -1453,7 +1470,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         Add Feature Images
                       </h3>
                     </div>
-
                     <ImageUploader setImagesUrl={setfeatureImagesImagesUrl} />
 
                     {featureImagesimagesUrl &&
@@ -1465,11 +1481,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               <div
                                 key={index}
                                 draggable
-                                onDragStart={() => (dragImage.current = index)}
+                                onDragStart={() => (dragFeatureImage.current = index)}
                                 onDragEnter={() =>
-                                  (draggedOverImage.current = index)
+                                  (draggedOverfeatureImage.current = index)
                                 }
-                                onDragEnd={handleSort}
+                                onDragEnd={handleFeatreSort}
                                 onDragOver={(e) => e.preventDefault()}
                               >
                                 <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
