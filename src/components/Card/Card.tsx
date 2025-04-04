@@ -143,46 +143,62 @@ const Card: React.FC<productCardProps> = ({
             </div>
           </div>
         )}
-     {product.sizes && product.sizes.length > 0 ? (
-  <div
-    className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-evenly"}`}
-  >
-    {product.sizes.map((feature, index) => (
-      <div key={index} className="flex gap-4">
-        <div className="flex justify-between gap-1 items-center">
-          <Image
-            src={features[0].icon}
-            alt="Icon"
-            width={features[0].width}
-            height={features[0].height}
-            className="text-gray-500 cursor-pointer hover:text-red-500"
-          />
-          <span className="text-[7px] text-black md:text-[12px]">{feature.width}mm</span>
-        </div>
-        <div className="flex justify-between gap-1 items-center">
-          <Image
-            src={features[1].icon}
-            alt="Icon"
-            width={features[1].width}
-            height={features[1].height}
-            className="text-gray-500 cursor-pointer hover:text-red-500"
-          />
-          <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}mm</span>
-        </div>
-        <div className="flex justify-between gap-1 items-center">
-          <Image
-            src={features[2].icon}
-            alt="Icon"
-            width={features[2].width}
-            height={features[2].height}
-            className="text-gray-500 cursor-pointer hover:text-red-500"
-          />
-          <span className="text-[7px] text-black md:text-[12px]">{feature.height}mm</span>
-        </div>
-      </div>
-    ))}
-  </div>
-) : null}
+        {product.sizes && product.sizes.length > 0 ? (
+          <div
+            className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-evenly"}`}
+          >
+            {product.sizes.map((feature, index) => (
+              <div key={index} className="flex gap-4">
+                <div className="flex justify-between gap-1 items-center">
+                  <Image
+                    src={features[0].icon}
+                    alt="Icon"
+                    width={features[0].width}
+                    height={features[0].height}
+                    className="text-gray-500 cursor-pointer hover:text-red-500"
+                  />
+                  <span className="text-[7px] text-black md:text-[12px]">{feature.width}mm</span>
+                </div>
+                <div className="flex justify-between gap-1 items-center">
+                  <Image
+                    src={features[1].icon}
+                    alt="Icon"
+                    width={features[1].width}
+                    height={features[1].height}
+                    className="text-gray-500 cursor-pointer hover:text-red-500"
+                  />
+                  <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}mm</span>
+                </div>
+                <div className="flex justify-between gap-1 items-center">
+                  <Image
+                    src={features[2].icon}
+                    alt="Icon"
+                    width={features[2].width}
+                    height={features[2].height}
+                    className="text-gray-500 cursor-pointer hover:text-red-500"
+                  />
+                  <span className="text-[7px] text-black md:text-[12px]">{feature.height}mm</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) :
+
+          <div className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-evenly"}`}>
+            {features.map((feature, index) => (
+              <div className="flex gap-1 items-center" key={index}>
+                <Image
+                  src={feature.icon}
+                  alt="Icon"
+                  width={feature.width}
+                  height={feature.height}
+                  className="text-gray-500 cursor-pointer hover:text-red-500"
+                />
+                <span className="text-[7px] text-black md:text-[12px]">{feature.label}</span>
+              </div>
+            ))}
+          </div>
+        }
 
 
         <div className="p-2 font-inter font-light lg:p-4">
