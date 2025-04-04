@@ -145,10 +145,10 @@ const Card: React.FC<productCardProps> = ({
         )}
         {product.sizes && product.sizes.length > 0 ? (
           <div
-            className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-evenly"}`}
+            className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-between"}`}
           >
             {product.sizes.map((feature, index) => (
-              <div key={index} className="flex gap-4">
+              <div key={index} className="flex gap-4 w-full justify-between">
                 <div className="flex justify-between gap-1 items-center">
                   <Image
                     src={features[0].icon}
@@ -157,7 +157,7 @@ const Card: React.FC<productCardProps> = ({
                     height={features[0].height}
                     className="text-gray-500 cursor-pointer hover:text-red-500"
                   />
-                  <span className="text-[7px] text-black md:text-[12px]">{feature.width}mm</span>
+                  <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
                 </div>
                 <div className="flex justify-between gap-1 items-center">
                   <Image
@@ -167,7 +167,7 @@ const Card: React.FC<productCardProps> = ({
                     height={features[1].height}
                     className="text-gray-500 cursor-pointer hover:text-red-500"
                   />
-                  <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}mm</span>
+                  <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
                 </div>
                 <div className="flex justify-between gap-1 items-center">
                   <Image
@@ -177,7 +177,7 @@ const Card: React.FC<productCardProps> = ({
                     height={features[2].height}
                     className="text-gray-500 cursor-pointer hover:text-red-500"
                   />
-                  <span className="text-[7px] text-black md:text-[12px]">{feature.height}mm</span>
+                  <span className="text-[7px] text-black md:text-[12px]">{feature.height}</span>
                 </div>
               </div>
             ))}
