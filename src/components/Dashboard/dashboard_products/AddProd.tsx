@@ -908,10 +908,10 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             Add Dimentions
                           </h3>
                         </div>
-                        <div className="py-4 px-6">
-                          <div>
-                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                              Width
+                        <div className="py-4 px-6 space-y-2">
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-24">
+                              Width:
                             </label>
                             <input
                               type="text"
@@ -923,9 +923,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
                             />
                           </div>
-                          <div>
-                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                              Height
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-24">
+                              Height:
                             </label>
                             <input
                               type="text"
@@ -937,9 +937,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
                             />
                           </div>
-                          <div>
-                            <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                            Thickness
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-24">
+                            Thickness:
                             </label>
                             <input
                               type="text"
