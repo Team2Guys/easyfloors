@@ -69,7 +69,7 @@ const Card: React.FC<productCardProps> = ({
           <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
             <Image
               src={product.posterImageUrl?.imageUrl ?? ''}
-              alt={product.name}
+              alt={product.posterImageUrl?.altText ?? " "}
               width={500}
               height={200}
               loading="lazy"
@@ -213,7 +213,10 @@ const Card: React.FC<productCardProps> = ({
       </div>
       <div className="p-2 font-inter font-light lg:p-4">
         <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start sm:py-2 max-sm:text-primary">
-          {'price' in product && product.price &&
+          {
+          
+          'price' in product && product.price &&
+
             <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
               {isAccessories ? '' : 'Only '} AED <span >{product?.price}</span>/m<span className="align-super text-10">2</span>
             </p>
@@ -230,7 +233,7 @@ const Card: React.FC<productCardProps> = ({
               </button>
             ) : (
               <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="border-2 border-primary text-[10px] text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold">
-                Shop Now
+                Shop Now 
               </Link>
             )}
 

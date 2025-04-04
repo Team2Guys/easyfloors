@@ -48,6 +48,7 @@ const FormLayout = ({
       custom_url: editCategory.custom_url || "",
       topHeading:editCategory.topHeading || "",
       RecallUrl:editCategory.RecallUrl || "",
+      price: editCategory.price  || ""
     }
     : null;
     const token = Cookies.get('admin_access_token');
@@ -69,6 +70,8 @@ const FormLayout = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
+      
+      console.log(posterImageUrl, "posterImageUrl", posterimageUrl)
 
       if (!posterImageUrl) throw new Error('Please select relevant Images');
       const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner };
@@ -424,6 +427,23 @@ const FormLayout = ({
                         />
                         <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
                       </div>
+
+                      <div>
+                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                          starting Price
+                        </label>
+                        <Field
+                          type="text"
+                          name="price"
+                          placeholder="Add Starting Price"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
+                            }`}
+                        />
+                        <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
+                      </div>
+
+
+
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">

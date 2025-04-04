@@ -43,7 +43,9 @@ const FormLayout = ({
       whatamIdetails: editCategory?.whatamIdetails || [],
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
-      recalledByCategories: editCategory?.recalledByCategories?.map((value: Category) => value.id) || []
+      recalledByCategories: editCategory?.recalledByCategories?.map((value: Category) => value.id) || [],
+      price: editCategory.price  || ""
+
 
     } as ISUBCATEGORY_EDIT
     : undefined;
@@ -79,6 +81,7 @@ const FormLayout = ({
       const homePageImage = homePagemageUrl && homePagemageUrl[0];
       const NewbannerImage = bannerImage && bannerImage[0];
 
+      console.log(values, "values")
       const newValue = { ...values, posterImageUrl, BannerImage: NewbannerImage, whatAmiImageBanner: Banner, whatAmiImage: whatIamIImage, homePageImage };
       const updateFlag = editCategoryName ? true : false;
 
@@ -637,6 +640,20 @@ const FormLayout = ({
                           className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                         />
                         <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
+                      </div>
+
+                      <div>
+                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                          Add Starting price
+                        </label>
+
+                        <Field
+                          type="text"
+                          name="price"
+                          placeholder="Add starting price"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        />
+                        <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
                       </div>
 
                       <div>

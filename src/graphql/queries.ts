@@ -109,6 +109,7 @@ export const FETCH_ALL_CATEGORIES = gql`
       whatAmiImageBanner
       topHeading
       RecallUrl
+      price
         recalledSubCats {
             id
             name
@@ -185,6 +186,7 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       homePageImage
       Heading
       BannerImage
+      price
 
       products {
         id
@@ -367,6 +369,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
         name
         custom_url
         posterImageUrl
+        price
       }
          products {
         id

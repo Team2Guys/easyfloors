@@ -33,6 +33,9 @@ export interface Category {
   whatAmiImageBanner?:ProductImage
   topHeading?:string
   recalledSubCats:ISUBCATEGORY[]
+  price?:string
+  stock?:number
+  boxCoverage?:string,
 }
 
 export interface EDIT_CATEGORY extends Category {
