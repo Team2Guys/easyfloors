@@ -51,6 +51,7 @@ export class CreateCategoryInput {
   RecallUrl?: string
 
 
-
+  @Field({ nullable: true })
+  price?: string;
 
 }

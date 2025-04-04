@@ -71,6 +71,7 @@ model Category {
   RecallUrl          String?
   accessories        Acessories[]    @relation()
   recalledSubCats    subCategories[] @relation("RecallCategories")
+  price   String?
 }
 
 model subCategories {
@@ -97,6 +98,7 @@ model subCategories {
   whatAmiTopHeading    String?
   whatamIdetails       Json[]     @default([])
   recalledByCategories Category[] @relation("RecallCategories")
+   price   String?
 }
 
 model Admins {

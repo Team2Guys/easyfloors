@@ -69,6 +69,8 @@ export class Category {
   @Field(()=>[SubCategory],{nullable:true})
   recalledSubCats?:SubCategory[]
 
+  @Field({ nullable: true })
+  price?: string;
 
 }
 

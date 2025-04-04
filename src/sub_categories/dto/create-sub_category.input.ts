@@ -60,6 +60,9 @@ export class CreateSubCategoryInput {
   @Field({ nullable: true })
   Heading?: string;
 
+  @Field({ nullable: true })
+  price?: string;
+
   @Field(() => GraphQLJSON, { nullable: true })
   BannerImage?: any;
 

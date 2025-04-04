@@ -75,6 +75,9 @@ export class SubCategory {
   @Field(() => [Category],{ nullable: true })
   recalledByCategories?: Category[]
 
+  @Field({ nullable: true })
+  price?: string;
+
 }
 
 
