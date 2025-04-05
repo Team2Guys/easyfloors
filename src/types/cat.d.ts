@@ -36,6 +36,8 @@ export interface Category {
   price?:string
   stock?:number
   boxCoverage?:string,
+  __typename?:string;
+
 }
 
 export interface EDIT_CATEGORY extends Category {
