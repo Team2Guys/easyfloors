@@ -31,7 +31,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                 {category.name}
               </Link>
               <p className="text-sm lg:text-base md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
-                Price Starting From: AED {category.price + " m²"  || (category.name === "SPC FLOORING" ? 'AED 150m²' : category.name === "LVT FLOORING" ? 'AED 180m²' : category.name === "POLAR FLOORING" ? 'AED 200m²' : category.name === "RICHMOND FLOORING" ? 'AED 220m²' : '' )}
+                Price Starting From: AED {category.price + "m²"  || (category.name === "SPC FLOORING" ? 'AED 150m²' : category.name === "LVT FLOORING" ? 'AED 180m²' : category.name === "POLAR FLOORING" ? 'AED 200m²' : category.name === "RICHMOND FLOORING" ? 'AED 220m²' : '' )}
               </p>
               <Link
                 href="/all-collection"
