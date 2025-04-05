@@ -16,7 +16,6 @@ export const handleAddToStorage = async (
     boxCoverage?: string,
 
   ) => {
-      console.log('Price per box:', pricePerBox); 
     if (!productData) {
       toast.error("Product is undefined");
       return;
