@@ -72,7 +72,9 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
               isAccessories={false}
             />
           ))
-        ) : (
+        ) :   (
+
+          
           [...Array(6)].map((_, i) => (
             <div key={i} className="w-full h-[200px] sm:h-[300px] animate-pulse rounded-md flex flex-col  mt-3">
               <div className="h-[150px] sm:h-[200px] w-full bg-gray-300 rounded-t-md"></div>

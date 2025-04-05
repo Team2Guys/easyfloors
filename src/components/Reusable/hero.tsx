@@ -50,12 +50,12 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
               <h3 className="sm:text-sm lg:text-[28px] font-medium">
                 {item.brand}
               </h3>
-              <p className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2 mt-3 ">
+              <div className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2 mt-3 ">
                 {item.priceText}
                 <p className="text-[16px] lg:text-[30px]">
                   <TiArrowRight />
                 </p>
-              </p>
+              </div>
             </Link>
           </div>
         </div>
