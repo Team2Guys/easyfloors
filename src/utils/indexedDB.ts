@@ -108,6 +108,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
   
   
   export const addToWishlist = async (product: ICart): Promise<void> => {
+    console.log('Product added to wishlist:', product);
     try {
       const db = await openDB();
       const tx = db.transaction("wishlist", "readwrite");

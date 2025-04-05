@@ -191,7 +191,7 @@ const Checkout = () => {
 
                 }}
             >
-                {({ values, handleChange, setFieldValue, isSubmitting }) => (
+                {({ values, handleChange, setFieldValue, isSubmitting,touched, errors,setFieldTouched }) => (
                     <Form className="grid grid-cols-1 2md:grid-cols-2 gap-5 lg:gap-10 min-h-screen mb-20">
                         <div className="bg-white pb-4 px-2 sm:px-0 sm:pb-8 shadow-lg rounded-lg sm:shadow-none">
                             <div className="space-y-4">
@@ -214,7 +214,12 @@ const Checkout = () => {
                                         placeholder="Type Your Phone No"
                                         value={values.phone}
                                         onChange={(value) => setFieldValue("phone", value)}
+                                        onBlur={() => setFieldTouched("phone", true)}
                                     />
+                               {/* Show validation error if the field is touched and has an error */}
+                               {touched.phone && errors.phone && (
+                               <div className="text-red-500 text-sm">{errors.phone}</div>
+                                 )}
                                 </div>
 
                                 <Select name="country" label="Country" placeholder="Select Country" required options={[{ value: "United Arab Emirates", label: "United Arab Emirates" }]} />
