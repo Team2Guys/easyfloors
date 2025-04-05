@@ -54,7 +54,9 @@ const CustomSelect = ({
                onClick={() => setIsOpen(!isOpen)}
                className="flex justify-between items-center w-full px-3 h-11 border border-gray-300 bg-white focus:ring-2 focus:ring-primary text-12 font-medium font-inter"
             >
-               {value ? options.find((opt) => opt.value === value)?.label : placeholder}
+               {value && options.find((opt) => opt.value === value)
+                  ? options.find((opt) => opt.value === value)?.label
+                  : placeholder}
                <FiChevronDown className={`text-gray-500 transition text-16 ${isOpen ? "rotate-180" : ""}`} />
             </button>
 
