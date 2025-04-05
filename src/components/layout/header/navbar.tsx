@@ -94,7 +94,7 @@ const Navbar = ({categories,products,cartTotal,wishlistTotal,freeSampleTotal}:IN
           <UserIcon className="hidden lg:flex" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} freeSampleTotal={freeSampleTotal?.length} />
           <div className="lg:hidden flex justify-end">
             <FaBars onClick={() => setIsOpen(true)} size={20} />
-            <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
+            <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}> 
               {menuItems.map((item) => (
                 <div key={item.label} className="border-b py-2 font-inter">
                   <div className="flex justify-between items-center gap-2">
