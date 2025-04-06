@@ -246,7 +246,7 @@ export const heroItems: HeroItem[] = [
     backgroundImage: "/assets/images/Home/hero-min.webp",
     // backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
     offerText: "Limited Time Offer",
-    title: "Starting From Just AED 49 Per Square Meter",
+    title: "Starting From Just AED 69 Per Square Metre.",
     highlight: "",
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",

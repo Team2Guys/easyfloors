@@ -360,7 +360,8 @@ export const FETCH_HEADER_CATEGORIES = gql`
       name
       custom_url
       RecallUrl
-      accessories {
+      price
+        accessories {
       id
       name
       custom_url 
@@ -387,6 +388,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
             name
             custom_url
               posterImageUrl
+              price
               category {
                 RecallUrl
                 
@@ -402,6 +404,7 @@ export const FETCHSUBCAT = gql`
       name
       posterImageUrl
       custom_url
+      price
       products {
         id
         name
