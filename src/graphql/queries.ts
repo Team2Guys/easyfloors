@@ -84,8 +84,9 @@ export const FETCH_HEADER_PRODUCTS = gql`
         stock
         discountPrice
         custom_url
-
         posterImageUrl
+        hoverImageUrl
+        productImages
          }
           }
         }`;
@@ -359,10 +360,11 @@ export const FETCH_HEADER_CATEGORIES = gql`
       name
       custom_url
       RecallUrl
-        accessories {
+      accessories {
       id
       name
       custom_url 
+      posterImageUrl
       }
       subcategories {
         id

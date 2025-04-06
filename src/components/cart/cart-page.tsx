@@ -18,6 +18,8 @@ interface CartPageProps {
 const CartPage = ({products}:CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]); 
   const [selectedFee, setSelectedFee] = useState(0);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -101,12 +103,25 @@ const CartPage = ({products}:CartPageProps) => {
   const increment = (id: number) => updateQuantity(id, 1);
   const decrement = (id: number) => updateQuantity(id, -1);
   
-
-  const handleStateSelect = (state: string, fee: number) => {
-    const subtotal = cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0);
-    setSelectedFee(subtotal > 1000 ? 0 : fee);
+  const handleStateSelect = (state: string) => {
+    setSelectedCity(state);
   };
-  return (
+
+  // Recalculate shipping fee when cartItems or city changes
+  useEffect(() => {
+    if (!selectedCity) return;
+    const subtotal = cartItems.reduce(
+      (total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0),
+      0
+    );
+    const fee = subtotal > 1000 ? 0 : selectedCity === "Dubai" ? 100 : 150;
+    setSelectedFee(fee);
+  }, [cartItems, selectedCity]);
+
+  const subtotal = cartItems.reduce(
+    (total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0),
+    0
+  );  return (
     
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
         <h1 className='text-center xl:text-[48px]'>Your Shopping Cart</h1>
@@ -200,13 +215,13 @@ const CartPage = ({products}:CartPageProps) => {
             </div>
             <CartSelect select={UAEStates} selectedFee={selectedFee}  onSelect={handleStateSelect} />
             <div className='border border-b border-[#DEDEDE]'/>
+
             <div className='flex items-center justify-between text-16 lg:text-20'>
             <p>Subtotal Incl. VAT</p>
-            <p>AED {(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)).toFixed(2)}</p>
-
+            <p>AED {(subtotal + selectedFee).toFixed(2)}</p>
             </div>
             <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
-            <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)) / 4}/>
+            <PaymentMethod installments={(parseFloat((subtotal + selectedFee).toFixed(2)) / 4)}/>
             <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
               <div className='flex justify-between gap-2' >
             {

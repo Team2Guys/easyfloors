@@ -9,9 +9,6 @@ const TrackOrder= async({ params }: { params: Promise<IParams> }) => {
   const {id} = await params;
   const data  = await fetchSingleOrder(id)
 
-console.log(data, "data, ")
-
-
   return (
     <>
       <Breadcrumb title="Track Order" />
