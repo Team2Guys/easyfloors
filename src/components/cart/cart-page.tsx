@@ -29,7 +29,6 @@ const CartPage = ({ products }: CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-  console.log(cartItems,"cartItems")
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
