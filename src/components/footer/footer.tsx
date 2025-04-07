@@ -159,7 +159,7 @@ const Footer = () => {
                         <SocialIcon/>
                     </div>
                     <div className='text-start sm:text-center'>
-                        <p className="text-sm text-white font-inter font-medium xs:font-extralight ">
+                        <p className="text-sm text-white font-inter font-medium xs:font-extralight">
                             Easyfloors.ae ©2025
                         </p>
                     </div>
