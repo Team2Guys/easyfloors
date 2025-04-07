@@ -40,24 +40,30 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   };
 
   const handleAreaChange = (id: string | number, value: string) => {
-    const boxCoverage = 2.4;
     const idStr = String(id);
     setAreas((prev) => ({
       ...prev,
       [idStr]: value,
     }));
-
+  
+    // Automatically select the product when user enters a value
+    if (value.trim() !== "" && !selectedProducts.includes(idStr)) {
+      setSelectedProducts((prev) => [...prev, idStr]);
+    } else if (value.trim() === "") {
+      setSelectedProducts((prev) => prev.filter((productId) => productId !== idStr));
+    }
+  
     const meters = parseFloat(value);
     if (!isNaN(meters) && meters > 0) {
       const isFeet = unit[idStr] === "ft";
       const coverage = isFeet ? boxCoverage * 10.764 : boxCoverage; // Convert if in feet
       const pieces = Math.ceil(meters / coverage); // Calculate required boxes
-
+  
       setRequiredBoxes((prev) => ({
         ...prev,
         [idStr]: pieces,
       }));
-
+  
       const product = products.find((p) => String(p.id) === idStr);
       setTotalPrice((prev) => ({
         ...prev,
@@ -68,6 +74,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       setTotalPrice((prev) => ({ ...prev, [idStr]: 0 }));
     }
   };
+  
 
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
@@ -99,7 +106,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
 
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl overflow-y-auto max-h-[90vh] thin-scrollbar relative">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl  relative pb-16 ">
         <button className="absolute top-3 right-3 text-gray-600 hover:text-gray-900" onClick={onClose}>
           <AiOutlineClose size={20} />
         </button>
@@ -108,7 +115,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           <p className="text-center text-gray-700">No accessory available.</p>
         ) : (
           <>
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto thin-scrollbar">
+             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[70vh] thin-scrollbar">
           {products.map((product) => (
            <div
            key={product.id}
@@ -184,7 +191,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
              </div>
 
         <button
-          className={`mt-4 w-fit px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2
+          className={`mt-4 w-fit px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed bottom-10 left-1/2 -translate-x-1/2
             ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}
           `}
           onClick={handleAddSelectedToCart}

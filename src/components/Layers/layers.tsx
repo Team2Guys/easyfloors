@@ -10,7 +10,7 @@ const Layers = () => {
           key={block.id}
           className={`${index === 0 ? 'border-r-2 pb-4' : ''}`}
         >
-          <h2 className="md:text-5xl text-2xl font-inter font-bold mb-4 bg-primary text-white text-center p-4">
+          <h2 className="md:text-5xl text-lg font-inter font-bold mb-4 bg-primary text-white text-center p-4">
             {block.heading}
           </h2>
           <div className="flex flex-col justify-between sm:justify-left md:pl-5">

@@ -12,8 +12,21 @@ export interface SocialLink {
     href: string;
     submenu?: { label: string; href: string; image?: string }[];
     scrolling?: boolean;
+    products?: {
+      name: string;
+      custom_url: string;
+      posterImageUrl?: { imageUrl: string,altText?: string };
+    }[];
   }
-
+  export interface HeaderAccessoriesProps {
+    name: string;
+    custom_url: string; // Add this property
+    posterImageUrl: {
+      imageUrl: string;
+      altText?: string;
+    };
+  }
+  
   export interface TextInputProps {
     label: string;
     name: string;
@@ -50,10 +63,12 @@ export interface SampleGridData {
   buttonText: string;
   image: string;
   alt: string;
+  href:string;
 }
 
 export interface SampleGridProps {
   sections: SampleGridData[];
+
 }
 
 export interface TAutoVideoProps {
@@ -241,9 +256,6 @@ export type OrderHistory = {
 export interface INavbar{
   categories?: Category[];
   products?: IProduct[];
-  cartTotal: ICart[];
-  wishlistTotal: ICart[];
-  freeSampleTotal: ICart[];
 }
 
  

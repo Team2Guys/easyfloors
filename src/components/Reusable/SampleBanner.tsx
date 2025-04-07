@@ -1,6 +1,7 @@
 
 import Container from 'components/common/container/Container'
 import Image from 'next/image'
+const bannerImage = '/assets/images/Home/free_sample_image.webp'
 import React from 'react'
 
 const SampleBanner = () => {
@@ -9,7 +10,9 @@ const SampleBanner = () => {
       <div className='border-t-[#00000033] border-t-[1px] sm:hidden'></div>
       <div className='h-auto w-full mt-7 xl:mt-14'>
         <div className='flex justify-center items-center'>
-          <Image src='https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291498/newbanner_11zon_11zon_jr57od.webp'
+          <Image 
+          // src='https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291498/newbanner_11zon_11zon_jr57od.webp'
+          src={bannerImage}
             height={200}
             width={800}
             alt='image'
@@ -28,7 +31,7 @@ const SampleBanner = () => {
             />
           </div>
           <div className='h-auto w-7/12 lg:w-4/12 sm:w-4/12'>
-            <p className='text-12 text-end text-inter 2xl:text-[42.6px] font-medium lg:text-3xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-4xl'>Free Samples UAE Wide</p>
+            <p className='text-12 text-end text-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</p>
           </div>
         </div>
       </div>

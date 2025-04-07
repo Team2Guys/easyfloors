@@ -89,7 +89,12 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   );
   const [categorySubCatError, setcategorySubCatError] = useState(initialErrors);
   const dragImage = useRef<number | null>(null);
+  const dragFeatureImage = useRef<number | null>(null);
+
   const draggedOverImage = useRef<number | null>(null);
+  const draggedOverfeatureImage = useRef<number | null>(null);
+
+
   const token = Cookies.get("2guysAdminToken");
   const superAdminToken = Cookies.get("superAdminToken");
   const finalToken = token ? token : superAdminToken;
@@ -132,6 +137,18 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     setImagesUrl(imagesClone);
   }
 
+  function handleFeatreSort() {
+    if (dragFeatureImage.current === null || draggedOverfeatureImage.current === null) return;
+
+    const imagesClone = featureImagesimagesUrl && featureImagesimagesUrl.length > 0 ? [...featureImagesimagesUrl] : [];
+
+    const temp = imagesClone[dragFeatureImage.current];
+    imagesClone[dragFeatureImage.current] = imagesClone[draggedOverfeatureImage.current];
+    imagesClone[draggedOverfeatureImage.current] = temp;
+
+    setfeatureImagesImagesUrl(imagesClone);
+  }
+
   useEffect(() => {
     const CategoryHandler = async () => {
       try {
@@ -157,6 +174,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
     CategoryHandler();
   }, [EditInitialValues]);
+
+  console.log(productInitialValue,'productInitialValue')
 
   const onSubmit = async (
     changedValue: IProductValues,
@@ -218,6 +237,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         featureImages: featureImagesimagesUrl,
         colorCode: values.colorCode === '' ? undefined : values.colorCode
       };
+      console.log('productInitialValue', newValues);
 
       if (!accessoryFlag) {
         Object.assign(newValues, images);
@@ -882,6 +902,57 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 <div className="flex flex-col gap-5">
                   {!accessoryFlag ? (
                     <>
+                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                          <h3 className="font-medium text-black dark:text-white">
+                            Add Dimentions
+                          </h3>
+                        </div>
+                        <div className="py-4 px-6 space-y-2">
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-24">
+                              Width:
+                            </label>
+                            <input
+                              type="text"
+                              name="sizes[0].width"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.sizes?.at(0)?.width}
+                              placeholder="Add Width"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-24">
+                              Height:
+                            </label>
+                            <input
+                              type="text"
+                              name="sizes[0].height"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.sizes?.at(0)?.height}
+                              placeholder="Add Height"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-24">
+                            Thickness:
+                            </label>
+                            <input
+                              type="text"
+                              name="sizes[0].thickness"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.sizes?.at(0)?.thickness}
+                              placeholder="Add Thickness"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                        </div>
+                      </div>
                       <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                         <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                           Waterproof
@@ -1453,7 +1524,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         Add Feature Images
                       </h3>
                     </div>
-
                     <ImageUploader setImagesUrl={setfeatureImagesImagesUrl} />
 
                     {featureImagesimagesUrl &&
@@ -1465,11 +1535,11 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               <div
                                 key={index}
                                 draggable
-                                onDragStart={() => (dragImage.current = index)}
+                                onDragStart={() => (dragFeatureImage.current = index)}
                                 onDragEnter={() =>
-                                  (draggedOverImage.current = index)
+                                  (draggedOverfeatureImage.current = index)
                                 }
-                                onDragEnd={handleSort}
+                                onDragEnd={handleFeatreSort}
                                 onDragOver={(e) => e.preventDefault()}
                               >
                                 <div className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105">
