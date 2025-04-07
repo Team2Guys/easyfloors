@@ -4,6 +4,7 @@ import React, { useRef, useState, useEffect, ReactNode, useCallback } from "reac
 import { IoIosClose } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
 import { LuMinus, LuPlus } from "react-icons/lu";
+import { TbShoppingBag } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart, getWishlist, getFreeSamples, openDB, removeCartItem, removeWishlistItem, removeFreeSample } from "utils/indexedDB";
@@ -25,7 +26,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
   cartItems,
   type,
   viewLink = "/cart",
-  emptyMessage = "Your list is empty",
+  emptyMessage = "Cart is empty",
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [localItems, setLocalItems] = useState<ICart[]>(cartItems);
@@ -65,7 +66,6 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     };
   }, []);
 
-  // Auto-open when items are added
   useEffect(() => {
     if (type === "cart" || type === "wishlist") {
       const handleUpdate = () => {
@@ -80,7 +80,6 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   }, [type]);
   
 
-  // Fetch items when updated
   useEffect(() => {
     const fetchItems = async () => {
       let updatedItems;
@@ -96,7 +95,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
     };
 
     fetchItems();
-  }, [type, isOpen]); // Added isOpen to dependency array to refresh when panel opens
+  }, [type, isOpen]); 
 
   const closePanel = () => setIsOpen(false);
 
@@ -110,10 +109,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
         await removeFreeSample(id);
       }
   
-      // Immediately update UI
       setLocalItems(prev => prev.filter(item => item.id !== id));
-  
-      // Still dispatch event for syncing elsewhere
       window.dispatchEvent(new Event(`${type}Updated`));
     } catch {
       toast.error(`Error removing item from ${type}`);
@@ -178,6 +174,8 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
           onMouseLeave={() => setIsHovered(false)}
           className={`absolute right-0 top-10 z-[999] bg-white shadow-lg rounded-lg border border-gray-200 ${panelClassName}`}
         >
+          { localItems.length > 0 ?
+          
           <div className="p-2 sm:w-96">
             <div className="flex items-center justify-between mb-2">
               <p className="font-bold text-md-h6">{type.toUpperCase()}</p>
@@ -251,7 +249,16 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
                 Continue Shopping
               </button>
             </div>
+          </div>:
+
+          <div className="p-2 sm:w-96 py-10 text-center flex flex-col items-center justify-center space-y-4">
+            <TbShoppingBag size={50} />
+            <p className="text-center text-black capitalize text-20 font-semibold">{emptyMessage}</p>
+            <div className="flex justify-center mt-2">
+              <Link href="/" className="bg-primary text-white px-4 py-2">Continue Shopping</Link>
+            </div>
           </div>
+          }
         </div>
       )}
     </div>
