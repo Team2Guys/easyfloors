@@ -13,6 +13,18 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
   categoryData,
 }) => {
   const [products, setProducts] = useState(filteredProducts);
+  const [showNoProductsMessage, setShowNoProductsMessage] = useState(false);
+
+useEffect(() => {
+  if (filteredProducts.length === 0) {
+    const timer = setTimeout(() => {
+      setShowNoProductsMessage(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  } else {
+    setShowNoProductsMessage(false);
+  }
+}, [filteredProducts]);
   useEffect(() => {
     if (filteredProducts) {
       setProducts(filteredProducts)
@@ -61,34 +73,37 @@ const SubCategory: React.FC<SubCategoryProps> = ({ filteredProducts,
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 sm:gap-4">
-        {products.length > 0 ? (
-          products.map((product, index) => (
-            <Card
-              key={index}
-              product={product}
-              features={features}
-              categoryData={categoryData}
-              isSoldOut={false}
-              isAccessories={false}
-            />
-          ))
-        ) :   (
-
-          
-          [...Array(6)].map((_, i) => (
-            <div key={i} className="w-full h-[200px] sm:h-[300px] animate-pulse rounded-md flex flex-col  mt-3">
-              <div className="h-[150px] sm:h-[200px] w-full bg-gray-300 rounded-t-md"></div>
-              <div className="p-3 flex flex-col gap-2">
-                <div className="h-8 w-3/4 bg-gray-300 rounded"></div>
-                <div className="flex gap-2">
-                  <div className="h-6 w-3/4 bg-gray-300 rounded"></div>
-                  <div className="h-6 w-1/4 bg-gray-300 rounded"></div>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+  {products.length > 0 ? (
+    products.map((product, index) => (
+      <Card
+        key={index}
+        product={product}
+        features={features}
+        categoryData={categoryData}
+        isSoldOut={false}
+        isAccessories={false}
+      />
+    ))
+  ) : !showNoProductsMessage ? (
+    [...Array(6)].map((_, i) => (
+      <div key={i} className="w-full h-[200px] sm:h-[300px] animate-pulse rounded-md flex flex-col mt-3">
+        <div className="h-[150px] sm:h-[200px] w-full bg-gray-300 rounded-t-md"></div>
+        <div className="p-3 flex flex-col gap-2">
+          <div className="h-8 w-3/4 bg-gray-300 rounded"></div>
+          <div className="flex gap-2">
+            <div className="h-6 w-3/4 bg-gray-300 rounded"></div>
+            <div className="h-6 w-1/4 bg-gray-300 rounded"></div>
+          </div>
+        </div>
       </div>
+    ))
+  ) : (
+    <div className="col-span-full text-center text-gray-500 py-10">
+      No products found.
+    </div>
+  )}
+      </div>
+
     </div>
   );
 };

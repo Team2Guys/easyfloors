@@ -84,8 +84,9 @@ export const FETCH_HEADER_PRODUCTS = gql`
         stock
         discountPrice
         custom_url
-
         posterImageUrl
+        hoverImageUrl
+        productImages
          }
           }
         }`;
@@ -364,6 +365,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       id
       name
       custom_url 
+      posterImageUrl
       }
       subcategories {
         id
