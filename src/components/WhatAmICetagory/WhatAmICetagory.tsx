@@ -21,18 +21,18 @@ const WhatAmICetagory: React.FC<{ subcat: ISUBCATEGORY }> = ({ subcat }) => {
           </div>
         ))}
       </div>
-      <div className="flex flex-col md:flex-row justify-center gap-6 mt-10">
-        {subcat && subcat?.whatAmiImage &&
-          <div className="w-full md:w-1/2">
-            <Image
-              src={subcat.whatAmiImage.imageUrl}
-              alt={subcat.whatAmiImage.altText || "SubCategory text"}
-              width={1000}
-              height={1000}
-              className="w-full h-auto"
-            />
-          </div>
-        }
+      <div className="grid grid-cols-2 gap-2 md:gap-6 mt-10">
+  {subcat?.whatAmiImage?.map((img, index) => (
+    <div key={index} className="w-full">
+      <Image
+        src={img.imageUrl}
+        alt={img.altText || "SubCategory text"}
+        width={1000}
+        height={1000}
+        className="w-full h-[130px] md:h-[300px] lg:h-[400px] xl:h-[500px] object-fill"
+      />
+    </div>
+  ))}
       </div>
     </section>
   );

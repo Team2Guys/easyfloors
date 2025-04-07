@@ -11,6 +11,7 @@ const PriceSlider = ({ setPriceValue, priceValue }: {
 
     return (
       <div
+      key={state.index}
         className="relative w-full h-[1.1px] "
         style={{
           background: `linear-gradient(to right, #E4E7E9  ${((minValue / 2000) * 100)}%, #cc7644 ${((minValue / 2000) * 100)}%, #cc7644 ${(maxValue / 2000) * 100}%, #E4E7E9 ${(maxValue / 2000) * 100}%)`,

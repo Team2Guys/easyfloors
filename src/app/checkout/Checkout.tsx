@@ -50,6 +50,40 @@ const Checkout = () => {
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
 
+    
+    
+
+    useEffect(() => {
+        const savedCity = localStorage.getItem('selectedCity') || '';
+        if (savedCity) {
+            const city = savedCity.replaceAll('"', "");
+            setSelectedCity(city);
+        } else {
+            setSelectedCity('');
+        }
+    }, [])
+
+    useEffect(() => {
+        const savedShipping = localStorage.getItem('shipping');
+        if (!savedShipping) return;
+        if (savedShipping) {
+            const parsedShipping = JSON.parse(savedShipping);
+      
+            if (parsedShipping.name === "Express Shipping") {
+              setSelectedShipping("express");
+              handleShippingSelect("express");
+            } else if (parsedShipping.name === "Self-Collect") {
+              setSelectedShipping("self-collect");
+              handleShippingSelect("self-collect");
+            } else if (parsedShipping.name === "Standard Shipping") {
+              setSelectedShipping("standard");
+              handleShippingSelect("standard");
+            }
+            else{
+                handleShippingSelect("standard");
+            }
+          }
+        }, []);
     type FormInitialValues = {
         firstName: string;
         lastName: string;
@@ -95,9 +129,6 @@ const Checkout = () => {
         fetchCartItems();
     }, []);
 
-    useEffect(() => {
-        handleShippingSelect("standard");
-    }, []);
 
     const handleShippingSelect = (type: string) => {
         if (selectedCity) {
@@ -137,7 +168,7 @@ const Checkout = () => {
 
     useEffect(() => {
         let shippingData;
-    
+
         if (selectedShipping === "standard") {
             shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
         } else if (selectedShipping === "express") {
@@ -145,7 +176,7 @@ const Checkout = () => {
         } else if (selectedShipping === "self-collect") {
             shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
         }
-    
+
         setShipping(shippingData);
     }, [selectedShipping]);
 
@@ -178,7 +209,7 @@ const Checkout = () => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: cartItems , shippingMethod: shipping }
+                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: cartItems, shippingMethod: shipping }
 
                         handlePayment(NewValues);
                         setSubmitting(true);
@@ -356,9 +387,9 @@ const Checkout = () => {
                                                 <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
                                                     <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                                    <p className="text-11 xs:text-16">`Installation charge for straight planks is AED 25 per metre square, and for herringbone is AED 35 per metre square. We're based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.`
+                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is AED 25 per metre square, and for herringbone is AED 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
                                                     </p>
-                                                    <Link target="_blank" rel="noopener noreferrer" className="hover:text-primary" href="/measurement-appointment">Book Free Installation Appointment</Link>
+                                                    <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/measurement-appointment ">Book Free Installation Appointment</Link>
                                                 </div>
                                             </div>
                                         </Panel>

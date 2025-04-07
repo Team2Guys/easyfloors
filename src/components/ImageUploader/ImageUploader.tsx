@@ -2,6 +2,7 @@
 import { FILE_UPLOAD_MUTATION } from "graphql/mutations";
 import React, { ChangeEvent, DragEvent, SetStateAction, useRef, useState } from "react";
 import { BsCloudDownload, BsCloudUpload } from "react-icons/bs";
+import { ProductImage } from "types/prod";
 
 export interface ImagesProps {
   imageUrl: string;
@@ -9,9 +10,9 @@ export interface ImagesProps {
 }
 
 interface PROPS {
-  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | undefined>>;
-  setposterimageUrl?: | React.Dispatch<SetStateAction<ImagesProps[]  | undefined>>;
-  sethoverImage?: React.Dispatch<SetStateAction<ImagesProps[] | undefined>>;
+  setImagesUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;
+  setposterimageUrl?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;
+  sethoverImage?: React.Dispatch<SetStateAction<ImagesProps[] | ProductImage[] | undefined>>;
 }
 
 

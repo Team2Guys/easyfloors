@@ -31,7 +31,7 @@ const Footerlinks: React.FC<FooterlinksProps> = ({ categories }) => {
                 className="flex items-center justify-between cursor-pointer border-b-2 pb-3"
                 onClick={() => toggleSection(index)}
               >
-                <Link href={`/${section.custom_url}`} className="font-medium">
+                <Link href={`/${section.custom_url}`} className="font-normal tracking-widest md:text-base text-sm">
                   {section.name}
                 </Link>
                 <div>

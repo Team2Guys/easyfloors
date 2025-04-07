@@ -75,7 +75,8 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   Canonical_Tag: '',
   custom_url: "",
   topHeading: "",
-  recalledSubCats: []
+  recalledSubCats: [],
+  price:""
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -127,6 +128,7 @@ export interface IProductValues {
   products: (string | number)[];
   colorCode?:string;
   colors?:  AdditionalInformation[]
+  sizes?: { width: string, height: string, thickness: string }[]
 }
 
 export const AddproductsinitialValues: IProductValues = {
@@ -150,7 +152,8 @@ export const AddproductsinitialValues: IProductValues = {
   boxCoverage: "",
   products: [],
   colorCode: "",
-  colors: []
+  colors: [],
+  sizes: []
 };
 
 
@@ -240,10 +243,10 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [
   {
-    // backgroundImage: "/assets/images/Home/hero-min.webp",
-    backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
+    backgroundImage: "/assets/images/Home/hero-min.webp",
+    // backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
     offerText: "Limited Time Offer",
-    title: "Starting From Just AED (Xx) Per Square Meter",
+    title: "Starting From Just AED 69 Per Square Metre.",
     highlight: "",
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
@@ -260,7 +263,7 @@ export const featureItems = [
     title: "Free Samples",
     description:
       "Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy.",
-    icon: "/assets/images/Home/free.png",
+    icon: "/assets/images/Home/freee.png",
   },
   {
     title: "Easy payment",
@@ -298,7 +301,7 @@ export const staticMenuItems = [
   { label: "Richmond Flooring", href: "richmond-flooring", submenu: [] },
   { label: "Polar Flooring", href: "polar-flooring", submenu: [] },
   { label: "How to measure", href: "how-to-measure-your-room" },
-  { label: "Accessories", href: "accessories" },
+  { label: "Accessories", href: "accessories", submenu: [] },
   { label: "Blogs", href: "blogs" },
   { label: "About Us", href: "about-us" },
   { label: "Contact Us", href: "contact-us" },
@@ -421,6 +424,7 @@ export const HomeUserInfo = [
     image: '/assets/images/UserInfo/budget_11zon.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
+    href: 'about-us'
   },
   {
     title: 'Overlay Ready',
@@ -775,7 +779,7 @@ export const alternatingData: TAboutUs[] = [
   },
   {
     id: 3,
-    image: "/assets/images/aboutus/about1.png",
+    image: "/assets/images/aboutus/third.webp",
     alt: "Third Image",
     heading: "Why Choose Easy Floors",
     paragraph: "At Easy Floors, we understand that choosing the right flooring is a big decision. We offer many premium options to fit any space and budget, along with a 15-year residential and 5-year commercial warranty enabling you to choose with confidence. Our focus on quality, transparency, and customer satisfaction sets us apart.",
@@ -790,8 +794,9 @@ export const sampleGridData: SampleGridData[] = [
     description:
       "Order up to 5 free samples, delivered FREE of charge across the UAE to find the perfect match.",
     buttonText: "Order free samples",
-    image: "/assets/images/aboutus/order-free-sample.png",
+    image: "/assets/images/aboutus/order-free-sample.webp",
     alt: "Free sample order",
+    href: 'all-collection'
   },
   {
     id: 2,
@@ -801,6 +806,7 @@ export const sampleGridData: SampleGridData[] = [
     buttonText: "Request a callback",
     image: "/assets/images/aboutus/request-call-back.png",
     alt: "Free sample order",
+    href: 'contact-us'
   },
 ];
 

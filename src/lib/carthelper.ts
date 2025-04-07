@@ -1,10 +1,11 @@
 import { toast } from 'react-toastify';
+import { EDIT_CATEGORY } from 'types/cat';
 import { IProduct } from 'types/prod';
 import { addToCart,addToFreeSample,addToWishlist, getFreeSamples } from 'utils/indexedDB';
 
 export const handleAddToStorage = async (
-    productData: IProduct,
-    totalPrice: number,
+    productData: IProduct | EDIT_CATEGORY,
+    totalPrice: string  | number,
     pricePerBox: number,
     squareMeter: number,
     requiredBoxes: number,
@@ -20,9 +21,9 @@ export const handleAddToStorage = async (
       return;
     }
     const adjustedRequiredBoxes = requiredBoxes > 0 ? requiredBoxes : 1;
-    const adjustedtotalPrice = totalPrice > 0 ? pricePerBox * adjustedRequiredBoxes : pricePerBox;
+    const adjustedtotalPrice = Number(totalPrice) > 0 ? pricePerBox * adjustedRequiredBoxes : pricePerBox;
     const adjustedsquareMeter = squareMeter > 0 ? squareMeter : Number(boxCoverage);
-    if (adjustedRequiredBoxes > Number(productData.stock)) {
+    if (adjustedRequiredBoxes > Number(productData?.stock)) {
       toast.error("Requested Box exceeds available stock!");
       return;
     }

@@ -1,4 +1,4 @@
-import { AdditionalInformation, IProduct, ProductImage } from "./prod";
+import { AdditionalInformation, IProduct, ProductImage, Sizes } from "./prod";
 import { Product } from "./type";
 
 export interface Category {
@@ -33,6 +33,11 @@ export interface Category {
   whatAmiImageBanner?:ProductImage
   topHeading?:string
   recalledSubCats:ISUBCATEGORY[]
+  price?:string
+  stock?:number
+  boxCoverage?:string,
+  __typename?:string;
+
 }
 
 export interface EDIT_CATEGORY extends Category {
@@ -44,6 +49,7 @@ export interface EDIT_CATEGORY extends Category {
     posterImageUrl?:ProductImage
     recalledSubCats?:ISUBCATEGORY[]
     subcategory?: ISUBCATEGORY_EDIT;
+    sizes?: Sizes[];
 
 }
 
@@ -51,7 +57,7 @@ export interface ISUBCATEGORY extends Category {
   id: number | string
   category:EDIT_CATEGORY,
   products?:IProduct[]
-  whatAmiImage?:ProductImage;
+  whatAmiImage?:ProductImage[];
   whatAmiImageBanner?:ProductImage;
   homePageImage?:ProductImage;
   whatAmiTopHeading?:string

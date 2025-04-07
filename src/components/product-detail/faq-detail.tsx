@@ -7,25 +7,23 @@ interface FAQprops {
 }
 
 const FaqDetail = ({ FAQS }: FAQprops) => {
-  const [openAccordions, setOpenAccordions] = useState<string[]>([]);
+  const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
   useEffect(() => {
     if (FAQS && FAQS.length > 0) {
-      setOpenAccordions(FAQS.map((faq) => faq.name)); 
+      setOpenAccordion(FAQS[0].name); 
     }
   }, [FAQS]);
 
   const handleToggle = (label: string) => {
-    setOpenAccordions((prev) =>
-      prev.includes(label) ? prev.filter((item) => item !== label) : [...prev, label]
-    );
+    setOpenAccordion((prev) => (prev === label ? null : label)); 
   };
 
   return (
     <div>
       {FAQS && FAQS.length > 0 && (
         <>
-          <p className="mx-auto max-w-[72%] sm:max-w-[25%] pl-1 mb-10 text-14 sm:text-24 font-inter font-medium pt-10">
+          <p className="mx-auto max-w-[72%] text-center sm:max-w-[25%] pl-1 mb-10 text-base sm:text-24 font-inter font-medium pt-10">
             FAQ’s
           </p>
           <div className="max-w-[90%] mx-auto mt-5 font-inter">
@@ -34,7 +32,7 @@ const FaqDetail = ({ FAQS }: FAQprops) => {
                 key={index}
                 detailpage
                 label={faq.name}
-                isOpen={openAccordions.includes(faq.name)} 
+                isOpen={openAccordion === faq.name} 
                 onToggle={() => handleToggle(faq.name)}
               >
                 <p className="text-14 lg:text-16">{faq.detail}</p>

@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { FETCH_HEADER_CATEGORIES } from 'graphql/queries';
 import { Category as ICategory } from "types/cat";
 import dynamic from 'next/dynamic';
-const Footerlinks =  dynamic(() => import('./Footerlinks'));
+const Footerlinks = dynamic(() => import('./Footerlinks'));
 
 import SocialIcon from 'components/Reusable/social-icon';
 
@@ -21,26 +21,26 @@ const Footer = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
         const getCategories = async () => {
-          try {
-            const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-            const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
-              const indexA = staticMenuItems.findIndex(
-                (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
-              );
-              const indexB = staticMenuItems.findIndex(
-                (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
-              );
-              return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-            });
-    
-            setCategories(sortedCategories);
-          } catch {
-            toast.error("Error fetching categories:");
-          } 
+            try {
+                const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
+                const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
+                    const indexA = staticMenuItems.findIndex(
+                        (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+                    );
+                    const indexB = staticMenuItems.findIndex(
+                        (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+                    );
+                    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                });
+
+                setCategories(sortedCategories);
+            } catch {
+                toast.error("Error fetching categories:");
+            }
         };
         getCategories();
-      }, []);
-    
+    }, []);
+
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -83,18 +83,18 @@ const Footer = () => {
 
                         )
                     })
-                ):(
+                ) : (
                     <>
-                    {[...Array(5)].map((_, index) => (
-                      <div key={index} className="hidden sm:block w-full animate-pulse">
-                        {[...Array(5)].map((_, i) => (
-                          <div key={i} className="h-6 w-full bg-gray-300 rounded mb-3"></div>
+                        {[...Array(5)].map((_, index) => (
+                            <div key={index} className="hidden sm:block w-full animate-pulse">
+                                {[...Array(5)].map((_, i) => (
+                                    <div key={i} className="h-6 w-full bg-gray-300 rounded mb-3"></div>
+                                ))}
+                            </div>
                         ))}
-                      </div>
-                    ))}
                     </>
                 )}
-             
+
                 <div className="sm:block ">
                     <h3 className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</h3>
                     <div className="text-sm mt-3 flex items-start gap-2">
@@ -141,7 +141,7 @@ const Footer = () => {
                     </div>
 
                 </div>
-                <div className="flex flex-col space-y-3 fixed right-4 bottom-32 md:right-16  z-20">
+                <div className="flex flex-col space-y-3 fixed right-4 bottom-10 md:right-16  z-20">
 
                     <Link href="tel:+971505974385" aria-label="Call +971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <IoCall size={35} />
@@ -155,19 +155,34 @@ const Footer = () => {
 
             <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
                 <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
+                    <div className='hidden sm:block'>
                     <div className="flex md:space-x-4 space-x-2">
                         <SocialIcon/>
                     </div>
-                    <div className='text-start sm:text-center'>
-                        <p className="text-sm text-white font-inter font-medium xs:font-extralight">
+                    </div>
+                    <div className='text-start xs hidden sm:block'>
+                        <p className="text-12 sm:text-13 text-white font-inter font-medium xs:font-extralight ">
                             Easyfloors.ae ©2025
                         </p>
                     </div>
-                    <div className="sm:space-x-4 max-sm:gap-2 text-white text-12 2xl:text-16 font-inter font-light flex flex-wrap lg:flex-nowrap items-center justify-center lg:justify-end xl:whitespace-nowrap w-full">
-                     <Link className='w-full text-start sm:w-fit' href="/terms-and-conditions">Terms & Conditions</Link>
-                     <Link className='w-full text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
+                    <div className="text-white  font-inter flex flex-wrap lg:flex-nowrap  lg:justify-end  w-full">
+                    <div className='flex justify-between xs:justify-center items-center text-12 sm:text-13 font-light flex-nowrap xl:whitespace-nowrap gap-2 sm:gap-0 w-full sm:space-x-4'> <Link className='w-full text-start sm:w-fit text-nowrap xs:text-wrap xl:text-nowrap' href="/terms-and-conditions">Terms & Conditions</Link>
+                     <Link className='w-full text-center sm:text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
                      <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
-                     <Link className='w-full text-start sm:w-fit' href="/return-and-refund-policy">Return & Refund policy</Link>
+                     <Link className='w-full text-center sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
+                    </div>
+                     <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light' href="/return-and-refund-policy">Return & Refund policy</Link>
+                    </div>
+                    <div className='block sm:hidden w-full'>
+                    <div className='flex justify-start items-center'>
+                    <div className="flex space-x-2 w-[32%] xs:w-[40%]">
+                        <SocialIcon/>
+                    </div>
+                    <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">
+                            Easyfloors.ae ©2025
+                    </p>
+                   
+                    </div>
                     </div>
                 </Container>
             </div>

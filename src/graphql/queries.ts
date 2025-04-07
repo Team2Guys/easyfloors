@@ -27,6 +27,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       colorCode
       colors
       thickness
+      sizes
       FAQS
         boxCoverage
         featureImages
@@ -108,6 +109,7 @@ export const FETCH_ALL_CATEGORIES = gql`
       whatAmiImageBanner
       topHeading
       RecallUrl
+      price
         recalledSubCats {
             id
             name
@@ -141,6 +143,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         CommmericallWarranty
         thickness
         boxCoverage
+        sizes
         subcategory {
           id
           name
@@ -179,11 +182,11 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       whatAmiImage
       whatamIdetails
       whatAmiTopHeading
-      whatAmiImage
       whatAmiImageBanner
       homePageImage
       Heading
       BannerImage
+      price
 
       products {
         id
@@ -356,6 +359,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       name
       custom_url
       RecallUrl
+      price
         accessories {
       id
       name
@@ -366,6 +370,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
         name
         custom_url
         posterImageUrl
+        price
       }
          products {
         id
@@ -381,6 +386,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
             name
             custom_url
               posterImageUrl
+              price
               category {
                 RecallUrl
                 
@@ -396,6 +402,7 @@ export const FETCHSUBCAT = gql`
       name
       posterImageUrl
       custom_url
+      price
       products {
         id
         name
@@ -508,6 +515,7 @@ query Product($custom_url: String!,$category: String!,$subCategory: String!, $ac
     FAQS
     boxCoverage
     featureImages
+    sizes
     category {
       id
       name
