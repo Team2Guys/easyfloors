@@ -10,7 +10,7 @@ import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
-import { handleAddToStorage } from "lib/carthelper";
+import { calculatePricePerBox, handleAddToStorage } from "lib/carthelper";
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
@@ -27,7 +27,11 @@ const Card: React.FC<productCardProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
-
+  const pricePerBox = calculatePricePerBox(
+    typeof product?.boxCoverage === "string" ? parseFloat(product.boxCoverage) : product?.boxCoverage,
+    typeof product?.price === "string" ? parseFloat(product.price) : product?.price
+  );
+console.log(product, 'productgggggg')
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -89,7 +93,7 @@ const Card: React.FC<productCardProps> = ({
                     (
                       product,
                       product.price ?? 0,
-                      0,
+                      pricePerBox,
                       0,
                       1,
                       product.subcategory?.name || "",
@@ -217,9 +221,11 @@ const Card: React.FC<productCardProps> = ({
           
           'price' in product && product.price &&
 
-            <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
-              {isAccessories ? '' : 'Only '} AED <span >{product?.price}</span>/m<span className="align-super text-10">2</span>
-            </p>
+        <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
+          {isAccessories ? '' : 'Only '} AED <span>{product?.price}</span>
+          {isAccessories ? '/m' : '/m²'}
+        </p>
+        
           }
 
           <div className="w-full md:text-right">

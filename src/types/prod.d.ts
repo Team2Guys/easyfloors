@@ -60,7 +60,7 @@ export interface IProduct {
     squareMeter?:number;
     totalPrice?:number
     sizes?: Sizes[]
-    pricePerBox:number,
+    pricePerBox?: number;
   }
 
 export interface Sizes { width: string, height: string, thickness: string }

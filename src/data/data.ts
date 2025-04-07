@@ -77,7 +77,6 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   topHeading: "",
   recalledSubCats: [],
   price:"",
-  pricePerBox:"",
 };
 
 export const subcategoryValidationSchema = Yup.object({
