@@ -60,6 +60,7 @@ export interface IProduct {
     squareMeter?:number;
     totalPrice?:number
     sizes?: Sizes[]
+    pricePerBox:number,
   }
 
 export interface Sizes { width: string, height: string, thickness: string }
@@ -81,6 +82,7 @@ export interface IProductFilter extends IProduct {
     image?: string
     totalPrice:number ;
     pricePerBox:number,
+    originalPricePerBox?: number;
     squareMeter:number,
     requiredBoxes:number,
     boxCoverage?:string,

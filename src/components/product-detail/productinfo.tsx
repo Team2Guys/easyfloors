@@ -108,6 +108,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
             value={length}
             onChange={handleLengthChange}
             placeholder="Enter your required meter"
+            min="0" 
             className="border p-2 w-full mt-1 border-primary text-12"
           />
         </div>

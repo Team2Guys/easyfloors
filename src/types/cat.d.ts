@@ -28,6 +28,7 @@ export interface Category {
     custom_url: string
     createdAt: Date;
   updatedAt: Date;
+  pricePerBox:number,
   }[]
 
   whatAmiImageBanner?:ProductImage
@@ -37,6 +38,7 @@ export interface Category {
   stock?:number
   boxCoverage?:string,
   __typename?:string;
+  pricePerBox?:string
 
 }
 
@@ -50,6 +52,7 @@ export interface EDIT_CATEGORY extends Category {
     recalledSubCats?:ISUBCATEGORY[]
     subcategory?: ISUBCATEGORY_EDIT;
     sizes?: Sizes[];
+    pricePerBox:string,
 
 }
 
