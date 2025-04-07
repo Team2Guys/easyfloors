@@ -42,13 +42,18 @@ const SmallScreen: React.FC = () => {
                 <div className="flex flex-row gap-2">
                   <Image src={product.image || "/image.png"} alt={product.name} width={80} height={80} className="object-cover w-20 h-20" />
                   <div className="text-14 font-inter font-normal flex-grow">
-                    <p className="font-semibold text-lg">{product.name}</p>
-                    <p className="text-12 font-normal font-inter">No. of boxes: {product.requiredBoxes}</p>
-                    <p className="text-12 font-normal font-inter">Box Coverage: {product.boxCoverage}</p>
-                    <p className="text-14 font-semibold font-inter">
+                    <p className="font-normal text-14">{product.name}</p>
+                    {!isSamplePage && (
+                    <>
+                   <p className="text-12 font-normal font-inter">No. of boxes: {product.requiredBoxes}</p>
+                  <p className="text-12 font-normal font-inter">Box Coverage: {product.boxCoverage}</p>
+                  </>
+                )}
+                    <p className="text-14 font-inter font-semibold font-
+                    ter">
                       {isSamplePage ? "Free" : `AED ${product.price}`}
                     </p>
-                    <p>{product.stock > 0 ? "In Stock" : "Out of Stock"}</p>
+                    <p className="text-14 font-normal font-inter">{product.stock > 0 ? "In Stock" : "Out of Stock"}</p>
                   </div>
                 </div>
                 <button onClick={() => handleRemoveItem(product.id, isSamplePage, setItems)} className="text-gray-500 hover:text-red-500">
@@ -63,7 +68,7 @@ const SmallScreen: React.FC = () => {
               </div>
               <div className="flex gap-2 w-full justify-between mt-3">
                 {!isSamplePage && (
-                  <div className="flex items-center bg-[#F0F0F0] text-black px-4 py-2">
+                  <div className="flex items-center bg-[#F0F0F0] text-black px-4 py-1">
                     <button onClick={() => updateQuantity(product.id, -1, setItems)} className="p-2">
                       <FiMinus />
                     </button>
@@ -73,8 +78,11 @@ const SmallScreen: React.FC = () => {
                     </button>
                   </div>
                 )}
-
-                <button onClick={() => handleAddToCart(product, isSamplePage, setItems)}  className="bg-black text-white flex items-center gap-2 px-4 py-2">
+                <button onClick={() => handleAddToCart(product, isSamplePage, setItems)} 
+              className={`bg-black text-white text-14 font-inter flex items-center gap-2  py-1 ${
+                !isSamplePage ? 'px-12' : 'px-14'
+              }`}
+              >
                   <GrCart /> Add to Cart
                 </button>
               </div>
