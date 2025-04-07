@@ -71,6 +71,18 @@ export const handleAddToStorage = async (
     }
     
   };
+  
+  export const calculatePricePerBox = (boxCoverage: string | number | undefined, price: number | undefined): number => {
+    const coverage = Number(boxCoverage);
+    const unitPrice = Number(price);
+  
+    if (isNaN(coverage) || isNaN(unitPrice) || coverage <= 0 || unitPrice <= 0) {
+      return 0;
+    }
+  
+    return parseFloat((coverage * unitPrice).toFixed(2));
+  };
+  
 
   export const calculateProductDetails = (area: string, unit: string, productData: IProduct | undefined) => {
     const boxCoverage = productData?.boxCoverage;
