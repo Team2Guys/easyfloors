@@ -40,7 +40,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
 
     if (newRequiredBoxes > product.stock) {
       toast.error(`Cannot add more than ${product.stock} boxes.`);
-      return false; // Prevents showing success toast
+      return false; 
     }
 
     const updatedProduct = {
@@ -56,7 +56,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
     });
 
     window.dispatchEvent(new Event("cartUpdated"));
-    return true; // Indicates success
+    return true; 
   } catch (error) {
     throw error
     return false;
@@ -108,7 +108,6 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
   
   
   export const addToWishlist = async (product: ICart): Promise<void> => {
-    console.log('Product added to wishlist:', product);
     try {
       const db = await openDB();
       const tx = db.transaction("wishlist", "readwrite");

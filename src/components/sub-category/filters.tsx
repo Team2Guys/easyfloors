@@ -152,23 +152,7 @@ const Filters = ({
             })}
           </ul>
         </Accordion>
-
-        {/* <Accordion title='Style' >
-          <ul className="pl-4 text-sm text-gray-600 space-y-1">
-            {Object.values(categoryState).map((item) => {
-              return (
-                item.subcategories?.map((sub) => (
-                  <li key={sub.custom_url}>
-                    <Link href={`/${item.custom_url}/${sub.custom_url}`} className="cursor-pointer hover:text-primary block capitalize">
-                      {item.name.toLowerCase()}
-                    </Link>
-                  </li>
-                ))
-
-              );
-            })}
-          </ul>
-        </Accordion> */}
+        
         <Accordion title="Style">
         <ul className="pl-4 text-sm text-gray-600 space-y-1">
         <li>
