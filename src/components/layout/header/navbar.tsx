@@ -12,7 +12,7 @@ import { staticMenuItems } from "data/data";
 import { ISUBCATEGORY } from "types/cat";
 import { HeaderAccessoriesProps, INavbar } from "types/types";
 
-const Navbar = ({ categories, products, cartTotal, wishlistTotal, freeSampleTotal }: INavbar) => {
+const Navbar = ({ categories, products}: INavbar) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [isScrolled, setIsScrolled] = useState(false);
@@ -94,7 +94,7 @@ const Navbar = ({ categories, products, cartTotal, wishlistTotal, freeSampleTota
         </div>
         <div className="w-2/12 lg:w-[20%] 2xl:w-[20%] 3xl:w-[23%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
           <SearchBar className="lg:block hidden" productData={products} />
-          <UserIcon className="hidden lg:flex" wishlistTotal={wishlistTotal?.length} cartTotal={cartTotal?.length} freeSampleTotal={freeSampleTotal?.length} />
+          <UserIcon className="hidden lg:flex" />
           <div className="lg:hidden flex justify-end">
             <FaBars onClick={() => setIsOpen(true)} size={20} />
             <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
