@@ -24,7 +24,7 @@ export const handleAddToStorage = async (
   // For cart only: validate requiredBoxes
   if (type === "cart") {
     if (requiredBoxes <= 0) {
-      toast.error("Please enter a box quantity to add the product to the cart.");
+      toast.error("Please enter quantity to add the product to the cart.");
       return;
     }
     
