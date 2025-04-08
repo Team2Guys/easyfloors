@@ -87,6 +87,7 @@ export interface IProductFilter extends IProduct {
     requiredBoxes:number,
     boxCoverage?:string,
     subcategories?:string,
+    unit?:string,
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {

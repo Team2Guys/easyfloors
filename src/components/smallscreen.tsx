@@ -47,17 +47,18 @@ const SmallScreen: React.FC = () => {
                     <>
                    <p className="text-12 font-normal font-inter">No. of boxes: {product.requiredBoxes}</p>
                   <p className="text-12 font-normal font-inter">Box Coverage: {product.boxCoverage}</p>
-                  </>
+                    </>
                 )}
                     <p className="text-14 font-inter font-semibold font-
-                    ter">
+                    ter"
+                    >
                       {isSamplePage ? "Free" : `AED ${product.price}`}
                     </p>
                     <p className="text-14 font-normal font-inter">{product.stock > 0 ? "In Stock" : "Out of Stock"}</p>
                   </div>
                 </div>
                 <button onClick={() => handleRemoveItem(product.id, isSamplePage, setItems)} className="text-gray-500 hover:text-red-500">
-                  <svg className="w-6 h-6" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="w-5 h-5" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="0.5" y="0.5" width="47" height="47" stroke="#424542" />
                     <path
                       d="M8.95313 9L7.35938 10.5937L14.0625 17.2969L20.7656 24L14.0625 30.7031L7.35938 37.4062L8.98125 39.0187L10.5938 40.6406L17.2969 33.9375L24 27.2344L30.7031 33.9375L37.4063 40.6406L39.0188 39.0187L40.6406 37.4062L33.9375 30.7031L27.2344 24L33.9375 17.2969L40.6406 10.5937L39.0188 8.98125L37.4063 7.35938L30.7031 14.0625L24 20.7656L17.3156 14.0812C13.65 10.4156 10.6219 7.40625 10.5938 7.40625C10.5656 7.40625 9.825 8.12812 8.95313 9Z"
@@ -80,9 +81,9 @@ const SmallScreen: React.FC = () => {
                 )}
                 <button onClick={() => handleAddToCart(product, isSamplePage, setItems)} 
               className={`bg-black text-white text-14 font-inter flex items-center gap-2  py-1 ${
-                !isSamplePage ? 'px-12' : 'px-14'
+                !isSamplePage ? 'px-7' : 'px-14'
               }`}
-              >
+                >
                   <GrCart /> Add to Cart
                 </button>
               </div>

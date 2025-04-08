@@ -118,6 +118,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
                 "cart",
                 image?.imageUrl ?? "",
                 boxCoverage,
+                unit
               )
             }
             className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
@@ -139,7 +140,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className , 
               MainCategory ?? "",
               "wishlist",
               image?.imageUrl ?? "",
-              boxCoverage
+              boxCoverage,
+              unit
             )
           }
         >

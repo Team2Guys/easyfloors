@@ -22,6 +22,12 @@ export const openDB = (): Promise<IDBDatabase> => {
   
 export const addToCart = async (product: ICart): Promise<boolean> => {
   try {
+    // First check if requiredBoxes is 0 or negative
+    if (!product.requiredBoxes || product.requiredBoxes <= 0) {
+      toast.error("Please enter a valid box quantity (at least 1).");
+      return false;
+    }
+
     const db = await openDB();
     const tx = db.transaction("cart", "readwrite");
     const store = tx.objectStore("cart");
@@ -58,12 +64,10 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
     window.dispatchEvent(new Event("cartUpdated"));
     return true; 
   } catch (error) {
-    throw error
+    throw error;
     return false;
   }
 };
-
-
 
 
   export const getCart = async (): Promise<ICart[]> => {

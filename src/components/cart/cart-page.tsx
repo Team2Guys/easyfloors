@@ -29,7 +29,6 @@ const CartPage = ({ products }: CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -221,8 +220,17 @@ const CartPage = ({ products }: CartPageProps) => {
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                               <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m<sup>2</sup></p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessory" ? "Price Per Piece:" : "Price Per Box:"} <span className='font-bold'>AED {(item.pricePerBox ?? 0).toFixed(2)}</span></p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessory" ? "No. Of Piece:" : "No. Of Boxes:"} <span className='font-bold'>{item.requiredBoxes ?? 0}</span> ({(Number(item.boxCoverage) * Number(item.requiredBoxes ?? 0)).toFixed(2)} SQM)
+                              <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessories" ? "Price Per Piece:" : "Price Per Box:"} <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span></p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>
+                                  {item.category === "Accessories" ? "No. Of Piece:" : "No. Of Boxes:"}
+                                  <span className='font-bold'>{item.requiredBoxes ?? 0} </span> 
+                                  (
+                                    {item.unit === "sqft" 
+                                      ? ((Number(item.boxCoverage) * 10.764 * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                      : Number((Number(item.boxCoverage) * (Number(item.requiredBoxes ?? 0))).toFixed(2)) 
+                                    } 
+                                    {item.unit === "sqft" ? " ft²" : " SQM"}
+                                  )
                               </p>
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">

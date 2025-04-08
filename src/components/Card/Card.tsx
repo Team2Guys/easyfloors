@@ -221,7 +221,7 @@ console.log(product, 'productgggggg')
           
           'price' in product && product.price &&
 
-          <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
+        <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
           {isAccessories ? '' : 'Only '} AED <span>{product?.price}</span>
           {isAccessories ? '/m' : '/m²'}
         </p>
