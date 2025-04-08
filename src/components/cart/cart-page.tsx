@@ -71,9 +71,9 @@ const CartPage = ({ products }: CartPageProps) => {
     );
     setSubTotal(subTotalPrice);
     const totalBeforeTax = subTotal + selectedFee;
-      const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
-      setTotal(totalBeforeTax + taxAmount);
-  },[cartItems])
+    const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
+    setTotal(totalBeforeTax + taxAmount);
+  }, [cartItems])
 
   const updateQuantity = async (id: number, change: number) => {
     try {
@@ -172,7 +172,7 @@ const CartPage = ({ products }: CartPageProps) => {
     localStorage.setItem('shippingFee', JSON.stringify(selectedFee));
     localStorage.setItem('selectedCity', JSON.stringify(selectedCity));
 
-  },[selectedCity, selectedShipping]);
+  }, [selectedCity, selectedShipping]);
 
   useEffect(() => {
     let shippingData;
@@ -277,7 +277,7 @@ const CartPage = ({ products }: CartPageProps) => {
 
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal:</p>
-                  <p>AED {subTotal}</p>
+                  <p>AED {subTotal.toFixed(2)}</p>
                 </div>
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Shipping Fee:</p>
@@ -287,8 +287,15 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal Incl. VAT</p>
-                  <p>AED {total > 0 ? total : subTotal}</p>
-
+                  {/* <p>AED {total > 0 ? total : subTotal.toFixed(2)}</p> */}
+                  <p>
+                    AED{" "}
+                    {typeof total === "number" && total > 0
+                      ? total.toFixed(2)
+                      : typeof subTotal === "number"
+                        ? subTotal.toFixed(2)
+                        : "0.00"}
+                  </p>
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
 

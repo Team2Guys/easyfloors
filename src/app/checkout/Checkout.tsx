@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Form, Formik } from "formik";
+import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -15,7 +15,7 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates, phoneValidation } from "data/data";
+import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
@@ -30,13 +30,18 @@ import Checkbox from "components/ui/checkbox";
 import { Collapse } from "antd";
 
 
-const validationSchema = Yup.object({
+const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required"),
     lastName: Yup.string().required("Last Name is required"),
     email: Yup.string().email("Invalid email").required("Email is required"),
-    phone: phoneValidation,
+    phone: Yup.string().required("Phone number is required"),
+    country: Yup.string().required("Country is required"),
     emirate: Yup.string().required("Emirate is required"),
+    city: Yup.string().required("City is required"),
     address: Yup.string().required("Address is required"),
+    terms: Yup.boolean()
+  .oneOf([true], "You must accept the terms and conditions")
+  .required("Required"),
 });
 
 const Checkout = () => {
@@ -50,8 +55,8 @@ const Checkout = () => {
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
 
-    
-    
+
+
 
     useEffect(() => {
         const savedCity = localStorage.getItem('selectedCity') || '';
@@ -68,22 +73,22 @@ const Checkout = () => {
         if (!savedShipping) return;
         if (savedShipping) {
             const parsedShipping = JSON.parse(savedShipping);
-      
+
             if (parsedShipping.name === "Express Shipping") {
-              setSelectedShipping("express");
-              handleShippingSelect("express");
+                setSelectedShipping("express");
+                handleShippingSelect("express");
             } else if (parsedShipping.name === "Self-Collect") {
-              setSelectedShipping("self-collect");
-              handleShippingSelect("self-collect");
+                setSelectedShipping("self-collect");
+                handleShippingSelect("self-collect");
             } else if (parsedShipping.name === "Standard Shipping") {
-              setSelectedShipping("standard");
-              handleShippingSelect("standard");
-            }
-            else{
+                setSelectedShipping("standard");
                 handleShippingSelect("standard");
             }
-          }
-        }, []);
+            else {
+                handleShippingSelect("standard");
+            }
+        }
+    }, []);
     type FormInitialValues = {
         firstName: string;
         lastName: string;
@@ -205,6 +210,8 @@ const Checkout = () => {
                     terms: false,
                 }}
                 validationSchema={validationSchema}
+                validateOnMount
+
                 onSubmit={(values, { setSubmitting }) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
@@ -228,7 +235,16 @@ const Checkout = () => {
                             <div className="space-y-4">
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <Input type="text" label="First Name" required name="firstName" placeholder="Enter first name" value={values.firstName} onChange={handleChange} />
+                                    <Input
+                                        type="text"
+                                        label="First Name"
+                                        required
+                                        name="firstName"
+                                        placeholder="Enter first name"
+                                        value={values.firstName}
+                                        onChange={handleChange}
+                                    />
+                                    {/* <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" /> */}
                                     <Input type="text" label="Last Name" required name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
                                 </div>
 
@@ -246,6 +262,8 @@ const Checkout = () => {
                                         value={values.phone}
                                         onChange={(value) => setFieldValue("phone", value)}
                                     />
+                                    <ErrorMessage name="phone" component="div" className="text-red-500 text-sm" />
+
                                 </div>
 
                                 <Select name="country" label="Country" placeholder="Select Country" required options={[{ value: "United Arab Emirates", label: "United Arab Emirates" }]} />
@@ -268,16 +286,19 @@ const Checkout = () => {
 
 
                                 <div className="flex items-center">
-                                    <Checkbox
-                                        required
-                                        name="terms"
-                                        onChange={(e) => setFieldValue("terms", e.target.checked)}
-                                        checked={values.terms}
-                                        className="custom-checkbox"
-                                    >
-                                        I have read and agree to the Terms and Conditions
-                                    </Checkbox>
+                                <div>
+  <Checkbox
+    name="terms"
+    onChange={(e) => setFieldValue("terms", e.target.checked)}
+    checked={values.terms}
+  >
+    I have read and agree to the <span className="text-primary">Terms and Conditions</span>
+  </Checkbox>
+  <ErrorMessage name="terms" component="div" className="text-red-500 text-sm mt-1" />
                                 </div>
+
+                                </div>
+
                             </div>
                         </div>
                         <div className="bg-[#FFF9F5] w-full">
