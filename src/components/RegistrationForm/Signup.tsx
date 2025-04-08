@@ -1,9 +1,9 @@
 "use client";
 
-import { Formik, Form, Field } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import client from "config/apolloClient";
@@ -14,9 +14,11 @@ import { useState } from "react";
 
 import { useRouter } from "next/navigation";
 import { loginData } from "data/data";
+import { validationSchema } from "hooks/SignUplValidation";
 
 const SignupForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const router = useRouter();
   const formValues = {
@@ -26,6 +28,8 @@ const SignupForm = () => {
     retypePassword: "",
     phone: "",
   };
+
+
 
   return (
     <div className="flex flex-col h-screen w-full md:flex-row">
@@ -42,7 +46,10 @@ const SignupForm = () => {
             </span>
             Back to home
           </Link>
-          <h2 className="sm:text-4xl text-2xl text-center text-primary font-bold font-inter mt-8" dangerouslySetInnerHTML={{ __html: loginData.title }} />
+          <h2
+            className="sm:text-4xl text-2xl text-center text-primary font-bold font-inter mt-8"
+            dangerouslySetInnerHTML={{ __html: loginData.title }}
+          />
 
           <h2 className="sm:text-4xl text-2xl text-center font-bold font-inter mt-8">
             Sign Up
@@ -50,58 +57,161 @@ const SignupForm = () => {
 
           <Formik
             initialValues={formValues}
+            validationSchema={validationSchema}
             onSubmit={async (values, { setSubmitting }) => {
-              const { retypePassword, phone, ...newValues } = values;
-              console.log(retypePassword, "retreive password")
-              await client.mutate({
-                mutation: CREATE_USER,
-                variables: {
-                  createUser: { ...newValues, phone: phone.toString() },
-                },
-              });
-              router.push('/login');
-              setSubmitting(false);
+              try {
+                const { retypePassword, phone, ...newValues } = values;
+                console.log(retypePassword)
+                if (values.password !== values.retypePassword) {
+                  toast.error("Passwords don't match");
+                  return;
+                }
+
+                const { data } = await client.mutate({
+                  mutation: CREATE_USER,
+                  variables: {
+                    createUser: { ...newValues, phone: phone.toString() },
+                  },
+                });
+
+                console.log(data, "data")
+                if (data?.createUser) {
+                  toast.success("Account created successfully!");
+                  router.push("/login");
+                }
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              } catch (error: any) {
+                toast.error(
+                  error.message || "An error occurred during signup"
+                );
+              } finally {
+                setSubmitting(false);
+              }
             }}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, errors, touched }) => (
               <Form className="mt-10">
-
-                <div className="flex border-b items-center mb-4">
-                  <FaUser className="text-primary" />
-                  <Field type="text" name="name" placeholder="Full Name" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
-                </div>
-
-                <div className="flex border-b items-center mb-4">
-                  <FaEnvelope className="text-primary" />
-                  <Field type="email" name="email" placeholder="Email" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
-                </div>
-                <div className="flex border-b items-center mb-4">
-                  <FaPhoneAlt className="text-primary" />
-                  <Field type="number" name="phone" placeholder="Phone Number" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
-                </div>
-                <div className="flex border-b justify-between items-center relative">
-                  <div className="flex w-full items-center">
-                    <FaLock className="text-primary" />
-                    <Field type={showPassword ? "text" : "password"} name="password" placeholder="Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
+                <div className="flex flex-col mb-4">
+                  <div className="flex border-b items-center">
+                    <FaUser className="text-primary" />
+                    <Field
+                      type="text"
+                      name="name"
+                      placeholder="Full Name"
+                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
+                        errors.name && touched.name ? "border-red-500" : ""
+                      }`}
+                    />
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
-                  >
-                    {showPassword ? <BsEyeSlash /> : <BsEye />}
-                  </button>
+                  <ErrorMessage
+                    name="name"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
                 </div>
-                <div className="flex border-b justify-between items-center relative">
-                  <div className="flex w-full items-center">
-                    <FaLock className="text-primary" />
-                    <Field type={showPassword ? "text" : "password"} name="retypePassword" placeholder="Confirm Password" className="p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4" />
+
+                <div className="flex flex-col mb-4">
+                  <div className="flex border-b items-center">
+                    <FaEnvelope className="text-primary" />
+                    <Field
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
+                        errors.email && touched.email ? "border-red-500" : ""
+                      }`}
+                    />
                   </div>
+                  <ErrorMessage
+                    name="email"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
                 </div>
+
+                <div className="flex flex-col mb-4">
+                  <div className="flex border-b items-center">
+                    <FaPhoneAlt className="text-primary" />
+                    <Field
+                      type="text"
+                      name="phone"
+                      placeholder="Phone Number"
+                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
+                        errors.phone && touched.phone ? "border-red-500" : ""
+                      }`}
+                    />
+                  </div>
+                  <ErrorMessage
+                    name="phone"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
+                <div className="flex flex-col mb-4">
+                  <div className="flex border-b justify-between items-center relative">
+                    <div className="flex w-full items-center">
+                      <FaLock className="text-primary" />
+                      <Field
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        placeholder="Password"
+                        className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
+                          errors.password && touched.password
+                            ? "border-red-500"
+                            : ""
+                        }`}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
+                    >
+                      {showPassword ? <BsEyeSlash /> : <BsEye />}
+                    </button>
+                  </div>
+                  <ErrorMessage
+                    name="password"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
+                <div className="flex flex-col mb-4">
+                  <div className="flex border-b justify-between items-center relative">
+                    <div className="flex w-full items-center">
+                      <FaLock className="text-primary" />
+                      <Field
+                        type={showConfirmPassword ? "text" : "password"}
+                        name="retypePassword"
+                        placeholder="Confirm Password"
+                        className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
+                          errors.retypePassword && touched.retypePassword
+                            ? "border-red-500"
+                            : ""
+                        }`}
+                      />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      className="text-primary -translate-y-1/2 absolute focus:outline-none right-3 top-1/2 transform"
+                    >
+                      {showConfirmPassword ? <BsEyeSlash /> : <BsEye />}
+                    </button>
+                  </div>
+                  <ErrorMessage
+                    name="retypePassword"
+                    component="div"
+                    className="text-red-500 text-sm mt-1"
+                  />
+                </div>
+
                 <div className="pt-7">
                   <button
                     type="submit"
-                    className="bg-primary p-3 text-white w-full"
+                    className="bg-primary p-3 text-white w-full hover:bg-primary-dark transition-colors disabled:bg-gray-400"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Creating Account..." : "Sign Up"}
@@ -112,15 +222,26 @@ const SignupForm = () => {
           </Formik>
 
           <p className="text-center mt-4">
-            Already have an account? {" "}
-            <Link href="/login" className="text-primary font-semibold hover:underline">
+            Already have an account?{" "}
+            <Link
+              href="/login"
+              className="text-primary font-semibold hover:underline"
+            >
               Login
             </Link>
           </p>
         </div>
       </div>
 
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar closeOnClick pauseOnHover draggable theme="light" />
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
     </div>
   );
 };
