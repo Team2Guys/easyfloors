@@ -14,6 +14,7 @@ import { AccessoriesModule } from './accessories/accessories.module';
 import { AppointmentsModule } from './appointments/appointments.module';
 import { UserModule } from './user/user.module';
 import { SalesProductsModule } from './sales-products/sales-products.module';
+import { PrismaService } from './prisma/prisma.service'
 
 @Module({
   imports: [
@@ -37,9 +38,10 @@ import { SalesProductsModule } from './sales-products/sales-products.module';
     SalesProductsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, {
+  providers: [ PrismaService,AppService, {
     provide: APP_GUARD,
-    useClass: AuthGuard, // ✅ Register AuthGuard globally
+    useClass: AuthGuard, 
+
   },],
 })
 export class AppModule { }

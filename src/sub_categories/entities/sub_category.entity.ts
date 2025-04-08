@@ -51,8 +51,8 @@ export class SubCategory {
   @Field({ nullable: true })
   short_description?: string
 
-  @Field(() => GraphQLJSON, { nullable: true })
-  whatAmiImage?: any
+  @Field(() => [GraphQLJSON], { nullable: true })
+  whatAmiImage?: any[]
 
   @Field(() => GraphQLJSON, { nullable: true })
   whatAmiImageBanner?: any
@@ -74,6 +74,9 @@ export class SubCategory {
 
   @Field(() => [Category],{ nullable: true })
   recalledByCategories?: Category[]
+
+  @Field({ nullable: true })
+  price?: string;
 
 }
 
