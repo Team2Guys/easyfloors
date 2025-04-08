@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useRef, useState, useEffect, ReactNode, useCallback } from "react";
 import { IoIosClose } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
@@ -31,6 +32,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [localItems, setLocalItems] = useState<ICart[]>(cartItems);
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
 const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleRef = useRef<HTMLDivElement>(null);
@@ -67,7 +69,15 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   }, []);
 
   useEffect(() => {
-    if (type === "cart" || type === "wishlist") {
+    const isWishlistPage = pathname === "/wishlist";
+    const isFreeSamplePage = pathname === "/freesample";
+  
+    const shouldListen =
+      type === "cart" ||
+      (type === "wishlist" && !isWishlistPage) ||
+      (type === "freeSample" && !isFreeSamplePage && !isWishlistPage);
+  
+    if (shouldListen) {
       const handleUpdate = () => {
         setIsOpen(true);
       };
@@ -77,7 +87,8 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
         window.removeEventListener(`${type}Updated`, handleUpdate);
       };
     }
-  }, [type]);
+  }, [type, pathname]);
+  
   
 
   useEffect(() => {
