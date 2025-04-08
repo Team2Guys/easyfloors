@@ -6,6 +6,10 @@ export interface ExtendedThumbnailProps {
   hideThumnailBottom?: boolean;
   imageheight?: boolean; 
   onImageChange:React.Dispatch<SetStateAction<string>>
+  stickyside?: boolean;
+  onColorSelect?: React.Dispatch<SetStateAction<string>>
+  stickyside?: boolean;
+  selectedColor?:string
 }
 
 export interface ThumbnailProps {
