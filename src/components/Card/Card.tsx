@@ -31,7 +31,7 @@ const Card: React.FC<productCardProps> = ({
     typeof product?.boxCoverage === "string" ? parseFloat(product.boxCoverage) : product?.boxCoverage,
     typeof product?.price === "string" ? parseFloat(product.price) : product?.price
   );
-console.log(product, 'productgggggg')
+
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
