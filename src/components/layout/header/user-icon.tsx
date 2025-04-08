@@ -1,10 +1,9 @@
 "use client";
-
+import React, { useState, useEffect, useRef, lazy } from "react";
 import CartIcon from "components/svg/cart-icon";
-import FreeSample from "components/svg/free-sample";
+const FreeSample = lazy(() => import('components/svg/free-sample'))
 import ProfileIcon from "components/svg/user-icon";
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
 import { LuHeart } from "react-icons/lu";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
