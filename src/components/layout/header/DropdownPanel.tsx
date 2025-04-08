@@ -171,7 +171,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
         className="relative flex h-7 justify-center p-1 text-white lg:text-black hover:text-white fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white cursor-pointer"
       >
         {badgeCount > 0 && (
-          <span className="absolute flex bg-white lg:bg-primary h-3 sm:h-4 justify-center text-black lg:text-white text-10 sm:text-xs w-3 sm:w-4 -right-1 -top-1 font-semibold items-center">
+          <span className="absolute flex bg-white lg:bg-primary h-3 sm:h-4 justify-center text-black lg:text-white text-10 sm:text-xs w-3 sm:w-4 right-[2px] sm:-right-1 -top-1 font-semibold items-center">
             {badgeCount}
           </span>
         )}
