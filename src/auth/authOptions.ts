@@ -57,7 +57,7 @@ export const authOptions = {
       if (session.user) {
         session.user.email = token.email;
         session.user.name = token.name;
-        session.user.image = token.picture || "/default-avatar.png";
+        session.user.image = token.picture || undefined;
 
         token.exp = Math.floor(Date.now() / 1000) + 5 * 60;
       }

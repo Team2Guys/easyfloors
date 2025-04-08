@@ -80,20 +80,23 @@ const UserIcon = ({ className }: UserIconProps) => {
     };
   }, []);
 
-  const logoutHandler = async () => {
+  const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     await signOut();
     setIsOpen(false);
   };
-
+console.log(session?.user, "session")
   return (
     <div className={`flex items-center 2xl:space-x-1 ${className} relative`}>
       <button
         onClick={handleProfileClick}
         className="relative flex items-center space-x-2 h-7 p-1 fill-white focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white lg:hover:bg-primary"
       >
-        {session?.user?.image ? (
+        {session ? (
           <Image
-          src={session?.user?.image || "/assets/images/dummy-avatar.jpg"}
+            
+           //@ts-expect-error(ts-migrate)
+          src={session?.user?.image?.imageUrl || "/assets/images/dummy-avatar.jpg"}
             alt="User Profile"
             width={50}
             height={50}

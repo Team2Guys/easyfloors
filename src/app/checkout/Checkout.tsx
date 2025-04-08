@@ -181,6 +181,8 @@ const Checkout = () => {
     }, [selectedShipping]);
 
 
+
+    console.log(UAEStates.length, "UAEStates")
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
