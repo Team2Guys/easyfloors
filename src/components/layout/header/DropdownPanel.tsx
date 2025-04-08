@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useRef, useState, useEffect, ReactNode, useCallback } from "react";
 import { IoIosClose } from "react-icons/io";
 import { IoCloseSharp } from "react-icons/io5";
@@ -31,6 +32,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [localItems, setLocalItems] = useState<ICart[]>(cartItems);
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
 const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const toggleRef = useRef<HTMLDivElement>(null);
@@ -67,7 +69,15 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   }, []);
 
   useEffect(() => {
-    if (type === "cart" || type === "wishlist") {
+    const isWishlistPage = pathname === "/wishlist";
+    const isFreeSamplePage = pathname === "/freesample";
+  
+    const shouldListen =
+      type === "cart" ||
+      (type === "wishlist" && !isWishlistPage) ||
+      (type === "freeSample" && !isFreeSamplePage && !isWishlistPage);
+  
+    if (shouldListen) {
       const handleUpdate = () => {
         setIsOpen(true);
       };
@@ -77,7 +87,8 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
         window.removeEventListener(`${type}Updated`, handleUpdate);
       };
     }
-  }, [type]);
+  }, [type, pathname]);
+  
   
 
   useEffect(() => {
@@ -157,7 +168,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
       <div
         ref={toggleRef}
         onClick={() => setIsOpen(!isOpen)}
-        className="relative flex h-7 justify-center p-1 hover:text-white fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white cursor-pointer"
+        className="relative flex h-7 justify-center p-1 text-white lg:text-black hover:text-white fill-white focus:bg-white focus:fill-black items-center lg:fill-black lg:hover:bg-primary lg:hover:fill-white cursor-pointer"
       >
         {badgeCount > 0 && (
           <span className="absolute flex bg-white lg:bg-primary h-3 sm:h-4 justify-center text-black lg:text-white text-10 sm:text-xs w-3 sm:w-4 -right-1 -top-1 font-semibold items-center">
@@ -172,7 +183,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
           ref={panelRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`absolute right-0 top-10 z-[999] bg-white shadow-lg rounded-lg border border-gray-200 ${panelClassName}`}
+          className={`fixed lg:absolute right-1/2 sm:right-5 lg:right-0 max-sm:translate-x-1/2 top-10 z-[999] bg-white shadow-lg rounded-lg border border-gray-200 ${panelClassName}`}
         >
           { localItems.length > 0 ?
           

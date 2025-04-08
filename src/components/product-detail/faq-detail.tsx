@@ -1,6 +1,6 @@
 "use client";
 import Accordion from "components/ui/accordion";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface FAQprops {
   FAQS?: { name: string; detail: string }[];
@@ -9,16 +9,9 @@ interface FAQprops {
 const FaqDetail = ({ FAQS }: FAQprops) => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (FAQS && FAQS.length > 0) {
-      setOpenAccordion(FAQS[0].name); 
-    }
-  }, [FAQS]);
-
   const handleToggle = (label: string) => {
     setOpenAccordion((prev) => (prev === label ? null : label)); 
   };
-
   return (
     <div>
       {FAQS && FAQS.length > 0 && (

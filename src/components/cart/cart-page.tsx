@@ -45,7 +45,7 @@ const CartPage = ({ products }: CartPageProps) => {
     };
 
     fetchCartItems();
-
+    
     const handleCartUpdate = () => fetchCartItems();
     window.addEventListener("cartUpdated", handleCartUpdate);
 
@@ -220,9 +220,9 @@ const CartPage = ({ products }: CartPageProps) => {
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                               <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m<sup>2</sup></p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessories" ? "Price Per Piece:" : "Price Per Box:"} <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span></p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessories" || item.category === "Accessory" ? "Price Per Piece:" : "Price Per Box:"} <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span></p>
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                                  {item.category === "Accessories" ? "No. Of Piece:" : "No. Of Boxes:"}
+                                  {item.category === "Accessories" || item.category === "Accessory" ? "No. Of Piece:" : "No. Of Boxes:"}
                                   <span className='font-bold'>{item.requiredBoxes ?? 0} </span> 
                                   (
                                     {item.unit === "sqft" 

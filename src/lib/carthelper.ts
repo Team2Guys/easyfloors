@@ -87,8 +87,7 @@ export const handleAddToStorage = async (
           return;
         }
         await addToFreeSample(item);
-        toast.success("Product added to freeSample!");
-      }
+        return;}
     } else {
       await addToWishlist(item);
       return;
