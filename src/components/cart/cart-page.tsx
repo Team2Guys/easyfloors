@@ -242,7 +242,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                     <LuPlus />
                                   </button>
                                 </div>
-                                <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{item.totalPrice.toFixed(2)}</span></p>
+                                <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                               </div>
                             </div>
                           </div>
@@ -259,7 +259,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                         </div>
                         <div className='col-span-2 text-center hidden xl:block'>
-                          <p className='text-16 2xl:text-20 font-semibold'>AED <span>{item.totalPrice.toFixed(2)}</span></p>
+                          <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                         </div>
                         <div className='col-span-2 text-end lg:pr-5'>
                           <button className='text-primary' onClick={() => handleRemoveItem(item.id)}>
@@ -285,7 +285,7 @@ const CartPage = ({ products }: CartPageProps) => {
 
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal:</p>
-                  <p>AED {subTotal}</p>
+                  <p>AED {subTotal.toFixed(2)}</p>
                 </div>
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Shipping Fee:</p>
@@ -295,7 +295,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal Incl. VAT</p>
-                  <p>AED {total > 0 ? total : subTotal}</p>
+                  <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>

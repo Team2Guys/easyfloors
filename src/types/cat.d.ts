@@ -37,7 +37,6 @@ export interface Category {
   stock?:number
   boxCoverage?:string,
   __typename?:string;
-
 }
 
 export interface EDIT_CATEGORY extends Category {
@@ -50,6 +49,7 @@ export interface EDIT_CATEGORY extends Category {
     recalledSubCats?:ISUBCATEGORY[]
     subcategory?: ISUBCATEGORY_EDIT;
     sizes?: Sizes[];
+    pricePerBox?: number;
 
 }
 

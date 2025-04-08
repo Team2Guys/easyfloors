@@ -3,6 +3,17 @@ import { EDIT_CATEGORY } from 'types/cat';
 import { IProduct } from 'types/prod';
 import { addToCart, addToFreeSample, addToWishlist, getFreeSamples } from 'utils/indexedDB';
 
+export const calculatePricePerBox = (boxCoverage: string | number | undefined, price: number | undefined): number => {
+  const coverage = Number(boxCoverage);
+  const unitPrice = Number(price);
+
+  if (isNaN(coverage) || isNaN(unitPrice) || coverage <= 0 || unitPrice <= 0) {
+    return 0;
+  }
+
+  return parseFloat((coverage * unitPrice).toFixed(2));
+};
+
 export const handleAddToStorage = async (
   productData: IProduct | EDIT_CATEGORY,
   totalPrice: string | number,
@@ -58,7 +69,7 @@ export const handleAddToStorage = async (
     requiredBoxes: adjustedRequiredBoxes,
     unit:adjustedUnit,
   };
-
+  
   try {
     if (type === "cart" || type === "freeSample") {
       const success = type === "cart" && await addToCart(item);
