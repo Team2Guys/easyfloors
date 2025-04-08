@@ -16,7 +16,6 @@ import { toast } from "react-toastify";
 
 interface UserIconProps {
   className?: string;
-
 }
 
 const UserIcon = ({ className }: UserIconProps) => {
