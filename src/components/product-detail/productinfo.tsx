@@ -67,7 +67,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <h2 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h2>
         <div className="flex border-b-[1px] border-gray-300"></div>
         <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
-          Price Per Piece: <span className="text-primary">AED {productData.price}</span>
+          Price Per Metre: <span className="text-primary">AED {productData.price}</span>
         </p>
         <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
         </p>
@@ -108,6 +108,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
             value={length}
             onChange={handleLengthChange}
             placeholder="Enter your required meter"
+            min="0" 
             className="border p-2 w-full mt-1 border-primary text-12"
           />
         </div>
@@ -120,9 +121,9 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         </div>
       </div>
       <div className="mt-4 p-3 border border-black font-inter text-16 xl:text-[23.6px] font-semibold">
-        <p>Total Required Pieces: <span className="text-12 xl:text-[20.6px] font-light">{requiredBoxes} Pieces</span></p>
-        <p >Price per piece: <span className="text-12 xl:text-[20.6px] font-light">AED {productData.price}</span></p>
-        <p>Total amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalPrice} ({requiredBoxes} pieces * AED {productData.price})</span></p>
+        <p>Total Required: <span className="text-12 xl:text-[20.6px] font-light">{requiredBoxes}  metres</span></p>
+        <p >Price Per Metre: <span className="text-12 xl:text-[20.6px] font-light">AED {productData.price}</span></p>
+        <p>Total Amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalPrice} ({requiredBoxes} metre * AED {productData.price})</span></p>
       </div>
 
       <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">

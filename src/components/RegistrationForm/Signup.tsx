@@ -5,7 +5,6 @@ import Link from "next/link";
 import { BiArrowBack } from "react-icons/bi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import client from "config/apolloClient";
 import { CREATE_USER } from "graphql/user_mutation";
 import { FaEnvelope, FaLock, FaPhoneAlt, FaUser } from "react-icons/fa";
