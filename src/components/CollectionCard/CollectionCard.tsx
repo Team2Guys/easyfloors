@@ -31,7 +31,7 @@ const CollectionCard = ({ subcategory }: { subcategory: ISUBCATEGORY }) => {
           <div className="w-full md:text-right">
             <Link
               href={`/${subcategory.category.RecallUrl}/${subcategory.custom_url}`}
-              className="text-black px-3 lg:px-9 py-1.5 lg:py-3 text-[10px] md:text-[10px] lg:text-sm border border-primary transition whitespace-nowrap hover:text-white hover:bg-primary font-inter font-semibold"
+              className="text-black px-3 lg:px-9 py-1.5 lg:py-3 text-[10px] md:text-[10px] lg:text-sm border-2 border-primary transition whitespace-nowrap hover:text-white hover:bg-primary font-inter font-semibold"
             >
               View All
             </Link>

@@ -97,7 +97,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           product.category?.name ?? product?.__typename,
           "cart",
           product.posterImageUrl.imageUrl ?? "",
-          String(boxCoverage)
+          String(boxCoverage),
         );
       }
     });

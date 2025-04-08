@@ -430,7 +430,7 @@ const Checkout = () => {
                                 </div>
                                 <div className="mx-auto w-full max-w-xl mt-2">
                                     <h3 className="text-20 xs:text-24 font-medium">Buy Now, Pay Later</h3>
-                                    <div className="flex justify-between flex-wrap gap-2 pt-3">
+                                    <div className="flex justify-between flex-wrap gap-5 pt-3">
                                         {
                                             paymentcard.map((array, index) => (
                                                 <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px]' key={index} width={90} height={60} src={array.image} alt='payment-card' />

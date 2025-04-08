@@ -19,6 +19,7 @@ const Wishlist = () => {
             columns={["Product", "Price Per Box", "QTY(m/m2)", "Stock Status", "Action"]}
           />
         </div>
+        {/* <AccessoryTable/> */}
         <div className="block md:hidden mb-5">
           <WishlistSmall/>
         </div>

@@ -22,6 +22,7 @@ interface UserIconProps {
 
 const UserIcon = ({ className }: UserIconProps) => {
   const { data: session } = useSession();
+  const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -93,11 +94,11 @@ const UserIcon = ({ className }: UserIconProps) => {
       >
         {session?.user?.image ? (
           <Image
-          src={session?.user?.image || "/assets/images/dummy-avatar.jpg"}
+          src={imgSrc}
             alt="User Profile"
             width={50}
             height={50}
-            className="rounded-full h-full w-5 md:w-32 "
+            className="rounded-full h-full w-5 lg:w-40 xl:w-32 xl:h-7 "
           />
         ) : (
           <ProfileIcon />
@@ -161,7 +162,7 @@ const UserIcon = ({ className }: UserIconProps) => {
         cartItems={wishlistTotal ?? []}
         type="wishlist"
         viewLink="/wishlist"
-        emptyMessage="Your wishlist is empty"
+        emptyMessage="wishlist is empty"
       />
       <div className="border-l-2 border-white h-4 lg:border-[#464646] md:h-6" />
 
@@ -173,7 +174,7 @@ const UserIcon = ({ className }: UserIconProps) => {
         cartItems={freeSampleTotal ?? []}
         type="freeSample"
         viewLink="/freesample"
-        emptyMessage="Your free sample is empty"
+        emptyMessage="free sample is empty"
       />
       <div className="border-l-2 border-white h-4 lg:border-[#464646] md:h-6" />
        {/* Cart */}
