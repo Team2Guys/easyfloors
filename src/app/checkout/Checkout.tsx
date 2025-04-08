@@ -298,7 +298,7 @@ const Checkout = () => {
                                             </div>
                                             <div className="ml-4">
                                                 <p className="font-bold text-13 xs:text-16">{item.name}</p>
-                                                <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter} SQM)</p>
+                                                <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>
                                             </div>
                                             <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.totalPrice.toFixed(2)}</p>
                                         </div>
