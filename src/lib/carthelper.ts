@@ -13,7 +13,8 @@ export const handleAddToStorage = async (
   MainCategory: string,
   type: "cart" | "wishlist" | "freeSample",
   image?: string,
-  boxCoverage?: string
+  boxCoverage?: string,
+  unit?: string,  
 ) => {
   if (!productData) {
     toast.error("Product is undefined");
@@ -23,7 +24,7 @@ export const handleAddToStorage = async (
   // For cart only: validate requiredBoxes
   if (type === "cart") {
     if (requiredBoxes <= 0) {
-      toast.error("Please enter a box quantity to add the product to the cart.");
+      toast.error("Please enter quantity to add the product to the cart.");
       return;
     }
     
@@ -41,7 +42,7 @@ export const handleAddToStorage = async (
 
   const adjustedTotalPrice = Number(totalPrice) > 0 ? pricePerBox * adjustedRequiredBoxes : pricePerBox;
   const adjustedSquareMeter = squareMeter > 0 ? squareMeter : Number(boxCoverage);
-
+  const adjustedUnit = unit ? unit : "sqm";
   const item = {
     id: Number(productData.id),
     name: productData.name,
@@ -55,6 +56,7 @@ export const handleAddToStorage = async (
     pricePerBox,
     squareMeter: adjustedSquareMeter,
     requiredBoxes: adjustedRequiredBoxes,
+    unit:adjustedUnit,
   };
 
   try {
@@ -62,7 +64,7 @@ export const handleAddToStorage = async (
       const success = type === "cart" && await addToCart(item);
 
       if (success && type === "cart") {
-        toast.success("Product added to cart!");
+        return;
       } else if (type === "freeSample") {
         const existingSamples = await getFreeSamples();
         if (existingSamples.length >= 5) {
@@ -78,7 +80,7 @@ export const handleAddToStorage = async (
       }
     } else {
       await addToWishlist(item);
-      toast.success("Product added to wishlist!");
+      return;
     }
   } catch {
     toast.error(`Error adding product to ${type}`);

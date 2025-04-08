@@ -22,7 +22,6 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
   useEffect(() => {
     fetchItems(isSamplePage, setItems);
   }, [isSamplePage]);
-
   return (
   
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>

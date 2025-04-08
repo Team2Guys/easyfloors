@@ -161,7 +161,7 @@ const UserIcon = ({ className }: UserIconProps) => {
         cartItems={wishlistTotal ?? []}
         type="wishlist"
         viewLink="/wishlist"
-        emptyMessage="Your wishlist is empty"
+        emptyMessage="wishlist is empty"
       />
       <div className="border-l-2 border-white h-4 lg:border-[#464646] md:h-6" />
 
@@ -173,7 +173,7 @@ const UserIcon = ({ className }: UserIconProps) => {
         cartItems={freeSampleTotal ?? []}
         type="freeSample"
         viewLink="/freesample"
-        emptyMessage="Your free sample is empty"
+        emptyMessage="free sample is empty"
       />
       <div className="border-l-2 border-white h-4 lg:border-[#464646] md:h-6" />
        {/* Cart */}
