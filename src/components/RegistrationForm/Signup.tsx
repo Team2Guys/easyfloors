@@ -77,7 +77,7 @@ const SignupForm = () => {
                   toast.success("Account created successfully!");
                   router.push("/login");
                 }
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
               } catch (error: any) {
                 toast.error(
                   error.message || "An error occurred during signup"
@@ -96,9 +96,8 @@ const SignupForm = () => {
                       type="text"
                       name="name"
                       placeholder="Full Name"
-                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
-                        errors.name && touched.name ? "border-red-500" : ""
-                      }`}
+                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${errors.name && touched.name ? "border-red-500" : ""
+                        }`}
                     />
                   </div>
                   <ErrorMessage
@@ -115,9 +114,8 @@ const SignupForm = () => {
                       type="email"
                       name="email"
                       placeholder="Email"
-                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
-                        errors.email && touched.email ? "border-red-500" : ""
-                      }`}
+                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${errors.email && touched.email ? "border-red-500" : ""
+                        }`}
                     />
                   </div>
                   <ErrorMessage
@@ -134,9 +132,8 @@ const SignupForm = () => {
                       type="text"
                       name="phone"
                       placeholder="Phone Number"
-                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
-                        errors.phone && touched.phone ? "border-red-500" : ""
-                      }`}
+                      className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${errors.phone && touched.phone ? "border-red-500" : ""
+                        }`}
                     />
                   </div>
                   <ErrorMessage
@@ -154,11 +151,10 @@ const SignupForm = () => {
                         type={showPassword ? "text" : "password"}
                         name="password"
                         placeholder="Password"
-                        className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
-                          errors.password && touched.password
+                        className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${errors.password && touched.password
                             ? "border-red-500"
                             : ""
-                        }`}
+                          }`}
                       />
                     </div>
                     <button
@@ -184,11 +180,10 @@ const SignupForm = () => {
                         type={showConfirmPassword ? "text" : "password"}
                         name="retypePassword"
                         placeholder="Confirm Password"
-                        className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${
-                          errors.retypePassword && touched.retypePassword
+                        className={`p-3 shadow-none w-full focus:outline-none focus:ring-0 pl-4 ${errors.retypePassword && touched.retypePassword
                             ? "border-red-500"
                             : ""
-                        }`}
+                          }`}
                       />
                     </div>
                     <button
