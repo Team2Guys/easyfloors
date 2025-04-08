@@ -15,9 +15,10 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
           <Image
             src={item.backgroundImage}
             alt="hero"
+            priority
             width={1920}
             height={1080}
-            loading="lazy"
+            loading="eager"
             className="w-full h-full object-cover"
           />
           <div className="bg-background">
