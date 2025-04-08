@@ -74,7 +74,6 @@ const SignupForm = () => {
                   },
                 });
 
-                console.log(data, "data")
                 if (data?.createUser) {
                   toast.success("Account created successfully!");
                   router.push("/login");
