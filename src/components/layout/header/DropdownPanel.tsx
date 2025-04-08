@@ -239,11 +239,11 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
             </div>
 
             <div className="w-full mt-2 space-y-1">
-              <Link href={viewLink} onClick={closePanel} className="w-full block text-center bg-black text-white py-1">
+              <Link href={viewLink} onClick={closePanel} className="w-full block text-center bg-primary text-white py-1">
                 View {type === "cart" ? "Cart" : type === "wishlist" ? "Wishlist" : "Free Samples"}
               </Link>
               <button
-                className="border w-full border-black hover:bg-black hover:text-white transition duration-300 py-1"
+                className="border w-full border-primary hover:bg-primary hover:text-white transition duration-300 py-1"
                 onClick={closePanel}
               >
                 Continue Shopping

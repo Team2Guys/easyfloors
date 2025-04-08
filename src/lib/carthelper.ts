@@ -64,7 +64,7 @@ export const handleAddToStorage = async (
       const success = type === "cart" && await addToCart(item);
 
       if (success && type === "cart") {
-        toast.success("Product added to cart!");
+        return;
       } else if (type === "freeSample") {
         const existingSamples = await getFreeSamples();
         if (existingSamples.length >= 5) {
@@ -80,7 +80,7 @@ export const handleAddToStorage = async (
       }
     } else {
       await addToWishlist(item);
-      toast.success("Product added to wishlist!");
+      return;
     }
   } catch {
     toast.error(`Error adding product to ${type}`);
