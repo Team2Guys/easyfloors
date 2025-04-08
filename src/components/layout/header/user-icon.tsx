@@ -83,7 +83,6 @@ const UserIcon = ({ className }: UserIconProps) => {
     await signOut();
     setIsOpen(false);
   };
-console.log(session?.user, "session")
   return (
     <div className={`flex items-center 2xl:space-x-1 ${className} relative`}>
       <button

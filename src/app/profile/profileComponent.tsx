@@ -96,7 +96,6 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
 
     };
 
-    console.log(profilePhoto, "profilePhoto", loggedInUser)
     return (
 
         <Container className="mt-4  dark:border-strokedark dark:bg-boxdark dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white border">
