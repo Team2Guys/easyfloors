@@ -1,3 +1,4 @@
+import AccessoryTable from 'components/accessory-table';
 import dynamic from 'next/dynamic';
 import React from 'react'
 import { CiHeart } from 'react-icons/ci'
@@ -19,6 +20,7 @@ const Wishlist = () => {
             columns={["Product", "Price Per Box", "QTY(m/m2)", "Stock Status", "Action"]}
           />
         </div>
+        {/* <AccessoryTable/> */}
         <div className="block md:hidden mb-5">
           <WishlistSmall/>
         </div>

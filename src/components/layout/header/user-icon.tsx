@@ -22,6 +22,7 @@ interface UserIconProps {
 
 const UserIcon = ({ className }: UserIconProps) => {
   const { data: session } = useSession();
+  const [imgSrc, setImgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -93,11 +94,11 @@ const UserIcon = ({ className }: UserIconProps) => {
       >
         {session?.user?.image ? (
           <Image
-          src={session?.user?.image || "/assets/images/dummy-avatar.jpg"}
+          src={imgSrc}
             alt="User Profile"
             width={50}
             height={50}
-            className="rounded-full h-full w-5 md:w-32 "
+            className="rounded-full h-full w-5 lg:w-40 xl:w-32 xl:h-7 "
           />
         ) : (
           <ProfileIcon />

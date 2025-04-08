@@ -46,24 +46,23 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     {col}
                   </th>
                 ))}
-              </tr>
+            </tr>
           </thead>
           <tbody>
             {items.map((product) => (
-            <tr key={product.id} className="border-t">
+      <tr key={product.id} className="border-t">
               <td className="p-3 flex items-center gap-3">
                   <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
-            <div className="text-12 xl:text-20 font-inter font-normal">
-                  <p>{product.name}</p>
-                  {!isSamplePage && (
-                  <>
-                  <p>No. of boxes: {product.requiredBoxes}</p>
-                  <p>Box Coverage: {product.boxCoverage}</p>
-                  </>
-              )}
-            </div>
-              
-                </td>
+                  <div className="text-12 xl:text-20 font-inter font-normal">
+                     <p>{product.name}</p>
+                     {!isSamplePage && (
+                     <>
+                     <p>No. of boxes: {product.requiredBoxes}</p>
+                     <p>Box Coverage: {product.boxCoverage}</p>
+                     </>
+                     )}
+                 </div>
+              </td>
                 <td className="p-3 font-inter text-12 xl:text-20 font-normal">
                   {pathname === "/freesample" ? "Free" : product.price}
                 </td>
@@ -93,7 +92,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     </button>
                   </div>
                 </td>
-              </tr>
+      </tr>
             ))}
           </tbody>
         </table>

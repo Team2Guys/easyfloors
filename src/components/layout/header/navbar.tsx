@@ -71,7 +71,7 @@ const Navbar = ({ categories, products}: INavbar) => {
             <Image
               width={400}
               height={400}
-              className="w-[54px] h-[24px] lg:w-[100px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
+              className="w-[54px] h-[24px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
               src="/assets/images/logo.png"
               alt="logo"
             />
@@ -92,7 +92,7 @@ const Navbar = ({ categories, products}: INavbar) => {
           </div>
           <SearchBar className="block lg:hidden" productData={products} />
         </div>
-        <div className="w-2/12 lg:w-[20%] 2xl:w-[20%] 3xl:w-[23%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
+        <div className="w-2/12 lg:w-[22%] xl:w-[20%] 2xl:w-[20%] 3xl:w-[23%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
           <SearchBar className="lg:block hidden" productData={products} />
           <UserIcon className="hidden lg:flex" />
           <div className="lg:hidden flex justify-end">
