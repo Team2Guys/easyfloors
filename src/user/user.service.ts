@@ -17,11 +17,11 @@ export class UserService {
         return customHttpException("User already exists!", 'BAD_REQUEST');
       }
 
-      await this.prisma.user.create({ data: createUserInput })
-
-
+     let user=   await this.prisma.user.create({ data: createUserInput })
+     console.log(user, "user")
+return user
     } catch (error) {
-      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+      throw  customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
   }
 
