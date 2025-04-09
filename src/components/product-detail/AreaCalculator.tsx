@@ -1,3 +1,4 @@
+// AreaCalculator.tsx
 import AccessoriesPopup from "components/AccessoriesPopup/AccessoriesPopup";
 import { useState } from "react";
 import { PiQuestionMark } from "react-icons/pi";
@@ -59,15 +60,16 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
       </div>
 
       <div>
-      <p className="text-14 sm:text-16 2xl:text-20 font-medium mt-2">
-  You require {requiredBoxes} Box ({!isNaN(convertedArea) ? convertedArea : 0}{" "}
-  {unit === "sqm" ? "m²" : "ft²"})
-      </p>
-
-        <p className="text-12 sm:text-16 2xl:text-20 font-light">No. Of Boxes: {requiredBoxes} ({squareMeter.toFixed(2)}{" "}
-        {unit === "sqm" ? "Square Meter" : "Square Feet"})
+        <p className="text-14 sm:text-16 2xl:text-20 font-medium mt-2">
+          You require {requiredBoxes} Box ({(convertedArea) ? convertedArea : 0}{" "}
+          {unit === "sqm" ? "m²" : "ft²"})
         </p>
-        {/* <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox.toFixed(2)}</span></span></p> */}
+
+        <p className="text-12 sm:text-16 2xl:text-20 font-light">
+        No. Of Boxes: {requiredBoxes} ({squareMeter ? (unit === "sqm" ? squareMeter.toFixed(2) : (squareMeter * 10.764).toFixed(2)) : 0}{" "}
+          {unit === "sqm" ? "Square Meter" : "Square Feet"})
+        </p>
+
         <p className="text-12 sm:text-16 2xl:text-20 font-light "> Price Per Box:
           <span className="font-medium pl-1"> 
             AED 

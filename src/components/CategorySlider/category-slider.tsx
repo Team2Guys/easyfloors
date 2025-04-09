@@ -19,6 +19,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
         const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
 
         const shouldEnablePagination = subcategories && subcategories.length >= 0;
+        const seeAllLink = `/${category?.custom_url || category.name.toLowerCase().replace(/\s+/g, '-')}`;
 
 
         return (
@@ -34,7 +35,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                 Price Starting From: AED {category.price + "/m²"  || (category.name === "SPC FLOORING" ? 'AED 150m²' : category.name === "LVT FLOORING" ? 'AED 180m²' : category.name === "POLAR FLOORING" ? 'AED 200m²' : category.name === "RICHMOND FLOORING" ? 'AED 220m²' : '' )}
               </p>
               <Link
-                href="/all-collection"
+                 href={seeAllLink} 
                 className="transition md:text-black font-semibold text-white px-4 py-1 border md:border-primary border-white font-inter hover:text-white hover:bg-primary"
               >
                 See All

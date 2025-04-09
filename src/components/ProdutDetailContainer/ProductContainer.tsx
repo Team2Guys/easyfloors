@@ -19,11 +19,14 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     requiredBoxes,
     pricePerBox,
     squareMeter,
-    totalPrice,
+    totalPrice, 
     installments,
     boxCoverage,
   } = calculateProductDetails(area, unit, productData);
-  const displayTotalPrice = unit === "sqm" ? totalPrice : (totalPrice / 10.764);
+  const displayTotalPrice = unit === "sqm"
+    ? totalPrice
+    : (totalPrice / 10.764);
+
 
   return (
     <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 ${isQuickView ? '2xl:gap-10' : '2xl:gap-20'}  ${className}`}>
@@ -53,14 +56,15 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="flex text-14 sm:text-18 text-primary 2xl:text-23 font-semibold gap-1 items-center sm:gap-1">
           <p className="text-black">Price :</p>
           <p>
-            <span> AED </span>
-            {unit === "sqm"
-              ? productData?.price
-              : (productData?.price / 10.764).toFixed(2)}
-            <span>
-              {unit === "sqm" ? "/m²" : "/ft²"}
-            </span>
+  <span> AED </span>
+  {unit === "sqm"
+    ? productData?.price
+    : (productData?.price / 10.764).toFixed(2)}
+  <span>
+    {unit === "sqm" ? "/m²" : "/ft²"}
+  </span>
           </p>
+
         </div>
         <div className="flex text-19 gap-1 items-center">
           <p className="text-12 xs:text-14 2xl:text-23 sm:text-18">
@@ -77,14 +81,14 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             </span>
           </p> */}
 
-          <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
-            Box Coverage:{" "}
-            <span className="font-normal">
-              {unit === "sqm"
-                ? `${boxCoverage ?? "0"} m²`
-                : `${(parseFloat(boxCoverage ?? "0") * 10.764).toFixed(2)} ft²`}
-            </span>
-          </p>
+<p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
+  Box Coverage:{" "}
+  <span className="font-normal">
+    {unit === "sqm"
+      ? `${boxCoverage ?? "0"} m²`
+      : `${(parseFloat(boxCoverage ?? "0") * 10.764).toFixed(2)} ft²`}
+  </span>
+</p>
           <div className="bg-black h-5 w-[2px]" />
           <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
             Box: <span className="font-normal">1</span>
