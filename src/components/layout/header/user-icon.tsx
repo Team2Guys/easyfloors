@@ -16,12 +16,11 @@ import { toast } from "react-toastify";
 
 interface UserIconProps {
   className?: string;
-
 }
 
 const UserIcon = ({ className }: UserIconProps) => {
   const { data: session } = useSession();
-  // const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
+  const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -93,9 +92,7 @@ const UserIcon = ({ className }: UserIconProps) => {
       >
         {session ? (
           <Image
-            
-           //@ts-expect-error(ts-migrate)
-          src={session?.user?.image?.imageUrl || "/assets/images/dummy-avatar.jpg"}
+          src={imgSrc}
             alt="User Profile"
             width={50}
             height={50}
@@ -186,8 +183,6 @@ const UserIcon = ({ className }: UserIconProps) => {
         badgeCount={cartTotal?.length ?? 0}
         cartItems={cartTotal ?? []}
       />
-
-
     </div>
   );
 };

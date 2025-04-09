@@ -67,4 +67,5 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     sldier?: boolean;
     features: Feature[];
     categoryData?: ICategory;
+    subCategoryFlag?: boolean;
   }

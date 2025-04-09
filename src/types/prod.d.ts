@@ -14,6 +14,7 @@ export interface ProductImage {
   plankWidth?: string;
   plankHeight?: string;
   isBlurred?: boolean; 
+  colorCode?: string;
 }
 
 export interface AdditionalInformation {

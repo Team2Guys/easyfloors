@@ -53,6 +53,7 @@ const accessoryFlag = path === "/dashboard/accessories";
     setProducts((accessoryFlag && accessories) ? accessories : productsData);
   }, [productsData, accessories]);
   const productFlag: boolean = selecteMenu === "Add All Products" ? true : false;
+  
   return (
     <DefaultLayout>
       <Breadcrumb pageName={productFlag ? `${accessoryFlag?  "Accessories" : "Products"}`:  `${!productFlag? "Edit":"Add"} ${accessoryFlag ? "Accessory" : "Products"}`} />

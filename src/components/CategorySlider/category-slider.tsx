@@ -20,8 +20,6 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
 
         const shouldEnablePagination = subcategories && subcategories.length >= 0;
         const seeAllLink = `/${category?.custom_url || category.name.toLowerCase().replace(/\s+/g, '-')}`;
-
-
         return (
           <div
             key={index}
@@ -59,7 +57,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                 {subcategories?.map((product: EDIT_CATEGORY, index) => {
                   return (
                     <SwiperSlide key={index} className="pb-7">
-                      <Card product={product} categoryData={category} features={features} sldier />
+                      <Card product={product} categoryData={category} features={features} sldier subCategoryFlag />
                     </SwiperSlide>
                   );
                 })}

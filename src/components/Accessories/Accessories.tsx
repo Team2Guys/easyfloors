@@ -37,7 +37,6 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
 
     setSortedProducts(sortedArray);
   }, [sortOption, product]);
-
   return (
     <Container>
       <div className="lg:mt-14 mt-5 py-4 font-inter space-y-4">
@@ -60,7 +59,7 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
               product={product}
               categoryData={product.category}
               isAccessories
-              isSoldOut={index === 0}
+              isSoldOut={(product.stock ?? 0) < 0 }
               features={features}
             />
           ))}

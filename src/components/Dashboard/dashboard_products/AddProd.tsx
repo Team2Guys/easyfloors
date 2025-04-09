@@ -900,8 +900,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="flex flex-col gap-5">
-                  {!accessoryFlag ? (
-                    <>
+                
                       <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                         <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
                           <h3 className="font-medium text-black dark:text-white">
@@ -1172,10 +1171,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           />
                         </div>
                       </div>
-                    </>
-                  ) : (
-                    ""
-                  )}
+                    
+              
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
@@ -1506,6 +1503,21 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   )
                                 }
                               />
+                               <input
+                                className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                placeholder="colorCode"
+                                type="text"
+                                name="colorCode"
+                                value={item?.colorCode || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setImagesUrl,
+                                    "colorCode"
+                                  )
+                                }
+                               />
                             </div>
                           );
                         })}

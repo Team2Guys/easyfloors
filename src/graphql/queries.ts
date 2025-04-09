@@ -50,6 +50,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         custom_url
         stock
         posterImageUrl
+        sizes
         
       }
     }
@@ -115,9 +116,11 @@ export const FETCH_ALL_CATEGORIES = gql`
             id
             name
             custom_url
+            sizes
               category {
                 RecallUrl
             }
+                
         }
       subcategories {
         id
@@ -125,6 +128,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         posterImageUrl
         custom_url
         description
+        sizes
       }
       products {
         id
@@ -188,7 +192,7 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       Heading
       BannerImage
       price
-
+      sizes
       products {
         id
         name
@@ -373,6 +377,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
         custom_url
         posterImageUrl
         price
+        sizes
       }
          products {
         id
@@ -387,12 +392,14 @@ export const FETCH_HEADER_CATEGORIES = gql`
             id
             name
             custom_url
-              posterImageUrl
+            posterImageUrl
+             sizes
               price
               category {
                 RecallUrl
                 
             }
+                
       }
       }
     }
@@ -442,6 +449,7 @@ export const FIND_ONE_Accessory = gql`
         Meta_Title
         Canonical_Tag
         whatAmiImageBanner
+      
         accessories {
             id
             name
@@ -450,6 +458,7 @@ export const FIND_ONE_Accessory = gql`
             stock
             posterImageUrl
             custom_url
+              sizes
         }
   }}
 

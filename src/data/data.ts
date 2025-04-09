@@ -314,6 +314,10 @@ export const features: Feature[] = [
   { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
+export const accessoryFeature: Feature[] = [
+  { icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
+  { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
+];
 
 export const ThumnailImage = [
   { image: "/assets/bin/slider.png" },
