@@ -20,6 +20,9 @@ export interface Category {
   accessories?: Product[];
   RecallUrl?:string
   Heading?:string
+  plankWidth?:string
+  thickness?:string
+  plankHeight?:string
   BannerImage?:ProductImage
   subcategories?: {
     id: number | string;
@@ -66,6 +69,9 @@ export interface ISUBCATEGORY extends Category {
   BannerImage?:ProductImage
   posterImageUrl?: ProductImage;
   recalledByCategories?:Category[]
+  plankWidth?:string
+  thickness?:string
+  plankHeight?:string
 }
 
 

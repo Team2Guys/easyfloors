@@ -10,8 +10,6 @@ const AccessoriesContainer = ({ productData }: { productData: IProduct }) => {
    const [image, setActiveImage] = useState<ProductImage | undefined>(productData?.productImages?.[0]);
    const [thumbnailImages, setThumbnailImages] = useState<ProductImage[]>(productData?.productImages || []);
    const [selectedColor, setSelectedColor] = useState<ProductImage | undefined>(productData?.featureImages?.[0]);
-      console.log(selectedColor,"selectedColor")
-      console.log(productData,"productData")
       useEffect(() => {
          setThumbnailImages(productData?.productImages || []);
          setActiveImage(productData?.productImages?.[0]);

@@ -27,6 +27,7 @@ const sortedCategories = categories?.sort((a: ICategory, b: ICategory) => {
   );
   return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
 });
+
   return (
     <>
       <HeroMain items={heroItems} />

@@ -11,6 +11,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const sliderRef1 = useRef<Slider | null>(null);
   const thumbSliderRef = useRef<Slider | null>(null);
+  const thumbRefs = useRef<(HTMLDivElement | null)[]>([]);
   
   const combinedImages = useMemo(() => {
     if (hideThumnailBottom) return ThumnailImage;
@@ -35,12 +36,16 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   }, [selectedColor, ThumnailImage, onImageChange, stickyside]);
 
   const handleThumbnailClick = (index: number) => {
-    if (index !== currentSlide) { 
+    if (index !== currentSlide) {
       setCurrentSlide(index);
-      onImageChange?.(ThumnailImage[index]);
+      onImageChange?.(combinedImages[index]);
       sliderRef1.current?.slickGoTo(index);
+      if (stickyside) {
+        thumbSliderRef.current?.slickGoTo(index); // <-- scroll the vertical thumb slider
+      }
     }
   };
+  
 
   const staticTitles = [
     "Click lock system",
@@ -59,20 +64,25 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       <div className="w-2/12">
         {stickyside ? (
           <Slider
-            ref={thumbSliderRef}
-            infinite={ThumnailImage.length > 5}
-            slidesToShow={5}
-            vertical
-            verticalSwiping
-            arrows={false}
-            swipeToSlide
-            focusOnSelect
-            className="custom-vertical-slider"
-            initialSlide={currentSlide}
+          ref={thumbSliderRef}
+          // infinite={ThumnailImage.length > 5}
+          slidesToShow={5}
+          touchMove
+          draggable
+          vertical
+          verticalSwiping
+          arrows={false}
+          swipeToSlide
+          focusOnSelect
+          className="custom-vertical-slider"
+          initialSlide={currentSlide}
           >
             {ThumnailImage.map((product, index) => (
               <div
                 key={index}
+                ref={(el) => {
+                  thumbRefs.current[index] = el;
+                }}
                 onClick={() => handleThumbnailClick(index)}
                 className={`cursor-pointer p-[2px] sm:p-1 ${
                   index === currentSlide ? "shadow-xl" : ""
@@ -128,12 +138,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
           arrows={false}
           initialSlide={currentSlide}
           afterChange={(index) => {
-            setCurrentSlide(index);
-            onImageChange?.(combinedImages[index]);
-
-            // Sync thumbnail slider for stickyside
-            if (stickyside) {
-              thumbSliderRef.current?.slickGoTo(index);
+            if (index !== currentSlide) {
+              setCurrentSlide(index);
+              onImageChange?.(combinedImages[index]);
+          
+              if (stickyside) {
+                thumbSliderRef.current?.slickGoTo(index);
+              }
             }
           }}
         >

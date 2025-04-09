@@ -44,7 +44,10 @@ const FormLayout = ({
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
       recalledByCategories: editCategory?.recalledByCategories?.map((value: Category) => value.id) || [],
-      price: editCategory.price  || ""
+      price: editCategory.price  || "",
+      plankWidth:editCategory.plankWidth || '',
+      thickness:editCategory.thickness || '',
+      plankHeight:editCategory.plankHeight || '',
 
 
     } as ISUBCATEGORY_EDIT
@@ -787,7 +790,58 @@ const FormLayout = ({
 
                       </div>
 
-
+                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black mt-2">
+                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                          <h3 className="font-medium text-black dark:text-white">
+                            Add Sizes
+                          </h3>
+                        </div>
+                        <div className="py-4 px-6 space-y-2">
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-40">
+                            Add Plank Width:
+                            </label>
+                            <input
+                              type="text"
+                              name="plankWidth"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.plankWidth}
+                              placeholder="Add Width"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                          
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-40">
+                            Add Thickness:
+                            </label>
+                            <input
+                              type="text"
+                              name="thickness"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.thickness}
+                              placeholder="Add thickness"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <label className="block text-sm font-medium text-black dark:text-white w-40">
+                            Add Plant Height:
+                            </label>
+                            <input
+                              type="text"
+                              name="plankHeight"
+                              onChange={formik.handleChange}
+                              onBlur={formik.handleBlur}
+                              value={formik.values.plankHeight}
+                              placeholder="Add Thickness"
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                            />
+                          </div>
+                        </div>
+                      </div>
                       <div className="flex gap-4 mt-4">
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
