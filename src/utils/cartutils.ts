@@ -40,7 +40,7 @@ export const handleRemoveItem = async (id: number, isSamplePage: boolean, setIte
 export const handleAddToCart = async (product: ICart, isSamplePage: boolean, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
   try {
     await saveToCart(product);
-    await handleRemoveItem(product.id, isSamplePage, setItems);
+    await handleRemoveItem(Number(product.id), isSamplePage, setItems);
     toast.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("freeSampleUpdated"));
   } catch {

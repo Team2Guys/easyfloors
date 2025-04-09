@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FiMinus } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
@@ -8,24 +7,23 @@ import { GrCart } from "react-icons/gr";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { ICart } from "types/prod";
-import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import { handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import { SetStateAction } from "react";
 
 interface ProductTableProps {
   columns: string[];
   isSamplePage?: boolean;
+  items: ICart[]; 
+  setItems: React.Dispatch<SetStateAction<ICart[]>>; 
 }
 
-const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = false }) => {
+const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = false, items,setItems }) => {
   const pathname = usePathname();
-  const [items, setItems] = useState<ICart[]>([]);
 
-  useEffect(() => {
-    fetchItems(isSamplePage, setItems);
-  }, [isSamplePage]);
   return (
   
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
-      {items.length === 0 ? (
+     {items.length === 0 && pathname === "/freesample" ? (
         <div className="text-center">
           <h1 className="text-center xl:text-[48px]">Your Shopping Cart</h1>
           <p className="text-center text-[24px] pt-10">
@@ -56,11 +54,20 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   <div className="text-12 xl:text-20 font-inter font-normal">
                      <p>{product.name}</p>
                      {!isSamplePage && (
-                     <>
-                     <p>No. of boxes: {product.requiredBoxes}</p>
-                     <p>Box Coverage: {product.boxCoverage}</p>
-                     </>
-                     )}
+                      <>
+                        {product.category === "Accessories" ? (
+                          <>
+                            <p>Price Per m: <span className="font-semibold">AED {product.price}</span></p>
+                            <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
+                          </>
+                        ) : (
+                          <>
+                            <p>No. of boxes: {product.requiredBoxes}</p>
+                            <p>Box Coverage: {product.boxCoverage}</p>
+                          </>
+                        )}
+                      </>
+                    )}
                   </div>
               </td>
                 <td className="p-3 font-inter text-12 xl:text-20 font-normal">
@@ -69,11 +76,11 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                 {pathname !== "/freesample" && (
                   <td className="p-3">
                     <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
-                      <button onClick={() => updateQuantity(product.id, -1, setItems)}  className="px-2 text-gray-700">
+                      <button onClick={() => updateQuantity(Number(product.id), -1, setItems)}  className="px-2 text-gray-700">
                         <FiMinus />
                       </button>
                       <span className="px-2 text-black font-semibold">{product.requiredBoxes}</span>
-                      <button onClick={() => updateQuantity(product.id, 1, setItems )}  className="px-2 text-gray-700">
+                      <button onClick={() => updateQuantity(Number(product.id), 1, setItems)}  className="px-2 text-gray-700">
                         <GoPlus />
                       </button>
                     </div>
@@ -87,7 +94,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     <button onClick={() => handleAddToCart(product, isSamplePage, setItems)} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
                       <GrCart /> {isSamplePage ? "Add to Cart" : "Add to Cart"}
                     </button>
-                    <button onClick={() =>  handleRemoveItem(product.id, isSamplePage, setItems)}  className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
+                    <button onClick={() =>  handleRemoveItem(Number(product.id), isSamplePage, setItems)}  className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
                       <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
                     </button>
                   </div>
