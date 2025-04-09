@@ -164,16 +164,18 @@ const Card: React.FC<productCardProps> = ({
                   />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
                 </div>
-                <div className="flex justify-between gap-1 items-center">
-                  <Image
-                    src={features[1].icon}
-                    alt="Icon"
-                    width={features[1].width}
-                    height={features[1].height}
-                    className="text-gray-500 cursor-pointer hover:text-red-500"
-                  />
-                  <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
-                </div>
+                {feature.thickness &&
+                  <div className="flex justify-between gap-1 items-center">
+                    <Image
+                      src={features[1].icon}
+                      alt="Icon"
+                      width={features[1].width}
+                      height={features[1].height}
+                      className="text-gray-500 cursor-pointer hover:text-red-500"
+                    />
+                    <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
+                  </div>}
+
                 <div className="flex justify-between gap-1 items-center">
                   <Image
                     src={features[2].icon}
@@ -219,14 +221,14 @@ const Card: React.FC<productCardProps> = ({
       <div className="p-2 font-inter font-light lg:p-4">
         <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start sm:py-2 max-sm:text-primary">
           {
-          
-          'price' in product && product.price &&
 
-        <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
-          {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} AED <span>{product?.price}</span>
-          {isAccessories ? '/m' : '/m²'}
-        </p>
-        
+            'price' in product && product.price &&
+
+            <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
+              {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} AED <span>{product?.price}</span>
+              {isAccessories ? '/m' : '/m²'}
+            </p>
+
           }
 
           <div className="w-full md:text-right">
@@ -240,7 +242,7 @@ const Card: React.FC<productCardProps> = ({
               </button>
             ) : (
               <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="border-2 border-primary text-[10px] text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold">
-                Shop Now 
+                Shop Now
               </Link>
             )}
 
