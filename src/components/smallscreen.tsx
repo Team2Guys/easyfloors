@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
@@ -19,7 +18,6 @@ const SmallScreen: React.FC = () => {
     fetchItems(isSamplePage, setItems);
   }, [isSamplePage]);
 
-  // Filter items by category
   const accessoryItems = items.filter((item) => item.category === "Accessories");
   const productItems = items.filter((item) => item.category !== "Accessories");
 

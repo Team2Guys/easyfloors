@@ -8,9 +8,9 @@ import { ICart } from "types/prod";
 interface ItemCardProps {
   product: ICart;
   isSamplePage?: boolean;
-  onRemove: (id: string) => void;
-  onQuantityChange?: (id: string, delta: number) => void;
-  onAddToCart: (product: ICart) => void;
+  onRemove: (_id: string) => void;
+  onQuantityChange?: (_id: string, _delta: number) => void;
+  onAddToCart: (_product: ICart) => void;
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, onQuantityChange, onAddToCart }) => {
@@ -27,24 +27,23 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
           />
           <div className="text-14 font-inter font-normal flex-grow">
             <p className="font-normal text-14">{product.name}</p>
-            {!isSamplePage && (
-                      <>
-                        {product.category === "Accessories" ? (
-                          <>
-                            <p>Price Per m: <span className="font-semibold">AED {product.price}</span></p>
-                            <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
-                          </>
-                        ) : (
-                          <>
-                            <p>No. of boxes: {product.requiredBoxes}</p>
-                            <p>Box Coverage: {product.boxCoverage}</p>
-                          </>
-                        )}
-                      </>
-                    )}
-            <p className="text-14 font-inter font-semibold">
+            {!isSamplePage && product.category && (
+            product.category === "Accessories" ? (
+            <>
+           <p>Price Per m: <span className="font-semibold">AED {product.price}</span></p>
+           <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
+            </>
+           ) : (
+          <>
+           <p>No. of boxes: {product.requiredBoxes}</p>
+           <p>Box Coverage: {product.boxCoverage}</p>
+          </>
+           )
+           )}
+          
+          <p className="text-14 font-inter font-semibold">
               {isSamplePage ? "Free" : `AED ${product.price}`}
-            </p>
+          </p>
             <p className="text-14 font-inter">
               {product.stock > 0 ? "In Stock" : "Out of Stock"}
             </p>

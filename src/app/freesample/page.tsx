@@ -15,7 +15,7 @@ const FreeSample = () => {
   const [items, setItems] = useState<ICart[]>([]);
   
     useEffect(() => {
-      fetchItems(false, setItems); // Assuming 'false' is the appropriate value for the first argument
+      fetchItems(false, setItems); 
     }, []);
   return (
     <>

@@ -54,19 +54,17 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   <div className="text-12 xl:text-20 font-inter font-normal">
                      <p>{product.name}</p>
                      {!isSamplePage && (
-                      <>
-                        {product.category === "Accessories" ? (
-                          <>
-                            <p>Price Per m: <span className="font-semibold">AED {product.price}</span></p>
-                            <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
-                          </>
-                        ) : (
-                          <>
-                            <p>No. of boxes: {product.requiredBoxes}</p>
-                            <p>Box Coverage: {product.boxCoverage}</p>
-                          </>
-                        )}
-                      </>
+                      product.category === "Accessories" ? (
+                        <>
+                          <p>Price Per m: <span className="font-semibold">AED {product.price}</span></p>
+                          <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
+                        </>
+                      ) : (
+                        <>
+                          <p>No. of boxes: {product.requiredBoxes}</p>
+                          <p>Box Coverage: {product.boxCoverage}</p>
+                        </>
+                      )
                     )}
                   </div>
               </td>
