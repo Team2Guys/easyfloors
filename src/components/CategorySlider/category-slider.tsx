@@ -58,7 +58,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                 {subcategories?.map((product: EDIT_CATEGORY, index) => {
                   return (
                     <SwiperSlide key={index} className="pb-7">
-                      <Card product={product} categoryData={category} features={features} sldier />
+                      <Card product={product} categoryData={category} features={features} sldier subCategoryFlag />
                     </SwiperSlide>
                   );
                 })}

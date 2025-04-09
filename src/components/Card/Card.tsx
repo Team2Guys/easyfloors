@@ -24,6 +24,7 @@ const Card: React.FC<productCardProps> = ({
   categoryData,
   isAccessories,
   isSoldOut = false,
+  subCategoryFlag,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
@@ -222,7 +223,7 @@ const Card: React.FC<productCardProps> = ({
           'price' in product && product.price &&
 
         <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
-          {isAccessories ? '' : 'Only '} AED <span>{product?.price}</span>
+          {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} AED <span>{product?.price}</span>
           {isAccessories ? '/m' : '/m²'}
         </p>
         
