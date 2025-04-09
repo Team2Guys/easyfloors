@@ -28,7 +28,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     const deltaY = startY - e.clientY;
     if (Math.abs(deltaY) > 10) { // Threshold to detect swipe
       setIsSwiping(true); // Mark as swiping
-      const direction = deltaY > 0 ? 2 : -2; // 1 for down, -1 for up
+      const direction = deltaY > 0 ? 1 : -1; // 1 for down, -1 for up
       const nextSlide = Math.min(
         Math.max(currentSlide + direction, 0),
         ThumnailImage.length - 1
@@ -98,14 +98,14 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp} 
+      onMouseLeave={handleMouseUp} // Stop dragging if the mouse leaves the container
     >
       {/* Thumbnail Side */}
       <div className="w-2/12">
         {stickyside ? (
           <Slider
             ref={thumbSliderRef}
-            infinite // Enable infinite scrolling
+            infinite={ThumnailImage.length > 5} // Enable infinite scrolling if there are more than 5 thumbnails
             slidesToShow={5}
             vertical
             verticalSwiping={false}
@@ -116,12 +116,12 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
             className="custom-vertical-slider"
             initialSlide={currentSlide}
           >
-            {Array.from({ length: 20 }, (_, i) => ThumnailImage[i % ThumnailImage.length]).map((product, index) => (
+            {ThumnailImage.map((product, index) => (
               <div
                 key={index}
-                onClick={() => handleThumbnailClick(index % ThumnailImage.length)} // Map index back to original array
+                onClick={() => handleThumbnailClick(index)}
                 className={`cursor-pointer p-[2px] sm:p-1 ${
-                  index % ThumnailImage.length === currentSlide ? "shadow-xl" : ""
+                  index === currentSlide ? "shadow-xl" : ""
                 }`}
               >
                 <Image
