@@ -115,9 +115,11 @@ export const FETCH_ALL_CATEGORIES = gql`
             id
             name
             custom_url
+            sizes
               category {
                 RecallUrl
             }
+                
         }
       subcategories {
         id
@@ -125,6 +127,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         posterImageUrl
         custom_url
         description
+        sizes
       }
       products {
         id
@@ -188,7 +191,7 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       Heading
       BannerImage
       price
-
+      sizes
       products {
         id
         name
@@ -373,6 +376,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
         custom_url
         posterImageUrl
         price
+        sizes
       }
          products {
         id
@@ -387,12 +391,14 @@ export const FETCH_HEADER_CATEGORIES = gql`
             id
             name
             custom_url
-              posterImageUrl
+            posterImageUrl
+             sizes
               price
               category {
                 RecallUrl
                 
             }
+                
       }
       }
     }

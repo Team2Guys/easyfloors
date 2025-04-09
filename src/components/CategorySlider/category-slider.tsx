@@ -19,8 +19,6 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
         const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
 
         const shouldEnablePagination = subcategories && subcategories.length >= 0;
-
-console.log(categories,"categories")
         return (
           <div
             key={index}
