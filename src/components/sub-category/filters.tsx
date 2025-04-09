@@ -139,6 +139,7 @@ const Filters = ({
 
 
 
+
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
             {Object.values(categoryState).map((item) => {
