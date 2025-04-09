@@ -47,7 +47,7 @@ model Products {
   featureImages         Json[]         @default([])
   acessories            Acessories[]   @relation("ProductAccessories")
   colors                Json[]         @default([])
-    sizes    Json[] @default([])
+  sizes                 Json[]         @default([])
 }
 
 model Category {
@@ -71,7 +71,7 @@ model Category {
   RecallUrl          String?
   accessories        Acessories[]    @relation()
   recalledSubCats    subCategories[] @relation("RecallCategories")
-  price   String?
+  price              String?
 }
 
 model subCategories {
@@ -90,7 +90,7 @@ model subCategories {
   categoryId           Int?
   category             Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   custom_url           String
-  whatAmiImage         Json[] @default([])
+  whatAmiImage         Json[]     @default([])
   homePageImage        Json?
   whatAmiImageBanner   Json?
   BannerImage          Json?
@@ -98,7 +98,8 @@ model subCategories {
   whatAmiTopHeading    String?
   whatamIdetails       Json[]     @default([])
   recalledByCategories Category[] @relation("RecallCategories")
-   price   String?
+  price                String?
+  sizes                 Json[]         @default([])
 }
 
 model Admins {
@@ -150,7 +151,7 @@ model Acessories {
   featureImages         Json[]     @default([])
   products              Products[] @relation("ProductAccessories")
   category              Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  sizes    Json[] @default([])
+  sizes                 Json[]     @default([])
 }
 
 enum AppointsType {

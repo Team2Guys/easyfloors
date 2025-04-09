@@ -68,4 +68,7 @@ export class CreateSubCategoryInput {
 
   @Field(() => GraphQLJSON)
   recalledByCategories: any[];
+
+  @Field(() => [GraphQLJSON], { nullable: true })
+  sizes?: any[]
 }

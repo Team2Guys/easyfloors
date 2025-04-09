@@ -78,6 +78,9 @@ export class SubCategory {
   @Field({ nullable: true })
   price?: string;
 
+   @Field(() => [GraphQLJSON],{nullable:true})
+    sizes?: any[]
+
 }
 
 
