@@ -1,10 +1,9 @@
 "use client";
-
+import React, { useState, useEffect, useRef, lazy } from "react";
 import CartIcon from "components/svg/cart-icon";
-import FreeSample from "components/svg/free-sample";
+const FreeSample = lazy(() => import('components/svg/free-sample'))
 import ProfileIcon from "components/svg/user-icon";
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
 import { LuHeart } from "react-icons/lu";
 import Image from "next/image";
 import { useSession, signOut } from "next-auth/react";
@@ -81,20 +80,22 @@ const UserIcon = ({ className }: UserIconProps) => {
     };
   }, []);
 
-  const logoutHandler = async () => {
+  const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     await signOut();
     setIsOpen(false);
   };
-
   return (
     <div className={`flex items-center 2xl:space-x-1 ${className} relative`}>
       <button
         onClick={handleProfileClick}
         className="relative flex items-center space-x-2 h-7 p-1 fill-white focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white lg:hover:bg-primary"
       >
-        {session?.user?.image ? (
+        {session ? (
           <Image
-          src={imgSrc}
+            
+           //@ts-expect-error(ts-migrate)
+          src={session?.user?.image?.imageUrl || "/assets/images/dummy-avatar.jpg"}
             alt="User Profile"
             width={50}
             height={50}

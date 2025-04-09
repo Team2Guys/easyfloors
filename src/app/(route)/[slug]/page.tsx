@@ -1,16 +1,17 @@
 import { fetchCategories, fetchSingleCategory } from "config/fetch";
 import { Suspense } from "react";
-import { Category as ICategory } from "types/cat";
+import { Category as ICategory, ISUBCATEGORY } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import Category from "./Cetagory";
+import { IProduct } from "types/prod";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const Category =await fetchSingleCategory(slug)
-if(!Category) return notFound() 
-   const headersList = await headers();
+  const Category = await fetchSingleCategory(slug)
+  if (!Category) return notFound()
+  const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
   const protocol = headersList.get('x-forwarded-proto') || 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
@@ -24,7 +25,7 @@ if(!Category) return notFound()
     Category?.posterImageUrl.altText ||
     'Easy Floor';
 
-    const NewImage = [
+  const NewImage = [
     {
       url: ImageUrl,
       alt: alt,
@@ -55,28 +56,39 @@ if(!Category) return notFound()
 
 const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
-  const catgories = await fetchCategories();
+  const categories = await fetchCategories();
 
-  let findCategory = catgories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
-  if(!findCategory) {
+  const findCategory = categories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
+  if (!findCategory) {
     return notFound()
-   }
- 
-  let  mainCategory;
-  const {whatAmiImageBanner, topHeading,description} = findCategory
+  }
   const reCallFlag = findCategory?.recalledSubCats && findCategory?.recalledSubCats.length > 0;
-  if(reCallFlag){
-    const recallCategory = findCategory?.recalledSubCats[0].category.RecallUrl
-    findCategory = catgories.find((cat: ICategory) => (cat.RecallUrl?.trim() ?? '') === recallCategory.trim());
-    mainCategory ={whatAmiImageBanner, topHeading, description}
+  if (reCallFlag) {
+    let products: IProduct[] = [];
+
+    categories.forEach((cat: ICategory) => {
+      const filteredProd = cat.products?.filter((prod) =>
+        findCategory?.recalledSubCats?.some(
+          (subCat: ISUBCATEGORY) => subCat.custom_url === prod.subcategory?.custom_url
+        )
+      ) || [];
+
+      products = [...products, ...filteredProd];
+    })
+    findCategory.products = products
   }
 
-  const filteredCategories = catgories.filter((value:ICategory)=>value?.name?.trim() !=="ACCESSORIES") || []
+
+  const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES") || []
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={filteredCategories} categoryData={findCategory}  isSubCategory={false} mainCategory={mainCategory} slug={slug} />
+      <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
     </Suspense>
   );
 };
 
+
+
 export default CategoryPage;
+
+

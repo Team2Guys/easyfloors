@@ -13,7 +13,7 @@ import { SelectedFilter } from "types/types";
 
 
 
-const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mainCategory, slug, subcategory,subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
+const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slug, subcategory,subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
@@ -59,7 +59,10 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mai
 
   return (
     <>
-      <Breadcrumb imageClass="h-[70px] xs:h-auto" image={mainCategory ? mainCategory.whatAmiImageBanner?.imageUrl : Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"} altText={mainCategory?.whatAmiImageBanner.altText || Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext />
+      <Breadcrumb imageClass="h-[70px] xs:h-auto"
+       image={ Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
+        altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
+      />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
         <div className=" lg:w-[20%] ">
           <Filters
@@ -76,14 +79,14 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, mai
         </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-        <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : mainCategory?.topHeading || Data?.topHeading || Data?.Heading || Data?.name}
+        <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : Data?.Heading || Data?.name}
         </h1>
             <p
               className="text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter "
               dangerouslySetInnerHTML={{ 
                 __html: isSubCategory 
                   ? subdescription[0].description || "" 
-                  : mainCategory?.description || Data?.description || "" 
+                  :  Data?.description || "" 
               }} 
             >
             </p>
