@@ -8,7 +8,7 @@ import { ExtendedThumbnailProps } from "types/product-detail";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
 import { debounce } from "lodash"; // Import debounce for smoothness
 
-const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight, onImageChange, stickyside, selectedColor }: ExtendedThumbnailProps) => {
+const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight, onImageChange, stickyside, selectedColor,setSelectedColor }: ExtendedThumbnailProps) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const sliderRef1 = useRef<Slider | null>(null);
   const thumbSliderRef = useRef<Slider | null>(null);
@@ -35,6 +35,12 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       );
       if (nextSlide !== currentSlide) {
         setCurrentSlide(nextSlide);
+        setSelectedColor?.({
+          color: ThumnailImage[nextSlide].color || ThumnailImage[nextSlide].colorCode,
+          colorCode: ThumnailImage[nextSlide].colorCode,
+          altText: ThumnailImage[nextSlide].altText,
+          imageUrl: ThumnailImage[nextSlide].imageUrl,
+        }); // Update selected color
         sliderRef1.current?.slickGoTo(nextSlide);
         if (stickyside) {
           thumbSliderRef.current?.slickGoTo(nextSlide);
@@ -57,7 +63,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   useEffect(() => {
     if (selectedColor) {
       const matchingIndex = ThumnailImage.findIndex(
-        (img) => img.colorCode === selectedColor
+        (img) => img.colorCode === selectedColor?.color
       );
       if (matchingIndex >= 0) {
         setCurrentSlide(matchingIndex);
@@ -73,6 +79,12 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   const handleThumbnailClick = (index: number) => {
     if (!isSwiping && index !== currentSlide) { // Only activate on click, not swipe
       setCurrentSlide(index);
+      setSelectedColor?.({
+        color: ThumnailImage[index].color || ThumnailImage[index].colorCode,
+        colorCode: ThumnailImage[index].colorCode,
+        altText: ThumnailImage[index].altText,
+        imageUrl: ThumnailImage[index].imageUrl,
+      }); // Update selected color
       onImageChange?.(combinedImages[index]);
       sliderRef1.current?.slickGoTo(index);
       if (stickyside) {

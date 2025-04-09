@@ -17,7 +17,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([]);
   const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([]);
   const boxCoverage = 2.4;
-
   const calculateSquareMeter = (boxes: number) => {
     return boxCoverage * boxes;
   };
