@@ -6,13 +6,48 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ExtendedThumbnailProps } from "types/product-detail";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
+import { debounce } from "lodash"; // Import debounce for smoothness
 
 const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight, onImageChange, stickyside, selectedColor }: ExtendedThumbnailProps) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
   const sliderRef1 = useRef<Slider | null>(null);
   const thumbSliderRef = useRef<Slider | null>(null);
-  const thumbRefs = useRef<(HTMLDivElement | null)[]>([]);
-  
+  const [isDragging, setIsDragging] = useState(false);
+  const [startY, setStartY] = useState(0);
+  const [isSwiping, setIsSwiping] = useState(false); // Track if a swipe is happening
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartY(e.clientY);
+    setIsSwiping(false); // Reset swipe state
+  };
+
+  const handleMouseMove = debounce((e: React.MouseEvent) => {
+    if (!isDragging) return;
+
+    const deltaY = startY - e.clientY;
+    if (Math.abs(deltaY) > 10) { // Threshold to detect swipe
+      setIsSwiping(true); // Mark as swiping
+      const direction = deltaY > 0 ? 2 : -2; // 1 for down, -1 for up
+      const nextSlide = Math.min(
+        Math.max(currentSlide + direction, 0),
+        ThumnailImage.length - 1
+      );
+      if (nextSlide !== currentSlide) {
+        setCurrentSlide(nextSlide);
+        sliderRef1.current?.slickGoTo(nextSlide);
+        if (stickyside) {
+          thumbSliderRef.current?.slickGoTo(nextSlide);
+        }
+      }
+      setStartY(e.clientY); // Reset startY for continuous dragging
+    }
+  }, 50); // Add debounce for smoothness
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
   const combinedImages = useMemo(() => {
     if (hideThumnailBottom) return ThumnailImage;
     return [...ThumnailImage, ...(ThumnailBottom || [])];
@@ -36,16 +71,15 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   }, [selectedColor, ThumnailImage, onImageChange, stickyside]);
 
   const handleThumbnailClick = (index: number) => {
-    if (index !== currentSlide) {
+    if (!isSwiping && index !== currentSlide) { // Only activate on click, not swipe
       setCurrentSlide(index);
       onImageChange?.(combinedImages[index]);
       sliderRef1.current?.slickGoTo(index);
       if (stickyside) {
-        thumbSliderRef.current?.slickGoTo(index); // <-- scroll the vertical thumb slider
+        thumbSliderRef.current?.slickGoTo(index);
       }
     }
   };
-  
 
   const staticTitles = [
     "Click lock system",
@@ -59,33 +93,35 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   const getStaticTitle = (index: number) => staticTitles[index] || "";
 
   return (
-    <div className="slider-container flex gap-2 sm:gap-4 overflow-hidden">
+    <div
+      className="slider-container flex gap-2 sm:gap-4 overflow-hidden"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp} 
+    >
       {/* Thumbnail Side */}
       <div className="w-2/12">
         {stickyside ? (
           <Slider
-          ref={thumbSliderRef}
-          // infinite={ThumnailImage.length > 5}
-          slidesToShow={5}
-          touchMove
-          draggable
-          vertical
-          verticalSwiping
-          arrows={false}
-          swipeToSlide
-          focusOnSelect
-          className="custom-vertical-slider"
-          initialSlide={currentSlide}
+            ref={thumbSliderRef}
+            infinite // Enable infinite scrolling
+            slidesToShow={5}
+            vertical
+            verticalSwiping={false}
+            swipe={false}
+            arrows={false}
+            swipeToSlide
+            focusOnSelect
+            className="custom-vertical-slider"
+            initialSlide={currentSlide}
           >
-            {ThumnailImage.map((product, index) => (
+            {Array.from({ length: 20 }, (_, i) => ThumnailImage[i % ThumnailImage.length]).map((product, index) => (
               <div
                 key={index}
-                ref={(el) => {
-                  thumbRefs.current[index] = el;
-                }}
-                onClick={() => handleThumbnailClick(index)}
+                onClick={() => handleThumbnailClick(index % ThumnailImage.length)} // Map index back to original array
                 className={`cursor-pointer p-[2px] sm:p-1 ${
-                  index === currentSlide ? "shadow-xl" : ""
+                  index % ThumnailImage.length === currentSlide ? "shadow-xl" : ""
                 }`}
               >
                 <Image
