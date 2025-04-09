@@ -900,8 +900,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="flex flex-col gap-5">
-                  {!accessoryFlag ? (
-                    <>
+                
                       <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                         <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
                           <h3 className="font-medium text-black dark:text-white">
@@ -1172,10 +1171,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           />
                         </div>
                       </div>
-                    </>
-                  ) : (
-                    ""
-                  )}
+                    
+              
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
