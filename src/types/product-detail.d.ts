@@ -9,7 +9,7 @@ export interface ExtendedThumbnailProps {
   stickyside?: boolean;
   onColorSelect?: React.Dispatch<SetStateAction<string>>
   stickyside?: boolean;
-  selectedColor: ProductImage | undefined
+  selectedColor?: ProductImage | undefined
   setSelectedColor?: React.Dispatch<SetStateAction<string>>
 }
 
