@@ -442,6 +442,7 @@ export const FIND_ONE_Accessory = gql`
         Meta_Title
         Canonical_Tag
         whatAmiImageBanner
+      
         accessories {
             id
             name
@@ -450,6 +451,7 @@ export const FIND_ONE_Accessory = gql`
             stock
             posterImageUrl
             custom_url
+              sizes
         }
   }}
 

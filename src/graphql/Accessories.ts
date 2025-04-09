@@ -23,6 +23,7 @@ export const FETCH_ALL_ACCESSORIES = gql`
         FAQS
         boxCoverage
         featureImages
+        sizes
       category {
         id
         name

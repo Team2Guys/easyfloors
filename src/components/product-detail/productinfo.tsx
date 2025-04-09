@@ -87,7 +87,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
             ))}
           </div>
           :
-          <p>No colour found</p>
+          <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour found</p>
         }
 
       </div>
@@ -97,7 +97,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           matchingColor.map((item, index) => (
             <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name} Colour {item.detail}</p>
           ))
-          : <p className="font-inter font-light text-12 xl:text-[20.6px]">No color match</p>}
+          : <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour match</p>}
       </div>
 
       {/* Length Input */}
@@ -110,7 +110,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
             onChange={handleLengthChange}
             placeholder="Enter your required meter"
             min="0" 
-            className="border p-2 w-full mt-1 border-primary text-12"
+            className="border p-2 font-light font-inter text-black w-[60%] mt-1 border-primary text-12 xl:text-[20.6px]"
           />
         </div>
         <p className="font-inter font-light tecxt-12 xl:text-sm mt-2">
@@ -138,7 +138,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       <PaymentMethod installments={totalPrice / 4} />
       <div className="mt-2 space-y-2">
         <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
-        <div className='flex justify-between gap-2' >
+        <div className='flex justify-between lg:justify-start gap-2 lg:gap-10' >
           {
             paymentcard.map((array, index) => (
               <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px] shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />

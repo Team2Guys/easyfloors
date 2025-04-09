@@ -20,6 +20,7 @@ interface UserIconProps {
 
 const UserIcon = ({ className }: UserIconProps) => {
   const { data: session } = useSession();
+  const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -91,13 +92,11 @@ const UserIcon = ({ className }: UserIconProps) => {
       >
         {session ? (
           <Image
-            
-           //@ts-expect-error(ts-migrate)
-          src={session?.user?.image?.imageUrl || "/assets/images/dummy-avatar.jpg"}
+          src={imgSrc}
             alt="User Profile"
             width={50}
             height={50}
-            className="rounded-full h-full w-5 md:w-32 "
+            className="rounded-full h-full w-5 lg:w-40 xl:w-32 xl:h-7 "
           />
         ) : (
           <ProfileIcon />
@@ -183,8 +182,6 @@ const UserIcon = ({ className }: UserIconProps) => {
         badgeCount={cartTotal?.length ?? 0}
         cartItems={cartTotal ?? []}
       />
-
-
     </div>
   );
 };
