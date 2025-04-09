@@ -1,4 +1,4 @@
-import AccessoryTable from 'components/accessory-table';
+
 import dynamic from 'next/dynamic';
 import React from 'react'
 import { CiHeart } from 'react-icons/ci'

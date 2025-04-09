@@ -1,4 +1,4 @@
-import AccessoriesComp from 'components/Accessories/Accessories'; 
+import AccessoriesComp from 'components/Accessories/Accessories';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import { fetchSingleCategory } from 'config/fetch';
 import { FIND_ONE_Accessory } from 'graphql/queries';
@@ -9,9 +9,9 @@ import React from 'react';
 
 export async function generateMetadata(): Promise<Metadata> {
 
-  const Category =await fetchSingleCategory("accessories")
-if(!Category) return notFound()
-   const headersList = await headers();
+  const Category = await fetchSingleCategory("accessories")
+  if (!Category) return notFound()
+  const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
   const protocol = headersList.get('x-forwarded-proto') || 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
@@ -25,7 +25,7 @@ if(!Category) return notFound()
     Category?.posterImageUrl.altText ||
     'Easy Floor';
 
-    const NewImage = [
+  const NewImage = [
     {
       url: ImageUrl,
       alt: alt,
@@ -57,14 +57,14 @@ if(!Category) return notFound()
 
 
 const Accessories = async () => {
-  const category =await fetchSingleCategory("accessories", FIND_ONE_Accessory, true)
-if(!category) return notFound()
+  const category = await fetchSingleCategory("accessories", FIND_ONE_Accessory, true)
+  if (!category) return notFound()
 
 
   return (
     <>
-      <Breadcrumb title={category.name} image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"}/>
-      <AccessoriesComp product={category.accessories || []} category={category}  /> 
+      <Breadcrumb title={category.name} image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"} />
+      <AccessoriesComp product={category.accessories || []} category={category} />
     </>
   );
 };

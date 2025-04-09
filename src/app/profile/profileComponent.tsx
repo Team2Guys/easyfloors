@@ -39,23 +39,6 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
         }
     }, [loggedInUser]);
 
-    // const AddminProfileTriggerHandler = async () => {
-    //   try {
-    //     if (!token) return;
-    //     let user: any = await axios.get(
-    //       `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getuserHandler`,
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       },
-    //     );
-    //     dispatch(loggedInUserAction(user.data.user));
-    //   } catch (err: any) {
-    //     console.log(err, 'err');
-    //   }
-    // };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
@@ -133,7 +116,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                         </Link>
                         <p
                             className="border border-gray p-2 max-w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold shadow cursor-pointer"
-                            onClick={() => logoutHhandler()}
+                            onClick={(e) => {e.preventDefault();logoutHhandler()}}
                         >
                             Log Out
                         </p>
@@ -145,7 +128,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                             <div className="h-14 w-14 rounded-full overflow-hidden">
                                 <Image
                                     src={
-                                        profilePhoto && profilePhoto.imageUrl
+                                        (profilePhoto && profilePhoto.imageUrl)
                                             ? profilePhoto.imageUrl
                                             : '/assets/images/dummy-avatar.jpg'
                                     }

@@ -61,7 +61,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                      <p>Box Coverage: {product.boxCoverage}</p>
                      </>
                      )}
-                 </div>
+                  </div>
               </td>
                 <td className="p-3 font-inter text-12 xl:text-20 font-normal">
                   {pathname === "/freesample" ? "Free" : product.price}
