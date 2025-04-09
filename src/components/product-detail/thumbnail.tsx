@@ -6,7 +6,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { ExtendedThumbnailProps } from "types/product-detail";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa";
-import { debounce } from "lodash"; // Import debounce for smoothness
 
 const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, imageheight, onImageChange, stickyside, selectedColor,setSelectedColor }: ExtendedThumbnailProps) => {
   const [currentSlide, setCurrentSlide] = useState<number>(0);
@@ -14,21 +13,28 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   const thumbSliderRef = useRef<Slider | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startY, setStartY] = useState(0);
-  const [isSwiping, setIsSwiping] = useState(false); // Track if a swipe is happening
+  const [isSwiping, setIsSwiping] = useState(false); 
 
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setStartY(e.clientY);
-    setIsSwiping(false); // Reset swipe state
+    setIsSwiping(false);
   };
 
-  const handleMouseMove = debounce((e: React.MouseEvent) => {
-    if (!isDragging) return;
+const animationFrame = useRef<number | null>(null);
 
+const handleMouseMove = (e: React.MouseEvent) => {
+  if (!isDragging) return;
+
+  if (animationFrame.current) {
+    cancelAnimationFrame(animationFrame.current);
+  }
+
+  animationFrame.current = requestAnimationFrame(() => {
     const deltaY = startY - e.clientY;
-    if (Math.abs(deltaY) > 10) { // Threshold to detect swipe
-      setIsSwiping(true); // Mark as swiping
-      const direction = deltaY > 0 ? 1 : -1; // 1 for down, -1 for up
+    if (Math.abs(deltaY) > 10) {
+      setIsSwiping(true);
+      const direction = deltaY > 0 ? 1 : -1;
       const nextSlide = Math.min(
         Math.max(currentSlide + direction, 0),
         ThumnailImage.length - 1
@@ -40,15 +46,17 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
           colorCode: ThumnailImage[nextSlide].colorCode,
           altText: ThumnailImage[nextSlide].altText,
           imageUrl: ThumnailImage[nextSlide].imageUrl,
-        }); // Update selected color
+        });
         sliderRef1.current?.slickGoTo(nextSlide);
         if (stickyside) {
           thumbSliderRef.current?.slickGoTo(nextSlide);
         }
       }
-      setStartY(e.clientY); // Reset startY for continuous dragging
+      setStartY(e.clientY);
     }
-  }, 50); // Add debounce for smoothness
+  });
+};
+
 
   const handleMouseUp = () => {
     setIsDragging(false);
@@ -112,44 +120,61 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp} // Stop dragging if the mouse leaves the container
     >
-      {/* Thumbnail Side */}
       <div className="w-2/12">
         {stickyside ? (
-          <Slider
-            ref={thumbSliderRef}
-            infinite={ThumnailImage.length > 5} // Enable infinite scrolling if there are more than 5 thumbnails
-            slidesToShow={5}
-            vertical
-            verticalSwiping={false}
-            swipe={false}
-            arrows={false}
-            swipeToSlide
-            focusOnSelect
-            className="custom-vertical-slider"
-            initialSlide={currentSlide}
-          >
-            {ThumnailImage.map((product, index) => (
-              <div
-                key={index}
-                onClick={() => handleThumbnailClick(index)}
-                className={`cursor-pointer p-[2px] sm:p-1 ${
-                  index === currentSlide ? "shadow-xl" : ""
+        <div className="relative">
+        
+        <button
+          onClick={() => thumbSliderRef.current?.slickPrev()}
+          className="absolute left-1/2 -translate-x-1/2 z-30 bg-white p-1  shadow"
+        >
+          <FaAngleUp size={30}/>
+        </button>
+      
+        {/* Thumbnail Slider */}
+        <Slider
+          ref={thumbSliderRef}
+          infinite={ThumnailImage.length > 5}
+          slidesToShow={5}
+          vertical
+          swipe={false}
+          arrows={false} // We'll use our own
+          focusOnSelect
+          className="custom-vertical-slider"
+          initialSlide={currentSlide}
+        >
+          {ThumnailImage.map((product, index) => (
+            <div
+              key={index}
+              onClick={() => handleThumbnailClick(index)}
+              className={`cursor-pointer p-[2px] sm:p-1 ${
+                index === currentSlide ? "shadow-xl" : ""
+              }`}
+            >
+              <Image
+                width={150}
+                height={150}
+                src={product.imageUrl}
+                className={`w-full ${
+                  imageheight
+                    ? "h-[35px] sm:h-[73px] md:h-[150px]"
+                    : "h-[35px] sm:h-[73px] md:h-[124px]"
                 }`}
-              >
-                <Image
-                  width={150}
-                  height={150}
-                  src={product.imageUrl}
-                  className={`w-full ${
-                    imageheight
-                      ? "h-[35px] sm:h-[73px] md:h-[230px]"
-                      : "h-[35px] sm:h-[73px] md:h-[124px]"
-                  }`}
-                  alt={product.altText || "Thumbnail"}
-                />
-              </div>
-            ))}
-          </Slider>
+                alt={product.altText || "Thumbnail"}
+              />
+            </div>
+          ))}
+        </Slider>
+      
+        {/* Down Arrow */}
+        <button
+          onClick={() => thumbSliderRef.current?.slickNext()}
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow"
+        >
+          <FaAngleDown size={30} />
+        </button>
+        </div>
+      
         ) : (
           <div className="flex flex-col gap-1 sm:gap-2">
             {ThumnailImage.map((product, index) => (
@@ -207,7 +232,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 src={product.imageUrl}
                 className={`w-full ${
                   imageheight
-                    ? "h-[273px] sm:h-[520px] md:h-[1218px]"
+                    ? "h-[273px] sm:h-[520px] md:h-[810px]"
                     : "h-[273px] sm:h-[520px] md:h-[830px]"
                 }`}
                 alt={product.altText || "Thumbnail"}
