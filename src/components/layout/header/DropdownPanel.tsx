@@ -164,7 +164,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const totalAmount = localItems.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
 
   return (
-    <div className="relative">
+    <div className="relative group">
       <div
         ref={toggleRef}
         onClick={() => setIsOpen(!isOpen)}
