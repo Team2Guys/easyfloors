@@ -21,7 +21,7 @@ interface UserIconProps {
 
 const UserIcon = ({ className }: UserIconProps) => {
   const { data: session } = useSession();
-  const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
+  // const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -101,6 +101,7 @@ const UserIcon = ({ className }: UserIconProps) => {
             height={50}
             className="rounded-full h-full w-5 lg:w-40 xl:w-32 xl:h-7 "
           />
+          
         ) : (
           <ProfileIcon />
         )}
