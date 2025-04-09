@@ -50,6 +50,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         custom_url
         stock
         posterImageUrl
+        sizes
         
       }
     }
