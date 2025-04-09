@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import { CiHeart } from "react-icons/ci";
@@ -13,13 +14,16 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   const [length, setLength] = useState("");
   const [requiredBoxes, setRequiredBoxes] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([])
-  const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([])
+  const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([]);
+  const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([]);
   const boxCoverage = 2.4;
+
   const calculateSquareMeter = (boxes: number) => {
     return boxCoverage * boxes;
   };
+
   const squareMeter = calculateSquareMeter(requiredBoxes);
+
   const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLength(value);
@@ -40,27 +44,24 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       (image, index, self) =>
         index === self.findIndex((img) => img.color === image.color)
     ) || [];
-    setUniqueFeatureImages(uniqueFeatureImages)
-  }, [productData?.featureImages])
+    setUniqueFeatureImages(uniqueFeatureImages);
+  }, [productData?.featureImages]);
 
   useEffect(() => {
-    setSelectedColor(uniqueFeatureImages[0])
-  }, [uniqueFeatureImages])
+    setSelectedColor(uniqueFeatureImages[0]);
+  }, [uniqueFeatureImages]);
 
   useEffect(() => {
     if (selectedColor?.color) {
       const filterColor = productData?.products
         ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
-
       setMatchingColor(filterColor || []);
     }
   }, [selectedColor, productData]);
 
-
-
   const handleColorClick = (color: ProductImage) => {
-    setSelectedColor(color)
-  }
+    setSelectedColor(color);
+  };
   return (
     <div className="p-1 lg:px-4">
       <div className="space-y-1 mt-5 lg:mt-0">
