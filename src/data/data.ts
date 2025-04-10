@@ -1,5 +1,5 @@
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AccPoPProduct, AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -129,6 +129,7 @@ export interface IProductValues {
   colorCode?: string;
   colors?: AdditionalInformation[]
   sizes?: { width: string, height: string, thickness: string }[]
+  lengthPrice?: string;
 }
 
 export const AddproductsinitialValues: IProductValues = {
@@ -153,7 +154,8 @@ export const AddproductsinitialValues: IProductValues = {
   products: [],
   colorCode: "",
   colors: [],
-  sizes: []
+  sizes: [],
+  lengthPrice: "",
 };
 
 
@@ -937,24 +939,24 @@ stepsHeading:"Measuring a Square or Rectangular Room",
 
 
 
-export const colors = [
-  { code: "3897", color: "/assets/bin/colors/c1.png" },
-  { code: "3895", color: "/assets/bin/colors/c2.png" },
-  { code: "2868", color: "/assets/bin/colors/c3.png" },
-  { code: "6661", color: "/assets/bin/colors/c4.png" },
-  { code: "2636", color: "/assets/bin/colors/c5.png" },
-  { code: "X8355-9", color: "/assets/bin/colors/c6.png" },
-  { code: "3896", color: "/assets/bin/colors/c7.png" },
-  { code: "3891", color: "/assets/bin/colors/c8.png" },
-  { code: "3895", color: "/assets/bin/colors/c9.png" },
-  { code: "2869", color: "/assets/bin/colors/c10.png" },
-  { code: "6661", color: "/assets/bin/colors/c11.png" },
-  { code: "2634", color: "/assets/bin/colors/c12.png" },
-  { code: "X8365-9", color: "/assets/bin/colors/c13.png" },
-  { code: "FC5943", color: "/assets/bin/colors/c14.png" },
-  { code: "FC5943", color: "/assets/bin/colors/c15.png" },
-  { code: "FC5943", color: "/assets/bin/colors/c16.png" },
-];
+// export const colors = [
+//   { code: "3897", color: "/assets/bin/colors/c1.png" },
+//   { code: "3895", color: "/assets/bin/colors/c2.png" },
+//   { code: "2868", color: "/assets/bin/colors/c3.png" },
+//   { code: "6661", color: "/assets/bin/colors/c4.png" },
+//   { code: "2636", color: "/assets/bin/colors/c5.png" },
+//   { code: "X8355-9", color: "/assets/bin/colors/c6.png" },
+//   { code: "3896", color: "/assets/bin/colors/c7.png" },
+//   { code: "3891", color: "/assets/bin/colors/c8.png" },
+//   { code: "3895", color: "/assets/bin/colors/c9.png" },
+//   { code: "2869", color: "/assets/bin/colors/c10.png" },
+//   { code: "6661", color: "/assets/bin/colors/c11.png" },
+//   { code: "2634", color: "/assets/bin/colors/c12.png" },
+//   { code: "X8365-9", color: "/assets/bin/colors/c13.png" },
+//   { code: "FC5943", color: "/assets/bin/colors/c14.png" },
+//   { code: "FC5943", color: "/assets/bin/colors/c15.png" },
+//   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
+// ];
 
 
 export const loginData: AuthData = {
@@ -983,56 +985,6 @@ export const signupData: SignAuthData = {
 };
 
 
-export const accessoriesProducts: AccPoPProduct[] = [
-  {
-    id: "1",
-    image: "/assets/images/accessories/product/1.png",
-    name: "Accessory One",
-    price: 50,
-    meters: 2,
-    feet: 6.56,
-  },
-  {
-    id: "2",
-    image: "/assets/images/accessories/product/1.png",
-    name: "Accessory Two",
-    price: 75,
-    meters: 3,
-    feet: 9.84,
-  },
-  {
-    id: "3",
-    image: "/assets/images/accessories/product/1.png",
-    name: "Accessory Three",
-    price: 60,
-    meters: 2.5,
-    feet: 8.2,
-  },
-  {
-    id: "4",
-    image: "/assets/images/accessories/product/1.png",
-    name: "Accessory Four",
-    price: 90,
-    meters: 4,
-    feet: 13.1,
-  },
-  {
-    id: "5",
-    image: "/assets/images/accessories/product/1.png",
-    name: "Accessory Five",
-    price: 80,
-    meters: 3.2,
-    feet: 10.5,
-  },
-  {
-    id: "6",
-    image: "/assets/images/accessories/product/1.png",
-    name: "Accessory Six",
-    price: 100,
-    meters: 5,
-    feet: 16.4,
-  },
-];
 export const emirates = [
   { value: "Abu Dhabi", label: "Abu Dhabi" },
   { value: "Dubai", label: "Dubai" },

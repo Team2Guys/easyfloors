@@ -24,6 +24,7 @@ export const FETCH_ALL_ACCESSORIES = gql`
         boxCoverage
         featureImages
         sizes
+        lengthPrice
       category {
         id
         name

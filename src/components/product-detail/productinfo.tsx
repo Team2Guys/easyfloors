@@ -113,7 +113,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           />
         </div>
         <p className="font-inter font-light tecxt-12 xl:text-sm mt-2">
-          (Selling in fixed length of 240cm)
+          {productData.lengthPrice ? "Length Per Piece: " + productData.lengthPrice : "Selling in fixed length of 240cm"}
         </p>
         <div className="mt-2 font-semibold text-16 lg:text-[23.6px]">
           <p>Height: <span className="font-light text-12 xl:text-[20.6px]">10 cm</span></p>
