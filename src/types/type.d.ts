@@ -358,3 +358,10 @@ export interface PrivacyPolicyItem {
 export interface PrivacyPolicyProps {
   data?: PrivacyPolicyItem[];
 }
+
+export interface ProductTableProps {
+  columns?: string[];
+  isSamplePage?: boolean;
+  items?: ICart[]; 
+  setItems?: React.Dispatch<SetStateAction<ICart[]>>; 
+}

@@ -1,30 +1,20 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { FaArrowLeftLong } from "react-icons/fa6";
-import { ICart } from "types/prod";
-import { usePathname } from "next/navigation";
-import { fetchItems, handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import {  handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
 import Container from "./common/container/Container";
 import ItemCard from "./itemcard";
+import { ProductTableProps } from "types/type";
 
 
-const SmallScreen: React.FC = () => {
-  const pathname = usePathname();
-  const isSamplePage = pathname === "/freesample";
-  const [items, setItems] = useState<ICart[]>([]);
-
-  useEffect(() => {
-    fetchItems(isSamplePage, setItems);
-  }, [isSamplePage]);
-
-  const accessoryItems = items.filter((item) => item.category === "Accessories");
-  const productItems = items.filter((item) => item.category !== "Accessories");
+const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) => {
+  const accessoryItems = (items ?? []).filter((item) => item.category === "Accessories");
+  const productItems = (items ?? []).filter((item) => item.category !== "Accessories");
 
   return (
     <Container>
       <div>
-        {items.length === 0 ? (
+        {items?.length === 0 ? (
           <div className="text-center mt-5 mb-10">
             <h1 className="text-2xl font-bold">
               {isSamplePage ? "Free Sample is Empty" : "Wishlist is Empty"}
@@ -49,9 +39,9 @@ const SmallScreen: React.FC = () => {
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => handleRemoveItem(Number(id), isSamplePage, setItems)}
-                      onQuantityChange={(id, delta) => updateQuantity(Number(id), delta, setItems)}
-                      onAddToCart={(product) => handleAddToCart(product, isSamplePage, setItems)}
+                      onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
+                      onQuantityChange={(id, delta) => setItems && setItems((prevItems) => updateQuantity(Number(id), delta, prevItems))}
+                      onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
                     />
                   </div>
                 ))}
@@ -69,9 +59,12 @@ const SmallScreen: React.FC = () => {
         <ItemCard
           product={product}
           isSamplePage={isSamplePage}
-          onRemove={(id) => handleRemoveItem(Number(id), isSamplePage, setItems)}
-          onQuantityChange={(id, delta) => updateQuantity(Number(id), delta, setItems)}
-          onAddToCart={(product) => handleAddToCart(product, isSamplePage, setItems)}
+          onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
+          onQuantityChange={(id, delta) =>
+            setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
+          }
+          
+          onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
         />
       </div>
     ))}

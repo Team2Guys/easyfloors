@@ -53,7 +53,7 @@ const Wishlist = () => {
         {products.length > 0 && (
         <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10">
           <ProductTable
-            columns={["Product", "Price Per Box", "QTY(m/m2)", "Stock Status", "Action"]}
+            columns={["Product","Price Per Box","QTY(m/m2)","Stock Status", "Action"]}
             items={products} 
             setItems={setItems} 
           />
@@ -61,16 +61,16 @@ const Wishlist = () => {
          )}
 
         {accessories.length > 0 && (
-        <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10">
+        <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10 ">
           <ProductTable
-            columns={["Accessories", "Price Per m", "QTY m", "Stock Status", "Action"]}
+            columns={["Accessories","Price Per m","QTY m", "Stock Status", "Action"]}
             items={accessories} 
             setItems={setItems} 
           />
         </div>
         )}
         <div className="block md:hidden mb-5">
-          <WishlistSmall />
+          <WishlistSmall items={items} setItems={setItems} />
         </div>
       </Container>
     </>

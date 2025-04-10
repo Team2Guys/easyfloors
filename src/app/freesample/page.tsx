@@ -1,6 +1,7 @@
 "use client"
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ICart } from "types/prod";
 import { fetchItems } from "utils/cartutils";
@@ -12,11 +13,13 @@ const Container = dynamic(() => import("components/common/container/Container"))
 const Breadcrumb = dynamic(() => import("components/Reusable/breadcrumb"));
 const Top = dynamic(() => import("components/top"));
 const FreeSample = () => {
+   const pathname = usePathname();
+    const isSamplePage = pathname === "/freesample";
   const [items, setItems] = useState<ICart[]>([]);
-  
-    useEffect(() => {
-      fetchItems(false, setItems); 
-    }, []);
+
+  useEffect(() => {
+    fetchItems(isSamplePage, setItems);
+  }, [isSamplePage]);
   return (
     <>
       <Breadcrumb title="freesample" />
@@ -26,7 +29,7 @@ const FreeSample = () => {
       <ProductTable columns={["Product", "Price Per Piece", "Stock Status", "Action"]} items={items} setItems={setItems} isSamplePage/>
       </div>
       <div className="block md:hidden">
-      <WishlistSmall />
+      <WishlistSmall items={items} setItems={setItems} isSamplePage/>
       </div>
       </Container>
     </>
