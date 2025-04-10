@@ -44,7 +44,8 @@ export class CategoriesService {
           accessories: true,
           products: {
             include: {
-              subcategory: true
+              subcategory: true,
+              category: true
             }
           }
 
