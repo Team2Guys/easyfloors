@@ -118,7 +118,6 @@ const CartPage = ({ products }: CartPageProps) => {
         )
       );
 
-      // Dispatch event for cart update
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       toast.error("Failed to update item quantity.");
@@ -219,7 +218,7 @@ const CartPage = ({ products }: CartPageProps) => {
                             <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart" />
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m<sup>2</sup></p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m</p>
                               <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessories" || item.category === "Accessory" ? "Price Per Piece:" : "Price Per Box:"} <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span></p>
                               <p className='text-12 sm:text-14 2xl:text-17'>
                                   {item.category === "Accessories" || item.category === "Accessory" ? "No. Of Piece:" : "No. Of Boxes:"}

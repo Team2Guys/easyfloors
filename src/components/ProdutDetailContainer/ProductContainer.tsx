@@ -8,9 +8,7 @@ import { LuHeart } from "react-icons/lu";
 import { calculateProductDetails, handleAddToStorage } from "lib/carthelper";
 import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
-
 const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {
-  // console.log( MainCategory, subCategory, productData, 'className')
   const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
   const [unit, setUnit] = useState("sqm");
   const [area, setArea] = useState("");
@@ -19,15 +17,10 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     requiredBoxes,
     pricePerBox,
     squareMeter,
-    totalPrice, 
+    totalPrice,
     installments,
     boxCoverage,
   } = calculateProductDetails(area, unit, productData);
-  const displayTotalPrice = unit === "sqm"
-    ? totalPrice
-    : (totalPrice / 10.764);
-
-
   return (
     <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 ${isQuickView ? '2xl:gap-10' : '2xl:gap-20'}  ${className}`}>
       <div className={`w-full ${!isQuickView && '2xl:w-[60%]'} lg:w-[55%]`}>
@@ -44,27 +37,17 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           <h1 className="text-18 sm:text-25 2xl:text-[33px] font-inter font-semibold">{productData.name}</h1>
         )}
         <div className="border-[#D9D9D9] border-b" />
-        {/* <div className="flex text-14 sm:text-18 text-primary 2xl:text-23 font-semibold gap-2 items-center sm:gap-4">
-          <p className="text-black">Price Per Sqm :</p>
-          <p>
-            <span>AED</span> {productData?.price}{" "}
-            <span>
-              /m<sup>2</sup>
-            </span>
-          </p>
-        </div> */}
         <div className="flex text-14 sm:text-18 text-primary 2xl:text-23 font-semibold gap-1 items-center sm:gap-1">
           <p className="text-black">Price :</p>
           <p>
-  <span> AED </span>
-  {unit === "sqm"
-    ? productData?.price
-    : (productData?.price / 10.764).toFixed(2)}
-  <span>
-    {unit === "sqm" ? "/m²" : "/ft²"}
-  </span>
+            <span> AED </span>
+            {unit === "sqm"
+              ? productData?.price
+              : (productData?.price / 10.764).toFixed(2)}
+            <span>
+              {unit === "sqm" ? "/m²" : "/ft²"}
+            </span>
           </p>
-
         </div>
         <div className="flex text-19 gap-1 items-center">
           <p className="text-12 xs:text-14 2xl:text-23 sm:text-18">
@@ -74,27 +57,20 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             </span>
           </p>
           <div className="bg-black h-5 w-[2px]" />
-          {/* <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
+          <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
             Box Coverage:{" "}
             <span className="font-normal">
-              {boxCoverage} m<sup>2</sup>
+              {unit === "sqm"
+                ? `${boxCoverage ?? "0"} m²`
+                : `${(parseFloat(boxCoverage ?? "0") * 10.764).toFixed(2)} ft²`}
             </span>
-          </p> */}
-
-<p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
-  Box Coverage:{" "}
-  <span className="font-normal">
-    {unit === "sqm"
-      ? `${boxCoverage ?? "0"} m²`
-      : `${(parseFloat(boxCoverage ?? "0") * 10.764).toFixed(2)} ft²`}
-  </span>
-</p>
+          </p>
           <div className="bg-black h-5 w-[2px]" />
           <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
             Box: <span className="font-normal">1</span>
           </p>
         </div>
-        <div className="border-[#501e1e] border-b" />
+        <div className="border-[#501E1E] border-b" />
         <AreaCalculator
           area={area}
           unit={unit}
@@ -109,12 +85,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="border-[#D9D9D9] border-b" />
         <div className="flex gap-5 items-center">
           <p className="text-16 2xl:text-33 font-black lg:text-28 sm:text-20">
-            Total : <span>AED</span> <span>{displayTotalPrice.toFixed(2)}</span>
+            Total : <span>AED</span> <span>{totalPrice.toFixed(2)}</span>
           </p>
-          {/* <p className="text-16 2xl:text-33 font-black lg:text-28 sm:text-20">
-            Total : <span>AED</span> <span>{displayTotalPrice}</span>
-          </p> */}
-
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">
           <button className="flex justify-center bg-primary text-11 xs:text-12 text-white w-7/12 2xl:text-22 font-inter gap-1 xs:gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16" onClick={() =>
@@ -183,5 +155,4 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     </Container>
   );
 };
-
 export default ProductContainer;

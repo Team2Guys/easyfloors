@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { ErrorMessage, Form, Formik } from "formik";
-import * as Yup from "yup";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Image from "next/image";
@@ -28,21 +27,7 @@ import Select from "components/appointment/Select";
 import CustomSelect from "components/appointment/custom-select";
 import Checkbox from "components/ui/checkbox";
 import { Collapse } from "antd";
-
-
-const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    phone: Yup.string().required("Phone number is required"),
-    country: Yup.string().required("Country is required"),
-    emirate: Yup.string().required("Emirate is required"),
-    city: Yup.string().required("City is required"),
-    address: Yup.string().required("Address is required"),
-    terms: Yup.boolean()
-  .oneOf([true], "You must accept the terms and conditions")
-  .required("Required"),
-});
+import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -54,9 +39,6 @@ const Checkout = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-
-
-
 
     useEffect(() => {
         const savedCity = localStorage.getItem('selectedCity') || '';
@@ -211,7 +193,7 @@ const Checkout = () => {
                     note: "",
                     terms: false,
                 }}
-                validationSchema={validationSchema}
+                validationSchema={checkoutValidationSchema}
                 validateOnMount
 
                 onSubmit={(values, { setSubmitting }) => {
@@ -288,16 +270,16 @@ const Checkout = () => {
 
 
                                 <div className="flex items-center">
-                                <div>
-  <Checkbox
-    name="terms"
-    onChange={(e) => setFieldValue("terms", e.target.checked)}
-    checked={values.terms}
-  >
-    I have read and agree to the <span className="text-primary">Terms and Conditions</span>
-  </Checkbox>
-  <ErrorMessage name="terms" component="div" className="text-red-500 text-sm mt-1" />
-                                </div>
+                                    <div>
+                                        <Checkbox
+                                            name="terms"
+                                            onChange={(e) => setFieldValue("terms", e.target.checked)}
+                                            checked={values.terms}
+                                        >
+                                            I have read and agree to the <span className="text-primary">Terms and Conditions</span>
+                                        </Checkbox>
+                                        <ErrorMessage name="terms" component="div" className="text-red-500 text-sm mt-1" />
+                                    </div>
 
                                 </div>
 

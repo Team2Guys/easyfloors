@@ -102,12 +102,13 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           product.price,
           squareMeter,
           requiredBoxes[productId] || 1,
-          "",
+          unit[productId], 
           product.category?.name ?? product?.__typename,
           "cart",
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
         );
+        
       }
     });
     onClose();
