@@ -1,7 +1,7 @@
 import { ImagesProps } from "components/ImageUploader/ImageUploader";
 import { FILE_UPLOAD_MUTATION } from "graphql/mutations";
 import { FilterState } from "types/cat";
-import { IProduct } from "types/prod";
+import { AdditionalInformation, IProduct } from "types/prod";
 import { ProductFilterParams, SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
@@ -72,7 +72,7 @@ export const productFilter = ({
   }
 
   const filterMapping: { key: keyof FilterState; productKey: string }[] = [
-    { key: "colors", productKey: "colors" },
+    { key: "Colours", productKey: "colors" },
     { key: "thicknesses", productKey: "thickness" },
     { key: "commercialWarranty", productKey: "CommmericallWarranty" },
     { key: "residentialWarranty", productKey: "ResidentialWarranty" },
@@ -81,9 +81,18 @@ export const productFilter = ({
 
   filterMapping.forEach(({ key, productKey }) => {
     if (selectedProductFilters[key].length > 0) {
-      filtered = filtered?.filter(product =>
-        selectedProductFilters[key].includes((product[productKey] || ""))
-      );
+      filtered = filtered?.filter(product => {
+        const productValue = product[productKey];;
+      
+        if (Array.isArray(productValue)) {
+          return productValue.some((val:AdditionalInformation) =>
+            selectedProductFilters[key].includes(val?.name)
+          );
+        }
+      
+        return selectedProductFilters[key].includes(productValue || "");
+      })
+
       selectedProductFilters[key].forEach((value: string) => {
         appliedFilters.push({ name: key, value });
       });

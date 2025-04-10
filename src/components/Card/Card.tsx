@@ -59,6 +59,8 @@ const Card: React.FC<productCardProps> = ({
   };
 
   const handleNavigate = (product: IProduct, categoryData: Category) => {
+console.log(product.category, "product")
+
     if (product.subcategory) {
       return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
     } else {
@@ -88,7 +90,9 @@ const Card: React.FC<productCardProps> = ({
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
+              <button className="
+
+              " onClick={() => {
                 if ("price" in product) {
                   handleAddToStorage
                     (
@@ -98,7 +102,7 @@ const Card: React.FC<productCardProps> = ({
                       0,
                       1,
                       product.subcategory?.name || "",
-                      categoryData?.name || "",
+                      categoryData?.name || "Accessories",
                       "wishlist",
                       product.posterImageUrl?.imageUrl ?? "",
                       product?.boxCoverage,

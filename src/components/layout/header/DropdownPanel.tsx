@@ -211,7 +211,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
                           />
                         </div>
                         <button
-                          onClick={() => handleRemoveItem(item.id)}
+                          onClick={() => handleRemoveItem(Number(item.id))}
                           className="absolute -top-2 -right-2 bg-white shadow h-4 w-4 rounded-full flex items-center justify-center text-xs"
                         >
                           <IoCloseSharp size={10} />
@@ -223,11 +223,11 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
                         <p className="text-xs text-gray-700 mt-1">AED {item.price}</p>
                         {type === "cart" && (
                           <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">
-                            <button onClick={() => decrement(item.id)} className="px-1 hover:text-black">
+                            <button onClick={() => decrement(Number(item.id))} className="px-1 hover:text-black">
                               <LuMinus />
                             </button>
                             <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                            <button onClick={() => increment(item.id)} className="px-1 hover:text-black">
+                            <button onClick={() => increment(Number(item.id))} className="px-1 hover:text-black">
                               <LuPlus />
                             </button>
                           </div>

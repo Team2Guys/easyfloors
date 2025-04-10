@@ -205,10 +205,12 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
            </div>
            <div className="py-2">
              <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
+             {product.selectedColor &&
              <div className="flex flex-col justify-between items-center mb-1 mt-1 w-fit">
               <Image width={50} height={50} src={product.selectedColor?.imageUrl || ""} alt={product.selectedColor?.altText || ""}/>
               <p className="text-11">{product.selectedColor?.color || ""}</p>
              </div>
+             }
              <p className="text-gray-700 font-medium">Price Per m: AED {product.price}</p>
              <p className="text-base text-gray-800 font-medium">You Require:</p>
          

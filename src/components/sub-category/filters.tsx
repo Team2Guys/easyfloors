@@ -22,13 +22,12 @@ const Filters = ({
   priceValue,
   className }: FIlterprops) => {
 
-  const [uniqueFilters, setUniqueFilters] = useState({
-    thicknesses: [] as string[],
-    commercialWarranty: [] as string[],
-    residentialWarranty: [] as string[],
-    plankWidth: [] as string[],
-    colors: [] as string[],
-  });
+  const [uniqueFilters, setUniqueFilters] = useState({thicknesses: [] as string[],commercialWarranty: [] as string[],residentialWarranty: [] as string[],plankWidth: [] as string[],Colours: [] as string[]});
+  const [categoryState, setCategoryState] = useState<{
+    polar?: Category;
+    richmond?: Category;
+  }>({});
+  const path = usePathname();
   const desiredCategoryOrder = [
     "SPC FLOORING",
     "LVT FLOORING",
@@ -40,11 +39,6 @@ const Filters = ({
     return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
   });
   
-  const [categoryState, setCategoryState] = useState<{
-    polar?: Category;
-    richmond?: Category;
-  }>({});
-  const path = usePathname();
   useEffect(() => {
     const richmond = catgories.find(
       (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
@@ -56,7 +50,7 @@ const Filters = ({
   }, [catgories]);
 
   const filterTitles = {
-    colors: "Colors",
+    Colours: "Colours",
     thicknesses: "Thickness",
     commercialWarranty: "Commercial Warranty",
     residentialWarranty: "Residential Warranty",
@@ -87,7 +81,7 @@ const Filters = ({
       commercialWarranty: Array.from(commercialWarrantySet),
       residentialWarranty: Array.from(residentialWarrantySet),
       plankWidth: Array.from(plankWidthSet),
-      colors: Array.from(colorSet),
+      Colours: Array.from(colorSet),
     });
   };
 
@@ -116,7 +110,7 @@ const Filters = ({
   const handleClearFilter = () => {
     setPriceValue([0, 2000])
     setSelectedProductFilters({
-      colors: [],
+      Colours: [],
       thicknesses: [],
       commercialWarranty: [],
       residentialWarranty: [],
@@ -124,6 +118,7 @@ const Filters = ({
     });
     setIsWaterProof(null)
   }
+
   return (
     <div className={`p-2 xl:p-4 w-full space-y-5  ${className}`}>
       <div className="border-b-2 pb-5">
@@ -215,7 +210,7 @@ const Filters = ({
                 {filterValues.map((item, i) => (
                   <li key={i}>
                     <button
-                      className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState].some(
+                      className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState]?.some(
                         (val: string) => val === item
                       )
                         ? "text-primary"
@@ -239,7 +234,7 @@ const Filters = ({
           setPriceValue={setPriceValue}
         />
         {(isWaterProof !== null ||
-          selectedProductFilters.colors.length > 0 ||
+          selectedProductFilters?.Colours?.length > 0 ||
           selectedProductFilters.thicknesses.length > 0 ||
           selectedProductFilters.commercialWarranty.length > 0 ||
           selectedProductFilters.residentialWarranty.length > 0 ||

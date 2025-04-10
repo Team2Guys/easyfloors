@@ -101,7 +101,7 @@ export interface SUBNCATEGORIES_PAGES_PROPS {
 }
 
 export type FilterState = {
-  colors: string[];
+  Colours: string[];
   thicknesses: string[];
   commercialWarranty: string[];
   residentialWarranty: string[];

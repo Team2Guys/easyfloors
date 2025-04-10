@@ -24,11 +24,13 @@ export const FETCH_ALL_ACCESSORIES = gql`
         boxCoverage
         featureImages
         sizes
+        lengthPrice
       category {
         id
         name
         custom_url
         description
+      RecallUrl
       }
       products {
         id
