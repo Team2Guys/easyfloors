@@ -14,7 +14,7 @@ const AccessoriesContainer = ({ productData }: { productData: IProduct }) => {
          setThumbnailImages(productData?.productImages || []);
          setActiveImage(productData?.productImages?.[0]);
       }, [productData]);
-
+      
    return (
       <Container className='py-4'>
          <div className="flex flex-col lg:flex-row">
@@ -24,8 +24,9 @@ const AccessoriesContainer = ({ productData }: { productData: IProduct }) => {
                   hideThumnailBottom
                   imageheight
                   onImageChange={setActiveImage}
+                  setSelectedColor={setSelectedColor}
                   stickyside
-                  selectedColor={typeof selectedColor?.color === 'number' ? selectedColor.color.toString() : selectedColor?.color}
+                  selectedColor={selectedColor}
                />
             </div>
             <div className="w-full lg:w-[40%]">

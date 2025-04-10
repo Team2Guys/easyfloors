@@ -21,6 +21,24 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     installments,
     boxCoverage,
   } = calculateProductDetails(area, unit, productData);
+
+  const filteredProducts = (productData?.acessories ?? []).map((product) => {
+    const selectedColor = product.featureImages?.find(
+      (img) => img.color === productData.productImages?.[0]?.colorCode || ""
+    );
+    const matchedProductImages = product.productImages?.find(
+      (img) => img.colorCode === productData.productImages?.[0]?.colorCode || ""
+    );
+  
+    return {
+      ...product,
+      selectedColor,
+      matchedProductImages,
+    };
+  });
+  const selectedColor = productData?.featureImages?.find(
+    (img) => img.color === productData?.productImages?.[0]?.colorCode
+  );
   return (
     <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 ${isQuickView ? '2xl:gap-10' : '2xl:gap-20'}  ${className}`}>
       <div className={`w-full ${!isQuickView && '2xl:w-[60%]'} lg:w-[55%]`}>
@@ -80,7 +98,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           convertedArea={convertedArea}
           pricePerBox={pricePerBox}
           squareMeter={squareMeter}
-          accessories={productData.acessories || []}
+          accessories={filteredProducts}
         />
         <div className="border-[#D9D9D9] border-b" />
         <div className="flex gap-5 items-center">
@@ -100,7 +118,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               MainCategory ?? "",
               "freeSample",
               image?.imageUrl ?? "",
-              boxCoverage
+              boxCoverage,
+              
             )
           }
           >
@@ -120,7 +139,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
                 "cart",
                 image?.imageUrl ?? "",
                 boxCoverage,
-                unit
+                unit,
+                selectedColor
               )
             }
             className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
@@ -143,7 +163,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               "wishlist",
               image?.imageUrl ?? "",
               boxCoverage,
-              unit
+              unit,
+              selectedColor
             )
           }
         >

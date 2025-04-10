@@ -16,6 +16,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
 
+
   if (!isOpen) return null;
 
   const boxCoverage = 2.4; // Coverage in square meters
@@ -60,7 +61,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       let areaInMeters = areaValue;
   
       if (unit[idStr] === "ft") {
-        areaInMeters = areaValue * 3.28084; // ft² to m²
+        areaInMeters = areaValue * 3.28084; 
       }
   
       const pricePerSqMeter = product.price;
@@ -107,6 +108,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           "cart",
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
+          unit[productId] || "m",
+          product.selectedColor
         );
         
       }

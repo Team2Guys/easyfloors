@@ -63,6 +63,8 @@ export interface IProduct {
     totalPrice?:number
     sizes?: Sizes[]
     pricePerBox?: number;
+    selectedColor?: ProductImage;
+    matchedProductImages?: ProductImage;
   }
 
 export interface Sizes { width: string, height: string, thickness: string }
