@@ -14,6 +14,7 @@ export interface ProductImage {
   plankWidth?: string;
   plankHeight?: string;
   isBlurred?: boolean; 
+  colorCode?: string;
 }
 
 export interface AdditionalInformation {
@@ -61,6 +62,8 @@ export interface IProduct {
     totalPrice?:number
     sizes?: Sizes[]
     pricePerBox?: number;
+    selectedColor?: ProductImage;
+    matchedProductImages?: ProductImage;
   }
 
 export interface Sizes { width: string, height: string, thickness: string }

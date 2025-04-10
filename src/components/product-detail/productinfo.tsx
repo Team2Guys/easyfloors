@@ -1,4 +1,5 @@
-"use client";
+'use client';
+
 import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
 import { CiHeart } from "react-icons/ci";
@@ -13,13 +14,15 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   const [length, setLength] = useState("");
   const [requiredBoxes, setRequiredBoxes] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([])
-  const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([])
+  const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([]);
+  const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([]);
   const boxCoverage = 2.4;
   const calculateSquareMeter = (boxes: number) => {
     return boxCoverage * boxes;
   };
+
   const squareMeter = calculateSquareMeter(requiredBoxes);
+
   const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLength(value);
@@ -40,27 +43,24 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       (image, index, self) =>
         index === self.findIndex((img) => img.color === image.color)
     ) || [];
-    setUniqueFeatureImages(uniqueFeatureImages)
-  }, [productData?.featureImages])
+    setUniqueFeatureImages(uniqueFeatureImages);
+  }, [productData?.featureImages]);
 
   useEffect(() => {
-    setSelectedColor(uniqueFeatureImages[0])
-  }, [uniqueFeatureImages])
+    setSelectedColor(uniqueFeatureImages[0]);
+  }, [uniqueFeatureImages]);
 
   useEffect(() => {
     if (selectedColor?.color) {
       const filterColor = productData?.products
         ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
-
       setMatchingColor(filterColor || []);
     }
   }, [selectedColor, productData]);
 
-
-
   const handleColorClick = (color: ProductImage) => {
-    setSelectedColor(color)
-  }
+    setSelectedColor(color);
+  };
   return (
     <div className="p-1 lg:px-4">
       <div className="space-y-1 mt-5 lg:mt-0">
@@ -94,7 +94,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
         {matchingColor.length ?
           matchingColor.map((item, index) => (
-            <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name} Colour {item.detail}</p>
+            <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name}</p>
           ))
           : <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour match</p>}
       </div>
@@ -127,9 +127,9 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       </div>
 
       <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString())} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(),'m',selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString())} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(),'m',selectedColor)} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
 
 
