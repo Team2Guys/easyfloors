@@ -76,7 +76,7 @@ export const categoryInitialValues: EDIT_CATEGORY = {
   custom_url: "",
   topHeading: "",
   recalledSubCats: [],
-  price:"",
+  price: "",
 };
 
 export const subcategoryValidationSchema = Yup.object({
@@ -126,8 +126,8 @@ export interface IProductValues {
   FAQS: AdditionalInformation[];
   boxCoverage?: string;
   products: (string | number)[];
-  colorCode?:string;
-  colors?:  AdditionalInformation[]
+  colorCode?: string;
+  colors?: AdditionalInformation[]
   sizes?: { width: string, height: string, thickness: string }[]
 }
 
@@ -289,9 +289,9 @@ export const featureItems = [
 
 
 export const socialLinks: SocialLink[] = [
-  { href: 'https://www.facebook.com/easyfloorsuae', target:'_blank', alt: 'facebook', className: 'w-[6px] h-[9px] sm:w-[8px] sm:h-[15px]' },
-  { href: 'https://www.instagram.com/easyfloorsuae/?hl=en',target:'_blank', alt: 'instagram', className: 'w-[10px] h-[10px] sm:w-[16px] sm:h-[16px]' },
-  { href: 'https://www.pinterest.com/easyfloorsuae/', target:'_blank', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
+  { href: 'https://www.facebook.com/easyfloorsuae', target: '_blank', alt: 'facebook', className: 'w-[6px] h-[9px] sm:w-[8px] sm:h-[15px]' },
+  { href: 'https://www.instagram.com/easyfloorsuae/?hl=en', target: '_blank', alt: 'instagram', className: 'w-[10px] h-[10px] sm:w-[16px] sm:h-[16px]' },
+  { href: 'https://www.pinterest.com/easyfloorsuae/', target: '_blank', alt: 'pinterest', className: 'w-[8px] h-[11px] sm:w-[12px] sm:h-[16px]' },
 ];
 
 
@@ -843,78 +843,94 @@ export const WhatAmIcategoryData: WhatAmICategoryData = {
 
 export const measurementData: MeasurementSection[] = [
   {
-    title: "How to measure your room for flooring",
+    title: "How to Measure Your Room for Flooring",
     description:
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "Measure your room to ensure that you are purchasing the right amount of flooring. That'll prevent delays, overspending, and shortages. A good measurement will also simplify the installation process and eliminate the need for repeat orders or returns.",
     steps: [],
     image: "",
   },
   {
-    title: "Follow the below steps to measure flooring for a perfectly square or rectangular room:",
-    description: "",
+    title: "General Guidelines for Measuring Your Room ",
+    description: `When calculating the width and length of a rectangular or square area, add 5-10% for waste and cutting errors. If you are planning to construct staircases, mantels, or closets in your room, allocate over 10% of your budget to them. 
+
+If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of AED 150 (refunded if you place an order from us). If you wish to measure the area yourself, you will only need a measuring tape, pencil, and paper. Make sure you measure in meters if you will be buying flooring materials that are usually marketed in mete
+`,
+stepsHeading:"Measuring a Square or Rectangular Room",
     steps: [
       {
-        title: "Step 1",
+        title: "Measure the length:",
         content:
-          "Measure the length and width of the room in meters or feet.",
+          " Find the room's length, such as five meters.",
       },
       {
-        title: "Step 2",
+        title: "Measure the width:",
         content:
-          "Multiply the length by the width to get the total area.",
+          "Determine the room's width, such as five meters.",
       },
       {
-        title: "Step 3",
+        title: "Measure the total area",
         content:
-          "Ensure to add an extra 10% for cutting and waste.",
+          "To get the floor size in square meters, multiply the length by the width.",
       },
     ],
     image: "/assets/images/how-to-measure-your-room/measure1.png",
   },
   {
-    title: "Follow the below steps to measure flooring for an L-shaped or irregular room:",
+    title: "Measuring an L-shaped or Irregular Room",
     description:
-      "For irregular rooms, divide the space into smaller rectangles and calculate each separately.",
+      "For irregular rooms, divide the area into smaller, more manageable rectangles and measure each one separately. When dealing with uneven areas, divide the area into smaller, more manageable rectangles and measure each one independently. Then, make a rough sketch by dividing the room into several rectangular portions and drawing the room plan.",
+
     steps: [
       {
-        title: "Step 1",
+        title: "Measure Every Section",
         content:
-          "Break the room into smaller rectangular sections.",
+          " Take separate measurements of each section's length and width.",
       },
       {
-        title: "Step 2",
+        title: "Determine the total area.",
         content:
-          "Measure and calculate the area of each section separately.",
-      },
-      {
-        title: "Step 3",
-        content:
-          "Add up all the section areas to get the total flooring needed.",
+          "The length of every part should be multiplied by its width before adding them all together to get the total size of the space.",
       },
     ],
     image: "/assets/images/how-to-measure-your-room/mearuse2.png",
   },
+
   {
-    title: "Calculate the 10% waste",
+    title: "Example:",
+    description:"(Area A) 10m² + (Area B) 15m² = Total Area: 25m²",
+    steps: [
+    ],
+    image: "",
+  },
+  {
+    title: "Factoring in 10% Waste Allowance",
     description:
-      "It's recommended to add 10% extra flooring material for cutting and fitting.",
+      "Add another 10% for waste and cutting adjustments to make sure you have enough flooring.",
     steps: [
       {
-        title: "Step 1",
+        title: "",
         content:
-          "Calculate 10% of the total flooring area.",
+          "Divide an entire area by 10 (e.g., 25m² ÷ 10 = 2.5m²)",
       },
       {
-        title: "Step 2",
+        title: "",
         content:
-          "Add this extra area to your total flooring calculation.",
+          "Include this in your overall flooring purchase. (e.g., 25m² + 2.5m² = 27.5m²)",
       },
       {
-        title: "Step 3",
+        title: "",
         content:
-          "Purchase the final flooring amount based on this total.",
+          "Place your order and prepare for installation!",
       },
     ],
+    image: "",
+  },
+
+  {
+    title: "Get Expert Guidance from Easy Floors",
+    description:
+      "With Easy Floors, you have a variety of premium flooring options in Dubai and the United Arab Emirates. If you need additional professional assistance with floor design ideas or flooring recommendations, please email us at cs@easyfloors.ae",
+    steps: [],
     image: "",
   },
 ];

@@ -134,6 +134,7 @@ export interface MeasurementSection {
   description: string;
   steps: Step[];
   image: string;
+  stepsHeading?:string
 }
 export interface OrderItem {
   
