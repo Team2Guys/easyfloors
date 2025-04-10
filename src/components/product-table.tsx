@@ -30,7 +30,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
               {(columns ?? [])
                 .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
                 .map((col, index) => (
-                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left" : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 2xl:p-4 justify-start text-left 2xl:w-[22%]"}`}>
+                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left" : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start md:w-full text-left 2xl:w-[60%]"}`}>
                     {col}
                   </th>
                 ))}
