@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import { EDIT_CATEGORY } from 'types/cat';
-import { IProduct } from 'types/prod';
+import { IProduct, ProductImage } from 'types/prod';
 import { addToCart, addToFreeSample, addToWishlist, getFreeSamples } from 'utils/indexedDB';
 
 export const calculatePricePerBox = (boxCoverage: string | number | undefined, price: number | undefined): number => {
@@ -25,7 +25,8 @@ export const handleAddToStorage = async (
   type: "cart" | "wishlist" | "freeSample",
   image?: string,
   boxCoverage?: string,
-  unit?: string,  
+  unit?: string,
+  selectedColor?: ProductImage
 ) => {
   if (!productData) {
     toast.error("Product is undefined");
@@ -68,6 +69,7 @@ export const handleAddToStorage = async (
     squareMeter: adjustedSquareMeter,
     requiredBoxes: adjustedRequiredBoxes,
     unit:adjustedUnit,
+    selectedColor
   };
   
   try {
