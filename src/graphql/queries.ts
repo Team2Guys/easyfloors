@@ -51,7 +51,8 @@ export const FETCH_ALL_PRODUCTS = gql`
         stock
         posterImageUrl
         sizes
-        
+        featureImages
+        productImages
       }
     }
   }
@@ -163,6 +164,9 @@ export const FETCH_ALL_CATEGORIES = gql`
           custom_url
           posterImageUrl 
         }
+           category {
+                RecallUrl
+            }
           
       }
     }

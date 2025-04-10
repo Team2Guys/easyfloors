@@ -134,6 +134,7 @@ export interface MeasurementSection {
   description: string;
   steps: Step[];
   image: string;
+  stepsHeading?:string
 }
 export interface OrderItem {
   
@@ -174,14 +175,6 @@ export interface AuthFormState {
   password: string;
 }
 
-export interface AccPoPProduct {
-  id: string;
-  image: string;
-  name: string;
-  price: number;
-  meters: number;
-  feet: number;
-}
 
 export interface AccessoriesPopupProps {
   isOpen: boolean;

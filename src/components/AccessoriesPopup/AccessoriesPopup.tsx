@@ -16,7 +16,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const [areas, setAreas] = useState<{ [key: string]: string }>({});
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
- 
 
   if (!isOpen) return null;
   const boxCoverage = 2.4;
@@ -98,6 +97,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           "cart",
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
+          unit[productId] || "m",
+          product.selectedColor
         );
       }
     });
@@ -135,7 +136,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
              <Image
                width={1000}
                height={1000}
-               src={product.posterImageUrl.imageUrl}
+               src={product.matchedProductImages?.imageUrl ? product.matchedProductImages?.imageUrl : product.posterImageUrl?.imageUrl}
                alt={product.name}
                className="w-full h-60 object-cover border border-black"
              />
@@ -204,6 +205,10 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
            </div>
            <div className="py-2">
              <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
+             <div className="flex flex-col justify-between items-center mb-1 mt-1 w-fit">
+              <Image width={50} height={50} src={product.selectedColor?.imageUrl || ""} alt={product.selectedColor?.altText || ""}/>
+              <p className="text-11">{product.selectedColor?.color || ""}</p>
+             </div>
              <p className="text-gray-700 font-medium">Price Per m: AED {product.price}</p>
              <p className="text-base text-gray-800 font-medium">You Require:</p>
          
@@ -244,7 +249,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
              </div>
 
         <button
-          className={`mt-4 w-fit px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed bottom-10 left-1/2 -translate-x-1/2
+          className={`mt-4 w-fit px-4 sm:px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2 absolute bottom-1 left-1/2 -translate-x-1/2
             ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}
           `}
           onClick={handleAddSelectedToCart}
