@@ -6,6 +6,7 @@ import { Metadata } from "next";
 import { headers } from "next/headers";
 import Category from "./Cetagory";
 import { IProduct } from "types/prod";
+import { staticMenuItems } from "data/data";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -79,7 +80,15 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
   }
 
 
-  const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES") || []
+  const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
+                      const indexA = staticMenuItems.findIndex(
+                          (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+                      );
+                      const indexB = staticMenuItems.findIndex(
+                          (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+                      );
+                      return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                  })   || []
   return (
     <Suspense fallback="Loading .....">
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
