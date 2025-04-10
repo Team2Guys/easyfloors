@@ -30,7 +30,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
               {(columns ?? [])
                 .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
                 .map((col, index) => (
-                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left" : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 2xl:p-4 justify-start text-left 2xl:w-[22%]"}`}>
+                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left" : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start md:w-full text-left 2xl:w-[60%]"}`}>
                     {col}
                   </th>
                 ))}
@@ -62,14 +62,19 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   {pathname === "/freesample" ? "Free" : product.price}
                 </td>
                 {pathname !== "/freesample" && (
-                  <td className="p-3">
-                    <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
-                    <button onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))} className="px-2 text-gray-700"><FiMinus /></button><span className="px-2 text-black font-semibold">{product.requiredBoxes}</span><button
-                    onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} className="px-2 text-gray-700"><GoPlus />
+                <td className="p-3">
+                  <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
+                    <button onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))} className="px-2 text-gray-700"><FiMinus />
                     </button>
-                    </div>
-                  </td>
-                )}
+                     <span className="px-2 text-black font-semibold">{product.requiredBoxes}</span>
+                    <button
+                      onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} className="px-2 text-gray-700"
+                    >
+                        <GoPlus />
+                    </button>
+                  </div>
+                </td>
+              )}
                 <td className="p-3 text-start font-inter text-12 xl:text-20 font-normal">
                   {product.stock > 0 ? "In Stock" : "Out of Stock"}
                 </td>
@@ -83,7 +88,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     </button>
                   </div>
                 </td>
-                </tr>
+      </tr>
             ))}
           </tbody>
         </table>
