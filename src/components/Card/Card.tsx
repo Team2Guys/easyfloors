@@ -59,7 +59,6 @@ const Card: React.FC<productCardProps> = ({
   };
 
   const handleNavigate = (product: IProduct, categoryData: Category) => {
-console.log(product.category, "product")
 
     if (product.subcategory) {
       return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;

@@ -65,8 +65,9 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   <td className="p-3">
                     <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
                     <button onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))} className="px-2 text-gray-700"><FiMinus /></button><span className="px-2 text-black font-semibold">{product.requiredBoxes}</span><button
-                    onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} className="px-2 text-gray-700"><GoPlus />
-                    </button>
+                    onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} className="px-2 text-gray-700"
+                    ><GoPlus />
+                                                                                                                                                                                                                                                          </button>
                     </div>
                   </td>
                 )}
@@ -83,7 +84,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     </button>
                   </div>
                 </td>
-                </tr>
+      </tr>
             ))}
           </tbody>
         </table>

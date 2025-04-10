@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Form, Formik } from "formik";
-import * as Yup from "yup";
+import { ErrorMessage, Form, Formik } from "formik";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import Image from "next/image";
@@ -15,7 +14,7 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates, phoneValidation } from "data/data";
+import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart } from "utils/indexedDB";
@@ -25,18 +24,8 @@ import { useMutation } from "@apollo/client";
 import { INITIATE_PAYMENT } from "graphql/mutations";
 import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
-import Checkbox from "components/ui/checkbox";
 import { Collapse } from "antd";
-
-
-const validationSchema = Yup.object({
-    firstName: Yup.string().required("First Name is required"),
-    lastName: Yup.string().required("Last Name is required"),
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    phone: phoneValidation,
-    emirate: Yup.string().required("Emirate is required"),
-    address: Yup.string().required("Address is required"),
-});
+import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -48,9 +37,6 @@ const Checkout = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-
-    
-    
 
     useEffect(() => {
         const savedCity = localStorage.getItem('selectedCity') || '';
@@ -67,22 +53,22 @@ const Checkout = () => {
         if (!savedShipping) return;
         if (savedShipping) {
             const parsedShipping = JSON.parse(savedShipping);
-      
+
             if (parsedShipping.name === "Express Shipping") {
-              setSelectedShipping("express");
-              handleShippingSelect("express");
+                setSelectedShipping("express");
+                handleShippingSelect("express");
             } else if (parsedShipping.name === "Self-Collect") {
-              setSelectedShipping("self-collect");
-              handleShippingSelect("self-collect");
+                setSelectedShipping("self-collect");
+                handleShippingSelect("self-collect");
             } else if (parsedShipping.name === "Standard Shipping") {
-              setSelectedShipping("standard");
-              handleShippingSelect("standard");
-            }
-            else{
+                setSelectedShipping("standard");
                 handleShippingSelect("standard");
             }
-          }
-        }, []);
+            else {
+                handleShippingSelect("standard");
+            }
+        }
+    }, []);
     type FormInitialValues = {
         firstName: string;
         lastName: string;
@@ -205,7 +191,9 @@ const Checkout = () => {
                     note: "",
                     terms: false,
                 }}
-                validationSchema={validationSchema}
+                validationSchema={checkoutValidationSchema}
+                validateOnMount
+
                 onSubmit={(values, { setSubmitting }) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
@@ -229,7 +217,16 @@ const Checkout = () => {
                             <div className="space-y-4">
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <Input type="text" label="First Name" required name="firstName" placeholder="Enter first name" value={values.firstName} onChange={handleChange} />
+                                    <Input
+                                        type="text"
+                                        label="First Name"
+                                        required
+                                        name="firstName"
+                                        placeholder="Enter first name"
+                                        value={values.firstName}
+                                        onChange={handleChange}
+                                    />
+                                    {/* <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" /> */}
                                     <Input type="text" label="Last Name" required name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
                                 </div>
 
@@ -247,6 +244,8 @@ const Checkout = () => {
                                         value={values.phone}
                                         onChange={(value) => setFieldValue("phone", value)}
                                     />
+                                    <ErrorMessage name="phone" component="div" className="text-red-500 text-sm" />
+
                                 </div>
 
                                 <Select name="country" label="Country" placeholder="Select Country" required options={[{ value: "United Arab Emirates", label: "United Arab Emirates" }]} />
@@ -263,16 +262,55 @@ const Checkout = () => {
 
 
                                 <div className="flex items-center">
-                                    <Checkbox
-                                        required
-                                        name="terms"
-                                        onChange={(e) => setFieldValue("terms", e.target.checked)}
-                                        checked={values.terms}
-                                        className="custom-checkbox"
-                                    >
-                                        I have read and agree to the Terms and Conditions
-                                    </Checkbox>
+                                    <div className="flex items-center gap-1">
+                                        {/* <Checkbox
+                                            name="terms"
+                                            onChange={(e) => setFieldValue("terms", e.target.checked)}
+                                            checked={values.terms}
+                                        >
+                                            I have read and agree to the <Link href='terms-and-conditions' className="text-primary hover:underline">Terms and Conditions</Link>
+                                        </Checkbox> */}
+                                        <input
+                                            type="checkbox"
+                                            checked={values.terms}
+                                            name="terms"
+                                            onChange={(e) => setFieldValue("terms", e.target.checked)}
+                                            id="terms-checkbox"
+                                            className="hidden"
+                                        />
+
+                                        <label htmlFor="terms-checkbox" className="checkbox-label flex items-center space-x-2 cursor-pointer">
+                                            <div
+                                                className={`w-5 h-5 border-2 flex items-center justify-center transition-colors duration-200 ${values.terms ? "bg-orange-600 border-orange-600 text-white" : "border-primary"
+                                                    }`}
+                                            >
+                                                {values.terms && (
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="w-4 h-4 text-white"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        strokeWidth={3}
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                            <span>
+                                                I have read and agree to the{" "}
+                                                <Link href="terms-and-conditions" className="text-primary hover:underline">
+                                                    Terms and Conditions
+                                                </Link>
+                                            </span>
+                                        </label>
+
+
+                                        <ErrorMessage name="terms" component="div" className="text-red-500 text-sm mt-1" />
+                                    </div>
+
                                 </div>
+
                             </div>
                         </div>
                         <div className="bg-[#FFF9F5] w-full">

@@ -47,6 +47,7 @@ const CartPage = ({ products }: CartPageProps) => {
     };
 
     fetchCartItems();
+
     const handleCartUpdate = () => fetchCartItems();
     window.addEventListener("cartUpdated", handleCartUpdate);
     return () => {
@@ -70,9 +71,9 @@ const CartPage = ({ products }: CartPageProps) => {
     );
     setSubTotal(subTotalPrice);
     const totalBeforeTax = subTotal + selectedFee;
-      const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
-      setTotal(totalBeforeTax + taxAmount);
-  },[cartItems])
+    const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
+    setTotal(totalBeforeTax + taxAmount);
+  }, [cartItems])
 
   const updateQuantity = async (id: number, change: number) => {
     try {
@@ -118,7 +119,6 @@ const CartPage = ({ products }: CartPageProps) => {
         )
       );
 
-      // Dispatch event for cart update
       window.dispatchEvent(new Event("cartUpdated"));
     } catch (error) {
       toast.error("Failed to update item quantity.");
@@ -168,7 +168,7 @@ const CartPage = ({ products }: CartPageProps) => {
     localStorage.setItem('shippingFee', JSON.stringify(selectedFee));
     localStorage.setItem('selectedCity', JSON.stringify(selectedCity));
 
-  },[selectedCity, selectedShipping]);
+  }, [selectedCity, selectedShipping]);
 
   useEffect(() => {
     let shippingData;
@@ -306,11 +306,30 @@ const CartPage = ({ products }: CartPageProps) => {
                             <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart" />
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m</p>
+                              {/* <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m²</p> */}
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                              Total Required:
-                                  <span className='font-bold'> {item.requiredBoxes ?? 0}m</span> 
-                              </p> 
+                                Price: AED <span>
+                                  {item.unit === "ft"
+                                    ? (item.price ?? 0 / 10.764).toFixed(2) 
+                                    : item.price
+                                  }
+                                           </span>/{item.unit === "ft" ? "ft²" : "m²"}
+                              </p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>
+                                {item.category === "Accessories" || item.category === "Accessory" ? "Price Per Piece:" : "Price Per Box:"}
+                                <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
+                              </p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>
+                                {item.category === "Accessories" || item.category === "Accessory" ? "No. Of Piece:" : "No. Of Boxes:"}
+                                <span className='font-bold'>{item.requiredBoxes ?? 0} </span>
+                                (
+                                {item.unit === "ft"
+                                  ? ((Number(item.boxCoverage) * 10.764 * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                  : Number((Number(item.boxCoverage) * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                }
+                                {item.unit === "ft" ? " ft²" : " m²"}
+                                )
+                              </p>
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                                   <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
@@ -375,8 +394,15 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal Incl. VAT</p>
-                  <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
-
+                  {/* <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2).toFixed(2)}</p> */}
+                  <p>
+                    AED{" "}
+                    {typeof total === "number" && total > 0
+                      ? total.toFixed(2)
+                      : typeof subTotal === "number"
+                        ? subTotal.toFixed(2)
+                        : "0.00"}
+                  </p>
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
                 <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">

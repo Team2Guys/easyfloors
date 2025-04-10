@@ -59,6 +59,7 @@ export interface IProduct {
     __typename?:string;
     requiredBoxes?:number
     squareMeter?:number;
+    
     totalPrice?:number
     sizes?: Sizes[]
     pricePerBox?: number;
@@ -94,6 +95,8 @@ export interface IProductFilter extends IProduct {
     unit?:string,
     pricePerMeter?: number;
     requiredQty?: number;
+    isAccessory?:string;
+    
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {

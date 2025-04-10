@@ -98,6 +98,7 @@ const UserIcon = ({ className }: UserIconProps) => {
             height={50}
             className="rounded-full h-full w-5 lg:w-40 xl:w-32 xl:h-7 "
           />
+          
         ) : (
           <ProfileIcon />
         )}

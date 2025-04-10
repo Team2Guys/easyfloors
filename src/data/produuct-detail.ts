@@ -17,6 +17,7 @@ export const flooringTypes: FlooringType[] = [
   {
     name: "SPC Flooring",
     price: "AED 150m²",
+    
     product: [
       {
         image: "/assets/categoryslider/Image.webp",
