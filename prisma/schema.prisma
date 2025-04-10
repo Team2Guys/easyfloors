@@ -152,6 +152,7 @@ model Acessories {
   products              Products[] @relation("ProductAccessories")
   category              Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   sizes                 Json[]     @default([])
+  lengthPrice         String?
 }
 
 enum AppointsType {

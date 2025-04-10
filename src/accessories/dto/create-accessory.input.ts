@@ -71,4 +71,6 @@ export class CreateAccessoryInput {
   @Field(() => GraphQLJSON, { nullable: true })
   products: any
 
+  @Field(() => String, { nullable: true })
+  lengthPrice?: string
 }

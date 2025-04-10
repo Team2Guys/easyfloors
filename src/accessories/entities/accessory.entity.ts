@@ -82,4 +82,7 @@ export class Accessory {
   @Field(() => Int, { nullable: true })
   colorCode?: number
 
+  @Field(() => String, { nullable: true })
+  lengthPrice?: string
+
 }
