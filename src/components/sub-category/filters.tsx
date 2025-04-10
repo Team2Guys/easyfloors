@@ -29,17 +29,28 @@ const Filters = ({
     plankWidth: [] as string[],
     colors: [] as string[],
   });
+  const desiredCategoryOrder = [
+    "SPC FLOORING",
+    "LVT FLOORING",
+    "POLAR FLOORING",
+    "RICHMOND FLOORING"
+  ];
+  
+  const orderedCategories = [...catgories].sort((a, b) => {
+    return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
+  });
+  
   const [categoryState, setCategoryState] = useState<{
     polar?: Category;
     richmond?: Category;
   }>({});
   const path = usePathname();
   useEffect(() => {
-    const polar = catgories.find(
-      (cat: Category) => cat.name.toLowerCase() === "polar flooring"
-    );
     const richmond = catgories.find(
       (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
+    );
+    const polar = catgories.find(
+      (cat: Category) => cat.name.toLowerCase() === "polar flooring"
     );
     setCategoryState({ polar, richmond });
   }, [catgories]);
@@ -118,10 +129,9 @@ const Filters = ({
       <div className="border-b-2 pb-5">
         <p className="text-16 font-medium uppercase pb-2  text-[#191C1F]">Filter by Category</p>
 
-        {catgories.map((category, index) => {
+        {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
           const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
-
           return (
             <Accordion key={index} title={category.name} >
               <ul className="pl-4 text-sm text-gray-600 space-y-1">
@@ -270,7 +280,7 @@ const Filters = ({
       <div className="pb-5">
         <p className="text-16 font-medium uppercase pb-5 text-[#191C1F]">Popular Tag</p>
         <div className="flex items-center ">
-          <RatioButtons options={catgories} />
+          <RatioButtons options={orderedCategories} />
         </div>
       </div>
     </div>

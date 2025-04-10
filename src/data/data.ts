@@ -302,7 +302,7 @@ export const staticMenuItems = [
   { label: "Polar Flooring", href: "polar-flooring", submenu: [] },
   { label: "How to measure", href: "how-to-measure-your-room" },
   { label: "Accessories", href: "accessories", submenu: [] },
-  { label: "Blogs", href: "blogs" },
+  // { label: "Blogs", href: "blogs" },
   { label: "About Us", href: "about-us" },
   { label: "Contact Us", href: "contact-us" },
 ];

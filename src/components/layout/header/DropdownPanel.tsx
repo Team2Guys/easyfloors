@@ -69,11 +69,12 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   }, []);
 
   useEffect(() => {
+    const isCartPage = pathname === "/cart";
     const isWishlistPage = pathname === "/wishlist";
     const isFreeSamplePage = pathname === "/freesample";
   
     const shouldListen =
-      type === "cart" ||
+      (type === "cart" && !isCartPage) ||
       (type === "wishlist" && !isWishlistPage) ||
       (type === "freeSample" && !isFreeSamplePage && !isWishlistPage);
   
@@ -88,6 +89,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
       };
     }
   }, [type, pathname]);
+  
   
   
 

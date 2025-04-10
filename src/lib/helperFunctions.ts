@@ -57,7 +57,7 @@ export const productFilter = ({
     );
   }
 
-  ProductsSorting(filtered || [], sortOption);
+  filtered = ProductsSorting(filtered || [], sortOption);
 
   filtered = filtered?.filter(product => {
     const price = parseFloat(String(product.price));

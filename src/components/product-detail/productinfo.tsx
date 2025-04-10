@@ -101,7 +101,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
       {/* Length Input */}
       <div className="border border-black mt-4 p-3">
-        <div className="flex items-center lg:items-start gap-2 ">
+        <div className="flex items-center gap-2 ">
           <p className="font-semibold font-inter text-16 xl:text-[23.6px]">Length:</p>
           <input
             type="number"

@@ -154,6 +154,7 @@ const Card: React.FC<productCardProps> = ({
           >
             {product.sizes.map((feature, index) => (
               <div key={index} className="flex gap-4 w-full justify-between">
+                {feature.width &&
                 <div className="flex justify-between gap-1 items-center">
                   <Image
                     src={features[0].icon}
@@ -164,6 +165,7 @@ const Card: React.FC<productCardProps> = ({
                   />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
                 </div>
+                } 
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
                     <Image
@@ -175,7 +177,7 @@ const Card: React.FC<productCardProps> = ({
                     />
                     <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
-
+                {feature.height &&
                 <div className="flex justify-between gap-1 items-center">
                   <Image
                     src={features[2].icon}
@@ -186,6 +188,7 @@ const Card: React.FC<productCardProps> = ({
                   />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.height}</span>
                 </div>
+                }
               </div>
             ))}
           </div>
