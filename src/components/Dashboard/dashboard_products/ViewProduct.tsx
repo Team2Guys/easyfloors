@@ -21,7 +21,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   setselecteMenu,
   setEditProduct,
   accessoryFlag
-  
+
 }) => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [removeProduct] = useMutation(REMOVE_PRODUCT);
@@ -32,7 +32,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     setSearchTerm(e.target.value);
   };
 
-  
+
   // const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true )
   const canAddProduct = true;
   // const canDeleteProduct =
@@ -60,20 +60,20 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     );
   }).sort((a: IProduct, b: IProduct) => {
     const searchText = searchTerm.trim().toLowerCase();
-    
+
     // First sort by whether the name starts with the search term
     const aStartsWith = a.name.toLowerCase().startsWith(searchText) ? -1 : 1;
     const bStartsWith = b.name.toLowerCase().startsWith(searchText) ? -1 : 1;
-  
+
     // Then sort by creation date (newest first)
     const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
     const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-  
+
     // If search term is empty, sort by date only (newest first)
     if (!searchText) {
       return dateB - dateA;
     }
-  
+
     // Otherwise, sort by search match first, then by date
     return aStartsWith - bStartsWith || dateB - dateA;
   }) || [];
@@ -96,7 +96,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       }
     });
   };
-  
+
   const handleDelete = async (key: string | number, type: "product" | "Accessories") => {
     try {
       if (type === "product") {
@@ -112,7 +112,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
         });
         setProducts((prev: IAccessories[]) => prev.filter((item) => item.id !== key) || []);
       }
-  
+
       notification.success({
         message: `${type.charAt(0).toUpperCase() + type.slice(1)} Deleted`,
         description: `The ${type} has been successfully deleted.`,
@@ -127,7 +127,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       throw err;
     }
   };
-  
+
 
   const columns = [
     {
@@ -170,18 +170,18 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (text: string, record: IProduct) => 
+      render: (text: string, record: IProduct) =>
         record?.createdAt ? new Date(record.createdAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
     },
-    
+
     {
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
-      render: (text: string, record: IProduct) => 
+      render: (text: string, record: IProduct) =>
         record?.updatedAt ? new Date(record.updatedAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
-    },  
-    
+    },
+
     {
       title: 'Edited By',
       dataIndex: 'last_editedBy',
@@ -192,11 +192,20 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       key: 'Preview',
       width: 120,
       render: (text: string, record: IProduct) => {
+        let urls;
+        if (record.subcategory?.custom_url) {
+          urls = `/${record.category?.RecallUrl + "/" + record.subcategory?.custom_url + "/" + record.custom_url}`
+        }
+        else {
+          urls = `/${record.category?.RecallUrl + "/" + record.custom_url}`
+        }
+
+
         return (
           <Link
             className="hover:text-black"
             target="_blank"
-            href={`/${record.category?.RecallUrl+"/"+record.subcategory?.custom_url+"/"+record.custom_url}`}
+            href={urls}
           >
             <FaRegEye />
           </Link>
@@ -265,7 +274,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
               }
             }}
           >
-            {`Add ${accessoryFlag?  "Accessory" :   "Products"}`}
+            {`Add ${accessoryFlag ? "Accessory" : "Products"}`}
           </p>
         </div>
       </div>
