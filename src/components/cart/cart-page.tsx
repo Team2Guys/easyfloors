@@ -45,7 +45,7 @@ const CartPage = ({ products }: CartPageProps) => {
     };
 
     fetchCartItems();
-    
+
     const handleCartUpdate = () => fetchCartItems();
     window.addEventListener("cartUpdated", handleCartUpdate);
 
@@ -218,18 +218,29 @@ const CartPage = ({ products }: CartPageProps) => {
                             <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart" />
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m</p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>{item.category === "Accessories" || item.category === "Accessory" ? "Price Per Piece:" : "Price Per Box:"} <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span></p>
+                              {/* <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m²</p> */}
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                                  {item.category === "Accessories" || item.category === "Accessory" ? "No. Of Piece:" : "No. Of Boxes:"}
-                                  <span className='font-bold'>{item.requiredBoxes ?? 0} </span> 
-                                  (
-                                    {item.unit === "sqft" 
-                                      ? ((Number(item.boxCoverage) * 10.764 * (Number(item.requiredBoxes ?? 0))).toFixed(2))
-                                      : Number((Number(item.boxCoverage) * (Number(item.requiredBoxes ?? 0))).toFixed(2)) 
-                                    } 
-                                    {item.unit === "sqft" ? " ft²" : " SQM"}
-                                  )
+                                Price: AED <span>
+                                  {item.unit === "ft"
+                                    ? (item.price ?? 0 / 10.764).toFixed(2) 
+                                    : item.price
+                                  }
+                                           </span>/{item.unit === "ft" ? "ft²" : "m²"}
+                              </p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>
+                                {item.category === "Accessories" || item.category === "Accessory" ? "Price Per Piece:" : "Price Per Box:"}
+                                <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
+                              </p>
+                              <p className='text-12 sm:text-14 2xl:text-17'>
+                                {item.category === "Accessories" || item.category === "Accessory" ? "No. Of Piece:" : "No. Of Boxes:"}
+                                <span className='font-bold'>{item.requiredBoxes ?? 0} </span>
+                                (
+                                {item.unit === "ft"
+                                  ? ((Number(item.boxCoverage) * 10.764 * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                  : Number((Number(item.boxCoverage) * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                }
+                                {item.unit === "ft" ? " ft²" : " m²"}
+                                )
                               </p>
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">

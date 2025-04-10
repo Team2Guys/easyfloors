@@ -25,7 +25,6 @@ import { INITIATE_PAYMENT } from "graphql/mutations";
 import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
 import CustomSelect from "components/appointment/custom-select";
-import Checkbox from "components/ui/checkbox";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 
@@ -270,14 +269,50 @@ const Checkout = () => {
 
 
                                 <div className="flex items-center">
-                                    <div>
-                                        <Checkbox
+                                    <div className="flex items-center gap-1">
+                                        {/* <Checkbox
                                             name="terms"
                                             onChange={(e) => setFieldValue("terms", e.target.checked)}
                                             checked={values.terms}
                                         >
-                                            I have read and agree to the <span className="text-primary">Terms and Conditions</span>
-                                        </Checkbox>
+                                            I have read and agree to the <Link href='terms-and-conditions' className="text-primary hover:underline">Terms and Conditions</Link>
+                                        </Checkbox> */}
+                                        <input
+                                            type="checkbox"
+                                            checked={values.terms}
+                                            name="terms"
+                                            onChange={(e) => setFieldValue("terms", e.target.checked)}
+                                            id="terms-checkbox"
+                                            className="hidden"
+                                        />
+
+                                        <label htmlFor="terms-checkbox" className="checkbox-label flex items-center space-x-2 cursor-pointer">
+                                            <div
+                                                className={`w-5 h-5 border-2 flex items-center justify-center transition-colors duration-200 ${values.terms ? "bg-orange-600 border-orange-600 text-white" : "border-primary"
+                                                    }`}
+                                            >
+                                                {values.terms && (
+                                                    <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        className="w-4 h-4 text-white"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        strokeWidth={3}
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                                                    </svg>
+                                                )}
+                                            </div>
+                                            <span>
+                                                I have read and agree to the{" "}
+                                                <Link href="terms-and-conditions" className="text-primary hover:underline">
+                                                    Terms and Conditions
+                                                </Link>
+                                            </span>
+                                        </label>
+
+
                                         <ErrorMessage name="terms" component="div" className="text-red-500 text-sm mt-1" />
                                     </div>
 

@@ -92,6 +92,7 @@ export interface IProductFilter extends IProduct {
     boxCoverage?:string,
     subcategories?:string,
     unit?:string,
+    isAccessory?:string;
     
   }
 

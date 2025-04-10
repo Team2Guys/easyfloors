@@ -35,6 +35,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       [idStr]: value,
     }));
 
+    // Update area if unit changes
     if (areas[idStr]) {
       handleAreaChange(idStr, areas[idStr]);
     }
@@ -46,34 +47,34 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       ...prev,
       [idStr]: value,
     }));
-  
+
     if (value.trim() !== "" && !selectedProducts.includes(idStr)) {
       setSelectedProducts((prev) => [...prev, idStr]);
     } else if (value.trim() === "") {
       setSelectedProducts((prev) => prev.filter((productId) => productId !== idStr));
     }
-  
+
     const areaValue = parseFloat(value);
     if (!isNaN(areaValue) && areaValue > 0) {
       const product = products.find((p) => String(p.id) === idStr);
       if (!product) return;
-  
+
       let areaInMeters = areaValue;
-  
+
       if (unit[idStr] === "ft") {
-        areaInMeters = areaValue * 3.28084; 
+        areaInMeters = areaValue * 3.28084;
       }
-  
+
       const pricePerSqMeter = product.price;
       const total = areaInMeters * pricePerSqMeter;
-  
-      const pieces = Math.ceil(areaInMeters / boxCoverage); 
-  
+
+      const pieces = Math.ceil(areaInMeters / boxCoverage);
+
       setRequiredBoxes((prev) => ({
         ...prev,
         [idStr]: pieces,
       }));
-  
+
       setTotalPrice((prev) => ({
         ...prev,
         [idStr]: parseFloat(total.toFixed(2)),
@@ -83,8 +84,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       setTotalPrice((prev) => ({ ...prev, [idStr]: 0 }));
     }
   };
-  
-  
+
+
 
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
@@ -103,7 +104,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           product.price,
           squareMeter,
           requiredBoxes[productId] || 1,
-          unit[productId], 
+          unit[productId],
           product.category?.name ?? product?.__typename,
           "cart",
           product.posterImageUrl.imageUrl ?? "",
@@ -111,7 +112,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           unit[productId] || "m",
           product.selectedColor
         );
-        
+
       }
     });
     onClose();
@@ -155,6 +156,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                       ? `Price Per ft: AED ${(product.price / 3.28084).toFixed(2)}`
                       : `Price Per m: AED ${product.price}`}
                   </p>
+
                   <p className="text-base text-gray-800 font-medium">You Require:</p>
                   <div className="flex gap-4 items-center mb-2">
                     {["m", "ft"].map((unitType) => (
