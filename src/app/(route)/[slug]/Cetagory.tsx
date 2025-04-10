@@ -17,7 +17,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
   const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
-    colors: [],
+    Colours: [],
     thicknesses: [],
     commercialWarranty: [],
     residentialWarranty: [],
