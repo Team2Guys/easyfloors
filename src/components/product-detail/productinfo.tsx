@@ -94,7 +94,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
         {matchingColor.length ?
           matchingColor.map((item, index) => (
-            <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name} Colour {item.detail}</p>
+            <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name}</p>
           ))
           : <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour match</p>}
       </div>
@@ -127,9 +127,9 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       </div>
 
       <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString())} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(),'m',selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString())} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(),'m',selectedColor)} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
 
 
