@@ -164,6 +164,9 @@ export const FETCH_ALL_CATEGORIES = gql`
           custom_url
           posterImageUrl 
         }
+           category {
+                RecallUrl
+            }
           
       }
     }
