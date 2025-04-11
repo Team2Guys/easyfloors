@@ -8,14 +8,14 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { TbShoppingBag } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart, getWishlist, getFreeSamples, openDB, removeCartItem, removeWishlistItem, removeFreeSample } from "utils/indexedDB";
+import { getCart, openDB, removeCartItem, removeWishlistItem, removeFreeSample, getFreeSamplesCart, cartremoveFreeSample, getWishlist, getFreeSamples } from "utils/indexedDB";
 
 interface DropdownPanelProps {
   icon: ReactNode;
   badgeCount?: number;
   panelClassName?: string;
   cartItems: ICart[];
-  type: "cart" | "wishlist" | "freeSample";
+  type: "cart" | "wishlist" | "freeSample" | "cartfreeSample";
   viewLink?: string;
   emptyMessage?: string;
 }
@@ -69,58 +69,82 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   }, []);
 
   useEffect(() => {
-    const isWishlistPage = pathname === "/wishlist";
-    const isFreeSamplePage = pathname === "/freesample";
+    const handleUpdate = () => {
+      const isCartPage = pathname === "/cart";
+      const isWishlistPage = pathname === "/wishlist";
+      const isFreeSamplePage = pathname === "/freesample";
   
-    const shouldListen =
-      type === "cart" ||
-      (type === "wishlist" && !isWishlistPage) ||
-      (type === "freeSample" && !isFreeSamplePage && !isWishlistPage);
+      const shouldShowPanel =
+        (type === "cart" && !isCartPage) ||
+        (type === "wishlist" && !isWishlistPage) ||
+        (type === "freeSample" && !isFreeSamplePage && !isWishlistPage) ||
+        (type === "cartfreeSample" && !isFreeSamplePage && !isWishlistPage);
   
-    if (shouldListen) {
-      const handleUpdate = () => {
+      if (shouldShowPanel) {
         setIsOpen(true);
-      };
+      }
+    };
   
-      window.addEventListener(`${type}Updated`, handleUpdate);
-      return () => {
-        window.removeEventListener(`${type}Updated`, handleUpdate);
-      };
-    }
+    window.addEventListener(`${type}Updated`, handleUpdate);
+    return () => {
+      window.removeEventListener(`${type}Updated`, handleUpdate);
+    };
   }, [type, pathname]);
   
-  
-
   useEffect(() => {
     const fetchItems = async () => {
-      let updatedItems;
+      let updatedItems: ICart[] = [];
+      
       if (type === "cart") {
-        updatedItems = await getCart();
+        const normalCart = (await getCart()) || [];
+        const freeCart = (await getFreeSamplesCart()) || [];
+        const markedFreeCart = freeCart.map(item => ({ 
+          ...item, 
+          isfreeSample: true 
+        }));
+        
+        updatedItems = [...normalCart, ...markedFreeCart];
       } else if (type === "wishlist") {
-        updatedItems = await getWishlist();
+        updatedItems = (await getWishlist()) || [];
       } else if (type === "freeSample") {
-        updatedItems = await getFreeSamples();
+        updatedItems = (await getFreeSamples()) || [];
       }
-
-      setLocalItems(updatedItems || []);
+      
+      setLocalItems(updatedItems);
     };
-
+  
     fetchItems();
-  }, [type, isOpen]); 
+    const handleUpdate = () => {
+      fetchItems();
+    };
+  
+    window.addEventListener(`${type}Updated`, handleUpdate);
+    return () => {
+      window.removeEventListener(`${type}Updated`, handleUpdate);
+    };
+  }, [type, isOpen]);
 
   const closePanel = () => setIsOpen(false);
 
-  const handleRemoveItem = async (id: number) => {
+  const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
     try {
-      if (type === "cart") {
-        await removeCartItem(id);
-      } else if (type === "wishlist") {
-        await removeWishlistItem(id);
-      } else if (type === "freeSample") {
-        await removeFreeSample(id);
+      if (isFreeSample) {
+        await cartremoveFreeSample(id); // Remove from free samples
+      } else {
+        if (type === "cart") {
+          await removeCartItem(id); // Remove from regular cart
+        } else if (type === "wishlist") {
+          await removeWishlistItem(id);
+        } else if (type === "freeSample") {
+          await removeFreeSample(id);
+        }
       }
   
-      setLocalItems(prev => prev.filter(item => item.id !== id));
+      // Update local items by removing the correct one
+      setLocalItems(prev => prev.filter(item => 
+        !(item.id === id && item.isfreeSample === isFreeSample)
+      ));
+  
       window.dispatchEvent(new Event(`${type}Updated`));
     } catch {
       toast.error(`Error removing item from ${type}`);
@@ -162,7 +186,6 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const decrement = (id: number) => updateQuantity(id, -1);
 
   const totalAmount = localItems.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
-
   return (
     <div className="relative group">
       <div
@@ -209,7 +232,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
                           />
                         </div>
                         <button
-                          onClick={() => handleRemoveItem(Number(item.id))}
+                          onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}
                           className="absolute -top-2 -right-2 bg-white shadow h-4 w-4 rounded-full flex items-center justify-center text-xs"
                         >
                           <IoCloseSharp size={10} />
@@ -218,8 +241,11 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
                       <div className="flex-1 flex flex-col justify-between text-start">
                         <h2 className="text-sm font-semibold leading-snug line-clamp-2">{item.name}</h2>
+                        {
+                          item.isfreeSample ? "free":
                         <p className="text-xs text-gray-700 mt-1">AED {item.price}</p>
-                        {type === "cart" && (
+                        }
+                        {!item.isfreeSample && type === "cart" && (
                           <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">
                             <button onClick={() => decrement(Number(item.id))} className="px-1 hover:text-black">
                               <LuMinus />
@@ -235,7 +261,10 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
                     {type === "cart" && (
                       <div className="flex justify-between items-center mt-2">
                         <span className="text-sm font-semibold">Total:</span>
+                        {
+                          item.isfreeSample ? "free":
                         <span className="text-sm">AED {item.totalPrice?.toFixed(2) || "0.00"}</span>
+                        }
                       </div>
                     )}
                   </div>

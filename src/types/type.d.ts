@@ -26,6 +26,10 @@ interface Color {
   name: string;
   detail: string;
 }
+interface CategoryFeatures {
+  name: string;
+  features: string[];
+}
 
 
 export type Block = {
@@ -78,6 +82,7 @@ export interface HeroMainProps {
 }
 export interface BlogCardProps {
   card: ISUBCATEGORY;
+  index?: number;
 }
 export interface FAQItem {
   id: number;

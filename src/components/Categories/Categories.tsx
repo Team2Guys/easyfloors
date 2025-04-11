@@ -4,13 +4,7 @@ import Link from "next/link";
 import { BlogCardProps } from "types/type";
 import { categoriesFeatures } from "data/data";
 
-interface Props extends BlogCardProps {
-  index: number;
-}
-
-const Categories: React.FC<Props> = ({ card, index }) => {
-  const features = categoriesFeatures[index] || [];
-
+const Categories: React.FC<BlogCardProps> = ({ card }) => {
   return (
     <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b">
       <div className="relative h-full w-full">
@@ -41,14 +35,10 @@ const Categories: React.FC<Props> = ({ card, index }) => {
               Click Me
             </Link>
           </div>
-
-          {/* Unique Features */}
-          <div className="absolute md:bottom-0 hidden sm:block md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="absolute md:bottom-0 hidden sm:block  md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <ul className="list-disc pl-5 text-left">
-              {features.map((feature, i) => (
-                <li className="text-[8px] md:text-sm" key={i}>
-                  {feature}
-                </li>
+              {categoriesFeatures.map((feature, index) => (
+                <li className="text-[8px] md:text-sm" key={index}>{feature}</li>
               ))}
             </ul>
           </div>

@@ -245,8 +245,8 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [
   {
-    backgroundImage: "/assets/images/Home/hero-min.webp",
-    // backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291367/hero-min_1__11zon_1_o82xef.webp",
+    // backgroundImage: "/assets/images/Home/hero-min.webp",
+    backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744112788/hero-min_2_ixg8qo.webp",
     offerText: "Limited Time Offer",
     title: "Starting From Just AED 69 Per Square Metre.",
     highlight: "",
@@ -304,7 +304,7 @@ export const staticMenuItems = [
   { label: "Polar Flooring", href: "polar-flooring", submenu: [] },
   { label: "How to measure", href: "how-to-measure-your-room" },
   { label: "Accessories", href: "accessories", submenu: [] },
-  { label: "Blogs", href: "blogs" },
+  // { label: "Blogs", href: "blogs" },
   { label: "About Us", href: "about-us" },
   { label: "Contact Us", href: "contact-us" },
 ];
@@ -421,6 +421,7 @@ export const categoriesFeatures = [
   ["Cushioned impact feel", "Ideal for kitchens & living areas", "User-friendly returns policy", "Excellent for light commercial use"],     
   ["Elegant layout pattern", "Water-resistant for wet zones", "Seamless interlocking fit", "Rich, textured finish"],  
 ];
+
 
 export const categoryData: TCategoryData = {
   title: "What Am I?",

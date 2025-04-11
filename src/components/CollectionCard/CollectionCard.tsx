@@ -4,7 +4,7 @@ import { ISUBCATEGORY } from "types/cat";
 
 const CollectionCard = ({ subcategory }: { subcategory: ISUBCATEGORY }) => {
   return (
-    <div className="md:px-2 hover:bg-[#FFF9F5] flex flex-col justify-between">
+    <div className="md:px-2 hover:bg-[#FFF9F5] flex flex-col justify-between pb-2.5">
       <Link href={`/${subcategory.category.RecallUrl}/${subcategory.custom_url}`}>
         <Image
           src={subcategory.posterImageUrl?.imageUrl || '/default-image.jpg'}
@@ -31,7 +31,7 @@ const CollectionCard = ({ subcategory }: { subcategory: ISUBCATEGORY }) => {
           <div className="w-full md:text-right">
             <Link
               href={`/${subcategory.category.RecallUrl}/${subcategory.custom_url}`}
-              className="text-black px-3 lg:px-9 py-1.5 lg:py-4 text-[10px] md:text-[10px] lg:text-sm border-2 border-primary transition whitespace-nowrap hover:text-white hover:bg-primary font-inter font-semibold"
+              className="text-black px-3 lg:px-9 py-1.5 lg:py-3 text-[10px] md:text-[10px] lg:text-sm border-2 border-primary transition whitespace-nowrap hover:text-white hover:bg-primary font-inter font-semibold"
             >
               View All
             </Link>

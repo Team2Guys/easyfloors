@@ -126,9 +126,9 @@ const handleMouseMove = (e: React.MouseEvent) => {
         
         <button
           onClick={() => thumbSliderRef.current?.slickPrev()}
-          className="absolute left-1/2 -translate-x-1/2 z-30 bg-white p-1  shadow"
+          className="absolute left-1/2 -translate-x-1/2 z-30 bg-white p-1  shadow sm:text-24 xl:text-30"
         >
-          <FaAngleUp size={30}/>
+          <FaAngleUp />
         </button>
       
         {/* Thumbnail Slider */}
@@ -157,7 +157,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                 src={product.imageUrl}
                 className={`w-full ${
                   imageheight
-                    ? "h-[35px] sm:h-[73px] md:h-[150px]"
+                    ? "h-[44px] sm:h-[73px] md:h-[148px]"
                     : "h-[35px] sm:h-[73px] md:h-[124px]"
                 }`}
                 alt={product.altText || "Thumbnail"}
@@ -169,9 +169,9 @@ const handleMouseMove = (e: React.MouseEvent) => {
         {/* Down Arrow */}
         <button
           onClick={() => thumbSliderRef.current?.slickNext()}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow sm:text-24 xl:text-30"
         >
-          <FaAngleDown size={30} />
+          <FaAngleDown />
         </button>
         </div>
       

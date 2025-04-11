@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import CartSelect from './cart-select';
-import { getCart, openDB, removeCartItem } from 'utils/indexedDB';
+import { cartremoveFreeSample, getCart, getFreeSamplesCart, openDB, removeCartItem } from 'utils/indexedDB';
 import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
 import RelatedSlider from 'components/related-slider/related-slider';
@@ -27,20 +27,24 @@ const CartPage = ({ products }: CartPageProps) => {
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<ICart[]>([]);
+  const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
-  const nonAccessoryItems = cartItems.filter(item => item.category !== 'Accessories');
-  const accessoryItems = cartItems.filter(item => item.category === 'Accessories');
+
+  const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
+  const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const items = await getCart();
+        const freeSamples = await getFreeSamplesCart();
         const subTotalPrice = items.reduce(
           (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
           0
         );
         setSubTotal(subTotalPrice);
         setCartItems(items);
+        setMergedCart([...items, ...freeSamples]);
       } catch {
         toast.error("Error fetching cart items");
       }
@@ -53,15 +57,25 @@ const CartPage = ({ products }: CartPageProps) => {
       window.removeEventListener("cartUpdated", handleCartUpdate);
     };
   }, []);
-  const handleRemoveItem = async (id: number) => {
-    try {
-      await removeCartItem(id);
-      const updatedCart = await getCart();
-      setCartItems(updatedCart);
-    } catch {
-      toast.error("Error removing item from cart:");
-    }
-  };
+ 
+
+   const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
+      try {
+        if (isFreeSample) {
+          await cartremoveFreeSample(id); 
+        } else {
+            await removeCartItem(id);
+        }
+        setMergedCart(prev => prev.filter(item => 
+          !(item.id === id && item.isfreeSample === isFreeSample)
+        ));
+    
+        window.dispatchEvent(new Event("cartUpdated"));
+      } catch {
+        toast.error(`Error removing item from cart.`);
+      }
+    };
+    
 
   useEffect(() => {
     const subTotalPrice = cartItems.reduce(
@@ -188,7 +202,7 @@ const CartPage = ({ products }: CartPageProps) => {
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
       <h1 className='text-center xl:text-[48px]'>Your Shopping Cart</h1>
       {
-        cartItems.length === 0 ?
+        mergedCart.length === 0 ?
 
           <div className='text-center'>
             <p className='text-center text-[24px] pt-10'>Cart is empty</p>
@@ -202,89 +216,109 @@ const CartPage = ({ products }: CartPageProps) => {
               <div className=' w-full md:w-[55%] xl:w-[70%] 2xl:w-[65%] px-2'>
                 {/* product */}
                 <div className='max-h-[590px] overflow-x-auto pr-4'>
-    {nonAccessoryItems.length > 0 && (
-      <>
-        <div className='hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
-          <div className='col-span-6'>Product</div>
-          <div className='col-span-2 text-center'>Box Qty</div>
-          <div className='col-span-2 text-center'>Total Price</div>
-          <div className='col-span-2 text-end'>Remove</div>
-        </div>
-        <p className='block xl:hidden text-12 font-semibold font-inter'>Product</p>
-        <div className='border border-b border-[#DEDEDE]' />
-        {nonAccessoryItems.map((item, cartindex) => (
-          <div key={cartindex}>
-            <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
-              <div className='col-span-10 xl:col-span-6'>
-                <div className='flex gap-4'>
-                  <Image
-                    width={170}
-                    height={160}
-                    className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[160px]'
-                    src={item.image ?? '/default-image.png'}
-                    alt="cart"
-                  />
-                  <div>
-                    <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
-                    <p className='text-12 sm:text-14 2xl:text-17'>
-                      Price: AED <span>{item.price}</span>/m<sup>2</sup>
-                    </p>
-                    <p className='text-12 sm:text-14 2xl:text-17'>
-                      Price Per Piece: <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
-                    </p>
-                    <p className='text-12 sm:text-14 2xl:text-17'>
-                      No. Of Boxes:
-                      <span className='font-bold'> {item.requiredBoxes ?? 0} </span> (
-                      {item.unit === "sqft"
-                        ? ((Number(item.boxCoverage) * 10.764 * (Number(item.requiredBoxes ?? 0))).toFixed(2))
-                        : Number((Number(item.boxCoverage) * (Number(item.requiredBoxes ?? 0))).toFixed(2))
-                      }
-                      {item.unit === "sqft" ? " ft²" : " SQM"}
-                      )
-                    </p>
-                    <div className='flex xl:hidden gap-5 mt-2 items-center'>
-                      <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
-                        <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
-                          <LuMinus />
-                        </button>
-                        <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                        <button className="px-1 hover:text-black" onClick={() => increment(Number(item.id))}>
-                          <LuPlus />
-                        </button>
-                      </div>
-                      <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                {nonAccessoryItems.length > 0 && (
+                  <>
+                    <div className='hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
+                      <div className='col-span-6'>Product</div>
+                      <div className='col-span-2 text-center'>Box Qty</div>
+                      <div className='col-span-2 text-center'>Total Price</div>
+                      <div className='col-span-2 text-end'>Remove</div>
                     </div>
-                  </div>
-                </div>
-              </div>
+                    <p className='block xl:hidden text-12 font-semibold font-inter'>Product</p>
+                    <div className='border border-b border-[#DEDEDE]' />
+                    {nonAccessoryItems.map((item, cartindex) => (
+                      <div key={cartindex}>
+                        <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+                          <div className='col-span-10 xl:col-span-6'>
+                            <div className='flex gap-4'>
+                              <Image
+                                width={170}
+                                height={160}
+                                className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[160px]'
+                                src={item.image ?? '/default-image.png'}
+                                alt="cart"
+                              />
+                              <div>
+                                <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
+                                {
+                                  item.isfreeSample ? 
+                                  <p className='text-12 sm:text-14 2xl:text-17'>
+                                  Price: Free
+                                  </p> :
+                                  <p className='text-12 sm:text-14 2xl:text-17'>
+                                  Price: AED{" "}
+                                  <span>
+                                    {item.unit === "sqft"
+                                      ? ((item.price?? 0) / 10.764).toFixed(2)
+                                      : (item.price ?? 0).toFixed(2)}
+                                  </span>
+                                  /{item.unit === "sqft" ? "ft" : "m"}<sup>2</sup>
+                                  </p>
+                                }
+                               
+                                {
+                                  !item.isfreeSample && 
+                                  <>
+                                  <p className='text-12 sm:text-14 2xl:text-17'>
+                                  Price Per Piece: <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
+                                  </p>
+                                <p className='text-12 sm:text-14 2xl:text-17'>
+                                  No. Of Boxes:
+                                  <span className='font-bold'> {item.requiredBoxes ?? 0} </span> (
+                                  {item.unit === "sqft"
+                                    ? ((Number(item.boxCoverage) * 10.764 * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                    : Number((Number(item.boxCoverage) * (Number(item.requiredBoxes ?? 0))).toFixed(2))
+                                  }
+                                  {item.unit === "sqft" ? " ft²" : " SQM"}
+                                  )
+                                </p>
+                                  </>
+                                }
+                                
+                                <div className='flex xl:hidden gap-5 mt-2 items-center'>
+                                  <div className={`flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ${item.isfreeSample ? "hidden" : "block"}`}>
+                                    <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
+                                      <LuMinus />
+                                    </button>
+                                    <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
+                                    <button className="px-1 hover:text-black" onClick={() => increment(Number(item.id))}>
+                                      <LuPlus />
+                                    </button>
+                                  </div>
+                                  <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
 
-              <div className='col-span-2 mx-auto hidden xl:block'>
-                <div className="flex items-center justify-center border border-[#959595] px-1 2xl:px-2 py-2 2xl:py-3 w-fit text-16 text-purple">
-                  <button className="px-3 hover:text-black" onClick={() => decrement(Number(item.id))}>
-                    <LuMinus />
-                  </button>
-                  <span className="text-16 text-purple px-2 2xl:px-3">{item.requiredBoxes}</span>
-                  <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(Number(item.id))}>
-                    <LuPlus />
-                  </button>
-                </div>
-              </div>
-              <div className='col-span-2 text-center hidden xl:block'>
-                <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
-              </div>
-              <div className='col-span-2 text-end lg:pr-5'>
-                <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id))}>
-                  <svg className='w-4 h-4 2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <div className='border border-b border-[#DEDEDE]' />
-          </div>
-        ))}
-      </>
-    )} 
+                          <div className='col-span-2 mx-auto hidden xl:block'>
+                            <div className={`flex items-center justify-center border border-[#959595] px-1 2xl:px-2 py-2 2xl:py-3 w-fit text-16 text-purple ${item.isfreeSample ? "hidden" : "block"}`}>
+                              <button className="px-3 hover:text-black" onClick={() => decrement(Number(item.id))}>
+                                <LuMinus />
+                              </button>
+                              <span className="text-16 text-purple px-2 2xl:px-3">{item.requiredBoxes}</span>
+                              <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(Number(item.id))}>
+                                <LuPlus />
+                              </button>
+                            </div>
+                          </div>
+                          <div className='col-span-2 text-center hidden xl:block'>
+                            {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'>AED <span>Free</span></p> :
+                              <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>}
+                          </div>
+                          <div className='col-span-2 text-end lg:pr-5'>
+                            <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
+                              <svg className='w-4 h-4 2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                        <div className='border border-b border-[#DEDEDE]' />
+                      </div>
+                    ))}
+                  </>
+                )} 
                 </div>
                  {/* Accessory */}
                  <div className=' max-h-[590px] overflow-x-auto pr-4 mt-7'>
@@ -306,10 +340,12 @@ const CartPage = ({ products }: CartPageProps) => {
                             <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart" />
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
-                              <p className='text-12 sm:text-14 2xl:text-17'>Price: AED <span>{item.price}</span>/m</p>
+                              <p className='text-12 sm:text-14 2xl:text-17 '>Price: AED 
+                               <span>{item.unit === "ft"? ((item.price?? 0) / 3.28084).toFixed(2): (item.price ?? 0).toFixed(2)}</span>/{item.unit === "ft" ? "ft" : "m"}
+                              </p>
                               <p className='text-12 sm:text-14 2xl:text-17'>
                               Total Required:
-                                  <span className='font-bold'> {item.requiredBoxes ?? 0}m</span> 
+                                  <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
                               </p> 
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
@@ -341,7 +377,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                         </div>
                         <div className='col-span-2 text-end lg:pr-5'>
-                          <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id))}>
+                          <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
                             <svg className=' w-4 h-4  2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
                             </svg>
@@ -360,7 +396,7 @@ const CartPage = ({ products }: CartPageProps) => {
               <div className='w-full md:w-[45%] xl:w-[30%] 2xl:w-[35%] bg-background p-3 sm:p-5 space-y-5 h-fit'>
                 <div className='flex gap-2 md:gap-5 items-center max-sm:justify-between'>
                   <h2 className=' text-18 md:text-20 2xl:text-28'>Order Summary</h2>
-                  <p className='text-14 text-[#FF0004]'>(*Total {cartItems.length} {cartItems.length === 1 ? "Item" : " Items"})</p>
+                  <p className='text-14 text-[#FF0004]'>(*Total {mergedCart.length} {mergedCart.length === 1 ? "Item" : " Items"})</p>
                 </div>
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
@@ -427,7 +463,7 @@ const CartPage = ({ products }: CartPageProps) => {
                     </div>
                   </Panel>
                 </Collapse>
-                <PaymentMethod installments={(cartItems.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)) / 4} />
+                <PaymentMethod installments={(mergedCart.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)) / 4} />
                 <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
                 <div className='flex justify-between gap-2' >
                   {
