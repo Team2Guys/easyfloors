@@ -41,6 +41,28 @@ const Footer = () => {
         getCategories();
     }, []);
 
+    const prioritizedOrder = [
+        "Skirting",
+        "Reducer",
+        "T Profile",
+        "Stair Nose",
+        "Quarter Round",
+        "L Shape Skirting 10cm",
+        "L Shape Skirting 12cm",
+        "L Shape Skirting 15cm",
+      ];
+      
+      const customSort = (a: { name: string }, b: { name: string }) => {
+        const aIndex = prioritizedOrder.indexOf(a.name);
+        const bIndex = prioritizedOrder.indexOf(b.name);
+      
+        if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
+        if (aIndex !== -1) return -1;
+        if (bIndex !== -1) return 1;
+      
+        return a.name.localeCompare(b.name); // fallback alphabetical
+      };
+      
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -62,7 +84,7 @@ const Footer = () => {
 
                                 <ul className="mt-4 space-y-2">
                                     {section.name === "ACCESSORIES" ? (
-                                        (section.accessories ?? []).map((item, i) => (
+                                        (section.accessories ?? []).sort(customSort).map((item, i) => (
                                             <li key={i} className="text-sm text-[#00000099] hover:text-gray-900 cursor-pointer font-normal">
                                                 <Link href={`/accessories/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
                                                     {item.name}
@@ -80,7 +102,6 @@ const Footer = () => {
                                     )}
                                 </ul>
                             </div>
-
                         )
                     })
                 ) : (

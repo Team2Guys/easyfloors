@@ -368,3 +368,10 @@ export interface  IfilterValues  {
     thicknesses: string,
     plankWidth: string,
 }
+
+export interface ProductTableProps {
+  columns?: string[];
+  isSamplePage?: boolean;
+  items?: ICart[]; 
+  setItems?: React.Dispatch<SetStateAction<ICart[]>>; 
+}

@@ -16,13 +16,20 @@ export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart
   }
 };
 
-export const updateQuantity = (id: number, index: number, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
-  setItems((_prevItems) =>
-    _prevItems.map((item) =>
-      item.id === id ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + index) } : item
-    )
+
+// utils/updateQuantity.ts
+export const updateQuantity = (
+  id: number,
+  delta: number,
+  items: ICart[]
+): ICart[] => {
+  return items.map((item) =>
+    item.id === id
+      ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + delta) }
+      : item
   );
 };
+
 
 export const handleRemoveItem = async (id: number, isSamplePage: boolean, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
   try {
@@ -40,7 +47,7 @@ export const handleRemoveItem = async (id: number, isSamplePage: boolean, setIte
 export const handleAddToCart = async (product: ICart, isSamplePage: boolean, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
   try {
     await saveToCart(product);
-    await handleRemoveItem(product.id, isSamplePage, setItems);
+    await handleRemoveItem(Number(product.id), isSamplePage, setItems);
     toast.success("Product added to cart successfully!");
     window.dispatchEvent(new Event("freeSampleUpdated"));
   } catch {
