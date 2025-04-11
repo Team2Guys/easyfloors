@@ -422,7 +422,6 @@ export const categoriesFeatures = [
   ["Elegant layout pattern", "Water-resistant for wet zones", "Seamless interlocking fit", "Rich, textured finish"],  
 ];
 
-
 export const categoryData: TCategoryData = {
   title: "What Am I?",
   subtitle: "(Compare us)",
