@@ -59,7 +59,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
     }
   }, [selectedColor, productData]);
 
-  console.log(productData?.products, "productData?.products", matchingColor)
 
   const handleColorClick = (color: ProductImage) => {
     setSelectedColor(color);
