@@ -44,6 +44,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { centerAspectCrop } from "types/product-crop";
 import { uploadPhotosToBackend } from "lib/helperFunctions";
 import { Modal } from "antd";
+import { useRouter } from "next/navigation";
 
 const initialErrors = {
   categoryError: "",
@@ -72,6 +73,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       ? [{ ...EditInitialValues.hoverImageUrl }]
       : []
   );
+
+  const router = useRouter()
   const [featureImagesimagesUrl, setfeatureImagesImagesUrl] = useState<
     ProductImage[] | undefined
   >(EditInitialValues ? EditInitialValues?.featureImages : []);
@@ -283,6 +286,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       /* eslint-disable */
     } catch (err: any) {
       if (err?.graphQLErrors?.length > 0) {
+        if(err?.graphQLErrors[0].message === "Authentication required"){
+          router.push("/dashboard/Admin-login")
+        }
         setError(err?.graphQLErrors[0].message);
       } else if (err instanceof Error) {
         setError(err.message);
