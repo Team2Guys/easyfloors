@@ -409,7 +409,6 @@ export const imageData: TImageBanner = {
 };
 
 
-// export const categoriesFeatures = ["Waterproof", "Scratch proof", "Durable", "Easy to clean"]
 export const categoriesFeatures:CategoryFeatures[] = [
   {
     name: "Richmond SPC Eco",

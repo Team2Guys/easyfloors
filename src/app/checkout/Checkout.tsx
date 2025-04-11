@@ -270,13 +270,6 @@ const Checkout = () => {
 
                                 <div className="flex items-center">
                                     <div className="flex items-center gap-1">
-                                        {/* <Checkbox
-                                            name="terms"
-                                            onChange={(e) => setFieldValue("terms", e.target.checked)}
-                                            checked={values.terms}
-                                        >
-                                            I have read and agree to the <Link href='terms-and-conditions' className="text-primary hover:underline">Terms and Conditions</Link>
-                                        </Checkbox> */}
                                         <input
                                             type="checkbox"
                                             checked={values.terms}
