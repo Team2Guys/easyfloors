@@ -7,7 +7,8 @@ import { Category, FilterState, ISUBCATEGORY } from "types/cat";
 import Link from "next/link";
 import { FIlterprops } from "types/types";
 import { usePathname } from "next/navigation";
-import { AdditionalInformation } from "types/prod";
+import { AdditionalInformation, IProduct } from "types/prod";
+import { IfilterValues } from "types/type";
 
 
 
@@ -65,6 +66,7 @@ const Filters = ({
       }
     });
 
+  
     setUniqueFilters({
       thicknesses: Array.from(thicknessSet),
       commercialWarranty: Array.from(commercialWarrantySet),
@@ -74,10 +76,18 @@ const Filters = ({
     });
   };
 
+
+
   useEffect(() => {
     extractUniqueAttributes(category);
   }, [category]);
 
+
+  const getColorCount = (targetColor: string): number => {
+    return category.products?.filter((product:IProduct) =>
+      product.colors?.some(color => color.name.trim().toLowerCase() === targetColor.toLowerCase())
+    ).length || 0;
+  };
   const handleYesWaterProof = (text: string) => {
     if (text === 'yes') {
 
@@ -108,6 +118,27 @@ const Filters = ({
     setIsWaterProof(null)
   }
 
+  const filtervalues:IfilterValues  ={
+    commercialWarranty: "CommmericallWarranty",
+    residentialWarranty : "ResidentialWarranty",
+    thicknesses: "thickness",
+    plankWidth: "plankWidth",
+  }
+
+
+  const filterProductsCountHanlder = (key:keyof IfilterValues,ValuesType:string)=>{
+      const filterprod = category?.products?.filter((product:IProduct)=>{
+        const values =  product[filtervalues[key] as keyof IProduct]
+        return values  == ValuesType;
+      })
+
+      return filterprod.length  ||0
+
+
+  }
+
+  
+
   return (
     <div className={`p-2 xl:p-4 w-full space-y-5  ${className}`}>
       <div className="border-b-2 pb-5">
@@ -131,10 +162,6 @@ const Filters = ({
           )
         }
         )}
-
-
-
-
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
             {Object.values(categoryState).map((item) => {
@@ -191,13 +218,23 @@ const Filters = ({
         </Accordion>
 
         {Object.entries(uniqueFilters).map(([filterKey, filterValues]) => {
-          // Make sure we have at least one value
           if (filterValues.length === 0) return null;
+     
+
 
           return (
             <Accordion key={filterKey} title={filterTitles[filterKey as keyof typeof uniqueFilters]}>
               <ul className="pl-4 text-sm text-gray-600 space-y-1">
-                {filterValues.map((item, i) => (
+                {filterValues.map((item, i) => {
+                       let length;
+                       let remaingCategory
+                       if(filterKey === 'Colours') {
+                         length=  getColorCount(item)
+                      }else {
+                        remaingCategory =  filterProductsCountHanlder(filterKey as keyof IfilterValues, item)
+                      }
+
+                  return (
                   <li key={i}>
                     <button
                       className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState]?.some(
@@ -208,10 +245,12 @@ const Filters = ({
                         }`}
                       onClick={() => handleFilterSelection(filterKey as keyof FilterState, item)}
                     >
-                      {item}
+                      {item + (length ? ` (${length})` : remaingCategory ? ` (${remaingCategory})`: "" )} 
                     </button>
                   </li>
-                ))}
+
+                  )
+        })}
               </ul>
             </Accordion>
           );

@@ -359,6 +359,16 @@ export interface PrivacyPolicyProps {
   data?: PrivacyPolicyItem[];
 }
 
+
+
+
+export interface  IfilterValues  {
+  commercialWarranty: string,
+    residentialWarranty : string,
+    thicknesses: string,
+    plankWidth: string,
+}
+
 export interface ProductTableProps {
   columns?: string[];
   isSamplePage?: boolean;
