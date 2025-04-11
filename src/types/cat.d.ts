@@ -92,7 +92,7 @@ export interface mainCategory {
 export interface SUBNCATEGORIES_PAGES_PROPS {
   catgories: Category[];
   categoryData: Category; 
-  subCategoryData?: ISUBCATEGORY;
+  subCategoryData?: ISUBCATEGORY | null;
   isSubCategory: boolean;
   mainCategory?: mainCategory;
   slug: string; 
