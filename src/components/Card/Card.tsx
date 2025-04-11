@@ -10,7 +10,7 @@ import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
-import { calculatePricePerBox, handleAddToStorage } from "lib/carthelper";
+import { handleAddToStorage } from "lib/carthelper";
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
@@ -28,11 +28,7 @@ const Card: React.FC<productCardProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
-  const pricePerBox = calculatePricePerBox(
-    typeof product?.boxCoverage === "string" ? parseFloat(product.boxCoverage) : product?.boxCoverage,
-    typeof product?.price === "string" ? parseFloat(product.price) : product?.price
-  );
-
+ 
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -89,25 +85,21 @@ const Card: React.FC<productCardProps> = ({
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-              <button className="
-
-              " onClick={() => {
-                if ("price" in product) {
-                  handleAddToStorage
-                    (
-                      product,
-                      product.price ?? 0,
-                      pricePerBox,
-                      0,
-                      1,
-                      product.subcategory?.name || "",
-                      categoryData?.name || "Accessories",
-                      "wishlist",
-                      product.posterImageUrl?.imageUrl ?? "",
-                      product?.boxCoverage,
-                    );
-                } else {
-                }
+              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
+               onClick={() => {
+                  handleAddToStorage(
+                    product,
+                    84,
+                    84,
+                    2.4, 
+                    1,
+                    product.subcategory?.name || "",
+                    categoryData?.name || "Accessories",
+                    "wishlist",
+                    product.posterImageUrl?.imageUrl ?? "",
+                    product?.boxCoverage,
+                    "m",
+                  );
               }}
               >
                 <FiHeart size={20} />

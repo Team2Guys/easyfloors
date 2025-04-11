@@ -15,11 +15,9 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const [areas, setAreas] = useState<{ [key: string]: string }>({});
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
-
-
   if (!isOpen) return null;
 
-  const boxCoverage = 2.4; // Coverage in square meters
+  const boxCoverage = 1; // Coverage in square meters
 
   const toggleSelect = (id: string | number) => {
     const idStr = String(id);
@@ -30,51 +28,33 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
 
   const handleUnitChange = (id: string | number, value: "m" | "ft") => {
     const idStr = String(id);
+  
     setUnit((prev) => ({
       ...prev,
       [idStr]: value,
     }));
-
-    // Update area if unit changes
     if (areas[idStr]) {
-      handleAreaChange(idStr, areas[idStr]);
+      recalculateBoxesAndPrice(idStr, areas[idStr], value); // 👈 use helper
     }
   };
-
-  const handleAreaChange = (id: string | number, value: string) => {
-    const idStr = String(id);
-    setAreas((prev) => ({
-      ...prev,
-      [idStr]: value,
-    }));
-
-    if (value.trim() !== "" && !selectedProducts.includes(idStr)) {
-      setSelectedProducts((prev) => [...prev, idStr]);
-    } else if (value.trim() === "") {
-      setSelectedProducts((prev) => prev.filter((productId) => productId !== idStr));
-    }
-
+  const recalculateBoxesAndPrice = (idStr: string, value: string, unitValue: "m" | "ft") => {
     const areaValue = parseFloat(value);
     if (!isNaN(areaValue) && areaValue > 0) {
       const product = products.find((p) => String(p.id) === idStr);
       if (!product) return;
 
-      let areaInMeters = areaValue;
+      const pieces = Math.ceil(areaValue / boxCoverage);
+      const pricePerUnit = unitValue === "ft"
+        ? product.price / 3.28084
+        : product.price;
 
-      if (unit[idStr] === "ft") {
-        areaInMeters = areaValue * 3.28084;
-      }
-
-      const pricePerSqMeter = product.price;
-      const total = areaInMeters * pricePerSqMeter;
-
-      const pieces = Math.ceil(areaInMeters / boxCoverage);
-
+      const total = areaValue * pricePerUnit;
+  
       setRequiredBoxes((prev) => ({
         ...prev,
         [idStr]: pieces,
       }));
-
+  
       setTotalPrice((prev) => ({
         ...prev,
         [idStr]: parseFloat(total.toFixed(2)),
@@ -84,8 +64,26 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       setTotalPrice((prev) => ({ ...prev, [idStr]: 0 }));
     }
   };
-
-
+  
+  
+  
+  const handleAreaChange = (id: string | number, value: string) => {
+    const idStr = String(id);
+    setAreas((prev) => ({
+      ...prev,
+      [idStr]: value,
+    }));
+  
+    if (value.trim() !== "" && !selectedProducts.includes(idStr)) {
+      setSelectedProducts((prev) => [...prev, idStr]);
+    } else if (value.trim() === "") {
+      setSelectedProducts((prev) => prev.filter((productId) => productId !== idStr));
+    }
+  
+    recalculateBoxesAndPrice(idStr, value, unit[idStr]);
+  };
+  
+  
 
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
@@ -97,26 +95,33 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     selectedProducts.forEach((productId) => {
       const product = products.find((p) => String(p.id) === productId);
       if (product) {
+        const selectedUnit = unit[productId] || "m";
+        const basePrice = product.price;
+  
+        const pricePerUnit =
+          selectedUnit === "ft" ? basePrice / 3.28084 : basePrice;
+  
         const squareMeter = boxCoverage * (requiredBoxes[productId] || 1);
+  
         handleAddToStorage(
           product,
-          totalPrice[productId] || 0,
-          product.price,
+          totalPrice[productId] || 0,         // 👈 Already unit-specific
+          parseFloat(pricePerUnit.toFixed(2)), // 👈 Converted per unit price
           squareMeter,
           requiredBoxes[productId] || 1,
-          unit[productId],
+          selectedUnit,
           product.category?.name ?? product?.__typename,
           "cart",
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
-          unit[productId] || "m",
+          selectedUnit,
           product.selectedColor
         );
-
       }
     });
     onClose();
   };
+  
 
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
@@ -192,6 +197,13 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                     className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
                   />
                 </div>
+                <p>{requiredBoxes[product.id] && `Required Boxes: ${requiredBoxes[product.id]}`}</p>
+                <p className="text-gray-700 font-medium">
+                    {unit[product.id] === "ft"
+                      ? `Price Per ft: AED ${(product.price / 3.28084).toFixed(2)}`
+                      : `Price Per m: AED ${product.price}`}
+                </p>
+                <p>{totalPrice[product.id] && `Total Price: AED ${totalPrice[product.id]}`}</p>
               </div>
             ))}
           </div>

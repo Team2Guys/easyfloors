@@ -1,21 +1,7 @@
 import { toast } from 'react-toastify';
 import { EDIT_CATEGORY } from 'types/cat';
 import { IProduct, ProductImage } from 'types/prod';
-import { addToCart, addToFreeSample, addToWishlist, getFreeSamples } from 'utils/indexedDB';
-
-export const calculatePricePerBox = (
-  boxCoverage: string | number | undefined,
-  price: number | undefined
-): number => {
-  const coverage = Number(boxCoverage);
-  const unitPrice = Number(price);
-
-  if (isNaN(coverage) || isNaN(unitPrice) || coverage <= 0 || unitPrice <= 0) {
-    return 0;
-  }
-
-  return parseFloat((coverage * unitPrice).toFixed(2));
-};
+import { AddcartFreeSample, addToCart, addToFreeSample, addToWishlist, getFreeSamples, getFreeSamplesCart } from 'utils/indexedDB';
 
 export const handleAddToStorage = async (
   productData: IProduct | EDIT_CATEGORY,
@@ -25,11 +11,12 @@ export const handleAddToStorage = async (
   requiredBoxes: number,
   subCategory: string,
   MainCategory: string,
-  type: 'cart' | 'wishlist' | 'freeSample',
+  type: 'cart' | 'wishlist' | 'freeSample' | 'cartfreeSample',
   image?: string,
   boxCoverage?: string,
   unit?: string,
-  selectedColor?: ProductImage
+  selectedColor?: ProductImage,
+  isfreeSample?: boolean
 ) => {
   if (!productData) {
     toast.error('Product is undefined');
@@ -60,7 +47,7 @@ export const handleAddToStorage = async (
   const adjustedUnit = unit || 'sqm';
 
   const item = {
-    id: Number(productData.id),
+    id:  Number(productData.id),
     name: productData.name,
     price: Number(productData.price),
     stock: Number(productData.stock),
@@ -73,7 +60,8 @@ export const handleAddToStorage = async (
     squareMeter: adjustedSquareMeter,
     requiredBoxes: adjustedRequiredBoxes,
     unit: adjustedUnit,
-    selectedColor
+    selectedColor,
+    isfreeSample: isfreeSample || false,
   };
 
   try {
@@ -95,13 +83,46 @@ export const handleAddToStorage = async (
 
       await addToFreeSample(item);
       return;
-    } else if (type === 'wishlist') {
+      
+    } 
+    else if (type === 'cartfreeSample') {
+      const existingSamples = await getFreeSamplesCart();
+
+      if (existingSamples.some((sample) => sample.id === item.id)) {
+        toast.error('Product already added to Free Samples.');
+        return;
+      }
+
+      if (existingSamples.length >= 5) {
+        toast.error('You can add only up to 5 free samples.');
+        return;
+      }
+
+      await AddcartFreeSample(item);
+      return;
+    }
+    else if (type === 'wishlist') {
       await addToWishlist(item);
       return;
     }
   } catch  {
     toast.error(`Error adding product to ${type}`);
   }
+};
+
+
+export const calculatePricePerBox = (
+  boxCoverage: string | number | undefined,
+  price: number | undefined
+): number => {
+  const coverage = Number(boxCoverage);
+  const unitPrice = Number(price);
+
+  if (isNaN(coverage) || isNaN(unitPrice) || coverage <= 0 || unitPrice <= 0) {
+    return 0;
+  }
+
+  return parseFloat((coverage * unitPrice).toFixed(2));
 };
 
 export const calculateProductDetails = (

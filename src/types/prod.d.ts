@@ -96,7 +96,7 @@ export interface IProductFilter extends IProduct {
     pricePerMeter?: number;
     requiredQty?: number;
     isAccessory?:string;
-    
+    isfreeSample?:boolean;
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {
