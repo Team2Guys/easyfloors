@@ -192,7 +192,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                   className={`w-full ${
                     imageheight
                       ? "h-[35px] sm:h-[73px] md:h-[230px]"
-                      : "h-[35px] sm:h-[73px] md:h-[124px]"
+                      : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[124px]"
                   }`}
                   alt={product.altText || "Thumbnail"}
                 />
@@ -233,7 +233,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                 className={`w-full ${
                   imageheight
                     ? "h-[273px] sm:h-[520px] md:h-[810px]"
-                    : "h-[273px] sm:h-[520px] md:h-[830px]"
+                    : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[830px]"
                 }`}
                 alt={product.altText || "Thumbnail"}
               />
@@ -297,7 +297,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                         : ""
                     }`}
                   />
-                  <p className="font-semibold text-[8px] md:text-14 lg:text-16">
+                  <p className="font-semibold text-[8px] md:text-14 lg:text-12 xl:text-16">
                     {getStaticTitle(index)}
                   </p>
                 </div>
