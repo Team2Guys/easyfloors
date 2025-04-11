@@ -11,13 +11,11 @@ import { type ISUBCATEGORY, type Category, FilterState, SUBNCATEGORIES_PAGES_PRO
 import { IProduct } from "types/prod";
 import { SelectedFilter } from "types/types";
 
-
-
 const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slug, subcategory,subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
-    colors: [],
+    Colours: [],
     thicknesses: [],
     commercialWarranty: [],
     residentialWarranty: [],

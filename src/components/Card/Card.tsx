@@ -10,7 +10,7 @@ import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
-import { calculatePricePerBox, handleAddToStorage } from "lib/carthelper";
+import { handleAddToStorage } from "lib/carthelper";
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
@@ -28,11 +28,7 @@ const Card: React.FC<productCardProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
-  const pricePerBox = calculatePricePerBox(
-    typeof product?.boxCoverage === "string" ? parseFloat(product.boxCoverage) : product?.boxCoverage,
-    typeof product?.price === "string" ? parseFloat(product.price) : product?.price
-  );
-
+ 
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -59,7 +55,6 @@ const Card: React.FC<productCardProps> = ({
   };
 
   const handleNavigate = (product: IProduct, categoryData: Category) => {
-console.log(product.category, "product")
 
     if (product.subcategory) {
       return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
@@ -90,23 +85,21 @@ console.log(product.category, "product")
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={() => {
-                if ("price" in product) {
-                  handleAddToStorage
-                    (
-                      product,
-                      product.price ?? 0,
-                      pricePerBox,
-                      0,
-                      1,
-                      product.subcategory?.name || "",
-                      categoryData?.name || "",
-                      "wishlist",
-                      product.posterImageUrl?.imageUrl ?? "",
-                      product?.boxCoverage,
-                    );
-                } else {
-                }
+              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
+               onClick={() => {
+                  handleAddToStorage(
+                    product,
+                    84,
+                    84,
+                    2.4, 
+                    1,
+                    product.subcategory?.name || "",
+                    categoryData?.name || "Accessories",
+                    "wishlist",
+                    product.posterImageUrl?.imageUrl ?? "",
+                    product?.boxCoverage,
+                    "m",
+                  );
               }}
               >
                 <FiHeart size={20} />
@@ -156,6 +149,7 @@ console.log(product.category, "product")
           >
             {product.sizes.map((feature, index) => (
               <div key={index} className="flex gap-4 w-full justify-between">
+                {feature.width &&
                 <div className="flex justify-between gap-1 items-center">
                   <Image
                     src={features[0].icon}
@@ -166,6 +160,7 @@ console.log(product.category, "product")
                   />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
                 </div>
+                } 
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
                     <Image
@@ -177,7 +172,7 @@ console.log(product.category, "product")
                     />
                     <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
-
+                {feature.height &&
                 <div className="flex justify-between gap-1 items-center">
                   <Image
                     src={features[2].icon}
@@ -188,6 +183,7 @@ console.log(product.category, "product")
                   />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.height}</span>
                 </div>
+                }
               </div>
             ))}
           </div>

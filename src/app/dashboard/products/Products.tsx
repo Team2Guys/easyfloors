@@ -47,6 +47,7 @@ const accessoryFlag = path === "/dashboard/accessories";
     sizes: editProduct && editProduct?.sizes,
     //@ts-expect-error added
     products: editProduct  && editProduct?.products?.map((value)=>value.id) || [],
+    lengthPrice: editProduct && editProduct?.lengthPrice,
   };
 
   useEffect(() => {

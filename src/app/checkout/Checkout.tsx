@@ -24,7 +24,6 @@ import { useMutation } from "@apollo/client";
 import { INITIATE_PAYMENT } from "graphql/mutations";
 import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
-import CustomSelect from "components/appointment/custom-select";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 
@@ -254,13 +253,7 @@ const Checkout = () => {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} />
-                                    <div>
-                                        <CustomSelect name="city" label="City" required placeholder="Select City" options={UAEStates} value={selectedCity}
-                                            onChange={(value) => setSelectedCity(value)}
-                                        />
-                                        {isSubmitting && !selectedCity && <div className="text-red-500 text-sm">City is required</div>}
-
-                                    </div>
+                                    <Select name="city" label="City" required placeholder="Select City" options={UAEStates}  />
                                 </div>
 
 

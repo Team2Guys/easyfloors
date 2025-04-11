@@ -65,6 +65,7 @@ export interface IProduct {
     pricePerBox?: number;
     selectedColor?: ProductImage;
     matchedProductImages?: ProductImage;
+    lengthPrice?:string
   }
 
 export interface Sizes { width: string, height: string, thickness: string }
@@ -77,7 +78,7 @@ export interface IProductFilter extends IProduct {
 }
 
   export interface ICart {
-    id: number ;
+    id: string | number;
     name: string;
     price?: number;
     stock: number;
@@ -92,8 +93,10 @@ export interface IProductFilter extends IProduct {
     boxCoverage?:string,
     subcategories?:string,
     unit?:string,
+    pricePerMeter?: number;
+    requiredQty?: number;
     isAccessory?:string;
-    
+    isfreeSample?:boolean;
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {

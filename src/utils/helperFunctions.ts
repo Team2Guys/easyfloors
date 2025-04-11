@@ -66,46 +66,43 @@ export const TrimerHandler = (value: string) => {
 }
 
 
-export const ProductsSorting = (filtered: IProduct[], sortOption: string) => {
+export const ProductsSorting = (filtered: IProduct[], sortOption: string): IProduct[] => {
+  const clone = [...filtered];
+
+  const getSortablePart = (name: string) => {
+    const parts = name.split(" - ");
+    return parts.length > 1 ? parts[1] : name;
+  };
+
   switch (sortOption) {
     case "A to Z":
-      filtered = filtered?.sort((a, b) => {
+      return clone.sort((a, b) => {
         if (!a.name || !b.name) return 0;
-        return a.name.localeCompare(b.name);
+        const nameA = getSortablePart(a.name);
+        const nameB = getSortablePart(b.name);
+        return nameA.localeCompare(nameB, undefined, { sensitivity: 'base' });
       });
-      break;
 
     case "Z to A":
-
-      filtered = filtered?.sort((a, b) => {
+      return clone.sort((a, b) => {
         if (!a.name || !b.name) return 0;
-        return b.name.localeCompare(a.name);
+        const nameA = getSortablePart(a.name);
+        const nameB = getSortablePart(b.name);
+        return nameB.localeCompare(nameA, undefined, { sensitivity: 'base' });
       });
-      break;
 
     case "Low to High":
-      filtered = filtered?.sort((a: IProduct, b) => {
-        const priceA = a.price
-        const priceB = b.price
-
-        return priceA - priceB;
-      });
-      break;
+      return clone.sort((a, b) => a.price - b.price);
 
     case "High to Low":
-      filtered = filtered?.sort((a, b) => {
-        const priceA = a.price
-        const priceB = b.price
-
-
-        return priceB - priceA;
-      });
-      break;
+      return clone.sort((a, b) => b.price - a.price);
 
     default:
-      break;
+      return filtered;
   }
-}
+};
+
+
 export function getExpectedDeliveryDate(
   shippingMethod: "Standard Shipping" | "Express Shipping" | "Self Collect",
   orderTime: Date

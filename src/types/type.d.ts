@@ -26,10 +26,6 @@ interface Color {
   name: string;
   detail: string;
 }
-interface CategoryFeatures {
-  name: string;
-  features: string[];
-}
 
 
 export type Block = {
@@ -82,6 +78,7 @@ export interface HeroMainProps {
 }
 export interface BlogCardProps {
   card: ISUBCATEGORY;
+  index?: number;
 }
 export interface FAQItem {
   id: number;
@@ -361,4 +358,21 @@ export interface PrivacyPolicyItem {
 }
 export interface PrivacyPolicyProps {
   data?: PrivacyPolicyItem[];
+}
+
+
+
+
+export interface  IfilterValues  {
+  commercialWarranty: string,
+    residentialWarranty : string,
+    thicknesses: string,
+    plankWidth: string,
+}
+
+export interface ProductTableProps {
+  columns?: string[];
+  isSamplePage?: boolean;
+  items?: ICart[]; 
+  setItems?: React.Dispatch<SetStateAction<ICart[]>>; 
 }

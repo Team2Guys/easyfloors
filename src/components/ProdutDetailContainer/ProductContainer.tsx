@@ -119,7 +119,9 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               "freeSample",
               image?.imageUrl ?? "",
               boxCoverage,
-              
+              unit,
+              selectedColor,
+              true
             )
           }
           >

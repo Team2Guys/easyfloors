@@ -44,6 +44,7 @@ import 'react-image-crop/dist/ReactCrop.css';
 import { centerAspectCrop } from "types/product-crop";
 import { uploadPhotosToBackend } from "lib/helperFunctions";
 import { Modal } from "antd";
+import { useRouter } from "next/navigation";
 
 const initialErrors = {
   categoryError: "",
@@ -72,6 +73,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       ? [{ ...EditInitialValues.hoverImageUrl }]
       : []
   );
+
+  const router = useRouter()
   const [featureImagesimagesUrl, setfeatureImagesImagesUrl] = useState<
     ProductImage[] | undefined
   >(EditInitialValues ? EditInitialValues?.featureImages : []);
@@ -175,7 +178,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
     CategoryHandler();
   }, [EditInitialValues]);
 
-  console.log(productInitialValue,'productInitialValue')
 
   const onSubmit = async (
     changedValue: IProductValues,
@@ -225,7 +227,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
       /* eslint-disable */
 
-      const { products, ...restValues } = values;
+      const { products,lengthPrice, ...restValues } = values;
       /* eslint-enable */
 
       let newValues = {
@@ -284,6 +286,9 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
       /* eslint-disable */
     } catch (err: any) {
       if (err?.graphQLErrors?.length > 0) {
+        if(err?.graphQLErrors[0].message === "Authentication required"){
+          router.push("/dashboard/Admin-login")
+        }
         setError(err?.graphQLErrors[0].message);
       } else if (err instanceof Error) {
         setError(err.message);
@@ -900,279 +905,300 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 </div>
 
                 <div className="flex flex-col gap-5">
-                
-                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
-                          <h3 className="font-medium text-black dark:text-white">
-                            Add Dimentions
-                          </h3>
-                        </div>
-                        <div className="py-4 px-6 space-y-2">
-                          <div className="flex items-center gap-4">
-                            <label className="block text-sm font-medium text-black dark:text-white w-24">
-                              Width:
-                            </label>
-                            <input
-                              type="text"
-                              name="sizes[0].width"
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
-                              value={formik.values.sizes?.at(0)?.width}
-                              placeholder="Add Width"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
-                            />
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <label className="block text-sm font-medium text-black dark:text-white w-24">
-                              Height:
-                            </label>
-                            <input
-                              type="text"
-                              name="sizes[0].height"
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
-                              value={formik.values.sizes?.at(0)?.height}
-                              placeholder="Add Height"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
-                            />
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <label className="block text-sm font-medium text-black dark:text-white w-24">
-                            Thickness:
-                            </label>
-                            <input
-                              type="text"
-                              name="sizes[0].thickness"
-                              onChange={formik.handleChange}
-                              onBlur={formik.handleBlur}
-                              value={formik.values.sizes?.at(0)?.thickness}
-                              placeholder="Add Thickness"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
-                            />
-                          </div>
-                        </div>
+
+                  <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
+                    <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Add Dimentions
+                      </h3>
+                    </div>
+                    <div className="py-4 px-6 space-y-2">
+                      <div className="flex items-center gap-4">
+                        <label className="block text-sm font-medium text-black dark:text-white w-24">
+                          Width:
+                        </label>
+                        <input
+                          type="text"
+                          name="sizes[0].width"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.sizes?.at(0)?.width}
+                          placeholder="Add Width"
+                          className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                        />
                       </div>
+                      <div className="flex items-center gap-4">
+                        <label className="block text-sm font-medium text-black dark:text-white w-24">
+                          Height:
+                        </label>
+                        <input
+                          type="text"
+                          name="sizes[0].height"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.sizes?.at(0)?.height}
+                          placeholder="Add Height"
+                          className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                        />
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <label className="block text-sm font-medium text-black dark:text-white w-24">
+                          Thickness:
+                        </label>
+                        <input
+                          type="text"
+                          name="sizes[0].thickness"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.sizes?.at(0)?.thickness}
+                          placeholder="Add Thickness"
+                          className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                    <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                      Waterproof
+                    </label>
+
+                    <div className="flex items-center gap-2">
+                      <Field name="waterproof">
+                        {({
+                          field,
+                          form,
+                        }: {
+                          field: FieldInputProps<boolean>;
+                          form: FormikProps<{ waterproof: boolean }>;
+                        }) => (
+                          <input
+                            type="checkbox"
+                            name={field.name}
+                            checked={Boolean(field.value)}
+                            onChange={() =>
+                              form.setFieldValue(field.name, !field.value)
+                            }
+                            className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
+                          />
+                        )}
+                      </Field>
+                      <span className="text-black dark:text-white">
+                        Is this waterproof?
+                      </span>
+                    </div>
+
+                    <ErrorMessage
+                      name="waterproof"
+                      component="div"
+                      className="text-red-500 dark:text-red-700 text-sm"
+                    />
+                  </div>
+
+                  <div className="py-4 px-6 rounded-sm border border-stroke">
+                    <div className="rounded-sm border border-stroke bg-white mb-4 dark:bg-black">
+                      <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                        <h3 className="font-medium text-black dark:text-white">
+                          Add Colours
+                        </h3>
+                      </div>
+                      <div className="flex flex-col py-4 px-6">
+                        <FieldArray name="colors">
+                          {({ push, remove }) => (
+                            <div className="flex flex-col gap-2">
+                              {formik.values.colors &&
+                                formik.values.colors.map(
+                                  (
+                                    model: AdditionalInformation,
+                                    index: number
+                                  ) => (
+                                    <div
+                                      key={index}
+                                      className="flex items-center"
+                                    >
+                                      <input
+                                        type="text"
+                                        name={`colors[${index}].name`}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik?.values?.colors?.[index].name}
+                                        placeholder="color Name"
+                                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                      />
+                                      <input
+                                        type="text"
+                                        name={`colors[${index}].detail`}
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.colors?.[index].detail}
+                                        placeholder="add code"
+                                        className="w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={() => remove(index)}
+                                        className="ml-2 text-red-500 "
+                                      >
+                                        <RxCross2
+                                          className="text-red-500 dark:text-white"
+                                          size={25}
+                                        />
+                                      </button>
+                                    </div>
+                                  )
+                                )}
+                              <button
+                                type="button"
+                                onClick={() => push({ name: "", detail: "" })}
+                                className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
+                              >
+                                Add color
+                              </button>
+                            </div>
+                          )}
+                        </FieldArray>
+                      </div>
+                    </div>
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                        Add Color Code
+                      </label>
+                      <Field
+                        type="number"
+                        name="colorCode"
+                        placeholder="enter color code"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage
+                        name="colorCode"
+                        component="div"
+                        className="text-red-500 dark:text-red-700 text-sm"
+                      />
+                    </div>
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                        Add Residential Warranty
+                      </label>
+
+                      <Field
+                        type="text"
+                        name="ResidentialWarranty"
+                        placeholder="5 years"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage
+                        name="ResidentialWarranty"
+                        component="div"
+                        className="text-red-500 dark:text-red-700 text-sm"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                        Add Commercial Warranty
+                      </label>
+
+                      <Field
+                        type="text"
+                        name="CommmericallWarranty"
+                        placeholder="5 years"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage
+                        name="CommmericallWarranty"
+                        component="div"
+                        className="text-red-500 dark:text-red-700 text-sm"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                        Add Plank Width
+                      </label>
+
+                      <Field
+                        type="text"
+                        name="plankWidth"
+                        placeholder="183 mm"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage
+                        name="plankWidth"
+                        component="div"
+                        className="text-red-500 dark:text-red-700 text-sm"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                        Add Thickness
+                      </label>
+
+                      <Field
+                        type="text"
+                        name="thickness"
+                        placeholder="5.5 mm"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage
+                        name="thickness"
+                        component="div"
+                        className="text-red-500 dark:text-red-700 text-sm"
+                      />
+                    </div>
+
+                    <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
+                      <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
+                        Box Coverage
+                      </label>
+
+                      <Field
+                        type="text"
+                        name="boxCoverage"
+                        placeholder="2.9"
+                        min="0"
+                        className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      />
+
+                      <ErrorMessage
+                        name="boxCoverage"
+                        component="div"
+                        className="text-red-500 dark:text-red-700 text-sm"
+                      />
+                    </div>
+
+                    {accessoryFlag &&
                       <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                         <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                          Waterproof
+                          length Per Meter Price
                         </label>
 
-                        <div className="flex items-center gap-2">
-                          <Field name="waterproof">
-                            {({
-                              field,
-                              form,
-                            }: {
-                              field: FieldInputProps<boolean>;
-                              form: FormikProps<{ waterproof: boolean }>;
-                            }) => (
-                              <input
-                                type="checkbox"
-                                name={field.name}
-                                checked={Boolean(field.value)}
-                                onChange={() =>
-                                  form.setFieldValue(field.name, !field.value)
-                                }
-                                className="h-5 w-5 rounded border-stroke bg-transparent text-primary focus:ring-primary dark:border-form-strokedark dark:bg-form-input"
-                              />
-                            )}
-                          </Field>
-                          <span className="text-black dark:text-white">
-                            Is this waterproof?
-                          </span>
-                        </div>
+                        <Field
+                          type="text"
+                          name="lengthPrice"
+                          placeholder="2m"
+                          min="0"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        />
 
                         <ErrorMessage
-                          name="waterproof"
+                          name="lengthPrice"
                           component="div"
                           className="text-red-500 dark:text-red-700 text-sm"
                         />
-                      </div>
+                      </div>}
+                  </div>
 
-                      <div className="py-4 px-6 rounded-sm border border-stroke">
-                        <div className="rounded-sm border border-stroke bg-white mb-4 dark:bg-black">
-                          <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
-                            <h3 className="font-medium text-black dark:text-white">
-                              Add Colours
-                            </h3>
-                          </div>
-                          <div className="flex flex-col py-4 px-6">
-                            <FieldArray name="colors">
-                              {({ push, remove }) => (
-                                <div className="flex flex-col gap-2">
-                                  {formik.values.colors &&
-                                    formik.values.colors.map(
-                                      (
-                                        model: AdditionalInformation,
-                                        index: number
-                                      ) => (
-                                        <div
-                                          key={index}
-                                          className="flex items-center"
-                                        >
-                                          <input
-                                            type="text"
-                                            name={`colors[${index}].name`}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={formik?.values?.colors?.[index].name}
-                                            placeholder="color Name"
-                                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                          />
-                                          <input
-                                            type="text"
-                                            name={`colors[${index}].detail`}
-                                            onChange={formik.handleChange}
-                                            onBlur={formik.handleBlur}
-                                            value={formik.values.colors?.[index].detail}
-                                            placeholder="add code"
-                                            className="w-full rounded-lg ml-2 border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                                          />
-                                          <button
-                                            type="button"
-                                            onClick={() => remove(index)}
-                                            className="ml-2 text-red-500 "
-                                          >
-                                            <RxCross2
-                                              className="text-red-500 dark:text-white"
-                                              size={25}
-                                            />
-                                          </button>
-                                        </div>
-                                      )
-                                    )}
-                                  <button
-                                    type="button"
-                                    onClick={() => push({ name: "", detail: "" })}
-                                    className="px-4 py-2 bg-black text-white dark:bg-primary dark:border-0  rounded-md shadow-md w-fit"
-                                  >
-                                    Add color
-                                  </button>
-                                </div>
-                              )}
-                            </FieldArray>
-                          </div>
-                        </div>
-                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                            Add Color Code
-                          </label>
-                          <Field
-                            type="number"
-                            name="colorCode"
-                            placeholder="enter color code"
-                            min="0"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          />
 
-                          <ErrorMessage
-                            name="colorCode"
-                            component="div"
-                            className="text-red-500 dark:text-red-700 text-sm"
-                          />
-                        </div>
-                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                            Add Residential Warranty
-                          </label>
-
-                          <Field
-                            type="text"
-                            name="ResidentialWarranty"
-                            placeholder="5 years"
-                            min="0"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          />
-
-                          <ErrorMessage
-                            name="ResidentialWarranty"
-                            component="div"
-                            className="text-red-500 dark:text-red-700 text-sm"
-                          />
-                        </div>
-
-                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                            Add Commercial Warranty
-                          </label>
-
-                          <Field
-                            type="text"
-                            name="CommmericallWarranty"
-                            placeholder="5 years"
-                            min="0"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          />
-
-                          <ErrorMessage
-                            name="CommmericallWarranty"
-                            component="div"
-                            className="text-red-500 dark:text-red-700 text-sm"
-                          />
-                        </div>
-
-                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                            Add Plank Width
-                          </label>
-
-                          <Field
-                            type="text"
-                            name="plankWidth"
-                            placeholder="183 mm"
-                            min="0"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          />
-
-                          <ErrorMessage
-                            name="plankWidth"
-                            component="div"
-                            className="text-red-500 dark:text-red-700 text-sm"
-                          />
-                        </div>
-
-                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                            Add Thickness
-                          </label>
-
-                          <Field
-                            type="text"
-                            name="thickness"
-                            placeholder="5.5 mm"
-                            min="0"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          />
-
-                          <ErrorMessage
-                            name="thickness"
-                            component="div"
-                            className="text-red-500 dark:text-red-700 text-sm"
-                          />
-                        </div>
-
-                        <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
-                          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
-                            Box Coverage
-                          </label>
-
-                          <Field
-                            type="text"
-                            name="boxCoverage"
-                            placeholder="2.9"
-                            min="0"
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                          />
-
-                          <ErrorMessage
-                            name="boxCoverage"
-                            component="div"
-                            className="text-red-500 dark:text-red-700 text-sm"
-                          />
-                        </div>
-                      </div>
-                    
-              
 
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
                     <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
@@ -1503,7 +1529,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                   )
                                 }
                               />
-                               <input
+                              <input
                                 className="border mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                 placeholder="colorCode"
                                 type="text"
@@ -1517,7 +1543,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     "colorCode"
                                   )
                                 }
-                               />
+                              />
                             </div>
                           );
                         })}

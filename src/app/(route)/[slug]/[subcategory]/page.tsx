@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 import Category from "../Cetagory";
+import { staticMenuItems } from "data/data";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string , subcategory: string }> }): Promise<Metadata> {
   const { slug , subcategory } = await params
@@ -56,12 +57,22 @@ if(!subCategory) return notFound()
 
 const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
   const { slug , subcategory } = await params
-  const [ catgories ] = await Promise.all([ fetchCategories() ]);
-  const findCategory = catgories.find((cat: ICategory) => (cat?.RecallUrl ) === slug.trim());
+  const [ categories ] = await Promise.all([ fetchCategories() ]);
+  const findCategory = categories.find((cat: ICategory) => (cat?.RecallUrl ) === slug.trim());
   if ( !findCategory) {
     return notFound()
   }
-  const filteredCategories = catgories.filter((value:ICategory)=>value?.name?.trim() !=="ACCESSORIES") || []
+
+  const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
+                      const indexA = staticMenuItems.findIndex(
+                          (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+                      );
+                      const indexB = staticMenuItems.findIndex(
+                          (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+                      );
+                      return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+                  })   || []
+  
   const getMatchingSubCategory = (subcategories: ICategory[], subCategoryUrl: string) => {
     return subcategories.filter((sub) => sub.custom_url === subCategoryUrl);
   };

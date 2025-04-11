@@ -7,7 +7,8 @@ import { Category, FilterState, ISUBCATEGORY } from "types/cat";
 import Link from "next/link";
 import { FIlterprops } from "types/types";
 import { usePathname } from "next/navigation";
-import { AdditionalInformation } from "types/prod";
+import { AdditionalInformation, IProduct } from "types/prod";
+import { IfilterValues } from "types/type";
 
 
 
@@ -22,30 +23,35 @@ const Filters = ({
   priceValue,
   className }: FIlterprops) => {
 
-  const [uniqueFilters, setUniqueFilters] = useState({
-    thicknesses: [] as string[],
-    commercialWarranty: [] as string[],
-    residentialWarranty: [] as string[],
-    plankWidth: [] as string[],
-    colors: [] as string[],
-  });
+  const [uniqueFilters, setUniqueFilters] = useState({thicknesses: [] as string[],commercialWarranty: [] as string[],residentialWarranty: [] as string[],plankWidth: [] as string[],Colours: [] as string[]});
   const [categoryState, setCategoryState] = useState<{
     polar?: Category;
     richmond?: Category;
   }>({});
   const path = usePathname();
+  const desiredCategoryOrder = [
+    "SPC FLOORING",
+    "LVT FLOORING",
+    "POLAR FLOORING",
+    "RICHMOND FLOORING"
+  ];
+  
+  const orderedCategories = [...catgories].sort((a, b) => {
+    return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
+  });
+  
   useEffect(() => {
-    const polar = catgories.find(
-      (cat: Category) => cat.name.toLowerCase() === "polar flooring"
-    );
     const richmond = catgories.find(
       (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
+    );
+    const polar = catgories.find(
+      (cat: Category) => cat.name.toLowerCase() === "polar flooring"
     );
     setCategoryState({ polar, richmond });
   }, [catgories]);
 
   const filterTitles = {
-    colors: "Colors",
+    Colours: "Colours",
     thicknesses: "Thickness",
     commercialWarranty: "Commercial Warranty",
     residentialWarranty: "Residential Warranty",
@@ -71,19 +77,28 @@ const Filters = ({
       }
     });
 
+  
     setUniqueFilters({
       thicknesses: Array.from(thicknessSet),
       commercialWarranty: Array.from(commercialWarrantySet),
       residentialWarranty: Array.from(residentialWarrantySet),
       plankWidth: Array.from(plankWidthSet),
-      colors: Array.from(colorSet),
+      Colours: Array.from(colorSet),
     });
   };
+
+
 
   useEffect(() => {
     extractUniqueAttributes(category);
   }, [category]);
 
+
+  const getColorCount = (targetColor: string): number => {
+    return category.products?.filter((product:IProduct) =>
+      product.colors?.some(color => color.name.trim().toLowerCase() === targetColor.toLowerCase())
+    ).length || 0;
+  };
   const handleYesWaterProof = (text: string) => {
     if (text === 'yes') {
 
@@ -105,7 +120,7 @@ const Filters = ({
   const handleClearFilter = () => {
     setPriceValue([0, 2000])
     setSelectedProductFilters({
-      colors: [],
+      Colours: [],
       thicknesses: [],
       commercialWarranty: [],
       residentialWarranty: [],
@@ -113,15 +128,36 @@ const Filters = ({
     });
     setIsWaterProof(null)
   }
+
+  const filtervalues:IfilterValues  ={
+    commercialWarranty: "CommmericallWarranty",
+    residentialWarranty : "ResidentialWarranty",
+    thicknesses: "thickness",
+    plankWidth: "plankWidth",
+  }
+
+
+  const filterProductsCountHanlder = (key:keyof IfilterValues,ValuesType:string)=>{
+      const filterprod = category?.products?.filter((product:IProduct)=>{
+        const values =  product[filtervalues[key] as keyof IProduct]
+        return values  == ValuesType;
+      })
+
+      return filterprod.length  ||0
+
+
+  }
+
+  
+
   return (
     <div className={`p-2 xl:p-4 w-full space-y-5  ${className}`}>
       <div className="border-b-2 pb-5">
         <p className="text-16 font-medium uppercase pb-2  text-[#191C1F]">Filter by Category</p>
 
-        {catgories.map((category, index) => {
+        {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
           const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
-
           return (
             <Accordion key={index} title={category.name} >
               <ul className="pl-4 text-sm text-gray-600 space-y-1">
@@ -136,10 +172,6 @@ const Filters = ({
           )
         }
         )}
-
-
-
-
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1">
             {Object.values(categoryState).map((item) => {
@@ -196,16 +228,26 @@ const Filters = ({
         </Accordion>
 
         {Object.entries(uniqueFilters).map(([filterKey, filterValues]) => {
-          // Make sure we have at least one value
           if (filterValues.length === 0) return null;
+     
+
 
           return (
             <Accordion key={filterKey} title={filterTitles[filterKey as keyof typeof uniqueFilters]}>
               <ul className="pl-4 text-sm text-gray-600 space-y-1">
-                {filterValues.map((item, i) => (
+                {filterValues.map((item, i) => {
+                       let length;
+                       let remaingCategory
+                       if(filterKey === 'Colours') {
+                         length=  getColorCount(item)
+                      }else {
+                        remaingCategory =  filterProductsCountHanlder(filterKey as keyof IfilterValues, item)
+                      }
+
+                  return (
                   <li key={i}>
                     <button
-                      className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState].some(
+                      className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState]?.some(
                         (val: string) => val === item
                       )
                         ? "text-primary"
@@ -213,10 +255,12 @@ const Filters = ({
                         }`}
                       onClick={() => handleFilterSelection(filterKey as keyof FilterState, item)}
                     >
-                      {item}
+                      {item + (length ? ` (${length})` : remaingCategory ? ` (${remaingCategory})`: "" )} 
                     </button>
                   </li>
-                ))}
+
+                  )
+        })}
               </ul>
             </Accordion>
           );
@@ -229,7 +273,7 @@ const Filters = ({
           setPriceValue={setPriceValue}
         />
         {(isWaterProof !== null ||
-          selectedProductFilters.colors.length > 0 ||
+          selectedProductFilters?.Colours?.length > 0 ||
           selectedProductFilters.thicknesses.length > 0 ||
           selectedProductFilters.commercialWarranty.length > 0 ||
           selectedProductFilters.residentialWarranty.length > 0 ||
@@ -270,7 +314,7 @@ const Filters = ({
       <div className="pb-5">
         <p className="text-16 font-medium uppercase pb-5 text-[#191C1F]">Popular Tag</p>
         <div className="flex items-center ">
-          <RatioButtons options={catgories} />
+          <RatioButtons options={orderedCategories} />
         </div>
       </div>
     </div>

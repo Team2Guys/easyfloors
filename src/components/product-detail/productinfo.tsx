@@ -6,7 +6,7 @@ import { CiHeart } from "react-icons/ci";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import PaymentMethod from "components/product-detail/payment";
 import { paymentcard } from "data/cart";
-import { AdditionalInformation, IProduct, IProductAccessories, ProductImage } from "types/prod";
+import { IProduct, IProductAccessories, ProductImage } from "types/prod";
 import { handleAddToStorage } from "lib/carthelper";
 
 const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor, setSelectedColor }: { productData: IProductAccessories, MainCategory: string, image?: { imageUrl: string }, setSelectedColor: React.Dispatch<SetStateAction<ProductImage | undefined>>, selectedColor: ProductImage | undefined }) => {
@@ -15,7 +15,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   const [requiredBoxes, setRequiredBoxes] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([]);
-  const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([]);
+  const [matchingColor, setMatchingColor] = useState<IProduct[]>([]);
   const boxCoverage = 2.4;
   const calculateSquareMeter = (boxes: number) => {
     return boxCoverage * boxes;
@@ -52,11 +52,14 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
   useEffect(() => {
     if (selectedColor?.color) {
-      const filterColor = productData?.products
-        ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
+      const filterColor = productData?.products?.filter((item: IProduct) => item.colors?.some((col) => col.detail === selectedColor.color)) || [];
+      console.log(filterColor, "filterColor")
+      // ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
       setMatchingColor(filterColor || []);
     }
   }, [selectedColor, productData]);
+
+  console.log(productData?.products, "productData?.products", matchingColor)
 
   const handleColorClick = (color: ProductImage) => {
     setSelectedColor(color);
@@ -74,62 +77,69 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <div className="flex border-b-[1px] border-gray-300"></div>
       </div>
 
-      <div className="w-full mt-5 h-216 border border-black p-3">
-        <p className="font-semibold font-inter text-16 xl:text-[23.6px] ">Colour: <span className="font-light text-14 xl:text-[20.6px]">{selectedColor?.colorName}</span></p>
+      <div className="w-full mt-1 h-216 border border-black px-3 pb-1">
+        <p className="font-semibold font-inter text-16 xl:text-20 ">Colour: <span className="font-light text-14 xl:text-19">{selectedColor?.colorName}</span></p>
         {uniqueFeatureImages.length > 0 ?
-          <div className="grid grid-cols-8 gap-2 lg:gap-4 mt-2">
+          <div className="grid grid-cols-8 gap-2 lg:gap-2 mt-1">
             {uniqueFeatureImages.map((col, index) => (
               <div key={index} className={`text-center border cursor-pointer w-full lg:w-12 ${selectedColor?.color === col.color ? 'border-black' : 'border-transparent'}`} onClick={() => handleColorClick(col)}>
                 <Image alt="img" src={col.imageUrl} height={1000} width={1000} className="h-auto w-full lg:h-12" />
-                <p className="text-[8px] sm:text-10 font-inter font-normal">{col.color}</p>
+                <p className="text-[8px] sm:text-10 font-inter font-normal text-nowrap">{col.color}</p>
               </div>
             ))}
           </div>
           :
-          <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour found</p>
+          <p className="font-inter font-light text-12 xl:text-16">No colour found</p>
         }
 
       </div>
-      <div className="mt-4 p-3 border border-black">
+      <div
+        className={`mt-3 p-3 border border-black h-36 ${matchingColor.length > 3 ? 'overflow-auto' : 'overflow-hidden'
+          }`}
+      >
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
-        {matchingColor.length ?
+        {matchingColor.length ? (
           matchingColor.map((item, index) => (
-            <p className="font-inter font-light text-12 xl:text-[20.6px]" key={index}>{item.name}</p>
+            <p className="font-inter font-light text-12 xl:text-16" key={index}>
+              {item.name}
+            </p>
           ))
-          : <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour match</p>}
+        ) : (
+          <p className="font-inter font-light text-12 xl:16">No colour match</p>
+        )}
       </div>
 
       {/* Length Input */}
-      <div className="border border-black mt-4 p-3">
-        <div className="flex items-center lg:items-start gap-2 ">
+      <div className="border border-black mt-2 p-3">
+        <div className="flex items-center gap-2 ">
           <p className="font-semibold font-inter text-16 xl:text-[23.6px]">Length:</p>
           <input
             type="number"
             value={length}
             onChange={handleLengthChange}
             placeholder="Enter your required meter"
-            min="0" 
-            className="border p-2 font-light font-inter text-black w-[60%] mt-1 border-primary text-12 xl:text-[20.6px]"
+            min="0"
+            className="border px-2 py-1 font-light font-inter text-black w-[60%] mt-1 border-primary text-12 xl:text-14"
           />
         </div>
         <p className="font-inter font-light tecxt-12 xl:text-sm mt-2">
-          (Selling in fixed length of 240cm)
+          {productData.lengthPrice ? "Length Per Piece: " + productData.lengthPrice : "Selling in fixed length of 240cm"}
         </p>
-        <div className="mt-2 font-semibold text-16 lg:text-[23.6px]">
-          <p>Height: <span className="font-light text-12 xl:text-[20.6px]">10 cm</span></p>
-          <p>Depth: <span className="font-light text-12 xl:text-[20.6px]">1.6 cm</span></p>
+        <div className="mt-2 font-semibold text-16 lg:text-18">
+          <p>Height: <span className="font-light text-12 xl:text-18">10 cm</span></p>
+          <p>Depth: <span className="font-light text-12 xl:text-18">1.6 cm</span></p>
         </div>
       </div>
-      <div className="mt-4 p-3 border border-black font-inter text-16 xl:text-[23.6px] font-semibold">
-        <p>Total Required: <span className="text-12 xl:text-[20.6px] font-light">{requiredBoxes}  metres</span></p>
-        <p >Price Per Metre: <span className="text-12 xl:text-[20.6px] font-light">AED {productData.price}</span></p>
-        <p>Total Amount: <span className="text-12 xl:text-[20.6px] font-light">AED {totalPrice} ({requiredBoxes} metre * AED {productData.price})</span></p>
+      <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
+        <p>Total Required: <span className="text-12 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
+        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light">AED {productData.price}</span></p>
+        <p>Total Amount: <span className="text-12 xl:text-17 font-light">AED {totalPrice} ({requiredBoxes} metre * AED {productData.price})</span></p>
       </div>
 
-      <div className="mt-4 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(),'m',selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
+      <div className="mt-2 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(),'m',selectedColor)} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="flex justify-center items-center text-14 text-[#475156] gap-1"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
 
 
@@ -140,7 +150,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <div className='flex justify-between lg:justify-start gap-2 lg:gap-10' >
           {
             paymentcard.map((array, index) => (
-              <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px] shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />
+              <Image className=' w-16  md:w-14 2xl:w-[50px] h-auto shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />
             ))
           }
         </div>
