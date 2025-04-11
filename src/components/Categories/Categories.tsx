@@ -1,13 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { BlogCardProps } from "types/type";
 import Link from "next/link";
+import { BlogCardProps } from "types/type";
 import { categoriesFeatures } from "data/data";
 
 const Categories: React.FC<BlogCardProps> = ({ card }) => {
-  const categoryData = categoriesFeatures.find(item => item.name === card.name);
-  const features = categoryData ? categoryData.features : [];
-
   return (
     <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b">
       <div className="relative h-full w-full">
@@ -38,12 +35,10 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
               Click Me
             </Link>
           </div>
-          <div className="absolute md:bottom-0 hidden sm:block md:right-0 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="absolute md:bottom-0 hidden sm:block  md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <ul className="list-disc pl-5 text-left">
-              {features.map((feature, index) => (
-                <li className="text-[8px] md:text-12" key={index}>
-                  {feature}
-                </li>
+              {categoriesFeatures.map((feature, index) => (
+                <li className="text-[8px] md:text-sm" key={index}>{feature}</li>
               ))}
             </ul>
           </div>

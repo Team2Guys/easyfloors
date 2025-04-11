@@ -82,6 +82,7 @@ export interface HeroMainProps {
 }
 export interface BlogCardProps {
   card: ISUBCATEGORY;
+  index?: number;
 }
 export interface FAQItem {
   id: number;
@@ -361,6 +362,16 @@ export interface PrivacyPolicyItem {
 }
 export interface PrivacyPolicyProps {
   data?: PrivacyPolicyItem[];
+}
+
+
+
+
+export interface  IfilterValues  {
+  commercialWarranty: string,
+    residentialWarranty : string,
+    thicknesses: string,
+    plankWidth: string,
 }
 
 export interface ProductTableProps {

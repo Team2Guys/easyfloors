@@ -256,7 +256,6 @@ export const getFreeSamples = async (): Promise<ICart[]> => {
     const db = await openDB();
 
     if (!db.objectStoreNames.contains("freeSample")) {
-      console.warn("Object store 'freeSample' does not exist.");
       return [];
     }
 
