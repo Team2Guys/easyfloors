@@ -6,7 +6,7 @@ import { CiHeart } from "react-icons/ci";
 import { HiOutlineShoppingCart } from "react-icons/hi";
 import PaymentMethod from "components/product-detail/payment";
 import { paymentcard } from "data/cart";
-import { AdditionalInformation, IProduct, IProductAccessories, ProductImage } from "types/prod";
+import { IProduct, IProductAccessories, ProductImage } from "types/prod";
 import { handleAddToStorage } from "lib/carthelper";
 
 const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor, setSelectedColor }: { productData: IProductAccessories, MainCategory: string, image?: { imageUrl: string }, setSelectedColor: React.Dispatch<SetStateAction<ProductImage | undefined>>, selectedColor: ProductImage | undefined }) => {
@@ -15,7 +15,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   const [requiredBoxes, setRequiredBoxes] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [uniqueFeatureImages, setUniqueFeatureImages] = useState<ProductImage[]>([]);
-  const [matchingColor, setMatchingColor] = useState<AdditionalInformation[]>([]);
+  const [matchingColor, setMatchingColor] = useState<IProduct[]>([]);
   const boxCoverage = 2.4;
   const calculateSquareMeter = (boxes: number) => {
     return boxCoverage * boxes;
@@ -52,11 +52,14 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
   useEffect(() => {
     if (selectedColor?.color) {
-      const filterColor = productData?.products
-        ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
+      const filterColor = productData?.products?.filter((item: IProduct) =>item.colors?.some((col) => col.detail === selectedColor.color)) || [];
+      console.log(filterColor, "filterColor")
+        // ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
       setMatchingColor(filterColor || []);
     }
   }, [selectedColor, productData]);
+
+  console.log(productData?.products, "productData?.products", matchingColor)
 
   const handleColorClick = (color: ProductImage) => {
     setSelectedColor(color);
@@ -88,7 +91,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           :
           <p className="font-inter font-light text-12 xl:text-[20.6px]">No colour found</p>
         }
-
+        
       </div>
       <div className="mt-4 p-3 border border-black">
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>

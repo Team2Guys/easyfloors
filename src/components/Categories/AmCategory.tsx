@@ -14,8 +14,8 @@ export default async function AmCategory({subCategories}: {subCategories: ISUBCA
     <CustomSwiper subCategories={subCategories} />
 
         <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {subCategories?.map((card:ISUBCATEGORY) => (
-            <BlogCard key={card.id} card={card} />
+          {subCategories?.map((card: ISUBCATEGORY, index: number) => (
+            <BlogCard key={card.id} card={card} index={index} />
           ))}
         </div>
       </div>

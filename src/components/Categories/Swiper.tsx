@@ -22,9 +22,9 @@ function CustomSwiper({subCategories}:{subCategories:ISUBCATEGORY[]}) {
         1280: { slidesPerView: 3, spaceBetween: 25 },
       }}
     >
-      {subCategories?.map((card:ISUBCATEGORY) => (
+      {subCategories?.map((card: ISUBCATEGORY, index: number) => (
         <SwiperSlide key={card.id}>
-          <BlogCard card={card} />
+          <BlogCard card={card} index={index} />
         </SwiperSlide>
       ))}
     </Swiper>

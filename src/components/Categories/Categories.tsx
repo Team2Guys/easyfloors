@@ -1,30 +1,37 @@
 import React from "react";
 import Image from "next/image";
-import { BlogCardProps } from "types/type";
 import Link from "next/link";
+import { BlogCardProps } from "types/type";
 import { categoriesFeatures } from "data/data";
 
-const Categories: React.FC<BlogCardProps> = ({ card }) => {
+interface Props extends BlogCardProps {
+  index: number;
+}
+
+const Categories: React.FC<Props> = ({ card, index }) => {
+  const features = categoriesFeatures[index] || [];
+
   return (
-    <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b ">
+    <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b">
       <div className="relative h-full w-full">
         <Image
           src={card?.homePageImage?.imageUrl || ""}
           alt={card?.homePageImage?.altText || "easy Floor"}
           width={2000}
           height={2000}
-          quality={100} 
+          quality={100}
           unoptimized
-          loading='lazy'
+          loading="lazy"
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
         />
 
-        <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70 ">
-          <h2 className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]" >I Am</h2>
-          <p
-            className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]"
-          >{card.name}
+        <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70">
+          <h2 className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+            I Am
+          </h2>
+          <p className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+            {card.name}
           </p>
           <div className="md:mt-3">
             <Link
@@ -34,10 +41,14 @@ const Categories: React.FC<BlogCardProps> = ({ card }) => {
               Click Me
             </Link>
           </div>
-          <div className="absolute md:bottom-0 hidden sm:block  md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+
+          {/* Unique Features */}
+          <div className="absolute md:bottom-0 hidden sm:block md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <ul className="list-disc pl-5 text-left">
-              {categoriesFeatures.map((feature, index) => (
-                <li className="text-[8px] md:text-sm" key={index}>{feature}</li>
+              {features.map((feature, i) => (
+                <li className="text-[8px] md:text-sm" key={i}>
+                  {feature}
+                </li>
               ))}
             </ul>
           </div>
