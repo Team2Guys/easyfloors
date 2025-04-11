@@ -881,7 +881,7 @@ export const sampleGridData: SampleGridData[] = [
     title: "Got Questions? Ask Away!",
     description:
       "Contact our friendly support team for expert advice on all your flooring needs.",
-    buttonText: "Request a callback",
+    buttonText: "Request a call back",
     image: "/assets/images/aboutus/request-call-back.png",
     alt: "Free sample order",
     href: 'contact-us'
