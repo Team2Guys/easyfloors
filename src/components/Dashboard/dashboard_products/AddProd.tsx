@@ -993,7 +993,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         <div className="rounded-sm border border-stroke bg-white mb-4 dark:bg-black">
                           <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
                             <h3 className="font-medium text-black dark:text-white">
-                              Add Colors
+                              Add Colours
                             </h3>
                           </div>
                           <div className="flex flex-col py-4 px-6">
