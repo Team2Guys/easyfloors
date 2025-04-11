@@ -303,7 +303,7 @@ const CartPage = ({ products }: CartPageProps) => {
                             </div>
                           </div>
                           <div className='col-span-2 text-center hidden xl:block'>
-                            {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'>AED <span>Free</span></p> :
+                            {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'><span>Free</span></p> :
                               <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>}
                           </div>
                           <div className='col-span-2 text-end lg:pr-5'>

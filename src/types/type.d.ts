@@ -26,10 +26,6 @@ interface Color {
   name: string;
   detail: string;
 }
-interface CategoryFeatures {
-  name: string;
-  features: string[];
-}
 
 
 export type Block = {
