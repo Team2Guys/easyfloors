@@ -97,6 +97,7 @@ export interface IProductFilter extends IProduct {
     requiredQty?: number;
     isAccessory?:string;
     isfreeSample?:boolean;
+    selectedColor?: ProductImage;
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {
