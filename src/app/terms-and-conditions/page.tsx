@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
     description: "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
-    url: 'fullUrl',
+    url: '/terms-and-conditions',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

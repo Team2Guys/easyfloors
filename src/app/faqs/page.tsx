@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'SPC & LVT Flooring FAQs | Easy Floors Answers You Can Trust',
     description: "Do you have questions about SPC or LVT flooring? Explore our FAQ page for answers on installation, warranties, pet safety, UAE climate suitability & more.",
-    url: 'fullUrl',
+    url: '/faqs',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

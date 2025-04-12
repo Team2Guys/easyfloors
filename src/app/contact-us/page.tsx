@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
     description: 'Have a question about flooring? Contact Easy Floors for expert support, product guidance, or order help. Fast response, friendly service.',
-    url: 'fullUrl',
+    url: '/contact-us',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

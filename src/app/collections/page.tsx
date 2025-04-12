@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
     description: "Browse Easy Floors’ premium SPC and LVT flooring collections. From herringbone to luxury vinyl, durable, stylish floors for homes and commercial spaces.",
-    url: 'fullUrl',
+    url: '/collections',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

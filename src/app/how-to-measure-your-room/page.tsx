@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Flooring Calculator Guide | How to Measure at Easy Floors UAE',
     description: 'Measure your room the right way! Use our step-by-step guide to calculate flooring quantity accurately and avoid waste. Expert help is available across the UAE.',
-    url: 'fullUrl',
+    url: '/how-to-measure-your-room',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

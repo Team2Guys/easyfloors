@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Secure Checkout | Complete Your Flooring Order at Easy Floors',
     description: 'Fast and secure checkout for your Easy Floors order. Enter delivery details, choose payment, and get your dream floors delivered in no time.',
-    url: 'fullUrl',
+    url: '/checkout',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

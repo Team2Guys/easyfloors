@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Login to Your Easy Floors Account | Secure Access',
     description: 'Access your Easy Floors account to track orders, manage preferences, and explore premium flooring collections. Quick, secure, and easy login.',
-    url: 'fullUrl',
+    url: '/login',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

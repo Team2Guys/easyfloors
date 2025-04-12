@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Your Flooring Cart | Review & Checkout with Easy Floors',
     description: "Ready to upgrade your floors? Review your selected items in the Easy Floors cart and proceed to secure checkout when you're ready.",
-    url: 'fullUrl',
+    url: '/cart',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],

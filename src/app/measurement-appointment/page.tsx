@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Book a Flooring Measurement Appointment | Easy Floors UAE',
     description: 'Schedule a professional flooring measurement with Easy Floors. AED 150 fee fully refunded upon order. Accurate sizing, no guesswork.',
-    url: 'fullUrl',
+    url: '/measurement-appointment',
     images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
       },
     ],
