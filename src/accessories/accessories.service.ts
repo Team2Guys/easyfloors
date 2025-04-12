@@ -74,6 +74,7 @@ export class AccessoriesService {
     }
   }
 
+
   async findOneMetatitle(custom_url: string, category: string) {
     try {
 
@@ -102,6 +103,7 @@ export class AccessoriesService {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
   }
+  
 }
 
 
