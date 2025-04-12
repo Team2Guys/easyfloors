@@ -18,6 +18,7 @@ async function bootstrap() {
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"], 
   });
+  app.setGlobalPrefix('backend');
 
   app.use(cookieParser());
   app.useGlobalGuards(new AuthGuard(new Reflector()));

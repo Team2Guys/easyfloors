@@ -46,9 +46,11 @@ export class SubCategoriesService {
 
     }
   }
-  async findOne(custom_url: string) {
+  async findOne(custom_url: string, category:string) {
     try {
-      return await this.prisma.subCategories.findFirst({ where: { custom_url }, include: { category: true } });
+      return await this.prisma.subCategories.findFirst({ where: { custom_url, category:{
+        RecallUrl:category
+      } }, include: { category: true } });
     } catch (error) {
       return customHttpException(`${error.message || JSON.stringify(error)}`, 'GATEWAY_TIMEOUT')
 
