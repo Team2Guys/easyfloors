@@ -24,7 +24,7 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, isImag
             {/* slug name */}
               {subcategory ? (
                 <Link
-                  href={`/${slug === "richmond" ? "richmond-flooring" : slug === "polar" ? "polar-flooring" : slug}`}
+                  href={`/${slug === "richmond" ? "richmond-flooring" : slug === "polar" ? "polar-flooring" : slug?.toUpperCase()}`}
                   className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize"
                 >
                   {slug}
