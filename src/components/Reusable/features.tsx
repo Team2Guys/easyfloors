@@ -23,14 +23,14 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
 
   return (
     <div className="relative bg-white w-full px-3 my-7 sm:mb-10 xl:mb-14 xl:mt-7">
-      <Slider ref={sliderRef} {...sliderSettings} className="w-full">
+      <Slider ref={sliderRef} {...sliderSettings} className="w-full p-2">
         {items.map((item, index) => {
           const isLastItem = index === items.length - 1;
 
           return (
             <div key={index} className="sm:px-1 lg:px-2 !flex flex-nowrap">
 
-              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-[#0000001F] xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 md:p-4 h-[147px] xs:h-[125px] sm:h-[200px] md:h-[180px] lg:h-[200px] md:gap-3 xl:pr-4 2xl:pr-5">
+              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-[#0000001F] xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 md:p-4 h-[153px] xs:h-[131px] sm:h-[200px] md:h-[193px] lg:h-[200px] md:gap-3 xl:pr-4 2xl:pr-5">
                 <Image
                   src={item.icon}
                   alt={item.title}
@@ -56,7 +56,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
         className="absolute -left-1 xs:left-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
         aria-label="Previous slide"
       >
-        <Image src="/assets/images/left.png" height={1500} width={1500} alt="image" className="h-4 w-4 sm:h-5 sm:w-5" />
+        <Image src="/assets/images/left.png" height={1500} width={1500} alt="image" className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
 
       <button
@@ -64,7 +64,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
         className="absolute -right-1 xs:right-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
         aria-label="Next slide"
       >
-        <Image src="/assets/images/right.png" height={1500} width={1500} alt="image" className="h-4 w-4 sm:h-5 sm:w-5" />
+        <Image src="/assets/images/right.png" height={1500} width={1500} alt="image" className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
     </div>
   );

@@ -22,7 +22,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     plankWidth: [],
   });
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
-  const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
+  const [priceValue, setPriceValue] = useState<[number, number]>([0, 149]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');

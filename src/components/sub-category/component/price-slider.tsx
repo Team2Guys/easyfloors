@@ -14,7 +14,7 @@ const PriceSlider = ({ setPriceValue, priceValue }: {
       key={state.index}
         className="relative w-full h-[1.1px] "
         style={{
-          background: `linear-gradient(to right, #E4E7E9  ${((minValue / 2000) * 100)}%, #cc7644 ${((minValue / 2000) * 100)}%, #cc7644 ${(maxValue / 2000) * 100}%, #E4E7E9 ${(maxValue / 2000) * 100}%)`,
+          background: `linear-gradient(to right, #E4E7E9  ${((minValue /  maxValue) * 100)}%, #cc7644 ${((minValue / maxValue) * 100)}%, #cc7644 ${(maxValue /  maxValue) * 100}%, #E4E7E9 ${(maxValue /  maxValue) * 100}%)`,
         }}
       />
     );
@@ -28,14 +28,14 @@ const PriceSlider = ({ setPriceValue, priceValue }: {
         trackClassName="h-[1px] rounded-full"
         value={priceValue}
         min={0}
-        max={2000}
+        max={149}
         onChange={setPriceValue}
         pearling
         minDistance={50}
         renderTrack={renderTrack}
       />
       <p className="mt-2 pl-5 font-inter text-12 xl:text-14 pt-1 text-[#475156]">
-        Price: <span className="font-normal">{priceValue[0]} AED — {priceValue[1]} AED</span>
+        Price: <span className="font-normal">{priceValue[0]} AED/m² — {priceValue[1]} AED</span>
       </p>
     </div>
   );
