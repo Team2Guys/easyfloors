@@ -53,8 +53,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   useEffect(() => {
     if (selectedColor?.color) {
       const filterColor = productData?.products?.filter((item: IProduct) => item.colors?.some((col) => col.detail === selectedColor.color)) || [];
-      console.log(filterColor, "filterColor")
-      // ?.flatMap((item: IProduct) => item.colors?.filter((col) => col.detail === selectedColor.color) || []);
       setMatchingColor(filterColor || []);
     }
   }, [selectedColor, productData]);
@@ -65,7 +63,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
   return (
     <div className="p-1 lg:px-4">
       <div className="space-y-1 mt-5 lg:mt-0">
-        <h2 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h2>
+        <h1 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h1>
         <div className="flex border-b-[1px] border-gray-300"></div>
         <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
           Price Per Metre: <span className="text-primary">AED {productData.price}</span>
