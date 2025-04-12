@@ -1,5 +1,5 @@
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AuthData, CategoryFeatures, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -410,10 +410,6 @@ export const imageData: TImageBanner = {
   alt: 'Picture of the author',
 };
 
-interface CategoryFeatures{
-  name:string,
-  features:string[]
-}
 
 
 export const categoriesFeatures:CategoryFeatures[] = [
