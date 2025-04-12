@@ -74,7 +74,7 @@ const ContactForm: React.FC = () => {
                 htmlFor="firstName"
                 className="text-14 md:text-20 font-medium font-inter"
               >
-                First Name
+                First Name <span className="text-red-500 text-14 align-super">*</span>
               </label>
               <Field
                 type="text"
@@ -94,7 +94,7 @@ const ContactForm: React.FC = () => {
                 htmlFor="LastName"
                 className="text-14 md:text-20 font-medium font-inter"
               >
-                Last Name
+                Last Name <span className="text-red-500 text-14 align-super">*</span>
               </label>
               <Field
                 type="text"
@@ -114,7 +114,7 @@ const ContactForm: React.FC = () => {
                 htmlFor="email"
                 className="text-14 md:text-20 font-medium font-inter"
               >
-                Email
+                Email <span className="text-red-500 text-14 align-super">*</span>
               </label>
               <Field
                 type="email"
@@ -134,7 +134,7 @@ const ContactForm: React.FC = () => {
                 htmlFor="phoneNumber"
                 className="text-14 md:text-20 font-medium font-inter"
               >
-                Phone Number
+                Phone Number <span className="text-red-500 text-14 align-super">*</span>
               </label>
               <Field
                 type="tel"

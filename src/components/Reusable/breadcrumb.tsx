@@ -7,8 +7,8 @@ import { BreadcrumbProps } from "types/PagesProps";
 
 const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext, imageClass }: BreadcrumbProps) => {
   return (
-    <div className="relative w-full pt-3">
-      <div className="bg-background text-black py-3 font-inter">
+    <div className="relative w-full pt-3 ">
+      <div className="bg-background text-black py-3 font-inter ">
         <Container className="text-lg flex items-center gap-2 sm:gap-4">
           {/* Home Link */}
           <Link href="/" className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">

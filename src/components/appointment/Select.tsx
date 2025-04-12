@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
 import { ErrorMessage, useFormikContext } from "formik";
-import { FiChevronDown } from "react-icons/fi";
+import { FiChevronDown, FiX } from "react-icons/fi";
 
 interface Option {
   value: string;
@@ -18,18 +18,53 @@ interface SelectProps {
 
 const Select = ({ name, options, label, required = false, placeholder = "Select Location" }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const { values, setFieldValue } = useFormikContext<{ [key: string]: string }>();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+        setSearchTerm("");
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  const filteredOptions = options.filter(option =>
+    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSelectClick = () => {
+    setIsOpen(!isOpen);
+    setSearchTerm("");
+  };
+
+  const handleOptionSelect = (option: Option) => {
+    setFieldValue(name, option.value);
+    setIsOpen(false);
+    setSearchTerm("");
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm("");
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const displayValue = values[name] 
+    ? options.find(opt => opt.value === values[name])?.label 
+    : placeholder;
 
   return (
     <div className="flex flex-col mb-1">
@@ -40,29 +75,58 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
       )}
 
       <div ref={dropdownRef} className="relative w-full mt-1">
-        <button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex justify-between items-center w-full px-3 h-11 border border-gray-300 bg-white text-12 font-medium font-inter"
+        <div
+          onClick={handleSelectClick}
+          className="flex justify-between items-center w-full px-3 h-11 border border-gray-300 bg-white text-12 font-medium font-inter cursor-pointer"
         >
-          {values[name] ? options.find(opt => opt.value === values[name])?.label : placeholder}
-          <FiChevronDown className={`text-gray-500 transition ${isOpen ? "rotate-180" : ""}`} />
-        </button>
+          {isOpen ? (
+            <input
+              ref={inputRef}
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder={displayValue}
+              className="w-full focus:outline-none flex-1"
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <span className={`truncate flex-1 text-left ${!values[name] ? 'text-gray-400' : ''}`}>
+              {displayValue}
+            </span>
+          )}
+          <div className="flex items-center">
+            {isOpen && searchTerm && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClearSearch();
+                }}
+                className="text-gray-400 hover:text-gray-600 mr-1"
+              >
+                <FiX size={16} />
+              </button>
+            )}
+            <FiChevronDown className={`text-gray-500 transition ${isOpen ? "rotate-180" : ""}`} />
+          </div>
+        </div>
 
         {isOpen && (
-          <ul className="absolute left-0 w-full bg-white border border-gray-200 rounded-md mt-1 shadow-md z-20 max-h-40 overflow-auto">
-            {options.map((option) => (
-              <li
-                key={option.value}
-                className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white transition text-12 lg:text-sm"
-                onClick={() => {
-                  setFieldValue(name, option.value);
-                  setIsOpen(false);
-                }}
-              >
-                {option.label}
+          <ul className="absolute left-0 w-full bg-white border border-gray-200 rounded-b-md shadow-md z-20 max-h-60 overflow-y-auto">
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map((option) => (
+                <li
+                  key={option.value}
+                  className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white transition text-12 lg:text-sm"
+                  onClick={() => handleOptionSelect(option)}
+                >
+                  {option.label}
+                </li>
+              ))
+            ) : (
+              <li className="px-4 py-2 text-12 text-gray-500">
+                No options found
               </li>
-            ))}
+            )}
           </ul>
         )}
       </div>

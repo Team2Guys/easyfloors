@@ -126,9 +126,9 @@ const handleMouseMove = (e: React.MouseEvent) => {
         
         <button
           onClick={() => thumbSliderRef.current?.slickPrev()}
-          className="absolute left-1/2 -translate-x-1/2 z-30 bg-white p-1  shadow"
+          className="absolute left-1/2 -translate-x-1/2 z-30 bg-white p-1  shadow sm:text-24 xl:text-30"
         >
-          <FaAngleUp size={30}/>
+          <FaAngleUp />
         </button>
       
         {/* Thumbnail Slider */}
@@ -157,7 +157,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                 src={product.imageUrl}
                 className={`w-full ${
                   imageheight
-                    ? "h-[35px] sm:h-[73px] md:h-[150px]"
+                    ? "h-[44px] sm:h-[73px] md:h-[148px]"
                     : "h-[35px] sm:h-[73px] md:h-[124px]"
                 }`}
                 alt={product.altText || "Thumbnail"}
@@ -169,9 +169,9 @@ const handleMouseMove = (e: React.MouseEvent) => {
         {/* Down Arrow */}
         <button
           onClick={() => thumbSliderRef.current?.slickNext()}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow"
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow sm:text-24 xl:text-30"
         >
-          <FaAngleDown size={30} />
+          <FaAngleDown />
         </button>
         </div>
       
@@ -192,7 +192,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                   className={`w-full ${
                     imageheight
                       ? "h-[35px] sm:h-[73px] md:h-[230px]"
-                      : "h-[35px] sm:h-[73px] md:h-[124px]"
+                      : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[124px]"
                   }`}
                   alt={product.altText || "Thumbnail"}
                 />
@@ -233,7 +233,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                 className={`w-full ${
                   imageheight
                     ? "h-[273px] sm:h-[520px] md:h-[810px]"
-                    : "h-[273px] sm:h-[520px] md:h-[830px]"
+                    : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[830px]"
                 }`}
                 alt={product.altText || "Thumbnail"}
               />
@@ -297,7 +297,7 @@ const handleMouseMove = (e: React.MouseEvent) => {
                         : ""
                     }`}
                   />
-                  <p className="font-semibold text-[8px] md:text-14 lg:text-16">
+                  <p className="font-semibold text-[8px] md:text-14 lg:text-12 xl:text-16">
                     {getStaticTitle(index)}
                   </p>
                 </div>
