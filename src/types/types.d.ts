@@ -265,3 +265,11 @@ export interface TDelivery {
   email: string
   address: string
 }
+export interface CategoryFeatures{
+  name:string,
+  features:string[]
+}
+export interface Props extends BlogCardProps {
+  index: number;
+  card:string;
+}
