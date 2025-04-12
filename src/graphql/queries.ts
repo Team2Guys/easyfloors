@@ -470,8 +470,8 @@ export const FIND_ONE_Accessory = gql`
 `
 
 export const FIND_ONE_SUB_CATEGORY = gql`
-query SubCategory($customUrl: String!) {
-  subCategory(customUrl: $customUrl) {
+query SubCategory($customUrl: String!, $category: String!) {
+  subCategory(customUrl: $customUrl, category: $category) {
     id
     name
          Canonical_Tag

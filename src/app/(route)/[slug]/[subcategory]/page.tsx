@@ -7,10 +7,10 @@ import { headers } from "next/headers";
 import Category from "../Cetagory";
 import { staticMenuItems } from "data/data";
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string , subcategory: string }> }): Promise<Metadata> {
-  const { slug , subcategory } = await params
-const subCategory=   await   fetchSingeSubCategory(subcategory.trim())
-if(!subCategory) return notFound()
+export async function generateMetadata({ params }: { params: Promise<{ slug: string, subcategory: string }> }): Promise<Metadata> {
+  const { slug, subcategory } = await params
+  const subCategory = await fetchSingeSubCategory(subcategory.trim(), slug)
+  if (!subCategory) return notFound()
 
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
@@ -18,7 +18,7 @@ if(!subCategory) return notFound()
   const pathname = headersList.get('x-invoke-path') || '/';
 
   const fullUrl = `${protocol}://${domain}${pathname}`;
-
+console.log(slug, "slug")
   const ImageUrl =
     subCategory?.posterImageUrl.imageUrl ||
     'Easy Floor';
@@ -55,31 +55,31 @@ if(!subCategory) return notFound()
   };
 }
 
-const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string , subcategory: string}> }) => {
-  const { slug , subcategory } = await params
-  const [ categories ] = await Promise.all([ fetchCategories() ]);
-  const findCategory = categories.find((cat: ICategory) => (cat?.RecallUrl ) === slug.trim());
-  if ( !findCategory) {
+const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string, subcategory: string }> }) => {
+  const { slug, subcategory } = await params
+  const [categories] = await Promise.all([fetchCategories()]);
+  const findCategory = categories.find((cat: ICategory) => (cat?.RecallUrl) === slug.trim());
+  if (!findCategory) {
     return notFound()
   }
 
   const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
-                      const indexA = staticMenuItems.findIndex(
-                          (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
-                      );
-                      const indexB = staticMenuItems.findIndex(
-                          (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
-                      );
-                      return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-                  })   || []
-  
+    const indexA = staticMenuItems.findIndex(
+      (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+    );
+    const indexB = staticMenuItems.findIndex(
+      (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+    );
+    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+  }) || []
+
   const getMatchingSubCategory = (subcategories: ICategory[], subCategoryUrl: string) => {
     return subcategories.filter((sub) => sub.custom_url === subCategoryUrl);
   };
   const matchingSubCategory = getMatchingSubCategory(findCategory.subcategories, subcategory);
   return (
     <Suspense fallback="Loading .....">
-      <Category catgories={filteredCategories} categoryData={findCategory}  slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
+      <Category catgories={filteredCategories} categoryData={findCategory} slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
     </Suspense>
   );
 };
