@@ -21,7 +21,6 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     residentialWarranty: [],
     plankWidth: [],
   });
-
   
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([0, 149]);
@@ -56,7 +55,6 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     subcategory,
     isWaterProof,
   ]);
-
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"
@@ -75,6 +73,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
             setSelectedProductFilters={setSelectedProductFilters}
             priceValue={priceValue}
             setPriceValue={setPriceValue}
+            catSlug={slug}
           />
         </div>
         <div className="lg:w-[80%]">
@@ -113,6 +112,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
                     setSelectedProductFilters={setSelectedProductFilters}
                     priceValue={priceValue}
                     setPriceValue={setPriceValue}
+                    catSlug={slug}
                   />
                 </Drawer>
               </div>

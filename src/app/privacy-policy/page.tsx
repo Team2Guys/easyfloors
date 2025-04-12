@@ -2,7 +2,23 @@ import Container from 'components/common/container/Container';
 import { privacyPolicyData } from 'data/privacy-policy';
 import Link from 'next/link';
 import React from 'react';
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Easy Floors Privacy Policy | How We Protect Your Data',
+  description:
+    'Learn how Easy Floors collects, uses, and protects your personal information. Read about data privacy, cookies, user rights, and how we keep your info secure.',
+  openGraph: {
+    title: 'Easy Floors Privacy Policy | How We Protect Your Data',
+    description: 'Learn how Easy Floors collects, uses, and protects your personal information. Read about data privacy, cookies, user rights, and how we keep your info secure.',
+    url: '/privacy-policy',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/privacy-policy',
+  },
+};
 const PrivacyPolicy = () => {
   const renderLinkableText = (text: string) => {
     const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;

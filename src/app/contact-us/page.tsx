@@ -2,8 +2,24 @@ import Container from "components/common/container/Container";
 import ContactForm from "components/contact/contact-form";
 import ContactInfo from "components/contact/contact-info";
 import Breadcrumb from "components/Reusable/breadcrumb";
+import { Metadata } from "next";
 import React from "react";
-
+export const metadata: Metadata = {
+  title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
+  description:
+    'Have a question about flooring? Contact Easy Floors for expert support, product guidance, or order help. Fast response, friendly service.',
+  openGraph: {
+    title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
+    description: 'Have a question about flooring? Contact Easy Floors for expert support, product guidance, or order help. Fast response, friendly service.',
+    url: '/contact-us',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/contact-us',
+  },
+};
 const Contact = () => {
   return (
     <>
