@@ -309,7 +309,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
             <TbShoppingBag size={50} />
             <p className="text-center text-black capitalize text-20 font-semibold">{emptyMessage}</p>
             <div className="flex justify-center mt-2">
-              <Link href="/" className="bg-primary text-white px-4 py-2">Continue Shopping</Link>
+              <Link href="/" onClick={closePanel} className="bg-primary text-white px-4 py-2">Continue Shopping</Link>
             </div>
           </div>
           }
