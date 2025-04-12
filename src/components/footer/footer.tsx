@@ -66,7 +66,7 @@ const Footer = () => {
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
-                <div className="md:col-span- lg:col-span- ">
+                <div className="sm:mt-2">
                     <Image src="/assets/images/logo.png" alt="Easyfloors" width={120} height={50} className="mb-4" />
                     <p className="mt-2 text-sm">{footerData.company.description}</p>
                 </div>

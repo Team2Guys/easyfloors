@@ -118,18 +118,20 @@ const handleMouseMove = (e: React.MouseEvent) => {
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp} // Stop dragging if the mouse leaves the container
+      onMouseLeave={handleMouseUp}
     >
       <div className="w-2/12">
         {stickyside ? (
         <div className="relative">
         
-        <button
-          onClick={() => thumbSliderRef.current?.slickPrev()}
-          className="absolute left-1/2 -translate-x-1/2 z-30 bg-white p-1  shadow sm:text-24 xl:text-30"
-        >
-          <FaAngleUp />
-        </button>
+        {ThumnailImage.length > 5 && (
+          <button
+            onClick={() => thumbSliderRef.current?.slickPrev()}
+            className="absolute top-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow sm:text-24 xl:text-30"
+          >
+            <FaAngleUp />
+          </button>
+        )}
       
         {/* Thumbnail Slider */}
         <Slider
@@ -167,12 +169,14 @@ const handleMouseMove = (e: React.MouseEvent) => {
         </Slider>
       
         {/* Down Arrow */}
-        <button
-          onClick={() => thumbSliderRef.current?.slickNext()}
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow sm:text-24 xl:text-30"
-        >
-          <FaAngleDown />
-        </button>
+        {ThumnailImage.length > 5 && (
+            <button
+              onClick={() => thumbSliderRef.current?.slickNext()}
+              className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 bg-white p-1 shadow sm:text-24 xl:text-30"
+            >
+              <FaAngleDown />
+            </button>
+          )}
         </div>
       
         ) : (

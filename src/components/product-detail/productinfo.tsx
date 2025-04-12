@@ -59,8 +59,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
     }
   }, [selectedColor, productData]);
 
-
-
   const handleColorClick = (color: ProductImage) => {
     setSelectedColor(color);
   };
