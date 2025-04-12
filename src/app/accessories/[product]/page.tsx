@@ -1,56 +1,11 @@
 
 import React from 'react';
-import { fetchAccessories } from 'config/fetch';
+import { fetchAccessories, getMetaTitleData } from 'config/fetch';
 import { IProduct } from "types/prod";
 import { notFound } from "next/navigation";
 import AccessoriesDetail from "./AccessoriesDetail";
 import { headers } from 'next/headers';
 import { Metadata } from 'next';
-import { gql } from '@apollo/client';
-import client from 'config/apolloClient';
-
-
-interface IParams { product: string }
-
-const FETCH_META_TITLE = gql`
-  query FetchMetaTitle($custom_url: String!, $category: String!) {
-    fetchMetatTitle(custom_url: $custom_url, category: $category) {
-        name
-        Canonical_Tag
-        Meta_Description
-        Meta_Title
-        posterImageUrl,
-
-    }
-  }
-`;
-
-export const getMetaTitleData = async (custom_url: string, category: string) => {
-  try {
-    const { data } = await client.query({
-      query: FETCH_META_TITLE,
-      variables: {
-        custom_url,
-        category,
-      },
-    });
-    return data?.fetchMetatTitle;
-  
-  } catch (error: any) { //eslint-disable-line
-    // Log complete error structure
-
-    // Extract useful error details
-    if (error?.graphQLErrors?.length) {
-      console.error("GraphQL Error:", error.graphQLErrors[0].message);
-    } else if (error?.networkError?.result?.errors?.length) {
-      console.error("Network Error:", error.networkError.result.errors[0].message);
-    } else {
-      console.error("Unknown Apollo error:", error.message);
-    }
-
-    return null;
-  }
-};
 
 
 interface IParams { product: string }
@@ -115,3 +70,6 @@ const ProductImageGallery = async ({ params }: { params: Promise<IParams> }) => 
 };
 
 export default ProductImageGallery;
+
+
+
