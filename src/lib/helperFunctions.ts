@@ -101,3 +101,4 @@ export const productFilter = ({
 
   return { filtered: filtered || [], appliedFilters };
 };
+

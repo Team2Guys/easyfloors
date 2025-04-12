@@ -49,3 +49,17 @@ export const UPDATE_ACCESSORY_MUTATION = gql`
     }
   }
 `;
+
+
+export const FETCH_META_TITLE = gql`
+query FetchMetaTitle($custom_url: String!, $category: String!) {
+  fetchMetatTitle(custom_url: $custom_url, category: $category) {
+      name
+      Canonical_Tag
+      Meta_Description
+      Meta_Title
+      posterImageUrl,
+
+  }
+}
+`;

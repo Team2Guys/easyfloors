@@ -3,7 +3,7 @@ import axios from 'axios';
 import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_ORDERS, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS, GET_ORDER_HISTORY, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
-import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
+import { FETCH_ALL_ACCESSORIES, FETCH_META_TITLE } from 'graphql/Accessories';
 import { Category } from 'types/cat';
 import { IProduct } from 'types/prod';
 import { ORDER_QUERY } from 'graphql/mutations';
@@ -74,7 +74,7 @@ export const fetchAppointments = async (token: string | undefined) => {
         headers: {
           Authorization: `Bearer ${token}`
         },
-        fetchOptions: { 
+        fetchOptions: {
           next: { tags: ["appointments"] }
         },
       },
@@ -96,7 +96,7 @@ export const fetchOrders = async (token: string | undefined) => {
         headers: {
           Authorization: `Bearer ${token}`
         },
-        fetchOptions: { 
+        fetchOptions: {
           next: { tags: ["orders"] }
         },
       },
@@ -108,7 +108,7 @@ export const fetchOrders = async (token: string | undefined) => {
   }
 };
 
-export const fetchOrdersHistory = async (token: string | undefined , email: string | null | undefined) => {
+export const fetchOrdersHistory = async (token: string | undefined, email: string | null | undefined) => {
   try {
     const { data } = await client.query({
       query: GET_ORDER_HISTORY,
@@ -118,7 +118,7 @@ export const fetchOrdersHistory = async (token: string | undefined , email: stri
         headers: {
           Authorization: `Bearer ${token}`
         },
-        fetchOptions: { 
+        fetchOptions: {
           next: { tags: ["usersorders"] }
         },
       },
@@ -155,7 +155,7 @@ export const get_all_records = async (token: string) => {
         headers: {
           Authorization: `Bearer ${token}`
         },
-        fetchOptions: { 
+        fetchOptions: {
           next: { tags: ["states_records"] }
         },
       },
@@ -247,11 +247,11 @@ export const fetchSingeSubCategory = async (customUrl: string): Promise<Category
   }
 };
 
-export const fetchSingeProduct = async (customUrl: string, category: string, subCategory: string , acessories?: boolean, FIND_QUICK_VIEW_PRODUCT?: DocumentNode): Promise<IProduct | null> => {
+export const fetchSingeProduct = async (customUrl: string, category: string, subCategory: string, acessories?: boolean, FIND_QUICK_VIEW_PRODUCT?: DocumentNode): Promise<IProduct | null> => {
   try {
     const { data } = await client.query({
       query: FIND_QUICK_VIEW_PRODUCT ? FIND_QUICK_VIEW_PRODUCT : FIND_ONE_PRODUCT,
-      variables: { custom_url: customUrl, category, subCategory , acessories },
+      variables: { custom_url: customUrl, category, subCategory, acessories },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["products"] } },
@@ -280,6 +280,42 @@ export const fetchSingleOrder = async (orderId: string) => {
     return data?.Order || null;
   } catch (error) {
     console.error("Error fetching order:", error);
+    return null;
+  }
+};
+
+
+
+export const getMetaTitleData = async (custom_url: string, category: string) => {
+  try {
+    const { data } = await client.query({
+      query: FETCH_META_TITLE,
+      variables: {
+        custom_url,
+        category,
+      },
+      fetchPolicy: "no-cache",
+      context: {
+        fetchOptions: {
+          credentials: "include",
+          next: { tags: ["accessories"] }
+        },
+      },
+    });
+    return data?.fetchMetatTitle;
+
+  } catch (error: any) { //eslint-disable-line
+    // Log complete error structure
+
+    // Extract useful error details
+    if (error?.graphQLErrors?.length) {
+      console.error("GraphQL Error:", error.graphQLErrors[0].message);
+    } else if (error?.networkError?.result?.errors?.length) {
+      console.error("Network Error:", error.networkError.result.errors[0].message);
+    } else {
+      console.error("Unknown Apollo error:", error.message);
+    }
+
     return null;
   }
 };
