@@ -74,14 +74,20 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
       const isWishlistPage = pathname === "/wishlist";
       const isFreeSamplePage = pathname === "/freesample";
   
-      const shouldShowPanel =
-        (type === "cart" && !isCartPage) ||
-        (type === "wishlist" && !isWishlistPage) ||
-        (type === "freeSample" && !isFreeSamplePage && !isWishlistPage) ||
-        (type === "cartfreeSample" && !isFreeSamplePage && !isWishlistPage);
-  
-      if (shouldShowPanel) {
+      // Special case: On free sample page, only show cart popup for cart updates
+      if (isFreeSamplePage && type === "cart") {
         setIsOpen(true);
+      }
+      // Normal cases for other pages
+      else if (!isFreeSamplePage) {
+        const shouldShowPanel =
+          (type === "cart" && !isCartPage) ||
+          (type === "wishlist" && !isWishlistPage) ||
+          (type === "freeSample" && !isWishlistPage);
+  
+        if (shouldShowPanel) {
+          setIsOpen(true);
+        }
       }
     };
   
@@ -129,23 +135,31 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
     try {
       if (isFreeSample) {
-        await cartremoveFreeSample(id); // Remove from free samples
+        if (type === "freeSample") {
+          await removeFreeSample(id); // Remove from free samples list
+        } else if (type === "cart") {
+          await cartremoveFreeSample(id); // Remove from cart's free samples
+        }
       } else {
         if (type === "cart") {
-          await removeCartItem(id); // Remove from regular cart
+          await removeCartItem(id);
         } else if (type === "wishlist") {
           await removeWishlistItem(id);
-        } else if (type === "freeSample") {
-          await removeFreeSample(id);
         }
       }
   
-      // Update local items by removing the correct one
+      // Update local items
       setLocalItems(prev => prev.filter(item => 
-        !(item.id === id && item.isfreeSample === isFreeSample)
+        !(item.id === id && (item.isfreeSample === isFreeSample))
       ));
   
+      // Dispatch appropriate update events
       window.dispatchEvent(new Event(`${type}Updated`));
+      
+      // If removing from cart, also update free samples if needed
+      if (type === "cart" && isFreeSample) {
+        window.dispatchEvent(new Event('cartfreeSampleUpdated'));
+      }
     } catch {
       toast.error(`Error removing item from ${type}`);
     }
@@ -295,7 +309,7 @@ const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
             <TbShoppingBag size={50} />
             <p className="text-center text-black capitalize text-20 font-semibold">{emptyMessage}</p>
             <div className="flex justify-center mt-2">
-              <Link href="/" className="bg-primary text-white px-4 py-2">Continue Shopping</Link>
+              <Link href="/" onClick={closePanel} className="bg-primary text-white px-4 py-2">Continue Shopping</Link>
             </div>
           </div>
           }

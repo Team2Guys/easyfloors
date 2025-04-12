@@ -33,6 +33,7 @@ const CartPage = ({ products }: CartPageProps) => {
   const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
+  console.log(accessoryItems,"accessoryItems")
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -348,6 +349,11 @@ const CartPage = ({ products }: CartPageProps) => {
                               Total Required:
                                   <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
                               </p> 
+                              {item?.selectedColor?.color &&
+                              <p className='text-12 sm:text-14 2xl:text-17'>
+                              Color:<span className='font-bold'> {item?.selectedColor?.color || ""}</span>
+                              </p> 
+                              }
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                                   <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>

@@ -50,11 +50,9 @@ export const handleAddToCart = async (
   setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void
 ) => {
   try {
-    // Remove the product from current storage
     await handleRemoveItem(Number(product.id), isSamplePage, setItems);
 
     if (isSamplePage) {
-      // Add to free sample store
       const freeSampleProduct = {
         ...product,
         requiredBoxes: 1,
@@ -64,12 +62,11 @@ export const handleAddToCart = async (
       };
 
       await AddcartFreeSample(freeSampleProduct);
-      toast.success("Product added to Free Samples!");
       window.dispatchEvent(new Event("freeSampleUpdated"));
+      window.dispatchEvent(new Event("cartUpdated"));
+      window.dispatchEvent(new Event("cartfreeSampleUpdated"));
     } else {
-      // Add to cart store
       await addToCart(product);
-      toast.success("Product added to Cart!");
       window.dispatchEvent(new Event("cartUpdated"));
     }
   } catch {
