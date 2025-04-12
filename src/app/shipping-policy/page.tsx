@@ -1,9 +1,24 @@
-'use client';
 import React from 'react';
 import Link from 'next/link';
 import Container from 'components/common/container/Container';
 import { deliveryCharges } from 'data/data';
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Easy Floors Shipping Policy | UAE Delivery & Charges Info',
+  description:
+    "Learn about Easy Floors' shipping options across the UAE. Enjoy free delivery on orders over AED 1000, next-day express shipping, and free sample delivery.",
+  openGraph: {
+    title: 'Easy Floors Shipping Policy | UAE Delivery & Charges Info',
+    description: "Learn about Easy Floors' shipping options across the UAE. Enjoy free delivery on orders over AED 1000, next-day express shipping, and free sample delivery.",
+    url: 'fullUrl',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/shipping-policy',
+  },
+};
 
 
 const Shipping = () => {

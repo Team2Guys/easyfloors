@@ -5,7 +5,23 @@ import { fetchSubCategories } from "config/fetch";
 import { FETCHSUBCAT } from "graphql/queries";
 import React from "react";
 import {ISUBCATEGORY } from "types/cat";
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
+  description:
+    "Browse Easy Floors’ premium SPC and LVT flooring collections. From herringbone to luxury vinyl, durable, stylish floors for homes and commercial spaces.",
+  openGraph: {
+    title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
+    description: "Browse Easy Floors’ premium SPC and LVT flooring collections. From herringbone to luxury vinyl, durable, stylish floors for homes and commercial spaces.",
+    url: 'fullUrl',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/all-collection',
+  },
+};
 const AllCollection= async () => {
   const [subcategories]= await Promise.all([fetchSubCategories(FETCHSUBCAT)])
   return (

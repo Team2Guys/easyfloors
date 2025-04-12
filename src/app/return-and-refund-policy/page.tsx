@@ -1,8 +1,23 @@
-'use client';
 import Container from 'components/common/container/Container';
 import { policySections } from 'data/data';
 import React from 'react';
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Easy Floors Return & Refund Policy | Hassle-Free 7-Day Returns',
+  description:
+    'Changed your mind? Return unused items within 7 days. Learn about refund timelines, return shipping, and what to do if you receive a defective product.',
+  openGraph: {
+    title: 'Easy Floors Return & Refund Policy | Hassle-Free 7-Day Returns',
+    description: 'Changed your mind? Return unused items within 7 days. Learn about refund timelines, return shipping, and what to do if you receive a defective product.',
+    url: 'fullUrl',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/return-and-refund-policy',
+  },
+};
 const ReturnRefundPolicy = () => {
   return (
     <Container className="pt-10 md:pt-20">
