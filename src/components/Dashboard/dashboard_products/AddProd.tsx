@@ -239,7 +239,6 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
         featureImages: featureImagesimagesUrl,
         colorCode: values.colorCode === '' ? undefined : values.colorCode
       };
-      console.log('productInitialValue', newValues);
 
       if (!accessoryFlag) {
         Object.assign(newValues, images);
