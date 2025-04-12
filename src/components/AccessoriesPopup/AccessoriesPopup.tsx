@@ -197,13 +197,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                     className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
                   />
                 </div>
-                <p>{requiredBoxes[product.id] && `Required Boxes: ${requiredBoxes[product.id]}`}</p>
-                <p className="text-gray-700 font-medium">
-                    {unit[product.id] === "ft"
-                      ? `Price Per ft: AED ${(product.price / 3.28084).toFixed(2)}`
-                      : `Price Per m: AED ${product.price}`}
-                </p>
-                <p>{totalPrice[product.id] && `Total Price: AED ${totalPrice[product.id]}`}</p>
+                
               </div>
             ))}
           </div>
