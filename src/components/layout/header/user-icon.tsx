@@ -92,6 +92,7 @@ const UserIcon = ({ className }: UserIconProps) => {
       <button
         onClick={handleProfileClick}
         className="relative flex items-center space-x-2 h-7 p-1 fill-white focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white lg:hover:bg-primary"
+         aria-label={session ? "Open user profile" : "Login"  }
       >
         {session ? (
           <Image

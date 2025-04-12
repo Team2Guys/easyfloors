@@ -7,7 +7,6 @@ import AccessoriesDetail from "./AccessoriesDetail";
 import { headers } from 'next/headers';
 import { Metadata } from 'next';
 
-
 interface IParams { product: string }
 
 export async function generateMetadata({ params }: { params: Promise<IParams> }): Promise<Metadata> {

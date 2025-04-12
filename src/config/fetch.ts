@@ -229,11 +229,11 @@ export const fetchSingleCategory = async (customUrl: string, FIND_ONE_CUSTOM_QUE
   }
 };
 
-export const fetchSingeSubCategory = async (customUrl: string): Promise<Category | null> => {
+export const fetchSingeSubCategory = async (customUrl: string, category:string): Promise<Category | null> => {
   try {
     const { data } = await client.query({
       query: FIND_ONE_SUB_CATEGORY,
-      variables: { customUrl },
+      variables: { customUrl, category },
       fetchPolicy: "no-cache",
       context: {
         fetchOptions: { next: { tags: ["categories"] } },

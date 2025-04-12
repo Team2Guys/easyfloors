@@ -2,6 +2,25 @@ import Container from 'components/common/container/Container';
 import { termsConditionsData } from 'data/terms-condition';
 import Link from 'next/link';
 import React from 'react';
+
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
+  description:
+    "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
+  openGraph: {
+    title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
+    description: "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
+    url: '/terms-and-conditions',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/terms-and-conditions',
+  },
+};
+
 const TermsAndConditions = () => {
     const renderLinkableText = (text: string) => {
       const emailRegex = /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi;
