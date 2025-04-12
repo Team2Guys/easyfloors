@@ -253,7 +253,7 @@ export const heroItems: HeroItem[] = [
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
-    buttonLink: "/all-collection",
+    buttonLink: "/collections",
     priceText: "Starting From AED 69/m²",
     flooringType: "SPC Eco • American Walnut",
     brand: "Polar Flooring",
@@ -877,7 +877,7 @@ export const sampleGridData: SampleGridData[] = [
     buttonText: "Order free samples",
     image: "/assets/images/aboutus/order-free-sample.webp",
     alt: "Free sample order",
-    href: 'all-collection'
+    href: 'collections'
   },
   {
     id: 2,

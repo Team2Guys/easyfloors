@@ -3,7 +3,23 @@ import Features from 'components/Reusable/features'
 import RoomMeasurement from 'components/RoomMeasurement/RoomMeasurement'
 import { featureItems } from 'data/data'
 import React from 'react'
-
+import { Metadata } from 'next';
+export const metadata: Metadata = {
+  title: 'Flooring Calculator Guide | How to Measure at Easy Floors UAE',
+  description:
+    'Measure your room the right way! Use our step-by-step guide to calculate flooring quantity accurately and avoid waste. Expert help is available across the UAE.',
+  openGraph: {
+    title: 'Flooring Calculator Guide | How to Measure at Easy Floors UAE',
+    description: 'Measure your room the right way! Use our step-by-step guide to calculate flooring quantity accurately and avoid waste. Expert help is available across the UAE.',
+    url: '/how-to-measure-your-room',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/how-to-measure-your-room',
+  },
+};
 const MeasureRoom = () => {
   return (
    <>

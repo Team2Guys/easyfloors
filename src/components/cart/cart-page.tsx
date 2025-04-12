@@ -33,7 +33,6 @@ const CartPage = ({ products }: CartPageProps) => {
   const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-  console.log(accessoryItems,"accessoryItems")
   useEffect(() => {
     const fetchCartItems = async () => {
       try {

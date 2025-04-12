@@ -4,7 +4,23 @@ import Breadcrumb from "components/Reusable/breadcrumb";
 import SampleGrid from "components/SampleGrid/SampleGrid";
 import VideoComponent from "components/VideoComponent/AboutCompany";
 import { alternatingData, sampleGridData } from "data/data";
-
+import { Metadata } from "next";
+export const metadata: Metadata = {
+  title: 'About Easy Floors UAE | Trusted Online Flooring Store in Dubai',
+  description:
+    'Learn more about Easy Floors—UAE’s leading online store for SPC and LVT flooring. Discover our Richmond & Polar collections, fast delivery, and free samples.',
+  openGraph: {
+    title: 'About Easy Floors UAE | Trusted Online Flooring Store in Dubai',
+    description: 'Learn more about Easy Floors—UAE’s leading online store for SPC and LVT flooring. Discover our Richmond & Polar collections, fast delivery, and free samples.',
+    url: '/about-us',
+    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+      },
+    ],
+  },
+  alternates: {
+    canonical: '/about-us',
+  },
+};
 const AboutUs = () => {
   return (
     <>

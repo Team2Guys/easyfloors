@@ -88,6 +88,7 @@ export interface FIlterprops {
 
   setPriceValue: React.Dispatch<React.SetStateAction<[number, number]>>;
   priceValue: [number, number];
+  catSlug: string
 }
 
 export type SelectedFilter =
