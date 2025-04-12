@@ -40,7 +40,7 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
   return (
     <Container>
       <div className="lg:mt-14 mt-5 py-4 font-inter space-y-4">
-        <h1 className="text-34 font-bold">{category.name}</h1>
+        <h2 className="text-34 font-bold">{category.name}</h2>
         <p className="text-lg leading-relaxed" dangerouslySetInnerHTML={{ __html: category?.description || "" }} />
       </div>
       <div className="flex items-center justify-end gap-2 lg:py-8">

@@ -5,7 +5,7 @@ import Image from "next/image";
 import Container from "components/common/container/Container";
 import { BreadcrumbProps } from "types/PagesProps";
 
-const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext, imageClass }: BreadcrumbProps) => {
+const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, isImagetext, imageClass }: BreadcrumbProps) => {
   return (
     <div className="relative w-full pt-3 ">
       <div className="bg-background text-black py-3 font-inter ">
@@ -30,7 +30,7 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
                   {slug}
                 </Link>
               ) : (
-                <span className="text-black font-inter text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{slug}</span>
+                <span className="text-black font-inter text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{slug.replace(/-/g, " ")}</span>
               )}
             </>
           )}
@@ -53,12 +53,12 @@ const Breadcrumb = ({ title, image = "", slug, subcategory, altText, isImagetext
                     </svg>
                   </>
                 ) : (
-                  <span className="text-black font-inter text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{subcategory}</span>
+                  <span className="text-black font-inter text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{subcategory.replace(/-/g, " ")}</span>
                 
                 )}
               </>
             )}
-          <span className="text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{title}</span>
+          <span className="text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{title.replace(/-/g, " ")}</span>
         </Container>
       </div>
 
