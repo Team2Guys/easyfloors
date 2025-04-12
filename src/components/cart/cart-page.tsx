@@ -260,7 +260,8 @@ const CartPage = ({ products }: CartPageProps) => {
                                   !item.isfreeSample && 
                                   <>
                                   <p className='text-12 sm:text-14 2xl:text-17'>
-                                  Price Per Piece: <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
+                                  {item.isAccessory? "Price Per Piece: ": "Price Per box: "} 
+                                  <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
                                   </p>
                                 <p className='text-12 sm:text-14 2xl:text-17'>
                                   No. Of Boxes:

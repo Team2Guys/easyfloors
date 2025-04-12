@@ -77,8 +77,8 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu, products }) =
 
         {label !== "Accessories" && submenu && isOpen && (
           <div
-            className={`fixed top-auto left-0 transform bg-white shadow z-50 overflow-y-auto border-primary border-t ${
-              submenu.length === 3 ? "w-[50%]" : "w-[100vw]"
+            className={`fixed top-auto  transform bg-white shadow z-50 overflow-y-auto border-primary border-t ${
+              submenu.length === 3 ? "w-[50%]" : "w-[100vw] -left-1/2 translate-x-1/2"
             }`}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

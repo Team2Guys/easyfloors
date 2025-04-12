@@ -21,6 +21,8 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     residentialWarranty: [],
     plankWidth: [],
   });
+
+  
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
@@ -58,7 +60,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"
-       image={ Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
+       image={isSubCategory ? subdescription?.[0].BannerImage?.imageUrl :  Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
         altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
       />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
