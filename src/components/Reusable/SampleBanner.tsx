@@ -9,15 +9,18 @@ const SampleBanner = () => {
     <Container>
       <div className='border-t-[#00000033] border-t-[1px] sm:hidden'></div>
       <div className='h-auto w-full mt-7 xl:mt-14'>
-        <div className='flex justify-center items-center'>
-          <Image 
-          // src='https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291498/newbanner_11zon_11zon_jr57od.webp'
-          src={bannerImage}
-            height={200}
-            width={800}
-            alt='image'
+        <div className='flex justify-center items-center '>
+          <Image
+            src={bannerImage}
+            alt='Free Sample'
             priority
-            className='h-[160px] w-[200px] 2xl:h-[669px] 2xl:w-[810px] lg:h-[400px] lg:w-[500px] xl:h-[500px] xl:w-[610px]'
+            width={676}
+            height={638}
+            quality={85}
+            className='w-full h-auto max-w-[200px] max-h-[189px]
+             lg:max-w-[500px] lg:max-h-[472px]
+             xl:max-w-[610px] xl:max-h-[576px]
+             2xl:max-w-[676px] 2xl:max-h-[638px] object-contain '
           />
         </div>
         <div className='flex border-b-[#00000033] border-b-[1px] justify-between w-full items-center mt-5 sm:border-b-2'>
