@@ -13,6 +13,9 @@ async function bootstrap() {
       'http://localhost:3001',
       'http://127.0.0.1:3000',
       'https://easyfloors.vercel.app',
+     "http://185.151.51.28:5007",
+    "http://185.151.51.28:3001",
+    "http://185.151.51.28:3000",
       
     ],
     credentials: true,
