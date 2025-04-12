@@ -21,7 +21,6 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     residentialWarranty: [],
     plankWidth: [],
   });
-
   
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
@@ -75,6 +74,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
             setSelectedProductFilters={setSelectedProductFilters}
             priceValue={priceValue}
             setPriceValue={setPriceValue}
+            catSlug={slug}
           />
         </div>
         <div className="lg:w-[80%]">
@@ -113,6 +113,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
                     setSelectedProductFilters={setSelectedProductFilters}
                     priceValue={priceValue}
                     setPriceValue={setPriceValue}
+                    catSlug={slug}
                   />
                 </Drawer>
               </div>

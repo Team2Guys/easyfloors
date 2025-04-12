@@ -21,6 +21,7 @@ const Filters = ({
   setSelectedProductFilters,
   setPriceValue,
   priceValue,
+  catSlug,
   className }: FIlterprops) => {
 
   const [uniqueFilters, setUniqueFilters] = useState({thicknesses: [] as string[],commercialWarranty: [] as string[],residentialWarranty: [] as string[],plankWidth: [] as string[],Colours: [] as string[]});
@@ -39,7 +40,7 @@ const Filters = ({
   const orderedCategories = [...catgories].sort((a, b) => {
     return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
   });
-  
+  console.log(catSlug,"catSlug")
   useEffect(() => {
     const richmond = catgories.find(
       (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
@@ -188,23 +189,44 @@ const Filters = ({
         
         <Accordion title="Style">
         <ul className="pl-4 text-sm text-gray-600 space-y-1">
-        <li>
-        <Link href="/style/eco" className="cursor-pointer hover:text-primary block capitalize">
-        Eco
-        </Link>
-        </li>
-        <li>
-      <Link href="/style/heeringbone" className="cursor-pointer hover:text-primary block capitalize">
-        Herringbone
-      </Link>
-        </li>
-      <li>
-      <Link href="/style/prime" className="cursor-pointer hover:text-primary block capitalize">
-        Prime
-      </Link>
-      </li>
+          {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring'|| catSlug === 'richmond') && (
+              <li>
+                <Link
+                  href={`/${
+                    catSlug === 'spc-flooring' ? 'polar' : 'richmond'
+                  }/spc-eco`}
+                  className="cursor-pointer hover:text-primary block capitalize"
+                >
+                  Eco
+                </Link>
+              </li>
+            )}
+            <li>
+              <Link
+                href={`/${
+                  catSlug === 'spc-flooring' ? 'polar' :
+                  catSlug === 'polar-flooring' ? 'polar' :
+                  'richmond'
+                }/spc-herringbone`}
+                className="cursor-pointer hover:text-primary block capitalize"
+              >
+                herringbone
+              </Link>
+            </li>
+            {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring'|| catSlug === 'richmond') && (
+              <li>
+                <Link
+                  href="/richmond/spc-prime"
+                  className="cursor-pointer hover:text-primary block capitalize"
+                >
+                  Prime
+                </Link>
+              </li>
+            )}
         </ul>
         </Accordion>
+
+
 
         <Accordion title="Waterproof">
           <ul className="pl-4 text-sm space-y-1">
