@@ -1,5 +1,5 @@
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AuthData, CategoryFeatures, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -410,17 +410,83 @@ export const imageData: TImageBanner = {
   alt: 'Picture of the author',
 };
 
-export const categoriesFeatures = [
-  ["Wider plank coverage", "5-layer acoustic construction", "Pre-attached comfort underlay", "Reduced footstep sound"],         
-  ["Real-wood proportions", "Thick & durable", "Perfect for open-plan spaces", "Flexible for stair installation"],          
-  ["Budget-friendly option", "Free 1mm/2mm foam underlay", "Great alternative to straight planks", "F2-year commercial warranty"],          
-  ["Easy clean surface", "Click lock holds tight", "No shrinking/expansion issues", "Indoor fade-resistant finish"],
-  ["UV-protected top layer", "Kid-friendly flooring", "Great for high-traffic zones", "Long-lasting colour retention"], 
-  ["Easy to maintain", "Great wood-look finish", "Perfect for DIY installs", "VOC-free and safe"], 
- 
-  ["Cushioned impact feel", "Ideal for kitchens & living areas", "User-friendly returns policy", "Excellent for light commercial use"],     
-  ["Elegant layout pattern", "Water-resistant for wet zones", "Seamless interlocking fit", "Rich, textured finish"],  
+
+
+export const categoriesFeatures:CategoryFeatures[] = [
+  {
+    name: "Richmond SPC Eco",
+    features: [
+      "Easy to maintain",
+      "Great wood-look finish",
+      "Perfect for DIY installs",
+      "VOC-free and safe"
+    ],
+  },
+  {
+    name: "Richmond LVT Comfort",
+    features: [
+      "UV-protected top layer",
+      "Kid-friendly flooring",
+      "Great for high-traffic zones",
+      "Long-lasting colour retention"
+    ],
+  },
+  {
+    name: "Richmond LVT Luxury",
+    features: [
+      "Real-wood proportions",
+      "Thick & durable",
+      "Perfect for open-plan spaces",
+      "Flexible for stair installation"
+    ],
+  },
+  {
+    name: "Richmond SPC Prime",
+    features: [
+      "Wider plank coverage",
+      "5-layer acoustic construction",
+      "Pre-attached comfort underlay",
+      "Reduced footstep sound"
+    ],
+  },
+  {
+    name: "Richmond SPC Herringbone",
+    features: [
+      "Elegant layout pattern",
+      "Water-resistant for wet zones",
+      "Seamless interlocking fit",
+      "Rich, textured finish"
+    ],
+  },
+  {
+    name: "Polar SPC Herringbone",
+    features: [
+      "Budget-friendly option",
+      "Free 1mm/2mm foam underlay",
+      "Great alternative to straight planks",
+      "2-year commercial warranty"
+    ],
+  },
+  {
+    name: "Polar LVT",
+    features: [
+      "Cushioned impact feel",
+      "Ideal for kitchens & living areas",
+      "User-friendly returns policy",
+      "Excellent for light commercial use"
+    ],
+  },
+  {
+    name: "Polar SPC",
+    features: [
+      "Easy clean surface",
+      "Click lock holds tight",
+      "No shrinking/expansion issues",
+      "Indoor fade-resistant finish"
+    ],
+  }
 ];
+
 
 export const categoryData: TCategoryData = {
   title: "What Am I?",
@@ -817,7 +883,7 @@ export const sampleGridData: SampleGridData[] = [
     title: "Got Questions? Ask Away!",
     description:
       "Contact our friendly support team for expert advice on all your flooring needs.",
-    buttonText: "Request a callback",
+    buttonText: "Request a call back",
     image: "/assets/images/aboutus/request-call-back.png",
     alt: "Free sample order",
     href: 'contact-us'
