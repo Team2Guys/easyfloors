@@ -130,6 +130,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         custom_url
         description
         sizes
+        BannerImage
       }
       products {
         id

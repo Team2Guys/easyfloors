@@ -3,13 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { BlogCardProps } from "types/type";
 import { categoriesFeatures } from "data/data";
+import { CategoryFeatures } from "types/types";
 
 interface Props extends BlogCardProps {
   index: number;
 }
 
 const Categories: React.FC<Props> = ({ card, index }) => {
-  const features = categoriesFeatures[index] || [];
+  const featureObj: CategoryFeatures | undefined = categoriesFeatures[index];
 
   return (
     <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b">
@@ -41,15 +42,17 @@ const Categories: React.FC<Props> = ({ card, index }) => {
               Click Me
             </Link>
           </div>
-          <div className="absolute md:bottom-0 hidden sm:block md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            <ul className="list-disc pl-5 text-left">
-              {features.map((feature, i) => (
-                <li className="text-[8px] md:text-sm" key={i}>
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </div>
+          {featureObj && (
+            <div className="absolute md:bottom-0 hidden sm:block md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              <ul className="list-disc pl-5 text-left">
+                {featureObj.features.map((feature, i) => (
+                  <li className="text-[8px] md:text-sm" key={i}>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
