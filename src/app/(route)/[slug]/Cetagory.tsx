@@ -21,6 +21,8 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     residentialWarranty: [],
     plankWidth: [],
   });
+
+  
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([0, 2000]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
