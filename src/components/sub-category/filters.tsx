@@ -118,7 +118,7 @@ const Filters = ({
   };
 
   const handleClearFilter = () => {
-    setPriceValue([0, 2000])
+    setPriceValue([0, 149])
     setSelectedProductFilters({
       Colours: [],
       thicknesses: [],

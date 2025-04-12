@@ -34,7 +34,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
                 </p>
                 <Link
                   href={item.buttonLink}
-                  className="px-2 py-1 sm:px-5 sm:py-3 xl:px-16 lg:px-6 lg:py-7 text-white bg-primary font-semibold xs:font-medium text-[11px] sm:text-sm lg:text-20 transition inline-block"
+                  className="px-2 py-1 sm:px-5 sm:py-3 xl:px-16 lg:px-6 lg:py-7 text-white bg-primary font-semibold xs:font-medium text-[9px] sm:text-sm lg:text-20 transition inline-block"
                 >
                   {item.buttonText}
                 </Link>
@@ -42,15 +42,15 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             </div>
           </div>
 
-          <div className="absolute bottom-4 sm:bottom-5 right-3 sm:right-5 xl:right-14 bg-background opacity-90 xs:opacity-95 p-1 sm:p-4 md:p-5 shadow-md w-[170px] h-[63px] sm:h-auto sm:w-[180px] md:w-[220px] lg:w-[314px] sm:space-y-1 xl:space-y-2 justify-start text-start">
+          <div className="absolute bottom-4 sm:bottom-5 right-3 sm:right-5 xl:right-14 bg-background opacity-90 xs:opacity-95 p-1 sm:p-4 md:p-5 shadow-md w-[170px] sm:h-auto sm:w-[180px] md:w-[220px] lg:w-[314px] sm:space-y-1 xl:space-y-2 justify-start text-start">
             <Link
               href="/polar-flooring"
               aria-label="Visit american walnut product page"
             >
-              <h3 className="sm:text-sm lg:text-[28px] font-medium">
+              <h3 className="text-14 sm:text-sm lg:text-[28px] font-medium">
                 {item.brand}
               </h3>
-              <div className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2 mt-3 ">
+              <div className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2 mt-1 lg:mt-3 ">
                 {item.priceText}
                 <p className="text-[16px] lg:text-[30px]">
                   <TiArrowRight />
