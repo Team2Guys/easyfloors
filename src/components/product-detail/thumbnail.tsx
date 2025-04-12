@@ -117,7 +117,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     <div className="relative">
       <button
         onClick={() => thumbSliderRef.current?.slickPrev()}
-        className="absolute -top-6 2xl:left-14 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
+        className="absolute -top-6 2xl:left-16 xl:left-12 lg:left-11 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
       >
         <MdKeyboardArrowUp className="block md:hidden" size={20} />
         <MdKeyboardArrowUp className="hidden md:block font-normal text-gray-600" size={30} />

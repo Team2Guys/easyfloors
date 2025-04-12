@@ -501,7 +501,7 @@ export const HomeUserInfo = [
     title: 'Budget Friendly',
     description:
       "High-quality flooring doesn't have to cost a fortune. Our durable, stylish options are available at factory prices so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
-    image: '/assets/images/UserInfo/budget_11zon.webp',
+      image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438022/budget_11zon_icozkb.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
     href: 'about-us'
@@ -510,7 +510,8 @@ export const HomeUserInfo = [
     title: 'Overlay Ready',
     description:
       "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
-    image: '/assets/images/UserInfo/overlay_11zon.webp',
+   
+    image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438070/Overlay_Ready_iaqqwr.webp',
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
   },
