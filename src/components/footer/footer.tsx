@@ -117,7 +117,7 @@ const Footer = () => {
                 )}
 
                 <div className="sm:block ">
-                    <h3 className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</h3>
+                    <p className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</p>
                     <div className="text-sm mt-3 flex items-start gap-2">
                         <div className='' >
                             <FaMapMarkerAlt size={16} className="text-black" />
