@@ -52,3 +52,6 @@ jobs:
           pm2 restart easyfloors_fe
           exit
           EOF
+
+
+          
