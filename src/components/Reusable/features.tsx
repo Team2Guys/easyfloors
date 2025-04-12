@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { FeaturesProps } from "types/type";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 const Features: React.FC<FeaturesProps> = ({ items }) => {
   const sliderRef = useRef<Slider>(null);
@@ -37,7 +38,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
                   width={100}
                   height={100}
                   loading="lazy"
-                  className="h-7 w-6 sm:h-8 sm:w-8 xl:w-[64px] xl:h-[64px]"
+                  className="h-7 w-6 sm:h-8 sm:w-8 xl:w-[64px] xl:h-[64px] object-contain"
                 />
                 <div className="flex flex-col md:justify-start md:items-start font-inter">
                   <h3 className="text-16 xl:text-18 font-bold font-inter mt-1">{item.title}</h3>
@@ -56,15 +57,15 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
         className="absolute -left-1 xs:left-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
         aria-label="Previous slide"
       >
-        <Image src="/assets/images/left.png" height={1500} width={1500} alt="image" className="h-4 w-4 sm:h-5 sm:w-5" />
+        <MdKeyboardArrowLeft className="h-6 w-6 sm:h-5 sm:w-5  " />
       </button>
-
       <button
         onClick={() => sliderRef.current?.slickNext()}
         className="absolute -right-1 xs:right-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
         aria-label="Next slide"
       >
-        <Image src="/assets/images/right.png" height={1500} width={1500} alt="image" className="h-4 w-4 sm:h-5 sm:w-5" />
+        <MdKeyboardArrowRight className="h-6 w-6 sm:h-5 sm:w-5 "  />
+
       </button>
     </div>
   );
