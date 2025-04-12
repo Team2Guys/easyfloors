@@ -24,6 +24,14 @@ export class AccessoriesResolver {
     return this.accessoriesService.findOne(id);
   }
 
+    @Public()
+    @Query(() => Accessory, { name: 'fetchMetatTitle', nullable:true })
+    findOneMetatitle(
+      @Args('custom_url', { type: () => String }) custom_url: string,
+      @Args('category', { type: () => String }) category: string,) {
+      return this.accessoriesService.findOneMetatitle(custom_url, category,);
+    }
+
   @Mutation(() => Accessory)
   updateAccessory(@Args('updateAccessoryInput') updateAccessoryInput: UpdateAccessoryInput) {
     return this.accessoriesService.update(+updateAccessoryInput.id, updateAccessoryInput);
@@ -33,4 +41,7 @@ export class AccessoriesResolver {
   removeAccessory(@Args('id', { type: () => Int }) id: number) {
     return this.accessoriesService.remove(id);
   }
+
+
+
 }

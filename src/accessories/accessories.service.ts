@@ -8,16 +8,16 @@ import { customHttpException } from '../utils/helper';
 export class AccessoriesService {
   constructor(private prisma: PrismaService) { }
   async create(createAccessoryInput: CreateAccessoryInput) {
-    const { category,products, ...updateData } = createAccessoryInput;
+    const { category, products, ...updateData } = createAccessoryInput;
 
     try {
       return await this.prisma.acessories.create({
         data: {
           ...updateData,
-          ...(category !== undefined ? { category: { connect: { id: +category } } } : {}), 
-          ...((products !== undefined && products.length > 0) 
-          ? { products: { connect: products.map((id: string) => ({ id: +id })) } } 
-          : {}),
+          ...(category !== undefined ? { category: { connect: { id: +category } } } : {}),
+          ...((products !== undefined && products.length > 0)
+            ? { products: { connect: products.map((id: string) => ({ id: +id })) } }
+            : {}),
         },
       });
     } catch (error) {
@@ -28,11 +28,11 @@ export class AccessoriesService {
         throw new InternalServerErrorException('Something went wrong while creating the accessory.');
       }
     }
-}
+  }
 
   async findAll() {
     try {
-      return await this.prisma.acessories.findMany({include:{category:true, products:true}})
+      return await this.prisma.acessories.findMany({ include: { category: true, products: true } })
     } catch (error) {
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
@@ -48,16 +48,16 @@ export class AccessoriesService {
 
   async update(id: number, updateAccessoryInput: UpdateAccessoryInput) {
     try {
-      const { category,products, id: _, ...updateData } = updateAccessoryInput;
-console.log(products, "products")
+      const { category, products, id: _, ...updateData } = updateAccessoryInput;
+      console.log(products, "products")
       return await this.prisma.acessories.update({
         where: { id },
         data: {
           ...updateData,
           ...(category !== undefined ? { category: { connect: { id: +category } } } : category ? { category } : undefined),
-          ...((products !== undefined && products.length > 0) 
-          ? { products: { connect: products.map((id: string) => ({ id: +id })) } } 
-          : {}),
+          ...((products !== undefined && products.length > 0)
+            ? { products: { connect: products.map((id: string) => ({ id: +id })) } }
+            : {}),
 
         },
       });
@@ -73,4 +73,35 @@ console.log(products, "products")
       customHttpException(error, 'INTERNAL_SERVER_ERROR');
     }
   }
+
+  async findOneMetatitle(custom_url: string, category: string) {
+    try {
+
+      let accessory = await this.prisma.acessories.findFirst({
+        where: {
+          custom_url, category: {
+            is: {
+              RecallUrl: category,
+            }
+          },
+
+        },
+        select: {
+          Meta_Description: true,
+          Meta_Title: true,
+          Canonical_Tag: true,
+          posterImageUrl: true,
+          name: true,
+          id: true
+        }
+      });
+      console.log(accessory, custom_url, category)
+      return accessory;
+    } catch (error) {
+      console.log(error, "error")
+      customHttpException(error, 'INTERNAL_SERVER_ERROR');
+    }
+  }
 }
+
+
