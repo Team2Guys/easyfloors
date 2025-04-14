@@ -21,12 +21,17 @@ jobs:
           node-version: '20'
       - name: Set environment variables
         run: echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> $GITHUB_ENV
+      - name: Clean install
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install 
         
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
       - name: Build
-        run: npm run build   
+        run: npm run build  
+
           
     
       - name: Install sshpass
