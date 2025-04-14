@@ -63,7 +63,7 @@ const Accessories = async () => {
 
   return (
     <>
-      <Breadcrumb image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"} />
+      <Breadcrumb image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"} slug='ACCESSORIES' />
       <AccessoriesComp product={category.accessories || []} category={category} />
     </>
   );

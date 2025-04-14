@@ -15,8 +15,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
      {items.length === 0 && pathname === "/freesample" ? (
         <div className="text-center">
-          <h1 className="text-center xl:text-[48px]">Your Shopping Cart</h1>
-          <p className="text-center text-[24px] pt-10">
+          <p className="text-center text-[24px] ">
             {isSamplePage ? "Free Sample list is empty" : "Wishlist is empty"}
           </p>
           <Link href="/" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
