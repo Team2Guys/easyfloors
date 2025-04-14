@@ -118,13 +118,6 @@ export interface SubSection {
   content: string;
 }
 
-export interface WhatAmICategoryData {
-  categoryHeading: string;
-  categorycontent:string;
-  subSections: SubSection[];
-  images: { src: string; alt: string; }[];
-}
-
 export interface Step {
   title: string;
   content: string;
