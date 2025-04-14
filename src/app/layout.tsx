@@ -89,11 +89,7 @@ export default function RootLayout({
       </Script>
       <body className={`${inter.variable}`}>
       <GoogleTagManager gtmId="GTM-NDT6D9FX" />
-      <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDT6D9FX"
-        height="0" width="0" style={{ display: "none", visibility: "hidden" }}
-        >
-        </iframe>
+      <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDT6D9FX" height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
       </noscript>
       <noscript>
         <Image
@@ -104,7 +100,6 @@ export default function RootLayout({
           alt="Facebook tracking pixel"
         />
       </noscript>
-
         <Customprovider>
           <PathnameWrapper>
             {children}
