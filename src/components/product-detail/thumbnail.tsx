@@ -115,6 +115,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
   return (
     <div className="relative">
+      {
+        stickyside &&
       <button
         onClick={() => thumbSliderRef.current?.slickPrev()}
         className="absolute -top-6 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
@@ -123,6 +125,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         <MdKeyboardArrowUp className="hidden md:block font-normal text-gray-600 bg-white" size={30} />
 
       </button>
+      }
       <div
         className="slider-container flex gap-2 sm:gap-4 overflow-hidden"
         onMouseDown={handleMouseDown}
@@ -170,6 +173,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
               </Slider>
 
               {/* Down Arrow */}
+              {
+                stickyside &&
               <button
                 onClick={() => thumbSliderRef.current?.slickNext()}
                 className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 p-1 "
@@ -178,6 +183,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
                 <MdKeyboardArrowDown className="hidden md:block font-normal text-gray-600 bg-white" size={30} />              
               </button>
+              }
             </div>
 
           ) : (
