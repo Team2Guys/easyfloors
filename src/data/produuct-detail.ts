@@ -4,15 +4,6 @@ import viseCard from './../../public/assets/images/payment-icons/visacard-logo.p
 import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 
 
-export const ThumnailBottom = [
-  {image:"/assets/bin/thumb1.png" , title:"Click lock system"},
-  {image:"/assets/bin/thumb2.png" ,title:"Layers of SPC or LVT"},
-  {image:"/assets/bin/thumb2.png" ,title:"Waterproof"},
-  {image:"/assets/bin/thumb4.png" ,title:"Easy to clean"},
-  {image:"/assets/bin/thumb5.png" ,title:"Scratch resistant"},
-  {image:"/assets/bin/thumb6.png" ,title:"the packaging"},
-
-]
 export const flooringTypes: FlooringType[] = [
   {
     name: "SPC Flooring",
@@ -171,21 +162,3 @@ export const tabbyfeature: ITabbyList[] = [
     },
   ];
   
-  
-   export const faqData = [
-      {
-        id: 'adhesives',
-        label: 'Do I Need Any Adhesives to Stick the Planks?',
-        content: 'No, you don\'t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you\'re not someone who likes to do things themselves, the click-lock feature makes it great for DIY.',
-      },
-      {
-        id: 'fade',
-        label: 'Will The Color and Texture Fade Over Time?',
-        content: 'Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its color and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it\'s great for busy households and businesses.',
-      },
-      {
-        id: 'planks',
-        label: 'How many planks come in a box, and what\'s the coverage area?',
-        content: 'The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you\'ll need multiple boxes depending on the total area.',
-      },
-    ];
