@@ -17,7 +17,7 @@ import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart } from "utils/indexedDB";
+import { getCart, getFreeSamplesCart } from "utils/indexedDB";
 import { paymentcard, UAEStates } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
@@ -29,10 +29,10 @@ import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 
 const Checkout = () => {
     const { Panel } = Collapse;
-    const [cartItems, setCartItems] = useState<ICart[]>([]);
     const [totalProducts, setTotalProducts] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
     const [total, setTotal] = useState(0);
+    const [mergedCart, setMergedCart] = useState<ICart[]>([]);
     const [selectedFee, setSelectedFee] = useState(0);
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
@@ -99,7 +99,8 @@ const Checkout = () => {
         const fetchCartItems = async () => {
             try {
                 const items = await getCart();
-                setCartItems(items);
+                const freeSamples = await getFreeSamplesCart();
+                setMergedCart([...items, ...freeSamples]);
                 setTotalProducts(items.length);
                 const subTotalPrice = items.reduce(
                     (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
@@ -198,7 +199,7 @@ const Checkout = () => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: cartItems, shippingMethod: shipping }
+                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
 
                         handlePayment(NewValues);
                         setSubmitting(true);
@@ -315,14 +316,16 @@ const Checkout = () => {
                                     </span>
                                 </div>
                                 <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3 mt-1">
-                                    {cartItems.length > 0 ? cartItems.map((item, index) => (
+                                    {mergedCart.length > 0 ? mergedCart.map((item, index) => (
                                         <div key={index} className="flex items-center border-b pb-4">
                                             <div className="p-1 bg-white border rounded-md">
                                                 <Image src={item.image || ''} alt={item.name} width={80} height={80} />
                                             </div>
                                             <div className="ml-4">
-                                                <p className="font-bold text-13 xs:text-16">{item.name}</p>
-                                                <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>
+                                            <p className="font-bold text-13 xs:text-16">{item.name}</p>
+                                            {item.isfreeSample ? "":
+                                            <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>    
+                                            }
                                             </div>
                                             <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.totalPrice.toFixed(2)}</p>
                                         </div>
