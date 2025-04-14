@@ -1,0 +1,11 @@
+User-agent: *
+Disallow: /dashboard
+Disallow: /cart
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /Wishlist
+Disallow: /thankyou
+Disallow: /search/{search_term_string}
+
+Sitemap: https://easyfloors.ae/sitemap.xml
