@@ -94,7 +94,6 @@ const Checkout = () => {
             return err;
         }
     };
-
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -115,7 +114,6 @@ const Checkout = () => {
         fetchCartItems();
     }, []);
 
-
     const handleShippingSelect = (type: string) => {
         if (selectedCity) {
             let fee = 150;
@@ -132,8 +130,6 @@ const Checkout = () => {
         }
         setSelectedShipping(type);
     };
-
-
 
     useEffect(() => {
         if (!selectedCity) return;
@@ -167,8 +163,6 @@ const Checkout = () => {
     }, [selectedShipping]);
 
 
-
-    console.log(UAEStates.length, "UAEStates")
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>

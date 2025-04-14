@@ -1,5 +1,5 @@
 import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, CategoryFeatures, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs, WhatAmICategoryData } from "types/types";
+import { AuthData, CategoryFeatures, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
@@ -322,41 +322,7 @@ export const accessoryFeature: Feature[] = [
   { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
-export const ThumnailImage = [
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-  { image: "/assets/bin/slider.png" },
-]
-export const ThumnailBottom = [
-  { image: "/assets/bin/thumb1.png", title: "Click lock system" },
-  { image: "/assets/bin/thumb2.png", title: "Layers of SPC or LVT" },
-  { image: "/assets/bin/thumb2.png", title: "Waterproof" },
-  { image: "/assets/bin/thumb4.png", title: "Easy to clean" },
-  { image: "/assets/bin/thumb5.png", title: "Scratch resistant" },
-  { image: "/assets/bin/thumb6.png", title: "the packaging" },
 
-]
 
 export const footerData = {
   company: {
@@ -603,26 +569,6 @@ export const faqs: FAQItem[] = [
   },
 ];
 
-export const accessoriesfaqs: FAQItem[] = [
-  {
-    id: 1,
-    question: "Do I Need Any Adhesives to Stick the Planks?",
-    answer:
-      "No, you don’t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you’re not someone who likes to do things themselves, the click-lock feature makes it great for DIY. ",
-  },
-  {
-    id: 2,
-    question: "Will The Color and Texture Fade Over Time?",
-    answer:
-      "Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its colour and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it's great for busy households and businesses",
-  },
-  {
-    id: 3,
-    question: "How many planks come in a box, and what’s the coverage area?",
-    answer: "The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you’ll need multiple boxes depending on the total area.",
-  },
-];
-
 
 export const boxData: BoxData[] = [
   {
@@ -812,38 +758,7 @@ export const tamarafeature: ITamaraList[] = [
   },
 ];
 
-export const specifications = [
-  { label: 'TOTAL THICKNESS', value: '4.0MM' },
-  { label: 'VIRGIN STONE/POLYMER CORE', value: '4.0MM VIRGIN WHITE STONE' },
-  { label: 'PRE ATTACHED IXPE UNDERLAY', value: 'NONE' },
-  { label: 'PLANK SIZE', value: '1220X183MM' },
-  { label: 'WEAR LAYER', value: '0.3MM' },
-  { label: 'EDGE DETAILS', value: 'UNILIN CLICK LOCK' },
-  { label: 'FINISH', value: 'MATT' },
-  { label: 'EMBOSSING', value: '3D NATURAL' },
-  { label: 'SQM PER CARTON', value: '2.68' },
-  { label: 'PIECES PER CARTON', value: '12PCS' },
-  { label: 'RESIDENTIAL LIMITED WARRANTY', value: '5 YEAR' },
-  { label: 'COMMERCIAL LIMITED WARRANTY', value: '2 YEAR' },
-];
 
-export const faqData = [
-  {
-    id: 'adhesives',
-    label: 'Do I Need Any Adhesives to Stick the Planks?',
-    content: 'No, you don\'t need any glue or other tools to install SPC Oak flooring. Its easy click-lock system allows the planks to snap together for a secure, smooth fit. This feature removes the mess of adhesives and makes installation quick and easy. Even if you\'re not someone who likes to do things themselves, the click-lock feature makes it great for DIY.',
-  },
-  {
-    id: 'fade',
-    label: 'Will The Color and Texture Fade Over Time?',
-    content: 'Even after years of daily use, heavy traffic, and sun exposure, the SPC Oak keeps its color and texture. Plus, it has a durable top wear layer that resists dents, scratches, and fading, so it\'s great for busy households and businesses.',
-  },
-  {
-    id: 'planks',
-    label: 'How many planks come in a box, and what\'s the coverage area?',
-    content: 'The dimensions of these planks are: 1220mm x 183mm. Each box usually covers about 2.01 (Square Meters) and contains around 9 planks, though this can vary. To give you an idea, it can cover a small bathroom, a walk-in closet, or a portion of a medium-sized bedroom. For larger rooms, you\'ll need multiple boxes depending on the total area.',
-  },
-];
 export const alternatingData: TAboutUs[] = [
   {
     id: 1,
@@ -891,33 +806,6 @@ export const sampleGridData: SampleGridData[] = [
     href: 'contact-us'
   },
 ];
-
-export const WhatAmIcategoryData: WhatAmICategoryData = {
-  categoryHeading: "Richmond LVT Comfort",
-  categorycontent: "I am another type of flooring that gives you the look and feel of real wood at a fraction of the price. My name stands for Luxury Vinyl Tile and in simple terms, I’m exactly this. I am made of 8 layers of materials to give you a high performing product, designed to outlast others by miles. Included in these 8 layers is a layer of glass fibre, adding to my strength. My top layer is a UV protection film to ensure maximum colour fastness retention and compared to other brands, I blast them out the water.",
-  subSections: [
-    {
-      subHeading: "Where can I be used",
-      content: "I offer more flexibility than my Richmond SPC cousins and can be used on level surfaces where you may have a slight gradient. Another area where I am often used is on mezzanine floors where there might be a slight “bounce on the flooring”. I’m also great for commercial areas or high volume traffic as I can be glued down, something my SPC cousins can’t do!",
-    },
-    {
-      subHeading: "Why LVT over SPC",
-      content: "To be honest, we both offer exceptional performance levels (naturally of course). SPC is made from stone and I’m made from vinyl. That’s the most obvious difference between us. SPC flooring is harder and I’m softer. In some cases, that’s better. For example, in areas where you might have kids, I provide a softer landing for those bottoms. Rubber is also more expensive than Polymer (oh yeah, I’m a classy one), hence the slightly higher costs of me over SPC. One other key difference is that I can be glued down, whereas Mr SPC can’t be glued down. Not an issue in most cases to be honest but if you have a high traffic area, gluing us planks down is better for longer term use.",
-    },
-    {
-      subHeading: "Do I come with a warranty",
-      content: "Yes, as with all Richmond Flooring products, I come with a 5-year warranty for commercial spaces and 15 years for residential areas. This gives you peace of mind that I can be trusted. There are some exceptions. If you fit me wrong or abuse me in ways I am not designed for, then let’s be real and accept that I’m not going to do you any favours. Use me right, look after me with regular cleaning and me and you will be friends for years to come.",
-    },
-    {
-      subHeading: "Can I be used in wet areas?",
-      content: "Yes, with my click lock system, you don’t even need glue to keep us planks in place. (however, adhesive for high traffic areas is recommended). The click system ensures that each of us lock into our neighboring plank and leaves zero gaps for water to seep into.",
-    },
-  ],
-  images: [
-    { src: "/assets/category/whatami1.png", alt: "Flooring Left" },
-    { src: "/assets/category/whatami.png", alt: "Flooring Right" },
-  ],
-};
 
 export const measurementData: MeasurementSection[] = [
   {
@@ -1013,26 +901,6 @@ stepsHeading:"Measuring a Square or Rectangular Room",
   },
 ];
 
-
-
-// export const colors = [
-//   { code: "3897", color: "/assets/bin/colors/c1.png" },
-//   { code: "3895", color: "/assets/bin/colors/c2.png" },
-//   { code: "2868", color: "/assets/bin/colors/c3.png" },
-//   { code: "6661", color: "/assets/bin/colors/c4.png" },
-//   { code: "2636", color: "/assets/bin/colors/c5.png" },
-//   { code: "X8355-9", color: "/assets/bin/colors/c6.png" },
-//   { code: "3896", color: "/assets/bin/colors/c7.png" },
-//   { code: "3891", color: "/assets/bin/colors/c8.png" },
-//   { code: "3895", color: "/assets/bin/colors/c9.png" },
-//   { code: "2869", color: "/assets/bin/colors/c10.png" },
-//   { code: "6661", color: "/assets/bin/colors/c11.png" },
-//   { code: "2634", color: "/assets/bin/colors/c12.png" },
-//   { code: "X8365-9", color: "/assets/bin/colors/c13.png" },
-//   { code: "FC5943", color: "/assets/bin/colors/c14.png" },
-//   { code: "FC5943", color: "/assets/bin/colors/c15.png" },
-//   { code: "FC5943", color: "/assets/bin/colors/c16.png" },
-// ];
 
 
 export const loginData: AuthData = {
