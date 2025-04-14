@@ -11,9 +11,9 @@ const Top: React.FC<TopProps> = ({ heading, Icon }) => {
       <div className="text-3xl transition-colors duration-300">
         <Icon className="h-10 w-10 lg:h-14 lg:w-14" />
       </div>
-      <p className="mt-1 lg:mt-6 text-xl font-semibold font-inter lg:text-[48px] text-black">
+      <h1 className="mt-1 lg:mt-6 text-xl font-semibold font-inter lg:text-[48px] text-black">
         {heading}
-      </p>
+      </h1>
     </div>
   );
 };
