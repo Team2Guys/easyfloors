@@ -104,7 +104,8 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   whatAmiTopHeading: "",
   Heading: "",
   recalledByCategories: [],
-  recalledSubCats: []
+  recalledSubCats: [],
+  whatIamEndpoint:""
 };
 export interface IProductValues {
   id?: number;
