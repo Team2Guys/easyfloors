@@ -26,6 +26,7 @@ jobs:
         run: |
           rm -rf node_modules package-lock.json
           npm cache clean --force
+          npm install react-image-crop@9.0.0
           npm install --legacy-peer-deps
       
       - name: Build
