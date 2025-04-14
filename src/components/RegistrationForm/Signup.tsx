@@ -50,9 +50,9 @@ const SignupForm = () => {
             dangerouslySetInnerHTML={{ __html: loginData.title }}
           />
 
-          <h2 className="sm:text-4xl text-2xl text-center font-bold font-inter mt-8">
+          <h1 className="sm:text-4xl text-2xl text-center font-bold font-inter mt-8">
             Sign Up
-          </h2>
+          </h1>
 
           <Formik
             initialValues={formValues}
