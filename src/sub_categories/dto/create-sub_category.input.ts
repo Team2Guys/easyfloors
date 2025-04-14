@@ -71,4 +71,8 @@ export class CreateSubCategoryInput {
 
   @Field(() => [GraphQLJSON], { nullable: true })
   sizes?: any[]
+  
+  @Field({ nullable: true })
+  whatIamEndpoint?: string;
+
 }

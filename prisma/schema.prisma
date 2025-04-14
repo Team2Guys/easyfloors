@@ -100,6 +100,7 @@ model subCategories {
   recalledByCategories Category[] @relation("RecallCategories")
   price                String?
   sizes                 Json[]         @default([])
+  whatIamEndpoint     String?
 }
 
 model Admins {
