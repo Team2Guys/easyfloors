@@ -150,6 +150,10 @@ padding: 4px;
   border: 1px solid #d1d5db;
   padding: 8px;
 }
+.slick-slide[aria-hidden="true"] {
+  pointer-events: none !important;
+  user-select: none !important;
+}
 
 
 @media (max-width: 767px) {

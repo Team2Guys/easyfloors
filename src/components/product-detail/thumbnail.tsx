@@ -118,7 +118,10 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       {
         stickyside &&
       <button
-        onClick={() => thumbSliderRef.current?.slickPrev()}
+      onClick={(e) => {
+        e.preventDefault(); // Prevent scroll-to-top
+        thumbSliderRef.current?.slickPrev();
+      }}
         className="absolute -top-6 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
       >
         <MdKeyboardArrowUp className="block md:hidden bg-white" size={20} />
@@ -148,7 +151,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 swipe={false}
                 arrows={false} // We'll use our own
                 focusOnSelect
-                className="custom-vertical-slider h-full md:h-[90vh]"
+                className="custom-vertical-slider h-full"
                 initialSlide={currentSlide}
               >
                 {ThumnailImage.map((product, index) => (
@@ -174,10 +177,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
               {/* Down Arrow */}
               {
-                stickyside &&
+              stickyside &&
               <button
-                onClick={() => thumbSliderRef.current?.slickNext()}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 p-1 "
+              onClick={(e) => {
+                e.preventDefault(); // Prevent scroll-to-top
+                thumbSliderRef.current?.slickNext();
+              }}
+                className="absolute bottom-1 left-1/2 -translate-x-1/2 z-30 p-1 "
               >
                 <MdKeyboardArrowDown className="block md:hidden bg-white" size={20} />
 
