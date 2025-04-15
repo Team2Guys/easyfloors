@@ -48,7 +48,8 @@
     { value: "Al Warqa", label: "Al Warqa" },
     { value: "Business Bay", label: "Business Bay" },
     { value: "Motor City", label: "Motor City" },
-    { value: "Discovery Gardens", label: "Discovery Gardens" }
+    { value: "Discovery Gardens", label: "Discovery Gardens" },
+    { value: "Other", label: "Other" }
 ];
 
 

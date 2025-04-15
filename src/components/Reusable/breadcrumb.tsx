@@ -1,14 +1,28 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Container from "components/common/container/Container";
 import { BreadcrumbProps } from "types/PagesProps";
 
 const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, imageClass }: BreadcrumbProps) => {
+    const [isScrolled, setIsScrolled] = useState(false);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        setIsScrolled(window.scrollY > 20);
+      };
+  
+      handleScroll();
+      window.addEventListener("scroll", handleScroll);
+  
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, []);
   return (
-    <div className="relative w-full pt-3 ">
-      <div className="bg-background text-black py-3 font-inter ">
+    <div className={` w-full pt-3  `}>
+      <div className={`bg-background text-black py-3 font-inter z-40 ${isScrolled ? "bg-white text-black top-9 lg:top-[76px] fixed w-full border-b" : "bg-white text-black sticky top-0"}`}>
         <Container className="text-lg flex items-center gap-2 sm:gap-4">
           {/* Home Link */}
           <Link href="/" className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
