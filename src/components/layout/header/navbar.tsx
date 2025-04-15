@@ -63,8 +63,6 @@ const pathname = usePathname()
     };
   });
 
-console.log(pathname, "pathname")
-
   return (
     <nav className={`bg-white w-full z-50 max-sm:pb-1 max-lg:pb-2 font-inter  ${isScrolled ? "bg-white text-black top-0 fixed" : "bg-white text-black sticky top-0"}`}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
