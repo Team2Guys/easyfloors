@@ -4,6 +4,8 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { customHttpException } from '../utils/helper';
 import { PrismaService } from '../prisma/prisma.service';
 import * as jwt from 'jsonwebtoken';
+import { Public } from 'decorators/public.decorator';
+import { Response } from 'express';
 
 
 @Injectable()
@@ -26,7 +28,7 @@ export class UserService {
   }
 
 
-  async userLogin(createUserInput: UserLogin) {
+  async userLogin(createUserInput: UserLogin, res: Response) {
     try {
       const { email, password } = createUserInput
       const existingUser = await this.prisma.user.findUnique({ where: { email } });
@@ -42,6 +44,13 @@ export class UserService {
       const token = jwt.sign(userWithoutPassword, process.env.TOKEN_SECRET, {
         expiresIn: '24h',
       });
+              res.cookie('admin_access_token', token, {
+                httpOnly: true,
+                secure: true, // Required when using SameSite: 'None'
+                sameSite: 'none', // Allows cross-origin cookie
+                path: '/',
+                maxAge: 24 * 60 * 60 * 1000, // 24 hours
+              });
       return {
         ...userWithoutPassword,
         token
@@ -61,7 +70,7 @@ export class UserService {
   }
 
 
-
+  
   async findOne(email: string) {
 
     try {

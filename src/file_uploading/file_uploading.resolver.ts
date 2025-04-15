@@ -9,6 +9,7 @@ import { Public } from '../decorators/public.decorator';
 export class FileUploadingResolver {
   constructor(private readonly fileUploadingService: FileUploadingService) {}
 
+  @Public()
   @Mutation(() => FileUploading)
   async createFileUploading(
     @Args({ name: 'file', type: () => GraphQLUpload }) file: FileUpload) {

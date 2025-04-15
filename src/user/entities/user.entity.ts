@@ -21,5 +21,6 @@ export class User {
   @Field(() => GraphQLJSON, {nullable:true})
   userImageUrl: string;
 
+  
 
 }
