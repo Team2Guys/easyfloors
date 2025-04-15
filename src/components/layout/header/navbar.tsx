@@ -11,12 +11,13 @@ import { BiChevronDown } from "react-icons/bi";
 import { staticMenuItems } from "data/data";
 import { ISUBCATEGORY } from "types/cat";
 import { HeaderAccessoriesProps, INavbar } from "types/types";
+import { usePathname } from "next/navigation";
 
 const Navbar = ({ categories, products}: INavbar) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [isScrolled, setIsScrolled] = useState(false);
-
+const pathname = usePathname()
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -45,7 +46,6 @@ const Navbar = ({ categories, products}: INavbar) => {
     });
   };
 
-  // Modify menuItems to show only accessories in the "Accessories" category
   const menuItems = staticMenuItems.map((staticItem) => {
     const matchedCategory = categories?.find((cat) => cat.custom_url === staticItem.href);
     if (!matchedCategory) return staticItem;
@@ -62,6 +62,8 @@ const Navbar = ({ categories, products}: INavbar) => {
       })) || [],
     };
   });
+
+console.log(pathname, "pathname")
 
   return (
     <nav className={`bg-white w-full z-50 max-sm:pb-1 max-lg:pb-2 font-inter  ${isScrolled ? "bg-white text-black top-0 fixed" : "bg-white text-black sticky top-0"}`}>
@@ -104,7 +106,7 @@ const Navbar = ({ categories, products}: INavbar) => {
                     {/* Main Category Link */}
                     <Link
                       href={item.href}
-                      className="text-14 font-semibold w-fit whitespace-nowrap"
+                      className={`text-14 font-semibold w-fit whitespace-nowrap ${pathname ===`/${item.href}` ? "bg-gray-light": ""}`}
                       onClick={() => setIsOpen(false)}
                     >
                       {item.label}

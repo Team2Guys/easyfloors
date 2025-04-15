@@ -4,12 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { MenuItemProps } from "types/types";
 import Container from "components/common/container/Container";
+import { usePathname } from "next/navigation";
 
 
 const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu, products }) => {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  const pathname = usePathname()
   const handleMouseEnter = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setIsOpen(true);
@@ -26,6 +28,7 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu, products }) =
       setIsOpen(false);
     }, 50);
   };
+
   return (
     <>
       <div
@@ -35,7 +38,7 @@ const Megamenu: React.FC<MenuItemProps> = ({ label, href, submenu, products }) =
         onClick={handleMouseLeave}
       >
         <Link
-          className="text-11 xl:text-13 2xl:text-13 3xl:text-16 capitalize hover:bg-gray-light pb-6"
+          className={`text-11 xl:text-13 2xl:text-13 3xl:text-16 capitalize ${pathname ===`/${href}` ? "bg-gray-light": ""} hover:bg-gray-light pb-6`}
           href={`/${href}`}
         >
           {label}
