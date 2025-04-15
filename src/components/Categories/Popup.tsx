@@ -96,7 +96,7 @@ function Popup() {
         </div>
       )}
 
-      <div className="max-w-3xl mx-auto text-center text-base md:my-10 my-4">
+      <div className="text-center text-base md:my-10 my-4">
         <p className="text-center md:text-base text-sm font-normal font-inter">
           {isExpanded || !isMobile
             ? categoryData.description

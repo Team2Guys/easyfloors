@@ -72,9 +72,7 @@ const FormLayout = ({
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-      
-      console.log(posterImageUrl, "posterImageUrl", posterimageUrl)
-
+    
       if (!posterImageUrl) throw new Error('Please select relevant Images');
       const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner };
 
@@ -133,10 +131,10 @@ const FormLayout = ({
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas?.getContext('2d');
   
-    canvas.width = crop.width;
-    canvas.height = crop.height;
+    canvas.width = crop?.width;
+    canvas.height = crop?.height;
   
     if (ctx) {
       ctx.drawImage(
@@ -152,7 +150,7 @@ const FormLayout = ({
       );
     }
   
-    const base64Image = canvas.toDataURL('image/jpeg');
+    const base64Image = canvas?.toDataURL('image/jpeg');
     setCroppedImage(base64Image);
   };
   
@@ -330,6 +328,7 @@ const FormLayout = ({
                       alt="Crop me"
                       style={{ maxWidth: '100%' }}
                       onLoad={onImageLoad}
+                      crossOrigin="anonymous"
                     />
                   </ReactCrop>
                 )}

@@ -1039,6 +1039,7 @@ const FormLayout = ({
                       alt="Crop me"
                       style={{ maxWidth: '100%' }}
                       onLoad={onImageLoad}
+                      crossOrigin="anonymous"
                     />
                   </ReactCrop>
                 )}

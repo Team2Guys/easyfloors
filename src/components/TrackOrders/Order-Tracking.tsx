@@ -93,7 +93,7 @@ export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
               </div>
 
               <Link
-                href="/"
+                href="/collections"
                 className="bg-primary text-white text-center py-2 px-10 w-fit"
               >
                 Continue Shopping

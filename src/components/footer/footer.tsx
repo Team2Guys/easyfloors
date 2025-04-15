@@ -50,19 +50,19 @@ const Footer = () => {
         "L Shape Skirting 10cm",
         "L Shape Skirting 12cm",
         "L Shape Skirting 15cm",
-      ];
-      
-      const customSort = (a: { name: string }, b: { name: string }) => {
+    ];
+
+    const customSort = (a: { name: string }, b: { name: string }) => {
         const aIndex = prioritizedOrder.indexOf(a.name);
         const bIndex = prioritizedOrder.indexOf(b.name);
-      
+
         if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
         if (aIndex !== -1) return -1;
         if (bIndex !== -1) return 1;
-      
+
         return a.name.localeCompare(b.name); // fallback alphabetical
-      };
-      
+    };
+
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
@@ -118,19 +118,7 @@ const Footer = () => {
 
                 <div className="sm:block ">
                     <p className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</p>
-                    <div className="text-sm mt-3 flex items-start gap-2">
-                        <div className='' >
-                            <FaMapMarkerAlt size={16} className="text-black" />
-                        </div>
-                        <Link
-                            href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-gray-700 hover:text-gray-900 md:full w-60"
-                        >
-                            {footerData.contact.address}
-                        </Link>
-                    </div>
+                    
                     <div className="text-sm mt-2 flex items-center gap-2">
                         <div className=''>
                             <IoCall size={16} className="text-black" />
@@ -147,6 +135,20 @@ const Footer = () => {
                             {footerData.contact.email}
                         </Link>
                     </div>
+                    <div className="text-sm mt-3 flex items-start gap-2">
+                        <div className='' >
+                            <FaMapMarkerAlt size={16} className="text-black" />
+                        </div>
+                        <Link
+                            href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-gray-700 hover:text-gray-900 md:full w-60"
+                        >
+                            {footerData.contact.address}
+                        </Link>
+                    </div>
+
                     <div className="grid grid-cols-6 md:grid-cols-3 w-4/5 gap-3 mt-4 items-center">
                         {footerData.paymentMethods.map((method, index) => (
                             <div key={index} className="flex justify-start">
@@ -177,9 +179,9 @@ const Footer = () => {
             <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
                 <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
                     <div className='hidden sm:block'>
-                    <div className="flex md:space-x-4 space-x-2">
-                        <SocialIcon/>
-                    </div>
+                        <div className="flex md:space-x-4 space-x-2">
+                            <SocialIcon />
+                        </div>
                     </div>
                     <div className='text-start xs hidden sm:block'>
                         <p className="text-12 sm:text-13 text-white font-inter font-medium xs:font-extralight ">
@@ -187,23 +189,23 @@ const Footer = () => {
                         </p>
                     </div>
                     <div className="text-white  font-inter flex flex-wrap lg:flex-nowrap  lg:justify-end  w-full">
-                    <div className='flex justify-between xs:justify-center items-center text-12 sm:text-13 font-light flex-nowrap xl:whitespace-nowrap gap-2 sm:gap-0 w-full sm:space-x-4'> <Link className='w-full text-start sm:w-fit text-nowrap xs:text-wrap xl:text-nowrap' href="/terms-and-conditions">Terms & Conditions</Link>
-                     <Link className='w-full text-center sm:text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
-                     <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
-                     <Link className='w-full text-center sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
-                    </div>
-                     <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light' href="/return-and-refund-policy">Return & Refund policy</Link>
+                        <div className='flex justify-between xs:justify-center items-center text-12 sm:text-13 font-light flex-nowrap xl:whitespace-nowrap gap-2 sm:gap-0 w-full sm:space-x-4'> <Link className='w-full text-start sm:w-fit text-nowrap xs:text-wrap xl:text-nowrap' href="/terms-and-conditions">Terms & Conditions</Link>
+                            <Link className='w-full text-center sm:text-start sm:w-fit' href="/shipping-policy">Shipping Policy</Link>
+                            <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
+                            <Link className='w-full text-center sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
+                        </div>
+                        <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light' href="/return-and-refund-policy">Return & Refund policy</Link>
                     </div>
                     <div className='block sm:hidden w-full'>
-                    <div className='flex justify-start items-center'>
-                    <div className="flex space-x-2 w-[32%] xs:w-[40%]">
-                        <SocialIcon/>
-                    </div>
-                    <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">
-                            Easyfloors.ae ©2025
-                    </p>
-                   
-                    </div>
+                        <div className='flex justify-start items-center'>
+                            <div className="flex space-x-2 w-[32%] xs:w-[40%]">
+                                <SocialIcon />
+                            </div>
+                            <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">
+                                Easyfloors.ae ©2025
+                            </p>
+
+                        </div>
                     </div>
                 </Container>
             </div>
