@@ -5,13 +5,10 @@ import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
 import { IProduct, ProductImage } from 'types/prod';
 
-export const ImageRemoveHandler = async (
-  imagePublicId: string,
-  setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
+export const ImageRemoveHandler = async (imagePublicId: string, setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
   finalToken?: string
 ) => {
   try {
-    // if(!finalToken) return  toast.success("Token Not found ")
     await axios.post(process.env.NEXT_PUBLIC_BASE_URL || "",
       {
         query: FILE_DELETION_MUTATION,
