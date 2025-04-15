@@ -1,7 +1,7 @@
 "use client";
 import ReactSlider from "react-slider";
 
-const PriceSlider = ({ setPriceValue, priceValue }: {
+const PriceSlider = ({ setPriceValue, priceValue}: {
   setPriceValue: React.Dispatch<React.SetStateAction<[number, number]>>;
   priceValue: [number, number];
 }) => {
@@ -28,7 +28,6 @@ const PriceSlider = ({ setPriceValue, priceValue }: {
         trackClassName="h-[1px] rounded-full"
         value={priceValue}
         min={0}
-        max={149}
         onChange={setPriceValue}
         pearling
         minDistance={50}
