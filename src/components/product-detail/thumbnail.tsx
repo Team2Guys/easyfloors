@@ -85,15 +85,16 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     }
   }, [selectedColor, ThumnailImage, onImageChange, stickyside]);
 
-  const handleThumbnailClick = (index: number) => {
-    if (!isSwiping && index !== currentSlide) { // Only activate on click, not swipe
+  const handleThumbnailClick = (index: number, e: React.MouseEvent) => {
+    e.preventDefault(); // Add this line
+    if (!isSwiping && index !== currentSlide) {
       setCurrentSlide(index);
       setSelectedColor?.({
         color: ThumnailImage[index].color || ThumnailImage[index].colorCode,
         colorCode: ThumnailImage[index].colorCode,
         altText: ThumnailImage[index].altText,
         imageUrl: ThumnailImage[index].imageUrl,
-      }); // Update selected color
+      });
       onImageChange?.(combinedImages[index]);
       sliderRef1.current?.slickGoTo(index);
       if (stickyside) {
@@ -118,7 +119,10 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
       {
         stickyside &&
       <button
-        onClick={() => thumbSliderRef.current?.slickPrev()}
+      onClick={(e) => {
+        e.preventDefault(); // Prevent scroll-to-top
+        thumbSliderRef.current?.slickPrev();
+      }}
         className="absolute -top-6 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
       >
         <MdKeyboardArrowUp className="block md:hidden bg-white" size={20} />
@@ -148,13 +152,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 swipe={false}
                 arrows={false} // We'll use our own
                 focusOnSelect
-                className="custom-vertical-slider h-full md:h-[90vh]"
+                className="custom-vertical-slider h-full"
                 initialSlide={currentSlide}
               >
                 {ThumnailImage.map((product, index) => (
                   <div
                     key={index}
-                    onClick={() => handleThumbnailClick(index)}
+                    onClick={(e) => handleThumbnailClick(index, e)}
                     className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
                       }`}
                   >
@@ -174,10 +178,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
               {/* Down Arrow */}
               {
-                stickyside &&
+              stickyside &&
               <button
-                onClick={() => thumbSliderRef.current?.slickNext()}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 p-1 "
+              onClick={(e) => {
+                e.preventDefault(); // Prevent scroll-to-top
+                thumbSliderRef.current?.slickNext();
+              }}
+                className="absolute bottom-1 left-1/2 -translate-x-1/2 z-30 p-1 "
               >
                 <MdKeyboardArrowDown className="block md:hidden bg-white" size={20} />
 
@@ -191,7 +198,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
               {ThumnailImage.map((product, index) => (
                 <div
                   key={index}
-                  onClick={() => handleThumbnailClick(index)}
+                  onClick={(e) => handleThumbnailClick(index, e)}
+
                   className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
                     }`}
                 >
@@ -292,7 +300,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   <div
                     key={index}
                     className="text-center cursor-pointer"
-                    onClick={() => handleThumbnailClick(globalIndex)}
+                    onClick={(e) => handleThumbnailClick(globalIndex,e)}
+
                   >
                     <Image
                       width={150}

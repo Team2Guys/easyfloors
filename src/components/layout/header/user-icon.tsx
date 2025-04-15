@@ -149,13 +149,7 @@ const UserIcon = ({ className }: UserIconProps) => {
             >
               Order History
             </Link>
-            <Link
-              href="/about-us"
-              className="block px-4 py-2 border text-sm font-medium text-gray-700 hover:bg-primary hover:text-white rounded transition"
-              onClick={() => setIsOpen(false)}
-            >
-              About Us
-            </Link>
+           
             <Divider />
             <button
               onClick={logoutHandler}

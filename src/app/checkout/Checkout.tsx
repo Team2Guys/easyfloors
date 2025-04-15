@@ -222,7 +222,10 @@ const Checkout = () => {
                                         onChange={handleChange}
                                     />
                                     {/* <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" /> */}
-                                    <Input type="text" label="Last Name" required name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
+                                    <div className="flex flex-col mb-1">
+                                    <label htmlFor="Last Name" className="text-13 font-medium font-inter mb-1">Last Name</label>
+                                    <input type="text" className="p-2 border border-gray-300 h-11 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary w-full placeholder:text-13 placeholder:font-light placeholder:text-[#828282]"  name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
+                                    </div>
                                 </div>
 
 
@@ -237,6 +240,7 @@ const Checkout = () => {
                                         name="phone"
                                         placeholder="Type Your Phone No"
                                         value={values.phone}
+                                        className="ring-0 !outline-none"
                                         onChange={(value) => setFieldValue("phone", value)}
                                     />
                                     <ErrorMessage name="phone" component="div" className="text-red-500 text-sm" />
@@ -426,12 +430,12 @@ const Checkout = () => {
                                 </div>
                                 <div className="mt-4">
                                     <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
-                                    <div className="flex gap-2 my-4 mx-auto w-full max-w-xl">
+                                    <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
                                         <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
                                     </div>
                                 </div>
                                 <div className="mx-auto w-full max-w-xl mt-2">
-                                    <h3 className="text-20 xs:text-24 font-medium">Buy Now, Pay Later</h3>
+                                    <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
                                     <div className="flex justify-between flex-wrap gap-5 pt-3">
                                         {
                                             paymentcard.map((array, index) => (

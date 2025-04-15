@@ -125,12 +125,6 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                         >
                             Order History
                         </Link>
-                        <Link
-                            className="border border-gray p-2 max-w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold shadow"
-                            href='/about-us'
-                        >
-                            About Us
-                        </Link>
                         <p
                             className="border border-gray p-2 max-w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold shadow cursor-pointer"
                             onClick={(e) => { e.preventDefault(); logoutHhandler() }}

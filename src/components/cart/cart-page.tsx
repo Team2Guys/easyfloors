@@ -221,20 +221,20 @@ const CartPage = ({ products }: CartPageProps) => {
                     <div className='hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
                       <div className='col-span-6'>Product</div>
                       <div className='col-span-2 text-center'>Box Qty</div>
-                      <div className='col-span-2 text-center'>Total Price</div>
+                      <div className='col-span-2 text-center'>Price</div>
                       <div className='col-span-2 text-end'>Remove</div>
                     </div>
                     <p className='block xl:hidden text-12 font-semibold font-inter'>Product</p>
                     <div className='border border-b border-[#DEDEDE]' />
                     {nonAccessoryItems.map((item, cartindex) => (
                       <div key={cartindex}>
-                        <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+                        <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                           <div className='col-span-10 xl:col-span-6'>
                             <div className='flex gap-4'>
                               <Image
                                 width={170}
                                 height={160}
-                                className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[160px]'
+                                className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[140px]'
                                 src={item.image ?? '/default-image.png'}
                                 alt="cart"
                               />
@@ -328,7 +328,7 @@ const CartPage = ({ products }: CartPageProps) => {
                   <div className=' hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
                     <div className='col-span-6'>Accessories</div>
                     <div className='col-span-2 text-center'>Qty m</div>
-                    <div className='col-span-2 text-center'>Total Price</div>
+                    <div className='col-span-2 text-center'>Price</div>
                     <div className='col-span-2 text-end'>Remove</div>
                   </div>
                   <p className='block xl:hidden text-12 font-semibold font-inter'>Accessories</p>
@@ -338,7 +338,7 @@ const CartPage = ({ products }: CartPageProps) => {
                       <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
                         <div className=' col-span-10 xl:col-span-6'>
                           <div className='flex gap-4'>
-                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart" />
+                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]' src={item.image ?? '/default-image.png'} alt="cart" />
                             <div>
                               <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: AED 
@@ -416,7 +416,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <CartSelect select={UAEStates} selectedFee={selectedFee} onSelect={handleStateSelect} />
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Subtotal Incl. VAT</p>
+                  <p>Total</p>
                   <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>

@@ -202,14 +202,16 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
             ))}
           </div>
         )}
+        <div>
         <button
-          className={`mt-4 md:mb-9 mb-7 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed sm:bottom-10 left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
+          className={` mt-2 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed  left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
           onClick={handleAddSelectedToCart}
           disabled={selectedProducts.length === 0}
         >
           <Image src="/assets/images/icon/cart.png" alt="cart" width={28} height={28} />
           Add to Cart
         </button>
+        </div>
       </div>
     </div>
   );

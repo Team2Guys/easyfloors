@@ -20,7 +20,7 @@ const Navbar = ({ categories, products}: INavbar) => {
 const pathname = usePathname()
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 5);
     };
 
     handleScroll();
@@ -62,8 +62,6 @@ const pathname = usePathname()
       })) || [],
     };
   });
-
-console.log(pathname, "pathname")
 
   return (
     <nav className={`bg-white w-full z-50 max-sm:pb-1 max-lg:pb-2 font-inter  ${isScrolled ? "bg-white text-black top-0 fixed" : "bg-white text-black sticky top-0"}`}>
