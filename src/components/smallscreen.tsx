@@ -16,9 +16,9 @@ const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) 
       <div>
         {items?.length === 0 ? (
           <div className="text-center mt-5 mb-10">
-            <h1 className="text-2xl font-bold">
+            <h3 className="text-2xl font-bold">
               {isSamplePage ? "Free Sample is Empty" : "Wishlist is Empty"}
-            </h1>
+            </h3>
             <Link
               href="/"
               className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4"

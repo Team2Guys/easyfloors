@@ -5,24 +5,28 @@ import Image from "next/image";
 import Container from "components/common/container/Container";
 import { BreadcrumbProps } from "types/PagesProps";
 
-const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, imageClass }: BreadcrumbProps) => {
-    const [isScrolled, setIsScrolled] = useState(false);
+const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImagetext, imageClass }: BreadcrumbProps) => {
+  const [isScrolled, setIsScrolled] = useState(false);
   
-    useEffect(() => {
-      const handleScroll = () => {
-        setIsScrolled(window.scrollY > 20);
-      };
-  
-      handleScroll();
-      window.addEventListener("scroll", handleScroll);
-  
-      return () => {
-        window.removeEventListener("scroll", handleScroll);
-      };
-    }, []);
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 5);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+
   return (
     <div className={` w-full pt-3  `}>
-      <div className={`bg-background text-black py-3 font-inter z-40 ${isScrolled ? "bg-white text-black top-9 lg:top-[76px] fixed w-full border-b" : "bg-white text-black sticky top-0"}`}>
+     <div
+  className={`transition-all duration-300 ease-in-out z-30 w-full py-3 bg-white border-b ${isScrolled ? "fixed top-[35px] sm:top-[45px] lg:top-[76px] shadow-md" : ""}`}
+     >
         <Container className="text-lg flex items-center gap-2 sm:gap-4">
           {/* Home Link */}
           <Link href="/" className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
@@ -74,7 +78,7 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, imageC
             )}
           <span className="text-[9px] xs:text-11 sm:text-12 md:text-14 font-bold capitalize">{title.replace(/-/g, " ")}</span>
         </Container>
-      </div>
+     </div>
 
       {image && (
         <div className="relative mt-2">
@@ -85,7 +89,11 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, imageC
             src={image}
             alt={altText || title || "breadcrumb-image"}
           />
-      
+       {!isImagetext && (
+            <div className="absolute inset-0 flex justify-center items-center text-white text-center">
+              <h1 className="text-25 md:text-[42.6px] font-bold">{title}</h1>
+            </div>
+          )}
         </div>
       )}
     </div>

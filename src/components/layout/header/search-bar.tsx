@@ -12,27 +12,33 @@ interface SearchBarProps {
 const SearchBar = ({ className, productData }: SearchBarProps) => {
   const [searchText, setSearchText] = useState("");
   const [isProductListOpen, setIsProductListOpen] = useState(false);
-  const filteredItems =
-  productData?.flatMap((product) => {
-    const searchTerm = searchText.trim().toLowerCase();
-    const isExplicitSearch = searchTerm.length >= 4;
-    const productMatches =
-      ((product.stock && product.stock > 0) || isExplicitSearch) &&
-      (product.name.toLowerCase().includes(searchTerm) ||
-        product.price.toString().includes(searchTerm) ||
-        product.description?.toString().includes(searchTerm) ||
-        product.discountPrice?.toString().includes(searchTerm) ||
-        product.category.RecallUrl?.toString().includes(searchTerm) ||
-        product.subcategory.custom_url?.toString().includes(searchTerm));
-    const matchingAccessories =
-      product.acessories?.filter(
-        (acc) =>
-          ((acc.stock && acc.stock > 0) || isExplicitSearch) &&
-          acc.name.toLowerCase().includes(searchTerm)
-      ) || [];
+  const filteredItems = productData?.sort((a,b)=>{
+    const aNameMatch = a.name.toLowerCase().includes(searchText);
+    const bNameMatch = b.name.toLowerCase().includes(searchText);
 
-    return productMatches ? [product, ...matchingAccessories] : matchingAccessories;
-  }) || [];
+    if (aNameMatch && !bNameMatch) return -1;
+    if (!aNameMatch && bNameMatch) return 1;
+    return 0;
+  })?.flatMap((product) => {
+      const searchTerm = searchText.trim().toLowerCase();
+      const isExplicitSearch = searchTerm.length >= 4;
+      const productMatches =
+        ((product.stock && product.stock > 0) || isExplicitSearch) &&
+        (product.name.toLowerCase().includes(searchTerm) ||
+          product.price.toString().includes(searchTerm) ||
+          product.description?.toString().includes(searchTerm) ||
+          product.discountPrice?.toString().includes(searchTerm) ||
+          product.category.RecallUrl?.toString().includes(searchTerm) ||
+          product.subcategory.custom_url?.toString().includes(searchTerm));
+      const matchingAccessories =
+        product.acessories?.filter(
+          (acc) =>
+            ((acc.stock && acc.stock > 0) || isExplicitSearch) &&
+            acc.name.toLowerCase().includes(searchTerm)
+        ) || [];
+
+      return productMatches ? [product, ...matchingAccessories] : matchingAccessories;
+    }) || [];
 
 
 
@@ -55,7 +61,7 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
         onChange={(e) => {
           setSearchText(e.target.value);
           setIsProductListOpen(true);
-    
+
         }}
         className="w-full pl-10 pr-4 h-7 text-14 lg:text-[10px] xl:text-14 sm:h-6 2xl:h-[31px] rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 bg-gray-100"
       />
@@ -68,7 +74,7 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-[310px] sm:w-[350px] xl:w-[400px] 2xl:w-[500px] bg-white border border-[#afa183] border-opacity-30 rounded-2xl mt-2 sm:mt-6 z-20">
             <div className="flex justify-end mb-2 sticky top-0 p-2 z-30 bg-white rounded-t-2xl">
               <svg
-              className="cursor-pointer"
+                className="cursor-pointer"
                 onClick={() => setIsProductListOpen(false)}
                 width="28"
                 height="28"
@@ -88,54 +94,54 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
               {uniqueItems.length > 0 ? (
                 uniqueItems.map((product, index) => {
                   const isAccessory = product.__typename === "Accessory";
-                 return(
-                  <Link
-                  key={index}
-                  href={isAccessory 
-                    ? `/accessories/${product.custom_url?.toLowerCase()}` 
-                    : `/${product.category.RecallUrl}/${product.subcategory.custom_url}/${product.custom_url?.toLowerCase()}`
-                  }
-                  onClick={() => setIsProductListOpen(false)}
-                  >
-                  <div className="flex border p-2 mx-1 my-2 rounded-md bg-white hover:shadow-md transition duration-300 gap-2 cursor-pointer border-[#afa183] border-opacity-30">
-                    <Image
-                      width={100}
-                      height={100}
-                      src={product.posterImageUrl.imageUrl}
-                      alt={product.name}
-                      className="size-20 md:size-28"
-                    />
-                    <div className="pt-1 w-full text-start font-inter">
-                      <p className="text-17 md:text-21 capitalize font-inter">{product.name}</p>
-                      <div className="flex items-center gap-1 xs:gap-4">
-                        {product.discountPrice && product.discountPrice > 0 ? (
-                          <>
-                            <p className="text-15 font-semibold text-[#FF0000]">
-                              AED <span>{product.discountPrice}</span>
-                            </p>
-                            <p className="text-[12px] text-primary-foreground font-bold line-through">
-                              AED <span>{product.price}</span>
-                            </p>
-                          </>
-                        ) : (
-                          <p className="text-15 font-semibold">
-                            AED <span>{product.price}</span>
+                  return (
+                    <Link
+                      key={index}
+                      href={isAccessory
+                        ? `/accessories/${product.custom_url?.toLowerCase()}`
+                        : `/${product.category.RecallUrl}/${product.subcategory.custom_url}/${product.custom_url?.toLowerCase()}`
+                      }
+                      onClick={() => setIsProductListOpen(false)}
+                    >
+                      <div className="flex border p-2 mx-1 my-2 rounded-md bg-white hover:shadow-md transition duration-300 gap-2 cursor-pointer border-[#afa183] border-opacity-30">
+                        <Image
+                          width={100}
+                          height={100}
+                          src={product.posterImageUrl.imageUrl}
+                          alt={product.name}
+                          className="size-20 md:size-28"
+                        />
+                        <div className="pt-1 w-full text-start font-inter">
+                          <p className="text-17 md:text-21 capitalize font-inter">{product.name}</p>
+                          <div className="flex items-center gap-1 xs:gap-4">
+                            {product.discountPrice && product.discountPrice > 0 ? (
+                              <>
+                                <p className="text-15 font-semibold text-[#FF0000]">
+                                  AED <span>{product.discountPrice}</span>
+                                </p>
+                                <p className="text-[12px] text-primary-foreground font-bold line-through">
+                                  AED <span>{product.price}</span>
+                                </p>
+                              </>
+                            ) : (
+                              <p className="text-15 font-semibold">
+                                AED <span>{product.price}</span>
+                              </p>
+                            )}
+                          </div>
+                          <p className="text-16">
+                            {product.stock && product.stock > 0 ? "In Stock" : <span className="text-[#FF0000]">Out of Stock</span>}
                           </p>
-                        )}
+                        </div>
                       </div>
-                      <p className="text-16">
-                        {product.stock && product.stock > 0 ? "In Stock" : <span className="text-[#FF0000]">Out of Stock</span>}
-                      </p>
-                    </div>
-                  </div>
-                  </Link>
-                 )
-              })
+                    </Link>
+                  )
+                })
               ) : (
                 <div className="w-full animate-pulse px-2">
-                {[...Array(3)].map((_, i) => (
-                  <div key={i} className="h-28 w-full bg-gray-300 rounded mb-3"></div>
-                ))}
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="h-28 w-full bg-gray-300 rounded mb-3"></div>
+                  ))}
                 </div>
               )}
             </div>

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import TopNav from './top-nav'
 import Navbar from './navbar'
 import { IProduct } from 'types/prod';
 import { Category } from 'types/cat';
 import { fetchCategories, fetchProducts } from 'config/fetch';
 import { FETCH_HEADER_CATEGORIES, FETCH_HEADER_PRODUCTS } from 'graphql/queries';
 import { toast } from 'react-toastify';
+import TopNav from './top-nav';
 
 const Header = () => {
    const [categories, setCategories] = useState<Category[]>([]);
@@ -27,10 +27,10 @@ const Header = () => {
       fetchItems();  
     }, []);
   return (
-    <div>
-    <TopNav />
+    <>
+    <TopNav/>
     <Navbar categories={categories} products={products}/>
-    </div>
+    </>
   )
 }
 

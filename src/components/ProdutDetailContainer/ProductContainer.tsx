@@ -152,7 +152,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           </button>
         </div>
         <button
-           className="flex border border-black hover:bg-black justify-center text-11 xs:text-12 text-black hover:text-white w-[57%] 2xl:text-22 font-inter xs:gap-2 items-center max-sm:h-[40px] py-2 sm:text-16"
+          className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-"
           onClick={() =>
             handleAddToStorage(
               productData,
