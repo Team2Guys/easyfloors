@@ -53,11 +53,6 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
             [name]: value,
         }));
     };
-
-
-    console.log(loggedInUser, "loggedInUser")
-
-
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         const userDetails = {

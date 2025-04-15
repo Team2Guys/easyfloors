@@ -64,6 +64,7 @@ export const authOptions = {
       }
       return token;
     },
+    
     async session({ session, token }: { session: Session; token: JWT }) {
       if (token.email) {
         try {
@@ -72,7 +73,6 @@ export const authOptions = {
             variables: { email: token.email },
             fetchPolicy: "network-only", // Ensure fresh data
           });
-          console.log(data.find_one, "findOne")
           if (data?.find_one) {
             session.user = {
               ...session.user,
@@ -91,6 +91,7 @@ export const authOptions = {
         }
 
       }
+      return session;
     }
   },
   session: {
