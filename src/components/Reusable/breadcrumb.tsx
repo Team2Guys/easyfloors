@@ -5,7 +5,7 @@ import Image from "next/image";
 import Container from "components/common/container/Container";
 import { BreadcrumbProps } from "types/PagesProps";
 
-const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, isImagetext, imageClass }: BreadcrumbProps) => {
+const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, imageClass }: BreadcrumbProps) => {
   return (
     <div className="relative w-full pt-3 ">
       <div className="bg-background text-black py-3 font-inter ">
@@ -71,11 +71,7 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText, isImag
             src={image}
             alt={altText || title || "breadcrumb-image"}
           />
-          {!isImagetext && (
-            <div className="absolute inset-0 flex justify-center items-center text-white text-center">
-              <h1 className="text-25 md:text-[42.6px] font-bold">{title}</h1>
-            </div>
-          )}
+      
         </div>
       )}
     </div>

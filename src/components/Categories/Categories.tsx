@@ -36,7 +36,7 @@ const Categories: React.FC<Props> = ({ card, index }) => {
           </p>
           <div className="md:mt-3">
             <Link
-              href={`what-am-i?flooring=${card.custom_url}`}
+              href={`what-am-i?flooring=${card.whatIamEndpoint}`}
               className="md:text-base text-[12px] font-medium text-white hover:bg-primary transition duration-300 underline hover:no-underline"
             >
               Click Me

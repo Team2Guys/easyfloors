@@ -44,11 +44,13 @@ const FormLayout = ({
       whatAmiTopHeading: editCategory?.whatAmiTopHeading || "",
       Heading: editCategory?.Heading || "",
       recalledByCategories: editCategory?.recalledByCategories?.map((value: Category) => value.id) || [],
-      price: editCategory.price  || "",
-      sizes:editCategory.sizes || [],
-   
+      price: editCategory.price || "",
+      sizes: editCategory.sizes || [],
+      whatIamEndpoint: editCategory.whatIamEndpoint || "",
+
     } as ISUBCATEGORY_EDIT
     : undefined;
+
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory?.posterImageUrl) ? [editCategory?.posterImageUrl] : undefined);
   const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined);
   const [WhatamIImageUrl, setWhatamIImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImage ? editCategory?.whatAmiImage : undefined);
@@ -630,6 +632,21 @@ const FormLayout = ({
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      What am I Endpoint
+                        </label>
+
+                        <Field
+                          type="text"
+                          name="whatIamEndpoint"
+                          placeholder="What Am I Endpoint"
+                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                        />
+                        <ErrorMessage name="whatIamEndpoint" component="div" className="text-red-500 text-sm" />
+                      </div>
+
+
+                      <div>
+                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
                           Custom Url
                         </label>
 
@@ -824,7 +841,7 @@ const FormLayout = ({
                           </div>
                           <div className="flex items-center gap-4">
                             <label className="block text-sm font-medium text-black dark:text-white w-24">
-                            Thickness:
+                              Thickness:
                             </label>
                             <input
                               type="text"
@@ -1022,6 +1039,7 @@ const FormLayout = ({
                       alt="Crop me"
                       style={{ maxWidth: '100%' }}
                       onLoad={onImageLoad}
+                      crossOrigin="anonymous"
                     />
                   </ReactCrop>
                 )}

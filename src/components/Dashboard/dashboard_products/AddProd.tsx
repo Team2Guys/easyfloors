@@ -1703,6 +1703,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       alt="Crop me"
                       style={{ maxWidth: '100%' }}
                       onLoad={onImageLoad}
+                      crossOrigin="anonymous"
                     />
                   </ReactCrop>
                 )}

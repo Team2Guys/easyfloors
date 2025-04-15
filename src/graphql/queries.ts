@@ -198,6 +198,7 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       BannerImage
       price
       sizes
+      whatIamEndpoint
       products {
         id
         name
@@ -215,6 +216,24 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
     }
   }
 `;
+
+export const FETCH_ALL_WHAT_AM_I = gql`
+  query SubCategories {
+    subCategories {
+      id
+      name
+      whatAmiImage
+      whatamIdetails
+      whatAmiTopHeading
+      whatAmiImageBanner
+      homePageImage
+      whatIamEndpoint    
+    }
+  }
+`;
+
+
+
 
 export const FETCH_ALL_APPOINTMENTS = gql`
   query appointments {

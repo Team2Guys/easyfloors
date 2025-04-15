@@ -68,6 +68,7 @@ export interface ISUBCATEGORY extends Category {
   posterImageUrl?: ProductImage;
   recalledByCategories?:Category[]
   sizes?: Sizes[];
+  whatIamEndpoint? :string
 }
 
 
