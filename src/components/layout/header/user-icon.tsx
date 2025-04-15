@@ -20,48 +20,49 @@ interface UserIconProps {
 
 const UserIcon = ({ className }: UserIconProps) => {
   const { data: session } = useSession();
-  const [imgSrc] = useState(session?.user?.image || "/assets/images/dummy-avatar.jpg");
+  //@ts-expect-error("Already added the Image")
+  const [imgSrc, setimgSrc] = useState(session?.user?.image?.imageUrl || "/assets/images/dummy-avatar.jpg");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
-      const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
-      const [freeSampleTotal, setfreeSampleTotal] = useState<ICart[]>();
-        const [mergedCart, setMergedCart] = useState<ICart[]>([]);
-      useEffect(() => {
-        const fetchItems = async () => {
-          try {
-            const items = await getCart();
-            const wishlist = await getWishlist();
-            const freesample = await getFreeSamples();
-            const cartfree = await getFreeSamplesCart();
-            setWishlistTotal(wishlist);
-            setfreeSampleTotal(freesample);
-            setMergedCart([...items, ...cartfree]);
-          } catch {
-            toast.error("Error fetching items");
-          }
-        };
-    
-        fetchItems();
-        const handleCartUpdate = () => fetchItems();
-        const handleWishlistUpdate = () => fetchItems();
-        const handlefreeSampleUpdate = () => fetchItems();
-        const handlecartfreeSampleUpdate = () => fetchItems();
-    
-        window.addEventListener("cartUpdated", handleCartUpdate);
-        window.addEventListener("wishlistUpdated", handleWishlistUpdate);
-        window.addEventListener("freeSampleUpdated", handlefreeSampleUpdate);
-        window.addEventListener("cartfreeSampleUpdated", handlecartfreeSampleUpdate);
-    
-        return () => {
-          window.removeEventListener("cartUpdated", handleCartUpdate);
-          window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
-          window.removeEventListener("freeSampleUpdated", handlefreeSampleUpdate);
-        window.addEventListener("cartfreeSampleUpdated", handlecartfreeSampleUpdate);
+  const [wishlistTotal, setWishlistTotal] = useState<ICart[]>();
+  const [freeSampleTotal, setfreeSampleTotal] = useState<ICart[]>();
+  const [mergedCart, setMergedCart] = useState<ICart[]>([]);
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const items = await getCart();
+        const wishlist = await getWishlist();
+        const freesample = await getFreeSamples();
+        const cartfree = await getFreeSamplesCart();
+        setWishlistTotal(wishlist);
+        setfreeSampleTotal(freesample);
+        setMergedCart([...items, ...cartfree]);
+      } catch {
+        toast.error("Error fetching items");
+      }
+    };
 
-        };
-    
-      }, []);
+    fetchItems();
+    const handleCartUpdate = () => fetchItems();
+    const handleWishlistUpdate = () => fetchItems();
+    const handlefreeSampleUpdate = () => fetchItems();
+    const handlecartfreeSampleUpdate = () => fetchItems();
+
+    window.addEventListener("cartUpdated", handleCartUpdate);
+    window.addEventListener("wishlistUpdated", handleWishlistUpdate);
+    window.addEventListener("freeSampleUpdated", handlefreeSampleUpdate);
+    window.addEventListener("cartfreeSampleUpdated", handlecartfreeSampleUpdate);
+
+    return () => {
+      window.removeEventListener("cartUpdated", handleCartUpdate);
+      window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
+      window.removeEventListener("freeSampleUpdated", handlefreeSampleUpdate);
+      window.addEventListener("cartfreeSampleUpdated", handlecartfreeSampleUpdate);
+
+    };
+
+  }, []);
   const handleProfileClick = () => {
     if (!session) {
       router.push("/login");
@@ -82,30 +83,41 @@ const UserIcon = ({ className }: UserIconProps) => {
     };
   }, []);
 
+
   const logoutHandler = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await signOut();
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    //@ts-expect-error("Already added the Image")
+    setimgSrc(session?.user?.image?.imageUrl || "/assets/images/dummy-avatar.jpg")
+  }, [session])
+
+
   return (
     <div className={`flex items-center 2xl:space-x-1 ${className} relative`}>
       <button
         onClick={handleProfileClick}
         className="relative flex items-center space-x-2 h-7 p-1 fill-white focus:bg-white focus:fill-black lg:fill-black lg:hover:fill-white lg:hover:bg-primary"
-         aria-label={session ? "Open user profile" : "Login"  }
+        aria-label={session ? "Open user profile" : "Login"}
       >
-        {session ? (
-          <Image
-          src={imgSrc}
-            alt="User Profile"
-            width={50}
-            height={50}
-            className="rounded-full h-full w-5 lg:w-40 xl:w-32 xl:h-7 "
-          />
-          
-        ) : (
-          <ProfileIcon />
-        )}
+
+        {
+
+          session  ? (
+            <Image
+              src={imgSrc}
+              alt="User Profile"
+              width={50}
+              height={50}
+              className="rounded-full h-full w-5 lg:w-40 xl:w-42 xl:h-7 "
+            />
+
+          ) : (
+            <ProfileIcon />
+          )}
       </button>
 
       {session && isOpen && (
@@ -180,7 +192,7 @@ const UserIcon = ({ className }: UserIconProps) => {
         emptyMessage="free sample is empty"
       />
       <div className="border-l-2 border-white h-4 lg:border-[#464646] md:h-6" />
-       {/* Cart */}
+      {/* Cart */}
       <DropdownPanel
         icon={<CartIcon />}
         type="cart"

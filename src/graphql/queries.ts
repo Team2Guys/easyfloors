@@ -616,3 +616,17 @@ export const GET_ALL_RECORDS = gql`
     }
   }
 `;
+
+
+
+export const FIND_ONE_USER = gql`
+  query FindOne($email: String!) {
+    find_one(email: $email) {
+      id
+      name
+      email
+      token
+      userImageUrl
+    }
+  }
+`;
