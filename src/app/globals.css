@@ -155,7 +155,9 @@ padding: 4px;
   user-select: none !important;
 }
 
-
+.PhoneInputInput{
+  outline: none !important;
+}
 @media (max-width: 767px) {
   .category_slider .swiper-pagination {
     background-color: transparent !important;

@@ -141,9 +141,9 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
       <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
       <PaymentMethod installments={totalPrice / 4} />
-      <div className="mt-2 space-y-2">
+      <div className="mt-2 space-y-2 text-center">
         <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
-        <div className='flex justify-between lg:justify-start gap-2 lg:gap-10' >
+        <div className='flex justify-between lg:justify-center items-center gap-2 lg:gap-10' >
           {
             paymentcard.map((array, index) => (
               <Image className=' w-16  md:w-14 2xl:w-[50px] h-auto shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />

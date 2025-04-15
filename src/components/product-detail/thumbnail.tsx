@@ -85,15 +85,16 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     }
   }, [selectedColor, ThumnailImage, onImageChange, stickyside]);
 
-  const handleThumbnailClick = (index: number) => {
-    if (!isSwiping && index !== currentSlide) { // Only activate on click, not swipe
+  const handleThumbnailClick = (index: number, e: React.MouseEvent) => {
+    e.preventDefault(); // Add this line
+    if (!isSwiping && index !== currentSlide) {
       setCurrentSlide(index);
       setSelectedColor?.({
         color: ThumnailImage[index].color || ThumnailImage[index].colorCode,
         colorCode: ThumnailImage[index].colorCode,
         altText: ThumnailImage[index].altText,
         imageUrl: ThumnailImage[index].imageUrl,
-      }); // Update selected color
+      });
       onImageChange?.(combinedImages[index]);
       sliderRef1.current?.slickGoTo(index);
       if (stickyside) {
@@ -157,7 +158,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 {ThumnailImage.map((product, index) => (
                   <div
                     key={index}
-                    onClick={() => handleThumbnailClick(index)}
+                    onClick={(e) => handleThumbnailClick(index, e)}
                     className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
                       }`}
                   >
@@ -197,7 +198,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
               {ThumnailImage.map((product, index) => (
                 <div
                   key={index}
-                  onClick={() => handleThumbnailClick(index)}
+                  onClick={(e) => handleThumbnailClick(index, e)}
+
                   className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
                     }`}
                 >
@@ -298,7 +300,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   <div
                     key={index}
                     className="text-center cursor-pointer"
-                    onClick={() => handleThumbnailClick(globalIndex)}
+                    onClick={(e) => handleThumbnailClick(globalIndex,e)}
+
                   >
                     <Image
                       width={150}

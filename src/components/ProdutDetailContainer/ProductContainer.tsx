@@ -75,11 +75,11 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             </span>
           </p>
           <div className="bg-black h-5 w-[2px]" />
-          <p className="text-12 xs:text-14 2xl:text-23 font-bold sm:text-18">
+          <p className="text-12 xs:text-14 2xl:text-20 font-bold sm:text-18">
             Box Coverage:{" "}
             <span className="font-normal">
               {unit === "sqm"
-                ? `${boxCoverage ?? "0"} m²`
+                ? `${(parseFloat(boxCoverage ?? "0") || 0).toFixed(2)} m²`
                 : `${(parseFloat(boxCoverage ?? "0") * 10.764).toFixed(2)} ft²`}
             </span>
           </p>
@@ -152,7 +152,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           </button>
         </div>
         <button
-          className="flex text-[#475156] gap-2 items-center"
+           className="flex border border-black hover:bg-black justify-center text-11 xs:text-12 text-black hover:text-white w-[57%] 2xl:text-22 font-inter xs:gap-2 items-center max-sm:h-[40px] py-2 sm:text-16"
           onClick={() =>
             handleAddToStorage(
               productData,
@@ -170,7 +170,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             )
           }
         >
-          <LuHeart size={20} />
+          <LuHeart size={25} />
           Add to Wishlist
         </button>
         <PaymentMethod installments={installments} showheading />
