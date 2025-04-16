@@ -32,12 +32,15 @@ const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
     <div className="flex justify-between text-16 lg:text-20">
       <p>Shipping</p>
       <div>
-        <div className="border bg-white text-[#BBBBBB] text-12 xl:text-15 2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 w-full mb-2">
-          United Arab Emirates
-        </div>
+         {selectedState === "City" && (
+          <div className={`border bg-white text-12 xl:text-15 2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 mb-2 ${selectedState === "City"? "w-full" : "w-52"}`}>
+            United Arab Emirates
+          </div>
+        )}
         <div className="relative w-full font-inter" ref={dropdownRef}>
         <div
-          className="border bg-white 2xl:px-5 2xl:py-3 px-2 py-2 w-full cursor-pointer flex justify-between items-center text-12 xl:text-15 text-[#BBBBBB]"
+          className={`border bg-white 2xl:px-5 2xl:py-3 px-2 py-2 cursor-pointer flex justify-between items-center text-12 xl:text-15
+            ${selectedState === "City"? "w-full" : "w-52"}`}
           onClick={() => setIsOpen(!isOpen)}
         >
           {selectedState}
@@ -45,7 +48,7 @@ const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
         </div>
 
         {isOpen && (
-          <div className="absolute top-full left-0 z-10 w-full bg-white border border-t-0 max-h-[90px] overflow-y-auto">
+          <div className="absolute top-full left-0 z-10 w-full bg-white border border-t-0 max-h-[90px] overflow-y-scroll">
             {select.map((state, index) => (
               <div
                 key={index}

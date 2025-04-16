@@ -258,7 +258,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 {product.plankHeight && (
                   <div className="absolute h-full top-0 flex flex-col justify-between py-4 sm:py-10 left-1/2 -translate-x-28 sm:-translate-x-36">
                     <span className="flex justify-center items-center">
-                      <FaAngleUp className="text-20 sm:text-24" />
+                      <FaAngleUp className="text-16 sm:text-20" />
                     </span>
                     <div className="flex-1 border w-[1px] mx-auto border-black"></div>
                     <span className="h-16 sm:h-28 flex justify-center items-center font-semibold transform rotate-90 text-13 sm:text-16">
@@ -266,16 +266,16 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     </span>
                     <div className="flex-1 border w-[1px] mx-auto border-black"></div>
                     <span className="flex justify-center items-center">
-                      <FaAngleDown className="text-20 sm:text-24" />
+                      <FaAngleDown className="text-16 sm:text-20" />
                     </span>
                   </div>
                 )}
 
                 {/* Plank width overlay */}
                 {product.plankWidth && (
-                  <div className="absolute w-[170px] sm:w-[200px] -top-1 sm:top-0 flex justify-between mx-auto left-1/2 -translate-x-24 sm:-translate-x-28">
+                  <div className="absolute w-[130px] sm:w-[135px] -top-1 sm:top-0 flex justify-between mx-auto left-1/2 -translate-x-1/2">
                     <span className="flex justify-center items-center transform -rotate-90">
-                      <FaAngleUp className="text-20 sm:text-24" />
+                      <FaAngleUp className="text-16 sm:text-20" />
                     </span>
                     <div className="flex-1 border h-[1px] my-auto border-black"></div>
                     <span className="flex justify-center items-center text-13 sm:text-16 font-semibold px-2">
@@ -283,7 +283,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     </span>
                     <div className="flex-1 border h-[1px] my-auto border-black"></div>
                     <span className="flex justify-center items-center transform -rotate-90">
-                      <FaAngleDown className="text-20 sm:text-24" />
+                      <FaAngleDown className="text-16 sm:text-20" />
                     </span>
                   </div>
                 )}

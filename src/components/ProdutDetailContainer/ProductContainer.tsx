@@ -9,7 +9,7 @@ import { calculateProductDetails, handleAddToStorage } from "lib/carthelper";
 import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
 const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {
-  const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
+  // const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
   const [unit, setUnit] = useState("sqm");
   const [area, setArea] = useState("");
   const {
@@ -21,7 +21,6 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     installments,
     boxCoverage,
   } = calculateProductDetails(area, unit, productData);
-
   const filteredProducts = (productData?.acessories ?? []).map((product) => {
     const selectedColor = product.featureImages?.find(
       (img) => img.color === productData.productImages?.[0]?.colorCode || ""
@@ -46,7 +45,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           <Thumbnail
             ThumnailImage={productData.productImages}
             ThumnailBottom={productData.featureImages}
-            onImageChange={setActiveImage}
+            // onImageChange={setActiveImage}
           />
         )}
       </div>
@@ -117,7 +116,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               subCategory ?? "",
               MainCategory ?? "",
               "freeSample",
-              image?.imageUrl ?? "",
+              productData?.productImages?.[0]?.imageUrl,
               boxCoverage,
               unit,
               selectedColor,
@@ -139,7 +138,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
                 subCategory ?? "",
                 MainCategory ?? "",
                 "cart",
-                image?.imageUrl ?? "",
+                productData?.productImages?.[0]?.imageUrl,
+                // image?.imageUrl ?? "",
                 boxCoverage,
                 unit,
                 selectedColor
@@ -163,7 +163,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               subCategory ?? "",
               MainCategory ?? "",
               "wishlist",
-              image?.imageUrl ?? "",
+              productData?.productImages?.[0]?.imageUrl,
+              // image?.imageUrl ?? "",
               boxCoverage,
               unit,
               selectedColor

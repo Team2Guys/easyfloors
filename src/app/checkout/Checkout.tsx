@@ -403,6 +403,16 @@ const Checkout = () => {
                                                     </p>
                                                 </div>
                                             </div>
+                                             <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                                                <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
+                                                <div>
+                                                <strong className="text-15 xs:text-20">Free Samples:</strong>
+                                                <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
+                                                <p className="text-11 xs:text-16">
+                                                    <span>Shipping Fee:</span> <strong>Free</strong>
+                                                </p>
+                                                </div>
+                                             </div>
                                         </Panel>
 
                                         <Panel
@@ -428,12 +438,15 @@ const Checkout = () => {
                                         </Panel>
                                     </Collapse>
                                 </div>
+                                {
+                                    subTotal > 0 &&
                                 <div className="mt-4">
                                     <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
                                     <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
                                         <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
                                     </div>
                                 </div>
+                                }
                                 <div className="mx-auto w-full max-w-xl mt-2">
                                     <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
                                     <div className="flex justify-between flex-wrap gap-5 pt-3">

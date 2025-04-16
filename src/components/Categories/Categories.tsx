@@ -43,10 +43,10 @@ const Categories: React.FC<Props> = ({ card, index }) => {
             </Link>
           </div>
           {featureObj && (
-            <div className="absolute md:bottom-0 hidden sm:block md:right-4 right-0 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div className="absolute md:bottom-0 hidden sm:block right-1/2 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100 translate-x-1/2 w-fit whitespace-nowrap">
               <ul className="list-disc pl-5 text-left">
                 {featureObj.features.map((feature, i) => (
-                  <li className="text-[8px] md:text-sm" key={i}>
+                  <li className="text-[8px] md:text-sm lg:text-11 xl:text-sm" key={i}>
                     {feature}
                   </li>
                 ))}

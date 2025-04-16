@@ -335,7 +335,7 @@ const CartPage = ({ products }: CartPageProps) => {
                   <div className='border border-b border-[#DEDEDE]' />
                   {accessoryItems.map((item, cartindex) => (
                     <div key={cartindex}>
-                      <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+                      <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                         <div className=' col-span-10 xl:col-span-6'>
                           <div className='flex gap-4'>
                             <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]' src={item.image ?? '/default-image.png'} alt="cart" />
@@ -433,12 +433,12 @@ const CartPage = ({ products }: CartPageProps) => {
                       onClick={() => handleShippingSelect("express")}
                     >
                       <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                      <div>
+                      <div className='text-11 xs:text-16'>
                         <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                        <p className="text-11 xs:text-16">delivery <strong>Next day</strong></p>
-                        <p className="text-11 xs:text-16">
-                          <span>Delivery Cost:</span> <strong>AED 150</strong>, <span>Free shipping for all orders above <strong>AED 1000</strong></span>
-                        </p>
+                        <p className="text-11 xs:text-16">delivery <strong>Next day delivery</strong></p>
+                        <p className="text-11 xs:text-16">Shipping Fee:</p>
+                        <p>All Emirates- <strong>AED 150</strong>,</p>  
+                        <p>Free shipping for all orders above <strong>AED 1000</strong></p>
                       </div>
                     </div>
                     <div
@@ -449,9 +449,9 @@ const CartPage = ({ products }: CartPageProps) => {
                       <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
                         <strong className="text-15 xs:text-20">Standard Shipping:</strong>
-                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                        <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
                         <p className="text-11 xs:text-16">
-                          <span>Delivery Cost:</span> <strong>Free</strong>
+                          <span>Shipping Fee:</span> <strong>Free</strong>
                         </p>
                       </div>
                     </div>
@@ -461,15 +461,27 @@ const CartPage = ({ products }: CartPageProps) => {
                       <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
                         <strong className="text-15 xs:text-20">Self-Collect:</strong>
-                        <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(9am-6pm)</strong></p>
+                        <p className="text-11 xs:text-16">Collection Mon-Sat <strong>(9am-6pm)</strong></p>
                         <p className="text-11 xs:text-16">
                           <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
                         </p>
                       </div>
                     </div>
+                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                      <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
+                      <div>
+                        <strong className="text-15 xs:text-20">Free Samples:</strong>
+                        <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
+                        <p className="text-11 xs:text-16">
+                          <span>Shipping Fee:</span> <strong>Free</strong>
+                        </p>
+                      </div>
+                    </div>
                   </Panel>
                 </Collapse>
-                <PaymentMethod installments={(mergedCart.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)) / 4} />
+                {total > 0 &&
+                <PaymentMethod installments={total > 0 ? parseFloat(total.toFixed(2)) /4: parseFloat(subTotal.toFixed(2))/4} />
+                }
                 <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
                 <div className='flex justify-between gap-2' >
                   {
