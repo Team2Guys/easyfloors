@@ -16,8 +16,14 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
 
         const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
-        const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
-
+        let  subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
+        subcategories = [...subcategories].sort((a, b) => {
+          const nameA = a.name.toLowerCase();
+          const nameB = b.name.toLowerCase();
+          if (nameA === "polar spc") return -1;
+          if (nameB === "polar spc") return 1;
+          return 0;
+        });
         const shouldEnablePagination = subcategories && subcategories.length >= 0;
         const seeAllLink = `/${category?.custom_url || category.name.toLowerCase().replace(/\s+/g, '-')}`;
         return (

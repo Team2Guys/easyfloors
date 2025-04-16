@@ -26,9 +26,9 @@ const Contact = () => {
       <Breadcrumb title="Contact Us" image="/assets/images/Contact/contact-us-banner-imag.webp"  />
       <Container className="md:mt-16 mt-10 mb-20">
         <div className=" sm:max-w-[80%] xl:max-w-[57%] 2xl:max-w-[40%] mx-auto text-center font-inter md:space-y-4">
-          <h1 className="md:text-[36px] text-xl font-semibold leading-10">
+          <h2 className="md:text-[36px] text-xl font-semibold leading-10">
             Get In Touch With Us
-          </h1>
+          </h2>
           <p className="text-[#9F9F9F] md:text-base text-sm">
             For more information about our product & services. Please feel free
             to drop us an email. Our Staff Always be there to help you out. Do

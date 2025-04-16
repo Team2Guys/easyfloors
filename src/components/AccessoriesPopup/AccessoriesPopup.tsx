@@ -125,7 +125,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
 
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl relative pb-20">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-5xl relative pb-20">
         <button className="absolute top-3 right-3 text-gray-600 hover:text-gray-900" onClick={onClose}>
           <AiOutlineClose size={20} />
         </button>
@@ -133,7 +133,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
         {products.length === 0 ? (
           <p className="text-center text-gray-700">No accessory available.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[70vh] thin-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[65vh] thin-scrollbar">
             {products.map((product) => (
               <div key={product.id} className={`p-2 ${selectedProducts.includes(String(product.id)) ? "" : "border-gray-300"}`}>
                 <div className="relative">
@@ -144,7 +144,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                     className={`w-5 h-5 absolute top-3 left-3 accent-white ${Number(product.stock) > 0 ? "cursor-pointer" : "cursor-not-allowed"}`}
                     disabled={Number(product.stock) <= 0}
                   />
-                  <Image width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-60 object-cover border border-black" />
+                  <Image width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-48 object-cover border border-black" />
                   <div className="flex justify-evenly border-b pb-2 gap-4 mt-3">
                     {features.map((feature, index) => (
                       <div key={index} className="flex items-center gap-1">

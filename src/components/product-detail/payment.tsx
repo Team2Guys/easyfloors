@@ -26,6 +26,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
         </div>
       )
     }
+
       <div className="flex gap-2 pt-4">
         <div className="relative w-1/2 border-4 border-[#00FFBC] p-4  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">

@@ -346,7 +346,7 @@ export const blocksData = [
       'Wear a layer that is transparent and highly resistant to damage.',
       'A click-lock system is integrated into its installation structure.',
       'Decorative layer with high-resolution wood or stone designs.',
-      'The core layer is made from rigid stone-plastic composite material.',
+      'The core layer is made from rigid stone composite material.',
       'A base layer that adds foundational stability and durability.',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291723/layer1_11zon_dfk4er.webp',
@@ -565,7 +565,7 @@ export const faqs: FAQItem[] = [
   {
     id: 3,
     question: "How do I know which flooring material is best for my space?",
-    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and herringbone patterns add a decorative touch. If unsure, consult with a trusted flooring company for expert recommendations.",
+    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, consult with a trusted flooring company for expert recommendations.",
   },
 ];
 
@@ -691,7 +691,7 @@ export const timeSlots = [
 
 
 export const faqspage: FAQ[] = [
-  { question: "Can you put SPC flooring on concrete?", answer: "We often receive this question from our customers. The answer is definitely yes. Stone plastic composite (SPC) looks great on concrete subfloors. By creating a solid foundation, it reduces the possibility of warping or buckling over time. So we have to use a completely flat surface for installation." },
+  { question: "Can you put SPC flooring on concrete?", answer: "We often receive this question from our customers. The answer is definitely yes. Stone composite (SPC) looks great on concrete subfloors. By creating a solid foundation, it reduces the possibility of warping or buckling over time. So we have to use a completely flat surface for installation." },
   { question: "When can you walk on LVT flooring after the installation process?", answer: "Our planks have a four-side click lock system for easy installation, and you can walk on them right away after the installation process. However, you should wait 48 hours before walking on glue-down LVT flooring textures, although some manufacturers recommend waiting longer." },
   { question: "Is SPC flooring slippery?", answer: "SPC flooring features a nonslip surface material. Since SPC flooring has a low heat transfer coefficient, it provides excellent anti-skid properties. A few drops of water on SPC flooring will make it feel less slippery than ordinary tile and stone." },
   { question: "Can heavy furniture be placed on oak SPC flooring?", answer: "Yes. The strong and resilient core layer of oak SPC flooring allows it to support heavy furniture. Compared to thinner choices (3 mm), a thicker SPC core (5 mm or more) is better able to resist dents and warping. Because of its stability, the flooring won't buckle or move even when heavy furniture is placed on it. Further, SPC flooring is more durable and impact-resistant than laminate flooring, making it a better option for spaces with heavy furniture. " },
@@ -702,7 +702,7 @@ export const faqspage: FAQ[] = [
   { question: "Is oak SPC flooring pet-friendly?", answer: "All of our durable floors are designed to withstand the rigours of kids and pets. Our flooring is completely free of formaldehyde, ensuring a safe and healthy indoor environment. We also have antibacterial coating on floors that provides excellent antibacterial properties, keeping your space clean and hygienic." },
   { question: "Does Polar LVT flooring fade under sunlight?", answer: "Our Polar LVT Flooring UAE does not fade under sunlight. We can use them for locations that receive direct sunlight, such as sunrooms or rooms with wide windows. The reason is that it contains UV protection, which prevents fading and discolouration caused by exposure to sunshine. The floors' deep antique tones remained after years of exposure to direct sunlight, giving the spaces an energetic and appealing look." },
   { question: "Can I install SPC flooring myself?", answer: "Yes. SPC flooring is an excellent option for do-it-yourself installation because of its simple 4-side click-lock mechanism. Before beginning, just make sure your subfloor is dry, clean, and level. With basic equipment like a rubber mallet, tape measure, and utility knife, the planks may be easily snapped together without the need for glue or nails. However, if you have any concerns or want a flawless finish, it's always a good idea to contact an expert." },
-  { question: "Does SPC flooring feel cold?", answer: "There's nothing better than SPC flooring underfoot, no matter what the weather is like. It is made of stone plastic composite with wear layers, which maintains a neutral temperature in summer and a slight warmth in winter to retain heat. The warmth of this flooring makes stepping out of bed in a bedroom more comfortable than stepping on cold tiles. In homes with kids or older adults who may be sensitive to extreme temperatures, this feature is really handy." },
+  { question: "Does SPC flooring feel cold?", answer: "There's nothing better than SPC flooring underfoot, no matter what the weather is like. It is made of stone composite with wear layers, which maintains a neutral temperature in summer and a slight warmth in winter to retain heat. The warmth of this flooring makes stepping out of bed in a bedroom more comfortable than stepping on cold tiles. In homes with kids or older adults who may be sensitive to extreme temperatures, this feature is really handy." },
   { question: "Can I use SPC flooring in the bathroom?", answer: "Of course. Because SPC flooring is water-resistant, it's a great option for bathrooms. It is resistant to warping, swelling, and moisture damage, unlike laminate or conventional wood. Even in regions with high humidity, its strong core and protective outer shell offer exceptional longevity. Selecting textured SPC planks will increase safety by preventing slippage in damp areas." },
   { question: "Is SPC or LVT flooring suitable for UAE climates?", answer: "Yes. The UAE's humid and hot atmosphere is something that our Richmond SPC or LVT flooring is made to resist. It is a dependable option for both residential and commercial applications because of its heat- and water-resistant qualities. SPC and LVT provide long-term durability since they do not expand or contract in response to temperature variations like regular wood flooring does. " }
 ];
