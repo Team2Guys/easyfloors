@@ -60,7 +60,7 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
 
         <p className="text-12 sm:text-16 2xl:text-20 font-light">
           No. Of Boxes: {requiredBoxes} ({squareMeter ? (unit === "sqm" ? squareMeter.toFixed(2) : (squareMeter * 10.764).toFixed(2)) : 0}{" "}
-          {unit === "sqm" ? "Square Meter" : "Square Feet"})
+          {unit === "sqm" ? "Square Metre" : "Square Feet"})
         </p>
         <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox.toFixed(2)}</span></span></p>
         <p className="text-12 sm:text-16 2xl:text-20 font-light flex items-center gap-3">

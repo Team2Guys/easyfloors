@@ -51,28 +51,29 @@ const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) 
             {/* Accessories Section */}
             {accessoryItems.length > 0 && (
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
-    {accessoryItems.slice(0, isSamplePage ? 5 : accessoryItems.length).map((product, index) => (
-      <div key={product.id}>
-        {index === 0 && (
-          <p className="font-inter font-semibold text-12 mt-7">Accessories</p>
-        )}
-        <ItemCard
-          product={product}
-          isSamplePage={isSamplePage}
-          onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
-          onQuantityChange={(id, delta) =>
-            setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
-          }
-          
-          onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
-        />
-      </div>
-    ))}
+              {accessoryItems.slice(0, isSamplePage ? 5 : accessoryItems.length).map((product, index) => (
+                <div key={product.id}>
+                  {index === 0 && (
+                    <p className="font-inter font-semibold text-12 mt-7">Accessories</p>
+                  )}
+                  <ItemCard
+                    product={product}
+                    isSamplePage={isSamplePage}
+                    onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
+                    onQuantityChange={(id, delta) =>
+                      setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
+                    }
+                    
+                    onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
+                  />
+                </div>
+              ))}
               </div>
             )}
           </div>
         )}
       </div>
+      <Link href="/collections" className="text-center text-[18px] bg-primary p-2 px-5 ml-3 flex w-fit items-center text-white mt-3 max-sm:mx-auto my-3">Continue Shopping</Link>
     </Container>
   );
 };

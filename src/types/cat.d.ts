@@ -51,7 +51,7 @@ export interface EDIT_CATEGORY extends Category {
     subcategory?: ISUBCATEGORY_EDIT;
     sizes?: Sizes[];
     pricePerBox?: number;
-
+    
 }
 
 export interface ISUBCATEGORY extends Category {

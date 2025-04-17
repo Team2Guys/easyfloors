@@ -1,7 +1,7 @@
 "use client";
 import Container from 'components/common/container/Container';
 import PaymentMethod from 'components/product-detail/payment';
-import { paymentcard, UAEStates } from 'data/cart';
+import { paymentcard } from 'data/cart';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -17,6 +17,7 @@ import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
+import { Appointmentlocation } from 'data/data';
 interface CartPageProps {
   products: IProduct[];
 }
@@ -397,7 +398,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 )} 
                  </div>
                   {/* accessory end */}
-                <Link href="/" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden lg:flex'><FaArrowLeftLong /> Continue shopping</Link>
+                <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden lg:flex'><FaArrowLeftLong /> Continue shopping</Link>
               </div>
               <div className='w-full md:w-[45%] xl:w-[30%] 2xl:w-[35%] bg-background p-3 sm:p-5 space-y-5 h-fit'>
                 <div className='flex gap-2 md:gap-5 items-center max-sm:justify-between'>
@@ -413,10 +414,10 @@ const CartPage = ({ products }: CartPageProps) => {
                   <p>Shipping Fee:</p>
                   <p>{selectedCity ? selectedFee > 0 ? `AED ${selectedFee}` : 'Free' : 'Pleae select city'}</p>
                 </div>
-                <CartSelect select={UAEStates} selectedFee={selectedFee} onSelect={handleStateSelect} />
+                <CartSelect select={Appointmentlocation} selectedFee={selectedFee} onSelect={handleStateSelect} />
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Total</p>
+                  <p>Total Incl. VAT</p>
                   <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>

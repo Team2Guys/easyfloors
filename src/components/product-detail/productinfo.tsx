@@ -132,10 +132,10 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p>Total Amount: <span className="text-12 xl:text-17 font-light">AED {totalPrice} ({requiredBoxes} metre * AED {productData.price})</span></p>
       </div>
 
-      <div className="mt-2 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
+      <div className="mt-2 flex font-normal font-inter items-center gap-4">
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
 
 
