@@ -10,11 +10,6 @@ export interface Feature {
   height: number;
 
 }
-export interface FlooringType {
-  name?: string;
-  price?: string;
-  product: FlooringProduct[];
-}
 
 interface FlooringProduct {
   image: string;
@@ -37,11 +32,6 @@ export type Block = {
 export interface HeadingImageProps {
   title: string;
   imageUrl: string;
-}
-
-export interface TImageBanner {
-  src: string;
-  alt: string;
 }
 
 export interface TCategoryData {

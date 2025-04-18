@@ -1,19 +1,14 @@
-import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, CategoryFeatures, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs } from "types/types";
+import { BoxData, CardData, FAQItem, Feature, HeroItem, TCategoryData } from "types/type";
+import { AuthData, CategoryFeatures, FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
 import privacy from '../../public/assets/images/icon/privacy.png';
 import support from '../../public/assets/images/icon/chat-46.png';
-import masterCard from './../../public/assets/images/payment-icons/Mastercard-Logo.png'
-import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
-import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 import { StaticImageData } from 'next/image';
 import { AdditionalInformation } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
-import parsePhoneNumberFromString from "libphonenumber-js/core";
-import metadata from 'libphonenumber-js/metadata.min.json';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -44,14 +39,6 @@ export const initialValues = {
     email: false,
   },
 };
-
-export const phoneValidation = Yup.string()
-  .test("valid-phone", "Invalid phone number", (value) => {
-    if (!value) return false; // Required field
-    const phoneNumber = parsePhoneNumberFromString(value, metadata);
-    return phoneNumber && phoneNumber.isValid(); // Checks if phone is valid
-  })
-  .required("Phone number is required");
 
 export const validationSchema = Yup.object({
   firstname: Yup.string().required("Name is required"),
@@ -170,11 +157,6 @@ export const excludedKeys = [
   "thickness",
   "subcategory",
   "featureImages",
-  "colors"
-
-]
-export const excludedKeysFroProducts = [
-  "product",
   "colors"
 
 ]
@@ -356,12 +338,6 @@ export const features: Feature[] = [
   { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
-export const accessoryFeature: Feature[] = [
-  { icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
-  { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
-];
-
-
 
 export const footerData = {
   company: {
@@ -409,13 +385,6 @@ export const FloorItemsData = [
   { id: 2, title: 'Eco Floor ', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291254/Eco-Floor_11zon_11zon_ewhoup.webp' },
   { id: 3, title: 'Prime Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291406/Prime-Floor_11zon_1__11zon_l98nti.webp' },
 ];
-
-
-export const imageData: TImageBanner = {
-  src: '/assets/category/fiveTree.png',
-  alt: 'Picture of the author',
-};
-
 
 
 export const categoriesFeatures:CategoryFeatures[] = [
@@ -719,15 +688,6 @@ export const popupCards: CardData[] = [
   },
 ];
 
-export const timeSlots = [
-  { value: "9am-11am", label: "9am-11am" },
-  { value: "11am-1pm", label: "11am-1pm" },
-  { value: "1pm-3pm", label: "1pm-3pm" },
-  { value: "3pm-6pm", label: "3pm-6pm" },
-];
-
-
-
 
 export const faqspage: FAQ[] = [
   { question: "Can you put SPC flooring on concrete?", answer: "We often receive this question from our customers. The answer is definitely yes. Stone composite (SPC) looks great on concrete subfloors. By creating a solid foundation, it reduces the possibility of warping or buckling over time. So we have to use a completely flat surface for installation." },
@@ -745,58 +705,6 @@ export const faqspage: FAQ[] = [
   { question: "Can I use SPC flooring in the bathroom?", answer: "Of course. Because SPC flooring is water-resistant, it's a great option for bathrooms. It is resistant to warping, swelling, and moisture damage, unlike laminate or conventional wood. Even in regions with high humidity, its strong core and protective outer shell offer exceptional longevity. Selecting textured SPC planks will increase safety by preventing slippage in damp areas." },
   { question: "Is SPC or LVT flooring suitable for UAE climates?", answer: "Yes. The UAE's humid and hot atmosphere is something that our Richmond SPC or LVT flooring is made to resist. It is a dependable option for both residential and commercial applications because of its heat- and water-resistant qualities. SPC and LVT provide long-term durability since they do not expand or contract in response to temperature variations like regular wood flooring does. " }
 ];
-
-export const tabbyfeature: ITabbyList[] = [
-  { id: 1, para: 'No interest. No fees.' },
-  { id: 2, para: 'Trusted by 4,5m+ customers.' },
-  { id: 3, para: 'Shariah-compliant.' },
-];
-
-export const tabbyhowitwork: ITabbyList[] = [
-  { id: 1, para: 'Choose Tabby at checkout' },
-  { id: 2, para: 'Enter your information and add your debit or credit card.' },
-  { id: 3, para: 'Your first payment is taken when the order is made.' },
-  { id: 4, para: 'We will send you a reminder when your next payment is due' },
-];
-
-export const tabbypayicon: ITabbyPayList[] = [
-  { id: 1, imageUrl: masterCard },
-  { id: 2, imageUrl: viseCard },
-  { id: 3, imageUrl: gPayCard },
-];
-
-export const tamarawhy: ITamaraList[] = [
-  { id: 1, para: 'Sharia-compliant' },
-  { id: 2, para: 'No late fees' },
-  { id: 3, para: 'Quick and easy' },
-];
-export const tamaralist: ITamaraList[] = [
-  {
-    id: 1,
-    para: 'Payment options availability may vary based on your order value and Tamara record.',
-  },
-  { id: 2, para: 'Subject to terms and conditions.' },
-  { id: 3, para: 'Tamara is Sharia-compliant.' },
-  { id: 4, para: 'Eligible for customers in United Arab Emirates.' },
-  {
-    id: 5,
-    para: 'Your final payment plan may vary depending on your credit history.',
-  },
-];
-
-export const tamarafeature: ITamaraList[] = [
-  {
-    id: 1,
-    title: 'Split in 4',
-    para: 'Pay a fraction now and the rest in 3 payments over the next 3 months. No late fees, shariah-compliant!*',
-  },
-  {
-    id: 2,
-    title: 'Pay in Full',
-    para: 'Pay the full amount today and enjoy exclusive perks with Tamara!*',
-  },
-];
-
 
 export const alternatingData: TAboutUs[] = [
   {
@@ -901,13 +809,6 @@ stepsHeading:"Measuring a Square or Rectangular Room",
   },
 
   {
-    title: "Example:",
-    description:"(Area A) 18m² + (Area B) 25m² = Total Area: 43m²",
-    steps: [
-    ],
-    image: "",
-  },
-  {
     title: "Factoring in 10% Waste Allowance",
     description:
       "Add another 10% for waste and cutting adjustments to make sure you have enough flooring.",
@@ -954,19 +855,6 @@ export const loginData: AuthData = {
   footerLinkText: "Create account",
   value: ""
 };
-
-export const signupData: SignAuthData = {
-  title: "WELCOME TO <br> EASY FLOORS",
-  subtitle: "Sign Up",
-  fullNamePlaceholder: "Enter your full name",
-  emailPlaceholder: "Enter your email",
-  passwordPlaceholder: "Enter your password",
-  retypePasswordPlaceholder: "Retype your password",
-  buttonText: "Sign Up",
-  footerText: "Already have an account?",
-  footerLinkText: "Sign In",
-};
-
 
 export const emirates = [
   { value: "Abu Dhabi", label: "Abu Dhabi" },

@@ -5,8 +5,6 @@ import { FaRegEnvelopeOpen, FaRegUser } from 'react-icons/fa';
 import { IoPhonePortraitOutline, IoSearchSharp } from 'react-icons/io5';
 import { RiLockPasswordLine } from 'react-icons/ri';
 
-import { cn } from 'lib/utils';
-
 const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
   ({ className, type, id, name, onChange, value, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
@@ -35,6 +33,10 @@ const Input = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLI
           return null;
       }
     };
+
+    function cn(...classes: (string | undefined | false)[]): string {
+      return classes.filter(Boolean).join(' ');
+    }
 
     return (
       <div className="relative flex items-center h-[76px] w-full rounded-full border-input custom-login-input bg-[#F6F6F6]">

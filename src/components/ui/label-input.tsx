@@ -1,7 +1,7 @@
 'use client';
 import * as React from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { cn } from 'lib/utils';
+
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -21,6 +21,10 @@ const LabelInput = React.forwardRef<HTMLInputElement, InputProps>(
       setShowPassword((prev) => !prev);
       setInputType((prev) => (prev === 'password' ? 'text' : 'password'));
     };
+
+    function cn(...classes: (string | undefined | null | false)[]): string {
+      return classes.filter(Boolean).join(' ');
+    }
 
     return (
       <div className="relative flex flex-col w-full">
