@@ -305,24 +305,6 @@ export interface AdminRecord {
   canCheckProfit: boolean;
   canViewUsers: boolean;
 }
-export interface IOrderList {
-  orderData: IOrder[];
-  orderColumns: Array<{ title: string; dataIndex: string; key: string }>;
-  visible: boolean;
-  /* eslint-disable */
-  setVisible: (value: boolean) => void;
-  /* eslint-enable */
-  selectedProducts: Array<{
-    id: string;
-    productData: {
-      posterImageUrl: string;
-      name: string;
-      price: number;
-      currency: string;
-    };
-    quantity: number;
-  }>;
-}
 
 export interface ITabbyList {
   id: number;

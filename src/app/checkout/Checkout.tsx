@@ -14,11 +14,11 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
 import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates } from "data/data";
+import { Appointmentlocation, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart, getFreeSamplesCart } from "utils/indexedDB";
-import { paymentcard, UAEStates } from "data/cart";
+import { paymentcard } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
 import { INITIATE_PAYMENT } from "graphql/mutations";
@@ -252,7 +252,7 @@ const Checkout = () => {
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} />
-                                    <Select name="city" label="City" required placeholder="Select City" options={UAEStates}  />
+                                    <Select name="city" label="City" required placeholder="Select City" options={Appointmentlocation}  />
                                 </div>
 
 

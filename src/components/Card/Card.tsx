@@ -28,7 +28,6 @@ const Card: React.FC<productCardProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
- 
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -40,7 +39,7 @@ const Card: React.FC<productCardProps> = ({
       } else {
         productData = await fetchSingeProduct(
           product.custom_url || '',
-          generateSlug(categoryData.RecallUrl),
+          generateSlug((product as IProduct).category?.RecallUrl || categoryData.RecallUrl),
           generateSlug(product.subcategory?.custom_url || ''),
           true,
           FIND_QUICK_VIEW_PRODUCT
@@ -53,7 +52,6 @@ const Card: React.FC<productCardProps> = ({
       throw error;
     }
   };
-
   const handleNavigate = (product: IProduct, categoryData: Category) => {
 
     if (product.subcategory) {
@@ -96,7 +94,7 @@ const Card: React.FC<productCardProps> = ({
                     product.subcategory?.name || "",
                     categoryData?.name || "Accessories",
                     "wishlist",
-                    product.posterImageUrl?.imageUrl ?? "",
+                    "productImages" in product ? product.productImages?.[0]?.imageUrl ?? "" : "",
                     product?.boxCoverage,
                     "m",
                   );

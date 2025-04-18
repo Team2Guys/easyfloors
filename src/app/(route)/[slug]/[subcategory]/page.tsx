@@ -18,7 +18,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const pathname = headersList.get('x-invoke-path') || '/';
 
   const fullUrl = `${protocol}://${domain}${pathname}`;
-console.log(slug, "slug")
   const ImageUrl =
     subCategory?.posterImageUrl.imageUrl ||
     'Easy Floor';

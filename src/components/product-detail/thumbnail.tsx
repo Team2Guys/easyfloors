@@ -241,7 +241,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
             {combinedImages.map((product, index) => (
               <div
                 key={index}
-                className={`relative ${product.plankWidth && "py-1 sm:py-0"}`}
+                className={`relative ${product.plankWidth && "py-2 sm:py-0"}`}
               >
                 <Image
                   width={800}
@@ -273,17 +273,17 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
                 {/* Plank width overlay */}
                 {product.plankWidth && (
-                  <div className="absolute w-[130px] sm:w-[135px] -top-1 sm:top-0 flex justify-between mx-auto left-1/2 -translate-x-1/2">
+                  <div className="absolute w-[130px] sm:w-[92px] md:w-[121px] lg:w-[74px] xl:w-[80px] 2xl:w-[135px] top-[9px] sm:top-0 flex 2xl:justify-between items-center mx-auto xsm:left-[46%] left-[43%] xs:left-[44%] sm:left-[52%] lg:left-[51%] 2xl:left-1/2 sm:-translate-x-1/2">
                     <span className="flex justify-center items-center transform -rotate-90">
-                      <FaAngleUp className="text-16 sm:text-20" />
+                      <FaAngleUp className="text-10 md:text-16 lg:text-12 2xl:text-20" />
                     </span>
-                    <div className="flex-1 border h-[1px] my-auto border-black"></div>
-                    <span className="flex justify-center items-center text-13 sm:text-16 font-semibold px-2">
+                    <div className="flex border w-[9px] h-[0.2px] sm:h-[1px] my-auto border-black"></div>
+                    <span className="flex justify-center items-center text-[8px] sm:text-10 md:text-14 lg:text-10 2xl:text-16 2xl:font-semibold px-[2px] 2xl:px-2 max-sm:absolute max-sm:left-[1%] max-sm:-top-[10px]">
                       {product.plankWidth}
                     </span>
-                    <div className="flex-1 border h-[1px] my-auto border-black"></div>
+                    <div className="flex border w-[9px] h-[0.2px] sm:h-[1px] my-auto border-black"></div>
                     <span className="flex justify-center items-center transform -rotate-90">
-                      <FaAngleDown className="text-16 sm:text-20" />
+                      <FaAngleDown className="text-10 md:text-16 lg:text-12 2xl:text-20" />
                     </span>
                   </div>
                 )}

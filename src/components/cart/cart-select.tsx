@@ -32,15 +32,11 @@ const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
     <div className="flex justify-between text-16 lg:text-20">
       <p>Shipping</p>
       <div>
-         {selectedState === "City" && (
-          <div className={`border bg-white text-12 xl:text-15 2xl:pl-4 2xl:pr-8 2xl:px-5 2xl:py-3 px-2 py-2 mb-2 ${selectedState === "City"? "w-full" : "w-52"}`}>
-            United Arab Emirates
-          </div>
-        )}
-        <div className="relative w-full font-inter" ref={dropdownRef}>
+
+        <div className=" w-full font-inter" ref={dropdownRef}>
         <div
           className={`border bg-white 2xl:px-5 2xl:py-3 px-2 py-2 cursor-pointer flex justify-between items-center text-12 xl:text-15
-            ${selectedState === "City"? "w-full" : "w-52"}`}
+           w-52`}
           onClick={() => setIsOpen(!isOpen)}
         >
           {selectedState}

@@ -141,6 +141,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         stock
         posterImageUrl
         hoverImageUrl
+        productImages
         custom_url
         waterproof
         plankWidth
