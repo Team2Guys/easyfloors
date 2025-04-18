@@ -282,7 +282,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   <>
                                   <p className='text-12 sm:text-14 2xl:text-17'>
                                   {item.isAccessory? "Price Per Piece: ": "Price Per box: "} 
-                                  <span className='font-bold'><span className="font-currency font-normal text-18"></span> {item.pricePerBox.toFixed(2)}</span>
+                                  <span className='font-bold'><span className="font-currency font-normal"></span> {item.pricePerBox.toFixed(2)}</span>
                                   </p>
                                 <p className='text-12 sm:text-14 2xl:text-17'>
                                   No. Of Boxes:
@@ -326,7 +326,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                           <div className='col-span-2 text-center hidden xl:block'>
                             {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'><span>Free</span></p> :
-                              <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-18"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>}
+                              <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal "></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>}
                           </div>
                           <div className='col-span-2 text-end lg:pr-5'>
                             <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
@@ -401,7 +401,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                         </div>
                         <div className='col-span-2 text-center hidden xl:block'>
-                          <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-18"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                          <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                         </div>
                         <div className='col-span-2 text-end lg:pr-5'>
                           <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
@@ -428,7 +428,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal:</p>
-                  <p><span className="font-currency font-normal text-18"></span> {subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal"></span> {subTotal.toFixed(2)}</p>
                 </div>
                 <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
                 <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
@@ -488,7 +488,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Total Incl:</p>
-                  <p><span className="font-currency font-normal text-18"></span> {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal"></span> {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>

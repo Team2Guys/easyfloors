@@ -30,7 +30,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
                                         <p className="md:text-sm text-gray-600 mt-1 text-12">No. Of Boxes: {item.requiredBoxes} ({item.squareMeter} SQM)</p>
                                     </div>
                                 </div>
-                                <p className="md:text-lg text-base font-semibold"><span className="font-currency text-18"></span> {item.price.toFixed(2)}</p>
+                                <p className="md:text-lg text-base font-semibold"><span className="font-currency text-18 font-normal"></span> {item.price.toFixed(2)}</p>
                             </div>
                         </div>
                     ))}
@@ -41,13 +41,13 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
                     <>
                        <div className="flex justify-between">
                         <p className=" whitespace-nowrap font-inter text-20 text-[#818EA1] ">Subtotal</p>
-                        <p className=" whitespace-nowrap font-inter text-20 font-normal"><span className="font-currency text-18"></span> {productsPrice}</p>
+                        <p className=" whitespace-nowrap font-inter text-20 font-normal"><span className="font-currency text-18 font-normal"></span> {productsPrice}</p>
 
                        </div>
 
                     <div className="flex justify-between mt-5">
                         <p className=" whitespace-nowrap font-inter text-20 text-[#818EA1] ">Shipping</p>
-                        <p className=" whitespace-nowrap font-inter text-20 font-normal"><span className="font-currency text-18"></span> {data.postpaymentStatus.shipmentFee == 0 ? "Free" : data.postpaymentStatus.shipmentFee}</p>
+                        <p className=" whitespace-nowrap font-inter text-20 font-normal"><span className="font-currency text-18 font-normal"></span> {data.postpaymentStatus.shipmentFee == 0 ? "Free" : data.postpaymentStatus.shipmentFee}</p>
 
                     </div>
                     </>
@@ -58,7 +58,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
 
                         <p className="md:text-2xl text-xl whitespace-nowrap font-bold">Total Incl:</p>
                         <span className="flex-grow border-b"></span>
-                        <p className="lg:text-xl text-lg font-bold whitespace-nowrap"><span className="font-currency text-18"></span> {data?.postpaymentStatus?.totalPrice}</p>
+                        <p className="lg:text-xl text-lg font-bold whitespace-nowrap"><span className="font-currency text-18 font-normal"></span> {data?.postpaymentStatus?.totalPrice}</p>
 
                     </div>
 
