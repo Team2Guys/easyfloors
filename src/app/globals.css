@@ -127,7 +127,7 @@ padding: 4px;
 }
 
 .custom-collapse .ant-collapse-header {
-  border-bottom: 1px solid #DEDEDE;
+  border-bottom: 2px solid #DEDEDE;
   padding-left: 0px !important;
 }
 

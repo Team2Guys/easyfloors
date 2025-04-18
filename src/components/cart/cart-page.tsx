@@ -13,11 +13,11 @@ import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
 import RelatedSlider from 'components/related-slider/related-slider';
 import { Collapse } from 'antd';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
-import { Appointmentlocation } from 'data/data';
+import { emirates } from 'data/data';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 interface CartPageProps {
   products: IProduct[];
 }
@@ -85,7 +85,8 @@ const CartPage = ({ products }: CartPageProps) => {
     );
     setSubTotal(subTotalPrice);
     const totalBeforeTax = subTotal + selectedFee;
-      const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
+      const taxAmount = selectedCity ? totalBeforeTax : 0;
+      // const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
       setTotal(totalBeforeTax + taxAmount);
   },[cartItems])
 
@@ -156,7 +157,8 @@ const CartPage = ({ products }: CartPageProps) => {
       fee = subTotal > 1000 ? 0 : 150;
     }
     const totalBeforeTax = subTotal + fee;
-    const taxAmount = totalBeforeTax * 0.05;
+    const taxAmount = totalBeforeTax;
+    // const taxAmount = totalBeforeTax * 0.05;
     setTotal(totalBeforeTax + taxAmount);
     setSelectedFee(fee);
     setSelectedCity(state);
@@ -172,7 +174,8 @@ const CartPage = ({ products }: CartPageProps) => {
       }
       setSelectedFee(fee);
       const totalBeforeTax = subTotal + fee;
-      const taxAmount = totalBeforeTax * 0.05;
+      const taxAmount = totalBeforeTax;
+      // const taxAmount = totalBeforeTax * 0.05;
       setTotal(totalBeforeTax + taxAmount);
     };
     setSelectedShipping(type);
@@ -410,19 +413,8 @@ const CartPage = ({ products }: CartPageProps) => {
                   <p>Subtotal:</p>
                   <p>AED {subTotal.toFixed(2)}</p>
                 </div>
-                <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Shipping Fee:</p>
-                  <p>{selectedCity ? selectedFee > 0 ? `AED ${selectedFee}` : 'Free' : 'Pleae select city'}</p>
-                </div>
-                <CartSelect select={Appointmentlocation} selectedFee={selectedFee} onSelect={handleStateSelect} />
-                <div className='border border-b border-[#DEDEDE]' />
-                <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Total Incl. VAT</p>
-                  <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
-
-                </div>
-                <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
-                <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
+                <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                   <Panel
                     header={<span className="text-slate-500">Shipping Options</span>}
                     key="1"
@@ -468,18 +460,22 @@ const CartPage = ({ products }: CartPageProps) => {
                         </p>
                       </div>
                     </div>
-                    <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                      <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                      <div>
-                        <strong className="text-15 xs:text-20">Free Samples:</strong>
-                        <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
-                        <p className="text-11 xs:text-16">
-                          <span>Shipping Fee:</span> <strong>Free</strong>
-                        </p>
-                      </div>
-                    </div>
+                    
                   </Panel>
-                </Collapse>
+                </Collapse> 
+
+                <div className='flex items-center justify-between text-16 lg:text-20'>
+                  <p>Shipping Fee:</p>
+                  <p>{selectedCity ? selectedFee > 0 ? `AED ${selectedFee}` : 'Free' : 'Pleae select city'}</p>
+                </div>
+                <div className='border border-b border-[#DEDEDE]' />
+                <div className='flex items-center justify-between text-16 lg:text-20'>
+                  <p>Total Incl</p>
+                  <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
+
+                </div>
+                <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
+                
                 {total > 0 &&
                 <PaymentMethod installments={total > 0 ? parseFloat(total.toFixed(2)) /4: parseFloat(subTotal.toFixed(2))/4} />
                 }

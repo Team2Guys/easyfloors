@@ -62,12 +62,12 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   const handleMouseUp = () => {
     setIsDragging(false);
   };
-
   const combinedImages = useMemo(() => {
     if (hideThumnailBottom) return ThumnailImage;
     return [...ThumnailImage, ...(ThumnailBottom || [])];
   }, [ThumnailImage, ThumnailBottom, hideThumnailBottom]);
-
+  
+  console.log(combinedImages,"combinedImages")
   // Find the first index that matches selectedColor
   useEffect(() => {
     if (selectedColor) {
@@ -268,7 +268,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     </span>
                   </div>
                 )}
-
+                
                 {/* Plank width overlay */}
                 {product.plankWidth && (
                   <div className="absolute w-[130px] sm:w-[92px] md:w-[121px] lg:w-[74px] xl:w-[80px] 2xl:w-[135px] top-[9px] sm:top-0 flex 2xl:justify-between items-center mx-auto xsm:left-[46%] left-[43%] xs:left-[44%] sm:left-[52%] lg:left-[51%] 2xl:left-1/2 sm:-translate-x-1/2">
@@ -285,6 +285,12 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     </span>
                   </div>
                 )}
+               {!stickyside && index === 5 && (
+              <div className="absolute bottom-14 sm:bottom-36 2xl:bottom-56 left-2 flex flex-col gap-1 font-inter max-w-60 w-full text-12 md:text-16 xl:text-20 font-semibold">
+                <p>Base layer</p>
+                <p>Backside detail</p>
+              </div>
+            )}
               </div>
             ))}
           </Slider>

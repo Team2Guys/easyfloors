@@ -13,7 +13,6 @@ import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { Appointmentlocation, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
@@ -26,6 +25,7 @@ import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -125,7 +125,8 @@ const Checkout = () => {
             setSelectedFee(fee);
 
             const totalBeforeTax = subTotal + fee;
-            const taxAmount = totalBeforeTax * 0.05;
+            const taxAmount = totalBeforeTax;
+            // const taxAmount = totalBeforeTax * 0.05;
             setTotal(totalBeforeTax + taxAmount);
         }
         setSelectedShipping(type);
@@ -144,7 +145,8 @@ const Checkout = () => {
         setSelectedFee(fee);
 
         const totalBeforeTax = subTotal + fee;
-        const taxAmount = totalBeforeTax * 0.05;
+        const taxAmount = totalBeforeTax;
+        // const taxAmount = totalBeforeTax * 0.05;
         setTotal(totalBeforeTax + taxAmount);
     }, [selectedCity, selectedShipping, subTotal]);
 
@@ -161,7 +163,12 @@ const Checkout = () => {
 
         setShipping(shippingData);
     }, [selectedShipping]);
+    const [initialEmirate, setInitialEmirate] = useState("");
 
+    useEffect(() => {
+      const emirate = localStorage.getItem("selectedEmirate");
+      if (emirate) setInitialEmirate(emirate.replaceAll('"', ""));
+    }, []);
 
     return (
         <Container>
@@ -179,7 +186,7 @@ const Checkout = () => {
                     lastName: "",
                     email: "",
                     phone: "",
-                    emirate: "",
+                    emirate: initialEmirate,
                     city: "",
                     country: "United Arab Emirates",
                     address: "",
@@ -251,7 +258,7 @@ const Checkout = () => {
 
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} />
+                                    <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} initialValue={initialEmirate} />
                                     <Select name="city" label="City" required placeholder="Select City" options={Appointmentlocation}  />
                                 </div>
 
@@ -341,7 +348,7 @@ const Checkout = () => {
                                             {!selectedCity ? 'Select shipping city' : selectedFee > 0 ? `AED ${selectedFee}` : 'Free'}
                                         </span>
                                     </p>
-                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
+                                    <p className="text-lg font-bold flex justify-between">Total Incl: <span>AED {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
                                     <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
@@ -354,7 +361,7 @@ const Checkout = () => {
                                 </div>
                                 <div className="border-b">
 
-                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={18} /> : <MdKeyboardArrowDown size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                                         <Panel
                                             header={<span className="text-slate-500">Shipping Options</span>}
                                             key="1"
@@ -403,16 +410,6 @@ const Checkout = () => {
                                                     </p>
                                                 </div>
                                             </div>
-                                             <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                                <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                                                <div>
-                                                <strong className="text-15 xs:text-20">Free Samples:</strong>
-                                                <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
-                                                <p className="text-11 xs:text-16">
-                                                    <span>Shipping Fee:</span> <strong>Free</strong>
-                                                </p>
-                                                </div>
-                                             </div>
                                         </Panel>
 
                                         <Panel

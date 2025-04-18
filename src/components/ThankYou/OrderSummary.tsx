@@ -56,7 +56,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
                     <div className="flex items-center gap-4 mt-4">
 
 
-                        <p className="md:text-2xl text-xl whitespace-nowrap font-bold">Total Incl. VAT</p>
+                        <p className="md:text-2xl text-xl whitespace-nowrap font-bold">Total Incl</p>
                         <span className="flex-grow border-b"></span>
                         <p className="lg:text-xl text-lg font-bold whitespace-nowrap">AED {data?.postpaymentStatus?.totalPrice}</p>
 

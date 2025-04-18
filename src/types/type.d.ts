@@ -312,14 +312,10 @@ export interface ITamaraList {
 }
 
 export interface CartSelectProps {
-  select: {
-    value: string;
-    label: string;
-  }[];
+  select: { value: string; label: string }[];
+  onSelect: (state: string, fee: number) => void;
   selectedFee: number;
-  // fees: { [key: string]: number };
-  onSelect: (_state: string, _fee: number) => void;
-}
+};
 export interface PrivacyPolicyItem {
   title?: string;
   content?: string[];
