@@ -35,7 +35,7 @@ const PriceSlider = ({ setPriceValue, priceValue }: {
         renderTrack={renderTrack}
       />
       <p className="mt-2 pl-5 font-inter text-12 xl:text-14 pt-1 text-[#475156]">
-        Price: <span className="font-normal">AED  {priceValue[0]}/m² — AED {priceValue[1]}/m²</span>
+        Price: <span className="font-normal"><span className="font-currency font-normal text-18"></span>  {priceValue[0]}/m² — <span className="font-currency font-normal text-18"></span> {priceValue[1]}/m²</span>
       </p>
     </div>
   );

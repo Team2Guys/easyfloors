@@ -60,7 +60,7 @@ function Popup() {
       </h1>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 font-inter">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white md:p-8 p-3 shadow-lg w-full max-w-3xl md:max-w-7xl max-h-full overflow-y-auto">
             <div className="flex justify-end items-center">
               <button
@@ -84,9 +84,9 @@ function Popup() {
                       <li
                         key={index}
                         className="md:text-sm text-[10px] ml-3 py-0.5 font-light"
-                      >
-                        {item}
-                      </li>
+                      dangerouslySetInnerHTML={{ __html: item }}
+                      />
+                       
                     ))}
                   </ul>
                 </div>

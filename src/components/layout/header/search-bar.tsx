@@ -117,15 +117,15 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
                             {product.discountPrice && product.discountPrice > 0 ? (
                               <>
                                 <p className="text-15 font-semibold text-[#FF0000]">
-                                  AED <span>{product.discountPrice}</span>
+                                <span className="font-currency text-18"></span> <span>{product.discountPrice}</span>
                                 </p>
                                 <p className="text-[12px] text-primary-foreground font-bold line-through">
-                                  AED <span>{product.price}</span>
+                                <span className="font-currency text-18"></span> <span>{product.price}</span>
                                 </p>
                               </>
                             ) : (
                               <p className="text-15 font-semibold">
-                                AED <span>{product.price}</span>
+                                <span className="font-currency text-18"></span> <span>{product.price}</span>
                               </p>
                             )}
                           </div>

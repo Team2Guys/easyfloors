@@ -11,6 +11,7 @@
   --card-text:#594F55;
   --green:#008000;
   --gray-light:#D9D9D9;
+  --font-currency: 'currency', 'currency Fallback';
 }
 @layer utilities {
   @keyframes fadeIn {
@@ -48,6 +49,9 @@
   }
 }
 
+.font-currency {
+  font-family: var(--font-currency);
+}
 ::-webkit-scrollbar {
   width: 3px;
 }

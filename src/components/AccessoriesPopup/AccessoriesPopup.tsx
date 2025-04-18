@@ -136,7 +136,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                 <div className="py-2">
                   <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
                   <p className="text-gray-700 font-medium">
-                    Price Per m: AED {product.price}
+                    Price Per m: <span className="font-currency font-normal text-18"></span> {product.price}
                   </p>
 
                   <p className="text-base text-gray-800 font-medium mb-2">You Require:</p>

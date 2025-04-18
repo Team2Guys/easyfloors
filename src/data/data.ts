@@ -270,13 +270,13 @@ export const heroItems: HeroItem[] = [
     // backgroundImage: "/assets/images/Home/hero-min.webp",
     backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744112788/hero-min_2_ixg8qo.webp",
     offerText: "Limited Time Offer",
-    title: "Starting From Just AED 49 Per Square Metre.",
+    title: "<p class='font-inter'>Starting From Just <span class='font-currency font-normal text-[43px]'></span>  49 Per Square Metre.</p>",
     highlight: "",
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/collections",
-    priceText: "Starting From AED 49/m²",
+    priceText: "<p class='font-inter text-xs lg:text-xl sm:font-semibold font-normal'>Starting From  <span class='font-currency font-normal !text-[30px]'></span> 49/m²</p>",
     flooringType: "SPC Eco • American Walnut",
     brand: "Polar Flooring",
   },
@@ -495,22 +495,22 @@ export const deliveryCharges = [
   {
     location: 'Dubai ( Next Day Delivery )',
     charges: [
-      'Under AED 1,000 - AED 50',
-      'Above AED 1,000 - Free',
+      'Under <span className="font-currency font-normal text-18"></span> 1,000 - <span className="font-currency font-normal text-18"></span>  50',
+      'Above <span className="font-currency font-normal text-18"></span>  1,000 - Free',
     ],
   },
   {
     location: 'Sharjah, Ajman, Umm Al Quwain ( 2 Working Days )',
     charges: [
-      'Under AED 1,000 - AED 100',
-      'Above AED 1,000 - Free',
+      'Under <span className="font-currency font-normal text-18"></span>  1,000 - <span className="font-currency font-normal text-18"></span>  100',
+      'Above <span className="font-currency font-normal text-18"></span>  1,000 - Free',
     ],
   },
   {
     location: 'Abu Dhabi, Fujairah, Ras Al Khaimah ( 2 Working Days )',
     charges: [
-      'Under AED 1,000 - AED 200',
-      'Above AED 1,000 - Free',
+      'Under <span className="font-currency font-normal text-18"></span>  1,000 - <span className="font-currency font-normal text-18"></span>  200',
+      'Above <span className="font-currency font-normal text-18"></span>  1,000 - Free',
     ],
   },
 ];
@@ -605,7 +605,7 @@ export const popupCards: CardData[] = [
       "Integrated IXPE underlay",
       "SPC core construction",
       "Realistic Wood Grain Finish",
-      "Affordable price from AED 109",
+      "Affordable price from <span class='font-currency font-normal text-18'></span> 109",
       "DIY-friendly installation",
     ],
   },
@@ -660,7 +660,7 @@ export const popupCards: CardData[] = [
       "Lots of timeless styles",
       "Wood grain finishes",
       "Water-resistant",
-      "Affordable from AED 49.00",
+      "Affordable from <span class='font-currency font-normal text-18'></span> 49.00",
       "Modern and classic",
     ],
   },
@@ -765,9 +765,8 @@ export const measurementData: MeasurementSection[] = [
   {
     title: "General Guidelines for Measuring Your Room ",
     description: `When calculating the width and length of a rectangular or square area, add 5-10% for waste and cutting errors. If you are planning to construct staircases, mantels, or closets in your room, allocate over 10% of your budget to them. 
-
-If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of AED 150 (refunded if you place an order from us). If you wish to measure the area yourself, you will only need a measuring tape, pencil, and paper. Make sure you measure in meters if you will be buying flooring materials that are usually marketed in mete
-`,
+      If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of <span class='font-currency font-normal text-18'></span> 150 (refunded if you place an order from us). If you wish to measure the area yourself, you will only need a measuring tape, pencil, and paper. Make sure you measure in meters if you will be buying flooring materials that are usually marketed in mete
+      `,
 stepsHeading:"Measuring a Square or Rectangular Room",
     steps: [
       {
