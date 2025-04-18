@@ -106,27 +106,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           </p>
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">
-          <button className="flex justify-center bg-primary text-11 xs:text-12 text-white w-7/12 2xl:text-22 font-inter gap-1 xs:gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16" onClick={() =>
-            handleAddToStorage(
-              productData,
-              totalPrice,
-              pricePerBox,
-              squareMeter,
-              requiredBoxes,
-              subCategory ?? "",
-              MainCategory ?? "",
-              "freeSample",
-              productData?.productImages?.[0]?.imageUrl,
-              boxCoverage,
-              unit,
-              selectedColor,
-              true
-            )
-          }
-          >
-            <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
-            <p className="text-10 xs:text-12 sm:text-14 xl:text-20">Order Now <strong><em>Free</em></strong> Sample</p>
-          </button>
+          
           <button
             onClick={() =>
               handleAddToStorage(
@@ -145,14 +125,13 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
                 selectedColor
               )
             }
-            className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+            className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           >
             <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7 text-11 xs:text-14 xl:text-20" />
             Add to Cart
           </button>
-        </div>
-        <button
-          className="flex bg-black justify-center text-11 xs:text-12 text-white w-5/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+          <button
+          className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           onClick={() =>
             handleAddToStorage(
               productData,
@@ -170,10 +149,33 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               selectedColor
             )
           }
-        >
+          >
           <LuHeart size={25} />
           Add to Wishlist
+          </button>
+        </div>
+        <button className="flex justify-center bg-primary text-11 xs:text-12 text-white w-7/12 2xl:text-22 font-inter gap-1 xs:gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16" onClick={() =>
+            handleAddToStorage(
+              productData,
+              totalPrice,
+              pricePerBox,
+              squareMeter,
+              requiredBoxes,
+              subCategory ?? "",
+              MainCategory ?? "",
+              "freeSample",
+              productData?.productImages?.[0]?.imageUrl,
+              boxCoverage,
+              unit,
+              selectedColor,
+              true
+            )
+          }
+        >
+            <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
+            <p className="text-10 xs:text-12 sm:text-14 xl:text-20">Order Now <strong><em>Free</em></strong> Sample</p>
         </button>
+       
         <PaymentMethod installments={installments} showheading />
       </div>
     </Container>

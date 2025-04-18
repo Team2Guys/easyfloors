@@ -14,9 +14,10 @@ interface SelectProps {
   label?: string;
   required?: boolean;
   placeholder?: string;
+  initialValue?: string;
 }
 
-const Select = ({ name, options, label, required = false, placeholder = "Select Location" }: SelectProps) => {
+const Select = ({ name, options, label, required = false, placeholder = "Select Location",initialValue }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -61,7 +62,11 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
       inputRef.current.focus();
     }
   };
-
+  useEffect(() => {
+    if (initialValue) {
+      setFieldValue(name, initialValue);
+    }
+  }, [initialValue, name, setFieldValue]);
   const displayValue = values[name] 
     ? options.find(opt => opt.value === values[name])?.label 
     : placeholder;

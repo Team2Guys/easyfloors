@@ -9,9 +9,6 @@ import { AccessoriesPopupProps } from "types/types";
 
 const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) => {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [unit, setUnit] = useState<{ [key: string]: "m" | "ft" }>(
-    Object.fromEntries(products.map((product) => [String(product.id), "m"]))
-  );
   const [areas, setAreas] = useState<{ [key: string]: string }>({});
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
@@ -26,29 +23,14 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     );
   };
 
-  const handleUnitChange = (id: string | number, value: "m" | "ft") => {
-    const idStr = String(id);
-  
-    setUnit((prev) => ({
-      ...prev,
-      [idStr]: value,
-    }));
-    if (areas[idStr]) {
-      recalculateBoxesAndPrice(idStr, areas[idStr], value); // 👈 use helper
-    }
-  };
-  const recalculateBoxesAndPrice = (idStr: string, value: string, unitValue: "m" | "ft") => {
+  const recalculateBoxesAndPrice = (idStr: string, value: string) => {
     const areaValue = parseFloat(value);
-    if (!isNaN(areaValue) && areaValue > 0) {
+    if (!isNaN(areaValue)) {
       const product = products.find((p) => String(p.id) === idStr);
       if (!product) return;
 
       const pieces = Math.ceil(areaValue / boxCoverage);
-      const pricePerUnit = unitValue === "ft"
-        ? product.price / 3.28084
-        : product.price;
-
-      const total = areaValue * pricePerUnit;
+      const total = areaValue * product.price;
   
       setRequiredBoxes((prev) => ({
         ...prev,
@@ -65,8 +47,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     }
   };
   
-  
-  
   const handleAreaChange = (id: string | number, value: string) => {
     const idStr = String(id);
     setAreas((prev) => ({
@@ -80,10 +60,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       setSelectedProducts((prev) => prev.filter((productId) => productId !== idStr));
     }
   
-    recalculateBoxesAndPrice(idStr, value, unit[idStr]);
+    recalculateBoxesAndPrice(idStr, value);
   };
-  
-  
 
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
@@ -91,37 +69,38 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     }
   };
 
+  const resetForm = () => {
+    setSelectedProducts([]);
+    setAreas({});
+    setRequiredBoxes({});
+    setTotalPrice({});
+  };
+
   const handleAddSelectedToCart = () => {
     selectedProducts.forEach((productId) => {
       const product = products.find((p) => String(p.id) === productId);
       if (product) {
-        const selectedUnit = unit[productId] || "m";
-        const basePrice = product.price;
-  
-        const pricePerUnit =
-          selectedUnit === "ft" ? basePrice / 3.28084 : basePrice;
-  
         const squareMeter = boxCoverage * (requiredBoxes[productId] || 1);
   
         handleAddToStorage(
           product,
-          totalPrice[productId] || 0,         // 👈 Already unit-specific
-          parseFloat(pricePerUnit.toFixed(2)), // 👈 Converted per unit price
+          totalPrice[productId] || 0,
+          product.price,
           squareMeter,
           requiredBoxes[productId] || 1,
-          selectedUnit,
+          "m",
           product.category?.name ?? product?.__typename,
           "cart",
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
-          selectedUnit,
+          "m",
           product.selectedColor
         );
       }
     });
+    resetForm();
     onClose();
   };
-  
 
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
@@ -133,7 +112,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
         {products.length === 0 ? (
           <p className="text-center text-gray-700">No accessory available.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[65vh] thin-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[50vh] 2xl:max-h-[65vh] thin-scrollbar">
             {products.map((product) => (
               <div key={product.id} className={`p-2 ${selectedProducts.includes(String(product.id)) ? "" : "border-gray-300"}`}>
                 <div className="relative">
@@ -156,55 +135,27 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                 </div>
                 <div className="py-2">
                   <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
-                  {product.selectedColor &&
-                    <div className="flex flex-col justify-between items-center mb-1 mt-1 w-fit">
-                      <Image width={50} height={50} src={product.selectedColor?.imageUrl || ""} alt={product.selectedColor?.altText || ""}/>
-                      <p className="text-11">{product.selectedColor?.color || ""}</p>
-                    </div>
-                    }
                   <p className="text-gray-700 font-medium">
-                    {unit[product.id] === "ft"
-                      ? `Price Per ft: AED ${(product.price / 3.28084).toFixed(2)}`
-                      : `Price Per m: AED ${product.price}`}
+                    Price Per m: AED {product.price}
                   </p>
 
-                  <p className="text-base text-gray-800 font-medium">You Require:</p>
-                  <div className="flex gap-4 items-center mb-2">
-                    {["m", "ft"].map((unitType) => (
-                      <label key={unitType} className="flex items-center justify-start gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          value={unitType}
-                          checked={unit[product.id] === unitType}
-                          onChange={() => handleUnitChange(product.id, unitType as "m" | "ft")}
-                          className="hidden"
-                        />
-                        <span
-                          className={`w-4 h-4 rounded-full border-2 m-0 flex items-start justify-start ${unit[product.id] === unitType ? "border-primary bg-primary" : "border-gray-400"}`}
-                        >
-                          {unit[product.id] === unitType && <span className="h-2 bg-orange-500 rounded-full"></span>}
-                        </span>
-                        <span className="text-md">{unitType === "m" ? "m" : "ft"}</span>
-                      </label>
-                    ))}
-                  </div>
+                  <p className="text-base text-gray-800 font-medium mb-2">You Require:</p>
                   <input
                     type="number"
-                    placeholder={`Enter Area (${unit[product.id] || "m"})`}
+                    placeholder="Enter Area (m)"
                     value={areas[product.id] || ""}
                     onChange={(e) => handleAreaChange(product.id, e.target.value)}
                     min="0"
                     className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
                   />
                 </div>
-                
               </div>
             ))}
           </div>
         )}
         <div>
         <button
-          className={` mt-2 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed  left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
+          className={`mt-2 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
           onClick={handleAddSelectedToCart}
           disabled={selectedProducts.length === 0}
         >
