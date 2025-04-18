@@ -13,7 +13,6 @@ import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { Appointmentlocation, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
@@ -26,6 +25,7 @@ import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -370,7 +370,7 @@ const Checkout = () => {
                                 </div>
                                 <div className="border-b">
 
-                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown  size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                                         <Panel
                                             header={<span className="text-slate-500">Shipping Options</span>}
                                             key="1"
