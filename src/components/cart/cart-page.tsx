@@ -78,17 +78,20 @@ const CartPage = ({ products }: CartPageProps) => {
     };
     
 
-  useEffect(() => {
-    const subTotalPrice = cartItems.reduce(
-      (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
-      0
-    );
-    setSubTotal(subTotalPrice);
-    const totalBeforeTax = subTotal + selectedFee;
-      const taxAmount = selectedCity ? totalBeforeTax : 0;
-      // const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
-      setTotal(totalBeforeTax + taxAmount);
-  },[cartItems])
+    useEffect(() => {
+      const subTotalPrice = cartItems.reduce(
+        (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
+        0
+      );
+      setSubTotal(subTotalPrice);
+      
+      // Recalculate shipping and total whenever cart items change
+      const fee = calculateShippingFee(subTotalPrice, selectedShipping, selectedCity);
+      setSelectedFee(fee);
+      
+      const totalBeforeTax = subTotalPrice + fee;
+      setTotal(totalBeforeTax);
+    }, [cartItems]);
 
   const updateQuantity = async (id: number, change: number) => {
     try {
@@ -149,37 +152,51 @@ const CartPage = ({ products }: CartPageProps) => {
     handleShippingSelect("standard");
   }, []);
 
-  const handleStateSelect = (state: string) => {
-    let fee = 150;
-    if (selectedShipping === 'standard' || selectedShipping === 'self-collect') {
-      fee = 0;
-    } else {
-      fee = subTotal > 1000 ? 0 : 150;
+  const calculateShippingFee = (
+    subtotal: number,
+    shippingType: string | null,
+    selectedCity: string
+  ): number => {
+    if (!selectedCity) return 0;
+    
+    switch (shippingType) {
+      case 'express':
+        return subtotal >= 1000 ? 0 : 150;
+      case 'standard':
+      case 'self-collect':
+        return 0;
+      default:
+        return 0;
     }
-    const totalBeforeTax = subTotal + fee;
-    const taxAmount = totalBeforeTax;
-    // const taxAmount = totalBeforeTax * 0.05;
-    setTotal(totalBeforeTax + taxAmount);
-    setSelectedFee(fee);
-    setSelectedCity(state);
   };
-
+  
+  // Update your state handlers in the CartPage component
+  const handleStateSelect = (state: string) => {
+    setSelectedCity(state);
+    localStorage.setItem('selectedCity', JSON.stringify(state));
+    
+    // Recalculate shipping fee when city changes
+    const fee = calculateShippingFee(subTotal, selectedShipping, state);
+    setSelectedFee(fee);
+    
+    // Update total
+    const totalBeforeTax = subTotal + fee;
+    setTotal(totalBeforeTax);
+  };
+  
   const handleShippingSelect = (type: string) => {
-    if (selectedCity) {
-      let fee = 150;
-      if (type === 'standard' || type === 'self-collect') {
-        fee = 0;
-      } else {
-        fee = subTotal > 1000 ? 0 : 150;
-      }
-      setSelectedFee(fee);
-      const totalBeforeTax = subTotal + fee;
-      const taxAmount = totalBeforeTax;
-      // const taxAmount = totalBeforeTax * 0.05;
-      setTotal(totalBeforeTax + taxAmount);
-    };
     setSelectedShipping(type);
-  }
+    localStorage.setItem('selectedShipping', type);
+    
+    // Only calculate if city is selected
+    if (selectedCity) {
+      const fee = calculateShippingFee(subTotal, type, selectedCity);
+      setSelectedFee(fee);
+      
+      const totalBeforeTax = subTotal + fee;
+      setTotal(totalBeforeTax);
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem('shipping', JSON.stringify(shipping));
@@ -470,7 +487,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 </div>
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Total Incl</p>
+                  <p>Total Incl:</p>
                   <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>
