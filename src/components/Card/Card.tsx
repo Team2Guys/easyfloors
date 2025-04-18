@@ -10,7 +10,6 @@ import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
-import { CgArrowsExpandLeftAlt, CgArrowsV, CgArrowsVAlt } from "react-icons/cg";
 import { handleAddToStorage } from "lib/carthelper";
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
@@ -150,20 +149,39 @@ const Card: React.FC<productCardProps> = ({
               <div key={index} className="flex gap-4 w-full justify-between">
                 {feature.width &&
                 <div className="flex justify-between gap-1 items-center">
-                <CgArrowsV size={25} className="rotate-90" />
-
+                  <Image
+                    src={features[0].icon}
+                    alt="Icon"
+                    width={features[0].width}
+                    height={features[0].height}
+                    loading="lazy"
+                    className="text-gray-500 cursor-pointer hover:text-red-500"
+                  />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
                 </div>
                 } 
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
-                   <CgArrowsExpandLeftAlt size={18} className="rotate-[45deg]" />
-
+                    <Image
+                      src={features[1].icon}
+                      alt="Icon"
+                      width={features[1].width}
+                      height={features[1].height}
+                      loading="lazy"
+                      className="text-gray-500 cursor-pointer hover:text-red-500"
+                    />
                     <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
                 {feature.height &&
                 <div className="flex justify-between gap-1 items-center">
-                  <CgArrowsVAlt size={20} />
+                  <Image
+                    src={features[2].icon}
+                    alt="Icon"
+                    width={features[2].width}
+                    loading="lazy"
+                    height={features[2].height}
+                    className="text-gray-500 cursor-pointer hover:text-red-500"
+                  />
                   <span className="text-[7px] text-black md:text-[12px]">{feature.height}</span>
                 </div>
                 }
