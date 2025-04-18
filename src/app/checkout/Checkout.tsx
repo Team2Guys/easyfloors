@@ -47,7 +47,6 @@ const Checkout = () => {
             setSelectedEmirate(emirate);
         }
     }, []);
-    console.log(selectedCity,"selectedCity")
     useEffect(() => {
         const savedCity = localStorage.getItem('selectedCity') || '';
         if (savedCity) {
