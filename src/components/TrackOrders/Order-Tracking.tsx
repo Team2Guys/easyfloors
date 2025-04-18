@@ -19,8 +19,6 @@ export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
 
   const currentDate = new Date();
 
-
-
   const isSameDate = formatDate(currentDate);
 
   const sameDate = isSameDate == formatedDate

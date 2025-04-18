@@ -150,18 +150,6 @@ export interface AuthData {
   footerLinkText: string;
   value: string;
 }
-export interface SignAuthData {
-  title: string;
-  subtitle: string;
-  emailPlaceholder: string;
-  passwordPlaceholder: string;
-  // forgotPasswordText?: string; 
-  buttonText: string;
-  footerText: string;
-  footerLinkText: string;
-  fullNamePlaceholder?:string;
-  retypePasswordPlaceholder?:string
-}
 
 
 export interface AuthFormState {

@@ -117,7 +117,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   return (
     <div className="relative">
       {
-        stickyside &&
+        stickyside && ThumnailImage.length > 5 && 
       <button
       onClick={(e) => {
         e.preventDefault(); // Prevent scroll-to-top
@@ -138,10 +138,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         onMouseLeave={handleMouseUp}
       >
         <div className="w-2/12">
-          {stickyside ? (
+          {stickyside && ThumnailImage.length > 5  ? (
             <div className="relative h-full">
-
-
 
               {/* Thumbnail Slider */}
               <Slider
@@ -178,7 +176,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
               {/* Down Arrow */}
               {
-              stickyside &&
+              stickyside && ThumnailImage.length > 5 && 
               <button
               onClick={(e) => {
                 e.preventDefault(); // Prevent scroll-to-top
@@ -208,7 +206,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     height={150}
                     src={product.imageUrl}
                     className={`w-full ${imageheight
-                        ? "h-[35px] sm:h-[73px] md:h-[230px]"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
                         : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[124px]"
                       }`}
                     alt={product.altText || "Thumbnail"}

@@ -1,5 +1,3 @@
-import { IReview } from 'types/type';
-import axios from 'axios';
 import { FETCH_ALL_APPOINTMENTS, FETCH_ALL_CATEGORIES, FETCH_ALL_ORDERS, FETCH_ALL_PRODUCTS, FETCH_ALL_SUB_CATEGORIES, FIND_ONE_CATEGORY, FIND_ONE_PRODUCT, FIND_ONE_SUB_CATEGORY, GET_ALL_ADMINS, GET_ALL_RECORDS, GET_ORDER_HISTORY, } from 'graphql/queries';
 import client from './apolloClient';
 import { DocumentNode } from '@apollo/client';
@@ -129,22 +127,6 @@ export const fetchOrdersHistory = async (token: string | undefined, email: strin
     throw error;
   }
 };
-
-
-export const fetchReviews = async (): Promise<IReview[]> => {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/reviews/get-all`,
-  );
-  return response.data;
-};
-
-export const TrimUrlHandler = (name: string | undefined) => {
-  if (!name) return '';
-
-  return name.trim().toLowerCase();
-};
-
-
 
 export const get_all_records = async (token: string) => {
   try {

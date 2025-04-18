@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { ReactNode } from "react";
 
-export interface CheckboxProps {
+interface CheckboxProps {
   name?: string; 
   checked?: boolean; 
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; //eslint-disable-line
