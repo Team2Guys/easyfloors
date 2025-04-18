@@ -30,7 +30,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
             {!isSamplePage && product.category && (
             product.category === "Accessories" ? (
             <>
-           <p>Price Per m: <span className="font-semibold"> <span className="font-currency text-18"></span> {product.price}</span></p>
+           <p>Price Per m: <span className="font-semibold"> <span className="font-currency text-18 font-normal"></span> {product.price}</span></p>
            <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
             </>
            ) : (
@@ -42,7 +42,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
            )}
           
           <p className="text-14 font-inter font-semibold">
-              {isSamplePage ? "Free" : <span className="font-currency text-18"> {product.price}</span>}
+              {isSamplePage ? "Free" : <span className="font-currency text-18 font-normal"> {product.price}</span>}
           </p>
             <p className="text-14 font-inter">
               {product.stock > 0 ? "In Stock" : "Out of Stock"}

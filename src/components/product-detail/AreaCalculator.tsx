@@ -62,7 +62,7 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
           No. Of Boxes: {requiredBoxes} ({squareMeter ? (unit === "sqm" ? squareMeter.toFixed(2) : (squareMeter * 10.764).toFixed(2)) : 0}{" "}
           {unit === "sqm" ? "Square Metre" : "Square Feet"})
         </p>
-        <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium"><span className="font-currency text-18"></span> <span>{pricePerBox.toFixed(2)}</span></span></p>
+        <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium"><span className="font-currency"></span> <span>{pricePerBox.toFixed(2)}</span></span></p>
         <p className="text-12 sm:text-16 2xl:text-20 font-light flex items-center gap-3">
           Accessories
           <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">

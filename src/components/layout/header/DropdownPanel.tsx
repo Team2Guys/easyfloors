@@ -257,7 +257,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                           <h2 className="text-sm font-semibold leading-snug line-clamp-2">{item.name}</h2>
                           {
                             item.isfreeSample ? "free" :
-                              <p className="text-xs text-gray-700 mt-1"><span className="font-currency text-18"></span> {item.price}</p>
+                              <p className="text-xs text-gray-700 mt-1"><span className="font-currency text-18 font-normal"></span> {item.price}</p>
                           }
                           {!item.isfreeSample && type === "cart" && (
                             <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">
@@ -277,7 +277,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                           <span className="text-sm font-semibold">Total:</span>
                           {
                             item.isfreeSample ? "free" :
-                              <span className="text-sm"><span className="font-currency text-18"></span> {item.totalPrice?.toFixed(2) || "0.00"}</span>
+                              <span className="text-sm"><span className="font-currency text-18 font-normal"></span> {item.totalPrice?.toFixed(2) || "0.00"}</span>
                           }
                         </div>
                       )}
@@ -289,7 +289,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
               </div>
 
               <div className="text-end mt-2 mb-2 font-bold">
-                {type === "cart" && <p>Total:  <span className="font-currency text-18"></span> {totalAmount.toFixed(2)}</p>}
+                {type === "cart" && <p>Total:  <span className="font-currency text-18 font-normal"></span> {totalAmount.toFixed(2)}</p>}
               </div>
 
               <div className="w-full mt-2 space-y-1">

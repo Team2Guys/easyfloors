@@ -224,7 +224,7 @@ const Card: React.FC<productCardProps> = ({
             'price' in product && product.price &&
 
             <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
-              {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} <span className="font-currency text-18"></span> <span>{product?.price}</span>
+              {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} <span className="font-currency text-18 font-normal"></span> <span>{product?.price}</span>
               {isAccessories ? '/m' : '/m²'}
             </p>
 

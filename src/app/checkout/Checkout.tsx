@@ -341,7 +341,7 @@ const Checkout = () => {
                             </div>
                             <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                                 <div className="space-y-2 py-4">
-                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-18"></span> {subTotal.toFixed(2)}</span></p>
+                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-18 font-normal font-normal"></span> {subTotal.toFixed(2)}</span></p>
                                     <p className="text-gray-600 flex justify-between">
                                         <span className="flex items-center gap-2">
                                             Shipping <CiDeliveryTruck size={16} className="mt-1" />
@@ -386,8 +386,8 @@ const Checkout = () => {
                                                     <p className="text-11 xs:text-16">delivery <strong>Next day</strong></p>
                                                     <p className="text-11 xs:text-16">
                                                         <span>Delivery Cost:</span> {subTotal > 1000 ? 
-                                                            <strong>Free (Order over 1000 <span className="font-currency text-18"></span>)</strong> : 
-                                                            <><strong><span className="font-currency text-18"></span> 150</strong>, <span>Free shipping for all orders above <strong><span className="font-currency text-18"></span> 1000</strong></span></>
+                                                            <strong>Free (Order over 1000 <span className="font-currency text-18 font-normal"></span>)</strong> : 
+                                                            <><strong><span className="font-currency text-18 font-normal"></span> 150</strong>, <span>Free shipping for all orders above <strong><span className="font-currency text-18 font-normal"></span> 1000</strong></span></>
                                                         }
                                                     </p>
                                                 </div>
@@ -442,7 +442,7 @@ const Checkout = () => {
                                                 <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
                                                     <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is <span className="font-currency text-18"></span> 25 per metre square, and for herringbone is <span className="font-currency text-18"></span> 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
+                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is <span className="font-currency text-18 font-normal"></span> 25 per metre square, and for herringbone is <span className="font-currency text-18 font-normal"></span> 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
                                                     </p>
                                                     <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/measurement-appointment ">Book Free Installation Appointment</Link>
                                                 </div>
