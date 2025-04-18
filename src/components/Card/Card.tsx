@@ -157,7 +157,7 @@ const Card: React.FC<productCardProps> = ({
                 } 
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
-                   <CgArrowsExpandLeftAlt className="rotate-[45deg]" />
+                   <CgArrowsExpandLeftAlt size={18} className="rotate-[45deg]" />
 
                     <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
