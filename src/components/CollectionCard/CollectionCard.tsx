@@ -21,7 +21,7 @@ const CollectionCard = ({ subcategory }: { subcategory: ISUBCATEGORY }) => {
           >
             {subcategory.name}
           </Link>
-          <p>Price Starting From: AED {subcategory.price}/m²</p>
+          <p>Price Starting From: <p><span className="font-currency font-normal text-18"></span> 150m²</p> {subcategory.price}/m²</p>
 
         </div>
         <div className="flex flex-col md:flex-row items-center md:items-start lg:items-center justify-between md:py-2 py-1 gap-2 md:gap-4 w-full md:p-4 font-inter font-light">

@@ -66,7 +66,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <h1 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h1>
         <div className="flex border-b-[1px] border-gray-300"></div>
         <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
-          Price Per Metre: <span className="text-primary">AED {productData.price}</span>
+          Price Per Metre: <span className="text-primary"><span className="font-currency text-18"></span> {productData.price}</span>
         </p>
         <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
         </p>
@@ -128,8 +128,8 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       </div>
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
         <p>Total Required: <span className="text-12 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
-        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light">AED {productData.price}</span></p>
-        <p>Total Amount: <span className="text-12 xl:text-17 font-light">AED {totalPrice} ({requiredBoxes} metre * AED {productData.price})</span></p>
+        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light"><span className="font-currency text-18"></span> {productData.price}</span></p>
+        <p>Total Amount: <span className="text-12 xl:text-17 font-light"><span className="font-currency text-18"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-18"></span> {productData.price})</span></p>
       </div>
 
       <div className="mt-2 flex font-normal font-inter items-center gap-4">

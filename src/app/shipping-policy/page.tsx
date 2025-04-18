@@ -39,7 +39,7 @@ const Shipping = () => {
           <h3 className=" text-14 sm:text-22 font-semibold">{item.location}</h3>
           <ul >
             {item.charges.map((charge, index) => (
-              <li key={index} className=" text-12 sm:text-20 font-inter">{charge}</li>
+              <li key={index} className=" text-12 sm:text-20 font-currency" dangerouslySetInnerHTML={{ __html: charge || "" }} />
             ))}
           </ul>
         </div>

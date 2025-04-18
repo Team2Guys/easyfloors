@@ -25,10 +25,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             <div className="absolute top-[6%] sm:top-[20%] lg:top-[14%] bg-background left-4 sm:left-0 opacity-90 xs:opacity-95 p-2 sm:p-6 md:p-8 w-[50%] xs:w-[35%] sm:w-[270px] md:w-[300px] lg:w-[400px] xl:w-[500px] shadow-md">
               <div className="flex flex-col justify-start items-start font-inter text-black font-light space-y-1 sm:space-y-3 lg:space-y-4 sm:pl-4 md:pl-5 lg:pl-12 xl:pl-16">
                 <p className="text-[10px] sm:text-sm">{item.offerText}</p>
-                <h2 className="text-14 sm:text-2xl lg:text-[35px] xl:text-5xl leading-[1.2] sm:leading-[1.4] md:leading-[1.6] xl:leading-[67.2px]">
-                  {item.title} <br />
-                  <span className="font-medium">{item.highlight}</span>
-                </h2>
+                <h2 className="text-14 sm:text-2xl lg:text-[35px] xl:text-5xl leading-[1.2] sm:leading-[1.4] md:leading-[1.6] xl:leading-[67.2px] font-currency"dangerouslySetInnerHTML={{ __html: item.title }} />
                 <p className="text-[10px] sm:text-sm md:text-base sm:leading-6 md:leading-7 w-full">
                   {item.description}
                 </p>
@@ -50,8 +47,8 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
               <h3 className="text-14 sm:text-sm lg:text-[28px] font-medium">
                 {item.brand}
               </h3>
-              <div className="text-xs lg:text-xl sm:font-semibold font-normal flex justify-start items-center gap-2 mt-1 lg:mt-3 ">
-                {item.priceText}
+              <div className=" flex justify-start items-center gap-2 mt-1 lg:mt-3 ">
+                <span dangerouslySetInnerHTML={{ __html: item.priceText }}/>
                 <p className="text-[16px] lg:text-[30px]">
                   <TiArrowRight />
                 </p>

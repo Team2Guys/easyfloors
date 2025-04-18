@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
-
+import localFont from 'next/font/local'
 import PathnameWrapper from "components/PathnameWrapper";
 import Customprovider from "../redux/CustomProvider";
 import { ToastContainer } from "react-toastify";
 import Script from "next/script";
 import Image from "next/image";
 import { GoogleTagManager } from '@next/third-parties/google';
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-Inter",
@@ -31,7 +32,15 @@ export const metadata: Metadata = {
     canonical: '/',
   },
 };
-
+const currency = localFont({ src: [
+  {
+    path: '../../public/assets/currency-symbol-v2.otf',
+    weight: '400',
+    style: 'normal',
+  }
+],
+ variable: '--font-currency'
+ });
 export default function RootLayout({
   children, 
 }: {
@@ -87,7 +96,7 @@ export default function RootLayout({
           fbq('track', 'PageView');
         `}
       </Script>
-      <body className={`${inter.variable}`}>
+      <body className={`${inter.variable} ${currency.variable}`}>
       <GoogleTagManager gtmId="GTM-NDT6D9FX" />
       <noscript> <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NDT6D9FX" height="0" width="0" style={{ display: "none", visibility: "hidden" }}></iframe>
       </noscript>
