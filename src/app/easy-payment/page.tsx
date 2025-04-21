@@ -6,7 +6,7 @@ import Image from 'next/image'
 const EasyPayment = () => {
   return (
     <Container className='space-y-2 sm:space-y-4 my-10 font-inter'>
-    <h1 className='font-bold text-3xl text-center mb-6'>Easy Payment</h1>
+    <h1 className='text-center text-36 sm:text-[47px] font-semibold mb-4 font-inter'>Easy Payment</h1>
     <p className='text-14 sm:text-20 sm:leading-[26px]'>You can shop with us whenever you want and without any stress.  We let you buy what you want now and pay for it later with Easy Payment. There are no interest or other fees.  Trusted partners like Tabby and Tamara can help you break down your purchase into four equal payments of the total amount. You can pay one payment today and the rest over the next three months. It&apos;s easy, safe, and completely clear.</p>
     <p className='text-14 sm:text-20 sm:leading-[26px]'>To set up your plan right away, just choose Tabby or Tamara at checkout.</p>
      <div className="flex  flex-wrap gap-5 pt-3">

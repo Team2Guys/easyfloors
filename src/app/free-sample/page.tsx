@@ -6,7 +6,7 @@ import React from 'react'
 const FreeSampleDetail = () => {
   return (
     <Container className='space-y-2 sm:space-y-4 my-10 font-inter'>
-      <h1 className='font-bold text-3xl text-center mb-6'>Free Samples</h1>
+      <h1 className='text-center text-36 sm:text-[47px] font-semibold mb-4 font-inter'>Free Samples</h1>
       <p className='text-14 sm:text-20 sm:leading-[26px]'>At Easy Floors, we understand that experiencing our products firsthand is the ultimate proof of their quality. We provide up to 5 complimentary samples delivered right to your doorstep anywhere in the UAE, allowing you to touch, feel, and experience the exceptional quality before you buy. When it comes to selecting materials for your home, office, or any project, making the right choice is essential. Experience the clarity of free samples, guiding you to make informed and confident choices. Customers have the opportunity to request a maximum of 5 samples from any product of their choice. Unfortunately, we do not offer samples for accessories.
       </p>
       <div className='w-full grid grid-cols-5 gap-2'>

@@ -334,14 +334,14 @@ const Checkout = () => {
                                             <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>    
                                             }
                                             </div>
-                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-18"></span> {item.totalPrice.toFixed(2)}</p>
+                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-20"></span> {item.totalPrice.toFixed(2)}</p>
                                         </div>
                                     )) : <p>Cart is Empty</p>}
                                 </div>
                             </div>
                             <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                                 <div className="space-y-2 py-4">
-                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-18 font-normal font-normal"></span> {subTotal.toFixed(2)}</span></p>
+                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-20 font-normal"></span> {subTotal.toFixed(2)}</span></p>
                                     <p className="text-gray-600 flex justify-between">
                                         <span className="flex items-center gap-2">
                                             Shipping <CiDeliveryTruck size={16} className="mt-1" />
@@ -357,7 +357,7 @@ const Checkout = () => {
                                             }
                                         </span>
                                     </p>
-                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-18"></span> {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
+                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
                                     <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
