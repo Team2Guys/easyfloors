@@ -11,7 +11,7 @@ const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname() as string;
 
   const withoutHeaderPages = ['/dashboard', '/thanks', '/login', '/signup', '/forgot-password'];
-  const hideNeedHelpPages = ['/privacy-policy', '/terms-and-conditions','/return-and-refund-policy','/how-to-measure-your-room','/shipping-policy','/faqs','/measurement-appointment',"/checkout",'/contact-us',"/track-order"];
+  const hideNeedHelpPages = ['/privacy-policy', '/terms-and-conditions','/return-and-refund-policy','/how-to-measure-your-room','/shipping-policy','/faqs','/measurement-appointment',"/checkout",'/contact-us',"/track-order","/help-with-installations"];
 
   return (
     <ApolloProvider client={client}>

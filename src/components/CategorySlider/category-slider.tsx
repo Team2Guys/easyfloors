@@ -9,20 +9,27 @@ import Link from "next/link";
 import Card from "components/Card/Card";
 import { features } from "data/data";
 import { Category, EDIT_CATEGORY, ISUBCATEGORY } from "types/cat";
+import { getSubcategoryOrder } from "data/home-category";
 
 const CategorySlider = ({ categories }: { categories: Category[] }) => {
+
+
   return (
     <div className="space-y-8">
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
-
         const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
         let  subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
         subcategories = [...subcategories].sort((a, b) => {
-          const nameA = a.name.toLowerCase();
-          const nameB = b.name.toLowerCase();
-          if (nameA === "polar spc") return -1;
-          if (nameB === "polar spc") return 1;
-          return 0;
+          return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
+        });
+        subcategories = [...subcategories].sort((a, b) => {
+          const orderA = getSubcategoryOrder(a.name);
+          const orderB = getSubcategoryOrder(b.name);
+          if (orderA !== orderB) {
+            return orderA - orderB;
+          } else {
+            return (Number(a.price) || 0) - (Number(b.price) || 0);
+          }
         });
         const shouldEnablePagination = subcategories && subcategories.length >= 0;
         const seeAllLink = `/${category?.custom_url || category.name.toLowerCase().replace(/\s+/g, '-')}`;

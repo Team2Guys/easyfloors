@@ -57,7 +57,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="flex text-14 sm:text-18 text-primary 2xl:text-23 font-semibold gap-1 items-center sm:gap-1">
           <p className="text-black">Price :</p>
           <p>
-          <span className="font-currency font-normal"></span>
+          <span className="font-currency font-normal"> </span>
             {unit === "sqm"
               ? productData?.price
               : (productData?.price / 10.764).toFixed(2)}

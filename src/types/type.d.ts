@@ -37,7 +37,7 @@ export interface HeadingImageProps {
 export interface TCategoryData {
   title: string;
   subtitle: string;
-  description: string;
+  description?: string;
   backgroundImage: string;
 }
 
@@ -45,6 +45,8 @@ export interface FeatureItem {
   title: string;
   description: string;
   icon: string;
+  buttonLink?: string;
+  buttonText?: string;
 }
 
 export interface FeaturesProps {

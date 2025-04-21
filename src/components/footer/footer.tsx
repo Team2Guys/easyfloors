@@ -15,6 +15,7 @@ import dynamic from 'next/dynamic';
 const Footerlinks = dynamic(() => import('./Footerlinks'));
 
 import SocialIcon from 'components/Reusable/social-icon';
+import { getSubcategoryOrder } from 'data/home-category';
 
 
 const Footer = () => {
@@ -74,8 +75,19 @@ const Footer = () => {
                 {categories.length > 0 ? (
                     categories.map((section: Category, index: number) => {
                         const reCallFlag = section.recalledSubCats && section.recalledSubCats.length > 0;
-                        const subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
-
+                        let subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
+                                subcategories = [...subcategories].sort((a, b) => {
+                                  return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
+                                });
+                                subcategories = [...subcategories].sort((a, b) => {
+                                    const orderA = getSubcategoryOrder(a.name);
+                                    const orderB = getSubcategoryOrder(b.name);
+                                    if (orderA !== orderB) {
+                                      return orderA - orderB;
+                                    } else {
+                                      return (Number(a.price) || 0) - (Number(b.price) || 0);
+                                    }
+                                  });
                         return (
                             <div key={index} className="sm:block hidden">
                                 <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">

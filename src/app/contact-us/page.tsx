@@ -30,9 +30,7 @@ const Contact = () => {
             Get In Touch With Us
           </h2>
           <p className="text-[#9F9F9F] md:text-base text-sm">
-            For more information about our product & services. Please feel free
-            to drop us an email. Our Staff Always be there to help you out. Do
-            not hesitate!
+          For more information about our products, please feel free to drop us a WhatsApp message or an email. Our staff are dedicated to help you find the best solution for your home/office.
           </p>
         </div>
         <div className="md:mt-16 sm:mt-10 bg-white sm:shadow-[0px_0px_69px_30px_#0000001c] p-5">

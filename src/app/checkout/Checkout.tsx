@@ -421,16 +421,6 @@ const Checkout = () => {
                                                     </p>
                                                 </div>
                                             </div>
-                                             <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                                <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                                                <div>
-                                                <strong className="text-15 xs:text-20">Free Samples:</strong>
-                                                <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
-                                                <p className="text-11 xs:text-16">
-                                                    <span>Shipping Fee:</span> <strong>Free</strong>
-                                                </p>
-                                                </div>
-                                             </div>
                                         </Panel>
 
                                         <Panel
