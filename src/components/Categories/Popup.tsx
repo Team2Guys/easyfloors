@@ -100,7 +100,7 @@ function Popup() {
         <p className="text-center md:text-base text-sm font-normal font-inter">
           {isExpanded || !isMobile
             ? categoryData.description
-            : `${categoryData.description.substring(0, 150)}...`}
+            : `${(categoryData.description || "").substring(0, 150)}...`}
           {isMobile && (
             <button
               onClick={handleReadMoreClick}
