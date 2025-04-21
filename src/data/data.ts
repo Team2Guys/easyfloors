@@ -501,22 +501,22 @@ export const deliveryCharges = [
   {
     location: 'Dubai ( Next Day Delivery )',
     charges: [
-      'Under <span className="font-currency font-normal text-18"></span> 1,000 - <span className="font-currency font-normal text-18"></span>  50',
-      'Above <span className="font-currency font-normal text-18"></span>  1,000 - Free',
+      'Under <span class="font-currency font-normal"></span> 1,000 - <span class="font-currency font-normal"></span>  50',
+      'Above <span class="font-currency font-normal"></span>  1,000 - Free',
     ],
   },
   {
     location: 'Sharjah, Ajman, Umm Al Quwain ( 2 Working Days )',
     charges: [
-      'Under <span className="font-currency font-normal text-18"></span>  1,000 - <span className="font-currency font-normal text-18"></span>  100',
-      'Above <span className="font-currency font-normal text-18"></span>  1,000 - Free',
+      'Under <span class="font-currency font-normal"></span>  1,000 - <span class="font-currency font-normal"></span>  100',
+      'Above <span class="font-currency font-normal"></span>  1,000 - Free',
     ],
   },
   {
     location: 'Abu Dhabi, Fujairah, Ras Al Khaimah ( 2 Working Days )',
     charges: [
-      'Under <span className="font-currency font-normal text-18"></span>  1,000 - <span className="font-currency font-normal text-18"></span>  200',
-      'Above <span className="font-currency font-normal text-18"></span>  1,000 - Free',
+      'Under <span class="font-currency font-normal"></span>  1,000 - <span class="font-currency font-normal"></span>  200',
+      'Above <span class="font-currency font-normal"></span>  1,000 - Free',
     ],
   },
 ];
