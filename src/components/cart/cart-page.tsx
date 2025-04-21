@@ -480,11 +480,11 @@ const CartPage = ({ products }: CartPageProps) => {
                     
                   </Panel>
                 </Collapse> 
-
-                <div className='flex items-center justify-between text-16 lg:text-20'>
+      {/* Shipping Fee show when select city */}
+                {/* <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Shipping Fee:</p>
                   <p>{selectedCity ? selectedFee > 0 ? <p><span className="font-currency font-normal text-18"></span> {selectedFee}</p> : 'Free' : 'Pleae select city'}</p>
-                </div>
+                </div> */}
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Total Incl:</p>

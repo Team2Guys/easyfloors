@@ -91,7 +91,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           </tbody>
         </table>
       )}
-      <Link href="/collections" className="text-center text-[18px] bg-primary p-2 px-5 ml-3 flex w-fit items-center text-white mt-3">Continue Shopping</Link>
+      <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden md:flex'><FaArrowLeftLong /> Continue shopping</Link>
     </div>
    
   );
