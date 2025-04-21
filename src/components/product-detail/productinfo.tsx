@@ -128,8 +128,8 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       </div>
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
         <p>Total Required: <span className="text-12 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
-        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal"></span> {productData.price}</span></p>
-        <p>Total Amount: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-18 font-normal"></span> {productData.price})</span></p>
+        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal text-16 xl:text-20"></span> {productData.price}</span></p>
+        <p>Total Amount: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal text-16 xl:text-20"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-16 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
       <div className="mt-2 flex font-normal font-inter items-center gap-4">
@@ -137,7 +137,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
         <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
-
 
       <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
       <PaymentMethod installments={totalPrice / 4} />
