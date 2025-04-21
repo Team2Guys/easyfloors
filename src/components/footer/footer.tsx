@@ -152,7 +152,7 @@ const Footer = () => {
                             <FaMapMarkerAlt size={16} className="text-black" />
                         </div>
                         <Link
-                            href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D"
+                            href="https://maps.app.goo.gl/VoKEfBJLA2y9fySt5"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-gray-700 hover:text-gray-900 md:full w-60"

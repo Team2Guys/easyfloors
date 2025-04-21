@@ -33,7 +33,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
             tabby
           </span>
           <p className=" text-[8px] sm:text-14 font-medium text-[#8D8D8D]">
-             Pay 4 interest-free payments of <span className="font-currency font-normal text-14"></span> {installments.toFixed(2)}{' '}
+             Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {installments.toFixed(2)}{' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTabbyOpen(true)}
@@ -58,7 +58,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
             tamara
           </span>
           <p className=" text-[8px] sm:text-14 font-medium text-[#8D8D8D]">
-          Pay 4 interest-free payments of <span className="font-currency font-normal text-14"></span> {installments.toFixed(2)} {' '}
+          Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {installments.toFixed(2)} {' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTamaraOpen(true)}

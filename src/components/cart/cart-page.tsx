@@ -267,7 +267,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   Price: Free
                                   </p> :
                                   <p className='text-12 sm:text-14 2xl:text-17'>
-                                  Price: <span className="font-currency font-normal text-20"></span>{" "}
+                                  Price: <span className="font-currency font-normal text-16 2xl:text-22"></span>{" "}
                                   <span>
                                     {item.unit === "sqft"
                                       ? ((item.price?? 0) / 10.764).toFixed(2)
@@ -282,7 +282,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   <>
                                   <p className='text-12 sm:text-14 2xl:text-17'>
                                   {item.isAccessory? "Price Per Piece: ": "Price Per box: "} 
-                                  <span className='font-bold'><span className="font-currency font-normal text-20"></span> {item.pricePerBox.toFixed(2)}</span>
+                                  <span className='font-bold'><span className="font-currency font-normal text-18 2xl:text-20"></span> {item.pricePerBox.toFixed(2)}</span>
                                   </p>
                                 <p className='text-12 sm:text-14 2xl:text-17'>
                                   No. Of Boxes:
@@ -384,7 +384,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                     <LuPlus />
                                   </button>
                                 </div>
-                                <p className='text-14 font-semibold whitespace-nowrap'><span className="font-currency font-normal text-18"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span>asd</p>
+                                <p className='text-14 font-semibold whitespace-nowrap'><span className="font-currency font-normal text-18"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                               </div>
                             </div>
                           </div>
@@ -428,7 +428,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal:</p>
-                  <p><span className="font-currency font-normal"></span> {subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal text-20 2xl:text-25"></span> {subTotal.toFixed(2)}</p>
                 </div>
                 <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
                 <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
@@ -488,7 +488,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Total Incl:</p>
-                  <p><span className="font-currency font-normal"></span> {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal text-18 lg:text-25"></span> {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>

@@ -495,29 +495,7 @@ export const HomeUserInfo = [
     reverse: false,
   },
 ]
-export const deliveryCharges = [
-  {
-    location: 'Dubai ( Next Day Delivery )',
-    charges: [
-      'Under <span class="font-currency font-normal"></span> 1,000 - <span class="font-currency font-normal"></span>  50',
-      'Above <span class="font-currency font-normal"></span>  1,000 - Free',
-    ],
-  },
-  {
-    location: 'Sharjah, Ajman, Umm Al Quwain ( 2 Working Days )',
-    charges: [
-      'Under <span class="font-currency font-normal"></span>  1,000 - <span class="font-currency font-normal"></span>  100',
-      'Above <span class="font-currency font-normal"></span>  1,000 - Free',
-    ],
-  },
-  {
-    location: 'Abu Dhabi, Fujairah, Ras Al Khaimah ( 2 Working Days )',
-    charges: [
-      'Under <span class="font-currency font-normal"></span>  1,000 - <span class="font-currency font-normal"></span>  200',
-      'Above <span class="font-currency font-normal"></span>  1,000 - Free',
-    ],
-  },
-];
+
 export const policySections = [
   {
     title: 'Can I Return A Purchased Product From EasyFloors.AE, If I Have A Change of Mind?',
