@@ -624,7 +624,7 @@ export const popupCards: CardData[] = [
     id: 3,
     heading: "Richmond SPC <br /> Herringbone",
     content: [
-      "Elegant herringbone pattern",
+      "Elegant Herringbone pattern",
       "Wide range of colours",
       "Integrated IXPE sound barrier",
       "Durable 0.5mm wear layer",
