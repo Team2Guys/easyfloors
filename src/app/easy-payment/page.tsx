@@ -1,6 +1,6 @@
 import React from 'react'
 import Container from 'components/common/container/Container'
-import { paymentcard } from 'data/cart'
+import { easyPayment } from 'data/cart'
 import Image from 'next/image'
 
 const EasyPayment = () => {
@@ -11,7 +11,7 @@ const EasyPayment = () => {
     <p className='text-14 sm:text-20 sm:leading-[26px]'>To set up your plan right away, just choose Tabby or Tamara at checkout.</p>
      <div className="flex  flex-wrap gap-5 pt-3">
       {
-          paymentcard.map((array, index) => (
+          easyPayment.map((array, index) => (
               <Image className=' w-16 h-11 md:w-14 md:h-12 2xl:w-[90px] 2xl:h-[60px] shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />
           ))
       }
