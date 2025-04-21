@@ -66,7 +66,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <h1 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h1>
         <div className="flex border-b-[1px] border-gray-300"></div>
         <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
-          Price Per Metre: <span className="text-primary"><span className="font-currency font-normal"></span> {productData.price}</span>
+          Price Per Metre: <span className="text-primary"><span className="font-currency font-normal text-18 xl:text-28"></span> {productData.price}</span>
         </p>
         <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
         </p>

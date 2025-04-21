@@ -270,13 +270,11 @@ export const heroItems: HeroItem[] = [
     // backgroundImage: "/assets/images/Home/hero-min.webp",
     backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744112788/hero-min_2_ixg8qo.webp",
     offerText: "Limited Time Offer",
-    title: "<p class='font-inter'>Starting From Just <span class='font-currency font-normal text-[43px]'></span>  49 Per Square Metre.</p>",
     highlight: "",
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/collections",
-    priceText: "<p class='font-inter text-xs lg:text-xl sm:font-semibold font-normal'>Starting From  <span class='font-currency font-normal !text-[30px]'></span> 49/m²</p>",
     flooringType: "SPC Eco • American Walnut",
     brand: "Polar Flooring",
   },

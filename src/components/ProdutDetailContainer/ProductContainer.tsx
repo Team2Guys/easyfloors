@@ -57,7 +57,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="flex text-14 sm:text-18 text-primary 2xl:text-23 font-semibold gap-1 items-center sm:gap-1">
           <p className="text-black">Price :</p>
           <p>
-          <span className="font-currency font-normal"> </span>
+          <span className="font-currency font-normal text-16 sm:text-20 2xl:text-26"> </span>
             {unit === "sqm"
               ? productData?.price
               : (productData?.price / 10.764).toFixed(2)}
@@ -102,7 +102,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="border-[#D9D9D9] border-b" />
         <div className="flex gap-5 items-center">
           <p className="text-16 2xl:text-33 font-black lg:text-28 sm:text-20">
-            Total : <span className="font-currency font-normal"></span> <span>{totalPrice.toFixed(2)}</span>
+            Total : <span className="font-currency font-normal text-18 2xl:text-37 lg:text-30 sm:text-20"></span> <span>{totalPrice.toFixed(2)}</span>
           </p>
         </div>
         <div className="flex w-full gap-1 items-center sm:gap-3">

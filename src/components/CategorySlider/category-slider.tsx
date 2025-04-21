@@ -43,7 +43,7 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                 {category.name}
               </Link>
               <p className="text-sm lg:text-base  md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
-                Price Starting From: <span className="font-currency font-normal text-18"></span> {category.price + "/m²" || (category.name === "SPC FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 150m²</p> : category.name === "LVT FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 180m²</p> : category.name === "POLAR FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 200m²</p> : category.name === "RICHMOND FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 220m²</p> : '')}
+                Price Starting From: <span className="font-currency font-normal text-18 lg:text-22"></span> {category.price + "/m²" || (category.name === "SPC FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 150m²</p> : category.name === "LVT FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 180m²</p> : category.name === "POLAR FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 200m²</p> : category.name === "RICHMOND FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 220m²</p> : '')}
               </p>
               <div className="w-full md:w-60 flex justify-center">
 
@@ -67,8 +67,8 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                   480: { slidesPerView: 2, spaceBetween: 15 },
                   640: { slidesPerView: 2, spaceBetween: 15 },
                   768: { slidesPerView: 2, spaceBetween: 20 },
-                  1024: { slidesPerView: 3, spaceBetween: 20 },
-                  1280: { slidesPerView: 3, spaceBetween: 25 },
+                  1024: { slidesPerView: 2.7, spaceBetween: 2 },
+                  1200: { slidesPerView: 3, spaceBetween: 2 },
                 }}
               >
                 {subcategories?.map((product: EDIT_CATEGORY, index) => {

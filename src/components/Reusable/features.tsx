@@ -44,7 +44,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
                 <div className="flex flex-col md:justify-start md:items-start font-inter">
                   <h3 className="text-16 xl:text-18 font-bold font-inter mt-1">{item.title}</h3>
                   <p className="text-[10px] sm:text-sm lg:text-14 2xl:text-16 font-light text-card-text md:text-start sm:block mt-1 leading-3">
-                    {item.description} <Link className="font-semibold" href={`${item.buttonLink}`}>{item.buttonText}</Link>
+                    {item.description} <Link className="font-semibold text-primary" href={`${item.buttonLink}`}>{item.buttonText}</Link>
                   </p>
                 </div>
               </div>
