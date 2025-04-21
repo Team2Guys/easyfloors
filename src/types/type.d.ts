@@ -55,12 +55,10 @@ export interface FeaturesProps {
 export interface HeroItem {
   backgroundImage: string;
   offerText: string;
-  title: string;
   highlight: string;
   description: string;
   buttonText: string;
   buttonLink: string;
-  priceText: string;
   flooringType: string;
   brand: string;
 }
