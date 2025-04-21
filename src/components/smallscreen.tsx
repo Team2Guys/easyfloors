@@ -73,7 +73,7 @@ const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) 
           </div>
         )}
       </div>
-      <Link href="/collections" className="text-center text-[18px] bg-primary p-2 px-5 ml-3 flex w-fit items-center text-white mt-3 max-sm:mx-auto my-3">Continue Shopping</Link>
+      <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden'><FaArrowLeftLong /> Continue shopping</Link>
     </Container>
   );
 };

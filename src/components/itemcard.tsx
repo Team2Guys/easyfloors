@@ -75,7 +75,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
         <button
           onClick={() => onAddToCart(product)}
           className={`bg-black text-white text-14 font-inter flex items-center gap-2 py-1 ${
-            !isSamplePage ? "px-7" : "px-14"
+            !isSamplePage ? "px-4 sm:px-7" : "px-14"
           }`}
         >
           <GrCart /> Add to Cart
