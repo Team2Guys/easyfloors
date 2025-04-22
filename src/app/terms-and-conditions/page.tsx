@@ -69,7 +69,6 @@ const TermsAndConditions = () => {
     return (
       <Container className='my-10 space-y-3 text-16 sm:text-18 font-inter'>
         <h1 className='text-2xl sm:text-4xl font-bold text-center'>Terms & Conditions</h1>
-        
         <ol className="pl-4 sm:pl-6 space-y-6">
           {termsConditionsData.map((item, index) => (
             <li key={index} className={item.title}>
@@ -77,7 +76,7 @@ const TermsAndConditions = () => {
                 <h2 className="text-lg sm:text-2xl font-bold mb-2">{item.title}</h2>
               )}
               {item.heading?.map((title, hIndex) => (
-                <h3 key={`h-${hIndex}`} className="text-base sm:text-xl font-semibold mt-3">
+                <h3 key={`h-${hIndex}`} className="text-12 sm:text-lg font-semibold mt-3">
                   {renderLinkableText(title)}
                 </h3>
               ))}

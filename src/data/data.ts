@@ -498,9 +498,9 @@ export const HomeUserInfo = [
 
 export const policySections = [
   {
-    title: 'Can I Return A Purchased Product From EasyFloors.AE, If I Have A Change of Mind?',
+    title: 'Can I Return A Purchased Product From easyfloors.ae, If I Have A Change of Mind?',
     content: [
-      'You can return any item within 7 days of receiving your order if it is unused, and in its original packing.',
+      'Yes, You can return any item within 7 days of receiving your order if it is unused, and in its original packing.',
       'Begin a return simply by emailing our friendly customer service team at <a href="mailto:cs@easyfloors.ae" target="_blank" class="font-bold">cs@easyfloors.ae</a> with your order number and a 2-3 sentence explanation of why you’re returning an item.',
       "We'll get back to you within 24 hours, and we'll give you a return authorisation number (RAN) that you need to include with the package when you send it back to be processed.",
       "Once we get and accept your return, we'll send you your money back. It could take a few days to show up in your account, but we'll start the return process right away.",

@@ -1,6 +1,6 @@
 export const termsConditionsData = [
     {
-        heading: ['Scope of these terms'],
+      title:"Scope of these terms",
       content: ['We are Easy Floors, a respectable provider of luxury flooring choices. We want the process of selecting and purchasing flooring to be simple and smooth. Our online sales are covered by these terms. Our website, www.easyfloors.ae, always has the most recent version. Please take note of all the important phrases.'],
     },
     {
