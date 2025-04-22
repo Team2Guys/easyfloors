@@ -344,17 +344,6 @@ query UsersOrders($email: String!) {
 }
 `
 
-export const GET_ADMIN_DETAILS = gql`
-  query GetAdmin {
-    admin {
-      id
-      name
-      email
-      role
-      createdAt
-    }
-  }
-`;
 
 export const GET_ALL_ADMINS = gql`
   query Admins {

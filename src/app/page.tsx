@@ -1,3 +1,6 @@
+
+import dynamic from "next/dynamic";
+const HeroMain = dynamic(() => import("components/Reusable/hero"));
 import Container from "components/common/container/Container";
 import Features from "components/Reusable/features";
 import { faqs, featureItems, heroItems, staticMenuItems } from "data/data";
@@ -12,8 +15,6 @@ import AmCategory from "components/Categories/AmCategory";
 import CategorySlider from "components/CategorySlider/category-slider";
 import { FETCH_ALL_WHAT_AM_I, FETCH_HEADER_CATEGORIES } from "graphql/queries";
 import { ICategory } from "types/type";
-import dynamic from "next/dynamic";
-const HeroMain = dynamic(() => import("components/Reusable/hero"));
 
 export default async function Home() {
 const [ categories , subCategories] = await Promise.all([fetchCategories(FETCH_HEADER_CATEGORIES) , fetchSubCategories(FETCH_ALL_WHAT_AM_I)])
