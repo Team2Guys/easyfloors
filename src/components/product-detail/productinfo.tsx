@@ -137,9 +137,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
         <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
-
-      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
-      <PaymentMethod installments={totalPrice / 4} />
       <div className="mt-2 space-y-2 text-center">
         <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
         <div className='flex justify-between lg:justify-center items-center gap-2 lg:gap-10' >
@@ -150,6 +147,9 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           }
         </div>
       </div>
+
+      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
+      <PaymentMethod installments={totalPrice / 4} />
     </div>
   );
 };

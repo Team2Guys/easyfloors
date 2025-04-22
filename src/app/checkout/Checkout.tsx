@@ -446,15 +446,6 @@ const Checkout = () => {
                                         </Panel>
                                     </Collapse>
                                 </div>
-                                {
-                                    subTotal > 0 &&
-                                <div className="mt-4">
-                                    <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
-                                    <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
-                                        <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
-                                    </div>
-                                </div>
-                                }
                                 <div className="mx-auto w-full max-w-xl mt-2">
                                     <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
                                     <div className="flex justify-between flex-wrap gap-5 pt-3">
@@ -465,6 +456,15 @@ const Checkout = () => {
                                         }
                                     </div>
                                 </div >
+                                {
+                                    subTotal > 0 &&
+                                <div className="mt-4">
+                                    <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
+                                    <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
+                                        <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
+                                    </div>
+                                </div>
+                                }
                             </div >
                         </div >
                     </Form >
