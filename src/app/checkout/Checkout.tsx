@@ -440,23 +440,23 @@ const Checkout = () => {
                                         </Panel>
 
                                         <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
-                                            <p className="text-gray-500">
-                                                This is our example return policy which is everything you need to know about our returns.
-                                            </p>
+                                        <p className="text-gray-500">
+                                        We offer 7-day hassle-free returns on all unused, sealed items in their original packaging. If you change your mind or receive a defective product, we’re here to help. <Link className="font-semibold text-red-500 hover:text-red-500 hover:underline underline" href="/return-and-refund-policy">Learn more</Link> 
+                                        </p>
                                         </Panel>
                                     </Collapse>
                                 </div>
                                 {
                                     subTotal > 0 &&
                                 <div className="mt-4">
-                                    <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
+                                    <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
                                     <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
                                         <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
                                     </div>
                                 </div>
                                 }
                                 <div className="mx-auto w-full max-w-xl mt-2">
-                                    <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
+                                <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
                                     <div className="flex justify-between flex-wrap gap-5 pt-3">
                                         {
                                             paymentcard.map((array, index) => (

@@ -187,14 +187,22 @@ const CartPage = ({ products }: CartPageProps) => {
   const handleShippingSelect = (type: string) => {
     setSelectedShipping(type);
     localStorage.setItem('selectedShipping', type);
-    
-    // Only calculate if city is selected
-    if (selectedCity) {
-      const fee = calculateShippingFee(subTotal, type, selectedCity);
+  
+    // If user selects "self-collect", auto-select Dubai
+    if (type === "self-collect") {
+      setSelectedCity("Dubai");
+      localStorage.setItem('selectedEmirate', JSON.stringify("Dubai"));
+  
+      const fee = calculateShippingFee(subTotal, type, "Dubai");
       setSelectedFee(fee);
-      
-      const totalBeforeTax = subTotal + fee;
-      setTotal(totalBeforeTax);
+      setTotal(subTotal + fee);
+    } else {
+      // Only calculate if city is selected
+      if (selectedCity) {
+        const fee = calculateShippingFee(subTotal, type, selectedCity);
+        setSelectedFee(fee);
+        setTotal(subTotal + fee);
+      }
     }
   };
 
@@ -430,7 +438,10 @@ const CartPage = ({ products }: CartPageProps) => {
                   <p>Subtotal:</p>
                   <p><span className="font-currency font-normal text-20 2xl:text-25"></span> {subTotal.toFixed(2)}</p>
                 </div>
-                <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
+                {selectedShipping !== "self-collect" && (
+                    <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
+                  )}
+
                 <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                   <Panel
                     header={<span className="text-slate-500">Shipping Options</span>}
@@ -487,16 +498,16 @@ const CartPage = ({ products }: CartPageProps) => {
                 </div> */}
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Total Incl:</p>
+                  <p>Total Incl. VAT</p>
                   <p><span className="font-currency font-normal text-18 lg:text-25"></span> {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
 
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
                 
+                <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
                 {total > 0 &&
                 <PaymentMethod installments={total > 0 ? parseFloat(total.toFixed(2)) /4: parseFloat(subTotal.toFixed(2))/4} />
                 }
-                <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
                 <div className='flex justify-between gap-2' >
                   {
                     paymentcard.map((array, index) => (

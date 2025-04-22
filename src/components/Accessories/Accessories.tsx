@@ -52,7 +52,7 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
         />
       </div>
       {sortedProducts.length > 0 ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 lg:mb-16">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:mb-16">
           {sortedProducts?.map((product, index) => (
             <Card
               key={index}
