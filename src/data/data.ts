@@ -747,24 +747,24 @@ export const measurementData: MeasurementSection[] = [
   {
     title: "General Guidelines for Measuring Your Room ",
     description: `When calculating the width and length of a rectangular or square area, add 5-10% for waste and cutting errors. If you are planning to construct staircases, mantels, or closets in your room, allocate over 10% of your budget to them. 
-      If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of <span class='font-currency font-normal text-18'></span> 150 (refunded if you place an order from us). If you wish to measure the area yourself, you will only need a measuring tape, pencil, and paper. Make sure you measure in meters if you will be buying flooring materials that are usually marketed in mete
+      If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of <span class='font-currency font-normal text-18'></span> 150 (refunded if you place an order with us). If you wish to measure the area yourself, you will only need a measuring tape, a pencil, and paper. Make sure you measure in metres if you will be buying flooring materials that are usually marketed in metres.
       `,
 stepsHeading:"Measuring a Square or Rectangular Room",
     steps: [
       {
         title: "Measure the length:",
         content:
-          " Find the room's length, such as five meters.",
+          "Find the room's length, such as five metres.",
       },
       {
         title: "Measure the width:",
         content:
-          "Determine the room's width, such as five meters.",
+          "Determine the room's width, such as five metres",
       },
       {
         title: "Measure the total area",
         content:
-          "To get the floor size in square meters, multiply the length by the width.",
+          "To get the floor size in square metres, multiply the length by the width.",
       },
     ],
     image: "/assets/images/how-to-measure-your-room/measure1.png",
@@ -772,13 +772,13 @@ stepsHeading:"Measuring a Square or Rectangular Room",
   {
     title: "Measuring an L-shaped or Irregular Room",
     description:
-      "For irregular rooms, divide the area into smaller, more manageable rectangles and measure each one separately. When dealing with uneven areas, divide the area into smaller, more manageable rectangles and measure each one independently. Then, make a rough sketch by dividing the room into several rectangular portions and drawing the room plan.",
+      "When dealing with uneven areas, divide the area into smaller, more manageable rectangles and measure each one independently. Then, make a rough sketch and draw the room plan.",
 
     steps: [
       {
         title: "Measure Every Section",
         content:
-          " Take separate measurements of each section's length and width.",
+          "Take separate measurements of each section's length and width.",
       },
       {
         title: "Determine the total area.",
@@ -792,31 +792,15 @@ stepsHeading:"Measuring a Square or Rectangular Room",
   {
     title: "Factoring in 10% Waste Allowance",
     description:
-      "Add another 10% for waste and cutting adjustments to make sure you have enough flooring.",
-    steps: [
-      {
-        title: "",
-        content:
-          "Divide an entire area by 10 (e.g., 25m² ÷ 10 = 2.5m²)",
-      },
-      {
-        title: "",
-        content:
-          "Include this in your overall flooring purchase. (e.g., 25m² + 2.5m² = 27.5m²)",
-      },
-      {
-        title: "",
-        content:
-          "Place your order and prepare for installation!",
-      },
-    ],
+      "We highly recommend adding another 5-10% for waste and cutting adjustments to ensure enough flooring. Place your order and prepare for installation!",
+    steps: [],
     image: "",
   },
 
   {
     title: "Get Expert Guidance from Easy Floors",
     description:
-      "With Easy Floors, you have a variety of premium flooring options in Dubai and the United Arab Emirates. If you need additional professional assistance with floor design ideas or flooring recommendations, please email us at cs@easyfloors.ae",
+      "With Easy Floors, you have various premium flooring options in Dubai and the United Arab Emirates. If you need additional professional assistance with floor design ideas or flooring recommendations, please email us at cs@easyfloors.ae.",
     steps: [],
     image: "",
   },

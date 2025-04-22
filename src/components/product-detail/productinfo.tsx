@@ -29,7 +29,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
     const meters = parseFloat(value);
     if (!isNaN(meters) && meters > 0) {
-      const pieces = Math.ceil(meters / boxCoverage);
+      const pieces = Math.ceil(meters);
       setRequiredBoxes(pieces);
       setTotalPrice(pieces * productData.price);
     } else {
@@ -132,13 +132,16 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p>Total Amount: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal text-16 xl:text-20"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-16 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
-      <div className="mt-2 flex font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
+      <div className="mt-2 flex font-normal font-inter items-center gap-2 sm:gap-4">
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-4 lg:px-4 xl:px-7 text-12 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
 
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
+        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-4 lg:px-4 xl:px-7 text-12 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
       </div>
+
+        <p className='tetx-18 xl:text-22 font-semibold text-center'>Buy Now, Pay Later</p>
+      <PaymentMethod installments={totalPrice / 4} />
       <div className="mt-2 space-y-2 text-center">
-        <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
+      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
         <div className='flex justify-between lg:justify-center items-center gap-2 lg:gap-10' >
           {
             paymentcard.map((array, index) => (
@@ -147,9 +150,6 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           }
         </div>
       </div>
-
-      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
-      <PaymentMethod installments={totalPrice / 4} />
     </div>
   );
 };

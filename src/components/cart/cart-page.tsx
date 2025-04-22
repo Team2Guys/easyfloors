@@ -505,6 +505,9 @@ const CartPage = ({ products }: CartPageProps) => {
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
                 
                 <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
+                {total > 0 &&
+                <PaymentMethod installments={total > 0 ? parseFloat(total.toFixed(2)) /4: parseFloat(subTotal.toFixed(2))/4} />
+                }
                 <div className='flex justify-between gap-2' >
                   {
                     paymentcard.map((array, index) => (
@@ -512,9 +515,6 @@ const CartPage = ({ products }: CartPageProps) => {
                     ))
                   }
                 </div>
-                {total > 0 &&
-                <PaymentMethod installments={total > 0 ? parseFloat(total.toFixed(2)) /4: parseFloat(subTotal.toFixed(2))/4} />
-                }
               </div>
             </div>
             <RelatedSlider
