@@ -7,7 +7,7 @@ const FreeSampleDetail = () => {
   return (
     <Container className='space-y-2 sm:space-y-4 my-10 font-inter'>
       <h1 className='text-center text-36 sm:text-[47px] font-semibold mb-4 font-inter'>Free Samples</h1>
-      <p className='text-14 sm:text-20 sm:leading-[26px]'>At Easy Floors, we understand that experiencing our products firsthand is the ultimate proof of their quality. We provide up to 5 complimentary samples delivered right to your doorstep anywhere in the UAE, allowing you to touch, feel, and experience the exceptional quality before you buy. When it comes to selecting materials for your home, office, or any project, making the right choice is essential. Experience the clarity of free samples, guiding you to make informed and confident choices. Customers have the opportunity to request a maximum of 5 samples from any product of their choice. Unfortunately, we do not offer samples for accessories.
+      <p className='text-14 sm:text-20 sm:leading-[26px]'>At www.easyfloors.ae , we understand that judging the quality and colour of our flooring on your screen isn’t the easiest task in the world. So we’d like to help give you the confidence by sending out free samples. Yes, you can order up to 5 samples which will be delivered FREE OF CHARGE anywhere in the UAE. Add to your basket or drop us a call or message if you need some more help/advice. We’re on hand to help you get exactly what you’re looking for.
       </p>
       <div className='w-full grid grid-cols-5 gap-2'>
         {
