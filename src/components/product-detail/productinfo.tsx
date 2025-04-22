@@ -2,12 +2,11 @@
 
 import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
-import { CiHeart } from "react-icons/ci";
-import { HiOutlineShoppingCart } from "react-icons/hi";
 import PaymentMethod from "components/product-detail/payment";
 import { paymentcard } from "data/cart";
 import { IProduct, IProductAccessories, ProductImage } from "types/prod";
 import { handleAddToStorage } from "lib/carthelper";
+import { LuHeart } from "react-icons/lu";
 
 const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor, setSelectedColor }: { productData: IProductAccessories, MainCategory: string, image?: { imageUrl: string }, setSelectedColor: React.Dispatch<SetStateAction<ProductImage | undefined>>, selectedColor: ProductImage | undefined }) => {
 
@@ -132,10 +131,21 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p>Total Amount: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal text-16 xl:text-20"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-16 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
-      <div className="mt-2 flex font-normal font-inter items-center gap-2 sm:gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-4 lg:px-4 xl:px-7 text-12 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
-
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-4 lg:px-4 xl:px-7 text-12 xl:text-[16px] 2xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
+      <div className="my-3 flex w-full gap-1 items-center sm:gap-3">
+         <button
+          onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)}
+          className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+         >
+        <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7 text-11 xs:text-14 xl:text-20" />
+        Add to Cart
+         </button>
+          <button
+          className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+          onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)}
+          >
+          <LuHeart size={25} />
+          Add to Wishlist
+          </button>
       </div>
 
         <p className='tetx-18 xl:text-22 font-semibold text-center'>Buy Now, Pay Later</p>
