@@ -8,6 +8,7 @@ import { LuHeart } from "react-icons/lu";
 import { calculateProductDetails, handleAddToStorage } from "lib/carthelper";
 import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
+import { paymentcard } from "data/cart";
 const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {
   // const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
   const [unit, setUnit] = useState("sqm");
@@ -175,8 +176,17 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
             <p className="text-10 xs:text-12 sm:text-14 xl:text-20">Order Now <strong><em>Free</em></strong> Sample</p>
         </button>
-       
         <PaymentMethod installments={installments} showheading />
+        <div className="mt-2 space-y-2 text-center">
+              <p className="text-center text-sm xs:text-base lg:text-xs xl:text-base font-semibold">Guaranteed Safe Checkout</p>
+                <div className='flex justify-between lg:justify-center items-center gap-2 lg:gap-10' >
+                  {
+                    paymentcard.map((array, index) => (
+                      <Image className=' w-16  md:w-14 2xl:w-[50px] h-auto shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />
+                    ))
+                  }
+                </div>
+        </div>
       </div>
     </Container>
   );

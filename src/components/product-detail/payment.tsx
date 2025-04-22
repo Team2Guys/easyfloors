@@ -20,7 +20,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
         <div className="flex items-center justify-center relative text-[#E4E4E4] font-inter">
         <span className="absolute left-0 w-1/6 border-t border-gray-300"></span>
         <p className="text-center px-3 w-4/6 whitespace-nowrap font-semibold text-[#000000] text-sm xs:text-base lg:text-xs xl:text-base">
-          Guaranteed Safe Checkout
+        Buy Now, Pay Later
         </p>
         <span className="absolute right-0 w-1/6 border-t border-gray-300"></span>
         </div>

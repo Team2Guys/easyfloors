@@ -3,6 +3,7 @@ import Card from "components/Card/Card";
 import Container from "components/common/container/Container";
 import CardSkeleton from "components/skaletons/card-skaleton";
 import Select from "components/ui/Select";
+import { defaultOrder } from "data/accessory";
 import { features } from "data/data";
 import React, { useState, useEffect } from "react";
 import { Category } from "types/cat";
@@ -17,7 +18,8 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
   const [sortOption, setSortOption] = useState<string>("Default");
   const [sortedProducts, setSortedProducts] = useState<IProduct[]>(product);
   useEffect(() => {
-    let sortedArray = [...product];
+    const sortedArray = [...product];
+
     switch (sortOption) {
       case "A to Z":
         sortedArray.sort((a, b) => a.name.localeCompare(b.name));
@@ -32,7 +34,11 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
         sortedArray.sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
         break;
       default:
-        sortedArray = product;
+        sortedArray.sort((a, b) => {
+          return (
+            defaultOrder.indexOf(a.name) - defaultOrder.indexOf(b.name)
+          );
+        });
     }
 
     setSortedProducts(sortedArray);

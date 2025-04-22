@@ -342,33 +342,8 @@ const Checkout = () => {
                             <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                                 <div className="space-y-2 py-4">
                                     <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-20 font-normal"></span> {subTotal.toFixed(2)}</span></p>
-                                    <p className="text-gray-600 flex justify-between">
-                                        <span className="flex items-center gap-2">
-                                            Shipping <CiDeliveryTruck size={16} className="mt-1" />
-                                        </span>
-                                        <span className="text-black">
-                                            {!selectedCity 
-                                                ? 'Select shipping city' 
-                                                : selectedShipping === 'express' 
-                                                    ? subTotal > 1000 
-                                                        ? 'Free' 
-                                                        : <span className="font-currency font-normal text-18"> {selectedFee}</span>
-                                                    : 'Free'
-                                            }
-                                        </span>
-                                    </p>
-                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
-                                </div>
-                                <div className="pb-10 border-t-2 pt-4">
-                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
-                                        {isSubmitting ? "Processing..." : "Pay Now"}
-                                    </button>
-                                </div>
-                                <div className="flex justify-center items-center gap-2 mt-4">
-                                    <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
-                                    <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
-                                </div>
-                                <div className="border-b">
+                                    
+                                    <div className="border-b">
 
                                     <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown  size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                                         <Panel
@@ -434,7 +409,7 @@ const Checkout = () => {
                                                     <strong className="text-15 xs:text-20">Installation Information:</strong>
                                                     <p className="text-11 xs:text-16">Installation charge for straight planks is <span className="font-currency text-18 font-normal"></span> 25 per metre square, and for herringbone is <span className="font-currency text-18 font-normal"></span> 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
                                                     </p>
-                                                    <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/measurement-appointment ">Book Free Installation Appointment</Link>
+                                                    <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/help-with-installations">Book Installation Appointment</Link>
                                                 </div>
                                             </div>
                                         </Panel>
@@ -445,7 +420,35 @@ const Checkout = () => {
                                         </p>
                                         </Panel>
                                     </Collapse>
+                                    </div>
+
+                                    <p className="text-gray-600 flex justify-between">
+                                        <span className="flex items-center gap-2">
+                                            Shipping <CiDeliveryTruck size={16} className="mt-1" />
+                                        </span>
+                                        <span className="text-black">
+                                            {!selectedCity 
+                                                ? 'Select shipping city' 
+                                                : selectedShipping === 'express' 
+                                                    ? subTotal > 1000 
+                                                        ? 'Free' 
+                                                        : <span className="font-currency font-normal text-18"> {selectedFee}</span>
+                                                    : 'Free'
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
                                 </div>
+                                <div className="pb-10 border-t-2 pt-4">
+                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
+                                        {isSubmitting ? "Processing..." : "Pay Now"}
+                                    </button>
+                                </div>
+                                <div className="flex justify-center items-center gap-2 mt-4">
+                                    <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
+                                    <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
+                                </div>
+                              
                                 {
                                     subTotal > 0 &&
                                 <div className="mt-4">
