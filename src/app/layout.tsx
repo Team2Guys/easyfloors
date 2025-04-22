@@ -50,7 +50,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="google-site-verification" content="faPNTY-av9Kw-FQsjD6DplLzKbaUP3uViHm5vogBmM4"/>
-      <Script id="gtm-init" strategy="afterInteractive">
+      <Script id="gtm-init" strategy="lazyOnload">
         {`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -60,7 +60,7 @@ export default function RootLayout({
         `}
       </Script>
       </head>
-      <Script id="clarity-script" strategy="afterInteractive">
+      <Script id="clarity-script" strategy="lazyOnload">
         {`
           (function(c,l,a,r,i,t,y){
               c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -71,9 +71,9 @@ export default function RootLayout({
       </Script>
       <Script
         src="https://www.googletagmanager.com/gtag/js?id=G-XQXSL09C0D"
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="gtag-init" strategy="afterInteractive">
+      <Script id="gtag-init" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
@@ -82,7 +82,7 @@ export default function RootLayout({
           gtag('config', 'G-XQXSL09C0D');
         `}
       </Script>
-      <Script id="fb-pixel" strategy="afterInteractive">
+      <Script id="fb-pixel" strategy="lazyOnload">
         {`
           !function(f,b,e,v,n,t,s)
           {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
