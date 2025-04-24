@@ -49,11 +49,11 @@ useEffect(() => {
 
       <div className={`flex ${selectedFilters.length > 0 ? 'justify-between items-center' : 'justify-end items-center'}  bg-[#F2F4F5] p-2 md:p-3 rounded-md w-full min-h-14`}>
         {selectedFilters.length > 0 &&
-          <div className="flex items-center gap-1 md:gap-3">
-            <span className="text-[#191C1F] text-[8px] md:text-13 text-nowrap">Active Filters:</span>
-            <div className="flex items-center flex-wrap gap-x-3 gap-y-1 px-3 py-1  text-[#191C1F] text-[8px] md:text-14">
+          <div className="flex items-center md:gap-3">
+            <span className="text-[#191C1F] text-12 md:text-13 text-nowrap">Active Filters:</span>
+            <div className="flex items-center flex-wrap gap-x-1 gap-y-1 px-3 py-1  text-[#191C1F] text-10 md:text-14">
               {selectedFilters.map((item, index) => (
-                <div key={index} className="flex items-center gap-2 flex-nowrap">
+                <div key={index} className="flex items-center gap-1 md:gap-2 flex-nowrap">
                   <span>
                     {item.value === true ? 'Yes' : item.value === false ? 'No' : item.value}
                   </span>
@@ -67,7 +67,7 @@ useEffect(() => {
           </div>
         }
 
-        <p className="text-[#191C1F] text-[8px] md:text-14">
+        <p className="text-[#191C1F] text-12 md:text-14">
           {products.length} <span className="text-[#5F6C72]">{products.length === 1 ? 'Result' : 'Results'} found</span>
         </p>
       </div>

@@ -13,7 +13,7 @@ import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
-import { Appointmentlocation, emirates } from "data/data";
+import { emirateCityMap, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart, getFreeSamplesCart } from "utils/indexedDB";
@@ -37,10 +37,14 @@ const Checkout = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-    const [selectedEmirate, setSelectedEmirate] = useState('');
-
+    const [selectedEmirate, setSelectedEmirate] = useState("");
+    const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
     useEffect(() => {
-        // Load saved emirate from localStorage if available
+        const cities = emirateCityMap[selectedEmirate] || [];
+        setCityOptions(cities);
+      }, [selectedEmirate]);
+      
+    useEffect(() => {
         const savedEmirate = localStorage.getItem('selectedEmirate');
         if (savedEmirate) {
             const emirate = savedEmirate.replaceAll('"', "");
@@ -260,8 +264,21 @@ const Checkout = () => {
 
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} initialValue={selectedEmirate} />
-                                    <Select name="city" label="City" required placeholder="Select City" options={Appointmentlocation}  />
+                                <Select
+                                    name="emirate"
+                                    label="Emirate"
+                                    options={emirates}
+                                    placeholder="Select Emirate"
+                                    initialValue={selectedEmirate}
+                                    onChange={(val) => setSelectedEmirate(val)}
+                                />
+
+                                    <Select
+                                    name="city"
+                                    label="City"
+                                    options={cityOptions}
+                                    placeholder="Select City"
+                                    />
                                 </div>
 
 

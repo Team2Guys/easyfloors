@@ -4,8 +4,8 @@ import Breadcrumb from "components/Reusable/breadcrumb";
 import { fetchSubCategories } from "config/fetch";
 import { FETCHSUBCAT } from "graphql/queries";
 import React from "react";
-import {ISUBCATEGORY } from "types/cat";
 import { Metadata } from 'next';
+import { filterAndSort } from "lib/helperFunctions";
 export const metadata: Metadata = {
   title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
   description:
@@ -22,23 +22,27 @@ export const metadata: Metadata = {
     canonical: '/collections',
   },
 };
-const AllCollection= async () => {
-  const [subcategories]= await Promise.all([fetchSubCategories(FETCHSUBCAT)])
+
+const AllCollection = async () => {
+  const [subcategories] = await Promise.all([fetchSubCategories(FETCHSUBCAT)]);
+  const polarProducts = filterAndSort(subcategories, "POLAR FLOORING", "");
+  const richmondSPC = filterAndSort(subcategories, "RICHMOND FLOORING", "spc");
+  const richmondLVT = filterAndSort(subcategories, "RICHMOND FLOORING", "lvt");
+  const sortedSubcategories = [...polarProducts, ...richmondSPC, ...richmondLVT];
+
   return (
     <div>
       <Breadcrumb title="All Collections" image='/assets/images/category/allcollection.png' />
       <Container className="md:mt-10 mt-8 mb-10">
         <div className="grid grid-cols-2 md:grid-cols-3 md:gap-6 gap-2 w-full">
-          {subcategories && subcategories.map((subcategory: ISUBCATEGORY, index:number) => (
-            <div key={index} >
-              <CollectionCard subcategory={subcategory}  />
+          {sortedSubcategories.map((subcategory, index) => (
+            <div key={index}>
+              <CollectionCard subcategory={subcategory} />
             </div>
           ))}
         </div>
-
       </Container>
     </div>
-
   );
 };
 

@@ -42,8 +42,8 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
               <Link href={`/${category?.custom_url}`} className="text-lg lg:text-4xl font-semibold">
                 {category.name}
               </Link>
-              <p className="text-sm lg:text-base  md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
-                Price Starting From: <span className="font-currency font-normal text-18 lg:text-22"></span> {category.price + "/m²" || (category.name === "SPC FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 150m²</p> : category.name === "LVT FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 180m²</p> : category.name === "POLAR FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 200m²</p> : category.name === "RICHMOND FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 220m²</p> : '')}
+              <p className="text-base  md:text-black mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
+                Price Starting From: <span className="font-currency font-normal text-22"></span> {category.price + "/m²" || (category.name === "SPC FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 150m²</p> : category.name === "LVT FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 180m²</p> : category.name === "POLAR FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 200m²</p> : category.name === "RICHMOND FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 220m²</p> : '')}
               </p>
               <div className="w-full md:w-60 flex justify-center">
 

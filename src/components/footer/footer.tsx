@@ -129,33 +129,33 @@ const Footer = () => {
                 )}
 
                 <div className="sm:block ">
-                    <p className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</p>
+                    <p className=" font-normal tracking-widest">CONTACT US</p>
                     
-                    <div className="text-sm mt-2 flex items-center gap-2">
+                    <div className="text-sm mt-2 flex items-center gap-2 group">
                         <div className=''>
-                            <IoCall size={16} className="text-black" />
+                            <IoCall size={16} className="text-black group-hover:text-primary" />
                         </div>
-                        <Link href="tel:+971505974385" className="text-gray-700 hover:text-gray-900">
+                        <Link href="tel:+971505974385" className="text-black group-hover:text-primary">
                             {footerData.contact.phone}
                         </Link>
                     </div>
-                    <div className="text-sm mt-2 flex items-center gap-2">
+                    <div className="text-sm mt-2 flex items-center gap-2 group">
                         <div className=''>
-                            <FaRegEnvelope size={16} className="text-black" />
+                            <FaRegEnvelope size={16} className="text-black group-hover:text-primary" />
                         </div>
-                        <Link href="mailto:cs@easyfloors.ae" className="text-gray-700 hover:text-gray-900">
+                        <Link href="mailto:cs@easyfloors.ae" className="text-black group-hover:text-primary">
                             {footerData.contact.email}
                         </Link>
                     </div>
-                    <div className="text-sm mt-3 flex items-start gap-2">
+                    <div className="text-sm mt-3 flex items-start gap-2 group">
                         <div className='' >
-                            <FaMapMarkerAlt size={16} className="text-black" />
+                            <FaMapMarkerAlt size={16} className="text-black group-hover:text-primary" />
                         </div>
                         <Link
                             href="https://maps.app.goo.gl/VoKEfBJLA2y9fySt5"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-700 hover:text-gray-900 md:full w-60"
+                            className="text-black group-hover:text-primary md:full w-60"
                         >
                             {footerData.contact.address}
                         </Link>
@@ -210,7 +210,7 @@ const Footer = () => {
                     </div>
                     <div className='block sm:hidden w-full'>
                         <div className='flex justify-start items-center'>
-                            <div className="flex space-x-2 w-[32%] xs:w-[40%]">
+                            <div className="flex space-x-2 w-[32%] xs:w-[34%] xsm:w-[37%] sm:w-[40%]">
                                 <SocialIcon />
                             </div>
                             <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">

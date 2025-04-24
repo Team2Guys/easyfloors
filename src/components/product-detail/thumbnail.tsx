@@ -123,7 +123,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         e.preventDefault(); // Prevent scroll-to-top
         thumbSliderRef.current?.slickPrev();
       }}
-        className="absolute -top-6 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
+        className="absolute !-top-1 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
       >
         <MdKeyboardArrowUp className="block md:hidden bg-white" size={20} />
         <MdKeyboardArrowUp className="hidden md:block font-normal text-gray-600 bg-white" size={30} />
@@ -207,7 +207,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     src={product.imageUrl}
                     className={`w-full ${imageheight
                         ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[124px]"
+                        : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[102px]"
                       }`}
                     alt={product.altText || "Thumbnail"}
                   />
@@ -247,7 +247,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   src={product.imageUrl}
                   className={`w-full ${imageheight
                     ? "h-[273px] sm:h-[520px] lg:h-[535px] xl:h-[700px] 2xl:h-[810px]"
-                      : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[830px]"
+                      : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[700px]"
                     }`}
                   alt={product.altText || "Thumbnail"}
                 />
