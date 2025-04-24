@@ -84,7 +84,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
             ))}
           </div>
           :
-          <p className="font-inter font-light text-12 xl:text-16">No colour found</p>
+          <p className="font-inter font-light text-14 xl:text-16">No colour found</p>
         }
 
       </div>
@@ -95,7 +95,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
         {matchingColor.length ? (
           matchingColor.map((item, index) => (
-            <p className="font-inter font-light text-12 xl:text-16" key={index}>
+            <p className="font-inter font-light text-14 xl:text-16" key={index}>
               {item.name}
             </p>
           ))
@@ -121,14 +121,14 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           {productData.lengthPrice ? "Length Per Piece: " + productData.lengthPrice : "Selling in fixed length of 240cm"}
         </p>
         <div className="mt-2 font-semibold text-16 lg:text-18">
-          <p>Height: <span className="font-light text-12 xl:text-18">10 cm</span></p>
-          <p>Depth: <span className="font-light text-12 xl:text-18">1.6 cm</span></p>
+          <p>Height: <span className="font-light text-14 xl:text-18">10 cm</span></p>
+          <p>Depth: <span className="font-light text-14 xl:text-18">1.6 cm</span></p>
         </div>
       </div>
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
-        <p>Total Required: <span className="text-12 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
-        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal text-16 xl:text-20"></span> {productData.price}</span></p>
-        <p>Total Amount: <span className="text-12 xl:text-17 font-light"><span className="font-currency font-normal text-16 xl:text-20"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-16 xl:text-20 font-normal"></span> {productData.price})</span></p>
+        <p>Total Required: <span className="text-14 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
+        <p >Price Per Metre: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {productData.price}</span></p>
+        <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
       <div className="my-3 flex w-full gap-1 items-center sm:gap-3">
@@ -147,10 +147,10 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           </button>
       </div>
 
-        <p className='tetx-18 xl:text-22 font-semibold text-center'>Buy Now, Pay Later</p>
+        <p className='text-18 xl:text-22 font-semibold text-center'>Buy Now, Pay Later</p>
       <PaymentMethod installments={totalPrice / 4} />
       <div className="mt-2 space-y-2 text-center">
-      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
+      <p className="text-center mt-4 font-medium font-inter text-18 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
         <div className='flex justify-between lg:justify-center items-center gap-2 lg:gap-10' >
           {
             paymentcard.map((array, index) => (

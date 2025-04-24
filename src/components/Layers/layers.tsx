@@ -17,7 +17,7 @@ const Layers = () => {
             <div className="mx-auto md:py-5">
               <ul className="list-disc md:pl-20 pl-7 mb-4 font-inter font-medium sm:font-light px-2">
                 {block.points.map((point, index) => (
-                  <li key={index} className="md:text-xl text-10 sm:text-[12px] md:py-1.5 py-1">
+                  <li key={index} className="md:text-xl text-[12px] md:py-1.5 py-1">
                     {point}
                   </li>
                 ))}

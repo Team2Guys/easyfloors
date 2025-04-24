@@ -24,7 +24,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
   };
 
   return (
-    <div className="relative bg-white w-full px-3 my-7 sm:mb-10 xl:mb-14 xl:mt-7">
+    <div className="relative bg-white w-full px-3 my-7 sm:mb-10 xl:mb-14 xl:mt-7 overflow-hidden">
       <Slider ref={sliderRef} {...sliderSettings} className="w-full p-2">
         {items.map((item, index) => {
           const isLastItem = index === items.length - 1;
@@ -32,7 +32,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
           return (
             <div key={index} className="sm:px-1 lg:px-2 !flex flex-nowrap">
 
-              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-[#0000001F] xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 md:p-4 h-[153px] xs:h-[131px] sm:h-[200px] md:h-[193px] lg:h-[200px] md:gap-3 xl:pr-4 2xl:pr-5">
+              <div className="flex flex-col md:flex-row mx-1 items-center md:items-start text-center border border-[#0000001F] xl:border-none  xl:border-l-0 xl:border-t-0 xl:border-b-0 p-2 md:p-4 h-[156px] xs:h-[140px] sm:h-[200px] md:h-[193px] lg:h-[200px] md:gap-3 xl:pr-4 2xl:pr-5">
                 <Image
                   src={item.icon}
                   alt={item.title}
@@ -43,7 +43,7 @@ const Features: React.FC<FeaturesProps> = ({ items }) => {
                 />
                 <div className="flex flex-col md:justify-start md:items-start font-inter">
                   <h3 className="text-14 lg:text-18 font-bold font-inter mt-1">{item.title}</h3>
-                  <p className="text-[9px] sm:text-sm lg:text-14 2xl:text-16 font-light text-card-text md:text-start sm:block mt-1 leading-3">
+                  <p className="text-11 sm:text-sm lg:text-14 2xl:text-16 font-light text-card-text md:text-start sm:block mt-1 leading-3">
                     {item.description} <Link className="text-primary" href={`${item.buttonLink}`}>{item.buttonText}</Link>
                   </p>
                 </div>

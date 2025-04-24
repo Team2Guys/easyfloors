@@ -1,6 +1,6 @@
 import { ImagesProps } from "components/ImageUploader/ImageUploader";
 import { FILE_UPLOAD_MUTATION } from "graphql/mutations";
-import { FilterState } from "types/cat";
+import { FilterState, ISUBCATEGORY } from "types/cat";
 import { AdditionalInformation, IProduct } from "types/prod";
 import { ProductFilterParams, SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
@@ -102,3 +102,16 @@ export const productFilter = ({
   return { filtered: filtered || [], appliedFilters };
 };
 
+export const filterAndSort = (
+  items: ISUBCATEGORY[],
+  categoryName: string,
+  urlIncludes: string
+) =>
+  items
+    .filter(
+      item =>
+        item.category?.name === categoryName &&
+        item.custom_url.includes(urlIncludes)
+    )
+    .sort((a, b) => Number(a.price) - Number(b.price));
+    

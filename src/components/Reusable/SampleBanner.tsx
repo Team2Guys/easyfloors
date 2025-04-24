@@ -23,8 +23,8 @@ const SampleBanner = () => {
              2xl:max-w-[676px] 2xl:max-h-[638px] object-contain '
           />
         </div>
-        <div className='flex border-b-[#00000033] border-b-[1px] justify-between w-full items-center mt-5 sm:border-b-2'>
-          <div className="w-5/12 lg:w-2/3 overflow-hidden sm:w-9/12">
+        <div className='flex border-b-[#00000033] border-b-[1px] justify-between w-full items-center mt-5 sm:border-b-2 relative'>
+          <div className="w-6/12 xs:w-7/12 lg:w-2/3 overflow-hidden md:w-8/12 2xl:w-9/12">
             <Image src='https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291653/delivery-truck_11zon_hsjurq.webp'
               height={800}
               width={800}
@@ -33,8 +33,8 @@ const SampleBanner = () => {
               className='h-5 w-10 animate-moveTruck sm:h-[64px] sm:w-24 xl:h-[122px] xl:w-[238px]'
             />
           </div>
-          <div className='h-auto w-7/12 lg:w-4/12 sm:w-4/12'>
-            <p className='text-12 text-end text-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</p>
+          <div className='h-auto absolute bg-white right-0 bottom-[0.5px]'>
+            <p className='text-14 text-end text-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</p>
           </div>
         </div>
       </div>

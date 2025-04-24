@@ -19,12 +19,12 @@ const NeedHelp: React.FC = () => {
                             />
                             <div className='max-w-xl mx-auto'>
                                 <h2 className=" text-12 sm:text-base md:text-3xl font-semibold">{box.title}</h2>
-                                <p className="text-gray-600 md:text-lg text-[8px] sm:text-sm mt-1 md:mt-4">{box.description}</p>
+                                <p className="md:text-lg text-12 sm:text-sm mt-1 md:mt-4">{box.description}</p>
                             </div>
                             <div className="md:mt-10 mt-2">
                                 <Link
                                     href={box.link}
-                                    className="md:py-3 py-2 px-2 md:text-lg text-10 sm:text-sm md:px-12 bg-primary font-inter font-medium xs:font-light text-white"
+                                    className="md:py-3 py-2 px-2 md:text-lg text-12 sm:text-sm md:px-12 bg-primary font-inter font-medium xs:font-light text-white"
                                 >
                                     {box.buttonText}
                                 </Link>

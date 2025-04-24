@@ -63,7 +63,7 @@ function Popup() {
                     {card.content.map((item, index) => (
                       <li
                         key={index}
-                        className="md:text-sm text-[10px] ml-3 py-0.5 font-light"
+                        className="md:text-sm text-12 sm:ml-3 py-0.5 font-light"
                       dangerouslySetInnerHTML={{ __html: item }}
                       />
                        

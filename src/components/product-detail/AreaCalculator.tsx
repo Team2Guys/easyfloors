@@ -54,16 +54,16 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
         />
       </div>
       <div>
-        <p className="text-14 sm:text-16 2xl:text-20 font-medium mt-2">
+        <p className="text-16 2xl:text-20 font-medium mt-2">
           You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ? convertedArea : "0"} {unit === "sqm" ? "m²" : "ft²"})
         </p>
 
-        <p className="text-12 sm:text-16 2xl:text-20 font-light">
+        <p className="text-16 2xl:text-20 font-light">
           No. Of Boxes: {requiredBoxes} ({squareMeter ? (unit === "sqm" ? squareMeter.toFixed(2) : (squareMeter * 10.764).toFixed(2)) : 0}{" "}
           {unit === "sqm" ? "Square Metre" : "Square Feet"})
         </p>
-        <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box : <span className="font-medium"><span className="font-currency text-14 sm:text-18 2xl:text-25 "></span> <span>{pricePerBox.toFixed(2)}</span></span></p>
-        <p className="text-12 sm:text-16 2xl:text-20 font-light flex items-center gap-3">
+        <p className="text-16 2xl:text-20 font-light">Price Per Box : <span className="font-medium"><span className="font-currency text-16 sm:text-18 2xl:text-25 "></span> <span>{pricePerBox.toFixed(2)}</span></span></p>
+        <p className="text-16 2xl:text-20 font-light flex items-center gap-3">
           Accessories
           <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">
             <PiQuestionMark className="text-lg font-extralight" />

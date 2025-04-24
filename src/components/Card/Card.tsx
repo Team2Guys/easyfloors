@@ -210,7 +210,7 @@ const Card: React.FC<productCardProps> = ({
         <div className="p-2 font-inter font-light lg:p-4">
           <Link
             href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
-            className={`md:mt-0 mt-1 text-left font-semibold  ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55] text-12 sm:text-base"
+            className={`md:mt-0 mt-1 text-left font-semibold  ${isAccessories ? "text-[#594F55] text-xl" : "text-[#594F55] text-13 sm:text-base"
               }`}
           >
             {isAccessories ? `${product.name}` : product.name}
