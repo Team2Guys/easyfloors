@@ -7,6 +7,7 @@ import { paymentcard } from "data/cart";
 import { IProduct, IProductAccessories, ProductImage } from "types/prod";
 import { handleAddToStorage } from "lib/carthelper";
 import { LuHeart } from "react-icons/lu";
+import { formatAED } from "lib/helperFunctions";
 
 const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor, setSelectedColor }: { productData: IProductAccessories, MainCategory: string, image?: { imageUrl: string }, setSelectedColor: React.Dispatch<SetStateAction<ProductImage | undefined>>, selectedColor: ProductImage | undefined }) => {
 
@@ -128,7 +129,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
         <p>Total Required: <span className="text-14 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
         <p >Price Per Metre: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {productData.price}</span></p>
-        <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {totalPrice} ({requiredBoxes} metre * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
+        <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {formatAED(totalPrice)} ({requiredBoxes} metre * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
       <div className="my-3 flex w-full gap-1 items-center sm:gap-3">
