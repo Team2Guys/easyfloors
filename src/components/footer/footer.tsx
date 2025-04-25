@@ -187,7 +187,6 @@ const Footer = () => {
                     </Link>
                 </div>
             </Container>
-
             <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
                 <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
                     <div className='hidden sm:block'>
@@ -195,7 +194,7 @@ const Footer = () => {
                             <SocialIcon />
                         </div>
                     </div>
-                    <div className='text-start xs hidden sm:block'>
+                    <div className='text-center xs hidden sm:block'>
                         <p className="text-12 sm:text-13 text-white font-inter font-medium xs:font-extralight ">
                             Easyfloors.ae ©2025
                         </p>
