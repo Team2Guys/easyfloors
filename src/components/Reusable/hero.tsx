@@ -27,7 +27,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             priority
             width={400}
             height={320}
-            loading="lazy"
+            loading="eager"
             className="w-full h-full object-cover block sm:hidden"
             />
           <div className="bg-background">
