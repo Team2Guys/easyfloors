@@ -25,9 +25,9 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             src={item.backgroundImageMobile}
             alt="hero"
             priority
-            width={600}
-            height={600}
-            loading="eager"
+            width={400}
+            height={320}
+            loading="lazy"
             className="w-full h-full object-cover block sm:hidden"
             />
           <div className="bg-background">

@@ -268,7 +268,7 @@ export const FindUs = [
 export const heroItems: HeroItem[] = [
   {
     backgroundImage: "/assets/images/Home/hero-min.avif",
-    backgroundImageMobile: "/assets/images/Home/hero-minmobile.webp",
+    backgroundImageMobile: "/assets/images/Home/hero-minmobile.avif",
     // backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744112788/hero-min_2_ixg8qo.webp",
     offerText: "Limited Time Offer",
     highlight: "",
