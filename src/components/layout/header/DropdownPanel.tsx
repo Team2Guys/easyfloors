@@ -1,3 +1,4 @@
+import { formatAED } from "lib/helperFunctions";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -277,7 +278,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                           <span className="text-sm font-semibold">Total:</span>
                           {
                             item.isfreeSample ? "free" :
-                              <span className="text-sm"><span className="font-currency text-18 font-normal"></span> {item.totalPrice?.toFixed(2) || "0.00"}</span>
+                              <span className="text-sm"><span className="font-currency text-18 font-normal"></span> {formatAED(item.totalPrice) || "0.00"}</span>
                           }
                         </div>
                       )}
@@ -289,7 +290,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
               </div>
 
               <div className="text-end mt-2 mb-2 font-bold">
-                {type === "cart" && <p>Total:  <span className="font-currency text-20 font-normal"></span> {totalAmount.toFixed(2)}</p>}
+                {type === "cart" && <p>Total:  <span className="font-currency text-20 font-normal"></span> {formatAED(totalAmount)}</p>}
               </div>
 
               <div className="w-full mt-2 space-y-1">

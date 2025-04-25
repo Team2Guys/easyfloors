@@ -26,6 +26,7 @@ import Select from "components/appointment/Select";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import { formatAED } from "lib/helperFunctions";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -39,18 +40,22 @@ const Checkout = () => {
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
     const [selectedEmirate, setSelectedEmirate] = useState("");
     const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
+    const [isOtherCity, setIsOtherCity] = useState(false);
+
     useEffect(() => {
         const cities = emirateCityMap[selectedEmirate] || [];
-        setCityOptions(cities);
+        const sortedCities = [...cities].sort((a, b) => a.label.localeCompare(b.label));
+        sortedCities.push({ value: "Other", label: "Other" }); // Add this line
+        setCityOptions(sortedCities);
       }, [selectedEmirate]);
       
-    useEffect(() => {
+      useEffect(() => {
         const savedEmirate = localStorage.getItem('selectedEmirate');
         if (savedEmirate) {
-            const emirate = savedEmirate.replaceAll('"', "");
-            setSelectedEmirate(emirate);
+          const emirate = savedEmirate.replaceAll('"', "");
+          setSelectedEmirate(emirate);
         }
-    }, []);
+      }, []);
     useEffect(() => {
         const savedCity = localStorage.getItem('selectedCity') || '';
         if (savedCity) {
@@ -198,6 +203,7 @@ const Checkout = () => {
                     address: "",
                     note: "",
                     terms: false,
+                    otherCity: "",
                 }}
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
@@ -206,7 +212,7 @@ const Checkout = () => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
+                        const NewValues = { ...withoutTerm, city: isOtherCity ? values.otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
 
                         handlePayment(NewValues);
                         setSubmitting(true);
@@ -272,15 +278,27 @@ const Checkout = () => {
                                     initialValue={selectedEmirate}
                                     onChange={(val) => setSelectedEmirate(val)}
                                 />
-
-                                    <Select
-                                    name="city"
-                                    label="City"
-                                    options={cityOptions}
-                                    placeholder="Select City"
-                                    />
+                                <Select
+                                name="city"
+                                label="City"
+                                options={cityOptions}
+                                placeholder="Select City"
+                                onChange={(value) => {
+                                    setFieldValue("city", value);
+                                    setSelectedCity(value);
+                                    setIsOtherCity(value === "Other");
+                                }}
+                                />
                                 </div>
-
+                                {isOtherCity && (
+                                    <Input
+                                        name="otherCity"
+                                        label="Add City"
+                                        placeholder="Enter Your City"
+                                        value={values.otherCity}
+                                        onChange={handleChange}
+                                    />
+                                    )}
 
                                 <Input type="text" label="Address" required name="address" placeholder="Enter Address" value={values.address} onChange={handleChange} />
                                 <Input type="text" label="Additional Information" name="note" placeholder="Apartment, Suite, etc." value={values.note} onChange={handleChange} />
@@ -351,14 +369,14 @@ const Checkout = () => {
                                             <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>    
                                             }
                                             </div>
-                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-20"></span> {item.totalPrice.toFixed(2)}</p>
+                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-20"></span> {formatAED(item.totalPrice)}</p>
                                         </div>
                                     )) : <p>Cart is Empty</p>}
                                 </div>
                             </div>
                             <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                                 <div className="space-y-2 py-4">
-                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-20 font-normal"></span> {subTotal.toFixed(2)}</span></p>
+                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-20 font-normal"></span> {formatAED(subTotal)}</span></p>
                                     
                                     <div className="border-b">
 
@@ -454,7 +472,7 @@ const Checkout = () => {
                                             }
                                         </span>
                                     </p>
-                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
+                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedCity ? formatAED(total) : formatAED(subTotal)}</span></p>
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
                                     <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
