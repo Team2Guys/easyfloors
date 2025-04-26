@@ -115,3 +115,11 @@ export const filterAndSort = (
     )
     .sort((a, b) => Number(a.price) - Number(b.price));
     
+
+    export const formatAED = (price: number | undefined | null): string => {
+      if (!price || isNaN(price)) return "0.00";
+      return price.toLocaleString("en-AE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    };

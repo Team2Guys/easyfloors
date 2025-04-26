@@ -187,7 +187,6 @@ const Footer = () => {
                     </Link>
                 </div>
             </Container>
-
             <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
                 <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
                     <div className='hidden sm:block'>
@@ -195,7 +194,7 @@ const Footer = () => {
                             <SocialIcon />
                         </div>
                     </div>
-                    <div className='text-start xs hidden sm:block'>
+                    <div className='text-center xs hidden sm:block'>
                         <p className="text-12 sm:text-13 text-white font-inter font-medium xs:font-extralight ">
                             Easyfloors.ae ©2025
                         </p>
@@ -206,14 +205,14 @@ const Footer = () => {
                             <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
                             <Link className='w-full text-center sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
                         </div>
-                        <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light' href="/return-and-refund-policy">Return & Refund policy</Link>
+                        <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light ml-16 xs:ml-10' href="/return-and-refund-policy">Return & Refund policy</Link>
                     </div>
-                    <div className='block sm:hidden w-full'>
-                        <div className='flex justify-start items-center'>
-                            <div className="flex space-x-2 w-[32%] xs:w-[34%] xsm:w-[37%] sm:w-[40%]">
+                    <div className='block sm:hidden w-full relative'>
+                        <div className='text-center'>
+                            <div className="flex space-x-2  absolute top-0 left-0">
                                 <SocialIcon />
                             </div>
-                            <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">
+                            <p className="text-12 sm:text-13 text-white font-inter font-light ml-14 xs:ml-8">
                                 Easyfloors.ae ©2025
                             </p>
 

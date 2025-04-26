@@ -7,6 +7,7 @@ import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.
 import Modal from "components/ui/modal";
 import { tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/produuct-detail";
 import { PaymentMethodProps } from "types/product-detail";
+import { formatAED } from "lib/helperFunctions";
 
 const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
@@ -28,12 +29,12 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
     }
 
       <div className="flex gap-2 pt-4">
-        <div className="relative w-1/2 border-4 border-[#00FFBC] px-1 py-4 md:px-4  shadow">
+        <div className="relative w-1/2 border-4 border-[#00FFBC] px-1 py-4 md:px-3  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">
             tabby
           </span>
           <p className=" text-12 sm:text-14 font-medium text-[#8D8D8D]">
-             Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {installments.toFixed(2)}{' '}
+             Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {formatAED(installments)}{' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTabbyOpen(true)}
@@ -47,18 +48,18 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-10 xl:text-10 2xl:text-12"><span className="font-currency font-normal text-14"></span> {installments.toFixed(2)}</p>
+                  <p className="text-10 xl:text-10 2xl:text-12"><span className="font-currency font-normal text-14"></span> {formatAED(installments)}</p>
                   <p className="text-[8px] xl:text-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}
           </div>
         </div>
-        <div className="relative w-1/2 border-4 border-[#D47C84] px-1 py-4 md:px-4 shadow">
+        <div className="relative w-1/2 border-4 border-[#D47C84] px-1 py-4 md:px-3 shadow">
           <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1  text-xs">
             tamara
           </span>
           <p className=" text-12 sm:text-14 font-medium text-[#8D8D8D]">
-          Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {installments.toFixed(2)} {' '}
+          Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {formatAED(installments)} {' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTamaraOpen(true)}
@@ -72,7 +73,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-10  xl:text-10 2xl:text-12"><span className="font-currency font-normal text-14"></span> {installments.toFixed(2)}</p>
+                  <p className="text-10  xl:text-10 2xl:text-12"><span className="font-currency font-normal text-14"></span> {formatAED(installments)}</p>
                   <p className="text-[8px] xl:text-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}

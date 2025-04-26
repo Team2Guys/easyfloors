@@ -18,6 +18,7 @@ import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { emirates } from 'data/data';
 import { MdKeyboardArrowDown } from 'react-icons/md';
+import { formatAED } from 'lib/helperFunctions';
 interface CartPageProps {
   products: IProduct[];
 }
@@ -334,7 +335,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                           <div className='col-span-2 text-center hidden xl:block'>
                             {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'><span>Free</span></p> :
-                              <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-20 2xl:text-25 "></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>}
+                              <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-20 2xl:text-25 "></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>}
                           </div>
                           <div className='col-span-2 text-end lg:pr-5'>
                             <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
@@ -409,7 +410,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                         </div>
                         <div className='col-span-2 text-center hidden xl:block'>
-                          <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                          <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>
                         </div>
                         <div className='col-span-2 text-end lg:pr-5'>
                           <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
@@ -436,7 +437,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal:</p>
-                  <p><span className="font-currency font-normal text-20 2xl:text-25"></span> {subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal text-20 2xl:text-25"></span> {formatAED(subTotal)}</p>
                 </div>
                 {selectedShipping !== "self-collect" && (
                     <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
@@ -499,7 +500,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Total Incl. VAT</p>
-                  <p><span className="font-currency font-normal text-20 lg:text-25"></span> {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal text-20 lg:text-25"></span> {total > 0 ? formatAED(total) : formatAED(subTotal)}</p>
 
                 </div>
                 <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>

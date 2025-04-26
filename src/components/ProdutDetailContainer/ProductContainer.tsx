@@ -9,6 +9,7 @@ import { calculateProductDetails, handleAddToStorage } from "lib/carthelper";
 import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
 import { paymentcard } from "data/cart";
+import { formatAED } from "lib/helperFunctions";
 const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {
   // const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
   const [unit, setUnit] = useState("sqm");
@@ -103,7 +104,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="border-[#D9D9D9] border-b" />
         <div className="flex gap-5 items-center">
           <p className="text-16 2xl:text-33 font-black lg:text-28 sm:text-20">
-            Total : <span className="font-currency font-normal text-18 2xl:text-37 lg:text-30 sm:text-20"></span> <span>{totalPrice.toFixed(2)}</span>
+            Total : <span className="font-currency font-normal text-18 2xl:text-37 lg:text-30 sm:text-20"></span> <span>{formatAED(totalPrice)}</span>
           </p>
         </div>
         <div className="grid grid-cols-2 w-full gap-1 items-center sm:gap-3">
