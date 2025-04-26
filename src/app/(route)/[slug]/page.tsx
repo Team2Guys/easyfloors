@@ -100,6 +100,3 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
 
 export default CategoryPage;
 
-
-
-
