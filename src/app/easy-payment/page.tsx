@@ -46,3 +46,5 @@ const EasyPayment = () => {
 }
 
 export default EasyPayment
+
+
