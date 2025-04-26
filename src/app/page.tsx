@@ -48,5 +48,3 @@ const sortedCategories = categories?.sort((a: ICategory, b: ICategory) => {
     
   );
 }
-
-
