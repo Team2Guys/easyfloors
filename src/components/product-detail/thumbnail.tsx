@@ -67,8 +67,6 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     return [...ThumnailImage, ...(ThumnailBottom || [])];
   }, [ThumnailImage, ThumnailBottom, hideThumnailBottom]);
   
-  console.log(combinedImages,"combinedImages")
-  // Find the first index that matches selectedColor
   useEffect(() => {
     if (selectedColor) {
       const matchingIndex = ThumnailImage.findIndex(
@@ -157,7 +155,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   <div
                     key={index}
                     onClick={(e) => handleThumbnailClick(index, e)}
-                    className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
+                    className={`cursor-pointer p-[2px] border-2 ${index === currentSlide ? "border-primary" : "border-transparent"
                       }`}
                   >
                     <Image
@@ -165,8 +163,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       height={150}
                       src={product.imageUrl}
                       className={`w-full ${imageheight
-                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : "h-[35px] sm:h-[73px] md:h-[124px]"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px] border border-black"
+                        : "h-[35px] sm:h-[73px] md:h-[124px] border-black"
                         }`}
                       alt={product.altText || "Thumbnail"}
                     />
@@ -198,7 +196,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   key={index}
                   onClick={(e) => handleThumbnailClick(index, e)}
 
-                  className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
+                  className={`cursor-pointer p-[2px] border-2 ${index === currentSlide ? "border-primary" : "border-transparent"
                     }`}
                 >
                   <Image
@@ -218,7 +216,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         </div>
 
         {/* Main Image Viewer */}
-        <div className="w-10/12">
+        <div className="w-10/12 ">
           <Slider
             infinite={combinedImages.length > 1}
             ref={sliderRef1}
@@ -245,7 +243,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   width={800}
                   height={800}
                   src={product.imageUrl}
-                  className={`w-full ${imageheight
+                  className={`w-full px-2 ${imageheight
                     ? "h-[273px] sm:h-[520px] lg:h-[535px] xl:h-[700px] 2xl:h-[810px]"
                       : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[700px]"
                     }`}
@@ -312,9 +310,9 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       height={150}
                       src={array.imageUrl}
                       alt={array.altText}
-                      className={`w-full max-sm:h-[39px] object-contain ${globalIndex === currentSlide
-                        ? "shadow-xl"
-                        : ""
+                      className={`w-full max-sm:h-[39px] p-[2px] object-contain border-2 ${globalIndex === currentSlide
+                        ? "border-primary"
+                        : "border-transparent"
                         }`}
                     />
                     <p className="font-semibold text-[8px] md:text-14 lg:text-12 xl:text-16">
