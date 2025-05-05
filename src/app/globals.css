@@ -162,6 +162,13 @@ padding: 4px;
 .PhoneInputInput{
   outline: none !important;
 }
+.free-sample-hover:hover {
+  background-color: var(--primary);
+}
+.free-sample-hover:hover svg {
+  filter: invert(1);
+}
+
 @media (max-width: 767px) {
   .category_slider .swiper-pagination {
     background-color: transparent !important;

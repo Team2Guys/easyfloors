@@ -24,7 +24,7 @@ const Filters = ({
   catSlug,
   className }: FIlterprops) => {
 
-  const [uniqueFilters, setUniqueFilters] = useState({thicknesses: [] as string[],commercialWarranty: [] as string[],residentialWarranty: [] as string[],plankWidth: [] as string[],Colours: [] as string[]});
+  const [uniqueFilters, setUniqueFilters] = useState({commercialWarranty: [] as string[],residentialWarranty: [] as string[], thicknesses: [] as string[],plankWidth: [] as string[], plankLength: [] as string[],Colours: [] as string[]});
   const [categoryState, setCategoryState] = useState<{
     polar?: Category;
     richmond?: Category;
@@ -52,17 +52,19 @@ const Filters = ({
 
   const filterTitles = {
     Colours: "Colours",
-    thicknesses: "Thickness",
     commercialWarranty: "Commercial Warranty",
     residentialWarranty: "Residential Warranty",
+    thicknesses: "Plank Thickness",
     plankWidth: "Plank Width",
+    plankLength: "Plank Length"
   };
 
   const extractUniqueAttributes = (category: Category) => {
-    const thicknessSet = new Set<string>();
     const commercialWarrantySet = new Set<string>();
     const residentialWarrantySet = new Set<string>();
+    const thicknessSet = new Set<string>();
     const plankWidthSet = new Set<string>();
+    const plankLengthSet = new Set<string>();
     const colorSet = new Set<string>();
 
     category.products?.forEach((product) => {
@@ -70,6 +72,7 @@ const Filters = ({
       if (product.CommmericallWarranty) commercialWarrantySet.add(product.CommmericallWarranty);
       if (product.ResidentialWarranty) residentialWarrantySet.add(product.ResidentialWarranty);
       if (product.plankWidth) plankWidthSet.add(product.plankWidth);
+      if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
       if (product.colors) {
         product.colors.forEach((color: AdditionalInformation) => {
           colorSet.add(color.name);
@@ -79,10 +82,11 @@ const Filters = ({
 
   
     setUniqueFilters({
-      thicknesses: Array.from(thicknessSet),
       commercialWarranty: Array.from(commercialWarrantySet),
       residentialWarranty: Array.from(residentialWarrantySet),
+      thicknesses: Array.from(thicknessSet),
       plankWidth: Array.from(plankWidthSet),
+      plankLength: Array.from(plankLengthSet),
       Colours: Array.from(colorSet),
     });
   };
@@ -121,10 +125,11 @@ const Filters = ({
     setPriceValue([0, 149])
     setSelectedProductFilters({
       Colours: [],
-      thicknesses: [],
       commercialWarranty: [],
       residentialWarranty: [],
+      thicknesses: [],
       plankWidth: [],
+      plankLength: []
     });
     setIsWaterProof(null)
   }
@@ -134,11 +139,16 @@ const Filters = ({
     residentialWarranty : "ResidentialWarranty",
     thicknesses: "thickness",
     plankWidth: "plankWidth",
+    plankLength: "plankLength"
   }
 
 
   const filterProductsCountHanlder = (key:keyof IfilterValues,ValuesType:string)=>{
       const filterprod = category?.products?.filter((product:IProduct)=>{
+        if(key === 'plankLength'){
+          const values =  product.sizes?.[0].height
+        return values  == ValuesType;
+        }
         const values =  product[filtervalues[key] as keyof IProduct]
         return values  == ValuesType;
       })
@@ -153,14 +163,14 @@ const Filters = ({
   return (
     <div className={`p-2 xl:p-4 w-full space-y-5  ${className}`}>
       <div className="border-b-2 pb-5">
-        <p className="text-16 font-medium uppercase pb-2  text-[#191C1F]">Filter by Category</p>
+        <p className="text-16 font-medium uppercase pb-2  text-[#191C1F] font-inter">Filter by Category</p>
 
         {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
           const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
           return (
             <Accordion key={index} title={category.name} >
-              <ul className="pl-4 text-sm text-gray-600 space-y-1">
+              <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
 
                 {subcategories?.map((subCategory: ISUBCATEGORY, i: number) => (
                   <Link href={`/${subCategory?.category?.RecallUrl || category.RecallUrl}/${subCategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
@@ -173,7 +183,7 @@ const Filters = ({
         }
         )}
         <Accordion title='Manufacturer' >
-          <ul className="pl-4 text-sm text-gray-600 space-y-1">
+          <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
             {Object.values(categoryState).map((item) => {
               return (
                 <li key={item.custom_url}>
@@ -187,7 +197,7 @@ const Filters = ({
         </Accordion>
         
         <Accordion title="Style">
-        <ul className="pl-4 text-sm text-gray-600 space-y-1">
+        <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
           {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring'|| catSlug === 'richmond') && (
               <li>
                 <Link
@@ -228,7 +238,7 @@ const Filters = ({
 
 
         <Accordion title="Waterproof">
-          <ul className="pl-4 text-sm space-y-1">
+          <ul className="pl-4 text-sm space-y-1 font-inter">
             <li>
               <button
                 className={`cursor-pointer ${isWaterProof ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
@@ -255,7 +265,7 @@ const Filters = ({
 
           return (
             <Accordion key={filterKey} title={filterTitles[filterKey as keyof typeof uniqueFilters]}>
-              <ul className="pl-4 text-sm text-gray-600 space-y-1">
+              <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
                 {filterValues.map((item, i) => {
                        let length;
                        let remaingCategory
@@ -289,7 +299,7 @@ const Filters = ({
       </div>
 
       <div className="border-b-2 pb-5">
-        <p className="text-16 font-medium uppercase pb-5  text-[#191C1F]">Price Range</p>
+        <p className="text-16 font-medium uppercase pb-5  text-[#191C1F] font-inter">Price Range</p>
         <PriceSlider priceValue={priceValue}
           setPriceValue={setPriceValue}
         />
@@ -308,9 +318,9 @@ const Filters = ({
 
       </div>
       <div className="border-b-2 pb-5">
-        <p className="text-16 font-medium uppercase pb-5  text-[#191C1F]">popular Brands</p>
+        <p className="text-16 font-medium uppercase pb-5  text-[#191C1F] font-inter">popular Brands</p>
         <div className="flex gap-4 flex-wrap items-center">
-          <ul className="space-y-3">
+          <ul className="space-y-3 font-inter">
             {Object.values(categoryState).map((item) => {
               return (
                 <li key={item.custom_url}>
@@ -333,7 +343,7 @@ const Filters = ({
         </div>
       </div>
       <div className="pb-5">
-        <p className="text-16 font-medium uppercase pb-5 text-[#191C1F]">Popular Tag</p>
+        <p className="text-16 font-medium uppercase pb-5 text-[#191C1F] font-inter">Popular Tag</p>
         <div className="flex items-center ">
           <RatioButtons options={orderedCategories} />
         </div>

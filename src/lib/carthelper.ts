@@ -119,7 +119,6 @@ export const calculateProductDetails = (
 ) => {
   const boxCoverage = productData?.boxCoverage;
   const numericCoverage = Number(boxCoverage);
-
   const convertedArea =
     unit === 'sqft'
       ? parseFloat((parseFloat(area) * 0.092903).toFixed(2))
