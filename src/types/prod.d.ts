@@ -1,4 +1,4 @@
-import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from "./cat";
+import { EDIT_CATEGORY, ISUBCATEGORY, ISUBCATEGORY_EDIT } from "./cat";
 import { AdditionalInformation } from "./type";
 
 
@@ -74,6 +74,10 @@ export interface IProductAccessories extends IProduct {
   products?: IProduct[];
 }
 export interface IProductFilter extends IProduct {
+  [key: string]: string;
+}
+
+export interface ICollectionFilter extends ISUBCATEGORY {
   [key: string]: string;
 }
 
