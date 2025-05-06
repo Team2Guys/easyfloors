@@ -29,8 +29,12 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
   useEffect(() => {
-    if (isSubCategory && subCategoryData) {
-      setData(subCategoryData);
+    if (isSubCategory) {
+      const filtered = categoryData.products?.filter(
+        product => product.subcategory?.custom_url === subcategory
+      );
+      const pushMatchingProducts = {...subdescription, products: filtered}
+      setData(pushMatchingProducts);
     } else {
       setData(categoryData)
     }
@@ -56,6 +60,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     subcategory,
     isWaterProof,
   ]);
+
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"
