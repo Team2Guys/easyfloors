@@ -67,7 +67,6 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     return [...ThumnailImage, ...(ThumnailBottom || [])];
   }, [ThumnailImage, ThumnailBottom, hideThumnailBottom]);
   
-  console.log(combinedImages,"combinedImages")
   // Find the first index that matches selectedColor
   useEffect(() => {
     if (selectedColor) {
@@ -165,8 +164,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       height={150}
                       src={product.imageUrl}
                       className={`w-full ${imageheight
-                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : "h-[35px] sm:h-[73px] md:h-[124px]"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:size-[150px]"
+                        : "h-[35px] sm:h-[73px] md:size-[124px]"
                         }`}
                       alt={product.altText || "Thumbnail"}
                     />
@@ -207,7 +206,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     src={product.imageUrl}
                     className={`w-full ${imageheight
                         ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[102px]"
+                        : ""
                       }`}
                     alt={product.altText || "Thumbnail"}
                   />
@@ -245,9 +244,9 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   width={800}
                   height={800}
                   src={product.imageUrl}
-                  className={`w-full ${imageheight
+                  className={`w-full px-1 ${imageheight
                     ? "h-[273px] sm:h-[520px] lg:h-[535px] xl:h-[700px] 2xl:h-[810px]"
-                      : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[700px]"
+                      : "h-[273px] sm:h-[520px] md:h-[530px] lg:h-[435px] xl:h-[530px] 2xl:h-[740px]"
                     }`}
                   alt={product.altText || "Thumbnail"}
                 />

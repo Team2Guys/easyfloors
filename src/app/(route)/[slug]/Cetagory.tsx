@@ -16,10 +16,11 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
     Colours: [],
-    thicknesses: [],
     commercialWarranty: [],
     residentialWarranty: [],
+    thicknesses: [],
     plankWidth: [],
+    plankLength: []
   });
   
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);

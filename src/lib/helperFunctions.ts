@@ -77,6 +77,7 @@ export const productFilter = ({
     { key: "commercialWarranty", productKey: "CommmericallWarranty" },
     { key: "residentialWarranty", productKey: "ResidentialWarranty" },
     { key: "plankWidth", productKey: "plankWidth" },
+    { key: "plankLength", productKey: "plankLength" }
   ];
 
   filterMapping.forEach(({ key, productKey }) => {
@@ -88,6 +89,9 @@ export const productFilter = ({
           return productValue.some((val:AdditionalInformation) =>
             selectedProductFilters[key].includes(val?.name)
           );
+        }
+        else if (key === 'plankLength'){
+          return selectedProductFilters[key].includes(product.sizes?.[0].height || "");
         }
       
         return selectedProductFilters[key].includes(productValue || "");

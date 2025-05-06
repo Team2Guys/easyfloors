@@ -16,7 +16,7 @@ export interface Category {
   updatedAt: Date;
   last_editedBy?: string;
   Recall_Cat?: string;
-  products?: Product[];
+  products?: IProduct[];
   accessories?: Product[];
   RecallUrl?:string
   Heading?:string
@@ -107,4 +107,5 @@ export type FilterState = {
   commercialWarranty: string[];
   residentialWarranty: string[];
   plankWidth: string[];
+  plankLength: string[];
 };

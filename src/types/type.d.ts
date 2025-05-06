@@ -337,6 +337,7 @@ export interface  IfilterValues  {
     residentialWarranty : string,
     thicknesses: string,
     plankWidth: string,
+    plankLength: string
 }
 
 export interface ProductTableProps {

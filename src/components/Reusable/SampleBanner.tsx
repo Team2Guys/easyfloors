@@ -34,7 +34,7 @@ const SampleBanner = () => {
             />
           </div>
           <div className='h-auto absolute bg-white right-0 bottom-[0.5px]'>
-            <p className='text-14 text-end text-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</p>
+            <p className='text-14 text-end font-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</p>
           </div>
         </div>
       </div>

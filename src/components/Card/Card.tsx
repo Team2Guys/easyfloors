@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { MouseEvent, useState } from "react";
+import { lazy, MouseEvent, useState } from "react";
 import { FiEye, FiHeart } from "react-icons/fi";
 import { Category } from "types/cat";
 import { productCardProps } from "types/PagesProps";
@@ -11,6 +11,8 @@ import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
 import { handleAddToStorage } from "lib/carthelper";
+import CartIcon from "components/svg/cart-icon";
+const FreeSample = lazy(() => import('components/svg/free-sample'))
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
@@ -24,7 +26,6 @@ const Card: React.FC<productCardProps> = ({
   categoryData,
   isAccessories,
   isSoldOut = false,
-  subCategoryFlag,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
@@ -61,6 +62,10 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
+  const selectedColor = (product as IProduct)?.featureImages?.find(
+    (img) => img.color === (product as IProduct)?.productImages?.[0]?.colorCode
+  );
+
 
   return (
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
@@ -83,6 +88,24 @@ const Card: React.FC<productCardProps> = ({
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
+              <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
+                           product,
+                           84,
+                           84,
+                           2.4, 
+                           1,
+                           product.subcategory?.name || "",
+                           categoryData?.name || "Accessories",
+                           "freeSample",
+                           "productImages" in product ? product.productImages?.[0]?.imageUrl ?? "" : "",
+                           product?.boxCoverage,
+                           "m",
+                           selectedColor,
+                           true
+                          )}
+              >
+                <FreeSample />
+              </button>
               <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
                onClick={() => {
                   handleAddToStorage(
@@ -224,7 +247,7 @@ const Card: React.FC<productCardProps> = ({
             'price' in product && product.price &&
 
             <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
-              {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} <span className="font-currency text-16 md:text-18 xl:text-20 font-normal"></span> <span>{product?.price}</span>
+              {isAccessories ? '' : 'Only '} <span className="font-currency text-16 md:text-18 xl:text-20 font-normal"></span> <span>{product?.price}</span>
               {isAccessories ? '/m' : '/m²'}
             </p>
 
@@ -240,8 +263,8 @@ const Card: React.FC<productCardProps> = ({
                 Out of Stock
               </button>
             ) : (
-              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="border-2 border-primary text-[10px] text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold">
-                Shop Now
+              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="flex justify-center items-center gap-2 border-2 border-primary text-[10px] text-nowrap text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold">
+                <CartIcon /> Shop Now
               </Link>
             )}
 
