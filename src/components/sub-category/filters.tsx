@@ -41,7 +41,6 @@ const Filters = ({
   const orderedCategories = [...catgories].sort((a, b) => {
     return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
   });
-  console.log(orderedCategories,"orderedCategories")
   useEffect(() => {
     const richmond = catgories.find(
       (cat: Category) => cat.name.toLowerCase() === "richmond flooring"

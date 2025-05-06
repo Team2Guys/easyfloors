@@ -1,7 +1,5 @@
 'use client';
-
 import { useEffect, useState } from 'react';
-
 const SaleTimer = ({ time }: { time: string }) => {
   const calculateTimeLeft = () => {
     const targetDate = new Date(time);
@@ -34,9 +32,7 @@ const SaleTimer = ({ time }: { time: string }) => {
   if (!timeLeft) return ;
 
   return (
-    <div>
-      {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
-    </div>
+      <>{timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s</>
   );
 };
 
