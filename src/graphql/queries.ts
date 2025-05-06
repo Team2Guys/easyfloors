@@ -428,6 +428,7 @@ export const FETCHSUBCAT = gql`
       posterImageUrl
       custom_url
       price
+      sizes
       products {
         id
         name

@@ -23,9 +23,12 @@ const Filters = ({
   setPriceValue,
   priceValue,
   catSlug,
-  className }: FIlterprops) => {
+  className,
+  isColection,
+  sortedSubcategories
+}: FIlterprops) => {
 
-  const [uniqueFilters, setUniqueFilters] = useState({commercialWarranty: [] as string[],residentialWarranty: [] as string[], thicknesses: [] as string[],plankWidth: [] as string[], plankLength: [] as string[],Colours: [] as string[]});
+  const [uniqueFilters, setUniqueFilters] = useState({ commercialWarranty: [] as string[], residentialWarranty: [] as string[], thicknesses: [] as string[], plankWidth: [] as string[], plankLength: [] as string[], Colours: [] as string[] });
   const [categoryState, setCategoryState] = useState<{
     polar?: Category;
     richmond?: Category;
@@ -37,7 +40,7 @@ const Filters = ({
     "POLAR FLOORING",
     "RICHMOND FLOORING"
   ];
-  
+
   const orderedCategories = [...catgories].sort((a, b) => {
     return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
   });
@@ -67,21 +70,27 @@ const Filters = ({
     const plankWidthSet = new Set<string>();
     const plankLengthSet = new Set<string>();
     const colorSet = new Set<string>();
+    if (!isColection) {
+      category.products?.forEach((product) => {
+        if (product.thickness) thicknessSet.add(product.thickness);
+        if (product.CommmericallWarranty) commercialWarrantySet.add(product.CommmericallWarranty);
+        if (product.ResidentialWarranty) residentialWarrantySet.add(product.ResidentialWarranty);
+        if (product.plankWidth) plankWidthSet.add(product.plankWidth);
+        if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
+        if (product.colors) {
+          product.colors.forEach((color: AdditionalInformation) => {
+            colorSet.add(color.name);
+          });
+        }
+      });
+    } else {
+      sortedSubcategories?.forEach((category: ISUBCATEGORY) => {
+        if (category.sizes && category.sizes[0].height) plankLengthSet.add(category.sizes[0].height);
+        if (category.sizes && category.sizes[0].width) plankWidthSet.add(category.sizes[0].width);
+        if (category.sizes && category.sizes[0].thickness) thicknessSet.add(category.sizes[0].thickness);
+      });
+    }
 
-    category.products?.forEach((product) => {
-      if (product.thickness) thicknessSet.add(product.thickness);
-      if (product.CommmericallWarranty) commercialWarrantySet.add(product.CommmericallWarranty);
-      if (product.ResidentialWarranty) residentialWarrantySet.add(product.ResidentialWarranty);
-      if (product.plankWidth) plankWidthSet.add(product.plankWidth);
-      if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
-      if (product.colors) {
-        product.colors.forEach((color: AdditionalInformation) => {
-          colorSet.add(color.name);
-        });
-      }
-    });
-
-  
     setUniqueFilters({
       commercialWarranty: Array.from(commercialWarrantySet),
       residentialWarranty: Array.from(residentialWarrantySet),
@@ -100,7 +109,7 @@ const Filters = ({
 
 
   const getColorCount = (targetColor: string): number => {
-    return category.products?.filter((product:IProduct) =>
+    return category.products?.filter((product: IProduct) =>
       product.colors?.some(color => color.name.trim().toLowerCase() === targetColor.toLowerCase())
     ).length || 0;
   };
@@ -135,31 +144,48 @@ const Filters = ({
     setIsWaterProof(null)
   }
 
-  const filtervalues:IfilterValues  ={
+  const filtervalues: IfilterValues = {
     commercialWarranty: "CommmericallWarranty",
-    residentialWarranty : "ResidentialWarranty",
+    residentialWarranty: "ResidentialWarranty",
     thicknesses: "thickness",
     plankWidth: "plankWidth",
     plankLength: "plankLength"
   }
 
 
-  const filterProductsCountHanlder = (key:keyof IfilterValues,ValuesType:string)=>{
-      const filterprod = category?.products?.filter((product:IProduct)=>{
-        if(key === 'plankLength'){
-          const values =  product.sizes?.[0].height
-        return values  == ValuesType;
-        }
-        const values =  product[filtervalues[key] as keyof IProduct]
-        return values  == ValuesType;
+  const filterProductsCountHanlder = (key: keyof IfilterValues, ValuesType: string) => {
+    if(isColection){
+      const filterprod = sortedSubcategories?.filter((product: ISUBCATEGORY) => {
+          if(key === 'thicknesses'){
+            const values = product.sizes?.[0].thickness
+            return values == ValuesType;
+          } else if(key === 'plankWidth'){
+            const values = product.sizes?.[0].width
+            return values == ValuesType;
+          } else if(key === 'plankLength'){
+            const values = product.sizes?.[0].height
+            return values == ValuesType;
+          }
+          
       })
+  
+      return filterprod?.length || 0
+    }
+    const filterprod = category?.products?.filter((product: IProduct) => {
+      if (key === 'plankLength') {
+        const values = product.sizes?.[0].height
+        return values == ValuesType;
+      }
+      const values = product[filtervalues[key] as keyof IProduct]
+      return values == ValuesType;
+    })
 
-      return filterprod.length  ||0
+    return filterprod.length || 0
 
 
   }
 
-  
+
 
   return (
     <div className={`p-2 xl:p-4 w-full space-y-5  ${className}`}>
@@ -168,6 +194,7 @@ const Filters = ({
 
         {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
+          if(isColection && category.name === 'ACCESSORIES') return;
           let subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
           subcategories = [...subcategories].sort((a, b) => {
             return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
@@ -209,15 +236,14 @@ const Filters = ({
             })}
           </ul>
         </Accordion>
-        
+
         <Accordion title="Style">
-        <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-          {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring'|| catSlug === 'richmond') && (
+          <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
+            {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
-                  href={`/${
-                    catSlug === 'spc-flooring' ? 'polar' : 'richmond'
-                  }/spc-eco`}
+                  href={`/${catSlug === 'spc-flooring' ? 'polar' : 'richmond'
+                    }/spc-eco`}
                   className="cursor-pointer hover:text-primary block capitalize"
                 >
                   Eco
@@ -226,17 +252,16 @@ const Filters = ({
             )}
             <li>
               <Link
-                href={`/${
-                  catSlug === 'spc-flooring' ? 'polar' :
+                href={`/${catSlug === 'spc-flooring' ? 'polar' :
                   catSlug === 'polar-flooring' ? 'polar' :
-                  'richmond'
-                }/spc-herringbone`}
+                    'richmond'
+                  }/spc-herringbone`}
                 className="cursor-pointer hover:text-primary block capitalize"
               >
                 herringbone
               </Link>
             </li>
-            {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring'|| catSlug === 'richmond') && (
+            {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
                   href="/richmond/spc-prime"
@@ -246,66 +271,68 @@ const Filters = ({
                 </Link>
               </li>
             )}
-        </ul>
-        </Accordion>
-
-
-
-        <Accordion title="Waterproof">
-          <ul className="pl-4 text-sm space-y-1 font-inter">
-            <li>
-              <button
-                className={`cursor-pointer ${isWaterProof ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
-                onClick={() => handleYesWaterProof('yes')}
-              >
-                Yes
-              </button>
-            </li>
-            <li>
-              <button
-                className={`cursor-pointer ${!isWaterProof && isWaterProof !== undefined && isWaterProof !== null ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
-                onClick={() => handleYesWaterProof('no')}
-              >
-                No
-              </button>
-            </li>
           </ul>
         </Accordion>
 
+
+        {!isColection && (
+          <Accordion title="Waterproof">
+            <ul className="pl-4 text-sm space-y-1 font-inter">
+              <li>
+                <button
+                  className={`cursor-pointer ${isWaterProof ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
+                  onClick={() => handleYesWaterProof('yes')}
+                >
+                  Yes
+                </button>
+              </li>
+              <li>
+                <button
+                  className={`cursor-pointer ${!isWaterProof && isWaterProof !== undefined && isWaterProof !== null ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
+                  onClick={() => handleYesWaterProof('no')}
+                >
+                  No
+                </button>
+              </li>
+            </ul>
+          </Accordion>
+        )}
+
+
         {Object.entries(uniqueFilters).map(([filterKey, filterValues]) => {
           if (filterValues.length === 0) return null;
-     
+
 
 
           return (
             <Accordion key={filterKey} title={filterTitles[filterKey as keyof typeof uniqueFilters]}>
               <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
                 {filterValues.map((item, i) => {
-                       let length;
-                       let remaingCategory
-                       if(filterKey === 'Colours') {
-                         length=  getColorCount(item)
-                      }else {
-                        remaingCategory =  filterProductsCountHanlder(filterKey as keyof IfilterValues, item)
-                      }
+                  let length;
+                  let remaingCategory
+                  if (filterKey === 'Colours') {
+                    length = getColorCount(item)
+                  } else {
+                    remaingCategory = filterProductsCountHanlder(filterKey as keyof IfilterValues, item)
+                  }
 
                   return (
-                  <li key={i}>
-                    <button
-                      className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState]?.some(
-                        (val: string) => val === item
-                      )
-                        ? "text-primary"
-                        : "text-gray-600 hover:text-primary"
-                        }`}
-                      onClick={() => handleFilterSelection(filterKey as keyof FilterState, item)}
-                    >
-                      {item + (length ? ` (${length})` : remaingCategory ? ` (${remaingCategory})`: "" )} 
-                    </button>
-                  </li>
+                    <li key={i}>
+                      <button
+                        className={`cursor-pointer ${selectedProductFilters[filterKey as keyof FilterState]?.some(
+                          (val: string) => val === item
+                        )
+                          ? "text-primary"
+                          : "text-gray-600 hover:text-primary"
+                          }`}
+                        onClick={() => handleFilterSelection(filterKey as keyof FilterState, item)}
+                      >
+                        {item + (length ? ` (${length})` : remaingCategory ? ` (${remaingCategory})` : "")}
+                      </button>
+                    </li>
 
                   )
-        })}
+                })}
               </ul>
             </Accordion>
           );
@@ -341,13 +368,13 @@ const Filters = ({
                   <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
 
                     <Checkbox
-                    checked={path === `/${item.custom_url}`}
+                      checked={path === `/${item.custom_url}`}
                       required
                       name="terms"
-                 
+
                       className="custom-checkbox"
                     >
-                   {item.name}
+                      {item.name}
                     </Checkbox>
                   </Link>
                 </li>
