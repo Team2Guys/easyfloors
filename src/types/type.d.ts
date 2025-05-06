@@ -53,8 +53,8 @@ export interface FeaturesProps {
   items: FeatureItem[];
 }
 export interface HeroItem {
-  backgroundImage: string;
-  backgroundImageMobile: string;
+  // backgroundImage: string;
+  // backgroundImageMobile: string;
   offerText: string;
   highlight: string;
   description: string;

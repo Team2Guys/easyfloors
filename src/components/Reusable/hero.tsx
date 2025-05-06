@@ -7,20 +7,19 @@ import SaleTimer from "./SaleTimer";
 
 const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
   const [videoSrc, setVideoSrc] = useState('');
-
+  const [posterSrc, setPosterSrc] = useState('');
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
         setVideoSrc('/assets/images/aboutus/aboutus-m.mp4');
+        setPosterSrc('/assets/images/Home/hero-minmobile.avif');
       } else {
         setVideoSrc('/assets/images/aboutus/aboutus.mp4');
+        setPosterSrc('/assets/images/Home/hero-min.avif');
       }
     };
 
-    // Initial check
     handleResize();
-
-    // Optional: update on resize
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -42,7 +41,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
           /> */}
          <video
       src={videoSrc}
-      poster={item.backgroundImage}
+      poster={posterSrc}
       className="w-full h-full object-cover"
       autoPlay
       muted
