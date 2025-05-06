@@ -1,10 +1,28 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { TiArrowRight } from "react-icons/ti";
 import { HeroMainProps } from "types/type";
 import SaleTimer from "./SaleTimer";
 
 const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
+  const [videoSrc, setVideoSrc] = useState('');
+  const [posterSrc, setPosterSrc] = useState('');
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setVideoSrc('/assets/images/aboutus/aboutus-m.mp4');
+        setPosterSrc('/assets/images/Home/hero-minmobile.avif');
+      } else {
+        setVideoSrc('/assets/images/aboutus/aboutus.mp4');
+        setPosterSrc('/assets/images/Home/hero-min.avif');
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
     <div className="relative flex flex-col w-full sm:h-[600px] xl:h-[885px]">
       {items.map((item, index) => (
@@ -21,26 +39,16 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             loading="eager"
             className="w-full h-full object-cover hidden sm:block"
           /> */}
-          <video
-            src="assets/images/aboutus/aboutus.mp4"
-            poster={item.backgroundImage}
-            className="w-full h-full object-cover hidden sm:block"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
-           <video
-            src="assets/images/aboutus/aboutus-m.mp4"
-            poster={item.backgroundImage}
-            className="w-full h-full object-cover sm:hidden block"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-           />
+         <video
+      src={videoSrc}
+      poster={posterSrc}
+      className="w-full h-full object-cover"
+      autoPlay
+      muted
+      loop
+      playsInline
+      preload="metadata"
+         />
           {/* <Image
             src={item.backgroundImageMobile}
             alt="hero"
