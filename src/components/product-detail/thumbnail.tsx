@@ -67,7 +67,6 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     return [...ThumnailImage, ...(ThumnailBottom || [])];
   }, [ThumnailImage, ThumnailBottom, hideThumnailBottom]);
   
-  // Find the first index that matches selectedColor
   useEffect(() => {
     if (selectedColor) {
       const matchingIndex = ThumnailImage.findIndex(
@@ -156,7 +155,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   <div
                     key={index}
                     onClick={(e) => handleThumbnailClick(index, e)}
-                    className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
+                    className={`cursor-pointer p-[2px] border-2 ${index === currentSlide ? "border-primary" : "border-transparent"
                       }`}
                   >
                     <Image
@@ -164,8 +163,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       height={150}
                       src={product.imageUrl}
                       className={`w-full ${imageheight
-                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:size-[150px]"
-                        : "h-[35px] sm:h-[73px] md:size-[124px]"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:size-[150px] border border-black"
+                        : "h-[35px] sm:h-[73px] md:size-[124px] border"
                         }`}
                       alt={product.altText || "Thumbnail"}
                     />
@@ -197,7 +196,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   key={index}
                   onClick={(e) => handleThumbnailClick(index, e)}
 
-                  className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
+                  className={`cursor-pointer p-[2px] border-2 ${index === currentSlide ? "border-primary" : "border-transparent"
                     }`}
                 >
                   <Image
@@ -206,7 +205,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     src={product.imageUrl}
                     className={`w-full ${imageheight
                         ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : ""
+                        : "h-auto xs:h-[46px] sm:h-auto md:h-[99px] lg:h-auto 2xl:h-[115px]"
                       }`}
                     alt={product.altText || "Thumbnail"}
                   />
@@ -217,7 +216,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         </div>
 
         {/* Main Image Viewer */}
-        <div className="w-10/12">
+        <div className="w-10/12 ">
           <Slider
             infinite={combinedImages.length > 1}
             ref={sliderRef1}
@@ -311,9 +310,9 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       height={150}
                       src={array.imageUrl}
                       alt={array.altText}
-                      className={`w-full max-sm:h-[39px] object-contain ${globalIndex === currentSlide
-                        ? "shadow-xl"
-                        : ""
+                      className={`w-full max-sm:h-[39px] p-[2px] object-contain border-2 ${globalIndex === currentSlide
+                        ? "border-primary"
+                        : "border-transparent"
                         }`}
                     />
                     <p className="font-semibold text-[8px] md:text-14 lg:text-12 xl:text-16">

@@ -102,6 +102,7 @@ export interface ICollectionFilter extends ISUBCATEGORY {
     isAccessory?:string;
     isfreeSample?:boolean;
     selectedColor?: ProductImage;
+    matchedProductImages?: ProductImage;
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {

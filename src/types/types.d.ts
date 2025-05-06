@@ -164,6 +164,7 @@ export interface AccessoriesPopupProps {
   isOpen: boolean;
   onClose: () => void;
   products:IProduct[];
+  sizes?: Array<{width?: string, height?: string, thickness?: string }>
 }export interface InputProps {
   type: string;
   name: string;

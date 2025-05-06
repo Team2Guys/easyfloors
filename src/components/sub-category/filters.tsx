@@ -9,6 +9,7 @@ import { FIlterprops } from "types/types";
 import { usePathname } from "next/navigation";
 import { AdditionalInformation, IProduct } from "types/prod";
 import { IfilterValues } from "types/type";
+import { getSubcategoryOrder } from "data/home-category";
 
 
 
@@ -193,8 +194,21 @@ const Filters = ({
 
         {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
-          const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
           if(isColection && category.name === 'ACCESSORIES') return;
+          let subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
+          subcategories = [...subcategories].sort((a, b) => {
+            return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
+          });
+          subcategories = [...subcategories].sort((a, b) => {
+              const orderA = getSubcategoryOrder(a.name);
+              const orderB = getSubcategoryOrder(b.name);
+              if (orderA !== orderB) {
+                return orderA - orderB;
+              } else {
+                return (Number(a.price) || 0) - (Number(b.price) || 0);
+              }
+            });
+          
           return (
             <Accordion key={index} title={category.name} >
               <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">

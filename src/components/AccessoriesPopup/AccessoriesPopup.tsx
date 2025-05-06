@@ -13,7 +13,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
   if (!isOpen) return null;
-
   const boxCoverage = 1; // Coverage in square meters
 
   const toggleSelect = (id: string | number) => {
@@ -94,7 +93,9 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
           "m",
-          product.selectedColor
+          product.selectedColor,
+          product.matchedProductImages,
+
         );
       }
     });
@@ -120,29 +121,69 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                     type="checkbox"
                     checked={selectedProducts.includes(String(product.id))}
                     onChange={() => toggleSelect(product.id)}
-                    className={`w-5 h-5 absolute top-3 left-3 accent-white ${Number(product.stock) > 0 ? "cursor-pointer" : "cursor-not-allowed"}`}
+                    className={`w-5 h-5 absolute top-3 left-3 z-10 accent-white ${Number(product.stock) > 0 ? "cursor-pointer" : "cursor-not-allowed"}`}
                     disabled={Number(product.stock) <= 0}
                   />
-                  <Image width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black" />
+                  
+                  <Image width={1000} height={1000} src={product?.matchedProductImages?.imageUrl ?? product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black absolute hover:opacity-0" />
+                  {product.hoverImageUrl && (
+                    <Image width={1000} height={1000} src={product.hoverImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black" />
+                  )}
                   <div className="flex justify-evenly border-b pb-2 gap-2 sm:gap-4 mt-3">
-                    {features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-1">
-                        <Image src={feature.icon} alt="Icon" width={feature.width} height={feature.height} />
-                        <span className=" text-12 sm:text-sm">{feature.label}</span>
+                      {product.sizes?.map((feature, index) => (
+                      <div key={index} className="flex gap-4 w-full justify-between">
+                        {feature.width &&
+                        <div className="flex justify-between gap-1 items-center">
+                          <Image
+                            src={features[0].icon}
+                            alt="Icon"
+                            width={features[0].width}
+                            height={features[0].height}
+                            loading="lazy"
+                            className="text-gray-500 cursor-pointer hover:text-red-500"
+                          />
+                          <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
+                        </div>
+                        } 
+                        {feature.thickness &&
+                          <div className="flex justify-between gap-1 items-center">
+                            <Image
+                              src={features[1].icon}
+                              alt="Icon"
+                              width={features[1].width}
+                              height={features[1].height}
+                              loading="lazy"
+                              className="text-gray-500 cursor-pointer hover:text-red-500"
+                            />
+                            <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
+                          </div>}
+                        {feature.height &&
+                        <div className="flex justify-between gap-1 items-center">
+                          <Image
+                            src={features[2].icon}
+                            alt="Icon"
+                            width={features[2].width}
+                            loading="lazy"
+                            height={features[2].height}
+                            className="text-gray-500 cursor-pointer hover:text-red-500"
+                          />
+                          <span className="text-[7px] text-black md:text-[12px]">{feature.height}</span>
+                        </div>
+                        }
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="py-2">
                   <h3 className="text-16 font-bold mt-1">{product.name}</h3>
+                  <h3 className="text-14 mt-1">Color : {product.selectedColor?.colorName ?? "White"}</h3>
                   <p className=" font-medium text-14">
                     Price Per m: <span className="font-currency font-normal text-14"></span> {product.price}
                   </p>
 
-                  <p className="text-14  font-medium mb-2">You Require:</p>
                   <input
                     type="number"
-                    placeholder="Enter Area (m)"
+                    placeholder="Enter length (m)"
                     value={areas[product.id] || ""}
                     onChange={(e) => handleAreaChange(product.id, e.target.value)}
                     min="0"

@@ -13,9 +13,8 @@ export const metadata: Metadata = {
     title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
     description: "Browse Easy Floors’ premium SPC and LVT flooring collections. From herringbone to luxury vinyl, durable, stylish floors for homes and commercial spaces.",
     url: '/collections',
-    images: [{
-      url: "/assets/images/logo.png", alt: 'Easyfloors',
-    },
+    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+      },
     ],
   },
   alternates: {

@@ -26,7 +26,7 @@ const AdditionalInfo = ({ description, AdditionalInformation,subcategory }:Addit
 
       </TabsList>
       <TabsContent value="description">
-        <p className='text-12 sm:text-14 2xl:text-16'>
+        <p className='text-12 sm:text-14 2xl:text-16 text-justify'>
           {description}
         </p>
       </TabsContent>

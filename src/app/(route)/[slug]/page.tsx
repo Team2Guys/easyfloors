@@ -58,7 +58,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
   const categories = await fetchCategories();
-
   const findCategory = categories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
   if (!findCategory) {
     return notFound()

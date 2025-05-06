@@ -43,9 +43,9 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
           <div className="bg-background">
             <div className="absolute top-[6%] sm:top-[20%] lg:top-[14%] bg-background left-4 sm:left-0 opacity-90 xs:opacity-95 p-2 sm:p-6 md:p-8 w-[65%] xs:w-[58%] sm:w-[270px] md:w-[300px] lg:w-[400px] xl:w-[500px] shadow-md">
               <div className="flex flex-col justify-start items-start font-inter text-black font-light space-y-1 sm:space-y-3 lg:space-y-4 sm:pl-4 md:pl-5 lg:pl-12 xl:pl-16">
-                <div className="flex justify-between items-center w-full">
+                <div className="flex justify-between items-center w-full text-11 xs:text-12 sm:text-sm">
                   <p className="text-11 xs:text-12 sm:text-sm">{item.offerText}</p>
-                  <p className="text-11 xs:text-12 sm:text-sm"><SaleTimer time='2025-05-27T23:59:59' /></p>
+                  <SaleTimer time='2025-05-27T23:59:59' />
                 </div>
                 <h2 className="text-14 sm:text-2xl lg:text-[35px] xl:text-5xl leading-[1.2] sm:leading-[1.4] md:leading-[1.6] xl:leading-[67.2px]">
                   Starting From Just <span className='font-currency font-normal text-18 sm:text-3xl lg:text-[42px] xl:text-[55px]'></span>49 Per Square Metre.
