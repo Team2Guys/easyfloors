@@ -361,12 +361,15 @@ const Checkout = () => {
                                     {mergedCart.length > 0 ? mergedCart.map((item, index) => (
                                         <div key={index} className="flex items-center border-b pb-4">
                                             <div className="p-1 bg-white border rounded-md">
-                                                <Image src={item.image || ''} alt={item.name} width={80} height={80} />
+                                                <Image src={item.matchedProductImages?.imageUrl ?? item.image ?? ""} alt={item.name} width={80} height={80} />
                                             </div>
                                             <div className="ml-4">
                                             <p className="font-bold text-13 xs:text-16">{item.name}</p>
                                             {item.isfreeSample ? "":
                                             <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>    
+                                            }
+                                            {item?.selectedColor?.colorName &&
+                                            <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>
                                             }
                                             </div>
                                             <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-20"></span> {formatAED(item.totalPrice)}</p>

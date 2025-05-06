@@ -121,9 +121,9 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
 
                 <Input
                   type="text"
-                  label="Select Rooms"
+                  label="Approximate Area"
                   name="selectRooms"
-                  placeholder="How Many Rooms?"
+                  placeholder="Approximate Area"
                   required
                   value={values.selectRooms}
                   onChange={handleChange}

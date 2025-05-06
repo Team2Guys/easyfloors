@@ -98,6 +98,7 @@ export interface IProductFilter extends IProduct {
     isAccessory?:string;
     isfreeSample?:boolean;
     selectedColor?: ProductImage;
+    matchedProductImages?: ProductImage;
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {

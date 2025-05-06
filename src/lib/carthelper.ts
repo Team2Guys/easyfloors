@@ -16,7 +16,8 @@ export const handleAddToStorage = async (
   boxCoverage?: string,
   unit?: string,
   selectedColor?: ProductImage,
-  isfreeSample?: boolean
+  matchedProductImages?: ProductImage,
+  // isfreeSample?: boolean
 ) => {
   if (!productData) {
     toast.error('Product is undefined');
@@ -43,7 +44,8 @@ export const handleAddToStorage = async (
 
   const adjustedSquareMeter =
     squareMeter > 0 ? squareMeter : Number(boxCoverage) * adjustedRequiredBoxes;
-
+    const adjustedImage =
+    matchedProductImages?.imageUrl ?? image;
   const adjustedUnit = unit || 'sqm';
 
   const item = {
@@ -51,7 +53,7 @@ export const handleAddToStorage = async (
     name: productData.name,
     price: Number(productData.price),
     stock: Number(productData.stock),
-    image,
+    image:adjustedImage,
     subcategories: subCategory,
     category: MainCategory,
     boxCoverage,
@@ -61,7 +63,8 @@ export const handleAddToStorage = async (
     requiredBoxes: adjustedRequiredBoxes,
     unit: adjustedUnit,
     selectedColor,
-    isfreeSample: isfreeSample || false,
+    matchedProductImages,
+    isfreeSample: type === 'freeSample' || false,
   };
 
   try {

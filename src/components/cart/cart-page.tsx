@@ -31,7 +31,7 @@ const CartPage = ({ products }: CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
-
+ console.log(mergedCart,"mergedCart")
   const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
@@ -368,7 +368,9 @@ const CartPage = ({ products }: CartPageProps) => {
                       <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                         <div className=' col-span-10 xl:col-span-6'>
                           <div className='flex gap-4'>
-                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]' src={item.image ?? '/default-image.png'} alt="cart" />
+                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]'
+                             src={item?.matchedProductImages?.imageUrl ?? item.image ?? '/default-image.png'} alt="cart"
+                            />
                             <div>
                               <p className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
@@ -378,11 +380,9 @@ const CartPage = ({ products }: CartPageProps) => {
                               Total Required:
                                   <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
                               </p> 
-                              {item?.selectedColor?.color &&
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                              Color:<span className='font-bold'> {item?.selectedColor?.color || ""}</span>
+                              Color:<span className='font-bold'> {item?.selectedColor?.colorName || "White"}</span>
                               </p> 
-                              }
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                                   <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>

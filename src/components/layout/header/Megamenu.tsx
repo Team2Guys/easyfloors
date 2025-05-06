@@ -36,7 +36,7 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
       onClick={handleMouseLeave}
     >
       <Link
-        className={`text-11 xl:text-13 2xl:text-13 3xl:text-16 capitalize p-1 ${pathname === `/${href}` ? "bg-gray-light" : "hover:bg-gray-light"}`}
+        className={`text-11 xl:text-13 2xl:text-13 3xl:text-16 capitalize ${pathname === `/${href}` ? "bg-gray-light p-[6px] xl:p-2 rounded-xl" : "hover:bg-gray-light p-[6px]  xl:p-2 rounded-xl "}`}
         href={`/${href}`}
       >
         {label}
