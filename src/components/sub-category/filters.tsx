@@ -132,7 +132,7 @@ const Filters = ({
   };
 
   const handleClearFilter = () => {
-    setPriceValue([0, 149])
+    setPriceValue([49, 149])
     setSelectedProductFilters({
       Colours: [],
       commercialWarranty: [],

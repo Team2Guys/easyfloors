@@ -61,7 +61,6 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     isWaterProof,
   ]);
 
-  console.log(Data,'Data')
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"

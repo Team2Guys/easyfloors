@@ -29,7 +29,6 @@ const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) 
   const richmondSPC = filterAndSort(subcategories, "RICHMOND FLOORING", "spc");
   const richmondLVT = filterAndSort(subcategories, "RICHMOND FLOORING", "lvt");
   const sortedSubcategories = [...polarProducts, ...richmondSPC, ...richmondLVT];
-console.log(sortedSubcategories,'sortedSubcategories')
   return (
     <div>
       <Breadcrumb title="All Collections" image='/assets/images/category/allcollection.png' />
