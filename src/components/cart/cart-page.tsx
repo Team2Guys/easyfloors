@@ -31,7 +31,6 @@ const CartPage = ({ products }: CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
- console.log(mergedCart,"mergedCart")
   const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
