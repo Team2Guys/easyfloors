@@ -271,7 +271,7 @@ const Card: React.FC<productCardProps> = ({
                 Out of Stock
               </button>
             ) : (
-              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="flex justify-center items-center gap-2 border-2 border-primary text-[10px] text-nowrap text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold">
+              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="flex justify-center items-center gap-2 border-2 border-primary text-[10px] text-nowrap text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold hover:fill-white">
                 <CartIcon /> Shop Now
               </Link>
             )}
