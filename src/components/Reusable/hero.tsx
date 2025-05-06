@@ -24,13 +24,23 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
           <video
             src="assets/images/aboutus/aboutus.mp4"
             poster={item.backgroundImage}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover hidden sm:block"
             autoPlay
             muted
             loop
             playsInline
             preload="metadata"
           />
+           <video
+            src="assets/images/aboutus/aboutus-m.mp4"
+            poster={item.backgroundImage}
+            className="w-full h-full object-cover sm:hidden block"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+           />
           {/* <Image
             src={item.backgroundImageMobile}
             alt="hero"
