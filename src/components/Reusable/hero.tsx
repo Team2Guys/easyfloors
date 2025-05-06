@@ -40,8 +40,8 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             className="w-full h-full object-cover hidden sm:block"
           /> */}
          <video
-      src={videoSrc}
-      poster={posterSrc}
+      src={videoSrc || ""}
+      poster={posterSrc || ""}
       className="w-full h-full object-cover"
       autoPlay
       muted
