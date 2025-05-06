@@ -566,7 +566,7 @@ export const boxData: BoxData[] = [
     id: 1,
     title: 'Need help with measurement?',
     description: `We have a detailed How to Measure Guide to make it easy. If you need further assistance, feel free to contact us—we're here to help!`,
-    buttonText: 'Learn More',
+    buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/measure1.png',
     link: '/measurement-appointment',
   },
@@ -574,7 +574,7 @@ export const boxData: BoxData[] = [
     id: 2,
     title: 'Need help with installation?',
     description: `Our easy click-lock system makes installation simple—no glue or nails are required. We can connect you with trusted installers for professional assistance.`,
-    buttonText: 'Learn More',
+    buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/Vectorrg.png',
     link: '/help-with-installations',
   }

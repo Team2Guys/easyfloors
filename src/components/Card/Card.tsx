@@ -25,6 +25,7 @@ const Card: React.FC<productCardProps> = ({
   isAccessories,
   isSoldOut = false,
   subCategoryFlag,
+  dragging
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
@@ -66,7 +67,13 @@ const Card: React.FC<productCardProps> = ({
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div>
         <div className="relative">
-          <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
+          <Link className="outline-none" onClick={(e) => {
+          if (dragging) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }} href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
+          >
             <Image
               src={product.posterImageUrl?.imageUrl ?? ''}
               alt={product.posterImageUrl?.altText ?? " "}

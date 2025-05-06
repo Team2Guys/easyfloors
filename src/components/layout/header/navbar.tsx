@@ -79,7 +79,7 @@ const pathname = usePathname()
           </Link>
         </div>
         <div className="w-8/12 lg:w-[68%] 2xl:w-[70%] 3xl:w-[67%]  max-lg:flex max-lg:justify-center">
-          <div className="hidden lg:flex items-center gap-2 lg:gap-3 xl:gap-5 w-fit h-16 justify-between capitalize font-light whitespace-nowrap relative overflow-hidden">
+          <div className="hidden lg:flex items-center gap-0 xl:gap-1 2xl:gap-5 w-fit h-16 justify-between capitalize font-light whitespace-nowrap relative overflow-hidden">
             {menuItems.map((item, index) => (
               <Megamenu
                 key={index}

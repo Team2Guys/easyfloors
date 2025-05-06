@@ -16,6 +16,7 @@ export const handleAddToStorage = async (
   boxCoverage?: string,
   unit?: string,
   selectedColor?: ProductImage,
+  matchedProductImages?: ProductImage,
   isfreeSample?: boolean
 ) => {
   if (!productData) {
@@ -43,7 +44,8 @@ export const handleAddToStorage = async (
 
   const adjustedSquareMeter =
     squareMeter > 0 ? squareMeter : Number(boxCoverage) * adjustedRequiredBoxes;
-
+    const adjustedImage =
+    matchedProductImages?.imageUrl ?? image;
   const adjustedUnit = unit || 'sqm';
 
   const item = {
@@ -51,7 +53,7 @@ export const handleAddToStorage = async (
     name: productData.name,
     price: Number(productData.price),
     stock: Number(productData.stock),
-    image,
+    image:adjustedImage,
     subcategories: subCategory,
     category: MainCategory,
     boxCoverage,
@@ -61,6 +63,7 @@ export const handleAddToStorage = async (
     requiredBoxes: adjustedRequiredBoxes,
     unit: adjustedUnit,
     selectedColor,
+    matchedProductImages,
     isfreeSample: isfreeSample || false,
   };
 
