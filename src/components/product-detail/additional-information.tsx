@@ -19,7 +19,7 @@ const AdditionalInfo = ({ description, AdditionalInformation,subcategory }:Addit
         {
           AdditionalInformation && AdditionalInformation.length > 0 && (
             <TabsTrigger value="specifications" className='data-[state=active]:text-primary text-12 xs:text-14 sm:text-24'>
-            Additional Information
+            Dimensions
             </TabsTrigger>
           )
         }

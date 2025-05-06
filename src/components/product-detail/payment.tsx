@@ -29,7 +29,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
     }
 
       <div className="flex gap-2 pt-4">
-        <div className="relative w-1/2 border-4 border-[#00FFBC] px-1 py-4 md:px-3  shadow">
+        <div className="relative w-1/2 border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">
             tabby
           </span>
@@ -42,19 +42,19 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
               Learn more
             </span>
           </p>
-          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 xl:gap-2 mt-2 font-inter">
+          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 mt-2 font-inter">
               {paymentLabels.map((label, index) => (
                 <div
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-10 xl:text-10 2xl:text-12"><span className="font-currency font-normal text-14"></span> {formatAED(installments)}</p>
+                  <p className="text-10 xl:text-10 2xl:text-12 text-nowrap"><span className="font-currency font-normal text-12 2xl:text-14"></span> {formatAED(installments)}</p>
                   <p className="text-[8px] xl:text-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}
           </div>
         </div>
-        <div className="relative w-1/2 border-4 border-[#D47C84] px-1 py-4 md:px-3 shadow">
+        <div className="relative w-1/2 border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow">
           <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1  text-xs">
             tamara
           </span>
@@ -67,13 +67,13 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
               Learn more
             </span>
           </p>
-          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 xl:gap-2 mt-2 font-inter">
+          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 mt-2 font-inter">
               {paymentLabels.map((label, index) => (
                 <div
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-10  xl:text-10 2xl:text-12"><span className="font-currency font-normal text-14"></span> {formatAED(installments)}</p>
+                  <p className="text-10 2xl:text-12 text-nowrap"><span className="font-currency font-normal text-12 2xl:text-14"></span> {formatAED(installments)}</p>
                   <p className="text-[8px] xl:text-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}

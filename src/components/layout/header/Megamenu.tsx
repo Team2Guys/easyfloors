@@ -30,7 +30,7 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
 
   return (
     <div
-      className="relative font-inter capitalize font-light"
+      className="relative font-inter capitalize font-light pb-6"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseLeave}

@@ -17,3 +17,5 @@ export const getSubcategoryOrder = (name: string) => {
 
   return 999;
 };
+  
+export const whatAmISorting = ['Polar SPC' , 'Polar SPC Herringbone', 'Polar LVT', 'Richmond SPC Eco', 'Richmond SPC Prime', 'Richmond SPC Herringbone', 'Richmond LVT Comfort', 'Richmond LVT Luxury']

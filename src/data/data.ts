@@ -556,7 +556,7 @@ export const faqs: FAQItem[] = [
   {
     id: 3,
     question: "How do I know which flooring material is best for my space?",
-    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, consult with a trusted flooring company for expert recommendations.",
+    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, talk to our experts at the click of a button by WhatsApp.",
   },
 ];
 
@@ -573,7 +573,7 @@ export const boxData: BoxData[] = [
   {
     id: 2,
     title: 'Need help with installation?',
-    description: `Our easy click-lock system makes installation simple—no glue or nails are required. We can connect you with trusted installers for professional assistance.`,
+    description: `Our easy click-lock system makes installation simple—no glue or nails are required. If self-fitting isn’t your thing, let us take care of the hassle. One call or message and we’ll send our expert teams to take care of the installation.`,
     buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/Vectorrg.png',
     link: '/help-with-installations',

@@ -174,7 +174,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
               unit,
               selectedColor,
               matchedProductImages,
-              true
+              // true
             )
           }
         >
