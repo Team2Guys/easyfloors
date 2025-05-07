@@ -218,4 +218,5 @@ model salesProducts {
   pay_methodType     String?
   paymethod_sub_type String?
   shippingMethod     Json?
+  otherCity String?
 }

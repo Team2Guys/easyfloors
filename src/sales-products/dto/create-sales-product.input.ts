@@ -30,6 +30,10 @@ export class CreateOrderInput {
   @Field()
   emirate: string; 
 
+
+  @Field({nullable:true})
+  otherCity?: string; 
+
   @Field(() => [GraphQLJSON])
   products: any[];
 
