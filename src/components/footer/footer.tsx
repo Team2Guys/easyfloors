@@ -69,7 +69,7 @@ const Footer = () => {
             <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
                 <div className="sm:mt-2">
                     <Image src="/assets/images/logo.webp" alt="Easyfloors" width={120} height={50} className="mb-4" />
-                    <p className="mt-2 text-sm text-justify">{footerData.company.description}</p>
+                    <p className="mt-2 text-sm text-justify w-full sm:max-w-[150px] 2xl:max-w-[172px]">{footerData.company.description}</p>
                 </div>
                 <Footerlinks categories={categories} />
                 {categories.length > 0 ? (
