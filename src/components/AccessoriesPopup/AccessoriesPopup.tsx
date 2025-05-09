@@ -1,6 +1,8 @@
 "use client";
 
-import { features } from "data/data";
+import Collapsearrow from "components/svg/collapse-arrow";
+import Leftright from "components/svg/leftright";
+import TwoArrow from "components/svg/twoarrow";
 import { handleAddToStorage } from "lib/carthelper";
 import Image from "next/image";
 import { useState } from "react";
