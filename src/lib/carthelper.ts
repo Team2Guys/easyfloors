@@ -45,7 +45,7 @@ export const handleAddToStorage = async (
   const adjustedSquareMeter =
     squareMeter > 0 ? squareMeter : Number(boxCoverage) * adjustedRequiredBoxes;
     const adjustedImage =
-    matchedProductImages?.imageUrl ?? image ?? (Array.isArray(productData?.posterImageUrl) ? productData?.posterImageUrl[0]?.imageUrl : productData?.posterImageUrl?.imageUrl) ?? '';
+    matchedProductImages?.imageUrl ?? image;
   const adjustedUnit = unit || 'sqm';
 
   const item = {
