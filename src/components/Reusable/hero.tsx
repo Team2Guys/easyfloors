@@ -15,7 +15,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
         setPosterSrc('/assets/images/Home/hero-minmobile.avif');
       } else {
         setVideoSrc('/assets/images/aboutus/aboutus.mp4');
-        setPosterSrc('/assets/images/Home/hero-min.avif');
+        setPosterSrc('https://res.cloudinary.com/dmmeqgdhv/video/upload/v1746764557/2Mb_Optimized_Easy_Floors_Website_About_Us_Video_3_mqsuwo.mp4');
       }
     };
 
@@ -40,14 +40,16 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             className="w-full h-full object-cover hidden sm:block"
           /> */}
          <video
-      src={videoSrc || ""}
-      poster={posterSrc || ""}
-      className="w-full h-full object-cover"
-      autoPlay
-      muted
-      loop
-      playsInline
-      preload="metadata"
+          src={videoSrc || ""}
+          poster={posterSrc || ""}
+          className="w-full h-full object-cover"
+          width="320" height="240"
+          
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
          />
           {/* <Image
             src={item.backgroundImageMobile}
