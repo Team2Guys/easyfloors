@@ -12,7 +12,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
     const handleResize = () => {
       if (window.innerWidth < 640) {
         setVideoSrc('https://res.cloudinary.com/dmmeqgdhv/video/upload/v1746768173/Mobile_Version-Easy_Floors_Website_About_Us_Video_3_e1wgvq.mp4');
-        setPosterSrc('/assets/images/Home/hero-minmobile.avif');
+        setPosterSrc('https://res.cloudinary.com/dmmeqgdhv/image/upload/v1746771377/hero-minmobile_h7wecq.avif');
       } else {
         setVideoSrc('https://res.cloudinary.com/dmmeqgdhv/video/upload/v1746764557/2Mb_Optimized_Easy_Floors_Website_About_Us_Video_3_mqsuwo.mp4');
         setPosterSrc('/assets/images/Home/hero-min.avif');
