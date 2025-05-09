@@ -42,7 +42,7 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
          <video
           src={videoSrc || ""}
           poster={posterSrc || ""}
-          className="w-full h-full object-cover"
+          className="w-full object-cover h-[320px] sm:h-[600px] xl:h-[885px] "
           width={320} height={240}
           autoPlay
           muted
