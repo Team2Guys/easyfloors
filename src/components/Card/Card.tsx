@@ -100,8 +100,8 @@ const Card: React.FC<productCardProps> = ({
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
               <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
                            product,
-                           84,
-                           84,
+                           19,
+                           19,
                            2.4, 
                            1,
                            product.subcategory?.name || "",
@@ -121,8 +121,8 @@ const Card: React.FC<productCardProps> = ({
                onClick={() => {
                   handleAddToStorage(
                     product,
-                    84,
-                    84,
+                    19,
+                    19,
                     2.4, 
                     1,
                     product.subcategory?.name || "",
