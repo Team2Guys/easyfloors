@@ -98,7 +98,7 @@ const Card: React.FC<productCardProps> = ({
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-              {!isAccessories &&
+              {isAccessories &&
               <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
                            product,
                            19,
