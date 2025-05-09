@@ -16,6 +16,7 @@ const Footerlinks = dynamic(() => import('./Footerlinks'));
 
 import SocialIcon from 'components/Reusable/social-icon';
 import { getSubcategoryOrder } from 'data/home-category';
+import { defaultOrder } from 'data/accessory';
 
 
 const Footer = () => {
@@ -42,22 +43,10 @@ const Footer = () => {
         getCategories();
     }, []);
 
-    const prioritizedOrder = [
-        "Reducer",
-        "T Profile",
-        "Stair Nose",
-        "Quarter Round",
-        "L Shape Skirting 10cm",
-        "L Shape Skirting 12cm",
-        "L Shape Skirting 15cm",
-        "Skirting 8cm",
-        "Skirting 12cm",
-        "Skirting 15cm",
-    ];
-
+  
     const customSort = (a: { name: string }, b: { name: string }) => {
-        const aIndex = prioritizedOrder.indexOf(a.name);
-        const bIndex = prioritizedOrder.indexOf(b.name);
+        const aIndex = defaultOrder.indexOf(a.name);
+        const bIndex = defaultOrder.indexOf(b.name);
 
         if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
         if (aIndex !== -1) return -1;
