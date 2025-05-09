@@ -18,7 +18,7 @@ import SocialIcon from 'components/Reusable/social-icon';
 import { getSubcategoryOrder } from 'data/home-category';
 import { defaultOrder } from 'data/accessory';
 
-
+ 
 const Footer = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
