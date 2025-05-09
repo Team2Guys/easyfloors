@@ -43,7 +43,6 @@ const Footer = () => {
     }, []);
 
     const prioritizedOrder = [
-        "Skirting",
         "Reducer",
         "T Profile",
         "Stair Nose",
@@ -51,6 +50,9 @@ const Footer = () => {
         "L Shape Skirting 10cm",
         "L Shape Skirting 12cm",
         "L Shape Skirting 15cm",
+        "Skirting 8cm",
+        "Skirting 12cm",
+        "Skirting 15cm",
     ];
 
     const customSort = (a: { name: string }, b: { name: string }) => {
