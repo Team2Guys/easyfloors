@@ -61,6 +61,8 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
+  
+
 
   return (
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
