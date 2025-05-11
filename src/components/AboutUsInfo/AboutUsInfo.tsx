@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { TAboutUsProps } from "types/types";
 
+
+
 const AboutUsInfo: React.FC<TAboutUsProps> = ({ sections }) => {
     return (
         <div className="space-y-5 sm:space-y-10 md:pt-8  font-inter ">
