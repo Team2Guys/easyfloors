@@ -50,6 +50,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         custom_url
         stock
         posterImageUrl
+        hoverImageUrl
         sizes
         featureImages
         productImages
@@ -131,6 +132,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         description
         sizes
         BannerImage
+        price
       }
       products {
         id
@@ -426,6 +428,7 @@ export const FETCHSUBCAT = gql`
       posterImageUrl
       custom_url
       price
+      sizes
       products {
         id
         name

@@ -30,13 +30,13 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
 
   return (
     <div
-      className="relative font-inter capitalize font-light"
+      className="relative font-inter capitalize font-light pb-6"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleMouseLeave}
     >
       <Link
-        className={`text-11 xl:text-13 2xl:text-13 3xl:text-16 capitalize ${pathname === `/${href}` ? "bg-gray-light p-2 rounded-xl" : "hover:bg-gray-light pb-6"}`}
+        className={`text-11 xl:text-13 2xl:text-13 3xl:text-16 capitalize ${pathname === `/${href}` ? "bg-gray-light p-[6px] xl:p-2 rounded-xl" : "hover:bg-gray-light p-[6px]  xl:p-2 rounded-xl "}`}
         href={`/${href}`}
       >
         {label}

@@ -25,16 +25,16 @@ interface CartPageProps {
 const CartPage = ({ products }: CartPageProps) => {
   const { Panel } = Collapse;
   const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('Enter Emirate');
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
-
   const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
+  const allItemsAreFreeSamples = mergedCart.every(item => item.isfreeSample === true);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -172,45 +172,51 @@ const CartPage = ({ products }: CartPageProps) => {
   };
   
   // Update your state handlers in the CartPage component
-  const handleStateSelect = (state: string) => {
-    setSelectedCity(state);
-    localStorage.setItem('selectedCity', JSON.stringify(state));
-    
-    // Recalculate shipping fee when city changes
-    const fee = calculateShippingFee(subTotal, selectedShipping, state);
-    setSelectedFee(fee);
-    
-    // Update total
-    const totalBeforeTax = subTotal + fee;
-    setTotal(totalBeforeTax);
-  };
+ const handleStateSelect = (state: string) => {
+  setSelectedCity(state);
+  localStorage.setItem('selectedEmirate', JSON.stringify(state));
+
+  // If not Dubai, force standard shipping
+  if (state !== 'Dubai') {
+    setSelectedShipping("standard");
+  }
+
+  const fee = calculateShippingFee(subTotal, state === "Dubai" ? selectedShipping : "standard", state);
+  setSelectedFee(fee);
+
+  const totalBeforeTax = subTotal + fee;
+  setTotal(totalBeforeTax);
+};
   
   const handleShippingSelect = (type: string) => {
-    setSelectedShipping(type);
-    localStorage.setItem('selectedShipping', type);
-  
-    // If user selects "self-collect", auto-select Dubai
-    if (type === "self-collect") {
-      setSelectedCity("Dubai");
-      localStorage.setItem('selectedEmirate', JSON.stringify("Dubai"));
-  
-      const fee = calculateShippingFee(subTotal, type, "Dubai");
-      setSelectedFee(fee);
-      setTotal(subTotal + fee);
-    } else {
-      // Only calculate if city is selected
-      if (selectedCity) {
-        const fee = calculateShippingFee(subTotal, type, selectedCity);
-        setSelectedFee(fee);
-        setTotal(subTotal + fee);
-      }
-    }
-  };
+  setSelectedShipping(type);
+  localStorage.setItem('selectedShipping', type);
+
+  if (type === "self-collect") {
+    // Save previous city before overriding
+    setSelectedCity("Dubai");
+    localStorage.setItem('selectedEmirate', JSON.stringify("Dubai"));
+
+    const fee = calculateShippingFee(subTotal, type, "Dubai");
+    setSelectedFee(fee);
+    setTotal(subTotal + fee);
+  } else {
+    // Restore previous city if it exists
+    const cityToUse = selectedCity;
+
+    setSelectedCity(cityToUse);
+    localStorage.setItem('selectedEmirate', JSON.stringify(selectedCity));
+
+    const fee = calculateShippingFee(subTotal, type, cityToUse);
+    setSelectedFee(fee);
+    setTotal(subTotal + fee);
+  }
+};
 
   useEffect(() => {
     localStorage.setItem('shipping', JSON.stringify(shipping));
     localStorage.setItem('shippingFee', JSON.stringify(selectedFee));
-    localStorage.setItem('selectedCity', JSON.stringify(selectedCity));
+    localStorage.setItem('selectedEmirate', JSON.stringify(selectedCity));
 
   },[selectedCity, selectedShipping]);
 
@@ -291,7 +297,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   <>
                                   <p className='text-12 sm:text-14 2xl:text-17'>
                                   {item.isAccessory? "Price Per Piece: ": "Price Per box: "} 
-                                  <span className='font-bold'><span className="font-currency font-normal text-16 2xl:text-20"></span> {item.pricePerBox.toFixed(2)}</span>
+                                  <span className='font-bold'><span className="font-currency font-normal text-16 2xl:text-20"></span> {item.pricePerBox && item.pricePerBox.toFixed(2)}</span>
                                   </p>
                                 <p className='text-12 sm:text-14 2xl:text-17'>
                                   No. Of Boxes:
@@ -368,7 +374,9 @@ const CartPage = ({ products }: CartPageProps) => {
                       <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                         <div className=' col-span-10 xl:col-span-6'>
                           <div className='flex gap-4'>
-                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]' src={item.image ?? '/default-image.png'} alt="cart" />
+                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]'
+                             src={item?.matchedProductImages?.imageUrl ?? item.image ?? '/default-image.png'} alt="cart"
+                            />
                             <div>
                               <p className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
@@ -378,11 +386,9 @@ const CartPage = ({ products }: CartPageProps) => {
                               Total Required:
                                   <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
                               </p> 
-                              {item?.selectedColor?.color &&
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                              Color:<span className='font-bold'> {item?.selectedColor?.color || ""}</span>
+                              Color:<span className='font-bold'> {item?.selectedColor?.colorName || "White"}</span>
                               </p> 
-                              }
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                                   <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
@@ -449,20 +455,22 @@ const CartPage = ({ products }: CartPageProps) => {
                     key="1"
                     className="!border-b-0"
                   >
+                {selectedCity === "Dubai" && !allItemsAreFreeSamples && (
                     <div
-                      className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"
-                        }`}
+                      className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
+                        selectedShipping === "express" ? "border-primary" : "border-transparent"
+                      }`}
                       onClick={() => handleShippingSelect("express")}
                     >
                       <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                      <div className='text-11 xs:text-16'>
-                        <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                        <p className="text-11 xs:text-16">delivery <strong>Next day delivery</strong></p>
-                        <p className="text-11 xs:text-16">Shipping Fee:</p>
-                        <p>All Emirates- <strong><span className="font-currency font-normal text-18"></span> 150</strong>,</p>  
+                      <div className="text-11 xs:text-16">
+                        <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
+                        <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
+                        <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span> 150</strong></p>
                         <p>Free shipping for all orders above <strong><span className="font-currency font-normal text-18"></span> 1000</strong></p>
                       </div>
                     </div>
+                  )}
                     <div
                       className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
                         }`}
@@ -470,7 +478,7 @@ const CartPage = ({ products }: CartPageProps) => {
                     >
                       <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
-                        <strong className="text-15 xs:text-20">Standard Shipping:</strong>
+                        <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
                         <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
                         <p className="text-11 xs:text-16">
                           <span>Shipping Fee:</span> <strong>Free</strong>

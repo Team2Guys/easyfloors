@@ -267,8 +267,8 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [
   {
-    backgroundImage: "/assets/images/Home/hero-min.avif",
-    backgroundImageMobile: "/assets/images/Home/hero-minmobile.avif",
+    // backgroundImage: "/assets/images/Home/hero-min.avif",
+    // backgroundImageMobile: "/assets/images/Home/hero-minmobile.avif",
     // backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744112788/hero-min_2_ixg8qo.webp",
     offerText: "Limited Time Offer",
     highlight: "",
@@ -348,7 +348,7 @@ export const footerData = {
   company: {
     name: 'easy floors',
     description:
-      'Founded with a passion for quality and design. Easyfloors is committed to craftsmanship, customer satisfaction and great value for money.',
+      'Founded with a passion for quality and design. Easyfloors is all about top-notch quality, happy customers, and awesome deals.',
   },
   contact: {
     address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',
@@ -556,7 +556,7 @@ export const faqs: FAQItem[] = [
   {
     id: 3,
     question: "How do I know which flooring material is best for my space?",
-    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, consult with a trusted flooring company for expert recommendations.",
+    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, talk to our experts at the click of a button by WhatsApp.",
   },
 ];
 
@@ -566,15 +566,15 @@ export const boxData: BoxData[] = [
     id: 1,
     title: 'Need help with measurement?',
     description: `We have a detailed How to Measure Guide to make it easy. If you need further assistance, feel free to contact us—we're here to help!`,
-    buttonText: 'Learn More',
+    buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/measure1.png',
     link: '/measurement-appointment',
   },
   {
     id: 2,
     title: 'Need help with installation?',
-    description: `Our easy click-lock system makes installation simple—no glue or nails are required. We can connect you with trusted installers for professional assistance.`,
-    buttonText: 'Learn More',
+    description: `Our easy click-lock system makes installation simple—no glue or nails are required. If self-fitting isn’t your thing, let us take care of the hassle. One call or message and we’ll send our expert teams to take care of the installation.`,
+    buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/Vectorrg.png',
     link: '/help-with-installations',
   }

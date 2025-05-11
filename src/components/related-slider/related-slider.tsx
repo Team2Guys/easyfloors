@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import Card from "components/Card/Card";
 import Container from "components/common/container/Container";
@@ -11,6 +11,7 @@ import { RelatedSliderProps } from "types/types";
 import SliderSkaleton from "components/skaletons/slider-skaleton";
 
 const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
+  const [dragging, setDragging] = useState(false);
   const settings = {
     dots: true,
     infinite: false,
@@ -18,6 +19,11 @@ const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
+    beforeChange: () => setDragging(true),
+    afterChange: () => {
+      // Delay reset to avoid click right after swipe
+      setTimeout(() => setDragging(false), 100);
+    },
     appendDots: (dots: React.ReactNode) => (
       <div
         style={{
@@ -71,6 +77,7 @@ const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
                   features={features}
                   sldier
                   isAccessories={isAccessories}
+                  dragging={dragging}
                 />
               </div>
             ))}

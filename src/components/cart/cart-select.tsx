@@ -5,7 +5,7 @@ import { CartSelectProps } from "types/type";
 
 const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedState, setSelectedState] = useState("Emirate");
+  const [selectedState, setSelectedState] = useState("Enter Emirate");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const handleSelect = (state: string) => {

@@ -1,18 +1,36 @@
-import Image from "next/image";
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { TiArrowRight } from "react-icons/ti";
 import { HeroMainProps } from "types/type";
+import SaleTimer from "./SaleTimer";
 
 const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
+  const [videoSrc, setVideoSrc] = useState('');
+  const [posterSrc, setPosterSrc] = useState('');
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setVideoSrc('https://res.cloudinary.com/dmmeqgdhv/video/upload/v1746768173/Mobile_Version-Easy_Floors_Website_About_Us_Video_3_e1wgvq.mp4');
+        setPosterSrc('https://res.cloudinary.com/dmmeqgdhv/image/upload/v1746771377/hero-minmobile_h7wecq.avif');
+      } else {
+        setVideoSrc('https://res.cloudinary.com/dmmeqgdhv/video/upload/v1746764557/2Mb_Optimized_Easy_Floors_Website_About_Us_Video_3_mqsuwo.mp4');
+        setPosterSrc('/assets/images/Home/hero-min.avif');
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   return (
-    <div className="relative flex flex-col w-full sm:h-[600px] xl:h-[885px]">
+    <div className="relative flex flex-col w-full h-[320px] sm:h-[600px] xl:h-[885px]">
       {items.map((item, index) => (
         <div
           key={index}
           className="relative w-full h-[320px] sm:h-[600px] xl:h-[885px]"
         >
-          <Image
+          {/* <Image
             src={item.backgroundImage}
             alt="hero"
             priority
@@ -20,8 +38,19 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             height={600}
             loading="eager"
             className="w-full h-full object-cover hidden sm:block"
-          />
-            <Image
+          /> */}
+         <video
+          src={videoSrc || ""}
+          poster={posterSrc || ""}
+          className="w-full object-cover h-[320px] sm:h-[600px] xl:h-[885px] "
+          width={320} height={240}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+         />
+          {/* <Image
             src={item.backgroundImageMobile}
             alt="hero"
             priority
@@ -29,20 +58,23 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             height={320}
             loading="eager"
             className="w-full h-full object-cover block sm:hidden"
-            />
+          /> */}
           <div className="bg-background">
             <div className="absolute top-[6%] sm:top-[20%] lg:top-[14%] bg-background left-4 sm:left-0 opacity-90 xs:opacity-95 p-2 sm:p-6 md:p-8 w-[65%] xs:w-[58%] sm:w-[270px] md:w-[300px] lg:w-[400px] xl:w-[500px] shadow-md">
               <div className="flex flex-col justify-start items-start font-inter text-black font-light space-y-1 sm:space-y-3 lg:space-y-4 sm:pl-4 md:pl-5 lg:pl-12 xl:pl-16">
-                <p className="text-12 sm:text-sm">{item.offerText}</p>
+                <div className="flex justify-between items-center w-full text-11 xs:text-12 sm:text-sm">
+                  <p className="text-11 xs:text-12 sm:text-sm">{item.offerText}</p>
+                  <SaleTimer time='2025-05-27T23:59:59' />
+                </div>
                 <h2 className="text-14 sm:text-2xl lg:text-[35px] xl:text-5xl leading-[1.2] sm:leading-[1.4] md:leading-[1.6] xl:leading-[67.2px]">
                   Starting From Just <span className='font-currency font-normal text-18 sm:text-3xl lg:text-[42px] xl:text-[55px]'></span>49 Per Square Metre.
                 </h2>
-                <p className="text-12 sm:text-sm md:text-base sm:leading-6 md:leading-7 w-full">
+                <p className="text-12 sm:text-sm md:text-base sm:leading-6 md:leading-7 w-full text-justify">
                   {item.description}
                 </p>
                 <Link
                   href={item.buttonLink}
-                  className="px-2 py-2 sm:px-5 sm:py-3 xl:px-16 lg:px-6 lg:py-7 text-white bg-primary font-semibold xs:font-medium text-12 sm:text-sm lg:text-20 transition inline-block"
+                  className="w-full px-2 py-2 sm:px-5 sm:py-3 xl:px-16 lg:px-6 lg:py-7 text-white bg-primary font-semibold xs:font-medium text-12 sm:text-sm lg:text-20 transition inline-block text-center"
                 >
                   {item.buttonText}
                 </Link>
@@ -61,9 +93,9 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
               <div className=" flex justify-start items-center sm:gap-2 mt-1 lg:mt-3 ">
                 <div className="w-full"><span className='font-inter text-14 lg:text-xl sm:font-semibold font-normal '>Starting From <span className='font-currency font-normal text-[16px] lg:text-[25px]'></span> 49/m²</span></div>
                 <div className="w-fit mt-1">
-                <TiArrowRight size={25}  />
+                  <TiArrowRight size={25} />
                 </div>
-                
+
               </div>
             </Link>
           </div>

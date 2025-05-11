@@ -16,20 +16,25 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
     Colours: [],
-    thicknesses: [],
     commercialWarranty: [],
     residentialWarranty: [],
+    thicknesses: [],
     plankWidth: [],
+    plankLength: []
   });
   
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
-  const [priceValue, setPriceValue] = useState<[number, number]>([0, 149]);
+  const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
   useEffect(() => {
-    if (isSubCategory && subCategoryData) {
-      setData(subCategoryData);
+    if (isSubCategory) {
+      const filtered = categoryData.products?.filter(
+        product => product.subcategory?.custom_url === subcategory
+      );
+      const pushMatchingProducts = {...subdescription, products: filtered}
+      setData(pushMatchingProducts);
     } else {
       setData(categoryData)
     }
@@ -55,6 +60,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     subcategory,
     isWaterProof,
   ]);
+
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"

@@ -76,6 +76,7 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string, sub
     return subcategories.filter((sub) => sub.custom_url === subCategoryUrl);
   };
   const matchingSubCategory = getMatchingSubCategory(findCategory.subcategories, subcategory);
+
   return (
     <Suspense fallback="Loading .....">
       <Category catgories={filteredCategories} categoryData={findCategory} slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />

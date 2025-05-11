@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'Create Your Easy Floors Account | Join Our Flooring Community',
     description: 'Sign up with Easy Floors to get access to exclusive offers, track your orders, and request free samples. Fast registration and instant access.',
     url: '/signup',
-    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
   },

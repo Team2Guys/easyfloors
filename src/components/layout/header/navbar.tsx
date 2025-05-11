@@ -72,14 +72,14 @@ const pathname = usePathname()
             <Image
               width={400}
               height={400}
-              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
-              src="/assets/images/logo.png"
+              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto pb-2"
+              src="/assets/images/logo.webp"
               alt="logo"
             />
           </Link>
         </div>
-        <div className="w-8/12 lg:w-[68%] 2xl:w-[70%] 3xl:w-[67%]  max-lg:flex max-lg:justify-center">
-          <div className="hidden lg:flex items-center gap-2 lg:gap-3 xl:gap-5 w-fit h-16 justify-between capitalize font-light whitespace-nowrap relative overflow-hidden">
+        <div className="w-8/12 lg:w-[68%] 2xl:w-[65%] 3xl:w-[65%]  max-lg:flex max-lg:justify-center">
+          <div className="hidden lg:flex items-end gap-0 xl:gap-1 2xl:gap-5 w-fit h-16 justify-between capitalize font-light whitespace-nowrap relative overflow-hidden">
             {menuItems.map((item, index) => (
               <Megamenu
                 key={index}
@@ -92,7 +92,7 @@ const pathname = usePathname()
           </div>
           <SearchBar className="block lg:hidden" productData={products} />
         </div>
-        <div className="w-2/12 lg:w-[22%] xl:w-[20%] 2xl:w-[20%] 3xl:w-[23%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
+        <div className="w-2/12 lg:w-[25%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
           <SearchBar className="lg:block hidden" productData={products} />
           <UserIcon className="hidden lg:flex" />
           <div className="lg:hidden flex justify-end">

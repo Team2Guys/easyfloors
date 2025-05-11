@@ -13,7 +13,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
   return (
     <div className="py-1">
       <button
-        className="flex items-center gap-2 w-full text-left text-black  text-14"
+        className="flex items-center gap-2 w-full text-left text-black  text-14 font-inter"
         onClick={() => setIsOpen(!isOpen)}
       >
         {isOpen ? <FiChevronRight /> : <FiChevronDown />}

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { MouseEvent, useState } from "react";
+import { lazy, MouseEvent, useState } from "react";
 import { FiEye, FiHeart } from "react-icons/fi";
 import { Category } from "types/cat";
 import { productCardProps } from "types/PagesProps";
@@ -11,6 +11,11 @@ import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
 import { toast } from "react-toastify";
 import { handleAddToStorage } from "lib/carthelper";
+import CartIcon from "components/svg/cart-icon";
+import Collapsearrow from "components/svg/collapse-arrow";
+import Leftright from "components/svg/leftright";
+import TwoArrow from "components/svg/twoarrow";
+const FreeSample = lazy(() => import('components/svg/free-sample'))
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
 );
@@ -24,7 +29,7 @@ const Card: React.FC<productCardProps> = ({
   categoryData,
   isAccessories,
   isSoldOut = false,
-  subCategoryFlag,
+  dragging
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
@@ -61,14 +66,21 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
-  
-
+  const selectedColor = (product as IProduct)?.featureImages?.find(
+    (img) => img.color === (product as IProduct)?.productImages?.[0]?.colorCode
+  );
 
   return (
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div>
         <div className="relative">
-          <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}>
+          <Link className="outline-none" onClick={(e) => {
+          if (dragging) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }} href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
+          >
             <Image
               src={product.posterImageUrl?.imageUrl ?? ''}
               alt={product.posterImageUrl?.altText ?? " "}
@@ -85,12 +97,33 @@ const Card: React.FC<productCardProps> = ({
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
+              {isAccessories &&
+              <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
+                           product,
+                           19,
+                           19,
+                           2.4, 
+                           1,
+                           product.subcategory?.name || "",
+                           categoryData?.name || "Accessories",
+                           "freeSample",
+                           "productImages" in product ? product.productImages?.[0]?.imageUrl ?? "" : "",
+                           product?.boxCoverage,
+                           "m",
+                           selectedColor,
+                       
+                           
+                          )}
+              >
+                <FreeSample />
+              </button>
+              }
               <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
                onClick={() => {
                   handleAddToStorage(
                     product,
-                    84,
-                    84,
+                    19,
+                    19,
                     2.4, 
                     1,
                     product.subcategory?.name || "",
@@ -148,43 +181,22 @@ const Card: React.FC<productCardProps> = ({
             className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-between"}`}
           >
             {product.sizes.map((feature, index) => (
-              <div key={index} className="flex gap-4 w-full justify-between">
+              <div key={index} className="flex gap-1 xsm:gap-4 w-full justify-between">
                 {feature.width &&
                 <div className="flex justify-between gap-1 items-center">
-                  <Image
-                    src={features[0].icon}
-                    alt="Icon"
-                    width={features[0].width}
-                    height={features[0].height}
-                    loading="lazy"
-                    className="text-gray-500 cursor-pointer hover:text-red-500"
-                  />
-                  <span className="text-[7px] text-black md:text-[12px]">{feature.width}</span>
+                  <Leftright/>
+                  <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.width}</span>
                 </div>
                 } 
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
-                    <Image
-                      src={features[1].icon}
-                      alt="Icon"
-                      width={features[1].width}
-                      height={features[1].height}
-                      loading="lazy"
-                      className="text-gray-500 cursor-pointer hover:text-red-500"
-                    />
-                    <span className="text-[7px] text-black md:text-[12px]">{feature.thickness}</span>
+                    <Collapsearrow/>
+                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
                 {feature.height &&
                 <div className="flex justify-between gap-1 items-center">
-                  <Image
-                    src={features[2].icon}
-                    alt="Icon"
-                    width={features[2].width}
-                    loading="lazy"
-                    height={features[2].height}
-                    className="text-gray-500 cursor-pointer hover:text-red-500"
-                  />
-                  <span className="text-[7px] text-black md:text-[12px]">{feature.height}</span>
+                  <TwoArrow/>
+                  <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.height}</span>
                 </div>
                 }
               </div>
@@ -226,7 +238,7 @@ const Card: React.FC<productCardProps> = ({
             'price' in product && product.price &&
 
             <p className="text-12 w-full font-medium md:text-14 md:text-left md:w-full xl:text-base text-primary">
-              {isAccessories ? '' : subCategoryFlag ? "Price Starting From:" : 'Only '} <span className="font-currency text-16 md:text-18 xl:text-20 font-normal"></span> <span>{product?.price}</span>
+              {isAccessories ? '' : 'Only '} <span className="font-currency text-16 md:text-18 xl:text-20 font-normal"></span> <span>{product?.price}</span>
               {isAccessories ? '/m' : '/m²'}
             </p>
 
@@ -242,8 +254,8 @@ const Card: React.FC<productCardProps> = ({
                 Out of Stock
               </button>
             ) : (
-              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="border-2 border-primary text-[10px] text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold">
-                Shop Now
+              <Link href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)} className="flex justify-center items-center gap-2 border-2 border-primary text-[10px] text-nowrap text-black hover:bg-primary hover:text-white lg:text-sm md:px-3 md:py-2 md:text-[10px] px-3 py-1.5 transition whitespace-nowrap font-semibold hover:fill-white">
+                <CartIcon /> Shop Now
               </Link>
             )}
 

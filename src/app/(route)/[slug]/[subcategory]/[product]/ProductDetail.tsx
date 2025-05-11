@@ -42,7 +42,7 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
       <Container>
         <Features items={featureItems} />
       </Container>
-      <RelatedSlider products={ProductInfo.slice(0, 5)}/>
+      <RelatedSlider products={productData?.acessories?.slice(0, 5) || []} isAccessories/>
     </div>
   );
 };

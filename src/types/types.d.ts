@@ -1,4 +1,4 @@
-import { FilterState } from "./cat";
+import { FilterState, ISUBCATEGORY } from "./cat";
 import { IProduct } from "./prod";
 
 export interface SocialLink {
@@ -80,7 +80,7 @@ export interface TAutoVideoProps {
 export interface FIlterprops {
   className?: string;
   catgories: Category[];
-  category: Category;
+  category?: Category;
   setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>;
   isWaterProof: boolean | null | undefined;
   setSelectedProductFilters: React.Dispatch<React.SetStateAction<FilterState>>;
@@ -89,6 +89,8 @@ export interface FIlterprops {
   setPriceValue: React.Dispatch<React.SetStateAction<[number, number]>>;
   priceValue: [number, number];
   catSlug: string
+  isColection?: boolean
+  sortedSubcategories?: ISUBCATEGORY[]
 }
 
 export type SelectedFilter =
@@ -162,6 +164,7 @@ export interface AccessoriesPopupProps {
   isOpen: boolean;
   onClose: () => void;
   products:IProduct[];
+  sizes?: Array<{width?: string, height?: string, thickness?: string }>
 }export interface InputProps {
   type: string;
   name: string;
@@ -180,6 +183,7 @@ export interface ProductFilterParams {
   selectedProductFilters: FilterState;
   isWaterProof: boolean | null | undefined;
   subcategory?: string;
+  subcategories?: ISUBCATEGORY[]
 }
 
 

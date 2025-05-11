@@ -15,6 +15,7 @@ import AmCategory from "components/Categories/AmCategory";
 import CategorySlider from "components/CategorySlider/category-slider";
 import { FETCH_ALL_WHAT_AM_I, FETCH_HEADER_CATEGORIES } from "graphql/queries";
 import { ICategory } from "types/type";
+import { whatAmISorting } from "data/home-category";
 
 export default async function Home() {
 const [ categories , subCategories] = await Promise.all([fetchCategories(FETCH_HEADER_CATEGORIES) , fetchSubCategories(FETCH_ALL_WHAT_AM_I)])
@@ -30,6 +31,11 @@ const sortedCategories = categories?.sort((a: ICategory, b: ICategory) => {
 });
 
 
+const sortedSubcategories = subCategories.sort(
+  (a: ICategory, b: ICategory) =>
+    whatAmISorting.indexOf(a.name) - whatAmISorting.indexOf(b.name)
+)
+
   return (
     <>
       <HeroMain items={heroItems} />
@@ -39,7 +45,7 @@ const sortedCategories = categories?.sort((a: ICategory, b: ICategory) => {
       <CategorySlider categories={sortedCategories} />
       <Layers />
       <FloorItems />
-      <AmCategory subCategories={subCategories} />
+      <AmCategory subCategories={sortedSubcategories} />
       <SampleBanner/>
       <ImageCompare />
       <UserInfo />
