@@ -348,7 +348,7 @@ export const footerData = {
   company: {
     name: 'easy floors',
     description:
-      'Founded with a passion for quality and design. Easyfloors is committed to craftsmanship, customer satisfaction and great value for money.',
+      'Founded with a passion for quality and design. Easyfloors is all about top-notch quality, happy customers, and awesome deals.',
   },
   contact: {
     address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',

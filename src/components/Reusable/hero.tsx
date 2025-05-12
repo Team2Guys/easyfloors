@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
   return (
-    <div className="relative flex flex-col w-full sm:h-[600px] xl:h-[885px]">
+    <div className="relative flex flex-col w-full h-[320px] sm:h-[600px] xl:h-[885px]">
       {items.map((item, index) => (
         <div
           key={index}
