@@ -18,20 +18,10 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             priority
             fill
             loading="eager"
-            className="w-full h-full object-cover"
-              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 100vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 100vw"
 
           />
 
-          {/* <Image
-            src={item.backgroundImageMobile}
-            alt="hero"
-            priority
-            width={400}
-            height={320}
-            loading="eager"
-            className="w-full h-full object-cover block sm:hidden"
-          /> */}
           <div className="bg-background hidden sm:block">
             <div className="absolute top-[6%] sm:top-[20%] lg:top-[14%] bg-background left-4 sm:left-0 opacity-90 xs:opacity-95 p-2 sm:p-6 md:p-8 w-[65%] xs:w-[58%] sm:w-[270px] md:w-[300px] lg:w-[400px] xl:w-[500px] shadow-md">
               <div className="flex flex-col justify-start items-start font-inter text-black font-light space-y-1 sm:space-y-3 lg:space-y-4 sm:pl-4 md:pl-5 lg:pl-12 xl:pl-16">
