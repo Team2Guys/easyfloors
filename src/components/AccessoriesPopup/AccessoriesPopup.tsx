@@ -96,7 +96,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           String(boxCoverage),
           "m",
           product.selectedColor,
-          product.matchedProductImages,
+          product.matchedProductImages?.[0] || product.posterImageUrl,
 
         );
       }
