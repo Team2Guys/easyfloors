@@ -15,7 +15,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
   if (!isOpen) return null;
-  const boxCoverage = 1; // Coverage in square meters
+  const boxCoverage = 1; 
 
   const toggleSelect = (id: string | number) => {
     const idStr = String(id);
@@ -105,6 +105,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     onClose();
   };
 
+
+  console.log(products, "productData")
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
       <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-6xl relative pb-20">
@@ -127,10 +129,10 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                     disabled={Number(product.stock) <= 0}
                   />
                   
-                  <Image width={1000} height={1000} src={product?.matchedProductImages?.imageUrl ?? product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black absolute hover:opacity-0" />
-                  {product.hoverImageUrl && (
-                    <Image width={1000} height={1000} src={product.hoverImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black" />
-                  )}
+                  <Image width={1000} height={1000} src={product?.matchedProductImages?.[0]?.imageUrl ?? product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black absolute hover:opacity-0" />
+        
+                    <Image width={1000} height={1000} src={product?.matchedProductImages?.[1]?.imageUrl || product?.hoverImageUrl?.imageUrl || product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black" />
+            
                   <div className="flex justify-evenly border-b pb-2 gap-2 sm:gap-4 mt-3">
                       {product.sizes?.map((feature, index) => (
                        <div key={index} className="flex gap-1 xsm:gap-4 w-full justify-between">

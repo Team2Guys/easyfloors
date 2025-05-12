@@ -24,11 +24,9 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     boxCoverage,
   } = calculateProductDetails(area, unit, productData);
   const filteredProducts = (productData?.acessories ?? []).map((product) => {
-    const selectedColor = product.featureImages?.find(
-      (img) => img.color === productData.productImages?.[0]?.colorCode || ""
+    const selectedColor = product.featureImages?.find((img) => img.color === productData.productImages?.[0]?.colorCode || ""
     );
-    const matchedProductImages = product.productImages?.find(
-      (img) => img.colorCode === productData.productImages?.[0]?.colorCode || ""
+    const matchedProductImages = product.productImages?.filter((img) => img.colorCode === productData.productImages?.[0]?.colorCode || ""
     );
   
     return {
@@ -40,9 +38,8 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
   const selectedColor = productData?.featureImages?.find(
     (img) => img.color === productData?.productImages?.[0]?.colorCode
   );
-  const matchedProductImages = productData.productImages?.find(
-    (img) => img.colorCode === productData.productImages?.[0]?.colorCode || ""
-  );
+
+  const matchedProductImages = productData.productImages?.find((img) => img.colorCode === productData.productImages?.[0]?.colorCode || "");
   return (
     <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 ${isQuickView ? '2xl:gap-10' : '2xl:gap-20'}  ${className}`}>
       <div className={`w-full ${!isQuickView && '2xl:w-[60%]'} lg:w-[55%]`}>

@@ -64,7 +64,7 @@ export interface IProduct {
     sizes?: Sizes[]
     pricePerBox?: number;
     selectedColor?: ProductImage;
-    matchedProductImages?: ProductImage;
+    matchedProductImages?: ProductImage[];
     lengthPrice?:string
   }
 
