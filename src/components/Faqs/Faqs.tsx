@@ -43,9 +43,7 @@ interface FaqsProps {
                                 </h2>
                             </button>
                             {openIndex === index && (
-                                <div className="pt-5 pb-4 flex gap-4 lg:pl-14 pl-5 text-gray-700  border-t font-normal md:text-lg text-sm">
-                                   {faq.answer}
-                                </div>
+                                <div className="pt-5 pb-4 flex gap-4 lg:pl-14 pl-5 text-gray-700  border-t font-normal md:text-lg text-sm" dangerouslySetInnerHTML={{__html:faq.answer}} />
                             )}
                             <hr className="border-gray-200 " />
                         </div>

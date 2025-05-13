@@ -173,7 +173,7 @@ const Footer = () => {
                         <IoCall size={35} />
                     </Link>
 
-                    <Link href="https://wa.me/971505974385" aria-label="WhatsApp +971505974385" className="bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center w-12 h-12">
+                    <Link href="https://wa.me/971505974385" aria-label="WhatsApp +971505974385" target='_blank' className="bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <FaWhatsapp size={35} />
                     </Link>
                 </div>
