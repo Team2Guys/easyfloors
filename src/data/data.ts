@@ -554,7 +554,7 @@ export const faqs: FAQItem[] = [
   {
     id: 3,
     question: "How do I know which flooring material is best for my space?",
-    answer: `<p>The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, talk to our experts at the click of a button by <a href='${process.env.NEXT_PUBLIC_WHATSAPP}' target='_blank' class='font-semibold text-primary hover:underline'>WhatsApp</a>.</p>`,
+    answer: `<p>The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, talk to our experts at the click of a button by <a href='https://wa.me/${process.env.NEXT_PUBLIC_PHONE_NUMBER?.replace('+', '').replace(/\s+/g, '')}' target='_blank' class='font-semibold text-primary hover:underline'>WhatsApp</a>.</p>`,
   },
 ];
 
