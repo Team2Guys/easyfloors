@@ -239,10 +239,14 @@ const Filters = ({
 
         <Accordion title="Style">
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-            {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
+
+            {/* ECO Logic */}
+            {(catSlug === 'polar-flooring' || catSlug === 'spc-flooring' || catSlug === 'lvt-flooring' || catSlug === 'richmond-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
-                  href={`/${catSlug === 'spc-flooring' ? 'polar' : 'richmond'
+                  href={`/${catSlug === 'polar-flooring' ? 'polar'
+                      : catSlug === 'spc-flooring' ? 'polar'
+                        : 'richmond'
                     }/spc-eco`}
                   className="cursor-pointer hover:text-primary block capitalize"
                 >
@@ -250,37 +254,31 @@ const Filters = ({
                 </Link>
               </li>
             )}
+
+            {/* Herringbone */}
             <li>
               <Link
-                href={`/${catSlug === 'spc-flooring' ? 'polar' :
-                  catSlug === 'polar-flooring' ? 'polar' :
-                    'richmond'
+                href={`/${catSlug === 'spc-flooring' || catSlug === 'polar-flooring' ? 'polar' : 'richmond'
                   }/spc-herringbone`}
                 className="cursor-pointer hover:text-primary block capitalize"
               >
-                herringbone
+                Herringbone
               </Link>
             </li>
-            {(catSlug === 'polar-flooring' ) && (
-              <>
-                <li>
-                  <Link
-                    href="polar/spc"
-                    className="cursor-pointer hover:text-primary block capitalize"
-                  >
-                    Eco
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/polar/lvt"
-                    className="cursor-pointer hover:text-primary block capitalize"
-                  >
-                    Comfort
-                  </Link>
-                </li>
-              </>
+
+            {/* Only for Polar */}
+            {catSlug === 'polar-flooring' && (
+              <li>
+                <Link
+                  href="/polar/lvt"
+                  className="cursor-pointer hover:text-primary block capitalize"
+                >
+                  Comfort
+                </Link>
+              </li>
             )}
+
+            {/* Prime – Only for Richmond, LVT, SPC */}
             {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
@@ -293,6 +291,7 @@ const Filters = ({
             )}
           </ul>
         </Accordion>
+
 
 
         {!isColection && (
