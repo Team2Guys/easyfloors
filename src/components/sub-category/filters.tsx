@@ -154,21 +154,21 @@ const Filters = ({
 
 
   const filterProductsCountHanlder = (key: keyof IfilterValues, ValuesType: string) => {
-    if(isColection){
+    if (isColection) {
       const filterprod = sortedSubcategories?.filter((product: ISUBCATEGORY) => {
-          if(key === 'thicknesses'){
-            const values = product.sizes?.[0].thickness
-            return values == ValuesType;
-          } else if(key === 'plankWidth'){
-            const values = product.sizes?.[0].width
-            return values == ValuesType;
-          } else if(key === 'plankLength'){
-            const values = product.sizes?.[0].height
-            return values == ValuesType;
-          }
-          
+        if (key === 'thicknesses') {
+          const values = product.sizes?.[0].thickness
+          return values == ValuesType;
+        } else if (key === 'plankWidth') {
+          const values = product.sizes?.[0].width
+          return values == ValuesType;
+        } else if (key === 'plankLength') {
+          const values = product.sizes?.[0].height
+          return values == ValuesType;
+        }
+
       })
-  
+
       return filterprod?.length || 0
     }
     const filterprod = category?.products?.filter((product: IProduct) => {
@@ -194,21 +194,21 @@ const Filters = ({
 
         {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
-          if(isColection && category.name === 'ACCESSORIES') return;
+          if (isColection && category.name === 'ACCESSORIES') return;
           let subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
           subcategories = [...subcategories].sort((a, b) => {
             return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
           });
           subcategories = [...subcategories].sort((a, b) => {
-              const orderA = getSubcategoryOrder(a.name);
-              const orderB = getSubcategoryOrder(b.name);
-              if (orderA !== orderB) {
-                return orderA - orderB;
-              } else {
-                return (Number(a.price) || 0) - (Number(b.price) || 0);
-              }
-            });
-          
+            const orderA = getSubcategoryOrder(a.name);
+            const orderB = getSubcategoryOrder(b.name);
+            if (orderA !== orderB) {
+              return orderA - orderB;
+            } else {
+              return (Number(a.price) || 0) - (Number(b.price) || 0);
+            }
+          });
+
           return (
             <Accordion key={index} title={category.name} >
               <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
@@ -261,6 +261,26 @@ const Filters = ({
                 herringbone
               </Link>
             </li>
+            {(catSlug === 'polar-flooring' ) && (
+              <>
+                <li>
+                  <Link
+                    href="polar/spc"
+                    className="cursor-pointer hover:text-primary block capitalize"
+                  >
+                    Eco
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/polar/lvt"
+                    className="cursor-pointer hover:text-primary block capitalize"
+                  >
+                    Comfort
+                  </Link>
+                </li>
+              </>
+            )}
             {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
