@@ -393,73 +393,79 @@ export const categoriesFeatures:CategoryFeatures[] = [
   {
     name: "Richmond SPC Eco",
     features: [
-      "Easy to maintain",
-      "Great wood-look finish",
-      "Perfect for DIY installs",
-      "VOC-free and safe"
+      "Hottest selling collection",
+      "⁠Ideal for large projects",
+      "Most affordable",
+      "Scratch/water resistant",
+      "1220 x 183 x 4mm"
     ],
   },
   {
     name: "Richmond LVT Comfort",
     features: [
-      "UV-protected top layer",
-      "Kid-friendly flooring",
-      "Great for high-traffic zones",
-      "Long-lasting colour retention"
+      "Affordable luxury",
+      "⁠Free underlay with all Polar",
+      "⁠5 year residential warranty",
+      "Water resistant",
+      "640 x 128 x 4mm"
     ],
   },
   {
     name: "Richmond LVT Luxury",
     features: [
-      "Real-wood proportions",
-      "Thick & durable",
-      "Perfect for open-plan spaces",
-      "Flexible for stair installation"
+      "Affordable collection",
+      "⁠Perfect for kitchen and kids areas",
+      "⁠Natural wood finishes",
+      "⁠Free underlay with all Polar",
+      "1220 x 180 x 4mm"
     ],
   },
   {
     name: "Richmond SPC Prime",
     features: [
-      "Wider plank coverage",
-      "5-layer acoustic construction",
-      "Pre-attached comfort underlay",
-      "Reduced footstep sound"
+      "IXPE attached underlay",
+      "⁠Click system",
+      "⁠No gaps installation",
+      "⁠1220 x 183 x 4mm"
     ],
   },
   {
     name: "Richmond SPC Herringbone",
     features: [
-      "Elegant layout pattern",
-      "Water-resistant for wet zones",
-      "Seamless interlocking fit",
-      "Rich, textured finish"
+      "Oversize planks like real wood",
+      "Click system for easy-fitting",
+      "Long lasting, easy maintanence",
+      "Water resistant",
+      "1220 x 228 x 6.5mm"
     ],
   },
   {
     name: "Polar SPC Herringbone",
     features: [
-      "Budget-friendly option",
-      "Free 1mm/2mm foam underlay",
-      "Great alternative to straight planks",
-      "2-year commercial warranty"
+      "IXPE underlay",
+      "15 year residential warranty",
+      "Scratch resistant",
+      "640 x 128mm planks",
+      "5.5mm thickness"
     ],
   },
   {
     name: "Polar LVT",
     features: [
-      "Cushioned impact feel",
-      "Ideal for kitchens & living areas",
-      "User-friendly returns policy",
-      "Excellent for light commercial use"
+      "Water-resistant",
+      "Cushioned feel",
+      "15 year residential warranty",
+      "Slip resistant1220 X 180mm x 5mm thick"
     ],
   },
   {
     name: "Polar SPC",
     features: [
-      "Easy clean surface",
-      "Click lock holds tight",
-      "No shrinking/expansion issues",
-      "Indoor fade-resistant finish"
+      "Easy-clean technology",
+      "No shrinking/expansion",
+      "⁠Water resistant",
+      "Wider luxury plank",
+      "1220 X 228mm"
     ],
   }
 ];
