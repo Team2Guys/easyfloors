@@ -63,8 +63,10 @@ const Product = async ({ params }: { params: Promise<IParams> }) => {
   const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
   if (!productData) return notFound()
 
+   const products = ProductInfo.filter((product: IProduct) => (product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
+
   return (
-    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={ProductInfo} productData={productData} />
+    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={products} productData={productData} />
   );
 };
 

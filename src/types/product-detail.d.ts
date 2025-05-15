@@ -4,8 +4,8 @@ export interface ExtendedThumbnailProps {
   ThumnailImage: ProductImage[];
   ThumnailBottom?: ProductImage[];
   hideThumnailBottom?: boolean;
-  imageheight?: boolean; 
-  onImageChange?:React.Dispatch<SetStateAction<string>>
+  imageheight?: boolean;
+  onImageChange?: React.Dispatch<SetStateAction<string>>
   stickyside?: boolean;
   onColorSelect?: React.Dispatch<SetStateAction<string>>
   stickyside?: boolean;
@@ -14,39 +14,39 @@ export interface ExtendedThumbnailProps {
 }
 
 export interface ThumbnailProps {
-  ThumnailImage: { imageUrl: string,altText:string  }[];
-  ThumnailBottom?: { imageUrl: string; title: string,altText:string }[];
+  ThumnailImage: { imageUrl: string, altText: string }[];
+  ThumnailBottom?: { imageUrl: string; title: string, altText: string }[];
 }
 export interface AdditionalInfoProps {
   description: string;
   AdditionalInformation?: { name: string; detail: string }[];
-  subcategory:string
+  subcategory: string
 }
 
 export interface AreaCalculatorProps {
   setArea: React.Dispatch<SetStateAction<string>>;
-  setUnit: React.Dispatch<SetStateAction<string>>; 
+  setUnit: React.Dispatch<SetStateAction<string>>;
   requiredBoxes: number;
   convertedArea: number;
   area: string;
   unit: string;
   pricePerBox: number;
-  squareMeter:number;
+  squareMeter: number;
   accessories: IProduct[];
 }
 
-export interface PaymentMethodProps{
+export interface PaymentMethodProps {
   showheading?: boolean
-  installments:number
+  installments: number
 }
 
-export interface detailprops{
+export interface detailprops {
   ProductName: string;
-    ProductInfo: IProduct[];
-    MainCategory?: string;
-    subCategory?: string;
-    productData:IProduct
-    accessories?: string;
-    className?: string;
-    isQuickView?: boolean
-  }
+  ProductInfo: IProduct[];
+  MainCategory?: string;
+  subCategory?: string;
+  productData: IProduct
+  accessories?: string;
+  className?: string;
+  isQuickView?: boolean
+}

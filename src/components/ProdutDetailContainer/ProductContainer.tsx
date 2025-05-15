@@ -10,8 +10,7 @@ import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
 import { paymentcard } from "data/cart";
 import { formatAED } from "lib/helperFunctions";
-const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {
-  // const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
+const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView}: detailprops) => {
   const [unit, setUnit] = useState("sqm");
   const [area, setArea] = useState("");
   const {
@@ -38,6 +37,9 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
   const selectedColor = productData?.featureImages?.find(
     (img) => img.color === productData?.productImages?.[0]?.colorCode
   );
+
+
+  
 
   const matchedProductImages = productData.productImages?.find((img) => img.colorCode === productData.productImages?.[0]?.colorCode || "");
   return (
