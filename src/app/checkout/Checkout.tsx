@@ -55,25 +55,32 @@ useEffect(() => {
     setSelectedEmirate(savedEmirate.replaceAll('"', ""));
   }
 }, []);
+
+
 useEffect(() => {
   if (shipping) {
     localStorage.setItem('shipping', JSON.stringify(shipping));
     localStorage.setItem('selectedShipping', JSON.stringify(selectedShipping));
 }
 }, [shipping]);
+
+
 useEffect(() => {
   if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
     setSelectedShipping('standard');
     handleShippingSelect('standard');
   }
 }, [selectedEmirate]);
+
   useEffect(() => {
     const savedShipping = localStorage.getItem('shipping');
+    console.log(savedShipping, "total")
     if (savedShipping) {
       const parsedShipping = JSON.parse(savedShipping);
       handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
     }
-  }, []);
+  }, [subTotal]);
+
   useEffect(() => {
   if (selectedEmirate) {
     localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
@@ -100,7 +107,8 @@ useEffect(() => {
                 handleShippingSelect("standard");
             }
         }
-    }, []);
+    }, [subTotal]);
+
     type FormInitialValues = {
         firstName: string;
         lastName: string;
@@ -133,10 +141,7 @@ useEffect(() => {
                 const freeSamples = await getFreeSamplesCart();
                 setMergedCart([...items, ...freeSamples]);
                 setTotalProducts(items.length);
-                const subTotalPrice = items.reduce(
-                    (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
-                    0
-                );
+                const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),0);
                 setSubTotal(subTotalPrice);
             } catch {
                 toast.error("Error fetching cart items:");
@@ -161,6 +166,7 @@ useEffect(() => {
     }
 
     setSelectedFee(fee);
+    console.log(subTotal, "subTotalPrice", fee)
     setTotal(subTotal + fee);
   };
 
@@ -174,7 +180,8 @@ useEffect(() => {
       shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
     }
     setShipping(shippingData);
-  }, [selectedShipping]);
+  }, [selectedShipping, ]);
+
 
 
     return (
