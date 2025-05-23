@@ -360,7 +360,7 @@ export const blocksData = [
     heading: 'SPC Flooring',
     points: [
       'UV layer that protects against fading and surface wear.',
-      'Wear a layer that is transparent and highly resistant to damage.',
+      'Wear layer that is transparent and highly resistant to damage.',
       'A click-lock system is integrated into its installation structure.',
       'Decorative layer with high-resolution wood or stone designs.',
       'The core layer is made from rigid stone polymer composite material.',
@@ -377,7 +377,7 @@ export const blocksData = [
       'Authentic printed decor layer that mimics natural textures.',
       'Middle stability layer that provides flexibility and structure.',
       'Bottom vinyl layer that enhances resilience and overall strength.',
-      'A click-lock system uses glue-down or floating installation methods. ',
+      'A click-lock system uses the or floating installation methods. ',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291706/layers2_11zon_zatjqm.webp',
   },
