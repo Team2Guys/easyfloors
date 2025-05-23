@@ -270,7 +270,7 @@ export const heroItems: HeroItem[] = [
     offerText: "Limited Time Offer",
     highlight: "",
     description:
-      "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
+      "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (3-4 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/collections",
     flooringType: "SPC Eco • American Walnut",
