@@ -22,7 +22,7 @@ export class SalesProductsResolver {
   } 
 
   @Public()
-  @Mutation(() => paymentStatus)
+  @Mutation(() => paymentStatus,{nullable:true})
   postpaymentStatus(@Args('postpaymentStatus') updatepaymentstatusInput: PaymentQueryDto) {
     return this.salesProductsService.postpaymentStatus(updatepaymentstatusInput);
   }
@@ -31,6 +31,13 @@ export class SalesProductsResolver {
   @Query(() => [paymentStatus], { name: 'AllOrders' })
   findAll() {
     return this.salesProductsService.findAll();
+  }
+
+  
+  @Public()
+  @Query(() => [paymentStatus], { name: 'AllOrdersFree' })
+  findAllFreesample() {
+    return this.salesProductsService.findAllFreesample();
   }
 
   @Public()

@@ -276,5 +276,18 @@ export class SalesProductsService {
 
 
 
+   async findAllFreesample() {
+    try {
+      return await this.prisma.salesProducts.findMany({where:{isfreesample:true}})
+    } catch (error) {
+      customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
+
+    }
+  }
+
+  
+
+
+
 
 }

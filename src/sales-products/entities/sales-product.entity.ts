@@ -146,6 +146,9 @@ export class paymentStatus {
     @Field(()=>Boolean,{nullable:true})
     pending: boolean;
 
+    @Field(()=>Boolean,{nullable:true})
+    isfreesample: boolean;
+
     @Field({nullable:true})
     currency: string;
 
