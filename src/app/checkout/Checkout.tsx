@@ -41,7 +41,10 @@ const Checkout = () => {
     const [selectedEmirate, setSelectedEmirate] = useState("");
     const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
     const [isOtherCity, setIsOtherCity] = useState(false);
-const allItemsAreFreeSamples = mergedCart.every(item => item.isfreeSample === true);
+    const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(false);
+
+
+
     useEffect(() => {
    const cities = emirateCityMap[selectedEmirate] || [];
     const sortedCities = [...cities].sort((a, b) => a.label.localeCompare(b.label));
@@ -55,8 +58,6 @@ useEffect(() => {
     setSelectedEmirate(savedEmirate.replaceAll('"', ""));
   }
 }, []);
-
-console.log(total,subTotal,'subTotal')
 useEffect(() => {
   if (shipping) {
     localStorage.setItem('shipping', JSON.stringify(shipping));
@@ -125,7 +126,7 @@ useEffect(() => {
 
     const handlePayment = async (orderData: FormInitialValues) => {
         try {
-            if(subTotal === 0) return; 
+            if(allItemsAreFreeSamples && !subTotal ) return alert("Free sampnle working"+subTotal)
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
 
@@ -140,6 +141,9 @@ useEffect(() => {
             try {
                 const items = await getCart();
                 const freeSamples = await getFreeSamplesCart();
+                const allItemsAreFreeSamples = freeSamples.every(item => item.isfreeSample === true);
+                seallItemsAreFreeSamples(allItemsAreFreeSamples)
+
                 setMergedCart([...items, ...freeSamples]);
                 setTotalProducts(items.length);
                 const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),0);
