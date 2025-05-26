@@ -219,4 +219,5 @@ model salesProducts {
   paymethod_sub_type String?
   shippingMethod     Json?
   otherCity String?
+  isfreesample Boolean?
 }

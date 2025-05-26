@@ -143,5 +143,8 @@ export class orderEmailInput extends PartialType(CreateOrderInput) {
 
   @Field()
   transactionDate: Date;
+    @Field(()=>Boolean, {nullable:true})
+  isfreesample?: boolean;
 
 }
+

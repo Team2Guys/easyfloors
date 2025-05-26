@@ -293,7 +293,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
    const mailOptions = {
       from: process.env.EMAIL_USER,
       to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1}`,
-      subject: `Order has been confirmed against Order # ${orderId}`,
+      subject: `Order has been confirmed at EF against Order # ${orderId}`,
 
       html: `<!DOCTYPE html>
 <html lang="en">
@@ -625,8 +625,8 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
        <p style="text-align:center;" class="order-para">Dear <b>Customer,</b></p>
        <p style="text-align:center;" class="order-para">Thank you very much for the order <br> you placed with <a
              href="https://easyfloors.ae/">https://easyfloors.ae/</a></p>
-       <a href="#" class="order-button">View Your Order</a>
-       <p style="text-align:center;" class="order-para">Your order has now been sent to the warehouse to prepare for packing and
+       <a href="#" class="order-button"> ${orderDetails.isfreesample ? "View Your Order" : "View Your Free Sample Order"}</a>
+       <p style="text-align:center;" class="order-para">Your ${orderDetails.isfreesample ? "Free Sample order" : "order" } has now been sent to the warehouse to prepare for packing and
           dispatch.</p>
        <p style="text-align:center;" class="order-para">Our team will be in touch soon to arrange the delivery with you.</p>
        <p style="text-align:center;" class="order-para">All The Best,</p>
@@ -657,8 +657,8 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                          </div>
                       </div>
                    </td>
-                   <td class="table-font" style="text-align:center; padding: 10px 2px;">${product.price}</td>
-                   <td class="table-font" style="text-align:center; padding: 10px 2px;">${product.totalPrice}</td>
+                   <td class="table-font" style="text-align:center; padding: 10px 2px;">${product.price || "Free"}</td>
+                   <td class="table-font" style="text-align:center; padding: 10px 2px;">${product.totalPrice || "Free"}</td>
                 </tr>
                 `).join('')}
              </tbody>
@@ -675,7 +675,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                             <th style="padding: 5px 5px 0px 5px;" class="table-font">Name:</th>
                          </tr>
                          <tr>
-                            <td style="padding: 0px 5px 5px 5px; width: 100%;" class="table-font">${(firstName || "")+ "" + lastName}</td>
+                            <td style="padding: 0px 5px 5px 5px; width: 100%;" class="table-font">${(firstName || "") + "" + lastName}</td>
                          </tr>
                          <tr>
                             <th style="padding: 5px 5px 0px 5px;" class="table-font">Email:</th>
@@ -712,7 +712,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                       <table style="border-collapse: collapse;">
                          <tr>
                             <td colspan="5" style="padding: 8px;" class="table-font">Subtotal</td>
-                            <td style="padding: 8px;" class="table-font">${totalPrice}</td>
+                            <td style="padding: 8px;" class="table-font">${totalPrice || "Free"}</td>
                          </tr>
                          <tr style="border-bottom: 2px solid #ccc;">
                             <td colspan="5" style="padding: 8px;" class="table-font">Shipment</td>
@@ -720,7 +720,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                          </tr>
                          <tr>
                             <td colspan="5" style="padding: 8px; font-weight: bold; " class="table-font">Total Incl. VAT</td>
-                            <td style="padding: 8px; font-weight: bold;" class="table-font">${(totalPrice && Number(shipmentFee) + totalPrice) || 0}</td>
+                            <td style="padding: 8px; font-weight: bold;" class="table-font">${(totalPrice && Number(shipmentFee) + totalPrice) || "Free"}</td>
                          </tr>
                       </table>
                    </td>

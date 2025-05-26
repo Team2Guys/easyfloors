@@ -14,6 +14,13 @@ export class SalesProductsResolver {
     return this.salesProductsService.create(createSalesProductInput);
   }
 
+
+  @Public()
+  @Mutation(() => SalesProduct,{nullable:true})
+  freeSample(@Args('createFreesample') createFreesample: CreateOrderInput) {
+    return this.salesProductsService.freeSample(createFreesample);
+  } 
+
   @Public()
   @Mutation(() => paymentStatus)
   postpaymentStatus(@Args('postpaymentStatus') updatepaymentstatusInput: PaymentQueryDto) {
