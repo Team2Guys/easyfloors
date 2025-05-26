@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { ErrorMessage, Form, Formik } from "formik";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
@@ -42,16 +42,8 @@ const Checkout = () => {
     const [selectedEmirate, setSelectedEmirate] = useState("");
     const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
     const [isOtherCity, setIsOtherCity] = useState(false);
+    const [otherCity, setOtherCity] = useState('');
     const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(false);
-
-
-
-    useEffect(() => {
-   const cities = emirateCityMap[selectedEmirate] || [];
-    const sortedCities = [...cities].sort((a, b) => a.label.localeCompare(b.label));
-    sortedCities.push({ value: "Other", label: "Other" });
-    setCityOptions(sortedCities);
-  }, [selectedEmirate]);
 
 useEffect(() => {
   const savedEmirate = localStorage.getItem('selectedEmirate');
@@ -59,6 +51,33 @@ useEffect(() => {
     setSelectedEmirate(savedEmirate.replaceAll('"', ""));
   }
 }, []);
+
+useEffect(() => {
+  if (!selectedEmirate) return;
+
+  // Get and sort city options
+  const cities = emirateCityMap[selectedEmirate] || [];
+  const sortedCities = cities
+    .slice()
+    .sort((a, b) => a.label.localeCompare(b.label));
+
+  // Add "Other" option
+  sortedCities.push({ value: "Other", label: "Other" });
+  setCityOptions(sortedCities);
+
+  // Adjust shipping method if needed
+  if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
+    setSelectedShipping('standard');
+    handleShippingSelect('standard');
+  }
+
+  // Persist selected emirate
+  localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
+
+}, [selectedEmirate]);
+
+
+
 useEffect(() => {
   if (shipping) {
     localStorage.setItem('shipping', JSON.stringify(shipping));
@@ -66,13 +85,6 @@ useEffect(() => {
 }
 }, [shipping]);
 
-
-useEffect(() => {
-  if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
-    setSelectedShipping('standard');
-    handleShippingSelect('standard');
-  }
-}, [selectedEmirate]);
 
   useEffect(() => {
     const savedShipping = localStorage.getItem('shipping');
@@ -83,11 +95,6 @@ useEffect(() => {
     }
   }, [subTotal]);
 
-  useEffect(() => {
-  if (selectedEmirate) {
-    localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
-  }
-}, [selectedEmirate]);
 
     useEffect(() => {
         const savedShipping = localStorage.getItem('shipping');
@@ -199,8 +206,6 @@ useEffect(() => {
     setShipping(shippingData);
   }, [selectedShipping, ]);
 
-
-
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -223,7 +228,6 @@ useEffect(() => {
                     address: "",
                     note: "",
                     terms: false,
-                    otherCity: "",
                 }}
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
@@ -232,7 +236,7 @@ useEffect(() => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: isOtherCity ? values.otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
+                        const NewValues = { ...withoutTerm, city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
 
                         setSubmitting(true);
                         handlePayment(NewValues);
@@ -315,8 +319,8 @@ useEffect(() => {
                                         name="otherCity"
                                         label="Add City"
                                         placeholder="Enter Your City"
-                                        value={values.otherCity}
-                                        onChange={handleChange}
+                                        value={otherCity}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setOtherCity(e.target.value)}
                                     />
                                     )}
 
