@@ -56,7 +56,7 @@ useEffect(() => {
   }
 }, []);
 
-
+console.log(total,subTotal,'subTotal')
 useEffect(() => {
   if (shipping) {
     localStorage.setItem('shipping', JSON.stringify(shipping));
@@ -125,6 +125,7 @@ useEffect(() => {
 
     const handlePayment = async (orderData: FormInitialValues) => {
         try {
+            if(subTotal === 0) return; 
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
 
