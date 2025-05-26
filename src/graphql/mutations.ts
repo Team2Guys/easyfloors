@@ -281,6 +281,16 @@ mutation CreateSalesProduct($createSalesProductInput: CreateOrderInput!) {
 
 
 
+
+export const INITIATE_FREE_SAMPLE = gql`
+mutation freeSample($createFreesample: CreateOrderInput!) {
+  freeSample(createFreesample: $createFreesample) {
+    paymentKey
+  }
+}`
+
+
+
 export  const POST_PAYMENT_STATUS = gql`
 mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
   postpaymentStatus(postpaymentStatus: $postpaymentStatus) {
