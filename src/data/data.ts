@@ -92,7 +92,7 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   Heading: "",
   recalledByCategories: [],
   recalledSubCats: [],
-  whatIamEndpoint:""
+  whatIamEndpoint: ""
 };
 export interface IProductValues {
   id?: number;
@@ -285,7 +285,7 @@ export const featureItems = [
       "Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy.",
     icon: "/assets/images/Home/freee.png",
     buttonText: "Learn More",
-    buttonLink:"/free-sample"
+    buttonLink: "/free-sample"
   },
   {
     title: "Easy payment",
@@ -293,15 +293,15 @@ export const featureItems = [
       "With Tabby or Tamara, split your payment into four easy installments — no hassle, no hidden fees.",
     icon: "/assets/images/Home/card.png",
     buttonText: "Learn More",
-    buttonLink:"/easy-payment"
+    buttonLink: "/easy-payment"
   },
   {
     title: "Delivery",
     description:
-      "Choose Express for a small fee for next-day delivery, or enjoy standard delivery in just 3-4 days anywhere in the UAE.",
+      "Choose Express for a small fee for next-day delivery, or enjoy standard delivery in just 2-3 days anywhere in the UAE.",
     icon: "/assets/images/Home/truck.png",
     buttonText: "Learn More",
-    buttonLink:"/shipping-policy"
+    buttonLink: "/shipping-policy"
   },
   {
     title: "Factory Prices",
@@ -377,7 +377,7 @@ export const blocksData = [
       'Authentic printed decor layer that mimics natural textures.',
       'Middle stability layer that provides flexibility and structure.',
       'Bottom vinyl layer that enhances resilience and overall strength.',
-      'A click-lock system uses the or floating installation methods. ',
+      'The click-lock system uses floating installation method. ',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291706/layers2_11zon_zatjqm.webp',
   },
@@ -389,7 +389,7 @@ export const FloorItemsData = [
 ];
 
 
-export const categoriesFeatures:CategoryFeatures[] = [
+export const categoriesFeatures: CategoryFeatures[] = [
   {
     name: "Richmond SPC Eco",
     features: [
@@ -484,16 +484,16 @@ export const HomeUserInfo = [
     title: 'Budget Friendly',
     description:
       "High-quality flooring doesn't have to cost a fortune. Our durable, stylish options are available at factory prices so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
-      image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438022/budget_11zon_icozkb.webp',
+    image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438022/budget_11zon_icozkb.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
     href: 'about-us'
   },
   {
-    title: 'Overlay Ready',
+    title: 'Install On Any Flat Surface',
     description:
       "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
-   
+
     image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438070/Overlay_Ready_iaqqwr.webp',
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
@@ -586,6 +586,29 @@ export const boxData: BoxData[] = [
 
 export const popupCards: CardData[] = [
   {
+    id: 6,
+    heading: "Polar <br /> SPC Eco",
+    content: [
+      "Lots of timeless styles",
+      "Wood grain finishes",
+      "Water-resistant",
+      "Affordable from <span class='font-currency font-normal text-16 md:text-18'></span> 49.00",
+      "Modern and classic",
+    ],
+  },
+
+  {
+    id: 8,
+    heading: "Polar <br /> LVT Comfort",
+    content: [
+      "Wood-like textured finish",
+      "Durable with 0.3mm wear layer",
+      "1220mm x 180mm plank size",
+      "Up to 5-year warranty",
+      "15-year warranty",
+    ],
+  },
+  {
     id: 1,
     heading: "Richmond <br /> SPC Eco",
     content: [
@@ -641,17 +664,6 @@ export const popupCards: CardData[] = [
     ],
   },
   {
-    id: 6,
-    heading: "Polar <br /> SPC",
-    content: [
-      "Lots of timeless styles",
-      "Wood grain finishes",
-      "Water-resistant",
-      "Affordable from <span class='font-currency font-normal text-16 md:text-18'></span> 49.00",
-      "Modern and classic",
-    ],
-  },
-  {
     id: 7,
     heading: "Polar SPC <br /> Herringbone",
     content: [
@@ -659,18 +671,7 @@ export const popupCards: CardData[] = [
       "Free underlay on all orders",
       "Wood-like embossed texture",
       "Multi-colour options",
-      "3mm wear layer",
-    ],
-  },
-  {
-    id: 8,
-    heading: "Polar <br /> LVT",
-    content: [
-      "Wood-like textured finish",
-      "Durable with 0.3mm wear layer",
-      "1220mm x 180mm plank size",
-      "Free UAE delivery",
-      "15-year warranty",
+      "0.3mm wear layer",
     ],
   },
 ];
@@ -754,7 +755,7 @@ export const measurementData: MeasurementSection[] = [
     description: `When calculating the width and length of a rectangular or square area, add 5-10% for waste and cutting errors. If you are planning to construct staircases, mantels, or closets in your room, allocate over 10% of your budget to them. 
       If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of <span class='font-currency font-normal text-18'></span> 150 (refunded if you place an order with us). If you wish to measure the area yourself, you will only need a measuring tape, a pencil, and paper. Make sure you measure in metres if you will be buying flooring materials that are usually marketed in metres.
       `,
-stepsHeading:"Measuring a Square or Rectangular Room",
+    stepsHeading: "Measuring a Square or Rectangular Room",
     steps: [
       {
         title: "Measure the length:",
@@ -895,7 +896,7 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Grand Mosque District", label: "Grand Mosque District" },
     { value: "Shakhbout City", label: "Shakhbout City" },
     { value: "Lulu Island", label: "Lulu Island" },
-  
+
   ],
   "Dubai": [
     { value: "Downtown", label: "Downtown" },
@@ -962,7 +963,7 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Yas Island", label: "Yas Island" },
     { value: "Za'abeel", label: "Za'abeel" },
     { value: "Zayed City", label: "Zayed City" }
-  ],  
+  ],
   "Sharjah": [
     { value: "Sharjah", label: "Sharjah" },
     { value: "Khor Fakkan", label: "Khor Fakkan" },
