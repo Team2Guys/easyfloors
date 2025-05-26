@@ -300,6 +300,49 @@ query AllOrders {
 }
 `
 
+export const FETCH_ALL_FREE_SAMPLE_ORDERS = gql`
+query AllOrdersFree {
+  AllOrdersFree {
+        firstName
+        lastName
+        email
+        country
+        city
+        address
+        note
+        phone
+        emirate
+        orderId
+        transactionDate
+        shipmentFee
+        totalPrice
+        checkout
+        paymentStatus
+        isRefund
+        success
+        pending
+        currency
+        is3DSecure
+        checkoutDate
+        shippingMethod
+        products {
+            id
+            name
+            price
+            stock
+            image
+            subcategories
+            category
+            boxCoverage
+            totalPrice
+            pricePerBox
+            squareMeter
+            requiredBoxes
+        }
+    }
+  }
+`
+
 export const GET_ORDER_HISTORY = gql`
 query UsersOrders($email: String!) {
     usersOrders(email: $email) {
