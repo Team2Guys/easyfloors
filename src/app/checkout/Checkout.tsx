@@ -20,13 +20,14 @@ import { getCart, getFreeSamplesCart } from "utils/indexedDB";
 import { paymentcard } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
-import { INITIATE_PAYMENT } from "graphql/mutations";
+import { INITIATE_FREE_SAMPLE, INITIATE_PAYMENT } from "graphql/mutations";
 import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { formatAED } from "lib/helperFunctions";
+import showToast from "components/Toaster/Toaster";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -129,11 +130,20 @@ useEffect(() => {
         note: string;
     };
 
+
+
     const [initiatePayment] = useMutation(INITIATE_PAYMENT);
+    const [initiateFreesample] = useMutation(INITIATE_FREE_SAMPLE);
 
     const handlePayment = async (orderData: FormInitialValues) => {
         try {
-            if(allItemsAreFreeSamples && !subTotal ) return alert("Free sampnle working"+subTotal)
+            if(allItemsAreFreeSamples && !subTotal ) {
+                
+                      await initiateFreesample({ variables: { createFreesample: orderData } });
+             
+                showToast('success', "Free sample request submitted successfully")
+           return 
+            }
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
 
@@ -143,6 +153,8 @@ useEffect(() => {
             return err;
         }
     };
+
+
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
@@ -220,15 +232,15 @@ useEffect(() => {
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
 
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values, { setSubmitting,resetForm  }) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
                         const NewValues = { ...withoutTerm, city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
 
-                        handlePayment(NewValues);
                         setSubmitting(true);
-                        console.log(NewValues, "VALUES")
+                        handlePayment(NewValues);
+        resetForm()
                     } catch (error) {
                         console.log(error)
                     } finally {
