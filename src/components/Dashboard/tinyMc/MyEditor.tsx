@@ -7,6 +7,7 @@ interface TinyMCEEditorProps {
   placeholder?: string;
 }
 
+
 const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
   const config = useMemo(
     () => ({
