@@ -221,3 +221,13 @@ model salesProducts {
   otherCity String?
   isfreesample Boolean?
 }
+
+
+
+model Redirecturls {
+  id            Int       @id @default(autoincrement())
+  url           String    @unique()
+  redirectedUrl String
+  createdAt     DateTime? @default(now())
+  updatedAt     DateTime?
+}

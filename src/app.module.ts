@@ -15,6 +15,7 @@ import { AppointmentsModule } from './appointments/appointments.module';
 import { UserModule } from './user/user.module';
 import { SalesProductsModule } from './sales-products/sales-products.module';
 import { PrismaService } from './prisma/prisma.service'
+import { GeneralModule } from './general/general.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PrismaService } from './prisma/prisma.service'
     AppointmentsModule,
     UserModule,
     SalesProductsModule,
+    GeneralModule,
   ],
   controllers: [AppController],
   providers: [ PrismaService,AppService, {

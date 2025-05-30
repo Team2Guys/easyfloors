@@ -11,6 +11,7 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'http://localhost:3001',
+      'http://localhost:3002',
       'http://127.0.0.1:3000',
       'https://easyfloors.vercel.app',
      "http://185.151.51.28:5007",
