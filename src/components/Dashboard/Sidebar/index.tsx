@@ -12,6 +12,7 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { TfiShoppingCartFull } from 'react-icons/tfi';
 import { TbGardenCartOff } from 'react-icons/tb';
 
+
 interface SidebarProps {
   sidebarOpen: boolean;
   //eslint-disable-next-line
@@ -66,6 +67,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       document.querySelector('body')?.classList.remove('sidebar-expanded');
     }
   }, [sidebarExpanded]);
+
+    const GeneralLinks = [
+    { href: '/dashboard/Redirecturls', label: 'View Redirecturls' },
+   ,
+  ];
 
   return (
     <aside
@@ -503,6 +509,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
+
+
               <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/usernewsletter'}
               >
@@ -554,6 +562,61 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
+                   <SidebarLinkGroup
+                activeCondition={pathname === '/dashboard/general'}
+              >
+                {(handleClick, open) => {
+                  return (
+                    <>
+                      <Link
+                        href="/dashboard"
+                        className={`dashboard_side_bar group ${pathname === '/dashboard/general' &&
+                          'active'
+                          }`}
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent default link behavior
+                          if (sidebarExpanded) {
+                            handleClick();
+                          } else {
+                            setSidebarExpanded(true);
+                          }
+                        }}
+                      >
+                        <TbGardenCartOff size={20} className="text-white" />
+                        Generals
+                        <MdOutlineKeyboardArrowDown
+                          size={30}
+                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
+                            }`}
+                        />
+                      </Link>
+                      {/* <!-- Dropdown Menu Start --> */}
+                      <div
+                        className={`translate transform overflow-hidden ${!open && 'hidden'
+                          }`}
+                      >
+                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
+                          {GeneralLinks.map((link) => (
+                            <li key={link?.href}>
+                              <Link
+                                href={link?.href || ""}
+                                className={`dashboard_side_bar_links group ${pathname === link?.href ? 'active' : ''
+                                  }`}
+                              >
+                                {link?.label}
+                              </Link>
+                            </li>
+                          ))}
+
+                        </ul>
+                      </div>
+                    </>
+                  );
+                }}
+              </SidebarLinkGroup>
+
+
+
               {superAdmin ? (
                 <li>
                   <Link

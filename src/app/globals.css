@@ -49,6 +49,64 @@
   }
 }
 
+
+@layer components {
+  .dashboard_side_bar {
+    @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-black;
+  }
+}
+
+
+@layer components {
+  .dashboard_side_bar_links {
+    @apply relative flex items-center gap-2.5 rounded-md px-4 font-medium duration-300 ease-in-out hover:text-white;
+  }
+}
+
+@layer components {
+  .active {
+    @apply text-white bg-black;
+  }
+}
+
+@layer components {
+  .input_main_appoint {
+    @apply grid grid-cols-1 gap-8 border-red-500 pb-2 md:grid-cols-2;
+  }
+}
+
+
+@layer components {
+  .primary-input {
+    @apply w-full rounded-lg border px-5 py-3 outline-none transition border-primary placeholder:text-black focus:border-black;
+  }
+}
+
+@layer components {
+  .primary-label {
+    @apply mb-3 block text-sm font-medium mt-3;
+  }
+}
+
+@layer components {
+  .input_container {
+    @apply flex gap-4 mt-2 flex-wrap sm:flex-nowrap;
+  }
+}
+
+@layer components {
+  .input_iner_container {
+    @apply w-full md:w-2/4;
+  }
+}
+
+
+@layer components {
+  .red_border {
+    @apply border-red-500;
+  }
+}
+
 .font-currency {
   font-family: var(--font-currency);
 }
