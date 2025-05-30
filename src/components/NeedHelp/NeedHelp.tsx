@@ -21,7 +21,7 @@ const NeedHelp: React.FC = () => {
                             />
                             <div className='max-w-xl mx-auto'>
                                 <h2 className=" text-12 sm:text-base md:text-3xl font-semibold">{box.title}</h2>
-                                <p className="md:text-lg text-12 sm:text-sm mt-1 md:mt-4 text-justify">{box.description}</p>
+                                <p className="px-2 xl:px-0 md:text-lg text-12 sm:text-sm mt-1 md:mt-4 text-justify">{box.description}</p>
                             </div>
                         </div>
                             <div className="md:mt-10 mt-2">

@@ -234,6 +234,8 @@ const CartPage = ({ products }: CartPageProps) => {
     setShipping(shippingData);
   }, [selectedShipping]);
 
+  console.log(accessoryItems.at(-1),'accessoryItems')
+
   return (
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
       <h1 className='text-center xl:text-[48px]'>Your Shopping Cart</h1>
@@ -267,15 +269,16 @@ const CartPage = ({ products }: CartPageProps) => {
                         <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                           <div className='col-span-10 xl:col-span-6'>
                             <div className='flex gap-4'>
-                              <Image
-                                width={170}
-                                height={160}
-                                className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[140px]'
-                                src={item.image ?? '/default-image.png'}
-                                alt="cart"
-                              />
+                              <div className='w-full max-w-[74px] md:max-w-[150px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'>
+                                <Image
+                                  fill
+                                  className='!relative block'
+                                  src={item.image ?? '/default-image.png'}
+                                  alt="cart"
+                                />
+                              </div>
                               <div>
-                                <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
+                                <Link href={`/${item.category}/${item.subcategories}/${item.custom_url}`} className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
                                 {
                                   item.isfreeSample ? 
                                   <p className='text-12 sm:text-14 2xl:text-17'>
@@ -378,7 +381,7 @@ const CartPage = ({ products }: CartPageProps) => {
                              src={item?.matchedProductImages?.imageUrl ?? item.image ?? '/default-image.png'} alt="cart"
                             />
                             <div>
-                              <p className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
+                              <Link href={`/accessories/${item.custom_url}`} className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
                                <span>{item.unit === "ft"? ((item.price?? 0) / 3.28084).toFixed(2): (item.price ?? 0).toFixed(2)}</span>/{item.unit === "ft" ? "ft" : "m"}
                               </p>
