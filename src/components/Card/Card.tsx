@@ -231,7 +231,7 @@ const Card: React.FC<productCardProps> = ({
           </Link>
         </div>
       </div>
-      <div className="px-2 pt-1 font-inter font-light lg:p-4">
+      <div className="px-2 pt-1 xsm:p-2 font-inter font-light lg:p-4">
         <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start sm:py-2 max-sm:text-primary">
           {
 
