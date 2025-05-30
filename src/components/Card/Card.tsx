@@ -3,7 +3,6 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { lazy, MouseEvent, useState } from "react";
 import { FiEye, FiHeart } from "react-icons/fi";
-import { Category } from "types/cat";
 import { productCardProps } from "types/PagesProps";
 import { IProduct } from "types/prod";
 import { fetchAccessories, fetchSingeProduct } from "config/fetch";
@@ -15,6 +14,7 @@ import CartIcon from "components/svg/cart-icon";
 import Collapsearrow from "components/svg/collapse-arrow";
 import Leftright from "components/svg/leftright";
 import TwoArrow from "components/svg/twoarrow";
+import { handleNavigate } from "utils/helperFunctions";
 const FreeSample = lazy(() => import('components/svg/free-sample'))
 const ProductContainer = dynamic(
   () => import("components/ProdutDetailContainer/ProductContainer")
@@ -55,14 +55,6 @@ const Card: React.FC<productCardProps> = ({
     } catch (error) {
       toast.error("Error fetching single product");
       throw error;
-    }
-  };
-  const handleNavigate = (product: IProduct, categoryData: Category) => {
-
-    if (product.subcategory) {
-      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
-    } else {
-      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.custom_url?.toLowerCase() ?? ''}`;
     }
   };
 
@@ -111,7 +103,7 @@ const Card: React.FC<productCardProps> = ({
                            product?.boxCoverage,
                            "m",
                            selectedColor,
-                       
+                          
                            
                           )}
               >

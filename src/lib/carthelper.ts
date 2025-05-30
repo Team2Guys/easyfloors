@@ -65,6 +65,7 @@ export const handleAddToStorage = async (
     selectedColor,
     matchedProductImages,
     isfreeSample: type === 'freeSample' || false,
+    custom_url: productData.custom_url
   };
 
   try {
