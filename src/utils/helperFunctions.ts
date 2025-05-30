@@ -4,6 +4,7 @@ import axios from 'axios';
 import React from 'react';
 import { FILE_DELETION_MUTATION } from 'graphql/mutations';
 import { IProduct, ProductImage } from 'types/prod';
+import { Category } from 'types/cat';
 
 export const ImageRemoveHandler = async (imagePublicId: string, setterFunction: React.Dispatch<React.SetStateAction<ProductImage[] | undefined>>,
   finalToken?: string
@@ -183,6 +184,13 @@ export function formatDate(date: Date): string {
 }
 
 
+export const handleNavigate = (product: IProduct, categoryData: Category) => {
 
+    if (product.subcategory) {
+      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.subcategory?.custom_url ?? ''}/${product.custom_url?.toLowerCase() ?? ''}`;
+    } else {
+      return `/${product.category?.RecallUrl ?? categoryData?.RecallUrl}/${product.custom_url?.toLowerCase() ?? ''}`;
+    }
+  };
 
 

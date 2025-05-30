@@ -40,7 +40,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
               <td className="p-3 flex items-center justify-start gap-3 ">
                   <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
                   <div className="text-12 xl:text-20 font-inter font-normal">
-                     <p>{product.name}</p>
+                     <Link href={`${product.category === "Accessories" ? `/accessories` : `/${product.category}/${product.subcategories}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
                      {!isSamplePage && (
                       product.category === "Accessories" ? (
                         <>
