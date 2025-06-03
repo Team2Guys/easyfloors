@@ -21,6 +21,7 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
         }
     }, []);
 
+    console.log(data, "data")
 return (
 
         loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?

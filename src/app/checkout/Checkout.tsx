@@ -55,24 +55,19 @@ const Checkout = () => {
 
     useEffect(() => {
         if (!selectedEmirate) return;
-
-        // Get and sort city options
         const cities = emirateCityMap[selectedEmirate] || [];
         const sortedCities = cities
             .slice()
             .sort((a, b) => a.label.localeCompare(b.label));
-
-        // Add "Other" option
         sortedCities.push({ value: "Other", label: "Other" });
         setCityOptions(sortedCities);
 
-        // Adjust shipping method if needed
+
         if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
             setSelectedShipping('standard');
             handleShippingSelect('standard');
         }
 
-        // Persist selected emirate
         localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
 
     }, [selectedEmirate]);
@@ -89,7 +84,6 @@ const Checkout = () => {
 
     useEffect(() => {
         const savedShipping = localStorage.getItem('shipping');
-        console.log(savedShipping, "total")
         if (savedShipping) {
             const parsedShipping = JSON.parse(savedShipping);
             handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
@@ -249,7 +243,9 @@ const Checkout = () => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
+                        const NewValues = { ...withoutTerm, 
+                            city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice:
+                             total, products: mergedCart, shippingMethod: shipping }
 
                         setSubmitting(true);
                         handlePayment(NewValues);

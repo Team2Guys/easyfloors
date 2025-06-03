@@ -15,7 +15,7 @@ if(redirectUrls){
      return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
 }
     const isAuthRoute = pathname === "/dashboard/Admin-login";
-    const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute; // All dashboard routes except login
+    const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute; 
   
     if (token && isAuthRoute) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
