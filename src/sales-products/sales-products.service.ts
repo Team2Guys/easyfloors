@@ -38,7 +38,7 @@ export class SalesProductsService {
 
         },
         "special_reference": orderId,
-        "redirection_url": "https://easyfloors.vercel.app/thank-you" as RequestRedirect
+        "redirection_url": "https://easyfloors.ae/thank-you" as RequestRedirect
       });
 
       var requestOptions = {
