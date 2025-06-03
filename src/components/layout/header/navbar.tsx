@@ -103,7 +103,7 @@ const pathname = usePathname()
                   <div className="flex justify-between items-center gap-2 capitalize">
                     {/* Main Category Link */}
                     <Link
-                      href={item.href}
+                      href={`/${item.href}`}
                       className={`text-14 font-semibold w-fit whitespace-nowrap ${pathname ===`/${item.href}` ? "bg-gray-light": ""}`}
                       onClick={() => setIsOpen(false)}
                     >
