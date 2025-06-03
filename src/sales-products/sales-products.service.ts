@@ -190,10 +190,11 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
         return;
       }
 
-      if (existingOrder.paymentStatus) {
-        console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
-        customHttpException("Payment status already updated", 'BAD_REQUEST');
-      }
+      // if (existingOrder.paymentStatus) {
+      //   console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
+      //   customHttpException("Payment status already updated", 'BAD_REQUEST');
+      // }
+    
 
       const paymentStatus = await this.prisma.salesProducts.update({
         where: { orderId },
@@ -219,6 +220,7 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
       sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email,);
       sendEmailHandler(existingOrder as orderEmailInput,);
 
+      console.log(existingOrder, "existingOrder")
       return existingOrder;
     } catch (error) {
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
