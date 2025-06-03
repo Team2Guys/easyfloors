@@ -29,6 +29,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { formatAED } from "lib/helperFunctions";
 import showToast from "components/Toaster/Toaster";
 
+
 const Checkout = () => {
     const { Panel } = Collapse;
     const [totalProducts, setTotalProducts] = useState(0);
@@ -45,55 +46,55 @@ const Checkout = () => {
     const [otherCity, setOtherCity] = useState('');
     const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(false);
 
-useEffect(() => {
-  const savedEmirate = localStorage.getItem('selectedEmirate');
-  if (savedEmirate) {
-    setSelectedEmirate(savedEmirate.replaceAll('"', ""));
-  }
-}, []);
+    useEffect(() => {
+        const savedEmirate = localStorage.getItem('selectedEmirate');
+        if (savedEmirate) {
+            setSelectedEmirate(savedEmirate.replaceAll('"', ""));
+        }
+    }, []);
 
-useEffect(() => {
-  if (!selectedEmirate) return;
+    useEffect(() => {
+        if (!selectedEmirate) return;
 
-  // Get and sort city options
-  const cities = emirateCityMap[selectedEmirate] || [];
-  const sortedCities = cities
-    .slice()
-    .sort((a, b) => a.label.localeCompare(b.label));
+        // Get and sort city options
+        const cities = emirateCityMap[selectedEmirate] || [];
+        const sortedCities = cities
+            .slice()
+            .sort((a, b) => a.label.localeCompare(b.label));
 
-  // Add "Other" option
-  sortedCities.push({ value: "Other", label: "Other" });
-  setCityOptions(sortedCities);
+        // Add "Other" option
+        sortedCities.push({ value: "Other", label: "Other" });
+        setCityOptions(sortedCities);
 
-  // Adjust shipping method if needed
-  if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
-    setSelectedShipping('standard');
-    handleShippingSelect('standard');
-  }
+        // Adjust shipping method if needed
+        if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
+            setSelectedShipping('standard');
+            handleShippingSelect('standard');
+        }
 
-  // Persist selected emirate
-  localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
+        // Persist selected emirate
+        localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
 
-}, [selectedEmirate]);
-
-
-
-useEffect(() => {
-  if (shipping) {
-    localStorage.setItem('shipping', JSON.stringify(shipping));
-    localStorage.setItem('selectedShipping', JSON.stringify(selectedShipping));
-}
-}, [shipping]);
+    }, [selectedEmirate]);
 
 
-  useEffect(() => {
-    const savedShipping = localStorage.getItem('shipping');
-    console.log(savedShipping, "total")
-    if (savedShipping) {
-      const parsedShipping = JSON.parse(savedShipping);
-      handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
-    }
-  }, [subTotal]);
+
+    useEffect(() => {
+        if (shipping) {
+            localStorage.setItem('shipping', JSON.stringify(shipping));
+            localStorage.setItem('selectedShipping', JSON.stringify(selectedShipping));
+        }
+    }, [shipping]);
+
+
+    useEffect(() => {
+        const savedShipping = localStorage.getItem('shipping');
+        console.log(savedShipping, "total")
+        if (savedShipping) {
+            const parsedShipping = JSON.parse(savedShipping);
+            handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
+        }
+    }, [subTotal]);
 
 
     useEffect(() => {
@@ -135,22 +136,34 @@ useEffect(() => {
     const [initiatePayment] = useMutation(INITIATE_PAYMENT);
     const [initiateFreesample] = useMutation(INITIATE_FREE_SAMPLE);
 
-    const handlePayment = async (orderData: FormInitialValues) => {
+    const handlePayment = async (orderData: FormInitialValues,) => {
         try {
-            if(allItemsAreFreeSamples && !subTotal ) {
-                
-                      await initiateFreesample({ variables: { createFreesample: orderData } });
-             
+            if (allItemsAreFreeSamples && !subTotal) {
+
+                await initiateFreesample({ variables: { createFreesample: orderData } });
+
                 showToast('success', "Free sample request submitted successfully")
-           return 
+                return
             }
+
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
-
+            if(!paymentKey.client_secret) return showToast('error', "payment Key not found")
+            
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
-        } catch (err) {
-            return err;
+            //eslint-disable-next-line
+        } catch (err:any) {
+            console.log(err, "error")
+             const errorMessage =
+    err?.graphQLErrors?.[0]?.message ||
+    err?.networkError?.message ||
+    err?.message ||
+    "Something went wrong";
+
+  showToast('error', errorMessage);
+
+            return err
         }
     };
 
@@ -165,7 +178,7 @@ useEffect(() => {
 
                 setMergedCart([...items, ...freeSamples]);
                 setTotalProducts(items.length);
-                const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),0);
+                const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 0);
                 setSubTotal(subTotalPrice);
             } catch {
                 toast.error("Error fetching cart items:");
@@ -175,36 +188,36 @@ useEffect(() => {
         fetchCartItems();
     }, []);
 
-  const handleShippingSelect = (type: string) => {
-    setSelectedShipping(type);
+    const handleShippingSelect = (type: string) => {
+        setSelectedShipping(type);
 
-    let fee = 0;
-    if (type === 'express') {
-      fee = selectedEmirate === 'Dubai' ? (subTotal > 1000 ? 0 : 150) : (subTotal > 1000 ? 0 : 150);
-    } else if (type === 'standard') {
-      fee = 0;
-    } else if (type === 'self-collect') {
-      setSelectedEmirate('Dubai');
-      localStorage.setItem('selectedEmirate', JSON.stringify('Dubai'));
-      fee = 0;
-    }
+        let fee = 0;
+        if (type === 'express') {
+            fee = selectedEmirate === 'Dubai' ? (subTotal > 1000 ? 0 : 150) : (subTotal > 1000 ? 0 : 150);
+        } else if (type === 'standard') {
+            fee = 0;
+        } else if (type === 'self-collect') {
+            setSelectedEmirate('Dubai');
+            localStorage.setItem('selectedEmirate', JSON.stringify('Dubai'));
+            fee = 0;
+        }
 
-    setSelectedFee(fee);
-    console.log(subTotal, "subTotalPrice", fee)
-    setTotal(subTotal + fee);
-  };
+        setSelectedFee(fee);
+        console.log(subTotal, "subTotalPrice", fee)
+        setTotal(subTotal + fee);
+    };
 
-  useEffect(() => {
-    let shippingData;
-    if (selectedShipping === "standard") {
-      shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
-    } else if (selectedShipping === "express") {
-      shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
-    } else if (selectedShipping === "self-collect") {
-      shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
-    }
-    setShipping(shippingData);
-  }, [selectedShipping, ]);
+    useEffect(() => {
+        let shippingData;
+        if (selectedShipping === "standard") {
+            shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
+        } else if (selectedShipping === "express") {
+            shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
+        } else if (selectedShipping === "self-collect") {
+            shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
+        }
+        setShipping(shippingData);
+    }, [selectedShipping,]);
 
     return (
         <Container>
@@ -232,7 +245,7 @@ useEffect(() => {
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
 
-                onSubmit={(values, { setSubmitting,resetForm  }) => {
+                onSubmit={(values, { setSubmitting}) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
@@ -240,7 +253,7 @@ useEffect(() => {
 
                         setSubmitting(true);
                         handlePayment(NewValues);
-        resetForm()
+                        
                     } catch (error) {
                         console.log(error)
                     } finally {
@@ -266,8 +279,8 @@ useEffect(() => {
                                     />
                                     {/* <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" /> */}
                                     <div className="flex flex-col mb-1">
-                                    <label htmlFor="Last Name" className="text-13 font-medium font-inter mb-1">Last Name</label>
-                                    <input type="text" className="p-2 border border-gray-300 h-11 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary w-full placeholder:text-13 placeholder:font-light placeholder:text-[#828282]"  name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
+                                        <label htmlFor="Last Name" className="text-13 font-medium font-inter mb-1">Last Name</label>
+                                        <input type="text" className="p-2 border border-gray-300 h-11 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary w-full placeholder:text-13 placeholder:font-light placeholder:text-[#828282]" name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
                                     </div>
                                 </div>
 
@@ -294,25 +307,25 @@ useEffect(() => {
 
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <Select
-                                    name="emirate"
-                                    label="Emirate"
-                                    options={emirates}
-                                    placeholder="Select Emirate"
-                                    initialValue={selectedEmirate}
-                                    onChange={(val) => setSelectedEmirate(val)}
-                                />
-                                <Select
-                                name="city"
-                                label="City"
-                                options={cityOptions}
-                                placeholder="Select City"
-                                onChange={(value) => {
-                                    setFieldValue("city", value);
-                                    setSelectedCity(value);
-                                    setIsOtherCity(value === "Other");
-                                }}
-                                />
+                                    <Select
+                                        name="emirate"
+                                        label="Emirate"
+                                        options={emirates}
+                                        placeholder="Select Emirate"
+                                        initialValue={selectedEmirate}
+                                        onChange={(val) => setSelectedEmirate(val)}
+                                    />
+                                    <Select
+                                        name="city"
+                                        label="City"
+                                        options={cityOptions}
+                                        placeholder="Select City"
+                                        onChange={(value) => {
+                                            setFieldValue("city", value);
+                                            setSelectedCity(value);
+                                            setIsOtherCity(value === "Other");
+                                        }}
+                                    />
                                 </div>
                                 {isOtherCity && (
                                     <Input
@@ -322,7 +335,7 @@ useEffect(() => {
                                         value={otherCity}
                                         onChange={(e: ChangeEvent<HTMLInputElement>) => setOtherCity(e.target.value)}
                                     />
-                                    )}
+                                )}
 
                                 <Input type="text" label="Address" required name="address" placeholder="Enter Address" value={values.address} onChange={handleChange} />
                                 <Input type="text" label="Additional Information" name="note" placeholder="Apartment, Suite, etc." value={values.note} onChange={handleChange} />
@@ -388,13 +401,13 @@ useEffect(() => {
                                                 <Image src={item.matchedProductImages?.imageUrl ?? item.image ?? ""} alt={item.name} width={80} height={80} />
                                             </div>
                                             <div className="ml-4">
-                                            <p className="font-bold text-13 xs:text-16">{item.name}</p>
-                                            {item.isfreeSample ? "":
-                                            <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>    
-                                            }
-                                            {item?.selectedColor?.colorName &&
-                                            <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>
-                                            }
+                                                <p className="font-bold text-13 xs:text-16">{item.name}</p>
+                                                {item.isfreeSample ? "" :
+                                                    <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>
+                                                }
+                                                {item?.selectedColor?.colorName &&
+                                                    <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>
+                                                }
                                             </div>
                                             <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-20"></span> {formatAED(item.totalPrice)}</p>
                                         </div>
@@ -404,85 +417,85 @@ useEffect(() => {
                             <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                                 <div className="space-y-2 py-4">
                                     <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-20 font-normal"></span> {formatAED(subTotal)}</span></p>
-                                    
+
                                     <div className="border-b">
 
-                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown  size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
-                                        <Panel
-                                            header={<span className="text-slate-500">Shipping Options</span>}
-                                            key="1"
-                                            className="!border-b-0"
-                                        >
-                                            {selectedEmirate === "Dubai" && !allItemsAreFreeSamples && (
-                                            <div
-                                                className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"}`}
-                                                onClick={() => handleShippingSelect("express")}
+                                        <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                                            <Panel
+                                                header={<span className="text-slate-500">Shipping Options</span>}
+                                                key="1"
+                                                className="!border-b-0"
                                             >
-                                                <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                                                <div>
-                                                    <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
-                                                    <p className="text-11 xs:text-16">delivery <strong>Next working day (cut-off time 1pm)</strong></p>
-                                                    <p className="text-11 xs:text-16">
-                                                        <span>Delivery Cost:</span> {subTotal > 1000 ? 
-                                                            <strong>Free (Order over 1000 <span className="font-currency text-18 font-normal"></span>)</strong> : 
-                                                            <><strong><span className="font-currency text-18 font-normal"></span> 150</strong>, <span>Free shipping for all orders above <strong><span className="font-currency text-18 font-normal"></span> 1000</strong></span></>
-                                                        }
-                                                    </p>
+                                                {selectedEmirate === "Dubai" && !allItemsAreFreeSamples && (
+                                                    <div
+                                                        className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"}`}
+                                                        onClick={() => handleShippingSelect("express")}
+                                                    >
+                                                        <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
+                                                        <div>
+                                                            <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
+                                                            <p className="text-11 xs:text-16">delivery <strong>Next working day (cut-off time 1pm)</strong></p>
+                                                            <p className="text-11 xs:text-16">
+                                                                <span>Delivery Cost:</span> {subTotal > 1000 ?
+                                                                    <strong>Free (Order over 1000 <span className="font-currency text-18 font-normal"></span>)</strong> :
+                                                                    <><strong><span className="font-currency text-18 font-normal"></span> 150</strong>, <span>Free shipping for all orders above <strong><span className="font-currency text-18 font-normal"></span> 1000</strong></span></>
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                <div
+                                                    className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
+                                                        }`}
+                                                    onClick={() => handleShippingSelect("standard")}
+                                                >
+                                                    <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
+                                                    <div>
+                                                        <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
+                                                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                                                        <p className="text-11 xs:text-16">
+                                                            <span>Delivery Cost:</span> <strong>Free</strong>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            )}
-                                            <div
-                                                className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
-                                                    }`}
-                                                onClick={() => handleShippingSelect("standard")}
+
+
+                                                <div className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "self-collect" ? "border-primary" : "border-transparent"
+                                                    }`} onClick={() => handleShippingSelect("self-collect")}
+                                                >
+                                                    <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
+                                                    <div>
+                                                        <strong className="text-15 xs:text-20">Self-Collect:</strong>
+                                                        <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(9am-6pm)</strong></p>
+                                                        <p className="text-11 xs:text-16">
+                                                            <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </Panel>
+
+                                            <Panel
+                                                header={<span className="text-slate-500">Installation</span>}
+                                                key="2"
+                                                className="!border-b-0"
                                             >
-                                                <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
-                                                <div>
-                                                    <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
-                                                    <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
-                                                    <p className="text-11 xs:text-16">
-                                                        <span>Delivery Cost:</span> <strong>Free</strong>
-                                                    </p>
+                                                <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
+                                                    <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
+                                                    <div>
+                                                        <strong className="text-15 xs:text-20">Installation Information:</strong>
+                                                        <p className="text-11 xs:text-16">Installation charge for straight planks is <span className="font-currency text-18 font-normal"></span> 25 per metre square, and for herringbone is <span className="font-currency text-18 font-normal"></span> 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
+                                                        </p>
+                                                        <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/help-with-installations">Book Installation Appointment</Link>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </Panel>
 
-
-                                            <div className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "self-collect" ? "border-primary" : "border-transparent"
-                                                }`} onClick={() => handleShippingSelect("self-collect")}
-                                            >
-                                                <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
-                                                <div>
-                                                    <strong className="text-15 xs:text-20">Self-Collect:</strong>
-                                                    <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(9am-6pm)</strong></p>
-                                                    <p className="text-11 xs:text-16">
-                                                        <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </Panel>
-
-                                        <Panel
-                                            header={<span className="text-slate-500">Installation</span>}
-                                            key="2"
-                                            className="!border-b-0"
-                                        >
-                                            <div className="bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center">
-                                                <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
-                                                <div>
-                                                    <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is <span className="font-currency text-18 font-normal"></span> 25 per metre square, and for herringbone is <span className="font-currency text-18 font-normal"></span> 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
-                                                    </p>
-                                                    <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/help-with-installations">Book Installation Appointment</Link>
-                                                </div>
-                                            </div>
-                                        </Panel>
-
-                                        <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
-                                        <p className="text-gray-500">
-                                        We offer 7-day hassle-free returns on all unused, sealed items in their original packaging. If you change your mind or receive a defective product, we’re here to help. <Link className="font-semibold text-red-500 hover:text-red-500 hover:underline underline" href="/return-and-refund-policy">Learn more</Link> 
-                                        </p>
-                                        </Panel>
-                                    </Collapse>
+                                            <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
+                                                <p className="text-gray-500">
+                                                    We offer 7-day hassle-free returns on all unused, sealed items in their original packaging. If you change your mind or receive a defective product, we’re here to help. <Link className="font-semibold text-red-500 hover:text-red-500 hover:underline underline" href="/return-and-refund-policy">Learn more</Link>
+                                                </p>
+                                            </Panel>
+                                        </Collapse>
                                     </div>
 
                                     <p className="text-gray-600 flex justify-between">
@@ -490,11 +503,11 @@ useEffect(() => {
                                             Shipping <CiDeliveryTruck size={16} className="mt-1" />
                                         </span>
                                         <span className="text-black">
-                                            {!selectedCity 
-                                                ? 'Select shipping city' 
-                                                : selectedShipping === 'express' 
-                                                    ? subTotal > 1000 
-                                                        ? 'Free' 
+                                            {!selectedCity
+                                                ? 'Select shipping city'
+                                                : selectedShipping === 'express'
+                                                    ? subTotal > 1000
+                                                        ? 'Free'
                                                         : <span className="font-currency font-normal text-18"> {selectedFee}</span>
                                                     : 'Free'
                                             }
@@ -511,18 +524,18 @@ useEffect(() => {
                                     <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
                                     <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
                                 </div>
-                              
+
                                 {
                                     subTotal > 0 &&
-                                <div className="mt-4">
-                                    <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
-                                    <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
-                                        <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
+                                    <div className="mt-4">
+                                        <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
+                                        <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
+                                            <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
+                                        </div>
                                     </div>
-                                </div>
                                 }
                                 <div className="mx-auto w-full max-w-xl mt-2">
-                                <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
+                                    <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
                                     <div className="flex justify-between flex-wrap gap-5 pt-3">
                                         {
                                             paymentcard.map((array, index) => (

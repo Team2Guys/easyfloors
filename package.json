@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --trubopack",
     "build": "next lint && next build",
     "start": "next start -p 5007",
     "lint": "next lint"
