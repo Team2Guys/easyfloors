@@ -1,4 +1,4 @@
-import { findOneRedirectUrl } from "config/general";
+// import { findOneRedirectUrl } from "config/general";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
@@ -9,11 +9,11 @@ export async function middleware(req: NextRequest) {
   
 
 
-    const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
+//     const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
         
-if(redirectUrls){
-     return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
-}
+// if(redirectUrls){
+//      return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
+// }
     const isAuthRoute = pathname === "/dashboard/Admin-login";
     const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute; // All dashboard routes except login
   
