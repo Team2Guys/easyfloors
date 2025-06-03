@@ -23,12 +23,10 @@ export class SalesProductsService {
         "amount": Math.ceil(totalPrice * 100),
         "currency": process.env.PAYMOD_CURRENCY,
         "payment_methods": [
-          158,
-          49727,
-          52742,
-          52741,
-          52992,
-          53201
+   57660,
+   52375,
+   52374,
+   52172
         ],
         "items": totalAmount,
         "billing_data": {
@@ -57,6 +55,7 @@ export class SalesProductsService {
       let result = await response.json();
 
       console.log(result.intention_order_id, "intention id")
+if(!result.intention_order_id) return customHttpException("Order Id not found ", 'NOT_FOUND');
 
       await this.prisma.salesProducts.create({
         data: {

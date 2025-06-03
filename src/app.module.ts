@@ -22,6 +22,7 @@ import { GeneralModule } from './general/general.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       // autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
+      path:"backend/graphql",
       autoSchemaFile:true,
       csrfPrevention: false,
       playground: true,

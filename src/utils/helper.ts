@@ -292,7 +292,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
    }).toUpperCase();
    const mailOptions = {
       from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
-      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1}`,
+      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2}`,
       subject: `Order has been confirmed @ EF against Order # ${orderId}`,
 
       html: `<!DOCTYPE html>
