@@ -450,14 +450,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
               <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/abundant'}
+                activeCondition={pathname === '/dashboard/measurement-appointment'}
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/abundant' &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/measurement-appointment' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -486,7 +486,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/measurement-appointment"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/abundant' &&
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/measurement-appointment' &&
                                 'text-white'
                                 } `}
                             >
@@ -496,7 +496,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/installation-appointments"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/abundant' &&
+                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/installation-appointments' &&
                                 'text-white'
                                 } `}
                             >
