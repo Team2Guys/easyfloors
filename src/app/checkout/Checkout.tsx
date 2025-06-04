@@ -28,6 +28,7 @@ import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { formatAED } from "lib/helperFunctions";
 import showToast from "components/Toaster/Toaster";
+import revalidateTag from "components/ServerActons/ServerAction";
 
 
 const Checkout = () => {
@@ -146,6 +147,7 @@ const Checkout = () => {
             
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
+            revalidateTag('orders')
             //eslint-disable-next-line
         } catch (err:any) {
             console.log(err, "error")
