@@ -21,6 +21,7 @@ export const metadata: Metadata = {
     canonical: 'https://easyfloors.ae/about-us',
   },
 };
+
 const AboutUs = () => {
   return (
     <>
