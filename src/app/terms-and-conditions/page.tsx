@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/terms-and-conditions',
+    canonical: 'https://easyfloors.ae/terms-and-conditions',
   },
 };
 

@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/contact-us',
+    canonical: 'https://easyfloors.ae/contact-us',
   },
 };
 const Contact = () => {

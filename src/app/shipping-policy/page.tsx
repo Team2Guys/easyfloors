@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/shipping-policy',
+    canonical: 'https://easyfloors.ae/shipping-policy',
   },
 };
 

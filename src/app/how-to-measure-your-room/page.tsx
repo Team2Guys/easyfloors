@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/how-to-measure-your-room',
+    canonical: 'https://easyfloors.ae/how-to-measure-your-room',
   },
 };
 const MeasureRoom = () => {
