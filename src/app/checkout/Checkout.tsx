@@ -450,7 +450,7 @@ const Checkout = () => {
                                                     <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                                                     <div>
                                                         <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
-                                                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                                                        <p className="text-11 xs:text-16">Receive within <strong>2-3 working days</strong></p>
                                                         <p className="text-11 xs:text-16">
                                                             <span>Delivery Cost:</span> <strong>Free</strong>
                                                         </p>
