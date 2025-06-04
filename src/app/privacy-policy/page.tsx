@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/privacy-policy',
+    canonical: 'https://easyfloors.ae/privacy-policy',
   },
 };
 const PrivacyPolicy = () => {

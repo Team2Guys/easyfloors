@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/faqs',
+    canonical: 'https://easyfloors.ae/faqs',
   },
 };
 const FAQsPage: React.FC = () => {

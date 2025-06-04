@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     ],
   },
   alternates: {
-    canonical: '/return-and-refund-policy',
+    canonical: 'https://easyfloors.ae/return-and-refund-policy',
   },
 };
 const ReturnRefundPolicy = () => {
