@@ -389,7 +389,7 @@ const Checkout = () => {
                                 <div className="flex items-center gap-4 pb-4 border-b">
                                     <h2 className="text-xl xs:text-2xl">Order Summary</h2>
                                     <span>
-                                        (<span className="text-red-600 pt-1">*Total {totalProducts} Items</span>)
+                                        (<span className="text-red-600 pt-1">*Total {`${totalProducts}`} {totalProducts > 1 ? "Items" : "Item"}</span>)
                                     </span>
                                 </div>
                                 <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3 mt-1">

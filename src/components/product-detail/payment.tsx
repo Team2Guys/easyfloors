@@ -42,7 +42,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
               Learn more
             </span>
           </p>
-          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 mt-2 font-inter">
+          <div className="flex flex-wrap justify-evenly gap-2 mt-2 font-inter">
               {paymentLabels.map((label, index) => (
                 <div
                   key={index}
@@ -67,7 +67,7 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
               Learn more
             </span>
           </p>
-          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 mt-2 font-inter">
+          <div className="flex flex-wrap justify-evenly gap-2 mt-2 font-inter">
               {paymentLabels.map((label, index) => (
                 <div
                   key={index}
