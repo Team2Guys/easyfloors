@@ -9,10 +9,10 @@ export async function middleware(req: NextRequest) {
   
 
 
-    const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
+   const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
         
 if(redirectUrls){
-     return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
+    return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
 }
     const isAuthRoute = pathname === "/dashboard/Admin-login";
     const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute; // All dashboard routes except login
