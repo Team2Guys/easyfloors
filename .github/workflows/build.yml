@@ -54,6 +54,7 @@ jobs:
           git pull origin dev --no-rebase
           
           npm install --legacy-peer-deps
+          rm -rf .next
           npm run build
           pm2 restart easyfloors_fe
           exit
