@@ -143,21 +143,21 @@ const Checkout = () => {
 
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
-            if(!paymentKey.client_secret) return showToast('error', "payment Key not found")
-            
+            if (!paymentKey.client_secret) return showToast('error', "payment Key not found")
+
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
             revalidateTag('orders')
             //eslint-disable-next-line
-        } catch (err:any) {
+        } catch (err: any) {
             console.log(err, "error")
-             const errorMessage =
-    err?.graphQLErrors?.[0]?.message ||
-    err?.networkError?.message ||
-    err?.message ||
-    "Something went wrong";
+            const errorMessage =
+                err?.graphQLErrors?.[0]?.message ||
+                err?.networkError?.message ||
+                err?.message ||
+                "Something went wrong";
 
-  showToast('error', errorMessage);
+            showToast('error', errorMessage);
 
             return err
         }
@@ -169,7 +169,7 @@ const Checkout = () => {
             try {
                 const items = await getCart();
                 const freeSamples = await getFreeSamplesCart();
-                const allItemsAreFreeSamples = freeSamples.every(item => item.isfreeSample === true);
+                const allItemsAreFreeSamples = freeSamples.length > 0 && freeSamples.every(item => item.isfreeSample);
                 seallItemsAreFreeSamples(allItemsAreFreeSamples)
 
                 setMergedCart([...items, ...freeSamples]);
@@ -215,6 +215,8 @@ const Checkout = () => {
         setShipping(shippingData);
     }, [selectedShipping,]);
 
+
+    console.log("allItemsAreFreeSamples", !allItemsAreFreeSamples, selectedEmirate)
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -241,17 +243,19 @@ const Checkout = () => {
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
 
-                onSubmit={(values, { setSubmitting}) => {
+                onSubmit={(values, { setSubmitting }) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, 
+                        const NewValues = {
+                            ...withoutTerm,
                             city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice:
-                             total, products: mergedCart, shippingMethod: shipping }
+                                total, products: mergedCart, shippingMethod: shipping
+                        }
 
                         setSubmitting(true);
                         handlePayment(NewValues);
-                        
+
                     } catch (error) {
                         console.log(error)
                     } finally {
@@ -424,7 +428,7 @@ const Checkout = () => {
                                                 key="1"
                                                 className="!border-b-0"
                                             >
-                                                {selectedEmirate === "Dubai" && !allItemsAreFreeSamples && (
+                                                {(selectedEmirate === "Dubai" || !selectedEmirate) && allItemsAreFreeSamples == false && (
                                                     <div
                                                         className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"}`}
                                                         onClick={() => handleShippingSelect("express")}
