@@ -179,6 +179,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
         )}
         <div>
         <button
+        id="AddToCart"
           className={`mt-2 w-fit px-2 xsm:px-5 sm:px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
           onClick={handleAddSelectedToCart}
           disabled={selectedProducts.length === 0}

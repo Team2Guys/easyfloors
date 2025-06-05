@@ -78,7 +78,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                 </td>
                 <td className="p-3">
                   <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center">
-                    <button onClick={() => handleAddToCart(product, isSamplePage,setItems ?? (() => {}))} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
+                    <button id="AddToCart" onClick={() => handleAddToCart(product, isSamplePage,setItems ?? (() => {}))} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
                     Add to Cart
                     </button>
                     <button onClick={() =>  handleRemoveItem(Number(product.id), isSamplePage, setItems ?? (() => {}))}  className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">

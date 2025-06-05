@@ -112,6 +112,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="grid grid-cols-2 w-full gap-1 items-center sm:gap-3">
           
           <button
+          id="AddToCart"
             onClick={() =>
               handleAddToStorage(
                 productData,
@@ -135,6 +136,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             Add to Cart
           </button>
           <button
+          id="AddToWishlist"
           className="flex bg-black justify-center text-11 xs:text-12 text-white 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           onClick={() =>
             handleAddToStorage(
