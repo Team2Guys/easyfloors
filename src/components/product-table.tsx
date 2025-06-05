@@ -28,7 +28,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
               {(columns ?? [])
                 .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
                 .map((col, index) => (
-                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left whitespace-nowrap " : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start text-left "} ${index==1 ? "text-center" : ""} ${index==0 ? " w-[70%] lg:w-[60%] 2xl:w-[35%] 3xl:w-[35%]" : "w-[20%] lg:w-[20%] 2xl:w-[22%] 3xl:w-[25%]"} ${index==3 ? "text-center" : ""}`}>
+                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left whitespace-nowrap " : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start text-left "} ${index==1 ? "text-center" : ""} ${index==0 ? " w-[70%] lg:w-[60%] 2xl:w-[35%] 3xl:w-[35%]" : "w-[20%] lg:w-[20%] 2xl:w-[22%] 3xl:w-[25%]"} ${index==3 ? "text-center" : ""} ${pathname === "/freesample" && col =='Stock Status' ? "text-center" : ""}`}>
                     {col}
                   </th>
                 ))}
