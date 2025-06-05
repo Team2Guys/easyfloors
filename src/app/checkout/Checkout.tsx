@@ -519,7 +519,7 @@ const Checkout = () => {
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
                                     <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
-                                        {isSubmitting ? "Processing..." : "Pay Now"}
+                                        {isSubmitting ? "Processing..." : allItemsAreFreeSamples ? 'Place Order' : "Pay Now"}
                                     </button>
                                 </div>
                                 <div className="flex justify-center items-center gap-2 mt-4">
