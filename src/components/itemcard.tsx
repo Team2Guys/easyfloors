@@ -73,6 +73,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
           </div>
         )}
         <button
+        id="AddToCart"
           onClick={() => onAddToCart(product)}
           className={`bg-black text-white text-14 font-inter flex items-center gap-2 py-1 ${
             !isSamplePage ? "px-4 sm:px-7" : "px-14"

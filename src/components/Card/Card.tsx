@@ -111,7 +111,8 @@ const Card: React.FC<productCardProps> = ({
               </button>
               }
               <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
-               onClick={() => {
+              id="AddToWishlist"
+              onClick={() => {
                   handleAddToStorage(
                     product,
                     19,
