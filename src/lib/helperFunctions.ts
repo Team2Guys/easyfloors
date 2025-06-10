@@ -87,7 +87,7 @@ export const productFilter = ({
       
         if (Array.isArray(productValue)) {
           return productValue.some((val:AdditionalInformation) =>
-            selectedProductFilters[key].includes(val?.name)
+            selectedProductFilters[key].includes(val?.name.trim())
           );
         }
         else if (key === 'plankLength'){

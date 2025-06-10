@@ -43,7 +43,7 @@ export const initialValues = {
 export const validationSchema = Yup.object({
   firstname: Yup.string().required("Name is required"),
   phoneNumber: Yup.string().required("Phone number is required"),
-  whatsappNumber: Yup.string().required("WhatsApp number is required"),
+  // whatsappNumber: Yup.string().required("WhatsApp number is required"),
   email: Yup.string()
     .email("Invalid email")
     .required("Email is required"),
