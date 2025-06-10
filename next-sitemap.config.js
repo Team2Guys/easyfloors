@@ -9,6 +9,24 @@ module.exports = {
   outDir: './public', // Will be generated after build
   exclude: ['/dashboard/*'], // optional
 
+   robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: '*',
+        disallow: [
+          '/dashboard',
+          '/cart',
+          '/login',
+          '/register',
+          '/forgot-password',
+          '/Wishlist',
+          '/thankyou',
+          '/search/{search_term_string}',
+        ],
+      },
+    ],
+    additionalSitemaps: ['https://easyfloors.ae/sitemap.xml']},
+
 
     additionalPaths: async () => {
  const [products, categories, subcategories, accessories] = await Promise.all([
