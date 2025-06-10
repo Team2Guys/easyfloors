@@ -2,7 +2,60 @@ import RelatedSlider from 'components/related-slider/related-slider';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import ThankYouComp from 'components/ThankYou/ThankYou';
 import { fetchProducts } from 'config/fetch';
+import { Metadata } from 'next';
 import React from 'react';
+
+interface ThankYouProps {
+searchParams: Promise<Record<string, string | null>>;}
+
+
+ export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise<Metadata> => {
+   const params = await searchParams;
+   const isPaymentSuccessful = params.success === 'true'
+  return isPaymentSuccessful
+    ? {
+        title: 'Payment Successful | Easy Floors',
+        description:
+          'Thank you for your purchase! Your payment has been processed successfully. We’ll begin preparing your order right away.',
+        openGraph: {
+          title: 'Payment Successful | Easy Floors',
+          description:
+            'Thank you for your purchase! Your payment was successful. Your flooring products will be delivered soon.',
+          url: 'https://easyfloors.ae/thank-you',
+          images: [
+            {
+              url: '/assets/images/logo.webp',
+              alt: 'Easyfloors',
+            },
+          ],
+          type: 'website',
+        },
+        alternates: {
+          canonical: 'https://easyfloors.ae/thank-you',
+        },
+      }
+    : {
+        title: 'Payment Failed | Easy Floors',
+        description:
+          'Unfortunately, your payment could not be processed. Please try again or contact our support team for assistance.',
+        openGraph: {
+          title: 'Payment Failed | Easy Floors',
+          description:
+            'There was an issue processing your payment. Please retry or get in touch with our support team.',
+          url: 'https://easyfloors.ae/thank-you',
+          images: [
+            {
+              url: '/assets/images/logo.webp',
+              alt: 'Easyfloors',
+            },
+          ],
+          type: 'website',
+        },
+        alternates: {
+          canonical: 'https://easyfloors.ae/thank-you',
+        },
+      };
+};
 
 export interface PaymentQueryParams {
 
@@ -17,8 +70,7 @@ export interface PaymentQueryParams {
 
 }
 
-interface ThankYouProps {
-searchParams: Promise<Record<string, string | null>>;}
+
 
 
 const ThankYou = async ({ searchParams }: ThankYouProps) => { 
