@@ -17,7 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<IParams> })
 
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
-  const protocol = headersList.get('x-forwarded-proto') || 'https';
+const protoHeader = headersList.get('x-forwarded-proto');
+const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
 
   const fullUrl = `${protocol}://${domain}${pathname}`;
@@ -50,6 +51,8 @@ export async function generateMetadata({ params }: { params: Promise<IParams> })
       description: description,
       url: url,
       images: NewImage,
+            type:'website'
+
     },
     alternates: {
       canonical:

@@ -237,6 +237,22 @@ export const FETCH_ALL_WHAT_AM_I = gql`
   }
 `;
 
+export const FETCH_ALL_WHAT_AM_I_META_TAGS = gql`
+  query SubCategories {
+    subCategories {
+ whatIamEndpoint    
+   id
+      name
+      
+             Canonical_Tag
+        Meta_Description
+        Meta_Title
+            posterImageUrl
+            custom_url
+    }
+  }
+`;
+
 
 
 
