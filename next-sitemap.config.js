@@ -20,7 +20,7 @@ module.exports = {
           '/register',
           '/forgot-password',
           '/Wishlist',
-          '/thankyou',
+          '/thank-you',
           '/search/{search_term_string}',
         ],
       },
@@ -37,6 +37,12 @@ module.exports = {
     ])
 
 
+const staticPages = [
+    {
+      loc: '/thank-you',
+      lastmod: new Date().toISOString(),
+    },
+  ]
 
        const categoryPaths = categories.map((category) => ({
       loc: `/${category.custom_url}`,
@@ -57,7 +63,7 @@ module.exports = {
       lastmod: new Date().toISOString(),
     })); 
 
-        return [...categoryPaths, ...subcategoryPaths, ...productPaths,...accessoriesPaths];
+        return [...staticPages ,...categoryPaths, ...subcategoryPaths, ...productPaths,...accessoriesPaths];
 
   },
 };
