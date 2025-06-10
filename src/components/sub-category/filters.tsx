@@ -79,7 +79,7 @@ const Filters = ({
         if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
         if (product.colors) {
           product.colors.forEach((color: AdditionalInformation) => {
-            colorSet.add(color.name);
+            colorSet.add(color.name.trim());
           });
         }
       });
