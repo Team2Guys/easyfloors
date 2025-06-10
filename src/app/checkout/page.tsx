@@ -13,9 +13,10 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+    type:'website'
   },
   alternates: {
-    canonical: '/checkout',
+    canonical: 'https://easyfloors.ae/checkout',
   },
 };
 const CheckoutPage = async () => {
