@@ -58,6 +58,8 @@ export const FETCH_ALL_PRODUCTS = gql`
     }
   }
 `;
+
+
 export const FETCH_HEADER_PRODUCTS = gql`
   query Products {
     products {
@@ -299,7 +301,6 @@ query AllOrders {
     }
 }
 `
-
 export const FETCH_ALL_FREE_SAMPLE_ORDERS = gql`
 query AllOrdersFree {
   AllOrdersFree {

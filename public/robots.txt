@@ -1,11 +1,9 @@
+# *
 User-agent: *
-Disallow: /dashboard
-Disallow: /cart
-Disallow: /login
-Disallow: /register
-Disallow: /forgot-password
-Disallow: /Wishlist
-Disallow: /thankyou
-Disallow: /search/{search_term_string}
+Allow: /
 
+# Host
+Host: https://easyfloors.ae/
+
+# Sitemaps
 Sitemap: https://easyfloors.ae/sitemap.xml
