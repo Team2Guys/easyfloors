@@ -9,7 +9,7 @@ interface ThankYouProps {
 searchParams: Promise<Record<string, string | null>>;}
 
 
-export const getThankYouMetadata = async ({ searchParams }: ThankYouProps): Promise<Metadata> => {
+ export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise<Metadata> => {
    const params = await searchParams;
    const isPaymentSuccessful = params.success === 'true'
   return isPaymentSuccessful
