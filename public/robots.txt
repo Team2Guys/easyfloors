@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://easyfloors.ae/
-
-# Sitemaps
-Sitemap: https://easyfloors.ae/sitemap.xml
