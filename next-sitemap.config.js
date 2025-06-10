@@ -4,7 +4,7 @@ const { fetchProductsForSitemap ,fetchcategoryForSitemap, fetchsubcategoryForSit
 module.exports = {
   siteUrl: 'https://easyfloors.ae/',
   generateRobotsTxt: true,
-  generateIndexSitemap: true,
+  generateIndexSitemap: false,
   sitemapSize: 5000,
   outDir: './public', // Will be generated after build
   exclude: ['/dashboard/*'], // optional
