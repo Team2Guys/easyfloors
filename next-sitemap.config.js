@@ -2,7 +2,7 @@
 //eslint-disable-next-line
 const { fetchProductsForSitemap ,fetchcategoryForSitemap, fetchsubcategoryForSitemap, fetchAccessoriesForSitemap} = require('./src/config/sitemap-data');
 const excludePages =  [
-          '/dashboard',
+          '/dashboard*',
           '/cart',
           '/login',
           '/forgot-password',
