@@ -1,28 +1,35 @@
 /** @type {import('next-sitemap').IConfig} */
 //eslint-disable-next-line
 const { fetchProductsForSitemap ,fetchcategoryForSitemap, fetchsubcategoryForSitemap, fetchAccessoriesForSitemap} = require('./src/config/sitemap-data');
+const excludePages =  [
+          '/dashboard',
+          '/cart',
+          '/login',
+          '/forgot-password',
+          '/Wishlist',
+          '/thank-you',
+          '/search/{search_term_string}',
+          "/easy-payment",
+          "/forgot-password",
+          "/cart",
+          "/checkout",
+          "/signup",
+          "/wishlist",
+          "/freesample",
+        ]
 module.exports = {
   siteUrl: 'https://easyfloors.ae/',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   sitemapSize: 5000,
   outDir: './public', // Will be generated after build
-  exclude: ['/dashboard/*'], // optional
+  exclude: excludePages, // optional
 
    robotsTxtOptions: {
     policies: [
       {
         userAgent: '*',
-        disallow: [
-          '/dashboard',
-          '/cart',
-          '/login',
-          '/register',
-          '/forgot-password',
-          '/Wishlist',
-          '/thank-you',
-          '/search/{search_term_string}',
-        ],
+        disallow: excludePages
       },
     ],
     additionalSitemaps: ['https://easyfloors.ae/sitemap.xml']},
