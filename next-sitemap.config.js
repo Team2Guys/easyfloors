@@ -16,6 +16,7 @@ const excludePages =  [
           "/signup",
           "/wishlist",
           "/freesample",
+          "/thank-you"
         ]
 module.exports = {
   siteUrl: 'https://easyfloors.ae/',
