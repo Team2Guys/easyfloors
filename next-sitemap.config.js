@@ -16,6 +16,7 @@ const excludePages =  [
           "/signup",
           "/wishlist",
           "/freesample",
+          "/thank-you",
           "/thank-you"
         ]
 module.exports = {
