@@ -9,7 +9,7 @@ const Accordion = ({ label, children, isOpen, onToggle,  detailpage, showPlusMin
   return (
     <div className={`py-2 ${showPlusMinus ? '' : detailpage ? 'border px-2' : 'border-b'}`}>
       <div className="flex justify-between items-center">
-        <div
+        <h3
           onClick={onToggle}
           className={`text-14 lg:text-16 font-semibold flex items-center w-full text-left gap-2 cursor-pointer select-none
           ${showPlusMinus ? "border-b pb-2" : ""}`}
@@ -17,7 +17,7 @@ const Accordion = ({ label, children, isOpen, onToggle,  detailpage, showPlusMin
           {isOpen ? <AiOutlineMinus className="w-5 h-5 text-primary" /> : <AiOutlinePlus className="w-5 h-5 " />}
           {label}
 
-        </div>
+        </h3>
       </div>
       {isOpen && <div className={`mt-2 ${showPlusMinus ? '' : detailpage ? 'pl-9' : 'border-l pl-4'}`}>{children}</div>}
     </div>

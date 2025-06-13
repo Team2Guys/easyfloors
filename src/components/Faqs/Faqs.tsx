@@ -18,9 +18,9 @@ interface FaqsProps {
 
     return (
         <Container className={`bg-white py-10 md:mt-10 ${className}`}>
-                <h1 className="text-2xl font-semibold font-inter text-[#1B1139] lg:text-3x text-center md:mb-10 mb-6">
+                <h2 className="text-2xl font-semibold font-inter text-[#1B1139] lg:text-3x text-center md:mb-10 mb-6">
                     FAQ’S
-                </h1>
+                </h2>
 
                 <div className="border font-inter font-semibold">
                     {data.map((faq, index) => (
@@ -29,7 +29,7 @@ interface FaqsProps {
                                 onClick={() => toggleFAQ(index)}
                                 className="flex w-full items-center justify-between text-left  focus:outline-none p-4"
                             >
-                                <h2 className="md:text-xl text-base text-gray-700 ">
+                                <h3 className="md:text-xl text-base text-gray-700 ">
                                     <div className="flex md:items-center gap-3">
                                         <div>
                                             {openIndex === index ? (
@@ -40,7 +40,7 @@ interface FaqsProps {
                                         </div>
                                         {faq.question}
                                     </div>
-                                </h2>
+                                </h3>
                             </button>
                             {openIndex === index && (
                                 <div className="pt-5 pb-4 flex gap-4 lg:pl-14 pl-5 text-gray-700  border-t font-normal md:text-lg text-sm" dangerouslySetInnerHTML={{__html:faq.answer}} />

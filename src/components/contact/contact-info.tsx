@@ -7,7 +7,7 @@ import { PiPhoneCallFill } from 'react-icons/pi'
 const ContactInfo = () => {
   return (
     <div className='p-2 sm:p-6'>
-      <p className='text-24 sm:text-28 font-inter font-semibold leading-8 text-white'>Contact Information</p>
+      <h1 className='text-24 sm:text-28 font-inter font-semibold leading-8 text-white'>Contact Information</h1>
       <div className='mt-5 sm:mt-8 lg:mt-10 space-y-3 lg:space-y-6'>
         <div className='flex gap-6 items-center text-white'>
           <PiPhoneCallFill size={20} />
