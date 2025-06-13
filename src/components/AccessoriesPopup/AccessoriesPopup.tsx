@@ -170,7 +170,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
                     value={areas[product.id] || ""}
                     onChange={(e) => handleAreaChange(product.id, e.target.value)}
                     min="0"
-                    className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[40px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
+                    className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[140px] xsm:w-[182px] h-[41px] sm:h-[40px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
                   />
                 </div>
               </div>
@@ -179,7 +179,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
         )}
         <div>
         <button
-          className={`mt-2 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
+        id="AddToCart"
+          className={`mt-2 w-fit px-2 xsm:px-5 sm:px-10 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
           onClick={handleAddSelectedToCart}
           disabled={selectedProducts.length === 0}
         >

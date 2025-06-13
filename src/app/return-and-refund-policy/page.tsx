@@ -13,9 +13,10 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+    type:"website"
   },
   alternates: {
-    canonical: '/return-and-refund-policy',
+    canonical: 'https://easyfloors.ae/return-and-refund-policy',
   },
 };
 const ReturnRefundPolicy = () => {

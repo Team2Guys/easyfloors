@@ -12,9 +12,10 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+      type:'website'
   },
   alternates: {
-    canonical: '/freesample',
+    canonical: 'https://easyfloors.ae/freesample',
   },
 };
 const FreeSample = () => {

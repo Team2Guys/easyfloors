@@ -234,7 +234,6 @@ const CartPage = ({ products }: CartPageProps) => {
     setShipping(shippingData);
   }, [selectedShipping]);
 
-  console.log(accessoryItems.at(-1),'accessoryItems')
 
   return (
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
@@ -458,7 +457,7 @@ const CartPage = ({ products }: CartPageProps) => {
                     key="1"
                     className="!border-b-0"
                   >
-                {selectedCity === "Dubai" && !allItemsAreFreeSamples && (
+                {(selectedCity === "Dubai" || selectedCity == "Enter Emirate") && !allItemsAreFreeSamples && (
                     <div
                       className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
                         selectedShipping === "express" ? "border-primary" : "border-transparent"

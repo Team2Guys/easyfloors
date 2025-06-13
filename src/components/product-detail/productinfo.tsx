@@ -135,11 +135,13 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       <div className="my-3 flex w-full gap-1 items-center sm:gap-3">
          <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)}
           className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+         id="AddToCart"
          >
           <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7 text-11 xs:text-14 xl:text-20" />
           Add to Cart
          </button>
           <button
+          id="AddToWishlist"
           className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)}
           >

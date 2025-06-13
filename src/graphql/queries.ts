@@ -58,6 +58,8 @@ export const FETCH_ALL_PRODUCTS = gql`
     }
   }
 `;
+
+
 export const FETCH_HEADER_PRODUCTS = gql`
   query Products {
     products {
@@ -235,6 +237,22 @@ export const FETCH_ALL_WHAT_AM_I = gql`
   }
 `;
 
+export const FETCH_ALL_WHAT_AM_I_META_TAGS = gql`
+  query SubCategories {
+    subCategories {
+ whatIamEndpoint    
+   id
+      name
+      
+             Canonical_Tag
+        Meta_Description
+        Meta_Title
+            posterImageUrl
+            custom_url
+    }
+  }
+`;
+
 
 
 
@@ -299,7 +317,6 @@ query AllOrders {
     }
 }
 `
-
 export const FETCH_ALL_FREE_SAMPLE_ORDERS = gql`
 query AllOrdersFree {
   AllOrdersFree {

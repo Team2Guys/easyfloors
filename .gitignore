@@ -13,6 +13,8 @@
 /package-lock.json
 /bun.
 /yarn.lock
+/public/sitemap.xml
+/public/robots.txt
 
 # testing
 /coverage

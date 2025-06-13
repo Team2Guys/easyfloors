@@ -28,6 +28,7 @@ import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { formatAED } from "lib/helperFunctions";
 import showToast from "components/Toaster/Toaster";
+import revalidateTag from "components/ServerActons/ServerAction";
 
 
 const Checkout = () => {
@@ -55,24 +56,19 @@ const Checkout = () => {
 
     useEffect(() => {
         if (!selectedEmirate) return;
-
-        // Get and sort city options
         const cities = emirateCityMap[selectedEmirate] || [];
         const sortedCities = cities
             .slice()
             .sort((a, b) => a.label.localeCompare(b.label));
-
-        // Add "Other" option
         sortedCities.push({ value: "Other", label: "Other" });
         setCityOptions(sortedCities);
 
-        // Adjust shipping method if needed
+
         if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
             setSelectedShipping('standard');
             handleShippingSelect('standard');
         }
 
-        // Persist selected emirate
         localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
 
     }, [selectedEmirate]);
@@ -89,7 +85,6 @@ const Checkout = () => {
 
     useEffect(() => {
         const savedShipping = localStorage.getItem('shipping');
-        console.log(savedShipping, "total")
         if (savedShipping) {
             const parsedShipping = JSON.parse(savedShipping);
             handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
@@ -148,20 +143,21 @@ const Checkout = () => {
 
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
-            if(!paymentKey.client_secret) return showToast('error', "payment Key not found")
-            
+            if (!paymentKey.client_secret) return showToast('error', "payment Key not found")
+
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
+            revalidateTag('orders')
             //eslint-disable-next-line
-        } catch (err:any) {
+        } catch (err: any) {
             console.log(err, "error")
-             const errorMessage =
-    err?.graphQLErrors?.[0]?.message ||
-    err?.networkError?.message ||
-    err?.message ||
-    "Something went wrong";
+            const errorMessage =
+                err?.graphQLErrors?.[0]?.message ||
+                err?.networkError?.message ||
+                err?.message ||
+                "Something went wrong";
 
-  showToast('error', errorMessage);
+            showToast('error', errorMessage);
 
             return err
         }
@@ -173,7 +169,7 @@ const Checkout = () => {
             try {
                 const items = await getCart();
                 const freeSamples = await getFreeSamplesCart();
-                const allItemsAreFreeSamples = freeSamples.every(item => item.isfreeSample === true);
+                const allItemsAreFreeSamples = freeSamples.length > 0 && freeSamples.every(item => item.isfreeSample);
                 seallItemsAreFreeSamples(allItemsAreFreeSamples)
 
                 setMergedCart([...items, ...freeSamples]);
@@ -219,6 +215,8 @@ const Checkout = () => {
         setShipping(shippingData);
     }, [selectedShipping,]);
 
+
+    console.log("allItemsAreFreeSamples", !allItemsAreFreeSamples, selectedEmirate)
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -245,15 +243,19 @@ const Checkout = () => {
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
 
-                onSubmit={(values, { setSubmitting}) => {
+                onSubmit={(values, { setSubmitting }) => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
+                        const NewValues = {
+                            ...withoutTerm,
+                            city: isOtherCity ? otherCity : selectedCity, shipmentFee: selectedFee, totalPrice:
+                                total, products: mergedCart, shippingMethod: shipping
+                        }
 
                         setSubmitting(true);
                         handlePayment(NewValues);
-                        
+
                     } catch (error) {
                         console.log(error)
                     } finally {
@@ -391,7 +393,7 @@ const Checkout = () => {
                                 <div className="flex items-center gap-4 pb-4 border-b">
                                     <h2 className="text-xl xs:text-2xl">Order Summary</h2>
                                     <span>
-                                        (<span className="text-red-600 pt-1">*Total {totalProducts} Items</span>)
+                                        (<span className="text-red-600 pt-1">*Total {`${totalProducts}`} {totalProducts > 1 ? "Items" : "Item"}</span>)
                                     </span>
                                 </div>
                                 <div className="space-y-4 max-h-[210px] overflow-y-auto pe-1 xs:pe-4 pt-3 mt-1">
@@ -426,7 +428,7 @@ const Checkout = () => {
                                                 key="1"
                                                 className="!border-b-0"
                                             >
-                                                {selectedEmirate === "Dubai" && !allItemsAreFreeSamples && (
+                                                {(selectedEmirate === "Dubai" || !selectedEmirate) && allItemsAreFreeSamples == false && (
                                                     <div
                                                         className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"}`}
                                                         onClick={() => handleShippingSelect("express")}
@@ -452,7 +454,7 @@ const Checkout = () => {
                                                     <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                                                     <div>
                                                         <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
-                                                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                                                        <p className="text-11 xs:text-16">Receive within <strong>2-3 working days</strong></p>
                                                         <p className="text-11 xs:text-16">
                                                             <span>Delivery Cost:</span> <strong>Free</strong>
                                                         </p>
@@ -517,7 +519,7 @@ const Checkout = () => {
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
                                     <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
-                                        {isSubmitting ? "Processing..." : "Pay Now"}
+                                        {isSubmitting ? "Processing..." : allItemsAreFreeSamples ? 'Place Order' : "Pay Now"}
                                     </button>
                                 </div>
                                 <div className="flex justify-center items-center gap-2 mt-4">

@@ -12,6 +12,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
         return accume += value.price;
     }, 0)
 
+
     return (
 
         <div className="bg-[#FFF9F5]  ">
