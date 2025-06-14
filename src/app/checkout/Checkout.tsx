@@ -60,7 +60,7 @@ const Checkout = () => {
         const sortedCities = cities
             .slice()
             .sort((a, b) => a.label.localeCompare(b.label));
-        sortedCities.push({ value: "Other", label: "Other" });
+        sortedCities.push({ value: "Other", label: "Other Areas" });
         setCityOptions(sortedCities);
 
 
@@ -326,7 +326,7 @@ const Checkout = () => {
                                         onChange={(value) => {
                                             setFieldValue("city", value);
                                             setSelectedCity(value);
-                                            setIsOtherCity(value === "Other");
+                                            setIsOtherCity(value === "Other" || value === "Other Areas");
                                         }}
                                     />
                                 </div>
