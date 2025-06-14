@@ -51,7 +51,7 @@ const Select = ({
 
   const filteredOptions: Option[] =
     allowOther && searchTerm.trim() && baseFiltered.length === 0
-      ? [{ value: "Other", label: "Other" }]  
+      ? [{ value: "Other", label: "Other Areas" }]  
       : baseFiltered;
 
   const handleSelectClick = () => {
