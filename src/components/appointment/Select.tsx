@@ -7,7 +7,6 @@ interface Option {
   value: string;
   label: string;
 }
-
 interface SelectProps {
   name: string;
   options: Option[];
@@ -16,7 +15,6 @@ interface SelectProps {
   placeholder?: string;
   initialValue?: string;
   onChange?: (_value: string) => void;
-  /** 👇 NEW – only true for Area */
   allowOther?: boolean;
 }
 
@@ -28,15 +26,13 @@ const Select = ({
   placeholder = "Select Location",
   initialValue,
   onChange,
-  allowOther = false,        // 👈 default = false (Emirate, Country keep old behaviour)
+  allowOther = false,  
 }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const inputRef   = useRef<HTMLInputElement>(null);
   const { values, setFieldValue } = useFormikContext<{ [key: string]: string }>();
-
-  /* --- click‑outside closes dropdown --- */
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -49,15 +45,13 @@ const Select = ({
   }, []);
 
   useEffect(() => { if (isOpen) inputRef.current?.focus(); }, [isOpen]);
-
-  /* --- filter & inject “Other” if needed --- */
   const baseFiltered = options.filter(opt =>
     opt.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const filteredOptions: Option[] =
     allowOther && searchTerm.trim() && baseFiltered.length === 0
-      ? [{ value: "Other", label: "Other" }]          // 👈 fallback row
+      ? [{ value: "Other", label: "Other" }]  
       : baseFiltered;
 
   const handleSelectClick = () => {
@@ -69,12 +63,10 @@ const Select = ({
     setFieldValue(name, opt.value);
     setIsOpen(false);
     setSearchTerm("");
-    onChange?.(opt.value);                             // notify parent
+    onChange?.(opt.value);       
   };
 
   const clearSearch = () => { setSearchTerm(""); inputRef.current?.focus(); };
-
-  /* --- keep initial value in sync (for SSR / cached) --- */
   useEffect(() => { if (initialValue) setFieldValue(name, initialValue); },
            [initialValue, name, setFieldValue]);
 
@@ -90,7 +82,6 @@ const Select = ({
       )}
 
       <div ref={dropdownRef} className="relative w-full mt-1">
-        {/* ---- visible field / search box ---- */}
         <div
           onClick={handleSelectClick}
           className="flex justify-between items-center w-full px-3 h-11 border border-gray-300 bg-white text-12 font-medium cursor-pointer"
