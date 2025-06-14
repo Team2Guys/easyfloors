@@ -319,9 +319,9 @@ const Checkout = () => {
                                     />
                                     <Select
                                         name="city"
-                                        label="City"
+                                        label="Area"
                                         options={cityOptions}
-                                        placeholder="Select City"
+                                        placeholder="Select Area"
                                         onChange={(value) => {
                                             setFieldValue("city", value);
                                             setSelectedCity(value);
@@ -332,8 +332,8 @@ const Checkout = () => {
                                 {isOtherCity && (
                                     <Input
                                         name="otherCity"
-                                        label="Add City"
-                                        placeholder="Enter Your City"
+                                        label="Add Area"
+                                        placeholder="Enter Your Area"
                                         value={otherCity}
                                         onChange={(e: ChangeEvent<HTMLInputElement>) => setOtherCity(e.target.value)}
                                     />
@@ -434,16 +434,12 @@ const Checkout = () => {
                                                         onClick={() => handleShippingSelect("express")}
                                                     >
                                                         <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                                                        <div>
+                                                         <div className="text-11 xs:text-16">
                                                             <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
-                                                            <p className="text-11 xs:text-16">delivery <strong>Next working day (cut-off time 1pm)</strong></p>
-                                                            <p className="text-11 xs:text-16">
-                                                                <span>Delivery Cost:</span> {subTotal > 1000 ?
-                                                                    <strong>Free (Order over 1000 <span className="font-currency text-18 font-normal"></span>)</strong> :
-                                                                    <><strong><span className="font-currency text-18 font-normal"></span> 150</strong>, <span>Free shipping for all orders above <strong><span className="font-currency text-18 font-normal"></span> 1000</strong></span></>
-                                                                }
-                                                            </p>
-                                                        </div>
+                                                            <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
+                                                            <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong> for orders under <strong><span className="font-currency font-normal text-18"></span>999</strong></p>
+                                                            <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>  
+                                                         </div>
                                                     </div>
                                                 )}
                                                 <div

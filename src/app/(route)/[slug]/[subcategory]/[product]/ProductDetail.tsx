@@ -42,7 +42,7 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
       <Container>
         <Features items={featureItems} />
       </Container>
-      <RelatedSlider products={ProductInfo?.filter((value)=>value.id !==productData.id) || []}  />
+      <RelatedSlider products={ProductInfo?.filter((value)=>value.id !==productData.id) || []} />
     </div>
   );
 };
