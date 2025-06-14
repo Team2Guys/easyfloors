@@ -16,7 +16,7 @@ const UserInfo = () => {
           <div className='text-center flex-1 '>
             <div className='flex flex-col items-center space-y-2 lg:space-y-3 max-w-[80%] md:max-w-[90%] 2xl:max-w-[77%] mx-auto font-inter'>
             <Image width={100} height={100} className='w-[24px] h-[24px] md:w-[57px] md:h-[57px]' loading='lazy' src={section.icon} alt={section.title}  />
-              <span className=' text-16 md:text-26 2xl:text-[34px] font-semibold'>{section.title}</span>
+              <h2 className=' text-16 md:text-26 2xl:text-[34px] font-semibold'>{section.title}</h2>
               <p className='mt-2 text-14 lg:text-16 2xl:text-20 font-light text-justify'>{section.description}</p>
             </div>
           </div>

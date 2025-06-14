@@ -180,7 +180,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           }
         >
             <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
-            <p className=" whitespace-nowrap">Order Now <strong><em>Free</em></strong> Sample</p>
+            <p className=" whitespace-nowrap">Order <strong><em>Free</em></strong> Sample</p>
         </button>
         </div>
         <PaymentMethod installments={installments} showheading />

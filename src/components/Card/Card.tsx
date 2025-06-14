@@ -220,7 +220,7 @@ const Card: React.FC<productCardProps> = ({
             className={`md:mt-0 mt-1 text-left font-semibold leading-5 h-10 xsm:h-auto block ${isAccessories ? "text-[#594F55] text-base xsm:text-xl" : "text-[#594F55] text-13 sm:text-base"
               }`}
           >
-            {isAccessories ? `${product.name}` : product.name}
+            <h3>{isAccessories ? `${product.name}` : product.name}</h3>
           </Link>
         </div>
       </div>

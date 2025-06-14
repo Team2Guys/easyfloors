@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: ' Flooring in UAE | SPC, LVT & Herringbone | Easy Floors',
     description: 'Shop SPC, LVT, and Herringbone flooring at factory-direct prices. Fast UAE delivery, free samples, easy installment options only at Easy Floors.',
-    url: '/',
+    url: 'https://easyfloors.ae/',
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
