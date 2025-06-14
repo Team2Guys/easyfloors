@@ -7,7 +7,6 @@ interface Option {
   value: string;
   label: string;
 }
-
 interface SelectProps {
   name: string;
   options: Option[];
@@ -16,18 +15,27 @@ interface SelectProps {
   placeholder?: string;
   initialValue?: string;
   onChange?: (_value: string) => void;
+  allowOther?: boolean;
 }
 
-const Select = ({ name, options, label, required = false, placeholder = "Select Location",initialValue ,onChange}: SelectProps) => {
+const Select = ({
+  name,
+  options,
+  label,
+  required = false,
+  placeholder = "Select Location",
+  initialValue,
+  onChange,
+  allowOther = false,  
+}: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef   = useRef<HTMLInputElement>(null);
   const { values, setFieldValue } = useFormikContext<{ [key: string]: string }>();
-
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsOpen(false);
         setSearchTerm("");
       }
@@ -36,46 +44,34 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  useEffect(() => {
-    if (isOpen && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isOpen]);
-
-  const filteredOptions = options.filter(option =>
-    option.label.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => { if (isOpen) inputRef.current?.focus(); }, [isOpen]);
+  const baseFiltered = options.filter(opt =>
+    opt.label.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const filteredOptions: Option[] =
+    allowOther && searchTerm.trim() && baseFiltered.length === 0
+      ? [{ value: "Other", label: "Other" }]  
+      : baseFiltered;
 
   const handleSelectClick = () => {
     setIsOpen(!isOpen);
     setSearchTerm("");
   };
 
-  const handleOptionSelect = (option: Option) => {
-    setFieldValue(name, option.value);
+  const handleOptionSelect = (opt: Option) => {
+    setFieldValue(name, opt.value);
     setIsOpen(false);
     setSearchTerm("");
-  
-    // ✅ Notify parent about the change
-    if (onChange) {
-      onChange(option.value);
-    }
+    onChange?.(opt.value);       
   };
 
-  const handleClearSearch = () => {
-    setSearchTerm("");
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-  useEffect(() => {
-    if (initialValue) {
-      setFieldValue(name, initialValue);
-    }
-  }, [initialValue, name, setFieldValue]);
-  const displayValue = values[name] 
-    ? options.find(opt => opt.value === values[name])?.label 
-    : placeholder;
+  const clearSearch = () => { setSearchTerm(""); inputRef.current?.focus(); };
+  useEffect(() => { if (initialValue) setFieldValue(name, initialValue); },
+           [initialValue, name, setFieldValue]);
+
+  const displayLabel =
+    values[name] ? options.find(o => o.value === values[name])?.label : placeholder;
 
   return (
     <div className="flex flex-col mb-1">
@@ -88,64 +84,56 @@ const Select = ({ name, options, label, required = false, placeholder = "Select 
       <div ref={dropdownRef} className="relative w-full mt-1">
         <div
           onClick={handleSelectClick}
-          className="flex justify-between items-center w-full px-3 h-11 border border-gray-300 bg-white text-12 font-medium font-inter cursor-pointer"
+          className="flex justify-between items-center w-full px-3 h-11 border border-gray-300 bg-white text-12 font-medium cursor-pointer"
         >
           {isOpen ? (
             <input
               ref={inputRef}
-              type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder={displayValue}
-              className="w-full focus:outline-none flex-1"
+              placeholder={displayLabel}
+              className="w-full flex-1 focus:outline-none"
               onClick={(e) => e.stopPropagation()}
-              
             />
           ) : (
-            <span className={`truncate flex-1 text-left ${!values[name] ? 'text-gray-400' : ''}`}>
-              {displayValue}
+            <span className={`truncate flex-1 text-left ${!values[name] && "text-gray-400"}`}>
+              {displayLabel}
             </span>
           )}
           <div className="flex items-center">
             {isOpen && searchTerm && (
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleClearSearch();
-                }}
+                onClick={(e) => { e.stopPropagation(); clearSearch(); }}
                 className="text-gray-400 hover:text-gray-600 mr-1"
               >
                 <FiX size={16} />
               </button>
             )}
-            <FiChevronDown className={`text-gray-500 transition ${isOpen ? "rotate-180" : ""}`} />
+            <FiChevronDown className={`text-gray-500 transition ${isOpen && "rotate-180"}`} />
           </div>
         </div>
 
+        {/* ---- dropdown list ---- */}
         {isOpen && (
           <ul className="absolute left-0 w-full bg-white border border-gray-200 rounded-b-md shadow-md z-20 max-h-60 overflow-y-auto">
-            {filteredOptions.length > 0 ? (
-              filteredOptions.map((option) => (
+            {filteredOptions.length ? (
+              filteredOptions.map((opt) => (
                 <li
-                  key={option.value}
-                  className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white transition text-12 lg:text-sm"
-                  onClick={() => handleOptionSelect(option)}
+                  key={opt.value}
+                  onClick={() => handleOptionSelect(opt)}
+                  className="px-4 py-2 cursor-pointer hover:bg-primary hover:text-white text-12 lg:text-sm"
                 >
-                  {option.label}
+                  {opt.label}
                 </li>
               ))
             ) : (
-              <li className="px-4 py-2 text-12 text-gray-500">
-                No options found
-              </li>
+              <li className="px-4 py-2 text-12 text-gray-500">No options found</li>
             )}
           </ul>
         )}
       </div>
 
-      <ErrorMessage name={name}>
-        {(msg) => <div className="text-red-500 text-sm">{msg}</div>}
-      </ErrorMessage>
+      <ErrorMessage name={name} component="div" className="text-red-500 text-sm" />
     </div>
   );
 };
