@@ -320,6 +320,7 @@ const Checkout = () => {
                                     <Select
                                         name="city"
                                         label="Area"
+                                        allowOther
                                         options={cityOptions}
                                         placeholder="Select Area"
                                         onChange={(value) => {

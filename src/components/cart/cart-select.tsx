@@ -35,7 +35,7 @@ const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
     }
   }, []);
   return (
-    <div className="flex justify-between text-16 lg:text-20">
+    <div className="flex justify-between text-16 lg:text-20 items-center">
       <p>Select Emirate</p>
       <div className="relative"> {/* Added relative positioning here */}
         <div className="w-full font-inter" ref={dropdownRef}>
