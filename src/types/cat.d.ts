@@ -18,64 +18,67 @@ export interface Category {
   Recall_Cat?: string;
   products?: IProduct[];
   accessories?: Product[];
-  RecallUrl?:string
-  Heading?:string
+  RecallUrl?: string
+  Heading?: string
   sizes?: Sizes[];
-  BannerImage?:ProductImage
+  BannerImage?: ProductImage
   subcategories?: {
     id: number | string;
     name: string;
     posterImageUrl?: ProductImage;
     custom_url: string
     createdAt: Date;
-  updatedAt: Date;
+    updatedAt: Date;
   }[]
 
-  whatAmiImageBanner?:ProductImage
-  topHeading?:string
-  recalledSubCats:ISUBCATEGORY[]
-  price?:string
-  stock?:number
-  boxCoverage?:string,
-  __typename?:string;
+  whatAmiImageBanner?: ProductImage
+  topHeading?: string
+  recalledSubCats: ISUBCATEGORY[]
+  price?: string
+  stock?: number
+  boxCoverage?: string,
+  __typename?: string;
 }
 
 export interface EDIT_CATEGORY extends Category {
-    id?: number | string
-    custom_url?: string
-    RecallUrl?:string
-    createdAt?: Date;
-    updatedAt?: Date;
-    posterImageUrl?:ProductImage
-    recalledSubCats?:ISUBCATEGORY[]
-    subcategory?: ISUBCATEGORY_EDIT;
-    sizes?: Sizes[];
-    pricePerBox?: number;
-    
+  id?: number | string
+  custom_url?: string
+  RecallUrl?: string
+  createdAt?: Date;
+  updatedAt?: Date;
+  posterImageUrl?: ProductImage
+  recalledSubCats?: ISUBCATEGORY[]
+  subcategory?: ISUBCATEGORY_EDIT;
+  sizes?: Sizes[];
+  pricePerBox?: number;
+
 }
 
 export interface ISUBCATEGORY extends Category {
   id: number | string
-  category:EDIT_CATEGORY,
-  products?:IProduct[]
-  whatAmiImage?:ProductImage[];
-  whatAmiImageBanner?:ProductImage;
-  homePageImage?:ProductImage;
-  whatAmiTopHeading?:string
-  whatamIdetails:AdditionalInformation[]
-  Heading?:string
-  BannerImage?:ProductImage
+  category: EDIT_CATEGORY,
+  products?: IProduct[]
+  whatAmiImage?: ProductImage[];
+  whatAmiImageBanner?: ProductImage;
+  homePageImage?: ProductImage;
+  whatAmiTopHeading?: string
+  whatamIdetails: AdditionalInformation[]
+  Heading?: string
+  BannerImage?: ProductImage
   posterImageUrl?: ProductImage;
-  recalledByCategories?:Category[]
+  recalledByCategories?: Category[]
   sizes?: Sizes[];
-  whatIamEndpoint? :string
+  whatIamEndpoint?: string
+  whatAmiCanonical_Tag?: string,
+  whatAmiMeta_Description?: string,
+  whatAmiMeta_Title?: string,
 }
 
 
 export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
   id?: number | string
-  category:number | string,
-  products?:IProduct[]
+  category: number | string,
+  products?: IProduct[]
   posterImageUrl?: ProductImage;
   createdAt?: Date;
   updatedAt?: Date;
@@ -85,18 +88,18 @@ export interface ISUBCATEGORY_EDIT extends ISUBCATEGORY {
 
 
 export interface mainCategory {
-  whatAmiImageBanner:ProductImage,
-  topHeading:string,
-  description:string
+  whatAmiImageBanner: ProductImage,
+  topHeading: string,
+  description: string
 }
 
 export interface SUBNCATEGORIES_PAGES_PROPS {
   catgories: Category[];
-  categoryData: Category; 
+  categoryData: Category;
   subCategoryData?: ISUBCATEGORY;
   isSubCategory: boolean;
   mainCategory?: mainCategory;
-  slug: string; 
+  slug: string;
   subcategory?: string;
   subdescription?: ICategory;
 }

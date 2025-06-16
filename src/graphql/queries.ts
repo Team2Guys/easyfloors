@@ -204,6 +204,9 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       price
       sizes
       whatIamEndpoint
+        whatAmiMeta_Title
+        whatAmiCanonical_Tag
+        whatAmiMeta_Description
       products {
         id
         name
@@ -244,9 +247,9 @@ export const FETCH_ALL_WHAT_AM_I_META_TAGS = gql`
    id
       name
       
-             Canonical_Tag
-        Meta_Description
-        Meta_Title
+  whatAmiMeta_Title
+        whatAmiCanonical_Tag
+        whatAmiMeta_Description
             posterImageUrl
             custom_url
     }

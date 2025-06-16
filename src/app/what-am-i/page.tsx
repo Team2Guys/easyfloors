@@ -19,8 +19,6 @@ export async function generateMetadata({ searchParams }: SlugPageProps): Promise
   if(!flooring) return notFound()
   const subCategories = await fetchSubCategories(FETCH_ALL_WHAT_AM_I_META_TAGS)
     const subCategory = subCategories.find((value: ISUBCATEGORY) => TrimerHandler(value?.whatIamEndpoint || value.custom_url) == TrimerHandler(flooring))
-
-
   if (!subCategory) return notFound()
 
   const headersList = await headers();
@@ -44,10 +42,10 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
     },
   ];
   const title =
-    subCategory?.Meta_Title ||
+    subCategory?.whatAmiMeta_Title ||
     'Easy Floor';
   const description =
-    subCategory?.Meta_Description ||
+    subCategory?.whatAmiMeta_Description ||
     'Welcome to Easy Floor';
   const url = `${fullUrl}what-am-i?flooring=${flooring}`;
   return {
