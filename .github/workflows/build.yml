@@ -45,6 +45,7 @@ jobs:
           git pull origin server
           
           npm install 
+          npx prisma generate
           npm run build
           pm2 restart easyfloors_be
           exit
