@@ -28,6 +28,13 @@ export class CreateSubCategoryInput {
   Meta_Title: string;
 
   @Field({ nullable: true })
+  whatAmiMeta_Title: string;
+  @Field({ nullable: true })
+  whatAmiCanonical_Tag: string;
+  @Field({ nullable: true })
+  whatAmiMeta_Description: string;
+
+  @Field({ nullable: true })
   last_editedBy: string;
 
   @Field()

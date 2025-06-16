@@ -72,7 +72,7 @@ export class SubCategory {
   @Field(() => GraphQLJSON, { nullable: true })
   BannerImage?: any
 
-  @Field(() => [Category],{ nullable: true })
+  @Field(() => [Category], { nullable: true })
   recalledByCategories?: Category[]
 
   @Field({ nullable: true })
@@ -81,8 +81,16 @@ export class SubCategory {
   @Field({ nullable: true })
   whatIamEndpoint?: string;
 
-   @Field(() => [GraphQLJSON],{nullable:true})
-    sizes?: any[]
+  @Field(() => [GraphQLJSON], { nullable: true })
+  sizes?: any[]
+
+
+  @Field({ nullable: true })
+  whatAmiMeta_Title: string;
+  @Field({ nullable: true })
+  whatAmiCanonical_Tag: string;
+  @Field({ nullable: true })
+  whatAmiMeta_Description: string;
 
 }
 

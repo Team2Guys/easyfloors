@@ -101,6 +101,10 @@ model subCategories {
   price                String?
   sizes                 Json[]         @default([])
   whatIamEndpoint     String?
+  // whatamI
+      whatAmiCanonical_Tag        String?
+    whatAmiMeta_Description     String?
+    whatAmiMeta_Title           String?
 }
 
 model Admins {
