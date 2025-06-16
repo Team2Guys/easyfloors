@@ -50,9 +50,9 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
               href="/polar-flooring"
               aria-label="Visit american walnut product page"
             >
-              <h3 className="text-16 sm:text-sm lg:text-[28px] font-medium">
+              <h1 className="text-16 sm:text-sm lg:text-[28px] font-medium">
                 {item.brand}
-              </h3>
+              </h1>
               <div className=" flex justify-start items-center sm:gap-2 mt-1 lg:mt-3 ">
                 <div className="w-full"><span className='font-inter text-14 lg:text-xl sm:font-semibold font-normal '>Starting From <span className='font-currency font-normal text-[16px] lg:text-[25px]'></span> 49/m²</span></div>
                 <div className="w-fit mt-1">

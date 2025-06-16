@@ -468,8 +468,8 @@ const CartPage = ({ products }: CartPageProps) => {
                       <div className="text-11 xs:text-16">
                         <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
                         <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
-                        <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span> 150</strong></p>
-                        <p>Free shipping for all orders above <strong><span className="font-currency font-normal text-18"></span> 1000</strong></p>
+                        <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong> for orders under <strong><span className="font-currency font-normal text-18"></span>999</strong></p>
+                        <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>
                       </div>
                     </div>
                   )}

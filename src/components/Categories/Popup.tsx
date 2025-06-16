@@ -19,7 +19,7 @@ function Popup() {
 
   return (
     <>
-      <h1
+      <h2
         className="relative text-center  md:text-5xl text-2xl md:max-w-3xl w-full font-bold text-white py-7 mx-auto bg-cover bg-center"
         style={{
           backgroundImage: `url(${categoryData.backgroundImage})`,
@@ -37,7 +37,7 @@ function Popup() {
             {categoryData.subtitle}
           </span>
         </div>
-      </h1>
+      </h2>
 
       {isModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
