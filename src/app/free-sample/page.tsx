@@ -1,8 +1,26 @@
 import Container from 'components/common/container/Container'
 import { freeSampleImage } from 'data/free-sample'
+import { Metadata } from 'next';
 import Image from 'next/image'
 import React from 'react'
 
+export const metadata: Metadata = {
+  title: 'Order Free Flooring Samples | Easy Floors UAE',
+  description:
+    'Try before you buy! Order up to 5 free flooring samples with free delivery across the UAE. Explore colours, textures, and finishes at home.',
+  openGraph: {
+    title: 'Order Free Flooring Samples | Easy Floors UAE',
+    description: 'Try before you buy! Order up to 5 free flooring samples with free delivery across the UAE. Explore colours, textures, and finishes at home.',
+    url: 'https://easyfloors.ae/free-sampl',
+    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+      },
+    ],
+      type:'website'
+  },
+  alternates: {
+    canonical: 'https://easyfloors.ae/free-sample',
+  },
+};
 const FreeSampleDetail = () => {
   return (
     <Container className='space-y-2 sm:space-y-4 my-10 font-inter'>
