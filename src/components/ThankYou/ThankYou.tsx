@@ -21,6 +21,7 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
             postPaymentStatus({ variables: { postpaymentStatus: extractedParams } });
             hasRun.current = true;
             revalidateTag("orders")
+            revalidateTag("products")
         }
     }, []);
 
