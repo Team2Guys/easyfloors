@@ -712,7 +712,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                       <table style="border-collapse: collapse;">
                          <tr>
                             <td colspan="5" style="padding: 8px;" class="table-font">Subtotal</td>
-                            <td style="padding: 8px;" class="table-font">${totalPrice || "Free"}</td>
+                            <td style="padding: 8px;" class="table-font">${(totalPrice && shipmentFee) && totalPrice-shipmentFee || "Free"}</td>
                          </tr>
                          <tr style="border-bottom: 2px solid #ccc;">
                             <td colspan="5" style="padding: 8px;" class="table-font">Shipment</td>
@@ -720,7 +720,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                          </tr>
                          <tr>
                             <td colspan="5" style="padding: 8px; font-weight: bold; " class="table-font">Total Incl. VAT</td>
-                            <td style="padding: 8px; font-weight: bold;" class="table-font">${(totalPrice && Number(shipmentFee) + totalPrice) || "Free"}</td>
+                            <td style="padding: 8px; font-weight: bold;" class="table-font">${(totalPrice) || "Free"}</td>
                          </tr>
                       </table>
                    </td>
