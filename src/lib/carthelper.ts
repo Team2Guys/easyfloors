@@ -89,6 +89,7 @@ export const handleAddToStorage = async (
       return;
       
     } 
+    
     else if (type === 'cartfreeSample') {
       const existingSamples = await getFreeSamplesCart();
 
@@ -106,6 +107,7 @@ export const handleAddToStorage = async (
       return;
     }
     else if (type === 'wishlist') {
+      console.log('Adding to wishlist:', item);
       await addToWishlist(item);
       return;
     }
