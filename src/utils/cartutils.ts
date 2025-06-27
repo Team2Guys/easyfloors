@@ -27,7 +27,6 @@ export const updateQuantity = (
     if (item.id !== id) return item;
 
     if (item.category === "Accessories") {
-      // For Accessories - update requiredBoxes directly
       const newRequiredBoxes = Math.max(1, (item.requiredBoxes ?? 0) + delta);
       const unitPrice = item.price ?? 0;
       const totalPrice = +(unitPrice * newRequiredBoxes).toFixed(3);
@@ -36,13 +35,11 @@ export const updateQuantity = (
         ...item,
         requiredBoxes: newRequiredBoxes,
         totalPrice,
-        squareMeter: newRequiredBoxes * Number(item.boxCoverage || 1), // Optional: update squareMeter if needed
+        squareMeter: newRequiredBoxes * Number(item.boxCoverage || 1),
       };
     } else {
-      // For non-Accessories - update squareMeter and calculate boxes
       const decimalPart = item.squareMeter % 1;
       const newSquareMeter = Math.max(0.1, Math.floor(item.squareMeter) + delta + decimalPart);
-      
       const coveragePerBox = Number(item.boxCoverage);
       const requiredBoxes = item.unit === "sqft" 
         ? Math.ceil(newSquareMeter / (coveragePerBox * 10.764))

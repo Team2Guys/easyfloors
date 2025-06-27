@@ -7,7 +7,6 @@ import { fetchItems } from 'utils/cartutils';
 import Link from 'next/link';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 
-// Dynamic Imports
 const ProductTable = dynamic(() => import("components/product-table"));
 const WishlistSmall = dynamic(() => import("components/smallscreen"));
 const Container = dynamic(() => import("components/common/container/Container"));
@@ -16,7 +15,6 @@ const Top = dynamic(() => import("components/top"));
 
 const WishlistPage = () => {
   const [items, setItems] = useState<ICart[]>([]);
-  console.log(items,"itemsitems")
   useEffect(() => {
     fetchItems(false, setItems); 
   }, []);
