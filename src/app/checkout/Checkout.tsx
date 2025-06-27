@@ -16,7 +16,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { emirateCityMap, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart, getFreeSamplesCart } from "utils/indexedDB";
+import { getCart, getFreeSamplesCart, openDB } from "utils/indexedDB";
 import { paymentcard } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
@@ -29,6 +29,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { formatAED } from "lib/helperFunctions";
 import showToast from "components/Toaster/Toaster";
 import revalidateTag from "components/ServerActons/ServerAction";
+import { useRouter } from "next/navigation";
 
 
 const Checkout = () => {
@@ -46,6 +47,8 @@ const Checkout = () => {
     const [isOtherCity, setIsOtherCity] = useState(false);
     const [otherCity, setOtherCity] = useState('');
     const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const savedEmirate = localStorage.getItem('selectedEmirate');
@@ -134,10 +137,15 @@ const Checkout = () => {
     const handlePayment = async (orderData: FormInitialValues,) => {
         try {
             if (allItemsAreFreeSamples && !subTotal) {
-
+                setIsLoading(true)
                 await initiateFreesample({ variables: { createFreesample: orderData } });
-
-                showToast('success', "Free sample request submitted successfully")
+                const db = await openDB();
+                const tx = db.transaction("cartfreeSample", "readwrite");
+                const store = tx.objectStore("cartfreeSample");
+                store.clear();
+                window.dispatchEvent(new Event("cartfreeSampleUpdated"));
+                router.push('/thank-you?isFreeSample=true')
+                setIsLoading(false)
                 return
             }
 
@@ -435,12 +443,12 @@ const Checkout = () => {
                                                         onClick={() => handleShippingSelect("express")}
                                                     >
                                                         <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                                                         <div className="text-11 xs:text-16">
+                                                        <div className="text-11 xs:text-16">
                                                             <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
                                                             <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
                                                             <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong> for orders under <strong><span className="font-currency font-normal text-18"></span>999</strong></p>
-                                                            <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>  
-                                                         </div>
+                                                            <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>
+                                                        </div>
                                                     </div>
                                                 )}
                                                 <div
@@ -515,8 +523,8 @@ const Checkout = () => {
                                     <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedEmirate ? formatAED(total) : formatAED(subTotal)}</span></p>
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
-                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
-                                        {isSubmitting ? "Processing..." : allItemsAreFreeSamples ? 'Place Order' : "Pay Now"}
+                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting || isLoading} >
+                                        {isSubmitting || isLoading ? "Processing..." : allItemsAreFreeSamples ? 'Place Order' : "Pay Now"}
                                     </button>
                                 </div>
                                 <div className="flex justify-center items-center gap-2 mt-4">
