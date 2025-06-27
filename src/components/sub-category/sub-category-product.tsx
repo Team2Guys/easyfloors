@@ -45,7 +45,6 @@ useEffect(() => {
     }
   };
 
-  console.log(products,"productsproducts")
   return (
     <div className="pt-5 lg:mb-20">
 
