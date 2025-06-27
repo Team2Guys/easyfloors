@@ -91,21 +91,21 @@ const Card: React.FC<productCardProps> = ({
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
               {isAccessories &&
               <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
-                           product,
-                           19,
-                           19,
-                           2.4, 
-                           1,
-                           product.subcategory?.name || "",
-                           categoryData?.name || "Accessories",
-                           "freeSample",
-                           "productImages" in product ? product.productImages?.[0]?.imageUrl ?? "" : "",
-                           product?.boxCoverage,
-                           "m",
-                           selectedColor,
-                          
-                           
-                          )}
+                product,
+                19,
+                19,
+                2.4, 
+                1,
+                product.subcategory?.custom_url || "",
+                ('category' in product ? product.category?.RecallUrl ?? "Accessories" : "Accessories"),
+                "freeSample",
+                "productImages" in product ? product.productImages?.[0]?.imageUrl ?? product.posterImageUrl?.imageUrl : product.posterImageUrl?.imageUrl,
+                product?.boxCoverage,
+                "m",
+                selectedColor,
+              
+                
+              )}
               >
                 <FreeSample />
               </button>
@@ -119,10 +119,10 @@ const Card: React.FC<productCardProps> = ({
                     19,
                     2.4, 
                     1,
-                    product.subcategory?.name || "",
-                    categoryData?.name || "Accessories",
+                    product.subcategory?.custom_url || "",
+                    ('category' in product ? product.category?.RecallUrl ?? "Accessories" : "Accessories"),
                     "wishlist",
-                    "productImages" in product ? product.productImages?.[0]?.imageUrl ?? "" : "",
+                    "productImages" in product ? product.productImages?.[0]?.imageUrl ?? product.posterImageUrl?.imageUrl : product.posterImageUrl?.imageUrl,
                     product?.boxCoverage,
                     "m",
                   );
