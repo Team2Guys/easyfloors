@@ -33,8 +33,6 @@ const Card: React.FC<productCardProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
-  
-  console.log(product,"productproduct")
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
