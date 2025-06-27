@@ -17,19 +17,46 @@ export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart
 };
 
 
-// utils/updateQuantity.ts
+
 export const updateQuantity = (
   id: number,
   delta: number,
   items: ICart[]
 ): ICart[] => {
-  return items.map((item) =>
-    item.id === id
-      ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + delta) }
-      : item
-  );
-};
+  return items.map((item) => {
+    if (item.id !== id) return item;
 
+    if (item.category === "Accessories") {
+      const newRequiredBoxes = Math.max(1, (item.requiredBoxes ?? 0) + delta);
+      const unitPrice = item.price ?? 0;
+      const totalPrice = +(unitPrice * newRequiredBoxes).toFixed(3);
+
+      return {
+        ...item,
+        requiredBoxes: newRequiredBoxes,
+        totalPrice,
+        squareMeter: newRequiredBoxes * Number(item.boxCoverage || 1),
+      };
+    } else {
+      const decimalPart = item.squareMeter % 1;
+      const newSquareMeter = Math.max(0.1, Math.floor(item.squareMeter) + delta + decimalPart);
+      const coveragePerBox = Number(item.boxCoverage);
+      const requiredBoxes = item.unit === "sqft" 
+        ? Math.ceil(newSquareMeter / (coveragePerBox * 10.764))
+        : Math.ceil(newSquareMeter / coveragePerBox);
+
+      const unitPrice = item.pricePerBox ?? 0;
+      const totalPrice = +(unitPrice * requiredBoxes).toFixed(3);
+
+      return {
+        ...item,
+        requiredBoxes,
+        squareMeter: newSquareMeter,
+        totalPrice,
+      };
+    }
+  });
+};
 
 export const handleRemoveItem = async (id: number, isSamplePage: boolean, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
   try {

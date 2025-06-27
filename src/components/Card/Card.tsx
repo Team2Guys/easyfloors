@@ -92,9 +92,9 @@ const Card: React.FC<productCardProps> = ({
               {!isAccessories &&
               <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
                 product,
-                19,
-                19,
-                2.4, 
+                Number(product.price) * (Number(product?.boxCoverage)|| 2.4),
+                Number(product.price) * (Number(product?.boxCoverage)|| 2.4),
+                Number(product?.boxCoverage), 
                 1,
                 product.subcategory?.custom_url || "",
                 ('category' in product ? product.category?.RecallUrl ?? "Accessories" : "Accessories"),
@@ -103,8 +103,7 @@ const Card: React.FC<productCardProps> = ({
                 product?.boxCoverage,
                 "m",
                 selectedColor,
-              
-                
+          
               )}
               >
                 <FreeSample />
@@ -115,9 +114,9 @@ const Card: React.FC<productCardProps> = ({
               onClick={() => {
               handleAddToStorage(
                 product,
-                19,
-                19,
-                2.4, 
+                Number(product.price) * (Number(product?.boxCoverage)|| 2.4),
+                Number(product.price) * (Number(product?.boxCoverage)|| 2.4),
+                Number(product?.boxCoverage) || 2.4, 
                 1,
                 product.subcategory?.custom_url || "",
                 ('category' in product ? product.category?.RecallUrl ?? "Accessories" : "Accessories"),
