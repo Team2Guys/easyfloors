@@ -17,17 +17,36 @@ export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart
 };
 
 
+
 // utils/updateQuantity.ts
+
 export const updateQuantity = (
   id: number,
   delta: number,
   items: ICart[]
 ): ICart[] => {
-  return items.map((item) =>
-    item.id === id
-      ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + delta) }
-      : item
-  );
+  return items.map((item) => {
+    if (item.id !== id) return item;
+    const coveragePerBox = Number(item.boxCoverage);
+    const decimalPart = item.unit === "sqft" 
+      ? (coveragePerBox * 10.764) % 1
+      : coveragePerBox % 1;
+    const currentInt = Math.floor(item.squareMeter);
+    let newSquareMeter = currentInt + delta + decimalPart;
+    newSquareMeter = Math.max(1 + decimalPart, newSquareMeter); 
+    const requiredBoxes = item.unit === "sqft"
+      ? Math.ceil(newSquareMeter / (coveragePerBox * 10.764))
+      : Math.ceil(newSquareMeter / coveragePerBox);
+    const unitPrice = item.pricePerBox ?? item.price ?? 0;
+    const totalPrice = +(unitPrice * requiredBoxes).toFixed(3);
+
+    return {
+      ...item,
+      squareMeter: +newSquareMeter.toFixed(2),
+      requiredBoxes,
+      totalPrice,
+    };
+  });
 };
 
 

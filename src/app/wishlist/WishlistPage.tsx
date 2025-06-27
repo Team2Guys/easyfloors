@@ -16,7 +16,7 @@ const Top = dynamic(() => import("components/top"));
 
 const WishlistPage = () => {
   const [items, setItems] = useState<ICart[]>([]);
-
+  console.log(items,"itemsitems")
   useEffect(() => {
     fetchItems(false, setItems); 
   }, []);
@@ -53,7 +53,7 @@ const WishlistPage = () => {
         {products.length > 0 && (
         <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10">
           <ProductTable
-            columns={["Product","Price Per Box","QTY(m/m2)","Availability", "Action"]}
+            columns={["Product","QTY(m/m2)","Total Price","Availability", "Action"]}
             items={products} 
             setItems={setItems} 
           />
