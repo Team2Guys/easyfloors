@@ -89,6 +89,7 @@ export const handleAddToStorage = async (
       return;
       
     } 
+    
     else if (type === 'cartfreeSample') {
       const existingSamples = await getFreeSamplesCart();
 
