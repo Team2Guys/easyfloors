@@ -16,7 +16,7 @@ import { Collapse } from 'antd';
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
-import { emirates } from 'data/data';
+import { emirates, generateSlug } from 'data/data';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { formatAED } from 'lib/helperFunctions';
 interface CartPageProps {
@@ -277,7 +277,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                 />
                               </div>
                               <div>
-                                <Link href={`/${item.category}/${item.subcategories}/${item.custom_url}`} className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
+                                <Link href={`/${generateSlug(item.category ??"")}/${generateSlug(item.subcategories??"")}/${item.custom_url}`} className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
                                 {
                                   item.isfreeSample ? 
                                   <p className='text-12 sm:text-14 2xl:text-17'>
