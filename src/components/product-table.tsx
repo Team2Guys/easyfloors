@@ -63,33 +63,34 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     </div>
                   </td>
                   
-                  {pathname !== "/freesample" && (
-                        <td className="p-3">
-                    <div className="flex flex-col">
-                      <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
-                        <button 
-                          onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))} 
-                          className="px-2 text-gray-700"
-                        >
-                          <FiMinus />
-                        </button>
-                        <span className="px-2 text-black font-semibold">
-                          {product.squareMeter === 0 ? '0.00' : product.squareMeter.toFixed(2)}
-                        </span>
-                        <button
-                          onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} 
-                          className="px-2 text-gray-700"
-                        >
-                          <GoPlus />
-                        </button>
-                      </div>
-                        
-                    </div>
-                        </td>
-                        )}
+                      {pathname !== "/freesample" && (
+                  <td className="p-3">
+                        <div className="flex flex-col">
+                          <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
+                            <button 
+                              onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))} 
+                              className="px-2 text-gray-700"
+                            >
+                              <FiMinus />
+                            </button>
+                            <span className="px-2 text-black font-semibold">
+                              {product.category === "Accessories" 
+                                ? product.requiredBoxes 
+                                : (product.squareMeter === 0 ? '0.00' : product.squareMeter.toFixed(2))}
+                            </span>
+                            <button
+                              onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} 
+                              className="px-2 text-gray-700"
+                            >
+                              <GoPlus />
+                            </button>
+                          </div>
+                        </div>
+                  </td>
+                      )}
 
                   <td className="p-3 font-inter text-12 xl:text-20 font-normal">
-                    {pathname === "/freesample" ? "Free" : product.totalPrice.toFixed(3)}
+                    {pathname === "/freesample" ? "Free" : product.totalPrice.toFixed(2)}
                   </td>
                   <td className="p-3 text-center font-inter text-12 xl:text-20 font-normal">
                     {product.stock > 0 ? "In Stock" : "Out of Stock"}
