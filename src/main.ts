@@ -28,7 +28,9 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalGuards(new AuthGuard(new Reflector()));
 
-  await app.listen(process.env.PORT ?? 3200);
+  await app.listen(process.env.PORT ?? 3200,()=>{
+    console.log('connected to ' + `http://localhost:${process.env.PORT}/`)
+  });
 }
 
 bootstrap();

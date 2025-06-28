@@ -235,3 +235,16 @@ model Redirecturls {
   createdAt     DateTime? @default(now())
   updatedAt     DateTime?
 }
+
+
+
+model GoogleToken {
+  id           Int      @id @default(autoincrement())
+  accessToken  String?
+  refreshToken String?
+  scope        String?
+  tokenType    String?
+  expiryDate   BigInt? // store timestamp in milliseconds
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
