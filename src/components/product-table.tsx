@@ -43,7 +43,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                 <tr key={product.id} className="border-t w-full">
                   <td className="p-3 flex items-center justify-start gap-3">
                     <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
-                    <div className="text-12 xl:text-20 font-inter font-normal">
+                    <div className="text-12 xl:text-20 font-inter font-normal w-10/12" >
                       <Link href={`${product.category === "Accessories" ? `/accessories` : `/${generateSlug(product.category)}/${generateSlug(product.subcategories)}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
                       {!isSamplePage && (
                         product.category === "Accessories" ? (
@@ -63,7 +63,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     </div>
                   </td>
                   
-                      {pathname !== "/freesample" && (
+                  {pathname !== "/freesample" && (
                   <td className="p-3">
                         <div className="flex flex-col">
                           <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
@@ -76,7 +76,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                             <span className="px-2 text-black font-semibold">
                               {product.category === "Accessories" 
                                 ? product.requiredBoxes 
-                                : (product.squareMeter === 0 ? '0.00' : product.squareMeter.toFixed(2))}
+                                : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
                             </span>
                             <button
                               onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} 
@@ -87,10 +87,10 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                           </div>
                         </div>
                   </td>
-                      )}
+                  )}
 
                   <td className="p-3 font-inter text-12 xl:text-20 font-normal">
-                    {pathname === "/freesample" ? "Free" : product.totalPrice.toFixed(2)}
+                    {pathname === "/freesample" ? "Free" :  product.totalPrice.toFixed(2)}
                   </td>
                   <td className="p-3 text-center font-inter text-12 xl:text-20 font-normal">
                     {product.stock > 0 ? "In Stock" : "Out of Stock"}
