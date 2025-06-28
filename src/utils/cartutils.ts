@@ -21,42 +21,43 @@ export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart
 export const updateQuantity = (
   id: number,
   delta: number,
-  items: ICart[]
+  items: ICart[],
 ): ICart[] => {
   return items.map((item) => {
     if (item.id !== id) return item;
+    if (item.category === "Accessories" || item.category === "Accessory") {
+  const metres     = Math.max(1, (item.requiredBoxes ?? 1) + delta);
+  const unitPrice  = item.price ?? 0;          // price per metre
+  const totalPrice = +(unitPrice * metres).toFixed(2);
 
-    if (item.category === "Accessories") {
-      const newRequiredBoxes = Math.max(1, (item.requiredBoxes ?? 0) + delta);
-      const unitPrice = item.price ?? 0;
-      const totalPrice = +(unitPrice * newRequiredBoxes).toFixed(3);
+  return {
+    ...item,
+    requiredBoxes: metres, 
+    squareMeter:   metres,  
+    totalPrice,      
+  };
+}
 
-      return {
-        ...item,
-        requiredBoxes: newRequiredBoxes,
-        totalPrice,
-        squareMeter: newRequiredBoxes * Number(item.boxCoverage || 1),
-      };
-    } else {
-      const decimalPart = item.squareMeter % 1;
-      const newSquareMeter = Math.max(0.1, Math.floor(item.squareMeter) + delta + decimalPart);
-      const coveragePerBox = Number(item.boxCoverage);
-      const requiredBoxes = item.unit === "sqft" 
-        ? Math.ceil(newSquareMeter / (coveragePerBox * 10.764))
-        : Math.ceil(newSquareMeter / coveragePerBox);
+    let newArea = +(item.squareMeter + delta).toFixed(2);
+    if (newArea < 1) newArea = 1;  
 
-      const unitPrice = item.pricePerBox ?? 0;
-      const totalPrice = +(unitPrice * requiredBoxes).toFixed(3);
+    const sqmPerBox = Number(item.boxCoverage);   
+    const areaInSqm = item.unit === "sqft" ? newArea / 10.764 : newArea;
 
-      return {
-        ...item,
-        requiredBoxes,
-        squareMeter: newSquareMeter,
-        totalPrice,
-      };
-    }
+    const boxesNeeded = Math.ceil(areaInSqm / sqmPerBox);
+
+    const unitPrice  = item.pricePerBox ?? 0;
+    const totalPrice = +(unitPrice * boxesNeeded).toFixed(2);
+
+    return {
+      ...item,
+      requiredBoxes: boxesNeeded,
+      squareMeter: newArea,
+      totalPrice,
+    };
   });
 };
+
 
 export const handleRemoveItem = async (id: number, isSamplePage: boolean, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
   try {

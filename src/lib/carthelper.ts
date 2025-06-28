@@ -107,7 +107,11 @@ export const handleAddToStorage = async (
       return;
     }
     else if (type === 'wishlist') {
-      await addToWishlist(item);
+  const added = await addToWishlist(item);
+
+      if (!added) {
+        toast.info('Product is already in your wishlist.');
+      }
       return;
     }
   } catch  {
