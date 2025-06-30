@@ -8,8 +8,7 @@ export class GoogleCronService {
 
     constructor(private readonly googleMerchantService: GoogleMerchantService) { }
 
-    // @Cron('0 0 1,16 * *')
-    @Cron(CronExpression.EVERY_5_MINUTES)
+    @Cron('0 0 1,16 * *')
     async handleCron() {
         const merchantId = process.env.GOOGLE_MERCHANT_ID || '';
         this.logger.log('Running cron job to sync products...');
