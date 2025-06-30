@@ -66,9 +66,9 @@ const content = google.content({ version: 'v2.1', auth: authClient });
   let result = await content.products.insert({
   merchantId,
   requestBody: {
-    offerId: 'cron Test',
-    title: ' cron Test',
-    description: 'Test',
+    offerId: 'cron Test2',
+    title: ' cron Test2',
+    description: 'Test2',
     link: 'https://example.com/product',
     imageLink: 'https://example.com/image.jpg',
     contentLanguage: 'en',
