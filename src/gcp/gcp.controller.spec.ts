@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { GcpController } from './gcp.controller';
-import { GcpService } from './gcp.service';
+import { GoogleController } from './gcp.controller';
+import { GoogleMerchantService } from './gcp.service';
 
 describe('GcpController', () => {
-  let controller: GcpController;
+  let controller: GoogleController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [GcpController],
-      providers: [GcpService],
+      controllers: [GoogleController],
+      providers: [GoogleMerchantService],
     }).compile();
 
-    controller = module.get<GcpController>(GcpController);
+    controller = module.get<GoogleController>(GoogleController);
   });
 
   it('should be defined', () => {

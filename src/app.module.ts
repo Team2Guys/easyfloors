@@ -17,6 +17,7 @@ import { SalesProductsModule } from './sales-products/sales-products.module';
 import { PrismaService } from './prisma/prisma.service'
 import { GeneralModule } from './general/general.module';
 import { GcpModule } from 'gcp/gcp.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -30,6 +31,8 @@ import { GcpModule } from 'gcp/gcp.module';
       context: ({ req, res }) => ({ req, res }),
 
     }),
+        ScheduleModule.forRoot(),
+
     ProductsModule,
     CategoriesModule,
     SubCategoriesModule,

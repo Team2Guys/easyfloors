@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { google } from 'googleapis';
 import { PrismaService } from '../../prisma/prisma.service'
+import * as path from 'path';
+
 
 @Injectable()
 export class GoogleAuthService {
@@ -10,7 +12,7 @@ export class GoogleAuthService {
     process.env.GOOGLE_REDIRECT_URI
   );
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   getAuthUrl(): string {
     return this.oauth2Client.generateAuthUrl({
@@ -46,25 +48,45 @@ export class GoogleAuthService {
     return tokens;
   }
 
-  async setStoredCredentials() {
-    const token = await this.prisma.googleToken.findUnique({
-      where: { id: 1 },
-    });
+  // async setStoredCredentials() {
+  //   const token = await this.prisma.googleToken.findUnique({
+  //     where: { id: 1 },
+  //   });
 
-    if (!token) throw new Error('Google token not found');
+  //   if (!token) throw new Error('Google token not found');
 
-    this.oauth2Client.setCredentials({
-      access_token: token.accessToken,
-      refresh_token: token.refreshToken,
-      scope: token.scope ||  "",
-      token_type: token.tokenType,
-      expiry_date: token.expiryDate ? Number(token.expiryDate) : undefined,
-    });
+  //   this.oauth2Client.setCredentials({
+  //     access_token: token.accessToken,
+  //     refresh_token: token.refreshToken,
+  //     scope: token.scope ||  "",
+  //     token_type: token.tokenType,
+  //     expiry_date: token.expiryDate ? Number(token.expiryDate) : undefined,
+  //   });
 
-    return this.oauth2Client;
-  }
+  //   return this.oauth2Client;
+  // }
 
   getOAuthClient() {
     return this.oauth2Client;
   }
+
+
+  async setStoredCredentials(): Promise<any> {
+    const base64Key = process.env.GCP_KEY_BASE64;
+    if (!base64Key) throw new Error("GCP_KEY_BASE64 is not set");
+
+    // Decode the base64 key and parse it as JSON
+    const credentials = JSON.parse(Buffer.from(base64Key, 'base64').toString('utf-8'));
+    console.log(credentials, "credentials" , base64Key)
+
+    const auth = new google.auth.GoogleAuth({
+      credentials, // directly passing JSON credentials object
+      scopes: ['https://www.googleapis.com/auth/content'],
+    });
+
+    const jwtClient = await auth.getClient();
+    return jwtClient;
+  }
+
+
 }
