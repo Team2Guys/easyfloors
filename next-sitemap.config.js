@@ -29,11 +29,19 @@ module.exports = {
 
    robotsTxtOptions: {
     policies: [
-      {
-        userAgent: '*',
-        disallow: excludePages
-      },
-    ],
+    {
+      userAgent: 'Googlebot',
+      allow: '/',
+    },
+    {
+      userAgent: 'Googlebot-Image',
+      allow: '/',
+    },
+    {
+      userAgent: '*',
+      disallow: excludePages,
+    },
+  ],
     additionalSitemaps: ['https://easyfloors.ae/sitemap.xml']},
 
 
