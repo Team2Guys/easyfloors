@@ -17,17 +17,45 @@ export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart
 };
 
 
-// utils/updateQuantity.ts
+
 export const updateQuantity = (
   id: number,
   delta: number,
-  items: ICart[]
+  items: ICart[],
 ): ICart[] => {
-  return items.map((item) =>
-    item.id === id
-      ? { ...item, requiredBoxes: Math.max(1, (item.requiredBoxes ?? 0) + delta) }
-      : item
-  );
+  return items.map((item) => {
+    if (item.id !== id) return item;
+    if (item.category === "Accessories" || item.category === "Accessory") {
+  const metres     = Math.max(1, (item.requiredBoxes ?? 1) + delta);
+  const unitPrice  = item.price ?? 0;          // price per metre
+  const totalPrice = +(unitPrice * metres).toFixed(2);
+
+  return {
+    ...item,
+    requiredBoxes: metres, 
+    squareMeter:   metres,  
+    totalPrice,      
+  };
+}
+
+    let newArea = +(item.squareMeter + delta).toFixed(2);
+    if (newArea < 1) newArea = 1;  
+
+    const sqmPerBox = Number(item.boxCoverage);   
+    const areaInSqm = item.unit === "sqft" ? newArea / 10.764 : newArea;
+
+    const boxesNeeded = Math.ceil(areaInSqm / sqmPerBox);
+
+    const unitPrice  = item.pricePerBox ?? 0;
+    const totalPrice = +(unitPrice * boxesNeeded).toFixed(2);
+
+    return {
+      ...item,
+      requiredBoxes: boxesNeeded,
+      squareMeter: newArea,
+      totalPrice,
+    };
+  });
 };
 
 
