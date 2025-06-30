@@ -225,10 +225,11 @@ const Filters = ({
         )}
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-            {Object.values(categoryState).map((item) => {
+            {Object.values(categoryState ?? {}).map((item) => {
+              if (!item) return null;
               return (
                 <li key={item.custom_url}>
-                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block capitalize">
+                  <Link href={`/${item.custom_url ?? ""}`} className="cursor-pointer hover:text-primary block capitalize">
                     {item.name.toLowerCase()}
                   </Link>
                 </li>
