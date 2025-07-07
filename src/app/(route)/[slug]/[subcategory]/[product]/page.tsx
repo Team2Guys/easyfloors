@@ -67,7 +67,7 @@ const Product = async ({ params }: { params: Promise<IParams> }) => {
   if (!productData) return notFound()
 
    const products = ProductInfo.filter((product: IProduct) => (product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
-
+    console.log(productData,'products')
   return (
     <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={products} productData={productData} />
   );
