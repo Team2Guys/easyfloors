@@ -16,7 +16,7 @@ export interface Category {
   updatedAt: Date;
   last_editedBy?: string;
   Recall_Cat?: string;
-  products?: Product[];
+  products?: IProduct[];
   accessories?: Product[];
   RecallUrl?:string
   Heading?:string
@@ -51,7 +51,7 @@ export interface EDIT_CATEGORY extends Category {
     subcategory?: ISUBCATEGORY_EDIT;
     sizes?: Sizes[];
     pricePerBox?: number;
-
+    
 }
 
 export interface ISUBCATEGORY extends Category {
@@ -107,4 +107,5 @@ export type FilterState = {
   commercialWarranty: string[];
   residentialWarranty: string[];
   plankWidth: string[];
+  plankLength: string[];
 };

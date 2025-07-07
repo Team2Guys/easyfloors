@@ -1,4 +1,5 @@
 import { ICart } from "types/prod";
+import { toast } from "react-toastify";
 
 export const openDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
@@ -83,16 +84,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
     });
   };
   
-  export const getCartItem = async (id: number): Promise<ICart | undefined> => {
-    const db = await openDB();
-    return new Promise((resolve, reject) => {
-      const tx = db.transaction("cart", "readonly");
-      const store = tx.objectStore("cart");
-      const request = store.get(id);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
-  };
+
   
   export const removeCartItem = async (id: number): Promise<void> => {
     try {
@@ -178,24 +170,6 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
       throw error;
     }
   };
-
-  export const getWishlistItem = async (id: number): Promise<ICart | undefined> => {
-    try {
-      const db = await openDB();
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction("wishlist", "readonly");
-        const store = tx.objectStore("wishlist");
-        const request = store.get(id);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-    } catch (error) {
-      throw error;
-    }
-  };
-
-
-  import { toast } from "react-toastify";
 
   export const addToFreeSample = async (product: ICart): Promise<void> => {
     try {

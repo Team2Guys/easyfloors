@@ -9,15 +9,28 @@ import Link from "next/link";
 import Card from "components/Card/Card";
 import { features } from "data/data";
 import { Category, EDIT_CATEGORY, ISUBCATEGORY } from "types/cat";
+import { getSubcategoryOrder } from "data/home-category";
 
 const CategorySlider = ({ categories }: { categories: Category[] }) => {
+
+
   return (
     <div className="space-y-8">
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
-
         const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
-        const subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
-
+        let  subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
+        subcategories = [...subcategories].sort((a, b) => {
+          return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
+        });
+        subcategories = [...subcategories].sort((a, b) => {
+          const orderA = getSubcategoryOrder(a.name);
+          const orderB = getSubcategoryOrder(b.name);
+          if (orderA !== orderB) {
+            return orderA - orderB;
+          } else {
+            return (Number(a.price) || 0) - (Number(b.price) || 0);
+          }
+        });
         const shouldEnablePagination = subcategories && subcategories.length >= 0;
         const seeAllLink = `/${category?.custom_url || category.name.toLowerCase().replace(/\s+/g, '-')}`;
         return (
@@ -29,8 +42,8 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
               <Link href={`/${category?.custom_url}`} className="text-lg lg:text-4xl font-semibold">
                 {category.name}
               </Link>
-              <p className="text-sm lg:text-base  md:text-gray-700 mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
-                Price Starting From: AED {category.price + "/m²" || (category.name === "SPC FLOORING" ? 'AED 150m²' : category.name === "LVT FLOORING" ? 'AED 180m²' : category.name === "POLAR FLOORING" ? 'AED 200m²' : category.name === "RICHMOND FLOORING" ? 'AED 220m²' : '')}
+              <p className="text-base  md:text-black mt-2 md:mt-3 mb-5 md:mb-4 md:w-fit md:px-3 md:py-1 md:bg-white font-light">
+                Price Starting From: <span className="font-currency font-normal text-22"></span> {category.price + "/m²" || (category.name === "SPC FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 150m²</p> : category.name === "LVT FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 180m²</p> : category.name === "POLAR FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 200m²</p> : category.name === "RICHMOND FLOORING" ? <p><span className="font-currency font-normal text-18"></span> 220m²</p> : '')}
               </p>
               <div className="w-full md:w-60 flex justify-center">
 
@@ -54,8 +67,8 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
                   480: { slidesPerView: 2, spaceBetween: 15 },
                   640: { slidesPerView: 2, spaceBetween: 15 },
                   768: { slidesPerView: 2, spaceBetween: 20 },
-                  1024: { slidesPerView: 3, spaceBetween: 20 },
-                  1280: { slidesPerView: 3, spaceBetween: 25 },
+                  1024: { slidesPerView: 2.7, spaceBetween: 2 },
+                  1200: { slidesPerView: 3, spaceBetween: 2 },
                 }}
               >
                 {subcategories?.map((product: EDIT_CATEGORY, index) => {

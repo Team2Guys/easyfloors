@@ -13,7 +13,7 @@ export default async function AmCategory({subCategories}: {subCategories: ISUBCA
     <Popup/>
     <CustomSwiper subCategories={subCategories} />
 
-        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10 lg:mt-20">
           {subCategories?.map((card: ISUBCATEGORY, index: number) => (
             <BlogCard key={card.id} card={card} index={index} />
           ))}

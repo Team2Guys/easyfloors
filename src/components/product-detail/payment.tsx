@@ -7,6 +7,7 @@ import tamaraLogo from "../../../public/assets/images/payment-icons/tamara-logo.
 import Modal from "components/ui/modal";
 import { tabbyfeature, tabbyhowitwork, tabbypayicon, tamarafeature, tamaralist, tamarawhy } from "data/produuct-detail";
 import { PaymentMethodProps } from "types/product-detail";
+import { formatAED } from "lib/helperFunctions";
 
 const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
   const [tabbyOpen, setTabbyOpen] = useState(false);
@@ -20,19 +21,20 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
         <div className="flex items-center justify-center relative text-[#E4E4E4] font-inter">
         <span className="absolute left-0 w-1/6 border-t border-gray-300"></span>
         <p className="text-center px-3 w-4/6 whitespace-nowrap font-semibold text-[#000000] text-sm xs:text-base lg:text-xs xl:text-base">
-          Guaranteed Safe Checkout
+        Buy Now, Pay Later
         </p>
         <span className="absolute right-0 w-1/6 border-t border-gray-300"></span>
         </div>
       )
     }
+
       <div className="flex gap-2 pt-4">
-        <div className="relative w-1/2 border-4 border-[#00FFBC] p-4  shadow">
+        <div className="relative w-1/2 border-4 border-[#00FFBC] px-1 py-4 xl:px-2  shadow">
           <span className="absolute -top-3 left-2 bg-[#00FFBC] px-2 py-1  text-xs font-extrabold">
             tabby
           </span>
-          <p className=" text-[8px] sm:text-14 font-medium text-[#8D8D8D]">
-             Pay 4 interest-free payments of AED {installments.toFixed(2)}{' '}
+          <p className=" text-12 sm:text-14 font-medium text-[#8D8D8D]">
+             Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {formatAED(installments)}{' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTabbyOpen(true)}
@@ -40,24 +42,24 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
               Learn more
             </span>
           </p>
-          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 xl:gap-2 mt-2 font-inter">
+          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 mt-2 font-inter">
               {paymentLabels.map((label, index) => (
                 <div
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-[8px] xl:text-10 2xl:text-12">AED {installments.toFixed(2)}</p>
-                  <p className="text-[7px] xltext-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
+                  <p className="text-10 xl:text-10 2xl:text-12 text-nowrap"><span className="font-currency font-normal text-12 2xl:text-14"></span> {formatAED(installments)}</p>
+                  <p className="text-[8px] xl:text-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}
           </div>
         </div>
-        <div className="relative w-1/2 border-4 border-[#D47C84] p-4  shadow">
+        <div className="relative w-1/2 border-4 border-[#D47C84] px-1 py-4 xl:px-2 shadow">
           <span className="absolute -top-3 left-2 bg-gradient-to-r from-blue-300 via-orange-300 to-pink-300 text-black font-extrabold px-2 py-1  text-xs">
             tamara
           </span>
-          <p className=" text-[8px] sm:text-14 font-medium text-[#8D8D8D]">
-          Pay 4 interest-free payments of AED {installments.toFixed(2)} {' '}
+          <p className=" text-12 sm:text-14 font-medium text-[#8D8D8D]">
+          Pay 4 interest-free payments of <span className="font-currency font-normal text-16"></span> {formatAED(installments)} {' '}
             <span
               className="underline cursor-pointer text-red-500"
               onClick={() => setTamaraOpen(true)}
@@ -65,14 +67,14 @@ const PaymentMethod = ({showheading,installments}:PaymentMethodProps) => {
               Learn more
             </span>
           </p>
-          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 xl:gap-2 mt-2 font-inter">
+          <div className="flex flex-wrap lg:flex-nowrap justify-evenly gap-2 lg:gap-1 mt-2 font-inter">
               {paymentLabels.map((label, index) => (
                 <div
                   key={index}
                   className="text-black font-medium 2xl:font-semibold pb-1 text-center "
                 >
-                  <p className="text-[8px] xl:text-10 2xl:text-12">AED {installments.toFixed(2)}</p>
-                  <p className="text-[7px] xltext-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
+                  <p className="text-10 2xl:text-12 text-nowrap"><span className="font-currency font-normal text-12 2xl:text-14"></span> {formatAED(installments)}</p>
+                  <p className="text-[8px] xl:text-[8px] 2xl:text-10 text-[#8D8D8D]">{label}</p>
                 </div>
               ))}
           </div>

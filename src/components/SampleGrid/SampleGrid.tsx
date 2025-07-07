@@ -17,10 +17,10 @@ const SampleGrid: React.FC<SampleGridProps> = ({ sections }) => {
               index % 2 === 0 ? "bg-primary text-white" : "bg-[#FFF9F5] text-black"
             }`}
           >
-            <h2 className="text-14 sm:text-2xl md:text-3xl font-semibold">
+            <h2 className="text-base sm:text-2xl md:text-3xl font-semibold">
               {section.title}
             </h2>
-            <p className="text-10 sm:text-base lg:text-xl font-normal font-inter">
+            <p className="text-xs sm:text-base lg:text-xl font-normal font-inter">
               {section.description}
             </p>
             {/* Wrapped Button Inside Link */}

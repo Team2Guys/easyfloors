@@ -11,15 +11,16 @@ import { BiChevronDown } from "react-icons/bi";
 import { staticMenuItems } from "data/data";
 import { ISUBCATEGORY } from "types/cat";
 import { HeaderAccessoriesProps, INavbar } from "types/types";
+import { usePathname } from "next/navigation";
 
 const Navbar = ({ categories, products}: INavbar) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [isScrolled, setIsScrolled] = useState(false);
-
+const pathname = usePathname()
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 5);
     };
 
     handleScroll();
@@ -45,7 +46,6 @@ const Navbar = ({ categories, products}: INavbar) => {
     });
   };
 
-  // Modify menuItems to show only accessories in the "Accessories" category
   const menuItems = staticMenuItems.map((staticItem) => {
     const matchedCategory = categories?.find((cat) => cat.custom_url === staticItem.href);
     if (!matchedCategory) return staticItem;
@@ -59,52 +59,52 @@ const Navbar = ({ categories, products}: INavbar) => {
         label: sub.name,
         href: `/${sub?.category?.RecallUrl || matchedCategory.RecallUrl}/${sub.custom_url}`,
         image: sub.posterImageUrl?.imageUrl || "/assets/default-image.png",
+        price: sub.price,
       })) || [],
     };
   });
 
   return (
-    <nav className={`bg-white w-full z-50 max-sm:pb-1 max-lg:pb-2 font-inter  ${isScrolled ? "bg-white text-black top-0 fixed" : "bg-white text-black sticky top-0"}`}>
+    <nav className={`bg-white w-full z-50 max-sm:py-2 max-lg:pb-2 font-inter  ${isScrolled ? "bg-white text-black top-0 fixed" : "bg-white text-black sticky top-0"}`}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
         <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
           <Link href="/">
             <Image
               width={400}
               height={400}
-              className="w-[54px] h-[24px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:w-auto 2xl:h-auto"
-              src="/assets/images/logo.png"
+              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto pb-2"
+              src="/assets/images/logo.webp"
               alt="logo"
             />
           </Link>
         </div>
-        <div className="w-8/12 lg:w-[68%] 2xl:w-[70%] 3xl:w-[67%]  max-lg:flex max-lg:justify-center">
-          <div className="hidden lg:flex items-center gap-2 lg:gap-1 xl:gap-2 2xl:gap-4 w-fit h-16 justify-between capitalize font-light whitespace-nowrap relative overflow-hidden">
+        <div className="w-8/12 lg:w-[68%] 2xl:w-[65%] 3xl:w-[65%]  max-lg:flex max-lg:justify-center">
+          <div className="hidden lg:flex items-end gap-0 xl:gap-1 2xl:gap-5 w-fit h-16 justify-between capitalize font-light whitespace-nowrap relative overflow-hidden">
             {menuItems.map((item, index) => (
               <Megamenu
                 key={index}
                 label={item.label}
                 href={item.href}
                 submenu={item.submenu}
-                // Only pass accessories for "Accessories" menu
                 products={item.label === "Accessories" ? categories?.find(cat => cat.name === "ACCESSORIES")?.accessories : []}
               />
             ))}
           </div>
           <SearchBar className="block lg:hidden" productData={products} />
         </div>
-        <div className="w-2/12 lg:w-[22%] xl:w-[20%] 2xl:w-[20%] 3xl:w-[23%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
+        <div className="w-2/12 lg:w-[25%] text-end flex items-center gap-2 justify-between max-lg:justify-end">
           <SearchBar className="lg:block hidden" productData={products} />
           <UserIcon className="hidden lg:flex" />
           <div className="lg:hidden flex justify-end">
-            <FaBars onClick={() => setIsOpen(true)} size={20} />
+            <FaBars onClick={() => setIsOpen(true)} size={25} />
             <Drawer isOpen={isOpen} onClose={() => setIsOpen(false)}>
               {menuItems.map((item) => (
                 <div key={item.label} className="border-b py-2 font-inter">
-                  <div className="flex justify-between items-center gap-2">
+                  <div className="flex justify-between items-center gap-2 capitalize">
                     {/* Main Category Link */}
                     <Link
                       href={item.href}
-                      className="text-14 font-semibold w-fit whitespace-nowrap"
+                      className={`text-14 font-semibold w-fit whitespace-nowrap ${pathname ===`/${item.href}` ? "bg-gray-light": ""}`}
                       onClick={() => setIsOpen(false)}
                     >
                       {item.label}
@@ -153,7 +153,21 @@ const Navbar = ({ categories, products}: INavbar) => {
                   {/* Submenu for Other Categories */}
                   {item?.submenu && item?.submenu.length > 0 && !openMenus["Accessories"] && openMenus[item.label] && (
                     <div className="grid grid-cols-2 gap-5 pt-2">
-                      {item.submenu.map((sub, index) => (
+                      {[...item.submenu]
+                    .sort((a, b) => {
+                      const getGroup = (item: { label: string; price?: string }) => {
+                        const label = item.label.toLowerCase();
+                        if (label.includes("polar")) return '0';
+                        if (label.includes("spc")) return '1';
+                        if (label.includes("lvt")) return '2';
+                        return "4";
+                      };
+
+                      const groupA = getGroup({ ...a, price: a.price || "0" });
+                      const groupB = getGroup({ ...b, price: b.price || "0" });
+                      if (groupA !== groupB) return groupA.localeCompare(groupB);
+                      return parseFloat(a.price || "0") - parseFloat(b.price || "0");
+                    }).map((sub, index) => (
                         <Link
                           href={sub.href}
                           key={index}

@@ -12,14 +12,18 @@ import { ProductImage } from 'types/prod';
 import { Session } from 'next-auth';
 import { useMutation } from '@apollo/client';
 import { UPDATE_USER } from 'graphql/user_mutation';
+import { ImageRemoveHandler } from 'utils/helperFunctions';
+import { toast } from 'react-toastify';
+import { useSession } from 'next-auth/react';
 
 
 function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | undefined }) {
     const [updateUser] = useMutation(UPDATE_USER);
+    const { update } = useSession();
 
     const router = useRouter();
     const [formData, setFormData] = useState({ name: '', email: '' });
-    const [profilePhoto, setProfilePhoto] = useState<ProductImage | undefined>();
+    const [profilePhoto, setProfilePhoto] = useState<ProductImage[] | undefined>([]);
 
     const handlePhotoChange = async (
         event: React.ChangeEvent<HTMLInputElement>,
@@ -28,13 +32,15 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
         if (file) {
             const imageUrl = await uploadPhotosToBackend([file]);
 
-            setProfilePhoto(() => imageUrl && imageUrl.length > 0 ? imageUrl[0] : undefined)
+            setProfilePhoto(() => imageUrl && imageUrl.length > 0 ? imageUrl : undefined)
         }
     };
+
+
     useEffect(() => {
         if (loggedInUser?.user) {
-            const images = loggedInUser?.user?.image 
-            setProfilePhoto( images || undefined as any) //eslint-disable-line
+            const images = loggedInUser?.user?.image
+            setProfilePhoto(images ? [images] : undefined as any) //eslint-disable-line
             setFormData({ name: loggedInUser?.user.name || "", email: loggedInUser?.user.email || "" });
         }
     }, [loggedInUser]);
@@ -47,22 +53,30 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
             [name]: value,
         }));
     };
-
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         const userDetails = {
             ...formData,
-            userImageUrl: profilePhoto
+            userImageUrl: profilePhoto?.[0] || null
         };
 
+
+
         try {
-          await updateUser({
+            await updateUser({
                 variables: {
-                  updateUser: userDetails
+                    updateUser: userDetails
                 },
-              });
-        
+            });
+
+
             showToast('success', "details has been updated");
+
+            await update({
+                name: userDetails.name,
+                email: userDetails.email,
+                image: userDetails.userImageUrl?.imageUrl,
+            });
         } catch (err) {
             return err;
 
@@ -79,19 +93,22 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
     };
 
     const handleDelete = async () => {
-        // try {
-        //     await ImageRemoveHandler(loggedInUser.userImagePublicId, profilePhoto);
-        //     setProfilePhoto(undefined);
-        //     showToast('success', 'Image removed successfully🎉');
-        //     console.log(profilePhoto);
-        // } catch (err: any) {
-        //     showToast(
-        //         'error',
-        //         err?.response?.data?.message ||
-        //         err?.response ||
-        //         'Their is something wrong!',
-        //     );
-        // }
+        try {
+            const imagePublicId = profilePhoto?.[0].public_id;
+            if (!imagePublicId) return;
+            await ImageRemoveHandler(imagePublicId, setProfilePhoto);
+            setProfilePhoto(undefined);
+            toast.success('Image removed successfully🎉');
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+
+            showToast(
+                'error',
+                err?.response?.data?.message ||
+                err?.response ||
+                'Their is something wrong!',
+            );
+        }
 
 
     };
@@ -108,15 +125,9 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                         >
                             Order History
                         </Link>
-                        <Link
-                            className="border border-gray p-2 max-w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold shadow"
-                            href='/about-us'
-                        >
-                            About Us
-                        </Link>
                         <p
                             className="border border-gray p-2 max-w-full rounded-md hover:bg-primary hover:text-white md:text-lg font-medium md:font-semibold shadow cursor-pointer"
-                            onClick={(e) => {e.preventDefault();logoutHhandler()}}
+                            onClick={(e) => { e.preventDefault(); logoutHhandler() }}
                         >
                             Log Out
                         </p>
@@ -124,18 +135,20 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                 </div>
                 <div className="p-4 rounded-md shadow w-full md:w-8/12">
                     <div>
+
+
                         <div className="mb-4 flex items-center gap-3">
                             <div className="h-14 w-14 rounded-full overflow-hidden">
                                 <Image
                                     src={
-                                        (profilePhoto && profilePhoto.imageUrl)
-                                            ? profilePhoto.imageUrl
+                                        ((profilePhoto && profilePhoto.length > 0) && profilePhoto[0].imageUrl)
+                                            ? profilePhoto[0].imageUrl
                                             : '/assets/images/dummy-avatar.jpg'
                                     }
                                     width={55}
                                     height={55}
                                     alt={loggedInUser?.user?.name ?? "Profile Photo"}
-                                    
+
                                 />
                             </div>
 
@@ -161,6 +174,8 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
 
 
                         </div>
+
+
                         <div className="relative mb-4 pt-2 h-36 rounded-md bg-lightbackground dark:bg-meta-4">
                             <input
                                 type="file"

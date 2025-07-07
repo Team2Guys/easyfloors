@@ -1,7 +1,7 @@
 "use client";
 import Container from 'components/common/container/Container';
 import PaymentMethod from 'components/product-detail/payment';
-import { paymentcard, UAEStates } from 'data/cart';
+import { paymentcard } from 'data/cart';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useEffect } from 'react';
@@ -13,26 +13,28 @@ import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
 import RelatedSlider from 'components/related-slider/related-slider';
 import { Collapse } from 'antd';
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import lightImg from '../../../public/assets/icons/light1(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
+import { emirates } from 'data/data';
+import { MdKeyboardArrowDown } from 'react-icons/md';
+import { formatAED } from 'lib/helperFunctions';
 interface CartPageProps {
   products: IProduct[];
 }
 const CartPage = ({ products }: CartPageProps) => {
   const { Panel } = Collapse;
   const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState('');
+  const [selectedCity, setSelectedCity] = useState('Enter Emirate');
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
-
   const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
+  const allItemsAreFreeSamples = mergedCart.every(item => item.isfreeSample === true);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
@@ -77,16 +79,20 @@ const CartPage = ({ products }: CartPageProps) => {
     };
     
 
-  useEffect(() => {
-    const subTotalPrice = cartItems.reduce(
-      (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
-      0
-    );
-    setSubTotal(subTotalPrice);
-    const totalBeforeTax = subTotal + selectedFee;
-      const taxAmount = selectedCity ? totalBeforeTax * 0.05 : 0;
-      setTotal(totalBeforeTax + taxAmount);
-  },[cartItems])
+    useEffect(() => {
+      const subTotalPrice = cartItems.reduce(
+        (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
+        0
+      );
+      setSubTotal(subTotalPrice);
+      
+      // Recalculate shipping and total whenever cart items change
+      const fee = calculateShippingFee(subTotalPrice, selectedShipping, selectedCity);
+      setSelectedFee(fee);
+      
+      const totalBeforeTax = subTotalPrice + fee;
+      setTotal(totalBeforeTax);
+    }, [cartItems]);
 
   const updateQuantity = async (id: number, change: number) => {
     try {
@@ -147,40 +153,70 @@ const CartPage = ({ products }: CartPageProps) => {
     handleShippingSelect("standard");
   }, []);
 
-  const handleStateSelect = (state: string) => {
-    let fee = 150;
-    if (selectedShipping === 'standard' || selectedShipping === 'self-collect') {
-      fee = 0;
-    } else {
-      fee = subTotal > 1000 ? 0 : 150;
+  const calculateShippingFee = (
+    subtotal: number,
+    shippingType: string | null,
+    selectedCity: string
+  ): number => {
+    if (!selectedCity) return 0;
+    
+    switch (shippingType) {
+      case 'express':
+        return subtotal >= 1000 ? 0 : 150;
+      case 'standard':
+      case 'self-collect':
+        return 0;
+      default:
+        return 0;
     }
-    const totalBeforeTax = subTotal + fee;
-    const taxAmount = totalBeforeTax * 0.05;
-    setTotal(totalBeforeTax + taxAmount);
-    setSelectedFee(fee);
-    setSelectedCity(state);
   };
+  
+  // Update your state handlers in the CartPage component
+ const handleStateSelect = (state: string) => {
+  setSelectedCity(state);
+  localStorage.setItem('selectedEmirate', JSON.stringify(state));
 
-  const handleShippingSelect = (type: string) => {
-    if (selectedCity) {
-      let fee = 150;
-      if (type === 'standard' || type === 'self-collect') {
-        fee = 0;
-      } else {
-        fee = subTotal > 1000 ? 0 : 150;
-      }
-      setSelectedFee(fee);
-      const totalBeforeTax = subTotal + fee;
-      const taxAmount = totalBeforeTax * 0.05;
-      setTotal(totalBeforeTax + taxAmount);
-    };
-    setSelectedShipping(type);
+  // If not Dubai, force standard shipping
+  if (state !== 'Dubai') {
+    setSelectedShipping("standard");
   }
+
+  const fee = calculateShippingFee(subTotal, state === "Dubai" ? selectedShipping : "standard", state);
+  setSelectedFee(fee);
+
+  const totalBeforeTax = subTotal + fee;
+  setTotal(totalBeforeTax);
+};
+  
+  const handleShippingSelect = (type: string) => {
+  setSelectedShipping(type);
+  localStorage.setItem('selectedShipping', type);
+
+  if (type === "self-collect") {
+    // Save previous city before overriding
+    setSelectedCity("Dubai");
+    localStorage.setItem('selectedEmirate', JSON.stringify("Dubai"));
+
+    const fee = calculateShippingFee(subTotal, type, "Dubai");
+    setSelectedFee(fee);
+    setTotal(subTotal + fee);
+  } else {
+    // Restore previous city if it exists
+    const cityToUse = selectedCity;
+
+    setSelectedCity(cityToUse);
+    localStorage.setItem('selectedEmirate', JSON.stringify(selectedCity));
+
+    const fee = calculateShippingFee(subTotal, type, cityToUse);
+    setSelectedFee(fee);
+    setTotal(subTotal + fee);
+  }
+};
 
   useEffect(() => {
     localStorage.setItem('shipping', JSON.stringify(shipping));
     localStorage.setItem('shippingFee', JSON.stringify(selectedFee));
-    localStorage.setItem('selectedCity', JSON.stringify(selectedCity));
+    localStorage.setItem('selectedEmirate', JSON.stringify(selectedCity));
 
   },[selectedCity, selectedShipping]);
 
@@ -221,20 +257,20 @@ const CartPage = ({ products }: CartPageProps) => {
                     <div className='hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
                       <div className='col-span-6'>Product</div>
                       <div className='col-span-2 text-center'>Box Qty</div>
-                      <div className='col-span-2 text-center'>Total Price</div>
+                      <div className='col-span-2 text-center'>Price</div>
                       <div className='col-span-2 text-end'>Remove</div>
                     </div>
                     <p className='block xl:hidden text-12 font-semibold font-inter'>Product</p>
                     <div className='border border-b border-[#DEDEDE]' />
                     {nonAccessoryItems.map((item, cartindex) => (
                       <div key={cartindex}>
-                        <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+                        <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                           <div className='col-span-10 xl:col-span-6'>
                             <div className='flex gap-4'>
                               <Image
                                 width={170}
                                 height={160}
-                                className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[160px]'
+                                className='w-[74px] md:w-[150px] h-[69px] md:h-[140px] 2xl:w-[170x] 2xl:h-[140px]'
                                 src={item.image ?? '/default-image.png'}
                                 alt="cart"
                               />
@@ -246,7 +282,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   Price: Free
                                   </p> :
                                   <p className='text-12 sm:text-14 2xl:text-17'>
-                                  Price: AED{" "}
+                                  Price: <span className="font-currency font-normal text-16 2xl:text-22"></span>{" "}
                                   <span>
                                     {item.unit === "sqft"
                                       ? ((item.price?? 0) / 10.764).toFixed(2)
@@ -261,7 +297,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   <>
                                   <p className='text-12 sm:text-14 2xl:text-17'>
                                   {item.isAccessory? "Price Per Piece: ": "Price Per box: "} 
-                                  <span className='font-bold'>AED {item.pricePerBox.toFixed(2)}</span>
+                                  <span className='font-bold'><span className="font-currency font-normal text-16 2xl:text-20"></span> {item.pricePerBox && item.pricePerBox.toFixed(2)}</span>
                                   </p>
                                 <p className='text-12 sm:text-14 2xl:text-17'>
                                   No. Of Boxes:
@@ -286,7 +322,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                       <LuPlus />
                                     </button>
                                   </div>
-                                  <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                                  <p className='text-14 font-semibold whitespace-nowrap'>Total: <span className="font-currency font-normal text-18"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                                 </div>
                               </div>
                             </div>
@@ -305,7 +341,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                           <div className='col-span-2 text-center hidden xl:block'>
                             {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'><span>Free</span></p> :
-                              <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>}
+                              <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-20 2xl:text-25 "></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>}
                           </div>
                           <div className='col-span-2 text-end lg:pr-5'>
                             <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
@@ -328,31 +364,31 @@ const CartPage = ({ products }: CartPageProps) => {
                   <div className=' hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
                     <div className='col-span-6'>Accessories</div>
                     <div className='col-span-2 text-center'>Qty m</div>
-                    <div className='col-span-2 text-center'>Total Price</div>
+                    <div className='col-span-2 text-center'>Price</div>
                     <div className='col-span-2 text-end'>Remove</div>
                   </div>
                   <p className='block xl:hidden text-12 font-semibold font-inter'>Accessories</p>
                   <div className='border border-b border-[#DEDEDE]' />
                   {accessoryItems.map((item, cartindex) => (
                     <div key={cartindex}>
-                      <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4'>
+                      <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
                         <div className=' col-span-10 xl:col-span-6'>
                           <div className='flex gap-4'>
-                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[160px]' src={item.image ?? '/default-image.png'} alt="cart" />
+                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]'
+                             src={item?.matchedProductImages?.imageUrl ?? item.image ?? '/default-image.png'} alt="cart"
+                            />
                             <div>
-                              <p className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
-                              <p className='text-12 sm:text-14 2xl:text-17 '>Price: AED 
+                              <p className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</p>
+                              <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
                                <span>{item.unit === "ft"? ((item.price?? 0) / 3.28084).toFixed(2): (item.price ?? 0).toFixed(2)}</span>/{item.unit === "ft" ? "ft" : "m"}
                               </p>
                               <p className='text-12 sm:text-14 2xl:text-17'>
                               Total Required:
                                   <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
                               </p> 
-                              {item?.selectedColor?.color &&
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                              Color:<span className='font-bold'> {item?.selectedColor?.color || ""}</span>
+                              Color:<span className='font-bold'> {item?.selectedColor?.colorName || "White"}</span>
                               </p> 
-                              }
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
                                   <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
@@ -363,7 +399,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                     <LuPlus />
                                   </button>
                                 </div>
-                                <p className='text-14 font-semibold whitespace-nowrap'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                                <p className='text-14 font-semibold whitespace-nowrap'>Total: <span className="font-currency font-normal text-18"></span> <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
                               </div>
                             </div>
                           </div>
@@ -380,7 +416,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           </div>
                         </div>
                         <div className='col-span-2 text-center hidden xl:block'>
-                          <p className='text-16 2xl:text-20 font-semibold'>AED <span>{(item.totalPrice ?? 0).toFixed(2)}</span></p>
+                          <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>
                         </div>
                         <div className='col-span-2 text-end lg:pr-5'>
                           <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
@@ -397,7 +433,7 @@ const CartPage = ({ products }: CartPageProps) => {
                 )} 
                  </div>
                   {/* accessory end */}
-                <Link href="/" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden lg:flex'><FaArrowLeftLong /> Continue shopping</Link>
+                <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden lg:flex'><FaArrowLeftLong /> Continue shopping</Link>
               </div>
               <div className='w-full md:w-[45%] xl:w-[30%] 2xl:w-[35%] bg-background p-3 sm:p-5 space-y-5 h-fit'>
                 <div className='flex gap-2 md:gap-5 items-center max-sm:justify-between'>
@@ -407,40 +443,34 @@ const CartPage = ({ products }: CartPageProps) => {
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
                   <p>Subtotal:</p>
-                  <p>AED {subTotal.toFixed(2)}</p>
+                  <p><span className="font-currency font-normal text-20 2xl:text-25"></span> {formatAED(subTotal)}</p>
                 </div>
-                <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Shipping Fee:</p>
-                  <p>{selectedCity ? selectedFee > 0 ? `AED ${selectedFee}` : 'Free' : 'Pleae select city'}</p>
-                </div>
-                <CartSelect select={UAEStates} selectedFee={selectedFee} onSelect={handleStateSelect} />
-                <div className='border border-b border-[#DEDEDE]' />
-                <div className='flex items-center justify-between text-16 lg:text-20'>
-                  <p>Subtotal Incl. VAT</p>
-                  <p>AED {total > 0 ? total.toFixed(2) : subTotal.toFixed(2)}</p>
+                {selectedShipping !== "self-collect" && (
+                    <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
+                  )}
 
-                </div>
-                <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
-                <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                   <Panel
                     header={<span className="text-slate-500">Shipping Options</span>}
                     key="1"
                     className="!border-b-0"
                   >
+                {selectedCity === "Dubai" && !allItemsAreFreeSamples && (
                     <div
-                      className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"
-                        }`}
+                      className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
+                        selectedShipping === "express" ? "border-primary" : "border-transparent"
+                      }`}
                       onClick={() => handleShippingSelect("express")}
                     >
                       <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
-                      <div>
-                        <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                        <p className="text-11 xs:text-16">delivery <strong>Next day</strong></p>
-                        <p className="text-11 xs:text-16">
-                          <span>Delivery Cost:</span> <strong>AED 150</strong>, <span>Free shipping for all orders above <strong>AED 1000</strong></span>
-                        </p>
+                      <div className="text-11 xs:text-16">
+                        <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
+                        <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
+                        <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span> 150</strong></p>
+                        <p>Free shipping for all orders above <strong><span className="font-currency font-normal text-18"></span> 1000</strong></p>
                       </div>
                     </div>
+                  )}
                     <div
                       className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
                         }`}
@@ -448,10 +478,10 @@ const CartPage = ({ products }: CartPageProps) => {
                     >
                       <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
-                        <strong className="text-15 xs:text-20">Standard Shipping:</strong>
-                        <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
+                        <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
+                        <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
                         <p className="text-11 xs:text-16">
-                          <span>Delivery Cost:</span> <strong>Free</strong>
+                          <span>Shipping Fee:</span> <strong>Free</strong>
                         </p>
                       </div>
                     </div>
@@ -461,16 +491,32 @@ const CartPage = ({ products }: CartPageProps) => {
                       <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
                         <strong className="text-15 xs:text-20">Self-Collect:</strong>
-                        <p className="text-11 xs:text-16">Collection Monday-Saturday <strong>(9am-6pm)</strong></p>
+                        <p className="text-11 xs:text-16">Collection Mon-Sat <strong>(9am-6pm)</strong></p>
                         <p className="text-11 xs:text-16">
                           <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
                         </p>
                       </div>
                     </div>
+                    
                   </Panel>
-                </Collapse>
-                <PaymentMethod installments={(mergedCart.reduce((total, item) => total + item.pricePerBox * (item.requiredBoxes ?? 0), 0)) / 4} />
-                <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
+                </Collapse> 
+      {/* Shipping Fee show when select city */}
+                {/* <div className='flex items-center justify-between text-16 lg:text-20'>
+                  <p>Shipping Fee:</p>
+                  <p>{selectedCity ? selectedFee > 0 ? <p><span className="font-currency font-normal text-18"></span> {selectedFee}</p> : 'Free' : 'Pleae select city'}</p>
+                </div> */}
+                <div className='border border-b border-[#DEDEDE]' />
+                <div className='flex items-center justify-between text-16 lg:text-20'>
+                  <p>Total Incl. VAT</p>
+                  <p><span className="font-currency font-normal text-20 lg:text-25"></span> {total > 0 ? formatAED(total) : formatAED(subTotal)}</p>
+
+                </div>
+                <Link href="/checkout" className='bg-primary text-white px-4 py-3 w-full text-14 md:text-20 block text-center '>Proceed to Checkout</Link>
+                
+                <p className='text-18 xl:text-22 font-semibold text-center'>Buy Now, Pay Later</p>
+                {total > 0 &&
+                <PaymentMethod installments={total > 0 ? parseFloat(total.toFixed(2)) /4: parseFloat(subTotal.toFixed(2))/4} />
+                }
                 <div className='flex justify-between gap-2' >
                   {
                     paymentcard.map((array, index) => (

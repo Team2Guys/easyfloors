@@ -50,6 +50,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         custom_url
         stock
         posterImageUrl
+        hoverImageUrl
         sizes
         featureImages
         productImages
@@ -131,6 +132,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         description
         sizes
         BannerImage
+        price
       }
       products {
         id
@@ -141,6 +143,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         stock
         posterImageUrl
         hoverImageUrl
+        productImages
         custom_url
         waterproof
         plankWidth
@@ -343,17 +346,6 @@ query UsersOrders($email: String!) {
 }
 `
 
-export const GET_ADMIN_DETAILS = gql`
-  query GetAdmin {
-    admin {
-      id
-      name
-      email
-      role
-      createdAt
-    }
-  }
-`;
 
 export const GET_ALL_ADMINS = gql`
   query Admins {
@@ -436,6 +428,7 @@ export const FETCHSUBCAT = gql`
       posterImageUrl
       custom_url
       price
+      sizes
       products {
         id
         name
@@ -613,6 +606,20 @@ export const GET_ALL_RECORDS = gql`
         totalSales
         totalUsers
         Total_abandant_order
+    }
+  }
+`;
+
+
+
+export const FIND_ONE_USER = gql`
+  query FindOne($email: String!) {
+    find_one(email: $email) {
+      id
+      name
+      email
+      token
+      userImageUrl
     }
   }
 `;

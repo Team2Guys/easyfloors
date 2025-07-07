@@ -1,9 +1,12 @@
-import  { SessionStrategy, User } from "next-auth";
+import { SessionStrategy, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import client from "config/apolloClient";
 import { LOGIN_USER } from "graphql/user_mutation";
 import { JWT } from "next-auth/jwt";
 import { Session } from "next-auth";
+import { FIND_ONE_USER } from "graphql/queries";
+import Cookies from 'js-cookie';
+
 
 interface CustomUser extends User {
   id: string;
@@ -27,6 +30,14 @@ export const authOptions = {
               userLogin: { email: credentials?.email, password: credentials?.password },
             },
           });
+          console.log(data.userLogin.token, "data")
+          Cookies.set(
+            "user_token",
+            data?.userLogin.token,
+            {
+              expires: 24 * 60 * 60 * 1000,
+            },
+          );
           if (data?.userLogin) {
             return {
               id: data.userLogin.id,
@@ -53,16 +64,35 @@ export const authOptions = {
       }
       return token;
     },
+    
     async session({ session, token }: { session: Session; token: JWT }) {
-      if (session.user) {
-        session.user.email = token.email;
-        session.user.name = token.name;
-        session.user.image = token.picture || undefined;
+      if (token.email) {
+        try {
+          const { data } = await client.query({
+            query: FIND_ONE_USER,
+            variables: { email: token.email },
+            fetchPolicy: "network-only", // Ensure fresh data
+          });
+          if (data?.find_one) {
+            session.user = {
+              ...session.user,
+              name: data.find_one.name,
+              email: data.find_one.email,
+              image: data.find_one.userImageUrl || undefined,
+            };
+            // Update token with latest data
+            token.email = data.find_one.email;
+            token.name = data.find_one.name;
+            token.picture = data.find_one.userImageUrl || null;
+          }
+          return session;
+        } catch (error) {
+          console.log(error, "errr")
+        }
 
-        token.exp = Math.floor(Date.now() / 1000) + 5 * 60;
       }
       return session;
-    },
+    }
   },
   session: {
     strategy: "jwt" as SessionStrategy,

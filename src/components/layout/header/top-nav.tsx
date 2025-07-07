@@ -6,11 +6,11 @@ import TopLink from "./top-link";
 import SocialIcon from "components/Reusable/social-icon";
 import UserIcon from "./user-icon";
 
-const TopNav = () => {
+const TopNav = ({ className = "" }: { className?: string }) => {
   const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER;
   const email = process.env.NEXT_PUBLIC_EMAIL;
   return (
-    <div className="bg-primary py-2 relative">
+    <div className={`bg-primary py-2 relative ${className}`}>
       <Container className="flex justify-between items-center">
         <div>
           <SocialIcon className=" lg:hidden" />

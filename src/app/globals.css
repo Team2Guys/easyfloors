@@ -11,6 +11,7 @@
   --card-text:#594F55;
   --green:#008000;
   --gray-light:#D9D9D9;
+  --font-currency: 'currency', 'currency Fallback';
 }
 @layer utilities {
   @keyframes fadeIn {
@@ -36,7 +37,7 @@
       transform: translateX(0%);
     }
     100% {
-      transform: translateX(410%);
+      transform: translateX(600%);
     }
   }
   .animate-moveTruck {
@@ -48,6 +49,9 @@
   }
 }
 
+.font-currency {
+  font-family: var(--font-currency);
+}
 ::-webkit-scrollbar {
   width: 3px;
 }
@@ -127,7 +131,7 @@ padding: 4px;
 }
 
 .custom-collapse .ant-collapse-header {
-  border-bottom: 1px solid #DEDEDE;
+  border-bottom: 2px solid #DEDEDE;
   padding-left: 0px !important;
 }
 
@@ -150,7 +154,20 @@ padding: 4px;
   border: 1px solid #d1d5db;
   padding: 8px;
 }
+.slick-slide[aria-hidden="true"] {
+  pointer-events: none !important;
+  user-select: none !important;
+}
 
+.PhoneInputInput{
+  outline: none !important;
+}
+.free-sample-hover:hover {
+  background-color: var(--primary);
+}
+.free-sample-hover:hover svg {
+  filter: invert(1);
+}
 
 @media (max-width: 767px) {
   .category_slider .swiper-pagination {

@@ -49,7 +49,7 @@ const Measurement = ({ appointments , title }: { appointments: IAppointment[] , 
          width: 200,
       },
       {
-         title: "Rooms",
+         title: "Approximate Area",
          dataIndex: "selectRooms",
          key: "selectRooms",
          width: 100,

@@ -2,12 +2,12 @@
 
 import { SetStateAction, useEffect, useState } from "react";
 import Image from "next/image";
-import { CiHeart } from "react-icons/ci";
-import { HiOutlineShoppingCart } from "react-icons/hi";
 import PaymentMethod from "components/product-detail/payment";
 import { paymentcard } from "data/cart";
 import { IProduct, IProductAccessories, ProductImage } from "types/prod";
 import { handleAddToStorage } from "lib/carthelper";
+import { LuHeart } from "react-icons/lu";
+import { formatAED } from "lib/helperFunctions";
 
 const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor, setSelectedColor }: { productData: IProductAccessories, MainCategory: string, image?: { imageUrl: string }, setSelectedColor: React.Dispatch<SetStateAction<ProductImage | undefined>>, selectedColor: ProductImage | undefined }) => {
 
@@ -29,7 +29,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
 
     const meters = parseFloat(value);
     if (!isNaN(meters) && meters > 0) {
-      const pieces = Math.ceil(meters / boxCoverage);
+      const pieces = Math.ceil(meters);
       setRequiredBoxes(pieces);
       setTotalPrice(pieces * productData.price);
     } else {
@@ -66,7 +66,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <h1 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h1>
         <div className="flex border-b-[1px] border-gray-300"></div>
         <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
-          Price Per Metre: <span className="text-primary">AED {productData.price}</span>
+          Price Per Metre: <span className="text-primary"><span className="font-currency font-normal text-18 xl:text-28"></span> {productData.price}</span>
         </p>
         <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
         </p>
@@ -78,14 +78,14 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         {uniqueFeatureImages.length > 0 ?
           <div className="grid grid-cols-8 gap-2 lg:gap-2 mt-1">
             {uniqueFeatureImages.map((col, index) => (
-              <div key={index} className={`text-center border cursor-pointer w-full lg:w-12 ${selectedColor?.color === col.color ? 'border-black' : 'border-transparent'}`} onClick={() => handleColorClick(col)}>
+              <div key={index} className={`text-center border cursor-pointer w-full lg:w-12 ${selectedColor?.color === col.color ? 'border-primary' : 'border-transparent'}`} onClick={() => handleColorClick(col)}>
                 <Image alt="img" src={col.imageUrl} height={1000} width={1000} className="h-auto w-full lg:h-12" />
                 <p className="text-[8px] sm:text-10 font-inter font-normal text-nowrap">{col.color}</p>
               </div>
             ))}
           </div>
           :
-          <p className="font-inter font-light text-12 xl:text-16">No colour found</p>
+          <p className="font-inter font-light text-14 xl:text-16">No colour found</p>
         }
 
       </div>
@@ -96,7 +96,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <p className="font-semibold text-15 xl:text-[23.6px] font-inter">Matching with:</p>
         {matchingColor.length ? (
           matchingColor.map((item, index) => (
-            <p className="font-inter font-light text-12 xl:text-16" key={index}>
+            <p className="font-inter font-light text-14 xl:text-16" key={index}>
               {item.name}
             </p>
           ))
@@ -122,28 +122,37 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
           {productData.lengthPrice ? "Length Per Piece: " + productData.lengthPrice : "Selling in fixed length of 240cm"}
         </p>
         <div className="mt-2 font-semibold text-16 lg:text-18">
-          <p>Height: <span className="font-light text-12 xl:text-18">10 cm</span></p>
-          <p>Depth: <span className="font-light text-12 xl:text-18">1.6 cm</span></p>
+          <p>Height: <span className="font-light text-14 xl:text-18">10 cm</span></p>
+          <p>Depth: <span className="font-light text-14 xl:text-18">1.6 cm</span></p>
         </div>
       </div>
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
-        <p>Total Required: <span className="text-12 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
-        <p >Price Per Metre: <span className="text-12 xl:text-17 font-light">AED {productData.price}</span></p>
-        <p>Total Amount: <span className="text-12 xl:text-17 font-light">AED {totalPrice} ({requiredBoxes} metre * AED {productData.price})</span></p>
+        <p>Total Required: <span className="text-14 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
+        <p >Price Per Metre: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {productData.price}</span></p>
+        <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {formatAED(totalPrice)} ({requiredBoxes} metre * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
-      <div className="mt-2 flex xl:text-[22.6px] font-normal font-inter items-center gap-4">
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><HiOutlineShoppingCart size={22} />Add to Cart</button>
-
-        <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)} className="bg-black text-white w-fit px-6 lg:px-4 xl:px-10 text-14 xl:text-[22.6px] py-2 flex gap-2 justify-center items-center"><CiHeart size={22} /> Add to Wishlist</button>
+      <div className="my-3 flex w-full gap-1 items-center sm:gap-3">
+         <button onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "cart", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)}
+          className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+         >
+          <Image src="/assets/images/icon/cart.png" alt="box" width={28} height={28} className="size-5 xs:size-7 text-11 xs:text-14 xl:text-20" />
+          Add to Cart
+         </button>
+          <button
+          className="flex bg-black justify-center text-11 xs:text-12 text-white w-6/12 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
+          onClick={() => handleAddToStorage(productData, totalPrice, productData.price, squareMeter, requiredBoxes, "", MainCategory ?? "", "wishlist", image?.imageUrl ?? "", boxCoverage.toString(), 'm', selectedColor)}
+          >
+          <LuHeart size={25} />
+          Add to Wishlist
+          </button>
       </div>
 
-
-      <p className="text-center mt-4 font-medium font-inter text-12 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
+        <p className='text-18 xl:text-22 font-semibold text-center'>Buy Now, Pay Later</p>
       <PaymentMethod installments={totalPrice / 4} />
-      <div className="mt-2 space-y-2">
-        <p className='tetx-18 xl:text-22 font-semibold'>Buy Now, Pay Later</p>
-        <div className='flex justify-between lg:justify-start gap-2 lg:gap-10' >
+      <div className="mt-2 space-y-2 text-center">
+      <p className="text-center mt-4 font-medium font-inter text-18 lg:text-[20.6px]">Guaranteed Safe Checkout</p>
+        <div className='flex justify-between lg:justify-center items-center gap-2 lg:gap-10' >
           {
             paymentcard.map((array, index) => (
               <Image className=' w-16  md:w-14 2xl:w-[50px] h-auto shadow' key={index} width={90} height={60} src={array.image} alt='payment-card' />

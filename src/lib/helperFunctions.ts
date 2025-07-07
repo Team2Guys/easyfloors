@@ -1,7 +1,7 @@
 import { ImagesProps } from "components/ImageUploader/ImageUploader";
 import { FILE_UPLOAD_MUTATION } from "graphql/mutations";
-import { FilterState } from "types/cat";
-import { AdditionalInformation, IProduct } from "types/prod";
+import { FilterState, ISUBCATEGORY } from "types/cat";
+import { AdditionalInformation, IProduct, IProductFilter } from "types/prod";
 import { ProductFilterParams, SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
@@ -77,6 +77,7 @@ export const productFilter = ({
     { key: "commercialWarranty", productKey: "CommmericallWarranty" },
     { key: "residentialWarranty", productKey: "ResidentialWarranty" },
     { key: "plankWidth", productKey: "plankWidth" },
+    { key: "plankLength", productKey: "plankLength" }
   ];
 
   filterMapping.forEach(({ key, productKey }) => {
@@ -88,6 +89,9 @@ export const productFilter = ({
           return productValue.some((val:AdditionalInformation) =>
             selectedProductFilters[key].includes(val?.name)
           );
+        }
+        else if (key === 'plankLength'){
+          return selectedProductFilters[key].includes(product.sizes?.[0].height || "");
         }
       
         return selectedProductFilters[key].includes(productValue || "");
@@ -102,3 +106,64 @@ export const productFilter = ({
   return { filtered: filtered || [], appliedFilters };
 };
 
+
+export const collectionFilter = ({
+  products,
+  priceValue,
+  selectedProductFilters,
+}: ProductFilterParams): { filtered: IProductFilter[]; appliedFilters: SelectedFilter[] } => {
+  let filtered = products ?? [];
+
+  const appliedFilters: SelectedFilter[] = [];
+
+  // Filter by price
+  filtered = filtered.filter(product => {
+    const price = parseFloat(String(product?.price ?? 0));
+    return price >= priceValue[0] && price <= priceValue[1];
+  });
+
+  const filterMapping: { key: keyof FilterState; productKey: string }[] = [
+    { key: "thicknesses", productKey: "thickness" },
+    { key: "plankWidth", productKey: "width" },
+    { key: "plankLength", productKey: "height" }
+  ];
+
+  filterMapping.forEach(({ key, productKey }) => {
+    const selectedValues = selectedProductFilters[key];
+    if (Array.isArray(selectedValues) && selectedValues.length > 0) {
+      filtered = filtered.filter(product => {
+        const filterValue = product?.sizes?.[0]?.[productKey] ?? "";
+        return selectedValues.includes(filterValue);
+      });
+
+      selectedValues.forEach(value => {
+        appliedFilters.push({ name: key, value });
+      });
+    }
+  });
+
+  return { filtered, appliedFilters };
+};
+
+
+export const filterAndSort = (
+  items: ISUBCATEGORY[],
+  categoryName: string,
+  urlIncludes: string
+) =>
+  items
+    .filter(
+      item =>
+        item.category?.name === categoryName &&
+        item.custom_url.includes(urlIncludes)
+    )
+    .sort((a, b) => Number(a.price) - Number(b.price));
+    
+
+    export const formatAED = (price: number | undefined | null): string => {
+      if (!price || isNaN(price)) return "0.00";
+      return price.toLocaleString("en-AE", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+    };

@@ -1,6 +1,7 @@
 import AccessoriesComp from 'components/Accessories/Accessories';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import { fetchSingleCategory } from 'config/fetch';
+import { defaultOrder } from 'data/accessory';
 import { FIND_ONE_Accessory } from 'graphql/queries';
 import { Metadata } from 'next';
 import { headers } from 'next/headers';
@@ -59,12 +60,20 @@ export async function generateMetadata(): Promise<Metadata> {
 const Accessories = async () => {
   const category = await fetchSingleCategory("accessories", FIND_ONE_Accessory, true)
   if (!category) return notFound()
+  const sortedAccessories = (category.accessories || []).slice().sort((a, b) => {
+    const indexA = defaultOrder.indexOf(a?.name || "");
+    const indexB = defaultOrder.indexOf(b?.name || "");
 
+    const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
+    const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
+
+    return safeIndexA - safeIndexB;
+  });
 
   return (
     <>
-      <Breadcrumb image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"} slug='ACCESSORIES' />
-      <AccessoriesComp product={category.accessories || []} category={category} />
+      <Breadcrumb image={category.whatAmiImageBanner?.imageUrl} altText={category.whatAmiImageBanner?.altText || "Accessories"}  slug='ACCESSORIES' isImagetext />
+      <AccessoriesComp product={sortedAccessories || []} category={category} />
     </>
   );
 };

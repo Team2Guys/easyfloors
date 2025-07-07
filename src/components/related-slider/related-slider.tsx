@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import Card from "components/Card/Card";
 import Container from "components/common/container/Container";
@@ -11,6 +11,7 @@ import { RelatedSliderProps } from "types/types";
 import SliderSkaleton from "components/skaletons/slider-skaleton";
 
 const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
+  const [dragging, setDragging] = useState(false);
   const settings = {
     dots: true,
     infinite: false,
@@ -18,6 +19,11 @@ const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
     slidesToShow: 4,
     slidesToScroll: 1,
     initialSlide: 0,
+    beforeChange: () => setDragging(true),
+    afterChange: () => {
+      // Delay reset to avoid click right after swipe
+      setTimeout(() => setDragging(false), 100);
+    },
     appendDots: (dots: React.ReactNode) => (
       <div
         style={{
@@ -57,8 +63,8 @@ const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
   };
 
   return (
-    <Container className=" sm:mt-10 font-inter w-full mb-10">
-      <h2 className="text-12 sm:text-24 max-sm:font-semibold lg:text-30 2xl:text-[40px] text-center">
+    <Container className=" mt-5 sm:mt-10 font-inter w-full mb-10">
+      <h2 className="text-18 sm:text-24 max-sm:font-semibold lg:text-30 2xl:text-[40px] text-center">
         Frequently Bought Together
       </h2>
       {products.length > 0 ? (
@@ -71,6 +77,7 @@ const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
                   features={features}
                   sldier
                   isAccessories={isAccessories}
+                  dragging={dragging}
                 />
               </div>
             ))}

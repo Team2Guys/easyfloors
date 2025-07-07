@@ -15,8 +15,10 @@ import dynamic from 'next/dynamic';
 const Footerlinks = dynamic(() => import('./Footerlinks'));
 
 import SocialIcon from 'components/Reusable/social-icon';
+import { getSubcategoryOrder } from 'data/home-category';
+import { defaultOrder } from 'data/accessory';
 
-
+ 
 const Footer = () => {
     const [categories, setCategories] = useState([]);
     useEffect(() => {
@@ -41,20 +43,10 @@ const Footer = () => {
         getCategories();
     }, []);
 
-    const prioritizedOrder = [
-        "Skirting",
-        "Reducer",
-        "T Profile",
-        "Stair Nose",
-        "Quarter Round",
-        "L Shape Skirting 10cm",
-        "L Shape Skirting 12cm",
-        "L Shape Skirting 15cm",
-    ];
-
+  
     const customSort = (a: { name: string }, b: { name: string }) => {
-        const aIndex = prioritizedOrder.indexOf(a.name);
-        const bIndex = prioritizedOrder.indexOf(b.name);
+        const aIndex = defaultOrder.indexOf(a.name);
+        const bIndex = defaultOrder.indexOf(b.name);
 
         if (aIndex !== -1 && bIndex !== -1) return aIndex - bIndex;
         if (aIndex !== -1) return -1;
@@ -65,17 +57,28 @@ const Footer = () => {
 
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
-            <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-5 font-inter font-light" >
+            <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-4 2xl:gap-5 font-inter font-light" >
                 <div className="sm:mt-2">
-                    <Image src="/assets/images/logo.png" alt="Easyfloors" width={120} height={50} className="mb-4" />
-                    <p className="mt-2 text-sm">{footerData.company.description}</p>
+                    <Image src="/assets/images/logo.webp" alt="Easyfloors" width={120} height={50} className="mb-4" />
+                    <p className="mt-2 text-sm text-justify w-full sm:max-w-[150px] xl:max-w-[160px] 2xl:max-w-[172px]">{footerData.company.description}</p>
                 </div>
                 <Footerlinks categories={categories} />
                 {categories.length > 0 ? (
                     categories.map((section: Category, index: number) => {
                         const reCallFlag = section.recalledSubCats && section.recalledSubCats.length > 0;
-                        const subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
-
+                        let subcategories: ISUBCATEGORY[] = (reCallFlag ? section.recalledSubCats : section.subcategories) as ISUBCATEGORY[] || [];
+                                subcategories = [...subcategories].sort((a, b) => {
+                                  return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
+                                });
+                                subcategories = [...subcategories].sort((a, b) => {
+                                    const orderA = getSubcategoryOrder(a.name);
+                                    const orderB = getSubcategoryOrder(b.name);
+                                    if (orderA !== orderB) {
+                                      return orderA - orderB;
+                                    } else {
+                                      return (Number(a.price) || 0) - (Number(b.price) || 0);
+                                    }
+                                  });
                         return (
                             <div key={index} className="sm:block hidden">
                                 <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
@@ -117,33 +120,33 @@ const Footer = () => {
                 )}
 
                 <div className="sm:block ">
-                    <p className=" font-normal tracking-widest md:text-base text-sm">CONTACT US</p>
+                    <p className=" font-normal tracking-widest">CONTACT US</p>
                     
-                    <div className="text-sm mt-2 flex items-center gap-2">
+                    <div className="text-sm mt-2 flex items-center gap-2 group">
                         <div className=''>
-                            <IoCall size={16} className="text-black" />
+                            <IoCall size={16} className="text-black group-hover:text-primary" />
                         </div>
-                        <Link href="tel:+971505974385" className="text-gray-700 hover:text-gray-900">
+                        <Link href="tel:+971505974385" className="text-black group-hover:text-primary">
                             {footerData.contact.phone}
                         </Link>
                     </div>
-                    <div className="text-sm mt-2 flex items-center gap-2">
+                    <div className="text-sm mt-2 flex items-center gap-2 group">
                         <div className=''>
-                            <FaRegEnvelope size={16} className="text-black" />
+                            <FaRegEnvelope size={16} className="text-black group-hover:text-primary" />
                         </div>
-                        <Link href="mailto:cs@easyfloors.ae" className="text-gray-700 hover:text-gray-900">
+                        <Link href="mailto:cs@easyfloors.ae" className="text-black group-hover:text-primary">
                             {footerData.contact.email}
                         </Link>
                     </div>
-                    <div className="text-sm mt-3 flex items-start gap-2">
+                    <div className="text-sm mt-3 flex items-start gap-2 group">
                         <div className='' >
-                            <FaMapMarkerAlt size={16} className="text-black" />
+                            <FaMapMarkerAlt size={16} className="text-black group-hover:text-primary" />
                         </div>
                         <Link
-                            href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D"
+                            href="https://maps.app.goo.gl/VoKEfBJLA2y9fySt5"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-gray-700 hover:text-gray-900 md:full w-60"
+                            className="text-black group-hover:text-primary md:full w-60"
                         >
                             {footerData.contact.address}
                         </Link>
@@ -170,12 +173,11 @@ const Footer = () => {
                         <IoCall size={35} />
                     </Link>
 
-                    <Link href="https://wa.me/971505974385" aria-label="WhatsApp +971505974385" className="bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center w-12 h-12">
+                    <Link href={`https://wa.me/${process.env.NEXT_PUBLIC_PHONE_NUMBER?.replace('+', '').replace(/\s+/g, '')}`} aria-label="WhatsApp +971505974385" target='_blank' className="bg-[#25D366] text-white rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <FaWhatsapp size={35} />
                     </Link>
                 </div>
             </Container>
-
             <div className="xs:border-t xs:border-gray-300 mt-6 py-4 flex flex-col md:flex-row sm:items-center justify-between bg-primary">
                 <Container className="grid grid-cols-1 lg:grid-cols-3 gap-4 max-sm:justify-items-start max-lg:justify-items-center ">
                     <div className='hidden sm:block'>
@@ -183,7 +185,7 @@ const Footer = () => {
                             <SocialIcon />
                         </div>
                     </div>
-                    <div className='text-start xs hidden sm:block'>
+                    <div className='text-center xs hidden sm:block'>
                         <p className="text-12 sm:text-13 text-white font-inter font-medium xs:font-extralight ">
                             Easyfloors.ae ©2025
                         </p>
@@ -194,14 +196,14 @@ const Footer = () => {
                             <Link className='w-full text-start sm:w-fit' href="/privacy-policy">Privacy Policy</Link>
                             <Link className='w-full text-center sm:text-start sm:w-fit hidden sm:block ' href="/return-and-refund-policy">Return & Refund policy</Link>
                         </div>
-                        <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light' href="/return-and-refund-policy">Return & Refund policy</Link>
+                        <Link className='w-full text-center sm:text-start sm:w-fit block sm:hidden mt-3 text-12 sm:text-13 font-light ml-16 xs:ml-10' href="/return-and-refund-policy">Return & Refund policy</Link>
                     </div>
-                    <div className='block sm:hidden w-full'>
-                        <div className='flex justify-start items-center'>
-                            <div className="flex space-x-2 w-[32%] xs:w-[40%]">
+                    <div className='block sm:hidden w-full relative'>
+                        <div className='text-center'>
+                            <div className="flex space-x-2  absolute top-0 left-0">
                                 <SocialIcon />
                             </div>
-                            <p className="text-12 sm:text-13 text-white font-inter font-light w-[30%] text-nowrap xs:w-[60%]">
+                            <p className="text-12 sm:text-13 text-white font-inter font-light ml-14 xs:ml-8">
                                 Easyfloors.ae ©2025
                             </p>
 

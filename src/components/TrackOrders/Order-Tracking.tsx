@@ -1,14 +1,11 @@
 "use client";
-
 import { PostPaymentStatus } from "types/OrdersProd";
-
 import Container from "components/common/container/Container";
 import OrderSummary from "components/ThankYou/OrderSummary";
 import { BsTruck } from "react-icons/bs";
 import { formatDate, trackingOrder } from "utils/helperFunctions";
 import Link from "next/link";
 import { SiVisa } from "react-icons/si";
-
 
 export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
   const NewDatas = {
@@ -22,13 +19,10 @@ export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
 
   const currentDate = new Date();
 
-
-
   const isSameDate = formatDate(currentDate);
 
   const sameDate = isSameDate == formatedDate
 
-  console.log(formatedDate == TrackingOrder, TrackingOrder, "tomorrow", isSameDate)
   return (
     <Container className="w-full py-5 md:py-10 space-y-3 sm:space-y-5 lg:space-y-10">
       <div className="text-center">

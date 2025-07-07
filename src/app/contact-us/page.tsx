@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
     description: 'Have a question about flooring? Contact Easy Floors for expert support, product guidance, or order help. Fast response, friendly service.',
     url: '/contact-us',
-    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
   },
@@ -26,13 +26,11 @@ const Contact = () => {
       <Breadcrumb title="Contact Us" image="/assets/images/Contact/contact-us-banner-imag.webp"  />
       <Container className="md:mt-16 mt-10 mb-20">
         <div className=" sm:max-w-[80%] xl:max-w-[57%] 2xl:max-w-[40%] mx-auto text-center font-inter md:space-y-4">
-          <h1 className="md:text-[36px] text-xl font-semibold leading-10">
+          <h2 className="md:text-[36px] text-xl font-semibold leading-10">
             Get In Touch With Us
-          </h1>
+          </h2>
           <p className="text-[#9F9F9F] md:text-base text-sm">
-            For more information about our product & services. Please feel free
-            to drop us an email. Our Staff Always be there to help you out. Do
-            not hesitate!
+          For more information about our products, please feel free to drop us a WhatsApp message or an email. Our staff are dedicated to help you find the best solution for your home/office.
           </p>
         </div>
         <div className="md:mt-16 sm:mt-10 bg-white sm:shadow-[0px_0px_69px_30px_#0000001c] p-5">

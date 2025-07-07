@@ -3,7 +3,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { FiMinus } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
-import { GrCart } from "react-icons/gr";
 import Link from "next/link";
 import { FaArrowLeftLong } from "react-icons/fa6";
 import { handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
@@ -29,7 +28,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
               {(columns ?? [])
                 .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
                 .map((col, index) => (
-                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left" : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start md:w-full text-left 2xl:w-[60%]"}`}>
+                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left whitespace-nowrap " : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start text-left "} ${index==1 ? "text-center" : ""} ${index==0 ? " w-[70%] lg:w-[60%] 2xl:w-[35%] 3xl:w-[35%]" : "w-[20%] lg:w-[20%] 2xl:w-[22%] 3xl:w-[25%]"} ${index==3 ? "text-center" : ""}`}>
                     {col}
                   </th>
                 ))}
@@ -45,7 +44,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                      {!isSamplePage && (
                       product.category === "Accessories" ? (
                         <>
-                          <p>Price Per m: <span className="font-semibold">AED {product.price}</span></p>
+                          <p>Price Per m: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
                           <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
                         </>
                       ) : (
@@ -57,7 +56,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     )}
                   </div>
               </td>
-                <td className="p-3 font-inter text-12 xl:text-20 font-normal">
+                <td className="p-3 font-inter text-12 xl:text-20 font-normal text-center">
                   {pathname === "/freesample" ? "Free" : product.price}
                 </td>
                 {pathname !== "/freesample" && (
@@ -74,13 +73,13 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   </div>
                 </td>
               )}
-                <td className="p-3 text-start font-inter text-12 xl:text-20 font-normal">
+                <td className="p-3 text-center font-inter text-12 xl:text-20 font-normal">
                   {product.stock > 0 ? "In Stock" : "Out of Stock"}
                 </td>
                 <td className="p-3">
                   <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center">
                     <button onClick={() => handleAddToCart(product, isSamplePage,setItems ?? (() => {}))} className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2">
-                      <GrCart /> {isSamplePage ? "Add to Cart" : "Add to Cart"}
+                    Add to Cart
                     </button>
                     <button onClick={() =>  handleRemoveItem(Number(product.id), isSamplePage, setItems ?? (() => {}))}  className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10">
                       <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
@@ -92,6 +91,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           </tbody>
         </table>
       )}
+      <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 hidden md:flex'><FaArrowLeftLong /> Continue shopping</Link>
     </div>
    
   );

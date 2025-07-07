@@ -16,7 +16,8 @@ export const handleAddToStorage = async (
   boxCoverage?: string,
   unit?: string,
   selectedColor?: ProductImage,
-  isfreeSample?: boolean
+  matchedProductImages?: ProductImage,
+  // isfreeSample?: boolean
 ) => {
   if (!productData) {
     toast.error('Product is undefined');
@@ -43,7 +44,8 @@ export const handleAddToStorage = async (
 
   const adjustedSquareMeter =
     squareMeter > 0 ? squareMeter : Number(boxCoverage) * adjustedRequiredBoxes;
-
+    const adjustedImage =
+    matchedProductImages?.imageUrl ?? image;
   const adjustedUnit = unit || 'sqm';
 
   const item = {
@@ -51,7 +53,7 @@ export const handleAddToStorage = async (
     name: productData.name,
     price: Number(productData.price),
     stock: Number(productData.stock),
-    image,
+    image:adjustedImage,
     subcategories: subCategory,
     category: MainCategory,
     boxCoverage,
@@ -61,7 +63,8 @@ export const handleAddToStorage = async (
     requiredBoxes: adjustedRequiredBoxes,
     unit: adjustedUnit,
     selectedColor,
-    isfreeSample: isfreeSample || false,
+    matchedProductImages,
+    isfreeSample: type === 'freeSample' || false,
   };
 
   try {
@@ -111,19 +114,6 @@ export const handleAddToStorage = async (
 };
 
 
-export const calculatePricePerBox = (
-  boxCoverage: string | number | undefined,
-  price: number | undefined
-): number => {
-  const coverage = Number(boxCoverage);
-  const unitPrice = Number(price);
-
-  if (isNaN(coverage) || isNaN(unitPrice) || coverage <= 0 || unitPrice <= 0) {
-    return 0;
-  }
-
-  return parseFloat((coverage * unitPrice).toFixed(2));
-};
 
 export const calculateProductDetails = (
   area: string,
@@ -132,7 +122,6 @@ export const calculateProductDetails = (
 ) => {
   const boxCoverage = productData?.boxCoverage;
   const numericCoverage = Number(boxCoverage);
-
   const convertedArea =
     unit === 'sqft'
       ? parseFloat((parseFloat(area) * 0.092903).toFixed(2))

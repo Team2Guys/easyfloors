@@ -53,7 +53,7 @@ const WishlistPage = () => {
         {products.length > 0 && (
         <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10">
           <ProductTable
-            columns={["Product","Price Per Box","QTY(m/m2)","Stock Status", "Action"]}
+            columns={["Product","Price Per Box","QTY(m/m2)","Availability", "Action"]}
             items={products} 
             setItems={setItems} 
           />
@@ -63,7 +63,7 @@ const WishlistPage = () => {
         {accessories.length > 0 && (
         <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10 ">
           <ProductTable
-            columns={["Accessories","Price Per m","QTY m", "Stock Status", "Action"]}
+            columns={["Accessories","Price Per m","QTY m", "Availability", "Action"]}
             items={accessories} 
             setItems={setItems} 
           />

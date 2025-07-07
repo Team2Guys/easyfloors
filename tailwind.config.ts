@@ -14,6 +14,7 @@ export default {
         '3xl': '1800px',
         '2md': '890px',
         'xs': '375px',
+        'xsm': '450px',
       },
       fontFamily: {
         inter: ["var(--font-Inter)", ...fontFamily.sans],

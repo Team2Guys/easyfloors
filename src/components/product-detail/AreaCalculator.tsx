@@ -24,7 +24,7 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             >
               {unit === "sqm" && <span className="w-2 h-2 bg-orange-500 rounded-full"></span>}
             </span>
-            <span className="text-12 sm:text-md">m²</span>
+            <span className="text-15 sm:text-lg">m²</span>
           </label>
           <label className="flex items-center space-x-2 cursor-pointer">
             <input
@@ -41,7 +41,7 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
             >
               {unit === "sqft" && <span className="w-2 h-2 bg-orange-500 rounded-full"></span>}
             </span>
-            <span className="text-12 sm:text-md">ft²</span>
+            <span className="text-15 sm:text-lg">ft²</span>
           </label>
         </div>
         <input
@@ -54,16 +54,19 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
         />
       </div>
       <div>
-        <p className="text-14 sm:text-16 2xl:text-20 font-medium mt-2">
-          You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ? convertedArea : "0"} {unit === "sqm" ? "m²" : "ft²"})
+        <p className="text-16 2xl:text-20 font-medium mt-2 hidden">
+          You require {requiredBoxes} Box{requiredBoxes > 1 ? "es" : ""} ({convertedArea ? convertedArea : "0"} m²)
+        </p>
+        <p className="text-16 2xl:text-20 font-medium mt-2">
+        No. Of Boxes: {requiredBoxes}
         </p>
 
-        <p className="text-12 sm:text-16 2xl:text-20 font-light">
-          No. Of Boxes: {requiredBoxes} ({squareMeter ? (unit === "sqm" ? squareMeter.toFixed(2) : (squareMeter * 10.764).toFixed(2)) : 0}{" "}
-          {unit === "sqm" ? "Square Meter" : "Square Feet"})
+        <p className="text-16 2xl:text-20 font-light">
+          Coverage area: {squareMeter ? (unit === "sqm" ? squareMeter.toFixed(2) : (squareMeter * 10.764).toFixed(2)) : 0}{" "}
+          {unit === "sqm" ? "m²" : "ft²"}
         </p>
-        <p className="text-12 sm:text-16 2xl:text-20 font-light">Price Per Box :  <span className="font-medium">AED <span>{pricePerBox.toFixed(2)}</span></span></p>
-        <p className="text-12 sm:text-16 2xl:text-20 font-light flex items-center gap-3">
+        <p className="text-16 2xl:text-20 font-light">Price Per Box : <span className="font-medium"><span className="font-currency text-16 sm:text-18 2xl:text-25 "></span> <span>{pricePerBox.toFixed(2)}</span></span></p>
+        <p className="text-16 2xl:text-20 font-light flex items-center gap-3">
           Accessories
           <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">
             <PiQuestionMark className="text-lg font-extralight" />

@@ -10,11 +10,6 @@ export interface Feature {
   height: number;
 
 }
-export interface FlooringType {
-  name?: string;
-  price?: string;
-  product: FlooringProduct[];
-}
 
 interface FlooringProduct {
   image: string;
@@ -39,15 +34,10 @@ export interface HeadingImageProps {
   imageUrl: string;
 }
 
-export interface TImageBanner {
-  src: string;
-  alt: string;
-}
-
 export interface TCategoryData {
   title: string;
   subtitle: string;
-  description: string;
+  description?: string;
   backgroundImage: string;
 }
 
@@ -55,20 +45,21 @@ export interface FeatureItem {
   title: string;
   description: string;
   icon: string;
+  buttonLink?: string;
+  buttonText?: string;
 }
 
 export interface FeaturesProps {
   items: FeatureItem[];
 }
 export interface HeroItem {
-  backgroundImage: string;
+  // backgroundImage: string;
+  // backgroundImageMobile: string;
   offerText: string;
-  title: string;
   highlight: string;
   description: string;
   buttonText: string;
   buttonLink: string;
-  priceText: string;
   flooringType: string;
   brand: string;
 }
@@ -305,24 +296,6 @@ export interface AdminRecord {
   canCheckProfit: boolean;
   canViewUsers: boolean;
 }
-export interface IOrderList {
-  orderData: IOrder[];
-  orderColumns: Array<{ title: string; dataIndex: string; key: string }>;
-  visible: boolean;
-  /* eslint-disable */
-  setVisible: (value: boolean) => void;
-  /* eslint-enable */
-  selectedProducts: Array<{
-    id: string;
-    productData: {
-      posterImageUrl: string;
-      name: string;
-      price: number;
-      currency: string;
-    };
-    quantity: number;
-  }>;
-}
 
 export interface ITabbyList {
   id: number;
@@ -340,14 +313,10 @@ export interface ITamaraList {
 }
 
 export interface CartSelectProps {
-  select: {
-    value: string;
-    label: string;
-  }[];
+  select: { value: string; label: string }[];
+  onSelect: (state: string, fee: number) => void;
   selectedFee: number;
-  // fees: { [key: string]: number };
-  onSelect: (_state: string, _fee: number) => void;
-}
+};
 export interface PrivacyPolicyItem {
   title?: string;
   content?: string[];
@@ -368,6 +337,7 @@ export interface  IfilterValues  {
     residentialWarranty : string,
     thicknesses: string,
     plankWidth: string,
+    plankLength: string
 }
 
 export interface ProductTableProps {

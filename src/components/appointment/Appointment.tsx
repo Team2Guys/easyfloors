@@ -121,9 +121,9 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
 
                 <Input
                   type="text"
-                  label="Select Rooms"
+                  label="Approximate Area"
                   name="selectRooms"
-                  placeholder="How Many Rooms?"
+                  placeholder="Approximate Area"
                   required
                   value={values.selectRooms}
                   onChange={handleChange}
@@ -196,7 +196,7 @@ function SubmitButton({ isSubmitting }: { isSubmitting: boolean }) {
         disabled={isSubmitting}
         className="w-fit bg-primary text-white p-2 lg:py-3 px-4 sm:px-10 font-inter text-15"
       >
-        {isSubmitting ? "Submitting..." : "BOOK A FREE APPOINTMENT"}
+        {isSubmitting ? "Submitting..." : " BOOK AN APPOINTMENT"}
       </button>
     </div>
   );

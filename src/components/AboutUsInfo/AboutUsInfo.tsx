@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { TAboutUsProps } from "types/types";
 
+
+
 const AboutUsInfo: React.FC<TAboutUsProps> = ({ sections }) => {
     return (
         <div className="space-y-5 sm:space-y-10 md:pt-8  font-inter ">
@@ -23,7 +25,7 @@ const AboutUsInfo: React.FC<TAboutUsProps> = ({ sections }) => {
                     </div>
                     <div className="w-full md:w-1/2 text-center md:text-left space-y-4">
                         <h2 className="text-16 md:text-3xl text-xl font-bold">{section.heading}</h2>
-                        <p className="text-10 sm:text-sm md:text-16 font-normal">{section.paragraph}</p>
+                        <p className="text-sm md:text-16 font-normal">{section.paragraph}</p>
                     </div>
                 </div>
             ))}

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: 'About Easy Floors UAE | Trusted Online Flooring Store in Dubai',
     description: 'Learn more about Easy Floors—UAE’s leading online store for SPC and LVT flooring. Discover our Richmond & Polar collections, fast delivery, and free samples.',
     url: '/about-us',
-    images: [{url: "/assets/images/logo.png", alt: 'Easyfloors',
+    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
 const AboutUs = () => {
   return (
     <>
-      <Breadcrumb title="About Us" image="/assets/images/aboutus/banner.png" />
+      <Breadcrumb title="About Us" showTitle image="/assets/images/aboutus/banner.png" />
       <Container>
         <div className="py-12">
           <AboutUsInfo sections={alternatingData} />
@@ -39,3 +39,4 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+

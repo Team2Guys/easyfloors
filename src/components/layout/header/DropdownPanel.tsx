@@ -1,3 +1,4 @@
+import { formatAED } from "lib/helperFunctions";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -220,7 +221,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
           ref={panelRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className={`fixed lg:absolute right-1/2 sm:right-5 lg:right-0 max-sm:translate-x-1/2 top-10 z-[999] bg-white shadow-lg rounded-lg border border-gray-200 ${panelClassName}`}
+          className={`fixed lg:absolute right-2 sm:right-5 lg:right-0  top-10 z-[999] bg-white shadow-lg rounded-lg border border-gray-200 ${panelClassName}`}
         >
           {localItems.length > 0 ?
 
@@ -257,7 +258,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                           <h2 className="text-sm font-semibold leading-snug line-clamp-2">{item.name}</h2>
                           {
                             item.isfreeSample ? "free" :
-                              <p className="text-xs text-gray-700 mt-1">AED {item.price}</p>
+                              <p className=" text-base sm:text-xs mt-1"><span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
                           }
                           {!item.isfreeSample && type === "cart" && (
                             <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">
@@ -277,7 +278,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                           <span className="text-sm font-semibold">Total:</span>
                           {
                             item.isfreeSample ? "free" :
-                              <span className="text-sm">AED {item.totalPrice?.toFixed(2) || "0.00"}</span>
+                              <span className="text-sm"><span className="font-currency text-18 font-normal"></span> {formatAED(item.totalPrice) || "0.00"}</span>
                           }
                         </div>
                       )}
@@ -289,7 +290,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
               </div>
 
               <div className="text-end mt-2 mb-2 font-bold">
-                {type === "cart" && `Total: AED ${totalAmount.toFixed(2)}`}
+                {type === "cart" && <p>Total:  <span className="font-currency text-20 font-normal"></span> {formatAED(totalAmount)}</p>}
               </div>
 
               <div className="w-full mt-2 space-y-1">

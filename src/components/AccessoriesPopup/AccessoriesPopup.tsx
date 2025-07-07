@@ -1,6 +1,8 @@
 "use client";
 
-import { features } from "data/data";
+import Collapsearrow from "components/svg/collapse-arrow";
+import Leftright from "components/svg/leftright";
+import TwoArrow from "components/svg/twoarrow";
 import { handleAddToStorage } from "lib/carthelper";
 import Image from "next/image";
 import { useState } from "react";
@@ -9,15 +11,11 @@ import { AccessoriesPopupProps } from "types/types";
 
 const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) => {
   const [selectedProducts, setSelectedProducts] = useState<string[]>([]);
-  const [unit, setUnit] = useState<{ [key: string]: "m" | "ft" }>(
-    Object.fromEntries(products.map((product) => [String(product.id), "m"]))
-  );
   const [areas, setAreas] = useState<{ [key: string]: string }>({});
   const [requiredBoxes, setRequiredBoxes] = useState<{ [key: string]: number }>({});
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
   if (!isOpen) return null;
-
-  const boxCoverage = 1; // Coverage in square meters
+  const boxCoverage = 1; 
 
   const toggleSelect = (id: string | number) => {
     const idStr = String(id);
@@ -26,29 +24,14 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     );
   };
 
-  const handleUnitChange = (id: string | number, value: "m" | "ft") => {
-    const idStr = String(id);
-  
-    setUnit((prev) => ({
-      ...prev,
-      [idStr]: value,
-    }));
-    if (areas[idStr]) {
-      recalculateBoxesAndPrice(idStr, areas[idStr], value); // 👈 use helper
-    }
-  };
-  const recalculateBoxesAndPrice = (idStr: string, value: string, unitValue: "m" | "ft") => {
+  const recalculateBoxesAndPrice = (idStr: string, value: string) => {
     const areaValue = parseFloat(value);
-    if (!isNaN(areaValue) && areaValue > 0) {
+    if (!isNaN(areaValue)) {
       const product = products.find((p) => String(p.id) === idStr);
       if (!product) return;
 
       const pieces = Math.ceil(areaValue / boxCoverage);
-      const pricePerUnit = unitValue === "ft"
-        ? product.price / 3.28084
-        : product.price;
-
-      const total = areaValue * pricePerUnit;
+      const total = areaValue * product.price;
   
       setRequiredBoxes((prev) => ({
         ...prev,
@@ -65,8 +48,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     }
   };
   
-  
-  
   const handleAreaChange = (id: string | number, value: string) => {
     const idStr = String(id);
     setAreas((prev) => ({
@@ -80,10 +61,8 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
       setSelectedProducts((prev) => prev.filter((productId) => productId !== idStr));
     }
   
-    recalculateBoxesAndPrice(idStr, value, unit[idStr]);
+    recalculateBoxesAndPrice(idStr, value);
   };
-  
-  
 
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).id === "popup-overlay") {
@@ -91,41 +70,46 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     }
   };
 
+  const resetForm = () => {
+    setSelectedProducts([]);
+    setAreas({});
+    setRequiredBoxes({});
+    setTotalPrice({});
+  };
+
   const handleAddSelectedToCart = () => {
     selectedProducts.forEach((productId) => {
       const product = products.find((p) => String(p.id) === productId);
       if (product) {
-        const selectedUnit = unit[productId] || "m";
-        const basePrice = product.price;
-  
-        const pricePerUnit =
-          selectedUnit === "ft" ? basePrice / 3.28084 : basePrice;
-  
         const squareMeter = boxCoverage * (requiredBoxes[productId] || 1);
   
         handleAddToStorage(
           product,
-          totalPrice[productId] || 0,         // 👈 Already unit-specific
-          parseFloat(pricePerUnit.toFixed(2)), // 👈 Converted per unit price
+          totalPrice[productId] || 0,
+          product.price,
           squareMeter,
           requiredBoxes[productId] || 1,
-          selectedUnit,
+          "m",
           product.category?.name ?? product?.__typename,
           "cart",
           product.posterImageUrl.imageUrl ?? "",
           String(boxCoverage),
-          selectedUnit,
-          product.selectedColor
+          "m",
+          product.selectedColor,
+          product.matchedProductImages?.[0] || product.posterImageUrl,
+
         );
       }
     });
+    resetForm();
     onClose();
   };
-  
 
+
+  console.log(products, "productData")
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-7xl relative pb-20">
+      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-6xl relative pb-20">
         <button className="absolute top-3 right-3 text-gray-600 hover:text-gray-900" onClick={onClose}>
           <AiOutlineClose size={20} />
         </button>
@@ -133,83 +117,76 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
         {products.length === 0 ? (
           <p className="text-center text-gray-700">No accessory available.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto max-h-[70vh] thin-scrollbar">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 xl:gap-4 overflow-y-auto max-h-[50vh] lg:max-h-[78vh] thin-scrollbar">
             {products.map((product) => (
-              <div key={product.id} className={`p-2 ${selectedProducts.includes(String(product.id)) ? "" : "border-gray-300"}`}>
+              <div key={product.id} className={` ${selectedProducts.includes(String(product.id)) ? "" : "border-gray-300"}`}>
                 <div className="relative">
                   <input
                     type="checkbox"
                     checked={selectedProducts.includes(String(product.id))}
                     onChange={() => toggleSelect(product.id)}
-                    className={`w-5 h-5 absolute top-3 left-3 accent-white ${Number(product.stock) > 0 ? "cursor-pointer" : "cursor-not-allowed"}`}
+                    className={`w-5 h-5 absolute top-3 left-3 z-10 accent-white ${Number(product.stock) > 0 ? "cursor-pointer" : "cursor-not-allowed"}`}
                     disabled={Number(product.stock) <= 0}
                   />
-                  <Image width={1000} height={1000} src={product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-60 object-cover border border-black" />
-                  <div className="flex justify-evenly border-b pb-2 gap-4 mt-3">
-                    {features.map((feature, index) => (
-                      <div key={index} className="flex items-center gap-1">
-                        <Image src={feature.icon} alt="Icon" width={feature.width} height={feature.height} />
-                        <span className="text-sm text-gray-800">{feature.label}</span>
-                      </div>
+                  
+                  <Image width={1000} height={1000} src={product?.matchedProductImages?.[0]?.imageUrl ?? product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black absolute hover:opacity-0" />
+        
+                    <Image width={1000} height={1000} src={product?.matchedProductImages?.[1]?.imageUrl || product?.hoverImageUrl?.imageUrl || product.posterImageUrl.imageUrl} alt={product.name} className="w-full h-40 object-cover border border-black" />
+            
+                  <div className="flex justify-evenly border-b pb-2 gap-2 sm:gap-4 mt-3">
+                      {product.sizes?.map((feature, index) => (
+                       <div key={index} className="flex gap-1 xsm:gap-4 w-full justify-between">
+                {feature.width &&
+                <div className="flex justify-between gap-1 items-center">
+                  <Leftright/>
+                  <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.width}</span>
+                </div>
+                } 
+                {feature.thickness &&
+                  <div className="flex justify-between gap-1 items-center">
+                    <Collapsearrow/>
+                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.thickness}</span>
+                  </div>}
+                {feature.height &&
+                <div className="flex justify-between gap-1 items-center">
+                  <TwoArrow/>
+                  <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.height}</span>
+                </div>
+                }
+                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="py-2">
-                  <h3 className="text-lg font-bold mt-1 text-gray-700">{product.name}</h3>
-                  {product.selectedColor &&
-                    <div className="flex flex-col justify-between items-center mb-1 mt-1 w-fit">
-                      <Image width={50} height={50} src={product.selectedColor?.imageUrl || ""} alt={product.selectedColor?.altText || ""}/>
-                      <p className="text-11">{product.selectedColor?.color || ""}</p>
-                    </div>
-                    }
-                  <p className="text-gray-700 font-medium">
-                    {unit[product.id] === "ft"
-                      ? `Price Per ft: AED ${(product.price / 3.28084).toFixed(2)}`
-                      : `Price Per m: AED ${product.price}`}
+                  <h3 className="text-16 font-bold mt-1">{product.name}</h3>
+                  <h3 className="text-14 mt-1">Color : {product.selectedColor?.colorName ?? "White"}</h3>
+                  <p className=" font-medium text-14">
+                    Price Per m: <span className="font-currency font-normal text-14"></span> {product.price}
                   </p>
 
-                  <p className="text-base text-gray-800 font-medium">You Require:</p>
-                  <div className="flex gap-4 items-center mb-2">
-                    {["m", "ft"].map((unitType) => (
-                      <label key={unitType} className="flex items-center justify-start gap-2 cursor-pointer">
-                        <input
-                          type="radio"
-                          value={unitType}
-                          checked={unit[product.id] === unitType}
-                          onChange={() => handleUnitChange(product.id, unitType as "m" | "ft")}
-                          className="hidden"
-                        />
-                        <span
-                          className={`w-4 h-4 rounded-full border-2 m-0 flex items-start justify-start ${unit[product.id] === unitType ? "border-primary bg-primary" : "border-gray-400"}`}
-                        >
-                          {unit[product.id] === unitType && <span className="h-2 bg-orange-500 rounded-full"></span>}
-                        </span>
-                        <span className="text-md">{unitType === "m" ? "m" : "ft"}</span>
-                      </label>
-                    ))}
-                  </div>
                   <input
                     type="number"
-                    placeholder={`Enter Area (${unit[product.id] || "m"})`}
+                    placeholder="Enter length (m)"
                     value={areas[product.id] || ""}
                     onChange={(e) => handleAreaChange(product.id, e.target.value)}
                     min="0"
-                    className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[60px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
+                    className="p-2 border border-[#9E9E9E] focus:outline-none focus:ring-1 focus:ring-[#9E9E9E] w-[120px] sm:w-[182px] h-[41px] sm:h-[40px] bg-[#D9D9D929] shadow-xl placeholder:text-black"
                   />
                 </div>
-                
               </div>
             ))}
           </div>
         )}
+        <div>
         <button
-          className={`mt-4 md:mb-9 mb-7 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed sm:bottom-10 left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
+          className={`mt-2 w-fit sm:px-10 px-5 mx-auto py-3 font-semibold flex items-center justify-center gap-2 fixed left-1/2 -translate-x-1/2 ${selectedProducts.length > 0 ? "bg-black text-white cursor-pointer" : "bg-black text-white cursor-not-allowed"}`}
           onClick={handleAddSelectedToCart}
           disabled={selectedProducts.length === 0}
         >
           <Image src="/assets/images/icon/cart.png" alt="cart" width={28} height={28} />
           Add to Cart
         </button>
+        </div>
       </div>
     </div>
   );

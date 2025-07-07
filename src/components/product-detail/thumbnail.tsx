@@ -62,13 +62,11 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   const handleMouseUp = () => {
     setIsDragging(false);
   };
-
   const combinedImages = useMemo(() => {
     if (hideThumnailBottom) return ThumnailImage;
     return [...ThumnailImage, ...(ThumnailBottom || [])];
   }, [ThumnailImage, ThumnailBottom, hideThumnailBottom]);
-
-  // Find the first index that matches selectedColor
+  
   useEffect(() => {
     if (selectedColor) {
       const matchingIndex = ThumnailImage.findIndex(
@@ -85,15 +83,16 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
     }
   }, [selectedColor, ThumnailImage, onImageChange, stickyside]);
 
-  const handleThumbnailClick = (index: number) => {
-    if (!isSwiping && index !== currentSlide) { // Only activate on click, not swipe
+  const handleThumbnailClick = (index: number, e: React.MouseEvent) => {
+    e.preventDefault(); // Add this line
+    if (!isSwiping && index !== currentSlide) {
       setCurrentSlide(index);
       setSelectedColor?.({
         color: ThumnailImage[index].color || ThumnailImage[index].colorCode,
         colorCode: ThumnailImage[index].colorCode,
         altText: ThumnailImage[index].altText,
         imageUrl: ThumnailImage[index].imageUrl,
-      }); // Update selected color
+      });
       onImageChange?.(combinedImages[index]);
       sliderRef1.current?.slickGoTo(index);
       if (stickyside) {
@@ -116,10 +115,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
   return (
     <div className="relative">
       {
-        stickyside &&
+        stickyside && ThumnailImage.length > 5 && 
       <button
-        onClick={() => thumbSliderRef.current?.slickPrev()}
-        className="absolute -top-6 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
+      onClick={(e) => {
+        e.preventDefault(); // Prevent scroll-to-top
+        thumbSliderRef.current?.slickPrev();
+      }}
+        className="absolute !-top-1 2xl:left-16 xl:left-11 lg:left-10 md:left-8 sm:left-8 left-4 z-30 p-1 max-w-max"
       >
         <MdKeyboardArrowUp className="block md:hidden bg-white" size={20} />
         <MdKeyboardArrowUp className="hidden md:block font-normal text-gray-600 bg-white" size={30} />
@@ -134,10 +136,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         onMouseLeave={handleMouseUp}
       >
         <div className="w-2/12">
-          {stickyside ? (
+          {stickyside && ThumnailImage.length > 5  ? (
             <div className="relative h-full">
-
-
 
               {/* Thumbnail Slider */}
               <Slider
@@ -148,14 +148,14 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 swipe={false}
                 arrows={false} // We'll use our own
                 focusOnSelect
-                className="custom-vertical-slider h-full md:h-[90vh]"
+                className="custom-vertical-slider h-full"
                 initialSlide={currentSlide}
               >
                 {ThumnailImage.map((product, index) => (
                   <div
                     key={index}
-                    onClick={() => handleThumbnailClick(index)}
-                    className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
+                    onClick={(e) => handleThumbnailClick(index, e)}
+                    className={`cursor-pointer p-[2px] border-2 ${index === currentSlide ? "border-primary" : "border-transparent"
                       }`}
                   >
                     <Image
@@ -163,8 +163,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       height={150}
                       src={product.imageUrl}
                       className={`w-full ${imageheight
-                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : "h-[35px] sm:h-[73px] md:h-[124px]"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:size-[150px] border border-black"
+                        : "border"
                         }`}
                       alt={product.altText || "Thumbnail"}
                     />
@@ -174,10 +174,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
 
               {/* Down Arrow */}
               {
-                stickyside &&
+              stickyside && ThumnailImage.length > 5 && 
               <button
-                onClick={() => thumbSliderRef.current?.slickNext()}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 z-30 p-1 "
+              onClick={(e) => {
+                e.preventDefault(); // Prevent scroll-to-top
+                thumbSliderRef.current?.slickNext();
+              }}
+                className="absolute bottom-1 left-1/2 -translate-x-1/2 z-30 p-1 "
               >
                 <MdKeyboardArrowDown className="block md:hidden bg-white" size={20} />
 
@@ -191,8 +194,9 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
               {ThumnailImage.map((product, index) => (
                 <div
                   key={index}
-                  onClick={() => handleThumbnailClick(index)}
-                  className={`cursor-pointer p-[2px] sm:p-1 ${index === currentSlide ? "shadow-xl" : ""
+                  onClick={(e) => handleThumbnailClick(index, e)}
+
+                  className={`cursor-pointer p-[2px] border-2 ${index === currentSlide ? "border-primary" : "border-transparent"
                     }`}
                 >
                   <Image
@@ -200,8 +204,8 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     height={150}
                     src={product.imageUrl}
                     className={`w-full ${imageheight
-                        ? "h-[35px] sm:h-[73px] md:h-[230px]"
-                        : "h-[35px] sm:h-[73px] md:h-[124px] lg:h-[75px] xl:h-[74.5px] 2xl:h-[124px]"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
+                        : "h-auto"
                       }`}
                     alt={product.altText || "Thumbnail"}
                   />
@@ -212,7 +216,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
         </div>
 
         {/* Main Image Viewer */}
-        <div className="w-10/12">
+        <div className="w-10/12 ">
           <Slider
             infinite={combinedImages.length > 1}
             ref={sliderRef1}
@@ -233,15 +237,15 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
             {combinedImages.map((product, index) => (
               <div
                 key={index}
-                className={`relative ${product.plankWidth && "py-1 sm:py-0"}`}
+                className={`relative ${product.plankWidth && "py-2 sm:py-0"}`}
               >
                 <Image
                   width={800}
                   height={800}
                   src={product.imageUrl}
-                  className={`w-full ${imageheight
+                  className={`w-full px-1 ${imageheight
                     ? "h-[273px] sm:h-[520px] lg:h-[535px] xl:h-[700px] 2xl:h-[810px]"
-                      : "h-[273px] sm:h-[520px] md:h-[830px] lg:h-[535px] xl:h-[530px] 2xl:h-[830px]"
+                      : "h-[273px] sm:h-[520px] md:h-[530px] lg:h-[435px] xl:h-[530px] 2xl:h-[740px]"
                     }`}
                   alt={product.altText || "Thumbnail"}
                 />
@@ -250,7 +254,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                 {product.plankHeight && (
                   <div className="absolute h-full top-0 flex flex-col justify-between py-4 sm:py-10 left-1/2 -translate-x-28 sm:-translate-x-36">
                     <span className="flex justify-center items-center">
-                      <FaAngleUp className="text-20 sm:text-24" />
+                      <FaAngleUp className="text-16 sm:text-20" />
                     </span>
                     <div className="flex-1 border w-[1px] mx-auto border-black"></div>
                     <span className="h-16 sm:h-28 flex justify-center items-center font-semibold transform rotate-90 text-13 sm:text-16">
@@ -258,27 +262,33 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     </span>
                     <div className="flex-1 border w-[1px] mx-auto border-black"></div>
                     <span className="flex justify-center items-center">
-                      <FaAngleDown className="text-20 sm:text-24" />
+                      <FaAngleDown className="text-16 sm:text-20" />
                     </span>
                   </div>
                 )}
-
+                
                 {/* Plank width overlay */}
                 {product.plankWidth && (
-                  <div className="absolute w-[170px] sm:w-[200px] -top-1 sm:top-0 flex justify-between mx-auto left-1/2 -translate-x-24 sm:-translate-x-28">
+                  <div className="absolute w-[130px] sm:w-[92px] md:w-[121px] lg:w-[74px] xl:w-[80px] 2xl:w-[135px] top-[9px] sm:top-0 flex 2xl:justify-between items-center mx-auto xsm:left-[46%] left-[43%] xs:left-[44%] sm:left-[52%] lg:left-[51%] 2xl:left-1/2 sm:-translate-x-1/2">
                     <span className="flex justify-center items-center transform -rotate-90">
-                      <FaAngleUp className="text-20 sm:text-24" />
+                      <FaAngleUp className="text-10 md:text-16 lg:text-12 2xl:text-20" />
                     </span>
-                    <div className="flex-1 border h-[1px] my-auto border-black"></div>
-                    <span className="flex justify-center items-center text-13 sm:text-16 font-semibold px-2">
+                    <div className="flex border w-[9px] h-[0.2px] sm:h-[1px] my-auto border-black"></div>
+                    <span className="flex justify-center items-center text-[8px] sm:text-10 md:text-14 lg:text-10 2xl:text-16 2xl:font-semibold px-[2px] 2xl:px-2 max-sm:absolute max-sm:left-[1%] max-sm:-top-[10px]">
                       {product.plankWidth}
                     </span>
-                    <div className="flex-1 border h-[1px] my-auto border-black"></div>
+                    <div className="flex border w-[9px] h-[0.2px] sm:h-[1px] my-auto border-black"></div>
                     <span className="flex justify-center items-center transform -rotate-90">
-                      <FaAngleDown className="text-20 sm:text-24" />
+                      <FaAngleDown className="text-10 md:text-16 lg:text-12 2xl:text-20" />
                     </span>
                   </div>
                 )}
+               {!stickyside && index === 5 && (
+              <div className="absolute bottom-14 sm:bottom-36 2xl:bottom-56 left-2 flex flex-col gap-1 font-inter max-w-60 w-full text-12 md:text-16 xl:text-20 font-semibold">
+                <p>Base layer</p>
+                <p>Backside detail</p>
+              </div>
+            )}
               </div>
             ))}
           </Slider>
@@ -292,16 +302,17 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   <div
                     key={index}
                     className="text-center cursor-pointer"
-                    onClick={() => handleThumbnailClick(globalIndex)}
+                    onClick={(e) => handleThumbnailClick(globalIndex,e)}
+
                   >
                     <Image
                       width={150}
                       height={150}
                       src={array.imageUrl}
                       alt={array.altText}
-                      className={`w-full max-sm:h-[39px] object-contain ${globalIndex === currentSlide
-                        ? "shadow-xl"
-                        : ""
+                      className={`w-full max-sm:h-[39px] p-[2px] object-contain border-2 ${globalIndex === currentSlide
+                        ? "border-primary"
+                        : "border-transparent"
                         }`}
                     />
                     <p className="font-semibold text-[8px] md:text-14 lg:text-12 xl:text-16">

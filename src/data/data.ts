@@ -1,19 +1,14 @@
-import { BoxData, CardData, FAQItem, Feature, ITabbyList, ITabbyPayList, ITamaraList, HeroItem, TCategoryData, TImageBanner } from "types/type";
-import { AuthData, CategoryFeatures, FAQ, SampleGridData, SignAuthData, SocialLink, TAboutUs } from "types/types";
+import { BoxData, CardData, FAQItem, Feature, HeroItem, TCategoryData } from "types/type";
+import { AuthData, CategoryFeatures, FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
 import palette from '../../public/assets/images/icon/chat-46.png';
 import delivery from '../../public/assets/images/icon/delivery-fast.png';
 import privacy from '../../public/assets/images/icon/privacy.png';
 import support from '../../public/assets/images/icon/chat-46.png';
-import masterCard from './../../public/assets/images/payment-icons/Mastercard-Logo.png'
-import viseCard from './../../public/assets/images/payment-icons/visacard-logo.png'
-import gPayCard from './../../public/assets/images/payment-icons/googlepay-logo.png'
 import { StaticImageData } from 'next/image';
 import { AdditionalInformation } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
-import parsePhoneNumberFromString from "libphonenumber-js/core";
-import metadata from 'libphonenumber-js/metadata.min.json';
 
 export const generateSlug = (text: string) => {
   if (!text) return '';
@@ -44,14 +39,6 @@ export const initialValues = {
     email: false,
   },
 };
-
-export const phoneValidation = Yup.string()
-  .test("valid-phone", "Invalid phone number", (value) => {
-    if (!value) return false; // Required field
-    const phoneNumber = parsePhoneNumberFromString(value, metadata);
-    return phoneNumber && phoneNumber.isValid(); // Checks if phone is valid
-  })
-  .required("Phone number is required");
 
 export const validationSchema = Yup.object({
   firstname: Yup.string().required("Name is required"),
@@ -173,11 +160,6 @@ export const excludedKeys = [
   "colors"
 
 ]
-export const excludedKeysFroProducts = [
-  "product",
-  "colors"
-
-]
 
 export const AddProductvalidationSchema = Yup.object().shape({
   name: Yup.string().min(2, 'Too Short!').required('Product Name is Required'),
@@ -221,17 +203,56 @@ export const serviceItems: IServiceItem[] = [
 ];
 
 export const Appointmentlocation = [
-  { value: "Downtown Dubai", label: "Downtown Dubai" },
-  { value: "Jumeirah", label: "Jumeirah" },
-  { value: "Dubai Marina", label: "Dubai Marina" },
-  { value: "Deira", label: "Deira" },
-  { value: "Bur Dubai", label: "Bur Dubai" },
-  { value: "Al Quoz", label: "Al Quoz" },
-  { value: "Business Bay", label: "Business Bay" },
-  { value: "Al Barsha", label: "Al Barsha" },
-  { value: "Silicon Oasis", label: "Silicon Oasis" },
-  { value: "Dubai Internet City", label: "Dubai Internet City" },
-]
+  { value: "Dubai", label: "Dubai" },
+  { value: "Abu Dhabi", label: "Abu Dhabi" },
+  { value: "Al Ain", label: "Al Ain" },
+  { value: "Sharjah", label: "Sharjah" },
+  { value: "Umm Al Quwain", label: "Umm Al Quwain" },
+  { value: "Ajman", label: "Ajman" },
+  { value: "Ras Al Khaimah", label: "Ras Al Khaimah" },
+  { value: "Fujairah", label: "Fujairah" },
+  { value: "Khor Fakkan", label: "Khor Fakkan" },
+  { value: "Kalba", label: "Kalba" },
+  { value: "Dibba Al Hisn", label: "Dibba Al Hisn" },
+  { value: "Dibba Al Fujairah", label: "Dibba Al Fujairah" },
+  { value: "Al Dhaid", label: "Al Dhaid" },
+  { value: "Mina Jebel Ali", label: "Mina Jebel Ali" },
+  { value: "Hatta", label: "Hatta" },
+  { value: "Al Ruwais Industrial City", label: "Al Ruwais Industrial City" },
+  { value: "Shaam", label: "Shaam" },
+  { value: "Madinat Zayed", label: "Madinat Zayed" },
+  { value: "Masfut", label: "Masfut" },
+  { value: "Al Bithnah", label: "Al Bithnah" },
+  { value: "Al Manama", label: "Al Manama" },
+  { value: "Aasmah", label: "Aasmah" },
+  { value: "Al Sila", label: "Al Sila" },
+  { value: "Al Jazeera Al Hamra", label: "Al Jazeera Al Hamra" },
+  { value: "Masafi", label: "Masafi" },
+  { value: "Ghayl", label: "Ghayl" },
+  { value: "Al Huwailat", label: "Al Huwailat" },
+  { value: "Hay Al Zubara", label: "Hay Al Zubara" },
+  { value: "Al Badiyah", label: "Al Badiyah" },
+  { value: "Ghiyathi", label: "Ghiyathi" },
+  { value: "Al Hamraniah", label: "Al Hamraniah" },
+  { value: "Al Jeer", label: "Al Jeer" },
+  { value: "Al Raafah", label: "Al Raafah" },
+  { value: "Al Batayih", label: "Al Batayih" },
+  { value: "Al Hail", label: "Al Hail" },
+  { value: "Adhen Village", label: "Adhen Village" },
+  { value: "Milehah", label: "Milehah" },
+  { value: "Al Aweer", label: "Al Aweer" },
+  { value: "Khatt", label: "Khatt" },
+  { value: "Al Faqa", label: "Al Faqa" },
+  { value: "Lahbab", label: "Lahbab" },
+  { value: "Sweihan", label: "Sweihan" },
+  { value: "Al Mirfa", label: "Al Mirfa" },
+  { value: "Al Rams", label: "Al Rams" },
+  { value: "Al Halah", label: "Al Halah" },
+  { value: "Qur", label: "Qur" },
+  { value: "Al Digdaga", label: "Al Digdaga" },
+  { value: "Ghalilah", label: "Ghalilah" },
+];
+
 
 export const FindUs = [
   { value: "Google", label: "Google" },
@@ -246,16 +267,12 @@ export const FindUs = [
 
 export const heroItems: HeroItem[] = [
   {
-    // backgroundImage: "/assets/images/Home/hero-min.webp",
-    backgroundImage: "https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744112788/hero-min_2_ixg8qo.webp",
     offerText: "Limited Time Offer",
-    title: "Starting From Just AED 69 Per Square Metre.",
     highlight: "",
     description:
       "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/collections",
-    priceText: "Starting From AED 69/m²",
     flooringType: "SPC Eco • American Walnut",
     brand: "Polar Flooring",
   },
@@ -267,18 +284,24 @@ export const featureItems = [
     description:
       "Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy.",
     icon: "/assets/images/Home/freee.png",
+    buttonText: "Learn More",
+    buttonLink:"/free-sample"
   },
   {
     title: "Easy payment",
     description:
       "With Tabby or Tamara, split your payment into four easy installments — no hassle, no hidden fees.",
     icon: "/assets/images/Home/card.png",
+    buttonText: "Learn More",
+    buttonLink:"/easy-payment"
   },
   {
     title: "Delivery",
     description:
       "Choose Express for a small fee for next-day delivery, or enjoy standard delivery in just 3-4 days anywhere in the UAE.",
     icon: "/assets/images/Home/truck.png",
+    buttonText: "Learn More",
+    buttonLink:"/shipping-policy"
   },
   {
     title: "Factory Prices",
@@ -317,18 +340,12 @@ export const features: Feature[] = [
   { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
 ];
 
-export const accessoryFeature: Feature[] = [
-  { icon: "/assets/categoryslider/leftrightarrow.png", label: "125mm", width: 25, height: 25 },
-  { icon: "/assets/categoryslider/againupbottom.png", label: "300-1200mm", width: 5, height: 20 },
-];
-
-
 
 export const footerData = {
   company: {
     name: 'easy floors',
     description:
-      'Founded with a passion for quality and design. Easyfloors is committed to craftsmanship, customer satisfaction and great value for money.',
+      'Founded with a passion for quality and design. Easyfloors is all about top-notch quality, happy customers, and awesome deals.',
   },
   contact: {
     address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',
@@ -346,7 +363,7 @@ export const blocksData = [
       'Wear a layer that is transparent and highly resistant to damage.',
       'A click-lock system is integrated into its installation structure.',
       'Decorative layer with high-resolution wood or stone designs.',
-      'The core layer is made from rigid stone-plastic composite material.',
+      'The core layer is made from rigid stone polymer composite material.',
       'A base layer that adds foundational stability and durability.',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291723/layer1_11zon_dfk4er.webp',
@@ -370,13 +387,6 @@ export const FloorItemsData = [
   { id: 2, title: 'Eco Floor ', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291254/Eco-Floor_11zon_11zon_ewhoup.webp' },
   { id: 3, title: 'Prime Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291406/Prime-Floor_11zon_1__11zon_l98nti.webp' },
 ];
-
-
-export const imageData: TImageBanner = {
-  src: '/assets/category/fiveTree.png',
-  alt: 'Picture of the author',
-};
-
 
 
 export const categoriesFeatures:CategoryFeatures[] = [
@@ -458,9 +468,9 @@ export const categoriesFeatures:CategoryFeatures[] = [
 export const categoryData: TCategoryData = {
   title: "What Am I?",
   subtitle: "(Compare us)",
-  description:
-    `I am more than just a surface beneath your feet. I'm a flooring solution for anyone who wants elegance, strength, and simplicity in their space. I support your everyday life, from busy mornings to quiet evenings, standing strong through it all. With the natural beauty of wood and the toughness of modern design, I resist water, scratches, and the test of time. Whether it’s the sturdy reliability of SPC, the soft comfort of LVT, or the timeless charm of Herringbone, I make every space look and feel better. I am easy to install, simple to maintain, and built to last.
-    I am more than something you walk on; we are a collection of flooring solutions that bring durability and simplicity to your space. You can choose any of the flooring solutions that fit your needs. We are here to handle your everyday life, from a busy morning to a simple, relaxing evening. All of the flooring options mentioned are designed to withstand heavy foot traffic and daily wear and tear. Whether you choose the sturdy SPC, the luxurious feel of LVT, or the timeless classiness of Herringbone, I make every room feel simply amazing. All of us are easy to install and simple to maintain while built for durability.`,
+  // description:
+  //   `I am more than just a surface beneath your feet. I'm a flooring solution for anyone who wants elegance, strength, and simplicity in their space. I support your everyday life, from busy mornings to quiet evenings, standing strong through it all. With the natural beauty of wood and the toughness of modern design, I resist water, scratches, and the test of time. Whether it’s the sturdy reliability of SPC, the soft comfort of LVT, or the timeless charm of Herringbone, I make every space look and feel better. I am easy to install, simple to maintain, and built to last.
+  //   I am more than something you walk on; we are a collection of flooring solutions that bring durability and simplicity to your space. You can choose any of the flooring solutions that fit your needs. We are here to handle your everyday life, from a busy morning to a simple, relaxing evening. All of the flooring options mentioned are designed to withstand heavy foot traffic and daily wear and tear. Whether you choose the sturdy SPC, the luxurious feel of LVT, or the timeless classiness of Herringbone, I make every room feel simply amazing. All of us are easy to install and simple to maintain while built for durability.`,
   backgroundImage: "/assets/category/campare-us.png",
 };
 export const HomeUserInfo = [
@@ -483,34 +493,12 @@ export const HomeUserInfo = [
     reverse: false,
   },
 ]
-export const deliveryCharges = [
-  {
-    location: 'Dubai ( Next Day Delivery )',
-    charges: [
-      'Under AED 1,000 - AED 50',
-      'Above AED 1,000 - Free',
-    ],
-  },
-  {
-    location: 'Sharjah, Ajman, Umm Al Quwain ( 2 Working Days )',
-    charges: [
-      'Under AED 1,000 - AED 100',
-      'Above AED 1,000 - Free',
-    ],
-  },
-  {
-    location: 'Abu Dhabi, Fujairah, Ras Al Khaimah ( 2 Working Days )',
-    charges: [
-      'Under AED 1,000 - AED 200',
-      'Above AED 1,000 - Free',
-    ],
-  },
-];
+
 export const policySections = [
   {
-    title: 'Can I Return A Purchased Product From EasyFloors.AE, If I Have A Change of Mind?',
+    title: 'Can I Return A Purchased Product From easyfloors.ae, If I Have A Change of Mind?',
     content: [
-      'You can return any item within 7 days of receiving your order if it is unused, and in its original packing.',
+      'Yes, You can return any item within 7 days of receiving your order if it is unused, and in its original packing.',
       'Begin a return simply by emailing our friendly customer service team at <a href="mailto:cs@easyfloors.ae" target="_blank" class="font-bold">cs@easyfloors.ae</a> with your order number and a 2-3 sentence explanation of why you’re returning an item.',
       "We'll get back to you within 24 hours, and we'll give you a return authorisation number (RAN) that you need to include with the package when you send it back to be processed.",
       "Once we get and accept your return, we'll send you your money back. It could take a few days to show up in your account, but we'll start the return process right away.",
@@ -549,6 +537,7 @@ export const policySections = [
     ]
   },
 ];
+
 export const faqs: FAQItem[] = [
   {
     id: 1,
@@ -565,7 +554,7 @@ export const faqs: FAQItem[] = [
   {
     id: 3,
     question: "How do I know which flooring material is best for my space?",
-    answer: "The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and herringbone patterns add a decorative touch. If unsure, consult with a trusted flooring company for expert recommendations.",
+    answer: `<p>The right flooring material depends on the room’s use, foot traffic, and moisture levels. SPC is durable, LVT is comfortable and stylish, and Herringbone patterns add a decorative touch. If unsure, talk to our experts at the click of a button by <a href='https://wa.me/${process.env.NEXT_PUBLIC_PHONE_NUMBER?.replace('+', '').replace(/\s+/g, '')}' target='_blank' class='font-semibold text-primary hover:underline'>WhatsApp</a>.</p>`,
   },
 ];
 
@@ -575,15 +564,15 @@ export const boxData: BoxData[] = [
     id: 1,
     title: 'Need help with measurement?',
     description: `We have a detailed How to Measure Guide to make it easy. If you need further assistance, feel free to contact us—we're here to help!`,
-    buttonText: 'Learn More',
+    buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/measure1.png',
     link: '/measurement-appointment',
   },
   {
     id: 2,
     title: 'Need help with installation?',
-    description: `Our easy click-lock system makes installation simple—no glue or nails are required. We can connect you with trusted installers for professional assistance.`,
-    buttonText: 'Learn More',
+    description: `Our easy click-lock system makes installation simple—no glue or nails are required. If self-fitting isn’t your thing, let us take care of the hassle. One call or message and we’ll send our expert teams to take care of the installation.`,
+    buttonText: 'Book Your Appointment',
     icon: '/assets/images/Home/Vectorrg.png',
     link: '/help-with-installations',
   }
@@ -597,7 +586,7 @@ export const popupCards: CardData[] = [
       "Integrated IXPE underlay",
       "SPC core construction",
       "Realistic Wood Grain Finish",
-      "Affordable price from AED 109",
+      "Affordable price from <span class='font-currency font-normal text-16 md:text-18'></span> 109",
       "DIY-friendly installation",
     ],
   },
@@ -616,7 +605,7 @@ export const popupCards: CardData[] = [
     id: 3,
     heading: "Richmond SPC <br /> Herringbone",
     content: [
-      "Elegant herringbone pattern",
+      "Elegant Herringbone pattern",
       "Wide range of colours",
       "Integrated IXPE sound barrier",
       "Durable 0.5mm wear layer",
@@ -652,7 +641,7 @@ export const popupCards: CardData[] = [
       "Lots of timeless styles",
       "Wood grain finishes",
       "Water-resistant",
-      "Affordable from AED 49.00",
+      "Affordable from <span class='font-currency font-normal text-16 md:text-18'></span> 49.00",
       "Modern and classic",
     ],
   },
@@ -680,18 +669,9 @@ export const popupCards: CardData[] = [
   },
 ];
 
-export const timeSlots = [
-  { value: "9am-11am", label: "9am-11am" },
-  { value: "11am-1pm", label: "11am-1pm" },
-  { value: "1pm-3pm", label: "1pm-3pm" },
-  { value: "3pm-6pm", label: "3pm-6pm" },
-];
-
-
-
 
 export const faqspage: FAQ[] = [
-  { question: "Can you put SPC flooring on concrete?", answer: "We often receive this question from our customers. The answer is definitely yes. Stone plastic composite (SPC) looks great on concrete subfloors. By creating a solid foundation, it reduces the possibility of warping or buckling over time. So we have to use a completely flat surface for installation." },
+  { question: "Can you put SPC flooring on concrete?", answer: "We often receive this question from our customers. The answer is definitely yes. Stone polymer composite (SPC) looks great on concrete subfloors. By creating a solid foundation, it reduces the possibility of warping or buckling over time. So we have to use a completely flat surface for installation." },
   { question: "When can you walk on LVT flooring after the installation process?", answer: "Our planks have a four-side click lock system for easy installation, and you can walk on them right away after the installation process. However, you should wait 48 hours before walking on glue-down LVT flooring textures, although some manufacturers recommend waiting longer." },
   { question: "Is SPC flooring slippery?", answer: "SPC flooring features a nonslip surface material. Since SPC flooring has a low heat transfer coefficient, it provides excellent anti-skid properties. A few drops of water on SPC flooring will make it feel less slippery than ordinary tile and stone." },
   { question: "Can heavy furniture be placed on oak SPC flooring?", answer: "Yes. The strong and resilient core layer of oak SPC flooring allows it to support heavy furniture. Compared to thinner choices (3 mm), a thicker SPC core (5 mm or more) is better able to resist dents and warping. Because of its stability, the flooring won't buckle or move even when heavy furniture is placed on it. Further, SPC flooring is more durable and impact-resistant than laminate flooring, making it a better option for spaces with heavy furniture. " },
@@ -702,62 +682,10 @@ export const faqspage: FAQ[] = [
   { question: "Is oak SPC flooring pet-friendly?", answer: "All of our durable floors are designed to withstand the rigours of kids and pets. Our flooring is completely free of formaldehyde, ensuring a safe and healthy indoor environment. We also have antibacterial coating on floors that provides excellent antibacterial properties, keeping your space clean and hygienic." },
   { question: "Does Polar LVT flooring fade under sunlight?", answer: "Our Polar LVT Flooring UAE does not fade under sunlight. We can use them for locations that receive direct sunlight, such as sunrooms or rooms with wide windows. The reason is that it contains UV protection, which prevents fading and discolouration caused by exposure to sunshine. The floors' deep antique tones remained after years of exposure to direct sunlight, giving the spaces an energetic and appealing look." },
   { question: "Can I install SPC flooring myself?", answer: "Yes. SPC flooring is an excellent option for do-it-yourself installation because of its simple 4-side click-lock mechanism. Before beginning, just make sure your subfloor is dry, clean, and level. With basic equipment like a rubber mallet, tape measure, and utility knife, the planks may be easily snapped together without the need for glue or nails. However, if you have any concerns or want a flawless finish, it's always a good idea to contact an expert." },
-  { question: "Does SPC flooring feel cold?", answer: "There's nothing better than SPC flooring underfoot, no matter what the weather is like. It is made of stone plastic composite with wear layers, which maintains a neutral temperature in summer and a slight warmth in winter to retain heat. The warmth of this flooring makes stepping out of bed in a bedroom more comfortable than stepping on cold tiles. In homes with kids or older adults who may be sensitive to extreme temperatures, this feature is really handy." },
+  { question: "Does SPC flooring feel cold?", answer: "There's nothing better than SPC flooring underfoot, no matter what the weather is like. It is made of stone polymer composite with wear layers, which maintains a neutral temperature in summer and a slight warmth in winter to retain heat. The warmth of this flooring makes stepping out of bed in a bedroom more comfortable than stepping on cold tiles. In homes with kids or older adults who may be sensitive to extreme temperatures, this feature is really handy." },
   { question: "Can I use SPC flooring in the bathroom?", answer: "Of course. Because SPC flooring is water-resistant, it's a great option for bathrooms. It is resistant to warping, swelling, and moisture damage, unlike laminate or conventional wood. Even in regions with high humidity, its strong core and protective outer shell offer exceptional longevity. Selecting textured SPC planks will increase safety by preventing slippage in damp areas." },
   { question: "Is SPC or LVT flooring suitable for UAE climates?", answer: "Yes. The UAE's humid and hot atmosphere is something that our Richmond SPC or LVT flooring is made to resist. It is a dependable option for both residential and commercial applications because of its heat- and water-resistant qualities. SPC and LVT provide long-term durability since they do not expand or contract in response to temperature variations like regular wood flooring does. " }
 ];
-
-export const tabbyfeature: ITabbyList[] = [
-  { id: 1, para: 'No interest. No fees.' },
-  { id: 2, para: 'Trusted by 4,5m+ customers.' },
-  { id: 3, para: 'Shariah-compliant.' },
-];
-
-export const tabbyhowitwork: ITabbyList[] = [
-  { id: 1, para: 'Choose Tabby at checkout' },
-  { id: 2, para: 'Enter your information and add your debit or credit card.' },
-  { id: 3, para: 'Your first payment is taken when the order is made.' },
-  { id: 4, para: 'We will send you a reminder when your next payment is due' },
-];
-
-export const tabbypayicon: ITabbyPayList[] = [
-  { id: 1, imageUrl: masterCard },
-  { id: 2, imageUrl: viseCard },
-  { id: 3, imageUrl: gPayCard },
-];
-
-export const tamarawhy: ITamaraList[] = [
-  { id: 1, para: 'Sharia-compliant' },
-  { id: 2, para: 'No late fees' },
-  { id: 3, para: 'Quick and easy' },
-];
-export const tamaralist: ITamaraList[] = [
-  {
-    id: 1,
-    para: 'Payment options availability may vary based on your order value and Tamara record.',
-  },
-  { id: 2, para: 'Subject to terms and conditions.' },
-  { id: 3, para: 'Tamara is Sharia-compliant.' },
-  { id: 4, para: 'Eligible for customers in United Arab Emirates.' },
-  {
-    id: 5,
-    para: 'Your final payment plan may vary depending on your credit history.',
-  },
-];
-
-export const tamarafeature: ITamaraList[] = [
-  {
-    id: 1,
-    title: 'Split in 4',
-    para: 'Pay a fraction now and the rest in 3 payments over the next 3 months. No late fees, shariah-compliant!*',
-  },
-  {
-    id: 2,
-    title: 'Pay in Full',
-    para: 'Pay the full amount today and enjoy exclusive perks with Tamara!*',
-  },
-];
-
 
 export const alternatingData: TAboutUs[] = [
   {
@@ -818,25 +746,24 @@ export const measurementData: MeasurementSection[] = [
   {
     title: "General Guidelines for Measuring Your Room ",
     description: `When calculating the width and length of a rectangular or square area, add 5-10% for waste and cutting errors. If you are planning to construct staircases, mantels, or closets in your room, allocate over 10% of your budget to them. 
-
-If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of AED 150 (refunded if you place an order from us). If you wish to measure the area yourself, you will only need a measuring tape, pencil, and paper. Make sure you measure in meters if you will be buying flooring materials that are usually marketed in mete
-`,
+      If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of <span class='font-currency font-normal text-18'></span> 150 (refunded if you place an order with us). If you wish to measure the area yourself, you will only need a measuring tape, a pencil, and paper. Make sure you measure in metres if you will be buying flooring materials that are usually marketed in metres.
+      `,
 stepsHeading:"Measuring a Square or Rectangular Room",
     steps: [
       {
         title: "Measure the length:",
         content:
-          " Find the room's length, such as five meters.",
+          "Find the room's length, such as five metres.",
       },
       {
         title: "Measure the width:",
         content:
-          "Determine the room's width, such as five meters.",
+          "Determine the room's width, such as five metres",
       },
       {
         title: "Measure the total area",
         content:
-          "To get the floor size in square meters, multiply the length by the width.",
+          "To get the floor size in square metres, multiply the length by the width.",
       },
     ],
     image: "/assets/images/how-to-measure-your-room/measure1.png",
@@ -844,13 +771,13 @@ stepsHeading:"Measuring a Square or Rectangular Room",
   {
     title: "Measuring an L-shaped or Irregular Room",
     description:
-      "For irregular rooms, divide the area into smaller, more manageable rectangles and measure each one separately. When dealing with uneven areas, divide the area into smaller, more manageable rectangles and measure each one independently. Then, make a rough sketch by dividing the room into several rectangular portions and drawing the room plan.",
+      "When dealing with uneven areas, divide the area into smaller, more manageable rectangles and measure each one independently. Then, make a rough sketch and draw the room plan.",
 
     steps: [
       {
         title: "Measure Every Section",
         content:
-          " Take separate measurements of each section's length and width.",
+          "Take separate measurements of each section's length and width.",
       },
       {
         title: "Determine the total area.",
@@ -862,40 +789,17 @@ stepsHeading:"Measuring a Square or Rectangular Room",
   },
 
   {
-    title: "Example:",
-    description:"(Area A) 10m² + (Area B) 15m² = Total Area: 25m²",
-    steps: [
-    ],
-    image: "",
-  },
-  {
     title: "Factoring in 10% Waste Allowance",
     description:
-      "Add another 10% for waste and cutting adjustments to make sure you have enough flooring.",
-    steps: [
-      {
-        title: "",
-        content:
-          "Divide an entire area by 10 (e.g., 25m² ÷ 10 = 2.5m²)",
-      },
-      {
-        title: "",
-        content:
-          "Include this in your overall flooring purchase. (e.g., 25m² + 2.5m² = 27.5m²)",
-      },
-      {
-        title: "",
-        content:
-          "Place your order and prepare for installation!",
-      },
-    ],
+      "We highly recommend adding another 5-10% for waste and cutting adjustments to ensure enough flooring. Place your order and prepare for installation!",
+    steps: [],
     image: "",
   },
 
   {
     title: "Get Expert Guidance from Easy Floors",
     description:
-      "With Easy Floors, you have a variety of premium flooring options in Dubai and the United Arab Emirates. If you need additional professional assistance with floor design ideas or flooring recommendations, please email us at cs@easyfloors.ae",
+      "With Easy Floors, you have various premium flooring options in Dubai and the United Arab Emirates. If you need additional professional assistance with floor design ideas or flooring recommendations, please email us at cs@easyfloors.ae.",
     steps: [],
     image: "",
   },
@@ -916,19 +820,6 @@ export const loginData: AuthData = {
   value: ""
 };
 
-export const signupData: SignAuthData = {
-  title: "WELCOME TO <br> EASY FLOORS",
-  subtitle: "Sign Up",
-  fullNamePlaceholder: "Enter your full name",
-  emailPlaceholder: "Enter your email",
-  passwordPlaceholder: "Enter your password",
-  retypePasswordPlaceholder: "Retype your password",
-  buttonText: "Sign Up",
-  footerText: "Already have an account?",
-  footerLinkText: "Sign In",
-};
-
-
 export const emirates = [
   { value: "Abu Dhabi", label: "Abu Dhabi" },
   { value: "Dubai", label: "Dubai" },
@@ -938,3 +829,177 @@ export const emirates = [
   { value: "Ras Al Khaimah", label: "Ras Al Khaimah" },
   { value: "Fujairah", label: "Fujairah" }
 ];
+
+export const emirateCityMap: Record<string, { value: string; label: string }[]> = {
+  "Abu Dhabi": [
+    { value: "Abu Dhabi", label: "Abu Dhabi" },
+    { value: "Al Reem Island", label: "Al Reem Island" },
+    { value: "Yas Island", label: "Yas Island" },
+    { value: "Saadiyat Island", label: "Saadiyat Island" },
+    { value: "Al Khalidiyah", label: "Al Khalidiyah" },
+    { value: "Corniche", label: "Corniche" },
+    { value: "Al Bateen", label: "Al Bateen" },
+    { value: "Al Raha Beach", label: "Al Raha Beach" },
+    { value: "Danet", label: "Danet" },
+    { value: "Zayed City", label: "Zayed City" },
+    { value: "Al Maryah Island", label: "Al Maryah Island" },
+    { value: "Hamdan Street", label: "Hamdan Street" },
+    { value: "AlJurf", label: "AlJurf" },
+    { value: "Saadiyat Grove", label: "Saadiyat Grove" },
+    { value: "Al Zahiyah", label: "Al Zahiyah" },
+    { value: "Al Markaziya", label: "Al Markaziya" },
+    { value: "Al Ghadeer Village", label: "Al Ghadeer Village" },
+    { value: "Electra Street", label: "Electra Street" },
+    { value: "Al Mushrif", label: "Al Mushrif" },
+    { value: "Capital Centre", label: "Capital Centre" },
+    { value: "Masdar City", label: "Masdar City" },
+    { value: "Airport Road", label: "Airport Road" },
+    { value: "Khalifa City", label: "Khalifa City" },
+    { value: "Marina Island", label: "Marina Island" },
+    { value: "Al Mina", label: "Al Mina" },
+    { value: "Al Rawdah", label: "Al Rawdah" },
+    { value: "Al Maqtaа", label: "Al Maqtaа" },
+    { value: "Al Nahyan", label: "Al Nahyan" },
+    { value: "Ghantoot", label: "Ghantoot" },
+    { value: "Nurai Island", label: "Nurai Island" },
+    { value: "Abu Dhabi Gate City", label: "Abu Dhabi Gate City" },
+    { value: "Eastern Mangrove", label: "Eastern Mangrove" },
+    { value: "Hudayriyat Island", label: "Hudayriyat Island" },
+    { value: "Makers District", label: "Makers District" },
+    { value: "Yas Bay", label: "Yas Bay" },
+    { value: "Al Shamkha", label: "Al Shamkha" },
+    { value: "Al Gurm Resort", label: "Al Gurm Resort" },
+    { value: "Al Matar", label: "Al Matar" },
+    { value: "Musaffah", label: "Musaffah" },
+    { value: "Al Wahdah", label: "Al Wahdah" },
+    { value: "Zayed Sports City", label: "Zayed Sports City" },
+    { value: "Al Najda Street", label: "Al Najda Street" },
+    { value: "Rawdhat", label: "Rawdhat" },
+    { value: "Al Aman", label: "Al Aman" },
+    { value: "Al Qurm", label: "Al Qurm" },
+    { value: "Al Khubeirah", label: "Al Khubeirah" },
+    { value: "Al Kasir Island", label: "Al Kasir Island" },
+    { value: "Between Two Bridges", label: "Between Two Bridges" },
+    { value: "Ramhan Island", label: "Ramhan Island" },
+    { value: "Al Raha Gardens", label: "Al Raha Gardens" },
+    { value: "Mohammed Bin Zayed City", label: "Mohammed Bin Zayed City" },
+    { value: "Al Danah", label: "Al Danah" },
+    { value: "Wahat Al Zaweya", label: "Wahat Al Zaweya" },
+    { value: "Nareel Island", label: "Nareel Island" },
+    { value: "Grand Mosque District", label: "Grand Mosque District" },
+    { value: "Shakhbout City", label: "Shakhbout City" },
+    { value: "Lulu Island", label: "Lulu Island" },
+  
+  ],
+  "Dubai": [
+    { value: "Downtown", label: "Downtown" },
+    { value: "Business Bay", label: "Business Bay" },
+    { value: "Dubai Marina", label: "Dubai Marina" },
+    { value: "Palm Jumeirah", label: "Palm Jumeirah" },
+    { value: "Emaar Beachfront", label: "Emaar Beachfront" },
+    { value: "MBR City - Meydan", label: "MBR City - Meydan" },
+    { value: "Dubai Creek Harbour", label: "Dubai Creek Harbour" },
+    { value: "Dubai Hills Estate", label: "Dubai Hills Estate" },
+    { value: "Damac Hills", label: "Damac Hills" },
+    { value: "Damac Hills II ( Akoya )", label: "Damac Hills II ( Akoya )" },
+    { value: "Al Barsha", label: "Al Barsha" },
+    { value: "Al Furjan", label: "Al Furjan" },
+    { value: "Al Ghadeer", label: "Al Ghadeer" },
+    { value: "Al Habtoor City", label: "Al Habtoor City" },
+    { value: "Al Jaddaf", label: "Al Jaddaf" },
+    { value: "Al Marjan Island", label: "Al Marjan Island" },
+    { value: "Al Reem Island", label: "Al Reem Island" },
+    { value: "Al Safa", label: "Al Safa" },
+    { value: "Alreeman", label: "Alreeman" },
+    { value: "Arabian Ranches", label: "Arabian Ranches" },
+    { value: "Arjan - Dubailand", label: "Arjan - Dubailand" },
+    { value: "Bluewaters Island", label: "Bluewaters Island" },
+    { value: "City Walk", label: "City Walk" },
+    { value: "DHCC - Dubai Healthcare City", label: "DHCC - Dubai Healthcare City" },
+    { value: "DMC - Dubai Maritime City", label: "DMC - Dubai Maritime City" },
+    { value: "DSO - Dubai Silicon Oasis", label: "DSO - Dubai Silicon Oasis" },
+    { value: "Damac Lagoons", label: "Damac Lagoons" },
+    { value: "Dubai Design District (d3)", label: "Dubai Design District (d3)" },
+    { value: "Dubai Harbour", label: "Dubai Harbour" },
+    { value: "Dubai Islands", label: "Dubai Islands" },
+    { value: "Dubai Production City | IMPZ", label: "Dubai Production City | IMPZ" },
+    { value: "Dubai South", label: "Dubai South" },
+    { value: "Dubai Sports City", label: "Dubai Sports City" },
+    { value: "Dubai Studio City", label: "Dubai Studio City" },
+    { value: "Dubailand", label: "Dubailand" },
+    { value: "Emirate of Abu Dhabi", label: "Emirate of Abu Dhabi" },
+    { value: "Emirate of Ajman", label: "Emirate of Ajman" },
+    { value: "Emirate of Ras Al Khaimah", label: "Emirate of Ras Al Khaimah" },
+    { value: "Emirate of Sharjah", label: "Emirate of Sharjah" },
+    { value: "Hayat Island", label: "Hayat Island" },
+    { value: "JBR - Jumeirah Beach Residence", label: "JBR - Jumeirah Beach Residence" },
+    { value: "JLT - Jumeirah Lake Towers", label: "JLT - Jumeirah Lake Towers" },
+    { value: "JVC - Jumeirah Village Circle", label: "JVC - Jumeirah Village Circle" },
+    { value: "JVT - Jumeirah Village Triangle", label: "JVT - Jumeirah Village Triangle" },
+    { value: "Jebel Ali Village", label: "Jebel Ali Village" },
+    { value: "Jumeirah", label: "Jumeirah" },
+    { value: "Jumeirah Pearl", label: "Jumeirah Pearl" },
+    { value: "Liwan", label: "Liwan" },
+    { value: "Maryam Island", label: "Maryam Island" },
+    { value: "MJL - Madinat Jumeirah Living", label: "MJL - Madinat Jumeirah Living" },
+    { value: "Meadows", label: "Meadows" },
+    { value: "Motor City", label: "Motor City" },
+    { value: "Mudon", label: "Mudon" },
+    { value: "Nad Al Sheba", label: "Nad Al Sheba" },
+    { value: "Saadiyat Island", label: "Saadiyat Island" },
+    { value: "Sobha Hartland", label: "Sobha Hartland" },
+    { value: "Sobha Hartland 2", label: "Sobha Hartland 2" },
+    { value: "The Valley", label: "The Valley" },
+    { value: "Tilal Al Ghaf", label: "Tilal Al Ghaf" },
+    { value: "Town Square", label: "Town Square" },
+    { value: "World Islands", label: "World Islands" },
+    { value: "Yas Island", label: "Yas Island" },
+    { value: "Za'abeel", label: "Za'abeel" },
+    { value: "Zayed City", label: "Zayed City" }
+  ],  
+  "Sharjah": [
+    { value: "Sharjah", label: "Sharjah" },
+    { value: "Khor Fakkan", label: "Khor Fakkan" },
+    { value: "Kalba", label: "Kalba" },
+    { value: "Dibba Al-Hisn", label: "Dibba Al-Hisn" },
+    { value: "Al Dhaid", label: "Al Dhaid" },
+    { value: "Al Madam", label: "Al Madam" },
+    { value: "Al Bataeh", label: "Al Bataeh" },
+    { value: "Mleiha", label: "Mleiha" },
+    { value: "Nahwa", label: "Nahwa" },
+    { value: "Al Hamriyah", label: "Al Hamriyah" },
+    { value: "Wadi Shi", label: "Wadi Shi" },
+  ],
+  "Ajman": [
+    { value: "Ajman", label: "Ajman" },
+    { value: "Masfout", label: "Masfout" },
+    { value: "Manama", label: "Manama" },
+  ],
+  "Umm Al-Quwain": [
+    { value: "Umm Al Quwain", label: "Umm Al Quwain" },
+    { value: "Falaj Al Mualla", label: "Falaj Al Mualla" },
+  ],
+  "Ras Al Khaimah": [
+    { value: "Ras Al Khaimah", label: "Ras Al Khaimah" },
+    { value: "Al Rams", label: "Al Rams" },
+    { value: "Sha'am", label: "Sha'am" },
+    { value: "Digdaga", label: "Digdaga" },
+    { value: "Ghalilah", label: "Ghalilah" },
+    { value: "Khatt", label: "Khatt" },
+    { value: "Al Jeer", label: "Al Jeer" },
+    { value: "Adhen", label: "Adhen" },
+    { value: "Khor Khwair", label: "Khor Khwair" },
+    { value: "Al Qusaidat", label: "Al Qusaidat" },
+    { value: "Ghayl", label: "Ghayl" },
+    { value: "Al Hamraniyah", label: "Al Hamraniyah" },
+  ],
+  "Fujairah": [
+    { value: "Fujairah", label: "Fujairah" },
+    { value: "Dibba Al-Fujairah", label: "Dibba Al-Fujairah" },
+    { value: "Masafi", label: "Masafi" },
+    { value: "Mirbah", label: "Mirbah" },
+    { value: "Qidfa", label: "Qidfa" },
+    { value: "Al Badiyah", label: "Al Badiyah" },
+    { value: "Dadna", label: "Dadna" },
+  ],
+};

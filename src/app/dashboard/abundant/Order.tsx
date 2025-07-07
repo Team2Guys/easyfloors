@@ -105,8 +105,8 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
                         <p><strong>City:</strong> {selectedOrder?.city}</p>
                         <p><strong>Address:</strong> {selectedOrder?.address}</p>
                         <p><strong>Other Notes:</strong> {selectedOrder?.note}</p>
-                        <p><strong>Shippment Fee:</strong> {selectedOrder?.shipmentFee === 0 ? 'Free' : ` AED ${selectedOrder?.shipmentFee}`}</p>
-                        <p><strong>Total Amount:</strong> AED {selectedOrder?.totalPrice}</p>
+                        <p><strong>Shippment Fee:</strong> {selectedOrder?.shipmentFee === 0 ? 'Free' : <span className="font-currency text-18 font-normal"> {selectedOrder?.shipmentFee}</span>}</p>
+                        <p><strong>Total Amount:</strong> <span className="font-currency text-18 font-normal"></span> {selectedOrder?.totalPrice}</p>
                         {selectedOrder?.products.map((prod, index) => (
                            <div key={index} className='flex gap-2 justify-between items-center pe-3'>
                               <div className='flex gap-2'>

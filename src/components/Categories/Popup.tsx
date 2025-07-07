@@ -1,15 +1,13 @@
 
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CardData } from "types/type";
 import { IoMdClose } from "react-icons/io";
 import { categoryData, popupCards } from "data/data";
 
 function Popup() {
 
-  const [isExpanded, setIsExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -18,24 +16,6 @@ function Popup() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
-
-  const handleReadMoreClick = () => {
-    setIsExpanded((prev) => !prev);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-
-    handleResize();
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <>
@@ -60,7 +40,7 @@ function Popup() {
       </h1>
 
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 font-inter">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
           <div className="bg-white md:p-8 p-3 shadow-lg w-full max-w-3xl md:max-w-7xl max-h-full overflow-y-auto">
             <div className="flex justify-end items-center">
               <button
@@ -83,10 +63,10 @@ function Popup() {
                     {card.content.map((item, index) => (
                       <li
                         key={index}
-                        className="md:text-sm text-[10px] ml-3 py-0.5 font-light"
-                      >
-                        {item}
-                      </li>
+                        className="md:text-sm text-12 sm:ml-3 py-0.5 font-light"
+                      dangerouslySetInnerHTML={{ __html: item }}
+                      />
+                       
                     ))}
                   </ul>
                 </div>
@@ -95,23 +75,6 @@ function Popup() {
           </div>
         </div>
       )}
-
-      <div className="text-center text-base md:my-10 my-4">
-        <p className="text-center md:text-base text-sm font-normal font-inter">
-          {isExpanded || !isMobile
-            ? categoryData.description
-            : `${categoryData.description.substring(0, 150)}...`}
-          {isMobile && (
-            <button
-              onClick={handleReadMoreClick}
-              className="text-primary underline ml-2 font-semibold xs:font-medium"
-            >
-              {isExpanded ? "Read Less" : "Read More"}
-            </button>
-          )}
-        </p>
-      </div>
-
     </>
   )
 }

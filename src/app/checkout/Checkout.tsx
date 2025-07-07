@@ -13,12 +13,11 @@ import light_2Img from '../../../public/assets/icons/light-02-(traced).png'
 import deliveryImg from '../../../public/assets/icons/delivery-truck 2 (traced).png'
 import locationImg from '../../../public/assets/icons/location 1 (traced).png'
 import { CiDeliveryTruck } from "react-icons/ci";
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import { emirates } from "data/data";
+import { emirateCityMap, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
 import { getCart, getFreeSamplesCart } from "utils/indexedDB";
-import { paymentcard, UAEStates } from "data/cart";
+import { paymentcard } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
 import { INITIATE_PAYMENT } from "graphql/mutations";
@@ -26,6 +25,8 @@ import Input from "components/appointment/Input";
 import Select from "components/appointment/Select";
 import { Collapse } from "antd";
 import { checkoutValidationSchema } from "hooks/CheckoutValidaion";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import { formatAED } from "lib/helperFunctions";
 
 const Checkout = () => {
     const { Panel } = Collapse;
@@ -37,16 +38,47 @@ const Checkout = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedShipping, setSelectedShipping] = useState<string | null>(null);
     const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-
+    const [selectedEmirate, setSelectedEmirate] = useState("");
+    const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
+    const [isOtherCity, setIsOtherCity] = useState(false);
+const allItemsAreFreeSamples = mergedCart.every(item => item.isfreeSample === true);
     useEffect(() => {
-        const savedCity = localStorage.getItem('selectedCity') || '';
-        if (savedCity) {
-            const city = savedCity.replaceAll('"', "");
-            setSelectedCity(city);
-        } else {
-            setSelectedCity('');
-        }
-    }, [])
+   const cities = emirateCityMap[selectedEmirate] || [];
+    const sortedCities = [...cities].sort((a, b) => a.label.localeCompare(b.label));
+    sortedCities.push({ value: "Other", label: "Other" });
+    setCityOptions(sortedCities);
+  }, [selectedEmirate]);
+
+useEffect(() => {
+  const savedEmirate = localStorage.getItem('selectedEmirate');
+  if (savedEmirate) {
+    setSelectedEmirate(savedEmirate.replaceAll('"', ""));
+  }
+}, []);
+useEffect(() => {
+  if (shipping) {
+    localStorage.setItem('shipping', JSON.stringify(shipping));
+    localStorage.setItem('selectedShipping', JSON.stringify(selectedShipping));
+}
+}, [shipping]);
+useEffect(() => {
+  if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
+    setSelectedShipping('standard');
+    handleShippingSelect('standard');
+  }
+}, [selectedEmirate]);
+  useEffect(() => {
+    const savedShipping = localStorage.getItem('shipping');
+    if (savedShipping) {
+      const parsedShipping = JSON.parse(savedShipping);
+      handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
+    }
+  }, []);
+  useEffect(() => {
+  if (selectedEmirate) {
+    localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
+  }
+}, [selectedEmirate]);
 
     useEffect(() => {
         const savedShipping = localStorage.getItem('shipping');
@@ -114,53 +146,35 @@ const Checkout = () => {
         fetchCartItems();
     }, []);
 
-    const handleShippingSelect = (type: string) => {
-        if (selectedCity) {
-            let fee = 150;
-            if (type === 'standard' || type === 'self-collect') {
-                fee = 0;
-            } else {
-                fee = subTotal > 1000 ? 0 : 150;
-            }
-            setSelectedFee(fee);
+  const handleShippingSelect = (type: string) => {
+    setSelectedShipping(type);
 
-            const totalBeforeTax = subTotal + fee;
-            const taxAmount = totalBeforeTax * 0.05;
-            setTotal(totalBeforeTax + taxAmount);
-        }
-        setSelectedShipping(type);
-    };
+    let fee = 0;
+    if (type === 'express') {
+      fee = selectedEmirate === 'Dubai' ? (subTotal > 1000 ? 0 : 150) : (subTotal > 1000 ? 0 : 150);
+    } else if (type === 'standard') {
+      fee = 0;
+    } else if (type === 'self-collect') {
+      setSelectedEmirate('Dubai');
+      localStorage.setItem('selectedEmirate', JSON.stringify('Dubai'));
+      fee = 0;
+    }
 
-    useEffect(() => {
-        if (!selectedCity) return;
+    setSelectedFee(fee);
+    setTotal(subTotal + fee);
+  };
 
-        let fee = 150;
-        if (selectedShipping === 'standard' || selectedShipping === 'self-collect') {
-            fee = 0;
-        } else {
-            fee = subTotal > 1000 ? 0 : 150;
-        }
-
-        setSelectedFee(fee);
-
-        const totalBeforeTax = subTotal + fee;
-        const taxAmount = totalBeforeTax * 0.05;
-        setTotal(totalBeforeTax + taxAmount);
-    }, [selectedCity, selectedShipping, subTotal]);
-
-    useEffect(() => {
-        let shippingData;
-
-        if (selectedShipping === "standard") {
-            shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
-        } else if (selectedShipping === "express") {
-            shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
-        } else if (selectedShipping === "self-collect") {
-            shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
-        }
-
-        setShipping(shippingData);
-    }, [selectedShipping]);
+  useEffect(() => {
+    let shippingData;
+    if (selectedShipping === "standard") {
+      shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
+    } else if (selectedShipping === "express") {
+      shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
+    } else if (selectedShipping === "self-collect") {
+      shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
+    }
+    setShipping(shippingData);
+  }, [selectedShipping]);
 
 
     return (
@@ -185,6 +199,7 @@ const Checkout = () => {
                     address: "",
                     note: "",
                     terms: false,
+                    otherCity: "",
                 }}
                 validationSchema={checkoutValidationSchema}
                 validateOnMount
@@ -193,7 +208,7 @@ const Checkout = () => {
                     try {
                         const { terms, ...withoutTerm } = values; //eslint-disable-line
                         // const shippingOption = { name:  } 
-                        const NewValues = { ...withoutTerm, city: selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
+                        const NewValues = { ...withoutTerm, city: isOtherCity ? values.otherCity : selectedCity, shipmentFee: selectedFee, totalPrice: total, products: mergedCart, shippingMethod: shipping }
 
                         handlePayment(NewValues);
                         setSubmitting(true);
@@ -222,7 +237,10 @@ const Checkout = () => {
                                         onChange={handleChange}
                                     />
                                     {/* <ErrorMessage name="firstName" component="div" className="text-red-500 text-sm" /> */}
-                                    <Input type="text" label="Last Name" required name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
+                                    <div className="flex flex-col mb-1">
+                                    <label htmlFor="Last Name" className="text-13 font-medium font-inter mb-1">Last Name</label>
+                                    <input type="text" className="p-2 border border-gray-300 h-11 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary w-full placeholder:text-13 placeholder:font-light placeholder:text-[#828282]"  name="lastName" placeholder="Enter Last name" value={values.lastName} onChange={handleChange} />
+                                    </div>
                                 </div>
 
 
@@ -237,6 +255,7 @@ const Checkout = () => {
                                         name="phone"
                                         placeholder="Type Your Phone No"
                                         value={values.phone}
+                                        className="ring-0 !outline-none"
                                         onChange={(value) => setFieldValue("phone", value)}
                                     />
                                     <ErrorMessage name="phone" component="div" className="text-red-500 text-sm" />
@@ -247,10 +266,35 @@ const Checkout = () => {
 
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                    <Select name="emirate" label="Emirate" required placeholder="Select Emirate" options={emirates} />
-                                    <Select name="city" label="City" required placeholder="Select City" options={UAEStates}  />
+                                <Select
+                                    name="emirate"
+                                    label="Emirate"
+                                    options={emirates}
+                                    placeholder="Select Emirate"
+                                    initialValue={selectedEmirate}
+                                    onChange={(val) => setSelectedEmirate(val)}
+                                />
+                                <Select
+                                name="city"
+                                label="City"
+                                options={cityOptions}
+                                placeholder="Select City"
+                                onChange={(value) => {
+                                    setFieldValue("city", value);
+                                    setSelectedCity(value);
+                                    setIsOtherCity(value === "Other");
+                                }}
+                                />
                                 </div>
-
+                                {isOtherCity && (
+                                    <Input
+                                        name="otherCity"
+                                        label="Add City"
+                                        placeholder="Enter Your City"
+                                        value={values.otherCity}
+                                        onChange={handleChange}
+                                    />
+                                    )}
 
                                 <Input type="text" label="Address" required name="address" placeholder="Enter Address" value={values.address} onChange={handleChange} />
                                 <Input type="text" label="Additional Information" name="note" placeholder="Apartment, Suite, etc." value={values.note} onChange={handleChange} />
@@ -313,64 +357,52 @@ const Checkout = () => {
                                     {mergedCart.length > 0 ? mergedCart.map((item, index) => (
                                         <div key={index} className="flex items-center border-b pb-4">
                                             <div className="p-1 bg-white border rounded-md">
-                                                <Image src={item.image || ''} alt={item.name} width={80} height={80} />
+                                                <Image src={item.matchedProductImages?.imageUrl ?? item.image ?? ""} alt={item.name} width={80} height={80} />
                                             </div>
                                             <div className="ml-4">
                                             <p className="font-bold text-13 xs:text-16">{item.name}</p>
                                             {item.isfreeSample ? "":
                                             <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>    
                                             }
+                                            {item?.selectedColor?.colorName &&
+                                            <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>
+                                            }
                                             </div>
-                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16">AED {item.totalPrice.toFixed(2)}</p>
+                                            <p className="ml-auto font-medium text-nowrap text-13 xs:text-16"><span className="font-currency font-normal text-20"></span> {formatAED(item.totalPrice)}</p>
                                         </div>
                                     )) : <p>Cart is Empty</p>}
                                 </div>
                             </div>
                             <div className="px-2 xs:px-4 sm:px-8 pb-10 border-t-2">
                                 <div className="space-y-2 py-4">
-                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black">AED {subTotal.toFixed(2)}</span></p>
-                                    <p className="text-gray-600 flex justify-between">
-                                        <span className="flex items-center gap-2">
-                                            Shipping <CiDeliveryTruck size={16} className="mt-1" />
-                                        </span>
-                                        <span className="text-black">
-                                            {!selectedCity ? 'Select shipping city' : selectedFee > 0 ? `AED ${selectedFee}` : 'Free'}
-                                        </span>
-                                    </p>
-                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span>AED {selectedCity ? total.toFixed(2) : subTotal.toFixed(2)}</span></p>
-                                </div>
-                                <div className="pb-10 border-t-2 pt-4">
-                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
-                                        {isSubmitting ? "Processing..." : "Pay Now"}
-                                    </button>
-                                </div>
-                                <div className="flex justify-center items-center gap-2 mt-4">
-                                    <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
-                                    <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
-                                </div>
-                                <div className="border-b">
+                                    <p className="text-gray-600 flex justify-between">Subtotal <span className="text-black"><span className="font-currency text-20 font-normal"></span> {formatAED(subTotal)}</span></p>
+                                    
+                                    <div className="border-b">
 
-                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <AiOutlineMinus size={18} /> : <AiOutlinePlus size={18} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
+                                    <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown  size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
                                         <Panel
                                             header={<span className="text-slate-500">Shipping Options</span>}
                                             key="1"
                                             className="!border-b-0"
                                         >
+                                            {selectedEmirate === "Dubai" && !allItemsAreFreeSamples && (
                                             <div
-                                                className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"
-                                                    }`}
+                                                className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "express" ? "border-primary" : "border-transparent"}`}
                                                 onClick={() => handleShippingSelect("express")}
                                             >
                                                 <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
-                                                    <strong className="text-15 xs:text-20">Express Shipping:</strong>
-                                                    <p className="text-11 xs:text-16">delivery <strong>Next day</strong></p>
+                                                    <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
+                                                    <p className="text-11 xs:text-16">delivery <strong>Next working day (cut-off time 1pm)</strong></p>
                                                     <p className="text-11 xs:text-16">
-                                                        <span>Delivery Cost:</span> <strong>AED 150</strong>, <span>Free shipping for all orders above <strong>AED 1000</strong></span>
+                                                        <span>Delivery Cost:</span> {subTotal > 1000 ? 
+                                                            <strong>Free (Order over 1000 <span className="font-currency text-18 font-normal"></span>)</strong> : 
+                                                            <><strong><span className="font-currency text-18 font-normal"></span> 150</strong>, <span>Free shipping for all orders above <strong><span className="font-currency text-18 font-normal"></span> 1000</strong></span></>
+                                                        }
                                                     </p>
                                                 </div>
                                             </div>
-
+                                            )}
                                             <div
                                                 className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${selectedShipping === "standard" ? "border-primary" : "border-transparent"
                                                     }`}
@@ -378,7 +410,7 @@ const Checkout = () => {
                                             >
                                                 <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
-                                                    <strong className="text-15 xs:text-20">Standard Shipping:</strong>
+                                                    <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
                                                     <p className="text-11 xs:text-16">Receive within <strong>3-4 working days</strong></p>
                                                     <p className="text-11 xs:text-16">
                                                         <span>Delivery Cost:</span> <strong>Free</strong>
@@ -410,28 +442,59 @@ const Checkout = () => {
                                                 <Image src={light_2Img} alt="icon" className="size-12 xs:size-16" />
                                                 <div>
                                                     <strong className="text-15 xs:text-20">Installation Information:</strong>
-                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is AED 25 per metre square, and for herringbone is AED 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
+                                                    <p className="text-11 xs:text-16">Installation charge for straight planks is <span className="font-currency text-18 font-normal"></span> 25 per metre square, and for herringbone is <span className="font-currency text-18 font-normal"></span> 35 per metre square. We&apos;re based in Dubai, so just a heads-up—other locations in Emirates may have additional charges.
                                                     </p>
-                                                    <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/measurement-appointment ">Book Free Installation Appointment</Link>
+                                                    <Link target="_blank" rel="noopener noreferrer" className=" hover:text-primary underline text-primary font-bold" href="/help-with-installations">Book Installation Appointment</Link>
                                                 </div>
                                             </div>
                                         </Panel>
 
                                         <Panel header={<span className="text-slate-500">Return Policy</span>} key="5">
-                                            <p className="text-gray-500">
-                                                This is our example return policy which is everything you need to know about our returns.
-                                            </p>
+                                        <p className="text-gray-500">
+                                        We offer 7-day hassle-free returns on all unused, sealed items in their original packaging. If you change your mind or receive a defective product, we’re here to help. <Link className="font-semibold text-red-500 hover:text-red-500 hover:underline underline" href="/return-and-refund-policy">Learn more</Link> 
+                                        </p>
                                         </Panel>
                                     </Collapse>
+                                    </div>
+
+                                    <p className="text-gray-600 flex justify-between">
+                                        <span className="flex items-center gap-2">
+                                            Shipping <CiDeliveryTruck size={16} className="mt-1" />
+                                        </span>
+                                        <span className="text-black">
+                                            {!selectedCity 
+                                                ? 'Select shipping city' 
+                                                : selectedShipping === 'express' 
+                                                    ? subTotal > 1000 
+                                                        ? 'Free' 
+                                                        : <span className="font-currency font-normal text-18"> {selectedFee}</span>
+                                                    : 'Free'
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedEmirate ? formatAED(total) : formatAED(subTotal)}</span></p>
                                 </div>
+                                <div className="pb-10 border-t-2 pt-4">
+                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting} >
+                                        {isSubmitting ? "Processing..." : "Pay Now"}
+                                    </button>
+                                </div>
+                                <div className="flex justify-center items-center gap-2 mt-4">
+                                    <Image src={secureImg} alt="secure img" className="w-4 xs:w-7 h-5 xs:h-8" />
+                                    <p className="text-13 xs:text-15 sm:text-17">Secure shopping with SSL data encryption</p>
+                                </div>
+                              
+                                {
+                                    subTotal > 0 &&
                                 <div className="mt-4">
-                                    <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
-                                    <div className="flex gap-2 my-4 mx-auto w-full max-w-xl">
+                                    <h3 className="text-20 xs:text-24 font-medium text-center">Buy Now, Pay Later</h3>
+                                    <div className="flex gap-2 my-4 mx-auto w-full 2xl:max-w-3xl">
                                         <PaymentMethod installments={(subTotal + (selectedFee || 0)) / 4} />
                                     </div>
                                 </div>
+                                }
                                 <div className="mx-auto w-full max-w-xl mt-2">
-                                    <h3 className="text-20 xs:text-24 font-medium">Buy Now, Pay Later</h3>
+                                <h3 className="text-18 xs:text-20 text-center font-medium">Guaranteed Safe Checkout</h3>
                                     <div className="flex justify-between flex-wrap gap-5 pt-3">
                                         {
                                             paymentcard.map((array, index) => (
