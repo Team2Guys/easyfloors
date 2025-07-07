@@ -187,7 +187,7 @@ mutation Add_Accessories($input: CreateAccessoryInput!) {
 }
 
 `
-;
+  ;
 
 export const CREATE_APPOINTMENT = gql`
 mutation Created_appointments($input: CreateAppointmentInput!) {
@@ -281,19 +281,33 @@ mutation CreateSalesProduct($createSalesProductInput: CreateOrderInput!) {
 
 
 
-export  const POST_PAYMENT_STATUS = gql`
+
+export const INITIATE_FREE_SAMPLE = gql`
+mutation freeSample($createFreesample: CreateOrderInput!) {
+  freeSample(createFreesample: $createFreesample) {
+    paymentKey
+  }
+}`
+
+
+
+export const POST_PAYMENT_STATUS = gql`
 mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
   postpaymentStatus(postpaymentStatus: $postpaymentStatus) {
-      products {
-        name
-        price
-        image
-        boxCoverage
-        totalPrice
-        pricePerBox
-        squareMeter
-        requiredBoxes
-    }
+     products {
+            id
+            name
+            price
+            stock
+            image
+            requiredBoxes
+            squareMeter
+            totalPrice
+            boxCoverage
+            category
+            subcategories
+            pricePerBox
+        }
     email
     lastName
     firstName

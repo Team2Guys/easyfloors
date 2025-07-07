@@ -9,17 +9,24 @@ import { POST_PAYMENT_STATUS } from "graphql/mutations";
 import OrderSummary from "./OrderSummary";
 import CardSkeleton from "components/skaletons/card-skaleton";
 import Image from "next/image";
+import revalidateTag from "components/ServerActons/ServerAction";
 const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extractedParams }) => {
     const hasRun = useRef(false);
     const [postPaymentStatus, { data, loading, error }] = useMutation(POST_PAYMENT_STATUS);
 
 
     useEffect(() => {
-        if (!hasRun.current && extractedParams.success) {
+        if ((!hasRun.current) && extractedParams.success) {
+             console.log(data, "data", extractedParams.success)
             postPaymentStatus({ variables: { postpaymentStatus: extractedParams } });
             hasRun.current = true;
+            revalidateTag("orders")
+            revalidateTag("products")
         }
     }, []);
+
+   
+      console.log(data, "data", extractedParams.success, !(hasRun.current))
 
 return (
 

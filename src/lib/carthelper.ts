@@ -65,6 +65,7 @@ export const handleAddToStorage = async (
     selectedColor,
     matchedProductImages,
     isfreeSample: type === 'freeSample' || false,
+    custom_url: productData.custom_url
   };
 
   try {
@@ -88,6 +89,7 @@ export const handleAddToStorage = async (
       return;
       
     } 
+    
     else if (type === 'cartfreeSample') {
       const existingSamples = await getFreeSamplesCart();
 
@@ -105,7 +107,11 @@ export const handleAddToStorage = async (
       return;
     }
     else if (type === 'wishlist') {
-      await addToWishlist(item);
+  const added = await addToWishlist(item);
+
+      if (!added) {
+        toast.info('Product is already in your wishlist.');
+      }
       return;
     }
   } catch  {

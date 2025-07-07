@@ -47,6 +47,9 @@ const FormLayout = ({
       price: editCategory.price || "",
       sizes: editCategory.sizes || [],
       whatIamEndpoint: editCategory.whatIamEndpoint || "",
+      whatAmiCanonical_Tag: editCategory.whatAmiCanonical_Tag || "",
+      whatAmiMeta_Description: editCategory.whatAmiMeta_Description || "",
+      whatAmiMeta_Title: editCategory.whatAmiMeta_Title || "",
 
     } as ISUBCATEGORY_EDIT
     : undefined;
@@ -632,7 +635,7 @@ const FormLayout = ({
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                      What am I Endpoint
+                          What am I Endpoint
                         </label>
 
                         <Field
@@ -855,6 +858,7 @@ const FormLayout = ({
                           </div>
                         </div>
                       </div>
+
                       <div className="flex gap-4 mt-4">
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -902,7 +906,72 @@ const FormLayout = ({
                         {formik.touched.Meta_Description && formik.errors.Meta_Description && (
                           <div className="text-red text-sm">{formik.errors.Meta_Description as string}</div>
                         )}
+
+
+
                       </div>
+
+
+
+
+                      <div className="flex gap-4 mt-4">
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                       whatAmiMeta_Title
+                          </label>
+                          <Field
+                            type="text"
+                            name="whatAmiMeta_Title"
+                            placeholder="whatAmiMeta_Title"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
+                              }`}
+                          />
+                          {formik.touched.whatAmiMeta_Title && formik.errors.whatAmiMeta_Title && (
+                            <div className="text-red text-sm">{formik.errors.whatAmiMeta_Title as string}</div>
+                          )}
+                        </div>
+                        <div className="w-2/4">
+                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        whatAmiCanonical_Tag
+                          </label>
+                          <Field
+                            type="text"
+                            name="whatAmiCanonical_Tag"
+                            placeholder="Canonical Tag"
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
+                              }`}
+                          />
+                          {formik.touched.whatAmiCanonical_Tag && formik.errors.whatAmiCanonical_Tag && (
+                            <div className="text-red text-sm">{formik.errors.whatAmiCanonical_Tag as string}</div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="mt-4">
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                whatAmiMeta_Description
+                        </label>
+                        <Field
+                          as="textarea"
+                          name="whatAmiMeta_Description"
+                          placeholder="Meta Description"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
+                            }`}
+                        />
+                        {formik.touched.whatAmiMeta_Description && formik.errors.whatAmiMeta_Description && (
+                          <div className="text-red text-sm">{formik.errors.whatAmiMeta_Description as string}</div>
+                        )}
+
+
+
+                      </div>
+
+
+
+
+
+
+
 
                       <div className="flex gap-4 mt-2">
                         <div className="w-full">

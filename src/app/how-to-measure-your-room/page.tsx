@@ -15,9 +15,10 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+    type:'website'
   },
   alternates: {
-    canonical: '/how-to-measure-your-room',
+    canonical: 'https://easyfloors.ae/how-to-measure-your-room',
   },
 };
 const MeasureRoom = () => {

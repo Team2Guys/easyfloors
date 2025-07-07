@@ -6,7 +6,7 @@ import { measurementData } from "data/data";
 const RoomMeasurement: React.FC = () => {
   return (
     <div className="container mx-auto p-6  font-inter">
-      <h2 className="text-center md:text-3xl text-xl font-bold">How to Measure Your Room & Calculate Flooring Quantity        </h2>
+      <h1 className="text-center md:text-3xl text-xl font-bold">How to Measure Your Room & Calculate Flooring Quantity</h1>
       <h2 className="md:text-xl text-lg font-bold md:mt-10 mt-4 mb-4">{measurementData[0].title}</h2>
       <p className="mb-4" dangerouslySetInnerHTML={{ __html: measurementData[0].description || '' }} />
 

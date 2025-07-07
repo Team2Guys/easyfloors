@@ -35,12 +35,12 @@ const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
     }
   }, []);
   return (
-    <div className="flex justify-between text-16 lg:text-20">
+    <div className="flex justify-between text-16 lg:text-20 items-center">
       <p>Select Emirate</p>
       <div className="relative"> {/* Added relative positioning here */}
         <div className="w-full font-inter" ref={dropdownRef}>
           <div
-            className="border bg-white 2xl:px-5 2xl:py-3 px-2 py-2 cursor-pointer flex justify-between items-center text-12 xl:text-15 w-52"
+            className="border bg-white 2xl:px-5 2xl:py-3 px-2 py-2 cursor-pointer flex justify-between items-center text-12 xl:text-15 h-9 w-52"
             onClick={() => setIsOpen(!isOpen)}
           >
             {selectedState}

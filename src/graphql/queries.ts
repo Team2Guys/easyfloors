@@ -58,6 +58,8 @@ export const FETCH_ALL_PRODUCTS = gql`
     }
   }
 `;
+
+
 export const FETCH_HEADER_PRODUCTS = gql`
   query Products {
     products {
@@ -202,6 +204,9 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       price
       sizes
       whatIamEndpoint
+        whatAmiMeta_Title
+        whatAmiCanonical_Tag
+        whatAmiMeta_Description
       products {
         id
         name
@@ -231,6 +236,22 @@ export const FETCH_ALL_WHAT_AM_I = gql`
       whatAmiImageBanner
       homePageImage
       whatIamEndpoint    
+    }
+  }
+`;
+
+export const FETCH_ALL_WHAT_AM_I_META_TAGS = gql`
+  query SubCategories {
+    subCategories {
+ whatIamEndpoint    
+   id
+      name
+      
+  whatAmiMeta_Title
+        whatAmiCanonical_Tag
+        whatAmiMeta_Description
+            posterImageUrl
+            custom_url
     }
   }
 `;
@@ -298,6 +319,48 @@ query AllOrders {
         }
     }
 }
+`
+export const FETCH_ALL_FREE_SAMPLE_ORDERS = gql`
+query AllOrdersFree {
+  AllOrdersFree {
+        firstName
+        lastName
+        email
+        country
+        city
+        address
+        note
+        phone
+        emirate
+        orderId
+        transactionDate
+        shipmentFee
+        totalPrice
+        checkout
+        paymentStatus
+        isRefund
+        success
+        pending
+        currency
+        is3DSecure
+        checkoutDate
+        shippingMethod
+        products {
+            id
+            name
+            price
+            stock
+            image
+            subcategories
+            category
+            boxCoverage
+            totalPrice
+            pricePerBox
+            squareMeter
+            requiredBoxes
+        }
+    }
+  }
 `
 
 export const GET_ORDER_HISTORY = gql`

@@ -28,12 +28,12 @@ const Categories: React.FC<Props> = ({ card, index }) => {
         />
 
         <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70">
-          <h2 className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+          <p className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
             I Am
-          </h2>
-          <p className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
-            {card.name}
           </p>
+          <h3 className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
+            {card.name}
+          </h3>
           <div className="md:mt-3">
             <Link
               href={`what-am-i?flooring=${card.whatIamEndpoint}`}
@@ -43,7 +43,7 @@ const Categories: React.FC<Props> = ({ card, index }) => {
             </Link>
           </div>
           {featureObj && (
-            <div className="absolute md:bottom-0 hidden sm:block right-1/2 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-0 transition-opacity duration-300 group-hover:opacity-100 translate-x-1/2 w-fit whitespace-nowrap">
+            <div className="absolute md:bottom-0 block right-1/2 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-100 xsm:opacity-0 transition-opacity duration-300 group-hover:opacity-100 translate-x-1/2 w-fit whitespace-nowrap">
               <ul className="list-disc pl-5 text-left">
                 {featureObj.features.map((feature, i) => (
                   <li className="text-[8px] md:text-sm lg:text-11 xl:text-sm" key={i}>

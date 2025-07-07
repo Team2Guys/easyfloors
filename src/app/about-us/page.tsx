@@ -16,11 +16,14 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+          type:'website'
+
   },
   alternates: {
-    canonical: '/about-us',
+    canonical: 'https://easyfloors.ae/about-us',
   },
 };
+
 const AboutUs = () => {
   return (
     <>
@@ -30,7 +33,7 @@ const AboutUs = () => {
           <AboutUsInfo sections={alternatingData} />
         </div>
         <div>
-          <VideoComponent videoUrl="assets/images/aboutus/aboutus.mp4" />
+          <VideoComponent videoUrl="https://bncmain.s3.eu-north-1.amazonaws.com/1747803062851-s3" />
           <SampleGrid sections={sampleGridData} />
         </div>
       </Container>
@@ -39,4 +42,5 @@ const AboutUs = () => {
 };
 
 export default AboutUs;
+
 

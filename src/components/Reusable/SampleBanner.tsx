@@ -9,18 +9,18 @@ const SampleBanner = () => {
     <Container>
       <div className='border-t-[#00000033] border-t-[1px] sm:hidden'></div>
       <div className='h-auto w-full mt-7 xl:mt-14'>
-        <div className='flex justify-center items-center '>
+        <div className='w-full h-auto mx-auto max-w-[200px] max-h-[189px]
+             lg:max-w-[500px] lg:max-h-[472px]
+             xl:max-w-[610px] xl:max-h-[576px]
+             2xl:max-w-[676px] 2xl:max-h-[638px]'
+        >
           <Image
             src={bannerImage}
             alt='Free Sample'
             priority
-            width={676}
-            height={638}
+            fill
             quality={85}
-            className='w-full h-auto max-w-[200px] max-h-[189px]
-             lg:max-w-[500px] lg:max-h-[472px]
-             xl:max-w-[610px] xl:max-h-[576px]
-             2xl:max-w-[676px] 2xl:max-h-[638px] object-contain '
+            className='!relative'
           />
         </div>
         <div className='flex border-b-[#00000033] border-b-[1px] justify-between w-full items-center mt-5 sm:border-b-2 relative'>
@@ -34,7 +34,7 @@ const SampleBanner = () => {
             />
           </div>
           <div className='h-auto absolute bg-white right-0 bottom-[0.5px]'>
-            <p className='text-14 text-end font-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</p>
+            <h2 className='text-14 text-end font-inter 2xl:text-4xl font-medium lg:text-2xl md:pr-7 md:text-lg pr-2 sm:text-base xl:text-3xl'>Free Samples UAE Wide</h2>
           </div>
         </div>
       </div>

@@ -15,7 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<IParams> })
 
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
-  const protocol = headersList.get('x-forwarded-proto') || 'https';
+const protoHeader = headersList.get('x-forwarded-proto');
+const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
 
   const fullUrl = `${protocol}://${domain}${pathname}`;
@@ -48,6 +49,8 @@ export async function generateMetadata({ params }: { params: Promise<IParams> })
       description: description,
       url: url,
       images: NewImage,
+            type:'website'
+
     },
     alternates: {
       canonical:
@@ -63,8 +66,10 @@ const Product = async ({ params }: { params: Promise<IParams> }) => {
   const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
   if (!productData) return notFound()
 
+   const products = ProductInfo.filter((product: IProduct) => (product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
+
   return (
-    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={ProductInfo} productData={productData} />
+    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={products} productData={productData} />
   );
 };
 

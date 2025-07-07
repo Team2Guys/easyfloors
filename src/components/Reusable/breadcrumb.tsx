@@ -91,7 +91,7 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImage
           />
        {!isImagetext && (
             <div className="absolute inset-0 flex justify-center items-center text-white text-center">
-              <h1 className="text-25 md:text-[42.6px] font-bold">{title}</h1>
+              <p className="text-25 md:text-[42.6px] font-bold">{title}</p>
             </div>
           )}
         </div>

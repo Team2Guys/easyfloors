@@ -43,7 +43,7 @@ export const initialValues = {
 export const validationSchema = Yup.object({
   firstname: Yup.string().required("Name is required"),
   phoneNumber: Yup.string().required("Phone number is required"),
-  whatsappNumber: Yup.string().required("WhatsApp number is required"),
+  // whatsappNumber: Yup.string().required("WhatsApp number is required"),
   email: Yup.string()
     .email("Invalid email")
     .required("Email is required"),
@@ -92,7 +92,7 @@ export const subcategoryInitialValues: ISUBCATEGORY_EDIT = {
   Heading: "",
   recalledByCategories: [],
   recalledSubCats: [],
-  whatIamEndpoint:""
+  whatIamEndpoint: ""
 };
 export interface IProductValues {
   id?: number;
@@ -270,7 +270,7 @@ export const heroItems: HeroItem[] = [
     offerText: "Limited Time Offer",
     highlight: "",
     description:
-      "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (2 to 3 days) delivery options.",
+      "We offer premium-quality flooring solutions at factory-direct prices, with express (1 working day) and standard (3-4 days) delivery options.",
     buttonText: "EXPLORE PRODUCTS",
     buttonLink: "/collections",
     flooringType: "SPC Eco • American Walnut",
@@ -285,7 +285,7 @@ export const featureItems = [
       "Order up to 5 free samples delivered anywhere in the UAE so you can see and feel the quality before you buy.",
     icon: "/assets/images/Home/freee.png",
     buttonText: "Learn More",
-    buttonLink:"/free-sample"
+    buttonLink: "/free-sample"
   },
   {
     title: "Easy payment",
@@ -293,15 +293,15 @@ export const featureItems = [
       "With Tabby or Tamara, split your payment into four easy installments — no hassle, no hidden fees.",
     icon: "/assets/images/Home/card.png",
     buttonText: "Learn More",
-    buttonLink:"/easy-payment"
+    buttonLink: "/easy-payment"
   },
   {
     title: "Delivery",
     description:
-      "Choose Express for a small fee for next-day delivery, or enjoy standard delivery in just 3-4 days anywhere in the UAE.",
+      "Choose Express for a small fee for next-day delivery, or enjoy standard delivery in just 2-3 days anywhere in the UAE.",
     icon: "/assets/images/Home/truck.png",
     buttonText: "Learn More",
-    buttonLink:"/shipping-policy"
+    buttonLink: "/shipping-policy"
   },
   {
     title: "Factory Prices",
@@ -360,7 +360,7 @@ export const blocksData = [
     heading: 'SPC Flooring',
     points: [
       'UV layer that protects against fading and surface wear.',
-      'Wear a layer that is transparent and highly resistant to damage.',
+      'Wear layer that is transparent and highly resistant to damage.',
       'A click-lock system is integrated into its installation structure.',
       'Decorative layer with high-resolution wood or stone designs.',
       'The core layer is made from rigid stone polymer composite material.',
@@ -377,7 +377,7 @@ export const blocksData = [
       'Authentic printed decor layer that mimics natural textures.',
       'Middle stability layer that provides flexibility and structure.',
       'Bottom vinyl layer that enhances resilience and overall strength.',
-      'A click-lock system uses glue-down or floating installation methods. ',
+      'The click-lock system uses floating installation method. ',
     ],
     imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291706/layers2_11zon_zatjqm.webp',
   },
@@ -389,77 +389,83 @@ export const FloorItemsData = [
 ];
 
 
-export const categoriesFeatures:CategoryFeatures[] = [
+export const categoriesFeatures: CategoryFeatures[] = [
   {
     name: "Richmond SPC Eco",
     features: [
-      "Easy to maintain",
-      "Great wood-look finish",
-      "Perfect for DIY installs",
-      "VOC-free and safe"
+      "Hottest selling collection",
+      "⁠Ideal for large projects",
+      "Most affordable",
+      "Scratch/water resistant",
+      "1220 x 183 x 4mm"
     ],
   },
   {
     name: "Richmond LVT Comfort",
     features: [
-      "UV-protected top layer",
-      "Kid-friendly flooring",
-      "Great for high-traffic zones",
-      "Long-lasting colour retention"
+      "Affordable luxury",
+      "⁠Free underlay with all Polar",
+      "⁠5 year residential warranty",
+      "Water resistant",
+      "640 x 128 x 4mm"
     ],
   },
   {
     name: "Richmond LVT Luxury",
     features: [
-      "Real-wood proportions",
-      "Thick & durable",
-      "Perfect for open-plan spaces",
-      "Flexible for stair installation"
+      "Affordable collection",
+      "⁠Perfect for kitchen and kids areas",
+      "⁠Natural wood finishes",
+      "⁠Free underlay with all Polar",
+      "1220 x 180 x 4mm"
     ],
   },
   {
     name: "Richmond SPC Prime",
     features: [
-      "Wider plank coverage",
-      "5-layer acoustic construction",
-      "Pre-attached comfort underlay",
-      "Reduced footstep sound"
+      "IXPE attached underlay",
+      "⁠Click system",
+      "⁠No gaps installation",
+      "⁠1220 x 183 x 4mm"
     ],
   },
   {
     name: "Richmond SPC Herringbone",
     features: [
-      "Elegant layout pattern",
-      "Water-resistant for wet zones",
-      "Seamless interlocking fit",
-      "Rich, textured finish"
+      "Oversize planks like real wood",
+      "Click system for easy-fitting",
+      "Long lasting, easy maintanence",
+      "Water resistant",
+      "1220 x 228 x 6.5mm"
     ],
   },
   {
     name: "Polar SPC Herringbone",
     features: [
-      "Budget-friendly option",
-      "Free 1mm/2mm foam underlay",
-      "Great alternative to straight planks",
-      "2-year commercial warranty"
+      "IXPE underlay",
+      "15 year residential warranty",
+      "Scratch resistant",
+      "640 x 128mm planks",
+      "5.5mm thickness"
     ],
   },
   {
     name: "Polar LVT",
     features: [
-      "Cushioned impact feel",
-      "Ideal for kitchens & living areas",
-      "User-friendly returns policy",
-      "Excellent for light commercial use"
+      "Water-resistant",
+      "Cushioned feel",
+      "15 year residential warranty",
+      "Slip resistant1220 X 180mm x 5mm thick"
     ],
   },
   {
     name: "Polar SPC",
     features: [
-      "Easy clean surface",
-      "Click lock holds tight",
-      "No shrinking/expansion issues",
-      "Indoor fade-resistant finish"
+      "Easy-clean technology",
+      "No shrinking/expansion",
+      "⁠Water resistant",
+      "Wider luxury plank",
+      "1220 X 228mm"
     ],
   }
 ];
@@ -478,16 +484,16 @@ export const HomeUserInfo = [
     title: 'Budget Friendly',
     description:
       "High-quality flooring doesn't have to cost a fortune. Our durable, stylish options are available at factory prices so you can enjoy premium designs for a fraction of the cost. Stylish and affordable flooring without compromising quality.",
-      image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438022/budget_11zon_icozkb.webp',
+    image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438022/budget_11zon_icozkb.webp',
     icon: '/assets/images/UserInfo/budget-icon.png',
     reverse: true,
     href: 'about-us'
   },
   {
-    title: 'Overlay Ready',
+    title: 'Install On Any Flat Surface',
     description:
       "Skip the hassle of removing old floors. You can install our flooring directly over most existing surfaces, saving time, effort, and money on installation. A smooth transition with minimal disruption.",
-   
+
     image: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1744438070/Overlay_Ready_iaqqwr.webp',
     icon: '/assets/images/UserInfo/overlay-icon.png',
     reverse: false,
@@ -580,6 +586,29 @@ export const boxData: BoxData[] = [
 
 export const popupCards: CardData[] = [
   {
+    id: 6,
+    heading: "Polar <br /> SPC Eco",
+    content: [
+      "Lots of timeless styles",
+      "Wood grain finishes",
+      "Water-resistant",
+      "Affordable from <span class='font-currency font-normal text-16 md:text-18'></span> 49.00",
+      "Modern and classic",
+    ],
+  },
+
+  {
+    id: 8,
+    heading: "Polar <br /> LVT Comfort",
+    content: [
+      "Wood-like textured finish",
+      "Durable with 0.3mm wear layer",
+      "1220mm x 180mm plank size",
+      "Up to 5-year warranty",
+      "15-year warranty",
+    ],
+  },
+  {
     id: 1,
     heading: "Richmond <br /> SPC Eco",
     content: [
@@ -635,17 +664,6 @@ export const popupCards: CardData[] = [
     ],
   },
   {
-    id: 6,
-    heading: "Polar <br /> SPC",
-    content: [
-      "Lots of timeless styles",
-      "Wood grain finishes",
-      "Water-resistant",
-      "Affordable from <span class='font-currency font-normal text-16 md:text-18'></span> 49.00",
-      "Modern and classic",
-    ],
-  },
-  {
     id: 7,
     heading: "Polar SPC <br /> Herringbone",
     content: [
@@ -653,18 +671,7 @@ export const popupCards: CardData[] = [
       "Free underlay on all orders",
       "Wood-like embossed texture",
       "Multi-colour options",
-      "3mm wear layer",
-    ],
-  },
-  {
-    id: 8,
-    heading: "Polar <br /> LVT",
-    content: [
-      "Wood-like textured finish",
-      "Durable with 0.3mm wear layer",
-      "1220mm x 180mm plank size",
-      "Free UAE delivery",
-      "15-year warranty",
+      "0.3mm wear layer",
     ],
   },
 ];
@@ -748,7 +755,7 @@ export const measurementData: MeasurementSection[] = [
     description: `When calculating the width and length of a rectangular or square area, add 5-10% for waste and cutting errors. If you are planning to construct staircases, mantels, or closets in your room, allocate over 10% of your budget to them. 
       If you would like professional assistance, we can arrange a measuring service for you with a refundable charge of <span class='font-currency font-normal text-18'></span> 150 (refunded if you place an order with us). If you wish to measure the area yourself, you will only need a measuring tape, a pencil, and paper. Make sure you measure in metres if you will be buying flooring materials that are usually marketed in metres.
       `,
-stepsHeading:"Measuring a Square or Rectangular Room",
+    stepsHeading: "Measuring a Square or Rectangular Room",
     steps: [
       {
         title: "Measure the length:",
@@ -889,7 +896,7 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Grand Mosque District", label: "Grand Mosque District" },
     { value: "Shakhbout City", label: "Shakhbout City" },
     { value: "Lulu Island", label: "Lulu Island" },
-  
+
   ],
   "Dubai": [
     { value: "Downtown", label: "Downtown" },
@@ -956,7 +963,7 @@ export const emirateCityMap: Record<string, { value: string; label: string }[]> 
     { value: "Yas Island", label: "Yas Island" },
     { value: "Za'abeel", label: "Za'abeel" },
     { value: "Zayed City", label: "Zayed City" }
-  ],  
+  ],
   "Sharjah": [
     { value: "Sharjah", label: "Sharjah" },
     { value: "Khor Fakkan", label: "Khor Fakkan" },

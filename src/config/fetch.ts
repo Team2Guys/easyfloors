@@ -85,10 +85,10 @@ export const fetchAppointments = async (token: string | undefined) => {
 };
 
 
-export const fetchOrders = async (token: string | undefined) => {
+export const fetchOrders = async (token: string | undefined, FETCH_ORDERS?: DocumentNode) => {
   try {
     const { data } = await client.query({
-      query: FETCH_ALL_ORDERS,
+      query: FETCH_ORDERS ? FETCH_ORDERS : FETCH_ALL_ORDERS,
       fetchPolicy: "no-cache",
       context: {
         headers: {
@@ -211,7 +211,7 @@ export const fetchSingleCategory = async (customUrl: string, FIND_ONE_CUSTOM_QUE
   }
 };
 
-export const fetchSingeSubCategory = async (customUrl: string, category:string): Promise<Category | null> => {
+export const fetchSingeSubCategory = async (customUrl: string, category: string): Promise<Category | null> => {
   try {
     const { data } = await client.query({
       query: FIND_ONE_SUB_CATEGORY,

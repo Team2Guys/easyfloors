@@ -27,6 +27,8 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+          type:'website'
+
   },
   alternates: {
     canonical: '/',

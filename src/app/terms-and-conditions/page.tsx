@@ -15,9 +15,10 @@ export const metadata: Metadata = {
     images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
       },
     ],
+    type:'website'
   },
   alternates: {
-    canonical: '/terms-and-conditions',
+    canonical: 'https://easyfloors.ae/terms-and-conditions',
   },
 };
 

@@ -16,6 +16,28 @@ import CategorySlider from "components/CategorySlider/category-slider";
 import { FETCH_ALL_WHAT_AM_I, FETCH_HEADER_CATEGORIES } from "graphql/queries";
 import { ICategory } from "types/type";
 import { whatAmISorting } from "data/home-category";
+import { Metadata } from "next";
+
+
+export const metadata: Metadata = {
+  title: ' Flooring in UAE | SPC, LVT & Herringbone | Easy Floors',
+  description:
+    'Shop SPC, LVT, and Herringbone flooring at factory-direct prices. Fast UAE delivery, free samples, easy installment options only at Easy Floors.',
+  openGraph: {
+    title: ' Flooring in UAE | SPC, LVT & Herringbone | Easy Floors',
+    description: 'Shop SPC, LVT, and Herringbone flooring at factory-direct prices. Fast UAE delivery, free samples, easy installment options only at Easy Floors.',
+    url: 'https://easyfloors.ae/',
+    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+      },
+    ],
+          type:'website'
+
+  },
+  alternates: {
+    canonical: 'https://easyfloors.ae/',
+  },
+};
+
 
 export default async function Home() {
 const [ categories , subCategories] = await Promise.all([fetchCategories(FETCH_HEADER_CATEGORIES) , fetchSubCategories(FETCH_ALL_WHAT_AM_I)])

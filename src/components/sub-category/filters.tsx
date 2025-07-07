@@ -79,7 +79,7 @@ const Filters = ({
         if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
         if (product.colors) {
           product.colors.forEach((color: AdditionalInformation) => {
-            colorSet.add(color.name);
+            colorSet.add(color.name.trim());
           });
         }
       });
@@ -154,21 +154,21 @@ const Filters = ({
 
 
   const filterProductsCountHanlder = (key: keyof IfilterValues, ValuesType: string) => {
-    if(isColection){
+    if (isColection) {
       const filterprod = sortedSubcategories?.filter((product: ISUBCATEGORY) => {
-          if(key === 'thicknesses'){
-            const values = product.sizes?.[0].thickness
-            return values == ValuesType;
-          } else if(key === 'plankWidth'){
-            const values = product.sizes?.[0].width
-            return values == ValuesType;
-          } else if(key === 'plankLength'){
-            const values = product.sizes?.[0].height
-            return values == ValuesType;
-          }
-          
+        if (key === 'thicknesses') {
+          const values = product.sizes?.[0].thickness
+          return values == ValuesType;
+        } else if (key === 'plankWidth') {
+          const values = product.sizes?.[0].width
+          return values == ValuesType;
+        } else if (key === 'plankLength') {
+          const values = product.sizes?.[0].height
+          return values == ValuesType;
+        }
+
       })
-  
+
       return filterprod?.length || 0
     }
     const filterprod = category?.products?.filter((product: IProduct) => {
@@ -194,21 +194,21 @@ const Filters = ({
 
         {orderedCategories.map((category, index) => {
           const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
-          if(isColection && category.name === 'ACCESSORIES') return;
+          if (isColection && category.name === 'ACCESSORIES') return;
           let subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
           subcategories = [...subcategories].sort((a, b) => {
             return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
           });
           subcategories = [...subcategories].sort((a, b) => {
-              const orderA = getSubcategoryOrder(a.name);
-              const orderB = getSubcategoryOrder(b.name);
-              if (orderA !== orderB) {
-                return orderA - orderB;
-              } else {
-                return (Number(a.price) || 0) - (Number(b.price) || 0);
-              }
-            });
-          
+            const orderA = getSubcategoryOrder(a.name);
+            const orderB = getSubcategoryOrder(b.name);
+            if (orderA !== orderB) {
+              return orderA - orderB;
+            } else {
+              return (Number(a.price) || 0) - (Number(b.price) || 0);
+            }
+          });
+
           return (
             <Accordion key={index} title={category.name} >
               <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
@@ -225,10 +225,11 @@ const Filters = ({
         )}
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-            {Object.values(categoryState).map((item) => {
+            {Object.values(categoryState ?? {}).map((item) => {
+              if (!item) return null;
               return (
                 <li key={item.custom_url}>
-                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block capitalize">
+                  <Link href={`/${item.custom_url ?? ""}`} className="cursor-pointer hover:text-primary block capitalize">
                     {item.name.toLowerCase()}
                   </Link>
                 </li>
@@ -239,10 +240,14 @@ const Filters = ({
 
         <Accordion title="Style">
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-            {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
+
+            {/* ECO Logic */}
+            {(catSlug === 'polar-flooring' || catSlug === 'spc-flooring' || catSlug === 'lvt-flooring' || catSlug === 'richmond-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
-                  href={`/${catSlug === 'spc-flooring' ? 'polar' : 'richmond'
+                  href={`/${catSlug === 'polar-flooring' ? 'polar'
+                      : catSlug === 'spc-flooring' ? 'polar'
+                        : 'richmond'
                     }/spc-eco`}
                   className="cursor-pointer hover:text-primary block capitalize"
                 >
@@ -250,17 +255,31 @@ const Filters = ({
                 </Link>
               </li>
             )}
+
+            {/* Herringbone */}
             <li>
               <Link
-                href={`/${catSlug === 'spc-flooring' ? 'polar' :
-                  catSlug === 'polar-flooring' ? 'polar' :
-                    'richmond'
+                href={`/${catSlug === 'spc-flooring' || catSlug === 'polar-flooring' ? 'polar' : 'richmond'
                   }/spc-herringbone`}
                 className="cursor-pointer hover:text-primary block capitalize"
               >
-                herringbone
+                Herringbone
               </Link>
             </li>
+
+            {/* Only for Polar */}
+            {catSlug === 'polar-flooring' && (
+              <li>
+                <Link
+                  href="/polar/lvt"
+                  className="cursor-pointer hover:text-primary block capitalize"
+                >
+                  Comfort
+                </Link>
+              </li>
+            )}
+
+            {/* Prime – Only for Richmond, LVT, SPC */}
             {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
@@ -273,6 +292,7 @@ const Filters = ({
             )}
           </ul>
         </Accordion>
+
 
 
         {!isColection && (

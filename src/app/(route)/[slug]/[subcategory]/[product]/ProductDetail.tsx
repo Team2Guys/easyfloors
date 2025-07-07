@@ -16,25 +16,25 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
     <div className="mb-10">
       <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
       {
-        ProductInfo.length > 0 
-        ?
-        <ProductContainer 
-        MainCategory={MainCategory} 
-        subCategory={subCategory} 
-        ProductName={ProductName} 
-        productData={productData} 
-        ProductInfo={ProductInfo}
-        />
-        :
-        <DetailSkaleton/>
+        ProductInfo.length > 0
+          ?
+          <ProductContainer
+            MainCategory={MainCategory}
+            subCategory={subCategory}
+            ProductName={ProductName}
+            productData={productData}
+            ProductInfo={ProductInfo}
+          />
+          :
+          <DetailSkaleton />
       }
-    
+
 
       <div className="lg:max-w-[80%] max-w-[95%] mb-10 mx-auto sm:max-w-[90%]">
-        <AdditionalInfo 
-          description={productData?.description || ''} 
-          AdditionalInformation={productData?.AdditionalInformation} 
-          subcategory={productData?.subcategory?.name || ""} 
+        <AdditionalInfo
+          description={productData?.description || ''}
+          AdditionalInformation={productData?.AdditionalInformation}
+          subcategory={productData?.subcategory?.name || ""}
         />
         <FaqDetail FAQS={productData?.FAQS} />
       </div>
@@ -42,7 +42,7 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
       <Container>
         <Features items={featureItems} />
       </Container>
-      <RelatedSlider products={productData?.acessories?.slice(0, 5) || []} isAccessories/>
+      <RelatedSlider products={ProductInfo?.filter((value)=>value.id !==productData.id) || []} />
     </div>
   );
 };

@@ -82,16 +82,16 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
 
                 <div className="custom-input-phone-wrapper">
                   <label htmlFor="whatsappNumber" className="text-13 font-medium font-inter">
-                    WhatsApp No. If Different <span className="text-red-500">*</span>
+                    WhatsApp No
                   </label>
                   <Field name="whatsappNumber">
                     {({ form }: FieldProps) => (
                       <PhoneInput
                         international
                         defaultCountry="AE"
-                        label="WhatsApp No. If Different"
+                        label="WhatsApp No"
                         name="whatsappNumber"
-                        required
+                        // required
                         placeholder="Type Your WhatsApp No"
                         value={values.whatsappNumber}
                         onChange={(value) => form.setFieldValue("whatsappNumber", value)}

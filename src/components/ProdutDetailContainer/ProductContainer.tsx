@@ -10,8 +10,7 @@ import { detailprops } from "types/product-detail";
 import React, { useState } from "react";
 import { paymentcard } from "data/cart";
 import { formatAED } from "lib/helperFunctions";
-const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {
-  // const [image, setActiveImage] = useState(productData?.productImages?.[0] || null);
+const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView}: detailprops) => {
   const [unit, setUnit] = useState("sqm");
   const [area, setArea] = useState("");
   const {
@@ -38,6 +37,9 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
   const selectedColor = productData?.featureImages?.find(
     (img) => img.color === productData?.productImages?.[0]?.colorCode
   );
+
+
+  
 
   const matchedProductImages = productData.productImages?.find((img) => img.colorCode === productData.productImages?.[0]?.colorCode || "");
   return (
@@ -110,6 +112,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         <div className="grid grid-cols-2 w-full gap-1 items-center sm:gap-3">
           
           <button
+          id="AddToCart"
             onClick={() =>
               handleAddToStorage(
                 productData,
@@ -133,6 +136,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
             Add to Cart
           </button>
           <button
+          id="AddToWishlist"
           className="flex bg-black justify-center text-11 xs:text-12 text-white 2xl:text-22 font-inter gap-2 items-center max-sm:h-[40px] px-2 py-2 sm:py-3 sm:text-16"
           onClick={() =>
             handleAddToStorage(
@@ -176,7 +180,7 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
           }
         >
             <Image src="/assets/images/icon/measure.png" alt="box" width={30} height={30} className="size-5 xs:size-7" />
-            <p className=" whitespace-nowrap">Order Now <strong><em>Free</em></strong> Sample</p>
+            <p className=" whitespace-nowrap">Order <strong><em>Free</em></strong> Sample</p>
         </button>
         </div>
         <PaymentMethod installments={installments} showheading />

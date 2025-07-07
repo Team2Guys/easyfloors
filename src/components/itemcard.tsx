@@ -35,7 +35,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
             </>
            ) : (
           <>
-           <p>No. of boxes: {product.requiredBoxes}</p>
+           <p >No. Of Boxes: <span className='font-bold'>{product.requiredBoxes}</span> ({product.squareMeter.toFixed(2)} {product.unit === "sqft" ? "ft²" : "SQM"})</p>
            <p>Box Coverage: {product.boxCoverage}</p>
           </>
            )
@@ -66,13 +66,18 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
             <button onClick={() => onQuantityChange(String(product.id), -1)} className="p-2">
               <FiMinus />
             </button>
-            <span className="px-3 font-semibold">{product.requiredBoxes}</span>
+            <span className="px-2 text-black font-semibold">
+              {product.category === "Accessories" 
+                ? product.requiredBoxes 
+                : (product.squareMeter === 0 ? '0.00' : product.squareMeter.toFixed(2))}
+            </span>
             <button onClick={() => onQuantityChange(String(product.id), 1)} className="p-2">
               <GoPlus />
             </button>
           </div>
         )}
         <button
+        id="AddToCart"
           onClick={() => onAddToCart(product)}
           className={`bg-black text-white text-14 font-inter flex items-center gap-2 py-1 ${
             !isSamplePage ? "px-4 sm:px-7" : "px-14"

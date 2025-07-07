@@ -57,7 +57,7 @@ const Footer = () => {
 
     return (
         <footer className="bg-gray-100 text-gray-700 pt-10 mt-20 px-0 mx-0 relative">
-            <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-7 md:grid-cols-4 gap-4 2xl:gap-5 font-inter font-light" >
+            <Container className=" mx-auto grid sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 2xl:gap-5 font-inter font-light" >
                 <div className="sm:mt-2">
                     <Image src="/assets/images/logo.webp" alt="Easyfloors" width={120} height={50} className="mb-4" />
                     <p className="mt-2 text-sm text-justify w-full sm:max-w-[150px] xl:max-w-[160px] 2xl:max-w-[172px]">{footerData.company.description}</p>
@@ -81,7 +81,7 @@ const Footer = () => {
                                   });
                         return (
                             <div key={index} className="sm:block hidden">
-                                <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal lg:tracking-widest md:tracking-normal sm:tracking-normal">
+                                <Link href={`/${section.custom_url}`} className="lg:text-base md:text-sm font-normal 2xl:tracking-widest xl:text-nowrap">
                                     {section.name}
                                 </Link>
 
@@ -120,9 +120,9 @@ const Footer = () => {
                 )}
 
                 <div className="sm:block ">
-                    <p className=" font-normal tracking-widest">CONTACT US</p>
+                    <p className=" font-normal 2xl:tracking-widest">CONTACT US</p>
                     
-                    <div className="text-sm mt-2 flex items-center gap-2 group">
+                    <div className="text-sm mt-4 flex items-center gap-2 group">
                         <div className=''>
                             <IoCall size={16} className="text-black group-hover:text-primary" />
                         </div>

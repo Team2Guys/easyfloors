@@ -1,8 +1,64 @@
 import RelatedSlider from 'components/related-slider/related-slider';
 import Breadcrumb from 'components/Reusable/breadcrumb';
+import FreeSampleThank from 'components/ThankYou/FreeSampleThank';
 import ThankYouComp from 'components/ThankYou/ThankYou';
 import { fetchProducts } from 'config/fetch';
+import { Metadata } from 'next';
 import React from 'react';
+
+interface ThankYouProps {
+  searchParams: Promise<Record<string, string | null>>;
+}
+
+
+export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise<Metadata> => {
+  const params = await searchParams;
+  const isPaymentSuccessful = params.success === 'true';
+  const isFreeSample = params.isFreeSample === 'true';
+  return isFreeSample || isPaymentSuccessful
+    ? {
+      title: 'Payment Successful | Easy Floors',
+      description:
+        'Thank you for your purchase! Your payment has been processed successfully. We’ll begin preparing your order right away.',
+      openGraph: {
+        title: 'Payment Successful | Easy Floors',
+        description:
+          'Thank you for your purchase! Your payment was successful. Your flooring products will be delivered soon.',
+        url: 'https://easyfloors.ae/thank-you',
+        images: [
+          {
+            url: '/assets/images/logo.webp',
+            alt: 'Easyfloors',
+          },
+        ],
+        type: 'website',
+      },
+      alternates: {
+        canonical: 'https://easyfloors.ae/thank-you',
+      },
+    }
+    : {
+      title: 'Payment Failed | Easy Floors',
+      description:
+        'Unfortunately, your payment could not be processed. Please try again or contact our support team for assistance.',
+      openGraph: {
+        title: 'Payment Failed | Easy Floors',
+        description:
+          'There was an issue processing your payment. Please retry or get in touch with our support team.',
+        url: 'https://easyfloors.ae/thank-you',
+        images: [
+          {
+            url: '/assets/images/logo.webp',
+            alt: 'Easyfloors',
+          },
+        ],
+        type: 'website',
+      },
+      alternates: {
+        canonical: 'https://easyfloors.ae/thank-you',
+      },
+    };
+};
 
 export interface PaymentQueryParams {
 
@@ -14,22 +70,22 @@ export interface PaymentQueryParams {
   pay_methodType: string | undefined
   cardLastDigits: string | undefined
   paymethod_sub_type: string | undefined
+  isFreeSample?: string
 
 }
 
-interface ThankYouProps {
-searchParams: Promise<Record<string, string | null>>;}
 
 
-const ThankYou = async ({ searchParams }: ThankYouProps) => { 
+
+const ThankYou = async ({ searchParams }: ThankYouProps) => {
   const productData = await fetchProducts();
   const params = await searchParams
-
+  const isFreeSample = params.isFreeSample === 'true';
   const extractedParams: PaymentQueryParams = {
-    success: params.success === 'true', 
+    success: params.success === 'true',
     integrationId: params.integration_id || undefined,
-    orderId: params.order || undefined, 
-    pending: params.pending === 'true', 
+    orderId: params.order || undefined,
+    pending: params.pending === 'true',
     is3DSecure: params.is_3d_secure || undefined,
     pay_methodType: params["source_data.type"] || undefined,
     cardLastDigits: params["source_data.pan"] || undefined,
@@ -39,8 +95,8 @@ const ThankYou = async ({ searchParams }: ThankYouProps) => {
   return (
     <>
       <Breadcrumb title="Thank You" />
-      <ThankYouComp extractedParams={extractedParams} />
-      <RelatedSlider  products={productData.slice(0, 5)} />
+      {isFreeSample ? <FreeSampleThank /> : <ThankYouComp extractedParams={extractedParams} />}
+      <RelatedSlider products={productData.slice(0, 5)} />
     </>
   );
 };

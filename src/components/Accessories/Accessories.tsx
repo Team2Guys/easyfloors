@@ -43,6 +43,8 @@ const AccessoriesComp: React.FC<ProductCardProps> = ({ product , category }) => 
 
     setSortedProducts(sortedArray);
   }, [sortOption, product]);
+
+  console.log(sortedProducts,"sortedProductssortedProducts")
   return (
     <Container>
       <div className="lg:mt-14 mt-5 py-4 font-inter space-y-4">
