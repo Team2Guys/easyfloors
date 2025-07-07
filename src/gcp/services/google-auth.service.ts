@@ -48,24 +48,6 @@ export class GoogleAuthService {
     return tokens;
   }
 
-  // async setStoredCredentials() {
-  //   const token = await this.prisma.googleToken.findUnique({
-  //     where: { id: 1 },
-  //   });
-
-  //   if (!token) throw new Error('Google token not found');
-
-  //   this.oauth2Client.setCredentials({
-  //     access_token: token.accessToken,
-  //     refresh_token: token.refreshToken,
-  //     scope: token.scope ||  "",
-  //     token_type: token.tokenType,
-  //     expiry_date: token.expiryDate ? Number(token.expiryDate) : undefined,
-  //   });
-
-  //   return this.oauth2Client;
-  // }
-
   getOAuthClient() {
     return this.oauth2Client;
   }
@@ -75,12 +57,11 @@ export class GoogleAuthService {
     const base64Key = process.env.GCP_KEY_BASE64;
     if (!base64Key) throw new Error("GCP_KEY_BASE64 is not set");
 
-    // Decode the base64 key and parse it as JSON
     const credentials = JSON.parse(Buffer.from(base64Key, 'base64').toString('utf-8'));
     console.log(credentials, "credentials" , base64Key)
 
     const auth = new google.auth.GoogleAuth({
-      credentials, // directly passing JSON credentials object
+      credentials, 
       scopes: ['https://www.googleapis.com/auth/content'],
     });
 

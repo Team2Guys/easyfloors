@@ -196,6 +196,12 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
          subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
          html: htmlTemplate,
       });
+      await transporter.sendMail({
+         from: process.env.EMAIL_USER,
+         to: `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
+         subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
+         html: htmlTemplate,
+      });
    } catch (error) {
       console.error("Error sending appointment email:", error);
       throw new Error("Failed to send appointment confirmation email");
@@ -275,10 +281,11 @@ export const contactusEmail = async (data: contactUsEmailInput) => {
 
    await transporter.sendMail({
       from: process.env.EMAIL_USER,
-      to: process.env.CONTACT_US_EMAIL,
+      to: `${process.env.CONTACT_US_EMAIL},${process.env.ORDER_MAIL3}`,
       subject: `New Contact Form Submission from ${firstName} ${LastName}`,
       html: htmlTemplate,
    });
+
 };
 
 
@@ -292,7 +299,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
    }).toUpperCase();
    const mailOptions = {
       from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
-      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2}`,
+      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
       subject: `Order has been confirmed @ EF against Order # ${orderId}`,
 
       html: `<!DOCTYPE html>
