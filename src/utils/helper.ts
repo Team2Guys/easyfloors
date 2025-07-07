@@ -660,7 +660,11 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                             alt="${product.name}" style="height:70px; width:70px;" class="product-img">
                          <div>
                             <p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 0px; color: black; font-weight: 600;">${product.name}</p>
-                            <p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>No .of Boxes:</b> ${product.requiredBoxes}(${product.squareMeter} SQM)</p>
+                          ${orderDetails.isfreesample ? "" : 
+                          
+                          `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>No .of Boxes:</b> ${product.requiredBoxes}(${product.squareMeter} SQM)</p>`
+                          
+                          }
                          </div>
                       </div>
                    </td>
