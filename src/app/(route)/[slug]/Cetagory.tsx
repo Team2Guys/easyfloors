@@ -87,7 +87,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
         <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : Data?.Heading || Data?.name}
         </h1>
             <p
-              className="text-14 md:text-16 2xl:text-20 lg:leading-[26px] font-inter "
+              className="text-14 md:text-16 2xl:text-18 lg:leading-[26px] font-inter "
               dangerouslySetInnerHTML={{ 
                 __html: isSubCategory 
                   ? subdescription[0].description || "" 
