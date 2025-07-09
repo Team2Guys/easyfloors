@@ -22,16 +22,16 @@ const ContactInfo = () => {
           <Link 
             target='_blank' 
             className='pl-3 sm:pl-0' 
-            href="https://share.google/046WhYBb0Cv7QmJYA"
+            href="https://maps.app.goo.gl/t4dm6MhpgeraVkBH8"
           >
-            22nd 15B St - Al Quoz - Al Quoz Industrial  <br className='hidden sm:block'/>  Area 4 - Dubai - UAE
+           22nd 15B St - Al Quoz - Al Quoz Industrial   <br className='hidden sm:block'/>Area 4 - Dubai - UAE
           </Link>
         </div>
       </div>
       <div className='mt-5 md:mt-20'>
         <iframe 
           className='w-full h-[200px] lg:h-[280px] rounded-lg shadow-lg border border-gray-200'
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178509655045!2d55.11851371500938!3d25.19719698389647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43c5045ac9ab%3A0xe8fe6b6d3731e2f9!2sJ1%20Warehouses!5e0!3m2!1sen!2sae!4v1712345678901!5m2!1sen!2sae"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4073.5032841777415!2d55.2357386!3d25.1177844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f69fca32528d3%3A0x63e4dd6474477d84!2sEasy%20Floors%20-%20Floorings!5e1!3m2!1sen!2s!4v1752045484880!5m2!1sen!2s"
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"

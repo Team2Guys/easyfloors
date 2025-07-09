@@ -49,7 +49,7 @@ const Shipping = () => {
         <h2 className=" text-20 sm:text-24 font-semibold font-inter">Self-Collect</h2>
         <ul className='list-disc px-6 text-14 sm:text-20 sm:leading-[26px] font-inter'>
         <li>Monday to Saturday, 9am – 6pm</li>
-        <li>Location: <Link href="https://maps.app.goo.gl/VoKEfBJLA2y9fySt5" className='font-normal underline hover:text-primary'>Agsons, J1 Warehouses, Jebel Ali Industrial – Dubai</Link></li>
+        <li>Location: <Link href="https://maps.app.goo.gl/BBJjwVKgTK4PPTWR8" className='font-normal underline hover:text-primary'>22nd 15B St - Al Quoz - Al Quoz Industrial Area 4 - Dubai - UAE</Link></li>
         </ul>
       <p className='text-14 sm:text-20 sm:leading-[26px] font-inter'>* For orders below <span className="font-currency font-normal text-16 sm:text-25"></span> 1,000 for areas outside of Dubai, a charge of <span className="font-currency font-normal text-16 sm:text-25"></span> 150 will apply</p>
     </Container>
