@@ -22,9 +22,9 @@ const ContactInfo = () => {
           <Link 
             target='_blank' 
             className='pl-3 sm:pl-0' 
-            href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,11090m/data=!3m1!1e3!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu"
+            href="https://share.google/046WhYBb0Cv7QmJYA"
           >
-            Agsons, J1 Warehouses, Jebel Ali <br className='hidden sm:block'/> Industrial - Dubai
+            22nd 15B St - Al Quoz - Al Quoz Industrial  <br className='hidden sm:block'/>  Area 4 - Dubai - UAE
           </Link>
         </div>
       </div>
