@@ -22,16 +22,16 @@ const ContactInfo = () => {
           <Link 
             target='_blank' 
             className='pl-3 sm:pl-0' 
-            href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,11090m/data=!3m1!1e3!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu"
+            href="https://maps.app.goo.gl/t4dm6MhpgeraVkBH8"
           >
-            Agsons, J1 Warehouses, Jebel Ali <br className='hidden sm:block'/> Industrial - Dubai
+           22nd 15B St - Al Quoz - Al Quoz Industrial   <br className='hidden sm:block'/>Area 4 - Dubai - UAE
           </Link>
         </div>
       </div>
       <div className='mt-5 md:mt-20'>
         <iframe 
           className='w-full h-[200px] lg:h-[280px] rounded-lg shadow-lg border border-gray-200'
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3610.178509655045!2d55.11851371500938!3d25.19719698389647!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43c5045ac9ab%3A0xe8fe6b6d3731e2f9!2sJ1%20Warehouses!5e0!3m2!1sen!2sae!4v1712345678901!5m2!1sen!2sae"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4073.5032841777415!2d55.2357386!3d25.1177844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f69fca32528d3%3A0x63e4dd6474477d84!2sEasy%20Floors%20-%20Floorings!5e1!3m2!1sen!2s!4v1752045484880!5m2!1sen!2s"
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
