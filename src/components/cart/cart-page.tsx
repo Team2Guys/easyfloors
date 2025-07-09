@@ -495,7 +495,7 @@ const CartPage = ({ products }: CartPageProps) => {
                         <strong className="text-15 xs:text-20">Self-Collect:</strong>
                         <p className="text-11 xs:text-16">Collection Mon-Sat <strong>(9am-6pm)</strong></p>
                         <p className="text-11 xs:text-16">
-                          <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps/place/J1+Warehouses/@24.9871787,55.0799029,13z/data=!4m6!3m5!1s0x3e5f43c5045ac9ab:0xe8fe6b6d3731e2f9!8m2!3d24.9871066!4d55.1211025!16s%2Fg%2F11fsb5fcvx?entry=ttu&amp;g_ep=EgoyMDI1MDIxMi4wIKXMDSoJLDEwMjExNDUzSAFQAw%3D%3D">Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai</Link></strong>
+                          <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/BBJjwVKgTK4PPTWR8">22nd 15B St - Al Quoz - Al Quoz Industrial Area 4 - Dubai - UAE</Link></strong>
                         </p>
                       </div>
                     </div>

@@ -348,7 +348,7 @@ export const footerData = {
       'Founded with a passion for quality and design. Easyfloors is all about top-notch quality, happy customers, and awesome deals.',
   },
   contact: {
-    address: 'Agsons, J1 Warehouses, Jebel Ali  Industrial – Dubai',
+    address: '22nd 15B St - Al Quoz - Al Quoz Industrial Area 4 - Dubai - United Arab Emirates',
     phone: '+971 50 597 4385',
     email: 'cs@easyfloors.ae',
   },
