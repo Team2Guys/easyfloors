@@ -383,9 +383,9 @@ export const blocksData = [
   },
 ];
 export const FloorItemsData = [
-  { id: 1, title: 'Herringbone Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291431/Herringbone-Floor_11zon_11zon_liydgh.webp' },
-  { id: 2, title: 'Eco Floor ', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291254/Eco-Floor_11zon_11zon_ewhoup.webp' },
-  { id: 3, title: 'Prime Floor', imageUrl: 'https://res.cloudinary.com/dmmeqgdhv/image/upload/v1742291406/Prime-Floor_11zon_1__11zon_l98nti.webp' },
+  { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/layers/Herringbone.webp' , hoverImage: '/assets/layers/HerringboneHover.webp' },
+  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/layers/Eco.webp' , hoverImage: '/assets/layers/EcoHover.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/layers/Prime.webp' , hoverImage: '/assets/layers/PrimeHover.webp' },
 ];
 
 
