@@ -1,23 +1,29 @@
-import React from 'react';
-import { FloorItemsData } from 'data/data'; 
+'use client'
+import { FloorItemsData } from 'data/data';
 import Container from 'components/common/container/Container';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const FloorItems = () => {
+  const [hoverIndex, serHoverImage] = useState<number | null>(null)
   return (
     <Container>
       <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 md:gap-16 gap-2 ">
-        {FloorItemsData.map((item) => (
-          <div key={item.id} className="flex flex-col items-center font-inter justify-center ">
+        {FloorItemsData.map((item, index) => (
+          <div key={index} className="flex flex-col items-center font-inter justify-center ">
             <h3 className="md:text-3xl text-14 md:font-bold md:mb-5 mb-2 whitespace-nowrap">{item.title}</h3>
-            <Image
-              src={item.imageUrl}
-              alt={item.title}
-              loading='lazy'
-              width={800} 
-              height={300} 
-              className="w-auto max-xsm:h-[100px] h-full"
-            />
+            <div className='max-xsm:h-[100px]'
+                onMouseEnter={() => serHoverImage(index)}
+                onMouseLeave={() => serHoverImage(null)}
+            >
+              <Image
+                src={hoverIndex === index ? item.hoverImage : item.imageUrl}
+                alt={item.title}
+                loading='lazy'
+                fill
+                className="!relative"
+              />
+            </div>
           </div>
         ))}
       </div>
