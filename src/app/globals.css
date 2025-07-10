@@ -41,11 +41,11 @@
     }
   }
   .animate-moveTruck {
-    animation: moveTruck 3s linear infinite;
+    animation: moveTruck 5s linear infinite;
   }
 
   .animate-scale-in {
-    animation: scaleIn 0.3s ease-out;
+    animation: scaleIn 0.5s ease-out;
   }
 }
 
