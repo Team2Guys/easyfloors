@@ -126,7 +126,7 @@ const Footer = () => {
                         <div className=''>
                             <IoCall size={16} className="text-black group-hover:text-primary" />
                         </div>
-                        <Link href="tel:+971505974385" className="text-black group-hover:text-primary">
+                        <Link href="tel:+971505974385" target='_blank' className="text-black group-hover:text-primary">
                             {footerData.contact.phone}
                         </Link>
                     </div>
@@ -169,7 +169,7 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col space-y-3 fixed right-4 bottom-10 md:right-16  z-20">
 
-                    <Link href="tel:+971505974385" aria-label="Call +971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
+                    <Link href="tel:+971505974385" target='_blank' aria-label="Call +971505974385" className="bg-[#3DA162] sm:hidden text-white p-2 rounded-full shadow-lg flex items-center justify-center w-12 h-12">
                         <IoCall size={35} />
                     </Link>
 

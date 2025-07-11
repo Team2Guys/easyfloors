@@ -11,7 +11,7 @@ const ContactInfo = () => {
       <div className='mt-5 sm:mt-8 lg:mt-10 space-y-3 lg:space-y-6'>
         <div className='flex gap-6 items-center text-white'>
           <PiPhoneCallFill size={20} />
-          <Link href="tel:+971 50 597 4385">+971 50 597 4385</Link>
+          <Link target='_blank' href="tel:+971 50 597 4385">+971 50 597 4385</Link>
         </div>
         <div className='flex gap-6 items-center text-white'>
           <IoMailSharp size={20} />
