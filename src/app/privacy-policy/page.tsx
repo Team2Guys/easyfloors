@@ -42,6 +42,7 @@ const PrivacyPolicy = () => {
         return (
           <Link 
             key={index} 
+            target='_blank'
             href={`tel:${segment.replace(/\+/g, '')}`} 
             className="text-primary"
           >

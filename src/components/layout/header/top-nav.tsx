@@ -15,7 +15,7 @@ const TopNav = ({ className = "" }: { className?: string }) => {
         <div>
           <SocialIcon className=" lg:hidden" />
           <div className="lg:flex items-center gap-7 hidden">
-            <Link href={`tel:${phoneNumber}`} className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
+            <Link href={`tel:${phoneNumber}`} target="_blank" className="flex items-center gap-2 text-white text-10 xl:text-14 2xl:text-16 font-inter font-normal">
               <Image
                 width={20}
                 height={20}
