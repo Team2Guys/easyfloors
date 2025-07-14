@@ -5,13 +5,13 @@ import DefaultLayout from 'components/Dashboard/DefaultLayout'
 import ProtectedRoute from 'hooks/AuthHookAdmin'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { FaRegEye } from 'react-icons/fa'
+import { BsEyeFill } from 'react-icons/bs'
 import { Order as prodOrder } from 'types/prod'
 
 const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedOrder, setSelectedOrder] = useState<prodOrder | null>(null);
-
+   console.log(ordersData, 'ordersData')
    const showModal = (record: prodOrder) => {
       setSelectedOrder(record);
       setIsModalOpen(true);
@@ -21,6 +21,8 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
       setIsModalOpen(false);
       setSelectedOrder(null);
    };
+  const hasTransactionDate = ordersData?.some(item => item.transactionDate);
+
    const columns = [
       {
          title: "Order Id",
@@ -53,17 +55,29 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          key: "country",
          width: 200,
       },
-
       {
          title: "Emirate",
          dataIndex: "emirate",
          key: "emirate",
          width: 100,
       },
+      hasTransactionDate ? {
+         title: "Transaction Date",
+         dataIndex: "transactionDate",
+         key: "transactionDate",
+         width: 120,
+         render: (date: string) => new Date(date).toLocaleString(),
+      } : {
+         title: "Checkout Date",
+         dataIndex: "checkoutDate",
+         key: "checkoutDate",
+         width: 120,
+         render: (date: string) => new Date(date).toLocaleString(),
+      },
       {
-         title: "Address",
-         dataIndex: "address",
-         key: "address",
+         title: "Total Amount",
+         dataIndex: "totalPrice",
+         key: "totalPrice",
          width: 120,
       },
       {
@@ -72,12 +86,12 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          key: "view",
          width: 100,
          render: (_: unknown, record: prodOrder) => (
-            <button onClick={() => showModal(record)}>
-               <FaRegEye />
+            <button onClick={() => showModal(record)} className="cursor-pointer">
+           <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200"/>
             </button>
          ),
       },
-   ];
+   ].filter(Boolean);
 
    return (
       <DefaultLayout>
@@ -107,15 +121,16 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
                         <p><strong>Other Notes:</strong> {selectedOrder?.note}</p>
                         <p><strong>Shippment Fee:</strong> {selectedOrder?.shipmentFee === 0 ? 'Free' : <span className="font-currency text-18 font-normal"> {selectedOrder?.shipmentFee}</span>}</p>
                         <p><strong>Total Amount:</strong> <span className="font-currency text-18 font-normal"></span> {selectedOrder?.totalPrice}</p>
+                        <p><strong>{hasTransactionDate ? 'Transaction Date' : 'Checkout Date'}:</strong> {hasTransactionDate ? new Date(selectedOrder?.transactionDate || '').toLocaleString() : new Date(selectedOrder?.checkoutDate || '').toLocaleString()}</p>
                         {selectedOrder?.products.map((prod, index) => (
                            <div key={index} className='flex gap-2 justify-between items-center pe-3'>
                               <div className='flex gap-2'>
-                              <Image src={`${prod.image}`} alt={prod.name} width={50} height={50} className='h-auto' />
-                              <div>
-                                 <h3 className='font-medium'>{prod.name}</h3>
-                                 <p className='font-medium'>Price per box: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
-                                 <p className='font-medium'>No. Of Boxes: <span className='font-normal'>{prod.requiredBoxes}</span> ({prod.squareMeter} SQM)</p>
-                              </div>
+                                 <Image src={`${prod.image}`} alt={prod.name} width={50} height={50} className='h-auto' />
+                                 <div>
+                                    <h3 className='font-medium'>{prod.name}</h3>
+                                    <p className='font-medium'>Price per box: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
+                                    <p className='font-medium'>No. Of Boxes: <span className='font-normal'>{prod.requiredBoxes}</span> ({prod.squareMeter} SQM)</p>
+                                 </div>
                               </div>
                               <p className='font-medium'>{prod.totalPrice.toFixed(2)}</p>
                            </div>

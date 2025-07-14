@@ -13,7 +13,9 @@ const Abandoned= async () => {
      allCookies.get("admin_access_token")?.value;
    
   const ordersData = await fetchOrders(token);
-  const abandonedOrder = ordersData.filter((item: ProdOrder) => (item.paymentStatus === false) && (item.checkout === true));
+  const abandonedOrder = ordersData.filter((item: ProdOrder) => (item.paymentStatus === false) && (item.checkout === true)).sort(
+    (a: ProdOrder, b: ProdOrder) => new Date(b.checkoutDate).getTime() - new Date(a.checkoutDate).getTime()
+  );;
   return <Order title="Abandoned Order" ordersData={abandonedOrder} />
 };
 
