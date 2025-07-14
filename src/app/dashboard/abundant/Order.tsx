@@ -4,13 +4,12 @@ import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb'
 import DefaultLayout from 'components/Dashboard/DefaultLayout'
 import Image from 'next/image'
 import React, { useState } from 'react'
-import { FaRegEye } from 'react-icons/fa'
+import { BsEyeFill } from 'react-icons/bs'
 import { Order as prodOrder } from 'types/prod'
 
-const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }) => {
+const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData: prodOrder[], isfreesample?: boolean }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedOrder, setSelectedOrder] = useState<prodOrder | null>(null);
-
    const showModal = (record: prodOrder) => {
       setSelectedOrder(record);
       setIsModalOpen(true);
@@ -20,6 +19,8 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
       setIsModalOpen(false);
       setSelectedOrder(null);
    };
+   const hasTransactionDate = ordersData?.some(item => item.transactionDate);
+
    const columns = [
       {
          title: "Order Id",
@@ -31,59 +32,86 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          title: "Name",
          dataIndex: "firstName",
          key: "firstName",
-         width: 200,
+         width: 150,
          render: (_: number, record: prodOrder) => `${record.firstName} ${record.lastName}`
       },
       {
          title: "Email",
          dataIndex: "email",
          key: "email",
-         width: 250,
+         width: 200,
       },
       {
          title: "Phone Number",
          dataIndex: "phone",
          key: "phone",
-         width: 150,
+         width: 120,
       },
       {
          title: "Country",
          dataIndex: "country",
          key: "country",
-         width: 200,
+         width: 140,
       },
-
       {
          title: "Emirate",
          dataIndex: "emirate",
          key: "emirate",
-         width: 100,
+         width: 90,
       },
-      {
-         title: "Address",
-         dataIndex: "address",
-         key: "address",
-         width: 120,
-      },
+      ...(!isfreesample
+         ? hasTransactionDate
+            ? [
+               {
+                  title: "Transaction Date",
+                  dataIndex: "transactionDate",
+                  key: "transactionDate",
+                  width: 140,
+                  render: (date: string) => new Date(date).toLocaleString(),
+               },
+               {
+                  title: "Total Amount",
+                  dataIndex: "totalPrice",
+                  key: "totalPrice",
+                  width: 100,
+               },
+            ]
+            : [
+               {
+                  title: "Checkout Date",
+                  dataIndex: "checkoutDate",
+                  key: "checkoutDate",
+                  width: 140,
+                  render: (date: string) => new Date(date).toLocaleString(),
+               },
+               {
+                  title: "Total Amount",
+                  dataIndex: "totalPrice",
+                  key: "totalPrice",
+                  width: 100,
+               },
+            ]
+         : [
       {
          title: 'Create At',
          dataIndex: 'createdAt',
          key: 'createdAt',
+         width: 140,
          render: (text: string, record: prodOrder) =>
             record?.checkoutDate ? new Date(record.checkoutDate).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
-      },
+      },]),
       {
          title: "View",
          dataIndex: "view",
          key: "view",
-         width: 100,
+         width: 60,
          render: (_: unknown, record: prodOrder) => (
-            <button onClick={() => showModal(record)}>
-               <FaRegEye />
+            <button onClick={() => showModal(record)} className="cursor-pointer">
+               <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200" />
             </button>
          ),
       },
-   ];
+   ].filter(Boolean);
 
    return (
       <DefaultLayout>
@@ -113,6 +141,7 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
                         <p><strong>Other Notes:</strong> {selectedOrder?.note}</p>
                         <p><strong>Shippment Fee:</strong> {selectedOrder?.shipmentFee === 0 ? 'Free' : <span className="font-currency text-18 font-normal"> {selectedOrder?.shipmentFee}</span>}</p>
                         <p><strong>Total Amount:</strong> <span className="font-currency text-18 font-normal"></span> {selectedOrder?.totalPrice}</p>
+                        <p><strong>{hasTransactionDate ? 'Transaction Date' : 'Checkout Date'}:</strong> {hasTransactionDate ? new Date(selectedOrder?.transactionDate || '').toLocaleString() : new Date(selectedOrder?.checkoutDate || '').toLocaleString()}</p>
                         {selectedOrder?.products.map((prod, index) => (
                            <div key={index} className='flex gap-2 justify-between items-center pe-3'>
                               <div className='flex gap-2'>
