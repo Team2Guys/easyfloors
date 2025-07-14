@@ -2,7 +2,6 @@
 import { Modal, Table } from 'antd'
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb'
 import DefaultLayout from 'components/Dashboard/DefaultLayout'
-import ProtectedRoute from 'hooks/AuthHookAdmin'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { FaRegEye } from 'react-icons/fa'
@@ -67,6 +66,13 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          width: 120,
       },
       {
+         title: 'Create At',
+         dataIndex: 'createdAt',
+         key: 'createdAt',
+         render: (text: string, record: prodOrder) =>
+            record?.checkoutDate ? new Date(record.checkoutDate).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
+      },
+      {
          title: "View",
          dataIndex: "view",
          key: "view",
@@ -110,12 +116,12 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
                         {selectedOrder?.products.map((prod, index) => (
                            <div key={index} className='flex gap-2 justify-between items-center pe-3'>
                               <div className='flex gap-2'>
-                              <Image src={`${prod.image}`} alt={prod.name} width={50} height={50} className='h-auto' />
-                              <div>
-                                 <h3 className='font-medium'>{prod.name}</h3>
-                                 <p className='font-medium'>Price per box: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
-                                 <p className='font-medium'>No. Of Boxes: <span className='font-normal'>{prod.requiredBoxes}</span> ({prod.squareMeter} SQM)</p>
-                              </div>
+                                 <Image src={`${prod.image}`} alt={prod.name} width={50} height={50} className='h-auto' />
+                                 <div>
+                                    <h3 className='font-medium'>{prod.name}</h3>
+                                    <p className='font-medium'>Price per box: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
+                                    <p className='font-medium'>No. Of Boxes: <span className='font-normal'>{prod.requiredBoxes}</span> ({prod.squareMeter} SQM)</p>
+                                 </div>
                               </div>
                               <p className='font-medium'>{prod.totalPrice.toFixed(2)}</p>
                            </div>
@@ -132,4 +138,4 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
    )
 }
 
-export default ProtectedRoute(Order)
+export default Order
