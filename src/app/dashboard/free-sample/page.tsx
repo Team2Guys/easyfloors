@@ -1,7 +1,8 @@
 import { cookies } from "next/headers";
 import { fetchOrders } from "config/fetch";
 import Order from "../abundant/Order";
-import { FETCH_ALL_FREE_SAMPLE_ORDERS } from "graphql/queries";
+import {FETCH_ALL_ORDERS } from "graphql/queries";
+import { Order as prodOrder } from 'types/prod'
 
 
 
@@ -12,8 +13,12 @@ const OrdersPage= async () => {
      allCookies.get("super_admin_access_token")?.value ||
      allCookies.get("admin_access_token")?.value;
    
-  const ordersData = await fetchOrders(token , FETCH_ALL_FREE_SAMPLE_ORDERS);
-  return <Order title="Free Sample Orders" ordersData={ordersData} />
+  const ordersData = await fetchOrders(token , FETCH_ALL_ORDERS);
+
+const filteredOrder  = ordersData.filter((value :prodOrder)=>value.isfreesample)
+
+console.log(filteredOrder, "filterdOrder", ordersData)
+  return <Order title="Free Sample Orders" ordersData={filteredOrder} />
 };
 
 export default OrdersPage;

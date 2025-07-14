@@ -2,7 +2,6 @@
 import { Modal, Table } from 'antd'
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb'
 import DefaultLayout from 'components/Dashboard/DefaultLayout'
-import ProtectedRoute from 'hooks/AuthHookAdmin'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { BsEyeFill } from 'react-icons/bs'
@@ -81,6 +80,13 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          width: 120,
       },
       {
+         title: 'Create At',
+         dataIndex: 'createdAt',
+         key: 'createdAt',
+         render: (text: string, record: prodOrder) =>
+            record?.checkoutDate ? new Date(record.checkoutDate).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
+      },
+      {
          title: "View",
          dataIndex: "view",
          key: "view",
@@ -147,4 +153,4 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
    )
 }
 
-export default ProtectedRoute(Order)
+export default Order
