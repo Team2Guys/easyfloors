@@ -217,11 +217,11 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
         }
       }
 
-      sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email,);
-      sendEmailHandler(existingOrder as orderEmailInput,);
+      await sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email,);
 
       return paymentStatus;
     } catch (error) {
+      console.log(error, "error")
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
     }
 

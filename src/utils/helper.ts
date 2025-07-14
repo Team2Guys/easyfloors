@@ -297,12 +297,8 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
       day: "2-digit",
       year: "numeric",
    }).toUpperCase();
-   const mailOptions = {
-      from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
-      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
-      subject: `Order has been confirmed @ EF against Order # ${orderId}`,
 
-      html: `<!DOCTYPE html>
+   const emailTemplate = `<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -633,7 +629,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
        <p style="text-align:center;" class="order-para">Thank you very much for the order <br> you placed with <a
              href="https://easyfloors.ae/">https://easyfloors.ae/</a></p>
        <a href="#" class="order-button"> ${orderDetails.isfreesample ? "View Your Order" : "View Your Free Sample Order"}</a>
-       <p style="text-align:center;" class="order-para">Your ${orderDetails.isfreesample ? "Free Sample order" : "order" } has now been sent to the warehouse to prepare for packing and
+       <p style="text-align:center;" class="order-para">Your ${orderDetails.isfreesample ? "Free Sample order" : "order"} has now been sent to the warehouse to prepare for packing and
           dispatch.</p>
        <p style="text-align:center;" class="order-para">Our team will be in touch soon to arrange the delivery with you.</p>
        <p style="text-align:center;" class="order-para">All The Best,</p>
@@ -660,11 +656,11 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                             alt="${product.name}" style="height:70px; width:70px;" class="product-img">
                          <div>
                             <p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 0px; color: black; font-weight: 600;">${product.name}</p>
-                          ${orderDetails.isfreesample ? "" : 
-                          
-                          `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>No .of Boxes:</b> ${product.requiredBoxes}(${product.squareMeter} SQM)</p>`
-                          
-                          }
+                          ${orderDetails.isfreesample ? "" :
+
+         `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>No .of Boxes:</b> ${product.requiredBoxes}(${product.squareMeter} SQM)</p>`
+
+      }
                          </div>
                       </div>
                    </td>
@@ -723,7 +719,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                       <table style="border-collapse: collapse;">
                          <tr>
                             <td colspan="5" style="padding: 8px;" class="table-font">Subtotal</td>
-                            <td style="padding: 8px;" class="table-font">${(totalPrice && shipmentFee) && totalPrice-shipmentFee || "Free"}</td>
+                            <td style="padding: 8px;" class="table-font">${(totalPrice && shipmentFee) && totalPrice - shipmentFee || "Free"}</td>
                          </tr>
                          <tr style="border-bottom: 2px solid #ccc;">
                             <td colspan="5" style="padding: 8px;" class="table-font">Shipment</td>
@@ -765,20 +761,37 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
 </body>
 
 </html>`
+
+
+
+   const mailOptions = {
+      from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
+      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
+      subject: `Order has been confirmed @ EF against Order # ${orderId}`,
+
+      html: emailTemplate
    };
 
 
    try {
-      transporter.sendMail(mailOptions, function (error, info) {
-         if (error) {
-            console.error('Error sending email:', error);
-            throw new Error(error.message || JSON.stringify(error))
 
-         } else {
-            console.log('Email sent:', info.response);
-            return info.response
-         }
+      await transporter.sendMail({
+         from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
+         to: `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
+         subject: `Order has been confirmed @ EF against Order # ${orderId}`,
+
+         html: emailTemplate
       });
+      
+      await transporter.sendMail({
+         from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
+         to: CustomerEmail,
+         subject: `Order has been confirmed @ EF against Order # ${orderId}`,
+
+         html: emailTemplate
+      });
+
+
    } catch (error) {
       throw new Error(error.message)
    }
