@@ -32,32 +32,32 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
          title: "Name",
          dataIndex: "firstName",
          key: "firstName",
-         width: 200,
+         width: 150,
          render: (_: number, record: prodOrder) => `${record.firstName} ${record.lastName}`
       },
       {
          title: "Email",
          dataIndex: "email",
          key: "email",
-         width: 250,
+         width: 200,
       },
       {
          title: "Phone Number",
          dataIndex: "phone",
          key: "phone",
-         width: 150,
+         width: 120,
       },
       {
          title: "Country",
          dataIndex: "country",
          key: "country",
-         width: 200,
+         width: 140,
       },
       {
          title: "Emirate",
          dataIndex: "emirate",
          key: "emirate",
-         width: 100,
+         width: 90,
       },
       ...(!isfreesample
          ? hasTransactionDate
@@ -66,8 +66,14 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
                   title: "Transaction Date",
                   dataIndex: "transactionDate",
                   key: "transactionDate",
-                  width: 120,
+                  width: 140,
                   render: (date: string) => new Date(date).toLocaleString(),
+               },
+               {
+                  title: "Total Amount",
+                  dataIndex: "totalPrice",
+                  key: "totalPrice",
+                  width: 100,
                },
             ]
             : [
@@ -75,29 +81,30 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
                   title: "Checkout Date",
                   dataIndex: "checkoutDate",
                   key: "checkoutDate",
-                  width: 120,
+                  width: 140,
                   render: (date: string) => new Date(date).toLocaleString(),
                },
                {
                   title: "Total Amount",
                   dataIndex: "totalPrice",
                   key: "totalPrice",
-                  width: 120,
+                  width: 100,
                },
             ]
-         : []),
+         : [
       {
          title: 'Create At',
          dataIndex: 'createdAt',
          key: 'createdAt',
+         width: 140,
          render: (text: string, record: prodOrder) =>
             record?.checkoutDate ? new Date(record.checkoutDate).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
-      },
+      },]),
       {
          title: "View",
          dataIndex: "view",
          key: "view",
-         width: 100,
+         width: 60,
          render: (_: unknown, record: prodOrder) => (
             <button onClick={() => showModal(record)} className="cursor-pointer">
                <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200" />
