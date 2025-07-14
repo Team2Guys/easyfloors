@@ -7,10 +7,9 @@ import React, { useState } from 'react'
 import { BsEyeFill } from 'react-icons/bs'
 import { Order as prodOrder } from 'types/prod'
 
-const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }) => {
+const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData: prodOrder[], isfreesample?: boolean }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedOrder, setSelectedOrder] = useState<prodOrder | null>(null);
-   console.log(ordersData, 'ordersData')
    const showModal = (record: prodOrder) => {
       setSelectedOrder(record);
       setIsModalOpen(true);
@@ -20,7 +19,7 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
       setIsModalOpen(false);
       setSelectedOrder(null);
    };
-  const hasTransactionDate = ordersData?.some(item => item.transactionDate);
+   const hasTransactionDate = ordersData?.some(item => item.transactionDate);
 
    const columns = [
       {
@@ -60,25 +59,33 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          key: "emirate",
          width: 100,
       },
-      hasTransactionDate ? {
-         title: "Transaction Date",
-         dataIndex: "transactionDate",
-         key: "transactionDate",
-         width: 120,
-         render: (date: string) => new Date(date).toLocaleString(),
-      } : {
-         title: "Checkout Date",
-         dataIndex: "checkoutDate",
-         key: "checkoutDate",
-         width: 120,
-         render: (date: string) => new Date(date).toLocaleString(),
-      },
-      {
-         title: "Total Amount",
-         dataIndex: "totalPrice",
-         key: "totalPrice",
-         width: 120,
-      },
+      ...(!isfreesample
+         ? hasTransactionDate
+            ? [
+               {
+                  title: "Transaction Date",
+                  dataIndex: "transactionDate",
+                  key: "transactionDate",
+                  width: 120,
+                  render: (date: string) => new Date(date).toLocaleString(),
+               },
+            ]
+            : [
+               {
+                  title: "Checkout Date",
+                  dataIndex: "checkoutDate",
+                  key: "checkoutDate",
+                  width: 120,
+                  render: (date: string) => new Date(date).toLocaleString(),
+               },
+               {
+                  title: "Total Amount",
+                  dataIndex: "totalPrice",
+                  key: "totalPrice",
+                  width: 120,
+               },
+            ]
+         : []),
       {
          title: 'Create At',
          dataIndex: 'createdAt',
@@ -93,7 +100,7 @@ const Order = ({ title, ordersData }: { title: string, ordersData: prodOrder[] }
          width: 100,
          render: (_: unknown, record: prodOrder) => (
             <button onClick={() => showModal(record)} className="cursor-pointer">
-           <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200"/>
+               <BsEyeFill className="text-primary cursor-pointer text-base transition duration-300 ease-in-out hover:scale-200" />
             </button>
          ),
       },
