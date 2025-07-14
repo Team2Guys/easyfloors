@@ -303,8 +303,7 @@ query AllOrders {
         is3DSecure
         checkoutDate
         shippingMethod
-        checkoutDAte
-        transactionDate
+        isfreesample
         products {
             id
             name

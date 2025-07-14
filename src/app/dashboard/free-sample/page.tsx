@@ -14,7 +14,10 @@ const OrdersPage= async () => {
      allCookies.get("admin_access_token")?.value;
    
   const ordersData = await fetchOrders(token , FETCH_ALL_ORDERS);
+
 const filteredOrder  = ordersData.filter((value :prodOrder)=>value.isfreesample)
+
+console.log(filteredOrder, "filterdOrder", ordersData)
   return <Order title="Free Sample Orders" ordersData={filteredOrder} />
 };
 
