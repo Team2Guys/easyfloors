@@ -158,6 +158,7 @@ export interface Order {
   is3DSecure: string,
   checkoutDate: string,
   products: orderProduct[],
+  isfreesample?:boolean
   shippingMethod: { name: string, deliveryDuration: string, freeShipping?: number, fee: number },
   __typename: string
 }
