@@ -15,10 +15,10 @@ const OrdersPage= async () => {
    
   const ordersData = await fetchOrders(token , FETCH_ALL_ORDERS);
 
-const filteredOrder  = ordersData.filter((value :prodOrder)=>value.isfreesample)
-
-console.log(filteredOrder, "filterdOrder", ordersData)
-  return <Order title="Free Sample Orders" ordersData={filteredOrder} />
+const filteredOrder  = ordersData.filter((value :prodOrder)=>value.isfreesample).sort(
+    (a: prodOrder, b: prodOrder) => new Date(b.checkoutDate).getTime() - new Date(a.checkoutDate).getTime()
+  );
+  return <Order title="Free Sample Orders" ordersData={filteredOrder} isfreesample />
 };
 
 export default OrdersPage;
