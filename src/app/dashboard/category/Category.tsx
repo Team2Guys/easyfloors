@@ -2,10 +2,8 @@
 
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import DefaultLayout from 'components/Dashboard/DefaultLayout';
-import ProtectedRoute from 'hooks/AuthHookAdmin';
 import { useEffect, useState } from 'react';
 import Addcategory from 'components/cat_subcat/Addcategory';
-;
 import { Category } from 'types/cat';
 import DashboardCat from 'components/cat_subcat/dashboard_cat';
 
@@ -44,4 +42,4 @@ const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   );
 };
 
-export default ProtectedRoute(CATEGORY);
+export default CATEGORY;

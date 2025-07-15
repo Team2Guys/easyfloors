@@ -3,7 +3,6 @@ import { Modal, Table } from 'antd'
 import { ColumnsType } from 'antd/es/table'
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb'
 import DefaultLayout from 'components/Dashboard/DefaultLayout'
-import ProtectedRoute from 'hooks/AuthHookAdmin'
 import React, { useState } from 'react'
 import { FaRegEye } from 'react-icons/fa'
 import { IAppointment } from 'types/types'
@@ -127,4 +126,4 @@ const Measurement = ({ appointments , title }: { appointments: IAppointment[] , 
    )
 }
 
-export default ProtectedRoute(Measurement)
+export default Measurement

@@ -4,7 +4,6 @@ import ViewNewsletter from 'components/Dashboard/ViewNewsletter';
 import { useState } from 'react';
 import DefaultLayout from 'components/Dashboard/DefaultLayout';
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
-import ProtectedRoute from 'hooks/AuthHookAdmin';
 
 interface Product {
   id: string;
@@ -28,4 +27,4 @@ const NewsLetter = ({ newsLetters }: { newsLetters: Product[] }) => {
   );
 };
 
-export default ProtectedRoute(NewsLetter);
+export default NewsLetter;

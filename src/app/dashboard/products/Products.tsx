@@ -2,7 +2,6 @@
 import Breadcrumb from "components/Dashboard/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "components/Dashboard/DefaultLayout";
 import ViewProduct from "components/Dashboard/dashboard_products/ViewProduct";
-import ProtectedRoute from "hooks/AuthHookAdmin";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { IAccessories, IProduct } from "types/prod";
@@ -87,4 +86,4 @@ const accessoryFlag = path === "/dashboard/accessories";
   );
 };
 
-export default ProtectedRoute(Product);
+export default Product;
