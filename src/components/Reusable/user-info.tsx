@@ -1,7 +1,6 @@
 import Container from 'components/common/container/Container';
 import { HomeUserInfo } from 'data/data';
 import Image from 'next/image';
-import React from 'react';
 
 
 

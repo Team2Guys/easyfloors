@@ -66,7 +66,7 @@ const Card: React.FC<productCardProps> = ({
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
       <div>
         <div className="relative">
-          <Link className="outline-none" onClick={(e) => {
+          <Link className={`outline-none block relative ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"}`} onClick={(e) => {
           if (dragging) {
             e.preventDefault();
             e.stopPropagation();
@@ -76,10 +76,10 @@ const Card: React.FC<productCardProps> = ({
             <Image
               src={product.posterImageUrl?.imageUrl ?? ''}
               alt={product.posterImageUrl?.altText ?? " "}
-              width={500}
-              height={200}
+              fill
               loading="lazy"
-              className={`w-full object-cover ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"} ${isAccessories ? "border border-gray-700 " : " "}`}
+              className={`object-cover ${isAccessories ? "border border-gray-700 " : " "}`}
+              sizes="(max-width: 768px) 200px, 300px"
             />
           </Link>
           {isAccessories && isSoldOut && (

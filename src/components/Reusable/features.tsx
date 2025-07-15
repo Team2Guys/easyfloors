@@ -1,5 +1,5 @@
 "use client";
-import React, {useRef } from "react";
+import { FC, useRef } from "react";
 import Image from "next/image";
 import Slider from "react-slick";
 import { FeaturesProps } from "types/type";
@@ -8,7 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import Link from "next/link";
 
-const Features: React.FC<FeaturesProps> = ({ items }) => {
+const Features: FC<FeaturesProps> = ({ items }) => {
   const sliderRef = useRef<Slider>(null);
   const sliderSettings = {
     dots: false,

@@ -1,5 +1,6 @@
 
-import BlogCard from "components/Categories/Categories";
+import dynamic from "next/dynamic";
+const  BlogCard = dynamic(() => import('components/Categories/Categories'))
 import Container from "components/common/container/Container";
 import { ISUBCATEGORY } from "types/cat";
 import CustomSwiper from "./Swiper";
