@@ -8,7 +8,6 @@ import { MdOutlineDashboard, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { BiCategoryAlt, BiEnvelope } from 'react-icons/bi';
 import { GrCodeSandbox, GrUserAdmin } from 'react-icons/gr';
 import { useAppSelector } from 'components/Others/HelperRedux';
-import { IoSettingsOutline } from 'react-icons/io5';
 import { TfiShoppingCartFull } from 'react-icons/tfi';
 import { TbGardenCartOff } from 'react-icons/tb';
 
@@ -630,17 +629,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </Link>
                 </li>
               ) : null}
-
-              <li>
-                <Link
-                  href="/dashboard/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname.includes('settings') && 'bg-black dark:bg-primary'
-                    }`}
-                >
-                  <IoSettingsOutline size={20} />
-                  Settings
-                </Link>
-              </li>
             </ul>
           </div>
 

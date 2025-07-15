@@ -6,10 +6,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
-import Card from "components/Card/Card";
+const Card = dynamic(() => import('components/Card/Card'));
 import { features } from "data/data";
 import { Category, EDIT_CATEGORY, ISUBCATEGORY } from "types/cat";
 import { getSubcategoryOrder } from "data/home-category";
+import dynamic from "next/dynamic";
 
 const CategorySlider = ({ categories }: { categories: Category[] }) => {
 

@@ -3,8 +3,9 @@ import { TiArrowRight } from "react-icons/ti";
 import { HeroMainProps } from "types/type";
 import SaleTimer from "./SaleTimer";
 import Image from "next/image";
+import { FC } from "react";
 
-const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
+const HeroMain: FC<HeroMainProps> = ({ items }) => {
   return (
     <div className="relative flex flex-col w-full h-[320px] sm:h-[600px] xl:h-[885px]">
       {items.map((item, index) => (
@@ -17,9 +18,8 @@ const HeroMain: React.FC<HeroMainProps> = ({ items }) => {
             alt="hero"
             priority
             fill
-            loading="eager"
-            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 100vw, 100vw"
-
+            fetchPriority="high"
+            sizes="(max-width: 640px) 100px, 800px"
           />
 
           <div className="bg-background hidden sm:block">

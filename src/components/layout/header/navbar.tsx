@@ -17,7 +17,9 @@ const Navbar = ({ categories, products}: INavbar) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openMenus, setOpenMenus] = useState<{ [key: string]: boolean }>({});
   const [isScrolled, setIsScrolled] = useState(false);
-const pathname = usePathname()
+  //eslint-disable-next-line
+  const [menuItems, setMenuItems] = useState<any[]>(staticMenuItems);
+  const pathname = usePathname()
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 5);
@@ -46,35 +48,50 @@ const pathname = usePathname()
     });
   };
 
-  const menuItems = staticMenuItems.map((staticItem) => {
-    const matchedCategory = categories?.find((cat) => cat.custom_url === staticItem.href);
-    if (!matchedCategory) return staticItem;
+  useEffect(() => {
+    if (!categories || categories.length === 0) return;
 
-    const reCallFlag = matchedCategory?.recalledSubCats && matchedCategory?.recalledSubCats.length > 0;
-    const subcategories: ISUBCATEGORY[] = (reCallFlag ? matchedCategory.recalledSubCats : matchedCategory.subcategories) as ISUBCATEGORY[] || [];
+    const updatedMenu = staticMenuItems.map((staticItem) => {
+      const matchedCategory = categories.find(
+        (cat) => cat.custom_url === staticItem.href
+      );
 
-    return {
-      ...staticItem,
-      submenu: subcategories?.map((sub) => ({
-        label: sub.name,
-        href: `/${sub?.category?.RecallUrl || matchedCategory.RecallUrl}/${sub.custom_url}`,
-        image: sub.posterImageUrl?.imageUrl || "/assets/default-image.png",
-        price: sub.price,
-      })) || [],
-    };
-  });
+      if (!matchedCategory) return staticItem;
 
+      const reCallFlag =
+        matchedCategory.recalledSubCats &&
+        matchedCategory.recalledSubCats.length > 0;
+
+      const subcategories: ISUBCATEGORY[] =
+        (reCallFlag
+          ? matchedCategory.recalledSubCats
+          : matchedCategory.subcategories) || [];
+
+      return {
+        ...staticItem,
+        submenu: subcategories.map((sub) => ({
+          label: sub.name,
+          href: `/${sub?.category?.RecallUrl || matchedCategory.RecallUrl}/${sub.custom_url}`,
+          image: sub.posterImageUrl?.imageUrl || "/assets/default-image.png",
+          price: sub.price,
+        })),
+      };
+    });
+
+    setMenuItems(updatedMenu);
+  }, [categories]);
   return (
     <nav className={`bg-white w-full z-50 max-sm:py-2 max-lg:pb-2 font-inter  ${isScrolled ? "bg-white text-black top-0 fixed" : "bg-white text-black sticky top-0"}`}>
       <Container className="flex items-center max-sm:gap-4 justify-between  mt-1 sm:mt-3 ">
         <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
           <Link href="/">
             <Image
-              width={400}
-              height={400}
-              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto pb-2"
+              width={200}
+              height={200}
+              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto md:pb-2"
               src="/assets/images/logo.webp"
               alt="logo"
+              sizes="(max-width: 768px) 54px, 200px"
             />
           </Link>
         </div>

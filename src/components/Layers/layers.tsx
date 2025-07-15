@@ -1,5 +1,4 @@
 import { blocksData } from 'data/data';
-import React from 'react';
 import Image from 'next/image';
 
 const Layers = () => {
@@ -23,14 +22,17 @@ const Layers = () => {
                 ))}
               </ul>
             </div>
+            <div className='w-full h-[100px] md:h-[300px] px-2 md:px-0 relative'>
               <Image
                 src={block.imageUrl}
                 alt={block.heading}
                 loading='lazy'
-                width={500} 
-                height={300} 
-                className="w-full h-[100px]  md:h-[300px] px-2 md:px-0 object-contain "
+                fetchPriority='low'
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100px, 600px"
               />
+            </div>
           </div>
         </div>
       ))}

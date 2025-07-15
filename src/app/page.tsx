@@ -1,19 +1,27 @@
 
-import dynamic from "next/dynamic";
-const HeroMain = dynamic(() => import("components/Reusable/hero"));
+import HeroMain from 'components/Reusable/hero';
+import dynamic from 'next/dynamic';
+const Features = dynamic(() => import("components/Reusable/features"));
+const FloorItems = dynamic(() => import("components/FloorItems/FloorItems"));
+const ImageCompare = dynamic(() => import("components/image-compare/image-compare"));
+const Layers = dynamic(() => import("components/Layers/layers"));
+const UserInfo = dynamic(() => import("components/Reusable/user-info"));
+const Faqs = dynamic(() => import("components/Faqs/Faqs"));
+const SampleBanner = dynamic(() => import("components/Reusable/SampleBanner"));
+const AmCategory = dynamic(() => import("components/Categories/AmCategory"));
+const CategorySlider = dynamic(() => import("components/CategorySlider/category-slider"));
 import Container from "components/common/container/Container";
-import Features from "components/Reusable/features";
-import { faqs, featureItems, heroItems, staticMenuItems } from "data/data";
-import FloorItems from "components/FloorItems/FloorItems";
-import ImageCompare from "components/image-compare/image-compare";
-import Layers from "components/Layers/layers";
-import UserInfo from "components/Reusable/user-info";
-import Faqs from "components/Faqs/Faqs";
-import SampleBanner from "components/Reusable/SampleBanner";
+import {
+  faqs,
+  featureItems,
+  heroItems,
+  staticMenuItems,
+} from "data/data";
+import {
+  FETCH_ALL_WHAT_AM_I,
+  FETCH_HEADER_CATEGORIES,
+} from "graphql/queries";
 import { fetchCategories, fetchSubCategories } from "config/fetch";
-import AmCategory from "components/Categories/AmCategory";
-import CategorySlider from "components/CategorySlider/category-slider";
-import { FETCH_ALL_WHAT_AM_I, FETCH_HEADER_CATEGORIES } from "graphql/queries";
 import { ICategory } from "types/type";
 import { whatAmISorting } from "data/home-category";
 import { Metadata } from "next";
