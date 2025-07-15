@@ -88,7 +88,7 @@ const Navbar = ({ categories, products}: INavbar) => {
             <Image
               width={200}
               height={200}
-              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto pb-2"
+              className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto md:pb-2"
               src="/assets/images/logo.webp"
               alt="logo"
               sizes="(max-width: 768px) 54px, 200px"
