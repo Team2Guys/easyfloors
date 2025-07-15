@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef, lazy } from "react";
+import { useState, useEffect, useRef, lazy } from "react";
 import CartIcon from "components/svg/cart-icon";
 const FreeSample = lazy(() => import('components/svg/free-sample'))
 import ProfileIcon from "components/svg/user-icon";

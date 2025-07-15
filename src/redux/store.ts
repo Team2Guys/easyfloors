@@ -4,9 +4,7 @@ import usersSlice from './slices/Admin/AdminsSlice';
 
 
 const rootReducer = combineReducers({
- 
-    // usrSlice: usrSlice,
-  usersSlice: usersSlice,
+   usersSlice: usersSlice,
 });
 
 export const store = configureStore({

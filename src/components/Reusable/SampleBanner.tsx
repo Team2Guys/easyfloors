@@ -1,4 +1,3 @@
-'use client'
 import Container from 'components/common/container/Container'
 import Image from 'next/image'
 const bannerImage = '/assets/images/Home/free_sample_image.webp'
@@ -21,6 +20,8 @@ const SampleBanner = () => {
             fill
             quality={85}
             className='!relative'
+            sizes="(max-width: 768px) 200px, 600px"
+
           />
         </div>
         <div className='flex border-b-[#00000033] border-b-[1px] justify-between w-full items-end mt-5 sm:border-b-2 relative'>
@@ -33,6 +34,7 @@ const SampleBanner = () => {
                 alt='image'
                 loading='lazy'
                 className='animate-moveTruck !relative'
+                sizes="(max-width: 768px) 100px, 200px"
               />
             </div>
           </div>

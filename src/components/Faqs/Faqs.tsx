@@ -1,6 +1,6 @@
 "use client";
 import Container from "components/common/container/Container";
-import React, { useState } from "react";
+import { useState } from "react";
 import { HiMinus, HiPlus } from "react-icons/hi";
 import { FAQItem } from "types/type";
 

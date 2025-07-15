@@ -1,7 +1,6 @@
 'use client';
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import DefaultLayout from 'components/Dashboard/DefaultLayout';
-import ProtectedRoute from 'hooks/AuthHookAdmin';
 import { useEffect, useState } from 'react';
 import ViewSubcategries from 'components/cat_subcat/ViewSubcategries';
 import {ISUBCATEGORY } from 'types/cat';
@@ -48,4 +47,4 @@ const SubCategoryComponent = ({
   );
 };
 
-export default ProtectedRoute(SubCategoryComponent);
+export default SubCategoryComponent;

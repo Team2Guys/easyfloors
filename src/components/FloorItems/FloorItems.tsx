@@ -12,7 +12,7 @@ const FloorItems = () => {
         {FloorItemsData.map((item, index) => (
           <div key={index} className="flex flex-col items-center font-inter justify-center ">
             <h3 className="md:text-3xl text-14 md:font-bold md:mb-5 mb-2 whitespace-nowrap">{item.title}</h3>
-            <div className='max-xsm:h-[100px]'
+            <div className='h-[100px] xs:h-full 2xl:h-auto w-full'
                 onMouseEnter={() => serHoverImage(index)}
                 onMouseLeave={() => serHoverImage(null)}
             >
@@ -22,6 +22,7 @@ const FloorItems = () => {
                 loading='lazy'
                 fill
                 className="!relative"
+                sizes="(max-width: 768px) 100px, 600px"
               />
             </div>
           </div>
