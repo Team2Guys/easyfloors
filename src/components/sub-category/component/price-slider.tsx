@@ -49,7 +49,7 @@ const PriceSlider = ({
         renderTrack={renderTrack}
       />
 
-      <p className="mt-2 pl-5 font-inter text-12 xl:text-14 pt-1 text-[#475156]">
+      <p className="mt-2 xl:pl-5 font-inter text-12 xl:text-14 pt-1 text-[#475156]">
         Price:{' '}
         <span className="font-normal">
           <span className="font-currency font-normal text-18"></span>{' '}

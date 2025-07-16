@@ -7,6 +7,7 @@ import { headers } from "next/headers";
 import Category from "./Cetagory";
 import { IProduct } from "types/prod";
 import { staticMenuItems } from "data/data";
+import CategorySkeleton from "components/skaletons/CategorySkeleton";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -92,7 +93,7 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
                       return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
                   })   || []
   return (
-    <Suspense fallback="Loading .....">
+    <Suspense fallback={<CategorySkeleton />} >
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
     </Suspense>
   );

@@ -84,16 +84,16 @@ export const productFilter = ({
     if (selectedProductFilters[key].length > 0) {
       filtered = filtered?.filter(product => {
         const productValue = product[productKey];;
-      
+
         if (Array.isArray(productValue)) {
-          return productValue.some((val:AdditionalInformation) =>
+          return productValue.some((val: AdditionalInformation) =>
             selectedProductFilters[key].includes(val?.name.trim())
           );
         }
-        else if (key === 'plankLength'){
+        else if (key === 'plankLength') {
           return selectedProductFilters[key].includes(product.sizes?.[0].height || "");
         }
-      
+
         return selectedProductFilters[key].includes(productValue || "");
       })
 
@@ -158,19 +158,19 @@ export const filterAndSort = (
         item.custom_url.includes(urlIncludes)
     )
     .sort((a, b) => Number(a.price) - Number(b.price));
-    
-
-    export const formatAED = (price: number | undefined | null): string => {
-      if (!price || isNaN(price)) return "0.00";
-      return price.toLocaleString("en-AE", {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      });
-    };
 
 
+export const formatAED = (price: number | undefined | null): string => {
+  if (!price || isNaN(price)) return "0.00";
+  return price.toLocaleString("en-AE", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
-    export const DateFormatHandler = (input: Date | string) => {
+
+
+export const DateFormatHandler = (input: Date | string) => {
   if (!input) return "Not available";
 
   const parsedDate = typeof input === "string" ? new Date(input) : input;

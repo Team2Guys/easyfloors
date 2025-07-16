@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Accordion from "./component/accordion";
 import PriceSlider from "./component/price-slider";
 import Checkbox from "components/ui/checkbox";
 import RatioButtons from "components/ui/radio-button";
-import { Category, FilterState, ISUBCATEGORY } from "types/cat";
+import { CategoriesFilter, Category, FilterState, ISUBCATEGORY } from "types/cat";
 import Link from "next/link";
 import { FIlterprops } from "types/types";
 import { usePathname } from "next/navigation";
-import { AdditionalInformation, IProduct } from "types/prod";
 import { IfilterValues } from "types/type";
 import { getSubcategoryOrder } from "data/home-category";
-
-
+import { desiredCategoryOrder, filterTitles } from "data/filter";
+import { extractUniqueAttributes, filterProductsCountHanlder, getColorCount, handleClearFilter, handleFilterSelection } from "lib/filterhelper";
 
 const Filters = ({
   catgories,
@@ -33,17 +32,40 @@ const Filters = ({
     polar?: Category;
     richmond?: Category;
   }>({});
+  const [orderedCategories, setOrderedCategories] = useState<CategoriesFilter[]>([]);
   const path = usePathname();
-  const desiredCategoryOrder = [
-    "SPC FLOORING",
-    "LVT FLOORING",
-    "POLAR FLOORING",
-    "RICHMOND FLOORING"
-  ];
 
-  const orderedCategories = [...catgories].sort((a, b) => {
-    return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
-  });
+    useEffect(() => {
+    if (!catgories?.length) return;
+
+    const sorted = [...catgories]
+      .filter(cat => !(isColection && cat.name.toUpperCase() === "ACCESSORIES"))
+      .sort((a, b) => {
+        return desiredCategoryOrder.indexOf(a.name.toUpperCase()) - desiredCategoryOrder.indexOf(b.name.toUpperCase());
+      })
+      .map(category => {
+        const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
+        let subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) || [];
+
+        subcategories = [...subcategories].sort((a, b) => {
+          const orderA = getSubcategoryOrder(a.name);
+          const orderB = getSubcategoryOrder(b.name);
+          if (orderA !== orderB) {
+            return orderA - orderB;
+          } else {
+            return (Number(a.price) || 0) - (Number(b.price) || 0);
+          }
+        });
+
+        return {
+          ...category,
+          sortedSubcategories: subcategories,
+        };
+      });
+
+    setOrderedCategories(sorted);
+  }, [catgories, isColection]);
+
   useEffect(() => {
     const richmond = catgories.find(
       (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
@@ -54,137 +76,27 @@ const Filters = ({
     setCategoryState({ polar, richmond });
   }, [catgories]);
 
-  const filterTitles = {
-    Colours: "Colours",
-    commercialWarranty: "Commercial Warranty",
-    residentialWarranty: "Residential Warranty",
-    thicknesses: "Plank Thickness",
-    plankWidth: "Plank Width",
-    plankLength: "Plank Length"
-  };
 
-  const extractUniqueAttributes = (category: Category) => {
-    const commercialWarrantySet = new Set<string>();
-    const residentialWarrantySet = new Set<string>();
-    const thicknessSet = new Set<string>();
-    const plankWidthSet = new Set<string>();
-    const plankLengthSet = new Set<string>();
-    const colorSet = new Set<string>();
-    if (!isColection) {
-      category.products?.forEach((product) => {
-        if (product.thickness) thicknessSet.add(product.thickness);
-        if (product.CommmericallWarranty) commercialWarrantySet.add(product.CommmericallWarranty);
-        if (product.ResidentialWarranty) residentialWarrantySet.add(product.ResidentialWarranty);
-        if (product.plankWidth) plankWidthSet.add(product.plankWidth);
-        if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
-        if (product.colors) {
-          product.colors.forEach((color: AdditionalInformation) => {
-            colorSet.add(color.name.trim());
-          });
-        }
-      });
-    } else {
-      sortedSubcategories?.forEach((category: ISUBCATEGORY) => {
-        if (category.sizes && category.sizes[0].height) plankLengthSet.add(category.sizes[0].height);
-        if (category.sizes && category.sizes[0].width) plankWidthSet.add(category.sizes[0].width);
-        if (category.sizes && category.sizes[0].thickness) thicknessSet.add(category.sizes[0].thickness);
-      });
-    }
+useEffect(() => {
+  if(!category && (sortedSubcategories && sortedSubcategories.length > 0 )) return;
+  const {
+    commercialWarrantySet,
+    residentialWarrantySet,
+    thicknessSet,
+    plankWidthSet,
+    plankLengthSet,
+    colorSet,
+  } = extractUniqueAttributes(category, sortedSubcategories, isColection);
 
-    setUniqueFilters({
-      commercialWarranty: Array.from(commercialWarrantySet),
-      residentialWarranty: Array.from(residentialWarrantySet),
-      thicknesses: Array.from(thicknessSet),
-      plankWidth: Array.from(plankWidthSet),
-      plankLength: Array.from(plankLengthSet),
-      Colours: Array.from(colorSet),
-    });
-  };
-
-
-
-  useEffect(() => {
-    extractUniqueAttributes(category);
-  }, [category]);
-
-
-  const getColorCount = (targetColor: string): number => {
-    return category.products?.filter((product: IProduct) =>
-      product.colors?.some(color => color.name.trim().toLowerCase() === targetColor.toLowerCase())
-    ).length || 0;
-  };
-  const handleYesWaterProof = (text: string) => {
-    if (text === 'yes') {
-
-      setIsWaterProof(isWaterProof === true ? null : true)
-    } else {
-      setIsWaterProof(isWaterProof === false ? null : false)
-    }
-  }
-
-  const handleFilterSelection = (filterKey: keyof FilterState, value: string) => {
-    setSelectedProductFilters(prevFilters => ({
-      ...prevFilters,
-      [filterKey]: prevFilters[filterKey].includes(value)
-        ? prevFilters[filterKey].filter(item => item !== value)
-        : [...prevFilters[filterKey], value],
-    }));
-  };
-
-  const handleClearFilter = () => {
-    setPriceValue([49, 149])
-    setSelectedProductFilters({
-      Colours: [],
-      commercialWarranty: [],
-      residentialWarranty: [],
-      thicknesses: [],
-      plankWidth: [],
-      plankLength: []
-    });
-    setIsWaterProof(null)
-  }
-
-  const filtervalues: IfilterValues = {
-    commercialWarranty: "CommmericallWarranty",
-    residentialWarranty: "ResidentialWarranty",
-    thicknesses: "thickness",
-    plankWidth: "plankWidth",
-    plankLength: "plankLength"
-  }
-
-
-  const filterProductsCountHanlder = (key: keyof IfilterValues, ValuesType: string) => {
-    if (isColection) {
-      const filterprod = sortedSubcategories?.filter((product: ISUBCATEGORY) => {
-        if (key === 'thicknesses') {
-          const values = product.sizes?.[0].thickness
-          return values == ValuesType;
-        } else if (key === 'plankWidth') {
-          const values = product.sizes?.[0].width
-          return values == ValuesType;
-        } else if (key === 'plankLength') {
-          const values = product.sizes?.[0].height
-          return values == ValuesType;
-        }
-
-      })
-
-      return filterprod?.length || 0
-    }
-    const filterprod = category?.products?.filter((product: IProduct) => {
-      if (key === 'plankLength') {
-        const values = product.sizes?.[0].height
-        return values == ValuesType;
-      }
-      const values = product[filtervalues[key] as keyof IProduct]
-      return values == ValuesType;
-    })
-
-    return filterprod.length || 0
-
-
-  }
-
+  setUniqueFilters({
+    commercialWarranty: Array.from(commercialWarrantySet),
+    residentialWarranty: Array.from(residentialWarrantySet),
+    thicknesses: Array.from(thicknessSet),
+    plankWidth: Array.from(plankWidthSet),
+    plankLength: Array.from(plankLengthSet),
+    Colours: Array.from(colorSet),
+  });
+}, [category, sortedSubcategories, isColection]);
 
 
   return (
@@ -192,37 +104,21 @@ const Filters = ({
       <div className="border-b-2 pb-5">
         <p className="text-16 font-medium uppercase pb-2  text-[#191C1F] font-inter">Filter by Category</p>
 
-        {orderedCategories.map((category, index) => {
-          const reCallFlag = category.recalledSubCats && category.recalledSubCats.length > 0;
-          if (isColection && category.name === 'ACCESSORIES') return;
-          let subcategories: ISUBCATEGORY[] = (reCallFlag ? category.recalledSubCats : category.subcategories) as ISUBCATEGORY[] || [];
-          subcategories = [...subcategories].sort((a, b) => {
-            return getSubcategoryOrder(a.name) - getSubcategoryOrder(b.name);
-          });
-          subcategories = [...subcategories].sort((a, b) => {
-            const orderA = getSubcategoryOrder(a.name);
-            const orderB = getSubcategoryOrder(b.name);
-            if (orderA !== orderB) {
-              return orderA - orderB;
-            } else {
-              return (Number(a.price) || 0) - (Number(b.price) || 0);
-            }
-          });
-
-          return (
-            <Accordion key={index} title={category.name} >
-              <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-
-                {subcategories?.map((subCategory: ISUBCATEGORY, i: number) => (
-                  <Link href={`/${subCategory?.category?.RecallUrl || category.RecallUrl}/${subCategory.custom_url}`} key={i} className="cursor-pointer hover:text-primary block">
-                    {subCategory.name}
-                  </Link>
-                ))}
-              </ul>
-            </Accordion>
-          )
-        }
-        )}
+        {orderedCategories.map((category, index) => (
+        <Accordion key={index} title={category.name}>
+          <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
+            {category.sortedSubcategories?.map((subCategory, i) => (
+              <Link
+                key={i}
+                href={`/${subCategory?.category?.RecallUrl || category.RecallUrl}/${subCategory.custom_url}`}
+                className="cursor-pointer hover:text-primary block"
+              >
+                {subCategory.name}
+              </Link>
+            ))}
+          </ul>
+        </Accordion>
+      ))}
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
             {Object.values(categoryState ?? {}).map((item) => {
@@ -301,7 +197,7 @@ const Filters = ({
               <li>
                 <button
                   className={`cursor-pointer ${isWaterProof ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
-                  onClick={() => handleYesWaterProof('yes')}
+                  onClick={() => setIsWaterProof(isWaterProof === true ? null : true)}
                 >
                   Yes
                 </button>
@@ -309,7 +205,7 @@ const Filters = ({
               <li>
                 <button
                   className={`cursor-pointer ${!isWaterProof && isWaterProof !== undefined && isWaterProof !== null ? 'text-primary' : 'text-gray-600 hover:text-primary'}`}
-                  onClick={() => handleYesWaterProof('no')}
+                  onClick={() => setIsWaterProof(isWaterProof === false ? null : false)}
                 >
                   No
                 </button>
@@ -331,9 +227,9 @@ const Filters = ({
                   let length;
                   let remaingCategory
                   if (filterKey === 'Colours') {
-                    length = getColorCount(item)
+                    length = getColorCount(item , category)
                   } else {
-                    remaingCategory = filterProductsCountHanlder(filterKey as keyof IfilterValues, item)
+                    remaingCategory = filterProductsCountHanlder(filterKey as keyof IfilterValues, item ,category , sortedSubcategories)
                   }
 
                   return (
@@ -345,7 +241,7 @@ const Filters = ({
                           ? "text-primary"
                           : "text-gray-600 hover:text-primary"
                           }`}
-                        onClick={() => handleFilterSelection(filterKey as keyof FilterState, item)}
+                        onClick={() => handleFilterSelection(filterKey as keyof FilterState, item , setSelectedProductFilters)}
                       >
                         {item + (length ? ` (${length})` : remaingCategory ? ` (${remaingCategory})` : "")}
                       </button>
@@ -371,7 +267,7 @@ const Filters = ({
           selectedProductFilters.residentialWarranty.length > 0 ||
           selectedProductFilters.plankWidth.length > 0) && (
             <div className="flex justify-center mt-4">
-              <button className="border border-[#cc7644] text-[#cc7644] w-[106px] h-[40px] text-14 rounded-[3px] transition hover:bg-[#cc7644] hover:text-white font-inter" onClick={handleClearFilter}>
+              <button className="border border-[#cc7644] text-[#cc7644] w-[106px] h-[40px] text-14 rounded-[3px] transition hover:bg-[#cc7644] hover:text-white font-inter" onClick={() => handleClearFilter(setPriceValue, setSelectedProductFilters, setIsWaterProof)} >
                 Clear Filters
               </button>
             </div>)
