@@ -164,6 +164,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                       priority
                       fetchPriority="high"
                       loading="eager"
+                      quality={75}
                       src={product.imageUrl}
                       className={`w-full ${imageheight
                         ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px]  border border-black"
@@ -250,6 +251,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                   priority
                   fetchPriority="high"
                   loading="eager"
+                  quality={75}
                   src={product.imageUrl}
                   className={`w-full px-1 `}
                   alt={product.altText || "Thumbnail"}
