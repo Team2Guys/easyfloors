@@ -1,41 +1,24 @@
-import Container from 'components/common/container/Container';
+import React from 'react';
 import { boxData } from 'data/data';
 import Link from 'next/link';
-import React from 'react';
 import Image from 'next/image';  
 
-const NeedHelp: React.FC = () => {
+const NeedHelp = () => {
     return (
-        <Container>
-            <div className="flex justify-center lg:gap-10 sm:gap-5 md:gap-10 gap-2 w-full">
-                {boxData.map((box) => (
-                    <div key={box.id} className="md:py-10 py-4 md:px-0 px-2 text-center border-[#CCCCCC] border-2 w-1/2 font-inter mx-auto flex flex-col justify-between">
-                        <div>
-
-                            <Image
-                                src={box.icon} 
-                                alt={box.title}
-                                width={64}  
-                                height={64} 
-                                className="mx-auto mb-1 sm:mb-4 w-full sm:h-16 h-6 object-contain"
-                            />
-                            <div className='max-w-xl mx-auto'>
-                                <h2 className=" text-12 sm:text-base md:text-3xl font-semibold">{box.title}</h2>
-                                <p className="px-2 xl:px-0 md:text-lg text-12 sm:text-sm mt-1 md:mt-4 text-justify">{box.description}</p>
-                            </div>
-                        </div>
-                            <div className="md:mt-10 mt-2">
-                                <Link
-                                    href={box.link}
-                                    className="md:py-3 px-1 py-2 xs:py-2 xs:px-2 md:text-lg text-10 sm:text-sm md:px-12 bg-primary font-inter font-medium xs:font-light text-white"
-                                >
-                                    {box.buttonText}
-                                </Link>
-                            </div>
-                    </div>
-                ))}
-            </div>
-        </Container>
+    <div className="grid grid-cols-2 justify-center lg:gap-10 sm:gap-5 gap-2 container px-2 sm:px-4 mx-auto">
+    {boxData.map((box,index) => (
+    <div key={index} className="md:py-10 py-4 md:px-0 px-2 text-center border-[#CCCCCC] border-2 font-inter flex flex-col justify-between">
+        <div>
+         <Image src={box.icon} alt={box.title} width={64} height={64}  className="mx-auto mb-1 sm:mb-4 w-full sm:h-16 h-6 object-contain"/>
+        <div className='max-w-xl mx-auto'>
+            <h2 className="text-12 sm:text-base md:text-3xl font-semibold">{box.title}</h2>
+            <p className="px-2 xl:px-0 md:text-lg text-12 sm:text-sm mt-1 md:mt-4 text-justify">{box.description}</p>
+        </div>
+        </div>
+        <Link href={box.link} className="md:text-lg text-[9px] sm:px-12 px-2 py-3 bg-primary w-fit mx-auto mt-2 text-white" >{box.buttonText}</Link>
+    </div>
+        ))}
+    </div>
     );
 };
 

@@ -6,11 +6,11 @@ import TopLink from "./top-link";
 import SocialIcon from "components/Reusable/social-icon";
 import UserIcon from "./user-icon";
 
-const TopNav = ({ className = "" }: { className?: string }) => {
+const TopNav = () => {
   const phoneNumber = process.env.NEXT_PUBLIC_PHONE_NUMBER;
   const email = process.env.NEXT_PUBLIC_EMAIL;
   return (
-    <div className={`bg-primary py-2 relative ${className}`}>
+    <div className="bg-primary py-2 relative">
       <Container className="flex justify-between items-center">
         <div>
           <SocialIcon className=" lg:hidden" />
@@ -21,6 +21,7 @@ const TopNav = ({ className = "" }: { className?: string }) => {
                 height={20}
                 src="/assets/images/icon/telephone.png"
                 alt="email"
+                loading="lazy"
               />
               <p>{phoneNumber}</p>
             </Link>
@@ -29,6 +30,7 @@ const TopNav = ({ className = "" }: { className?: string }) => {
                 width={20}
                 height={14}
                 src="/assets/images/icon/email.png"
+                loading="lazy"
                 alt="email"
               />
               <p>{email}</p>
