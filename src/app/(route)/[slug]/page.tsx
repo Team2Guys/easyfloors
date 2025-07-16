@@ -1,5 +1,4 @@
 import { fetchCategories, fetchSingleCategory } from "config/fetch";
-import { Suspense } from "react";
 import { Category as ICategory, ISUBCATEGORY } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
@@ -83,18 +82,16 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
 
 
   const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
-                      const indexA = staticMenuItems.findIndex(
-                          (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
-                      );
-                      const indexB = staticMenuItems.findIndex(
-                          (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
-                      );
-                      return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-                  })   || []
+    const indexA = staticMenuItems.findIndex(
+        (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+    );
+    const indexB = staticMenuItems.findIndex(
+        (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+    );
+    return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
+})   || []
   return (
-    <Suspense fallback="Loading .....">
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
-    </Suspense>
   );
 };
 
