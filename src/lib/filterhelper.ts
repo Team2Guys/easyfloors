@@ -13,11 +13,11 @@ export const extractUniqueAttributes = (category: Category, sortedSubcategories?
   const colorSet = new Set<string>();
   if (!isColection) {
     category.products?.forEach((product) => {
-      if (product.thickness) thicknessSet.add(product.thickness);
+      if (product.thickness) thicknessSet.add(product.thickness.replace(/\s+/g, '').trim());
       if (product.CommmericallWarranty) commercialWarrantySet.add(product.CommmericallWarranty);
       if (product.ResidentialWarranty) residentialWarrantySet.add(product.ResidentialWarranty);
-      if (product.plankWidth) plankWidthSet.add(product.plankWidth);
-      if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height);
+      if (product.plankWidth) plankWidthSet.add(product.plankWidth.replace(/\s+/g, '').trim());
+      if (product.sizes && product.sizes[0].height) plankLengthSet.add(product.sizes[0].height.replace(/\s+/g, '').trim());
       if (product.colors) {
         product.colors.forEach((color: AdditionalInformation) => {
           colorSet.add(color.name.trim());
@@ -26,9 +26,9 @@ export const extractUniqueAttributes = (category: Category, sortedSubcategories?
     });
   } else {
     sortedSubcategories?.forEach((category: ISUBCATEGORY) => {
-      if (category.sizes && category.sizes[0].height) plankLengthSet.add(category.sizes[0].height);
-      if (category.sizes && category.sizes[0].width) plankWidthSet.add(category.sizes[0].width);
-      if (category.sizes && category.sizes[0].thickness) thicknessSet.add(category.sizes[0].thickness);
+      if (category.sizes && category.sizes[0].height) plankLengthSet.add(category.sizes[0].height.replace(/\s+/g, '').trim());
+      if (category.sizes && category.sizes[0].width) plankWidthSet.add(category.sizes[0].width.replace(/\s+/g, '').trim());
+      if (category.sizes && category.sizes[0].thickness) thicknessSet.add(category.sizes[0].thickness.replace(/\s+/g, '').trim());
     });
   }
   return {
@@ -49,14 +49,30 @@ export const getColorCount = (targetColor: string, category: Category): number =
 };
 
 
-export const handleFilterSelection = (filterKey: keyof FilterState, value: string, setSelectedProductFilters: React.Dispatch<React.SetStateAction<FilterState>>) => {
-  setSelectedProductFilters(prevFilters => ({
-    ...prevFilters,
-    [filterKey]: prevFilters[filterKey].includes(value)
-      ? prevFilters[filterKey].filter(item => item !== value)
-      : [...prevFilters[filterKey], value],
-  }));
+export const handleFilterSelection = (
+  filterKey: keyof FilterState,
+  value: string,
+  setSelectedProductFilters: React.Dispatch<React.SetStateAction<FilterState>>
+) => {
+  // Normalize only for certain keys
+  const normalizeKeys: (keyof FilterState)[] = ['thicknesses', 'plankWidth', 'plankLength'];
+  const normalizedValue = normalizeKeys.includes(filterKey)
+    ? value.replace(/\s+/g, '').trim()
+    : value.trim();
+
+  setSelectedProductFilters(prevFilters => {
+    const currentValues = prevFilters[filterKey];
+    const isSelected = currentValues.includes(normalizedValue);
+
+    return {
+      ...prevFilters,
+      [filterKey]: isSelected
+        ? currentValues.filter(item => item !== normalizedValue)
+        : [...currentValues, normalizedValue],
+    };
+  });
 };
+
 
 
 export const handleClearFilter = (setPriceValue: React.Dispatch<React.SetStateAction<[number, number]>>, setSelectedProductFilters: React.Dispatch<React.SetStateAction<FilterState>>, setIsWaterProof: React.Dispatch<React.SetStateAction<boolean | null | undefined>>) => {
@@ -73,34 +89,52 @@ export const handleClearFilter = (setPriceValue: React.Dispatch<React.SetStateAc
 }
 
 
-export const filterProductsCountHanlder = (key: keyof IfilterValues, ValuesType: string, category: Category, sortedSubcategories?: ISUBCATEGORY[], isColection?: boolean) => {
+export const filterProductsCountHanlder = (
+  key: keyof IfilterValues,
+  ValuesType: string,
+  category: Category,
+  sortedSubcategories?: ISUBCATEGORY[],
+  isColection?: boolean
+): number => {
+  const normalizeIfNeeded = (k: keyof IfilterValues, value: string | undefined) => {
+    if (!value) return '';
+    const keysToNormalize: (keyof IfilterValues)[] = ['thicknesses', 'plankWidth', 'plankLength'];
+    return keysToNormalize.includes(k) ? value.replace(/\s+/g, '').trim() : value.trim();
+  };
+
+  const normalizedTargetValue = normalizeIfNeeded(key, ValuesType);
+
   if (isColection) {
-    const filterprod = sortedSubcategories?.filter((product: ISUBCATEGORY) => {
+    const filtered = sortedSubcategories?.filter((subcategory) => {
+      const size = subcategory.sizes?.[0];
+      if (!size) return false;
+
       if (key === 'thicknesses') {
-        const values = product.sizes?.[0].thickness
-        return values == ValuesType;
+        return normalizeIfNeeded(key, size.thickness) === normalizedTargetValue;
       } else if (key === 'plankWidth') {
-        const values = product.sizes?.[0].width
-        return values == ValuesType;
+        return normalizeIfNeeded(key, size.width) === normalizedTargetValue;
       } else if (key === 'plankLength') {
-        const values = product.sizes?.[0].height
-        return values == ValuesType;
+        return normalizeIfNeeded(key, size.height) === normalizedTargetValue;
       }
+      return false;
+    });
 
-    })
-
-    return filterprod?.length || 0
+    return filtered?.length || 0;
   }
-  const filterprod = category?.products?.filter((product: IProduct) => {
+
+  const filtered = category.products?.filter((product: IProduct) => {
     if (key === 'plankLength') {
-      const values = product.sizes?.[0].height
-      return values == ValuesType;
+      const size = product.sizes?.[0];
+      return normalizeIfNeeded(key, size?.height) === normalizedTargetValue;
+    } else if (key === 'plankWidth' || key === 'thicknesses') {
+      const rawValue = product[filtervalues[key] as keyof IProduct] as string | undefined;
+      return normalizeIfNeeded(key, rawValue) === normalizedTargetValue;
     }
-    const values = product[filtervalues[key] as keyof IProduct]
-    return values == ValuesType;
-  })
 
-  return filterprod?.length || 0
+    // default (non-size filters)
+    const rawValue = product[filtervalues[key] as keyof IProduct] as string | undefined;
+    return rawValue?.trim() === ValuesType.trim();
+  });
 
-
-}
+  return filtered?.length || 0;
+};

@@ -88,6 +88,9 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImage
             height={400}
             src={image}
             alt={altText || title || "breadcrumb-image"}
+            sizes="100wv"
+            priority
+            fetchPriority="high"
           />
        {!isImagetext && (
             <div className="absolute inset-0 flex justify-center items-center text-white text-center">

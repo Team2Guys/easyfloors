@@ -79,25 +79,34 @@ export const productFilter = ({
     { key: "plankWidth", productKey: "plankWidth" },
     { key: "plankLength", productKey: "plankLength" }
   ];
+  const normalizeKeys: (keyof FilterState)[] = ['thicknesses', 'plankWidth', 'plankLength'];
 
   filterMapping.forEach(({ key, productKey }) => {
-    if (selectedProductFilters[key].length > 0) {
+    const selectedValues = selectedProductFilters[key];
+    if (selectedValues.length > 0) {
       filtered = filtered?.filter(product => {
-        const productValue = product[productKey];;
+        let productValue = product[productKey];
+
+        if (key === 'plankLength') {
+          productValue = product.sizes?.[0]?.height;
+        }
+
+        if (typeof productValue === 'string') {
+          productValue = normalizeKeys.includes(key)
+            ? productValue.replace(/\s+/g, '').trim()
+            : productValue.trim();
+        }
 
         if (Array.isArray(productValue)) {
           return productValue.some((val: AdditionalInformation) =>
-            selectedProductFilters[key].includes(val?.name.trim())
+            selectedValues.includes(val?.name.trim())
           );
         }
-        else if (key === 'plankLength') {
-          return selectedProductFilters[key].includes(product.sizes?.[0].height || "");
-        }
 
-        return selectedProductFilters[key].includes(productValue || "");
-      })
+        return selectedValues.includes(productValue || '');
+      });
 
-      selectedProductFilters[key].forEach((value: string) => {
+      selectedValues.forEach((value: string) => {
         appliedFilters.push({ name: key, value });
       });
     }
