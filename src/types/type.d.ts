@@ -83,7 +83,6 @@ export interface BoxItem {
   buttonText: string;
 }
 export interface BoxData {
-  id: number;
   title: string;
   description: string;
   buttonText: string;

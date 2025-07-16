@@ -9,27 +9,24 @@ const WhatAmICetagory: React.FC<{ subcat: ISUBCATEGORY }> = ({ subcat }) => {
       <h1 className="text-2xl md:text-4xl font-bold text-center md:mb-8 mb-4">
         {subcat.whatAmiTopHeading}
       </h1>
-
-      <div className="space-y-6  mt-10">
-        {subcat.whatamIdetails.map((section, index: number) => (
+      <div className="space-y-6 mt-10">
+        {subcat.whatamIdetails.map((section, index) => (
           <div key={index}>
-            {section.name &&
-              <h2 className="text-xl md:text-2xl font-semibold mb-2">{section.name}</h2>
-
-            }
-            <p>{section.detail}</p>
+            {section.name &&<h2 className="text-xl md:text-2xl font-semibold mb-2">{section.name}</h2>}
+            <p className="max-sm:text-sm">{section.detail}</p>
           </div>
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-2 md:gap-6 mt-10">
+      <div className="grid grid-cols-2 gap-2 md:gap-6 mt-10 ">
         {subcat?.whatAmiImage?.map((img, index) => (
-          <div key={index} className="w-full">
+          <div key={index} className="w-full h-[130px] md:h-[300px] lg:h-[400px] xl:h-[500px] relative">
             <Image
               src={img.imageUrl}
               alt={img.altText || "SubCategory text"}
-              width={1000}
-              height={1000}
-              className="w-full h-[130px] md:h-[300px] lg:h-[400px] xl:h-[500px] object-fill"
+              fill
+              priority
+              fetchPriority="high"
+              quality={75}
             />
           </div>
         ))}

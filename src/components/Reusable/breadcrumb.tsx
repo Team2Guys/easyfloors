@@ -24,9 +24,7 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImage
 
   return (
     <div className={` w-full pt-3  `}>
-     <div
-  className={`transition-all duration-300 ease-in-out z-30 w-full py-3 bg-white border-b ${isScrolled ? "fixed top-[35px] sm:top-[45px] lg:top-[76px] shadow-md" : ""}`}
-     >
+     <div className={`z-30 w-full py-3 bg-white border-b ${isScrolled ? "fixed top-[35px] sm:top-[45px] lg:top-[76px] shadow-md" : ""}`}>
         <Container className="text-lg flex items-center gap-2 sm:gap-4">
           {/* Home Link */}
           <Link href="/" className="hover:underline text-[9px] xs:text-11 sm:text-12 md:text-14 text-[#9F9F9F] font-inter capitalize">
@@ -81,11 +79,10 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImage
      </div>
 
       {image && (
-        <div className="relative mt-2">
+        <div className="relative h-[110px] sm:h-[200px] xl:h-[332px]">
           <Image
-            className={`object-fill w-full h-[110px] sm:h-[200px] xl:h-[332px] ${imageClass}`}
-            width={1400}
-            height={400}
+            className={`object-fill w-full  ${imageClass}`}
+            fill
             src={image}
             alt={altText || title || "breadcrumb-image"}
             sizes="100wv"
