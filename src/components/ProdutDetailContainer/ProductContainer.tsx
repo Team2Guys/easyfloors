@@ -38,9 +38,6 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
     (img) => img.color === productData?.productImages?.[0]?.colorCode
   );
 
-
-
-
   const matchedProductImages = productData.productImages?.find((img) => img.colorCode === productData.productImages?.[0]?.colorCode || "");
   return (
     <Container className={`flex flex-wrap lg:flex-nowrap gap-5 w-full mt-10 border-b pb-5 ${isQuickView ? '2xl:gap-10' : '2xl:gap-20'}  ${className}`}>
