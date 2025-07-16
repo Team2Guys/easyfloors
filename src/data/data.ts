@@ -567,7 +567,6 @@ export const faqs: FAQItem[] = [
 
 export const boxData: BoxData[] = [
   {
-    id: 1,
     title: 'Need help with measurement?',
     description: `We have a detailed How to Measure Guide to make it easy. If you need further assistance, feel free to contact us—we're here to help!`,
     buttonText: 'Book Your Appointment',
@@ -575,7 +574,6 @@ export const boxData: BoxData[] = [
     link: '/measurement-appointment',
   },
   {
-    id: 2,
     title: 'Need help with installation?',
     description: `Our easy click-lock system makes installation simple—no glue or nails are required. If self-fitting isn’t your thing, let us take care of the hassle. One call or message and we’ll send our expert teams to take care of the installation.`,
     buttonText: 'Book Your Appointment',
