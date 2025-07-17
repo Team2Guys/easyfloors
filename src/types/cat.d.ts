@@ -29,6 +29,7 @@ export interface Category {
     custom_url: string
     createdAt: Date;
     updatedAt: Date;
+
   }[]
 
   whatAmiImageBanner?: ProductImage
@@ -38,6 +39,10 @@ export interface Category {
   stock?: number
   boxCoverage?: string,
   __typename?: string;
+}
+
+export interface CategoriesFilter extends Category {
+  sortedSubcategories: ISUBCATEGORY[]
 }
 
 export interface EDIT_CATEGORY extends Category {

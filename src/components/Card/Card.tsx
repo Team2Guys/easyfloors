@@ -75,7 +75,7 @@ const Card: React.FC<productCardProps> = ({
           >
             <Image
               src={product.posterImageUrl?.imageUrl ?? ''}
-              alt={product.posterImageUrl?.altText ?? " "}
+              alt={product.posterImageUrl?.altText ?? product.name}
               fill
               loading="lazy"
               className={`object-cover ${isAccessories ? "border border-gray-700 " : " "}`}
@@ -90,7 +90,7 @@ const Card: React.FC<productCardProps> = ({
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
               {!isAccessories &&
-              <button className="bg-white p-1 shadow transition free-sample-hover" onClick={() => handleAddToStorage(
+              <button className="bg-white p-1 shadow transition free-sample-hover" aria-label="Add to free sample" onClick={() => handleAddToStorage(
                 product,
                 Number(product.price) * (Number(product?.boxCoverage)|| 1),
                 Number(product.price) * (Number(product?.boxCoverage)|| 1),
@@ -111,6 +111,7 @@ const Card: React.FC<productCardProps> = ({
               }
               <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
               id="AddToWishlist"
+              aria-label="Add to wishlist"
               onClick={() => {
               handleAddToStorage(
                 product,
@@ -130,7 +131,7 @@ const Card: React.FC<productCardProps> = ({
                 <FiHeart size={20} />
               </button>
 
-              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" onClick={(e) => handleModel(e)} >
+              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" aria-label="open quick view" onClick={(e) => handleModel(e)} >
                 <FiEye size={20} />
               </button>
             </div>

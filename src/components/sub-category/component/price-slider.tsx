@@ -35,7 +35,7 @@ const PriceSlider = ({
   };
 
   return (
-    <div>
+    <>
       <ReactSlider
         className="w-full h-[1px] rounded-full relative"
         thumbClassName="w-4 h-4 bg-white border-2 border-[#cc7644] rounded-full cursor-pointer shadow-md -top-[6px]"
@@ -49,7 +49,7 @@ const PriceSlider = ({
         renderTrack={renderTrack}
       />
 
-      <p className="mt-2 pl-5 font-inter text-12 xl:text-14 pt-1 text-[#475156]">
+      <p className="mt-2 xl:pl-5 font-inter text-12 xl:text-14 pt-1 text-[#475156]">
         Price:{' '}
         <span className="font-normal">
           <span className="font-currency font-normal text-18"></span>{' '}
@@ -58,7 +58,7 @@ const PriceSlider = ({
           {priceValue[1]}/m²
         </span>
       </p>
-    </div>
+    </>
   );
 };
 

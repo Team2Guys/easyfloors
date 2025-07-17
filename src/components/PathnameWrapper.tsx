@@ -1,13 +1,13 @@
 'use client';
-import React from 'react';
 import { usePathname } from 'next/navigation';
 import Footer from './footer/footer';
 import Header from './layout/header/Header';
 import NeedHelp from './NeedHelp/NeedHelp';
 import { ApolloProvider } from '@apollo/client';
 import client from 'config/apolloClient';
+import { ReactNode } from 'react';
 
-const PathnameWrapper = ({ children }: { children: React.ReactNode }) => {
+const PathnameWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname() as string;
 
   const withoutHeaderPages = ['/dashboard', '/thanks', '/login', '/signup', '/forgot-password'];

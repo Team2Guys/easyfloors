@@ -6,6 +6,8 @@ import { headers } from "next/headers";
 import Category from "./Cetagory";
 import { IProduct } from "types/prod";
 import { staticMenuItems } from "data/data";
+import CategorySkeleton from "components/skaletons/CategorySkeleton";
+import { Suspense } from "react";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -13,8 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!Category) return notFound()
   const headersList = await headers();
   const domain = headersList.get('x-forwarded-host') || headersList.get('host') || '';
-const protoHeader = headersList.get('x-forwarded-proto');
-const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'https';
+  const protoHeader = headersList.get('x-forwarded-proto');
+  const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'https';
   const pathname = headersList.get('x-invoke-path') || '/';
 
   const fullUrl = `${protocol}://${domain}${pathname}`;
@@ -47,7 +49,7 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
       description: description,
       url: url,
       images: NewImage,
-            type:'website'
+      type: 'website'
 
     },
     alternates: {
@@ -83,15 +85,17 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
 
   const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
     const indexA = staticMenuItems.findIndex(
-        (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
+      (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
     );
     const indexB = staticMenuItems.findIndex(
-        (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
+      (item) => item.label.toLowerCase() === b.name.trim().toLowerCase()
     );
     return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
-})   || []
+  }) || []
   return (
+    <Suspense fallback={<CategorySkeleton />} >
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
+    </Suspense>
   );
 };
 
