@@ -136,8 +136,9 @@ const Checkout = () => {
 
     const handlePayment = async (orderData: FormInitialValues,) => {
         try {
+            setIsLoading(true)
             if (allItemsAreFreeSamples && !subTotal) {
-                setIsLoading(true)
+
                 await initiateFreesample({ variables: { createFreesample: orderData } });
                 const db = await openDB();
                 const tx = db.transaction("cartfreeSample", "readwrite");
@@ -145,7 +146,10 @@ const Checkout = () => {
                 store.clear();
                 window.dispatchEvent(new Event("cartfreeSampleUpdated"));
                 router.push('/thank-you?isFreeSample=true')
-                setIsLoading(false)
+                setTimeout(() => {
+                    setIsLoading(false)
+
+                }, 2000);
                 return
             }
 
@@ -168,6 +172,11 @@ const Checkout = () => {
             showToast('error', errorMessage);
 
             return err
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false)
+
+            }, 2000);
         }
     };
 
@@ -179,7 +188,7 @@ const Checkout = () => {
                 const freeSamples = await getFreeSamplesCart();
                 const allItemsAreFreeSamples = freeSamples.length > 0 && freeSamples.every(item => item.isfreeSample);
                 seallItemsAreFreeSamples(allItemsAreFreeSamples)
-                const totalproducts  =[...items, ...freeSamples]
+                const totalproducts = [...items, ...freeSamples]
 
                 setMergedCart(totalproducts);
                 setTotalProducts(totalproducts?.length);
