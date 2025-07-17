@@ -50,7 +50,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
     const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(isFreeSample);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    console.log(allItemsAreFreeSamples,'allItemsAreFreeSamples')
     useEffect(() => {
         const savedEmirate = localStorage.getItem('selectedEmirate');
         if (savedEmirate) {
@@ -137,16 +136,22 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
 
     const handlePayment = async (orderData: FormInitialValues,) => {
         try {
+            setIsLoading(true)
             if (allItemsAreFreeSamples && !subTotal) {
-                setIsLoading(true)
-                await initiateFreesample({ variables: { createFreesample: orderData } });
+
+                const {data} = await initiateFreesample({ variables: { createFreesample: orderData } });
+                const orderid = data.freeSample.paymentKey
+                console.log(orderid, "data", data)
                 const db = await openDB();
-                const tx = db.transaction("cartfreeSample", "readwrite");
-                const store = tx.objectStore("cartfreeSample");
+                const tx = db.transaction("freeSample", "readwrite");
+                const store = tx.objectStore("freeSample");
                 store.clear();
-                window.dispatchEvent(new Event("cartfreeSampleUpdated"));
-                router.push('/thank-you?isFreeSample=true')
-                setIsLoading(false)
+                window.dispatchEvent(new Event("freeSampleUpdated"));
+                router.push(`/thank-you?isFreeSample=true&order=${orderid}`)
+                setTimeout(() => {
+                    setIsLoading(false)
+
+                }, 2000);
                 return
             }
 
@@ -169,6 +174,11 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
             showToast('error', errorMessage);
 
             return err
+        } finally {
+            setTimeout(() => {
+                setIsLoading(false)
+
+            }, 2000);
         }
     };
 

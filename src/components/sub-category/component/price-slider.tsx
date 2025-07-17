@@ -35,7 +35,7 @@ const PriceSlider = ({
   };
 
   return (
-    <div>
+    <>
       <ReactSlider
         className="w-full h-[1px] rounded-full relative"
         thumbClassName="w-4 h-4 bg-white border-2 border-[#cc7644] rounded-full cursor-pointer shadow-md -top-[6px]"
@@ -58,7 +58,7 @@ const PriceSlider = ({
           {priceValue[1]}/m²
         </span>
       </p>
-    </div>
+    </>
   );
 };
 

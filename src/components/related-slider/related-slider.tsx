@@ -68,7 +68,7 @@ const RelatedSlider = ({ products, isAccessories }: RelatedSliderProps) => {
         Frequently Bought Together
       </h2>
       {products.length > 0 ? (
-        <div className="slider-container pt-4 sm:pt-10 w-full overflow-hidden">
+        <div className="slider-container pt-4 sm:pt-10 w-full overflow-hidden" aria-hidden="true">
           <Slider {...settings}>
             {products.map((product: IProduct, index: number) => (
               <div key={index} className="pb-7">

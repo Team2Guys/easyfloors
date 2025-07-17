@@ -161,9 +161,13 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     <Image
                       width={150}
                       height={150}
+                      priority
+                      fetchPriority="high"
+                      loading="eager"
+                      quality={75}
                       src={product.imageUrl}
                       className={`w-full ${imageheight
-                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:size-[150px] border border-black"
+                        ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px]  border border-black"
                         : "border"
                         }`}
                       alt={product.altText || "Thumbnail"}
@@ -205,7 +209,7 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     src={product.imageUrl}
                     className={`w-full ${imageheight
                         ? "h-[44px] sm:h-[90px] lg:h-[93px] xl:h-[126px] 2xl:h-[150px]"
-                        : "h-auto"
+                        : "h-auto 2xl:h-[140px]"
                       }`}
                     alt={product.altText || "Thumbnail"}
                   />
@@ -237,16 +241,19 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
             {combinedImages.map((product, index) => (
               <div
                 key={index}
-                className={`relative ${product.plankWidth && "py-2 sm:py-0"}`}
-              >
-                <Image
-                  width={800}
-                  height={800}
-                  src={product.imageUrl}
-                  className={`w-full px-1 ${imageheight
+                className={`relative ${imageheight
                     ? "h-[273px] sm:h-[520px] lg:h-[535px] xl:h-[700px] 2xl:h-[810px]"
                       : "h-[273px] sm:h-[520px] md:h-[530px] lg:h-[435px] xl:h-[530px] 2xl:h-[740px]"
-                    }`}
+                    } ${product.plankWidth && "py-2 sm:py-0"}`}
+              >
+                <Image
+                  fill
+                  priority
+                  fetchPriority="high"
+                  loading="eager"
+                  quality={75}
+                  src={product.imageUrl}
+                  className={`w-full px-1 `}
                   alt={product.altText || "Thumbnail"}
                 />
 
@@ -305,16 +312,18 @@ const Thumbnail = ({ ThumnailImage, ThumnailBottom, hideThumnailBottom = false, 
                     onClick={(e) => handleThumbnailClick(globalIndex,e)}
 
                   >
+                    <div className="w-full h-[39px] sm:h-20 md:h-28 lg:h-24 2xl:h-32 relative">
+                      
                     <Image
-                      width={150}
-                      height={150}
+                      fill
                       src={array.imageUrl}
                       alt={array.altText}
-                      className={`w-full max-sm:h-[39px] p-[2px] object-contain border-2 ${globalIndex === currentSlide
+                      className={` p-[2px] object-cover border-2 ${globalIndex === currentSlide
                         ? "border-primary"
                         : "border-transparent"
-                        }`}
+                      }`}
                     />
+                    </div>
                     <p className="font-semibold text-[8px] md:text-14 lg:text-12 xl:text-16">
                       {getStaticTitle(index)}
                     </p>
