@@ -537,7 +537,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                     <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedEmirate ? formatAED(total) : formatAED(subTotal)}</span></p>
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
-                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting || isLoading} >
+                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting || isLoading || totalProducts === 0} >
                                         {isSubmitting || isLoading ? "Processing..." : allItemsAreFreeSamples ? 'Place Order' : "Pay Now"}
                                     </button>
                                 </div>
