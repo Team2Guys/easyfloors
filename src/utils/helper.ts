@@ -628,7 +628,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
        <p style="text-align:center;" class="order-para">Dear <b>Customer,</b></p>
        <p style="text-align:center;" class="order-para">Thank you very much for the order <br> you placed with <a
              href="https://easyfloors.ae/">https://easyfloors.ae/</a></p>
-       <a href="https://easyfloors.ae/track-order/${orderDetails.orderId}" class="order-button"> ${orderDetails.isfreesample ? "View Your Order" : "View Your Free Sample Order"}</a>
+       <a href="https://easyfloors.ae/track-order/${orderDetails.orderId}" class="order-button"> ${orderDetails.isfreesample ? " View Your Free Sample Order" : "View Your Order"}</a>
        <p style="text-align:center;" class="order-para">Your ${orderDetails.isfreesample ? "Free Sample order" : "order"} has now been sent to the warehouse to prepare for packing and
           dispatch.</p>
        <p style="text-align:center;" class="order-para">Our team will be in touch soon to arrange the delivery with you.</p>
