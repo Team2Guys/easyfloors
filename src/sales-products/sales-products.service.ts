@@ -263,7 +263,7 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
       })
 
       await sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email);
-      return { paymentKey: "Free sample has been booked" };
+      return { paymentKey: orderId };
     } catch (error) {
       console.log(error, "error")
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
