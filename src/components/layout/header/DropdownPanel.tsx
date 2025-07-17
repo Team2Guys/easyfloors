@@ -74,7 +74,17 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
       const isCartPage = pathname === "/cart";
       const isWishlistPage = pathname === "/wishlist";
       const isFreeSamplePage = pathname === "/freesample";
+      const isFreeSampleCheckoutPage = pathname === "/freesample-checkout";
+      const isCheckoutPage = pathname === "/checkout";
 
+      if (type === "freeSample" && isFreeSampleCheckoutPage) {
+        return;
+      }
+
+      // ✅ Prevent cart modal on checkout page
+      if (type === "cart" && isCheckoutPage) {
+        return;
+      }
       // Special case: On free sample page, only show cart popup for cart updates
       if (isFreeSamplePage && type === "cart") {
         setIsOpen(true);
@@ -297,7 +307,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                 <Link href={viewLink} onClick={closePanel} className="w-full block text-center bg-primary text-white py-1">
                   View {type === "cart" ? "Cart" : type === "wishlist" ? "Wishlist" : "Free Samples"}
                 </Link>
-        
+
                 <div className="border text-center w-full border-primary hover:bg-primary hover:text-white transition duration-300 py-1">
                   <Link href="/collections" onClick={closePanel} className=" text-center  px-4 py-2">Continue Shopping</Link>
                 </div>
