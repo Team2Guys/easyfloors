@@ -179,9 +179,10 @@ const Checkout = () => {
                 const freeSamples = await getFreeSamplesCart();
                 const allItemsAreFreeSamples = freeSamples.length > 0 && freeSamples.every(item => item.isfreeSample);
                 seallItemsAreFreeSamples(allItemsAreFreeSamples)
+                const totalproducts  =[...items, ...freeSamples]
 
-                setMergedCart([...items, ...freeSamples]);
-                setTotalProducts(items.length);
+                setMergedCart(totalproducts);
+                setTotalProducts(totalproducts?.length);
                 const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 0);
                 setSubTotal(subTotalPrice);
             } catch {
