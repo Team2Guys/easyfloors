@@ -762,17 +762,6 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
 
 </html>`
 
-
-
-   const mailOptions = {
-      from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
-      to: CustomerEmail ? CustomerEmail : `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
-      subject: `Order has been confirmed @ EF against Order # ${orderId}`,
-
-      html: emailTemplate
-   };
-
-
    try {
 
       await transporter.sendMail({

@@ -217,7 +217,7 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
         }
       }
 
-      await sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email,);
+      await sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email);
 
       return paymentStatus;
     } catch (error) {
@@ -262,9 +262,7 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
         }
       })
 
-      await sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email,);
-      await sendEmailHandler(existingOrder as orderEmailInput,);
-
+      await sendEmailHandler(existingOrder as orderEmailInput, existingOrder.email);
       return { paymentKey: "Free sample has been booked" };
     } catch (error) {
       console.log(error, "error")
