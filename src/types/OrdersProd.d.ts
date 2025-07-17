@@ -30,6 +30,7 @@ export interface ORDERS_PROD {
     currency:string
     shipmentFee:number
     __typename: string;
+    checkoutDate?:string
   }
   
   export interface PostPaymentStatusResponse {
