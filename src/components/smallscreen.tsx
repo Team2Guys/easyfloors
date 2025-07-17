@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
-import { FaArrowLeftLong } from "react-icons/fa6";
-import {  handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+import { handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
 import Container from "./common/container/Container";
 import ItemCard from "./itemcard";
 import { ProductTableProps } from "types/type";
 
 
-const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) => {
+const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProps) => {
   const accessoryItems = (items ?? []).filter((item) => item.category === "Accessories");
   const productItems = (items ?? []).filter((item) => item.category !== "Accessories");
 
@@ -33,9 +33,9 @@ const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) 
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
                 {productItems.slice(0, isSamplePage ? 5 : productItems.length).map((product, index) => (
                   <div key={product.id}>
-                     {index === 0 && (
-                    <p className="font-inter font-semibold text-12">Product</p>
-                  )}
+                    {index === 0 && (
+                      <p className="font-inter font-semibold text-12">Product</p>
+                    )}
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
@@ -51,29 +51,33 @@ const SmallScreen = ({isSamplePage = false, items,setItems }:ProductTableProps) 
             {/* Accessories Section */}
             {accessoryItems.length > 0 && (
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
-              {accessoryItems.slice(0, isSamplePage ? 5 : accessoryItems.length).map((product, index) => (
-                <div key={product.id}>
-                  {index === 0 && (
-                    <p className="font-inter font-semibold text-12 mt-7">Accessories</p>
-                  )}
-                  <ItemCard
-                    product={product}
-                    isSamplePage={isSamplePage}
-                    onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
-                    onQuantityChange={(id, delta) =>
-                      setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
-                    }
-                    
-                    onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
-                  />
-                </div>
-              ))}
+                {accessoryItems.slice(0, isSamplePage ? 5 : accessoryItems.length).map((product, index) => (
+                  <div key={product.id}>
+                    {index === 0 && (
+                      <p className="font-inter font-semibold text-12 mt-7">Accessories</p>
+                    )}
+                    <ItemCard
+                      product={product}
+                      isSamplePage={isSamplePage}
+                      onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
+                      onQuantityChange={(id, delta) =>
+                        setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
+                      }
+
+                      onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>
         )}
       </div>
-      <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10'><FaArrowLeftLong /> Continue shopping</Link>
+      <div className={`flex items-center ${isSamplePage ? 'justify-between' : 'justify-start'}`}>
+        <Link href="/collections" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'><FaArrowLeftLong /> Continue shopping</Link>
+        {isSamplePage &&<Link href="/freesample-checkout" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'>Checkout <FaArrowRightLong /></Link>
+      }
+      </div>
     </Container>
   );
 };

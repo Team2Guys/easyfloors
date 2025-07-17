@@ -76,6 +76,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
             </button>
           </div>
         )}
+        {!isSamplePage && 
         <button
         id="AddToCart"
           onClick={() => onAddToCart(product)}
@@ -84,7 +85,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
           }`}
         >
           <GrCart /> Add to Cart
-        </button>
+        </button>}
       </div>
     </div>
   );
