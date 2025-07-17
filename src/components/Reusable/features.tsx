@@ -57,6 +57,7 @@ const Features: FC<FeaturesProps> = ({ items }) => {
         onClick={() => sliderRef.current?.slickPrev()}
         className="absolute -left-1 xs:left-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
         aria-label="Previous slide"
+        aria-hidden="true"
       >
         <MdKeyboardArrowLeft className="h-6 w-6 sm:h-5 sm:w-5  " />
       </button>
@@ -64,6 +65,7 @@ const Features: FC<FeaturesProps> = ({ items }) => {
         onClick={() => sliderRef.current?.slickNext()}
         className="absolute -right-1 xs:right-0 top-1/2 -translate-y-1/2 z-20 xl:hidden"
         aria-label="Next slide"
+        aria-hidden="true"
       >
         <MdKeyboardArrowRight className="h-6 w-6 sm:h-5 sm:w-5 "  />
 

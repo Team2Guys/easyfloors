@@ -68,7 +68,7 @@ const AreaCalculator = ({ setArea, setUnit, requiredBoxes, convertedArea, area, 
         <p className="text-16 2xl:text-20 font-light">Price Per Box : <span className="font-medium"><span className="font-currency text-16 sm:text-18 2xl:text-25 "></span> <span>{pricePerBox.toFixed(2)}</span></span></p>
         <p className="text-16 2xl:text-20 font-light flex items-center gap-3">
           Accessories
-          <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1">
+          <button onClick={() => setIsOpen(true)} className="border border-black rounded-full p-1" name="Accessories">
             <PiQuestionMark className="text-lg font-extralight" />
           </button>
         </p>
