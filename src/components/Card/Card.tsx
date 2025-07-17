@@ -32,6 +32,7 @@ const Card: React.FC<productCardProps> = ({
   dragging
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showCaption, setShowCaption] = useState('');
   const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -67,11 +68,11 @@ const Card: React.FC<productCardProps> = ({
       <div>
         <div className="relative">
           <Link className={`outline-none block relative ${sldier ? "h-[130px] sm:h-52" : "h-[107px] md:h-[275px]"}`} onClick={(e) => {
-          if (dragging) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        }} href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
+            if (dragging) {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          }} href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
           >
             <Image
               src={product.posterImageUrl?.imageUrl ?? ''}
@@ -89,51 +90,98 @@ const Card: React.FC<productCardProps> = ({
           )}
           {!sldier &&
             <div className="flex absolute duration-300 gap-2 group-hover:opacity-100 opacity-0 right-2 top-2 transition-opacity">
-              {!isAccessories &&
-              <button className="bg-white p-1 shadow transition free-sample-hover" aria-label="Add to free sample" onClick={() => handleAddToStorage(
-                product,
-                Number(product.price) * (Number(product?.boxCoverage)|| 1),
-                Number(product.price) * (Number(product?.boxCoverage)|| 1),
-                Number(product?.boxCoverage), 
-                1,
-                product.subcategory?.custom_url || "",
-                ('category' in product ? product.category?.RecallUrl ?? "Accessories" : "Accessories"),
-                "freeSample",
-                "productImages" in product ? product.productImages?.[0]?.imageUrl ?? product.posterImageUrl?.imageUrl : product.posterImageUrl?.imageUrl,
-                product?.boxCoverage,
-                "m",
-                selectedColor,
-          
-              )}
-              >
-                <FreeSample />
-              </button>
-              }
-              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition "
-              id="AddToWishlist"
-              aria-label="Add to wishlist"
-              onClick={() => {
-              handleAddToStorage(
-                product,
-                Number(product.price) * (Number(product?.boxCoverage)|| 1),
-                Number(product.price) * (Number(product?.boxCoverage)|| 1),
-                Number(product?.boxCoverage) || 1, 
-                1,
-                product.subcategory?.custom_url || "",
-                ('category' in product ? product.category?.RecallUrl ?? "Accessories" : "Accessories"),
-                "wishlist",
-                "productImages" in product ? product.productImages?.[0]?.imageUrl ?? product.posterImageUrl?.imageUrl : product.posterImageUrl?.imageUrl,
-                product?.boxCoverage,
-                "m",
-                  );
-              }}
-              >
-                <FiHeart size={20} />
-              </button>
+              {!isAccessories && (
+                <div className="relative card-icon-btn">
+                  <button
+                    className="bg-white p-1 shadow transition free-sample-hover"
+                    aria-label="Add to free sample"
+                    onClick={() =>
+                      handleAddToStorage(
+                        product,
+                        Number(product.price) * (Number(product?.boxCoverage) || 1),
+                        Number(product.price) * (Number(product?.boxCoverage) || 1),
+                        Number(product?.boxCoverage),
+                        1,
+                        product.subcategory?.custom_url || "",
+                        'category' in product
+                          ? product.category?.RecallUrl ?? "Accessories"
+                          : "Accessories",
+                        "freeSample",
+                        "productImages" in product
+                          ? product.productImages?.[0]?.imageUrl ??
+                          product.posterImageUrl?.imageUrl
+                          : product.posterImageUrl?.imageUrl,
+                        product?.boxCoverage,
+                        "m",
+                        selectedColor
+                      )
+                    }
+                    onMouseEnter={() => setShowCaption('Add to Free Sample')}
+                    onMouseLeave={() => setShowCaption('')}
+                  >
+                    <FreeSample />
+                  </button>
 
-              <button className="bg-white p-1 shadow hover:bg-primary hover:text-white transition" aria-label="open quick view" onClick={(e) => handleModel(e)} >
-                <FiEye size={20} />
-              </button>
+                  {/* Tooltip for Free Sample */}
+                  <span className={`show-caption-btn absolute left-1/2 -translate-x-1/2 -bottom-6 bg-gray-800 text-white text-xs px-2 py-1 rounded transition whitespace-nowrap z-10 ${showCaption === 'Add to Free Sample' ? 'opacity-100' : 'opacity-0'}`}>
+                    Add to Free Sample
+                  </span>
+                </div>
+              )}
+
+              <div className="relative">
+                <button
+                  className="bg-white p-1 shadow hover:bg-primary hover:text-white transition"
+                  id="AddToWishlist"
+                  aria-label="Add to wishlist"
+                  onClick={() => {
+                    handleAddToStorage(
+                      product,
+                      Number(product.price) * (Number(product?.boxCoverage) || 1),
+                      Number(product.price) * (Number(product?.boxCoverage) || 1),
+                      Number(product?.boxCoverage) || 1,
+                      1,
+                      product.subcategory?.custom_url || "",
+                      'category' in product
+                        ? product.category?.RecallUrl ?? "Accessories"
+                        : "Accessories",
+                      "wishlist",
+                      "productImages" in product
+                        ? product.productImages?.[0]?.imageUrl ??
+                        product.posterImageUrl?.imageUrl
+                        : product.posterImageUrl?.imageUrl,
+                      product?.boxCoverage,
+                      "m"
+                    );
+                  }}
+                  onMouseEnter={() => setShowCaption('Add to Wishlist')}
+                  onMouseLeave={() => setShowCaption('')}
+                >
+                  <FiHeart size={20} />
+                </button>
+
+                {/* Tooltip for Wishlist */}
+                <span className={`absolute left-1/2 -translate-x-1/2 -bottom-6 bg-gray-800 text-white text-xs px-2 py-1 rounded transition whitespace-nowrap z-10 ${showCaption === 'Add to Wishlist' ? 'opacity-100' : 'opacity-0'}`}>
+                  Add to Wishlist
+                </span>
+              </div>
+
+
+              <div className="relative">
+                <button
+                  className="bg-white p-1 shadow hover:bg-primary hover:text-white transition"
+                  aria-label="open quick view"
+                  onClick={(e) => handleModel(e)}
+                  onMouseEnter={() => setShowCaption('Quick View')}
+                  onMouseLeave={() => setShowCaption('')}
+                >
+                  <FiEye size={20} />
+                </button>
+                <span className={`absolute left-1/2 -translate-x-1/2 -bottom-6 bg-gray-800 text-white text-[10px] p-1 rounded transition whitespace-nowrap z-10 ${showCaption === 'Quick View' ? 'opacity-100' : 'opacity-0'}`}>
+                  Quick View
+                </span>
+              </div>
+
             </div>
           }
         </div>
@@ -176,21 +224,21 @@ const Card: React.FC<productCardProps> = ({
             {product.sizes.map((feature, index) => (
               <div key={index} className="flex gap-1 xsm:gap-4 w-full justify-between">
                 {feature.width &&
-                <div className="flex justify-between gap-1 items-center">
-                  <Leftright/>
-                  <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.width}</span>
-                </div>
-                } 
+                  <div className="flex justify-between gap-1 items-center">
+                    <Leftright />
+                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.width}</span>
+                  </div>
+                }
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
-                    <Collapsearrow/>
+                    <Collapsearrow />
                     <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
                 {feature.height &&
-                <div className="flex justify-between gap-1 items-center">
-                  <TwoArrow/>
-                  <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.height}</span>
-                </div>
+                  <div className="flex justify-between gap-1 items-center">
+                    <TwoArrow />
+                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.height}</span>
+                  </div>
                 }
               </div>
             ))}

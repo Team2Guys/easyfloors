@@ -2,14 +2,22 @@ import { ICart } from "types/prod";
 import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, addToCart, AddcartFreeSample } from "utils/indexedDB";
 import { toast } from "react-toastify";
 
-export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart[]) => void) => {
+export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICart[]) => void) => {
   try {
     if (isSamplePage) {
       const samples = await getFreeSamples();
-      setItems(samples);
+      if(setItems){
+        setItems(samples);
+      } else {
+        return samples;
+      }
     } else {
       const wishlist = await getWishlist();
-      setItems(wishlist);
+      if(setItems){
+        setItems(wishlist);
+      } else {
+        return wishlist;
+      }
     }
   } catch {
     toast.error("Error fetching items.");

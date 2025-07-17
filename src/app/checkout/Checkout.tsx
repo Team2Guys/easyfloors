@@ -16,7 +16,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { emirateCityMap, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart, getFreeSamplesCart, openDB } from "utils/indexedDB";
+import { getCart, openDB } from "utils/indexedDB";
 import { paymentcard } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
@@ -30,9 +30,10 @@ import { formatAED } from "lib/helperFunctions";
 import showToast from "components/Toaster/Toaster";
 import revalidateTag from "components/ServerActons/ServerAction";
 import { useRouter } from "next/navigation";
+import { fetchItems } from "utils/cartutils";
 
 
-const Checkout = () => {
+const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
     const { Panel } = Collapse;
     const [totalProducts, setTotalProducts] = useState(0);
     const [subTotal, setSubTotal] = useState(0);
@@ -46,10 +47,9 @@ const Checkout = () => {
     const [cityOptions, setCityOptions] = useState<{ value: string; label: string }[]>([]);
     const [isOtherCity, setIsOtherCity] = useState(false);
     const [otherCity, setOtherCity] = useState('');
-    const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(false);
+    const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(isFreeSample);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-
     useEffect(() => {
         const savedEmirate = localStorage.getItem('selectedEmirate');
         if (savedEmirate) {
@@ -143,10 +143,10 @@ const Checkout = () => {
                 const orderid = data.freeSample.paymentKey
                 console.log(orderid, "data", data)
                 const db = await openDB();
-                const tx = db.transaction("cartfreeSample", "readwrite");
-                const store = tx.objectStore("cartfreeSample");
+                const tx = db.transaction("freeSample", "readwrite");
+                const store = tx.objectStore("freeSample");
                 store.clear();
-                window.dispatchEvent(new Event("cartfreeSampleUpdated"));
+                window.dispatchEvent(new Event("freeSampleUpdated"));
                 router.push(`/thank-you?isFreeSample=true&order=${orderid}`)
                 setTimeout(() => {
                     setIsLoading(false)
@@ -186,16 +186,20 @@ const Checkout = () => {
     useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const items = await getCart();
-                const freeSamples = await getFreeSamplesCart();
-                const allItemsAreFreeSamples = freeSamples.length > 0 && freeSamples.every(item => item.isfreeSample);
-                seallItemsAreFreeSamples(allItemsAreFreeSamples)
-                const totalproducts = [...items, ...freeSamples]
+                if (isFreeSample) {
+                    const freeSample = await fetchItems(isFreeSample);
+                    setMergedCart(freeSample || [])
+                    seallItemsAreFreeSamples(isFreeSample)
+                    setTotalProducts((freeSample && freeSample.length) || 0);
+                    setSubTotal(0);
+                } else {
+                    const items = await getCart();
+                    setMergedCart(items);
+                    setTotalProducts(items.length);
+                    const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 0);
+                    setSubTotal(subTotalPrice);
+                }
 
-                setMergedCart(totalproducts);
-                setTotalProducts(totalproducts?.length);
-                const subTotalPrice = items.reduce((total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0), 0);
-                setSubTotal(subTotalPrice);
             } catch {
                 toast.error("Error fetching cart items:");
             }
@@ -235,8 +239,6 @@ const Checkout = () => {
         setShipping(shippingData);
     }, [selectedShipping,]);
 
-
-    console.log("allItemsAreFreeSamples", !allItemsAreFreeSamples, selectedEmirate)
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -535,7 +537,7 @@ const Checkout = () => {
                                     <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedEmirate ? formatAED(total) : formatAED(subTotal)}</span></p>
                                 </div>
                                 <div className="pb-10 border-t-2 pt-4">
-                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting || isLoading} >
+                                    <button type="submit" className={`w-full bg-primary text-white p-2 `} disabled={isSubmitting || isLoading || totalProducts === 0} >
                                         {isSubmitting || isLoading ? "Processing..." : allItemsAreFreeSamples ? 'Place Order' : "Pay Now"}
                                     </button>
                                 </div>

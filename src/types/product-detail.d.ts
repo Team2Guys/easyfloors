@@ -49,4 +49,5 @@ export interface detailprops {
   accessories?: string;
   className?: string;
   isQuickView?: boolean
+  AccessoriesProducts?: IProduct[];
 }

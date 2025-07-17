@@ -22,7 +22,7 @@ const FreeSamplePage = () => {
   }, [isSamplePage]);
   return (
     <>
-      <Breadcrumb title="freesample" />
+      <Breadcrumb title="Free Sample" />
       <Container>
       <Top heading="Free Samples" Icon={() => <Image src="/assets/images/Wishlist/sample.svg" alt="Sample" width={24} height={24} className="h-10 w-10 lg:h-14 lg:w-14" />} />
       <div className=" hidden md:block pb-6 xl:pt-6 xl:mb-10">
