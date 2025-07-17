@@ -266,9 +266,9 @@ const CartPage = ({ products }: CartPageProps) => {
                     {nonAccessoryItems.map((item, cartindex) => (
                       <div key={cartindex}>
                         <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
-                          <div className='col-span-10 xl:col-span-6'>
-                            <div className='flex gap-4'>
-                              <div className='w-full max-w-[74px] md:max-w-[150px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'>
+                          <div className='col-span-11 xl:col-span-6'>
+                            <div className='flex gap-2 xsm:gap-4'>
+                              <div className='w-full max-w-[65px] md:max-w-[140px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'>
                                 <Image
                                   fill
                                   className='!relative block'
@@ -277,7 +277,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                 />
                               </div>
                               <div>
-                                <Link href={`/${generateSlug(item.category ??"")}/${generateSlug(item.subcategories??"")}/${item.custom_url}`} className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
+                                <Link href={`/${generateSlug(item.category ??"")}/${generateSlug(item.subcategories??"")}/${item.custom_url}`} className='text-[12px] xsm:text-13 xl:text-14 2xl:text-16 font-medium'>{item.name}</Link>
                                 {
                                   item.isfreeSample ? 
                                   <p className='text-12 sm:text-14 2xl:text-17'>
@@ -345,7 +345,7 @@ const CartPage = ({ products }: CartPageProps) => {
                             {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'><span>Free</span></p> :
                               <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-20 2xl:text-25 "></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>}
                           </div>
-                          <div className='col-span-2 text-end lg:pr-5'>
+                          <div className='col-span-1 xl:col-span-2 text-end xl:pr-5'>
                             <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
                               <svg className='w-4 h-4 2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
@@ -374,13 +374,13 @@ const CartPage = ({ products }: CartPageProps) => {
                   {accessoryItems.map((item, cartindex) => (
                     <div key={cartindex}>
                       <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
-                        <div className=' col-span-10 xl:col-span-6'>
-                          <div className='flex gap-4'>
-                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]'
+                        <div className=' col-span-11 xl:col-span-6'>
+                          <div className='flex gap-2 xsm:gap-4'>
+                            <Image width={170} height={160} className='w-full max-w-[65px] md:max-w-[140px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'
                              src={item?.matchedProductImages?.imageUrl ?? item.image ?? '/default-image.png'} alt="cart"
                             />
                             <div>
-                              <Link href={`/accessories/${item.custom_url}`} className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
+                              <Link href={`/accessories/${item.custom_url}`} className='text-[12px] xsm:text-13 xl:text-14 2xl:text-16 font-medium'>{item.name}</Link>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
                                <span>{item.unit === "ft"? ((item.price?? 0) / 3.28084).toFixed(2): (item.price ?? 0).toFixed(2)}</span>/{item.unit === "ft" ? "ft" : "m"}
                               </p>
@@ -420,7 +420,7 @@ const CartPage = ({ products }: CartPageProps) => {
                         <div className='col-span-2 text-center hidden xl:block'>
                           <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>
                         </div>
-                        <div className='col-span-2 text-end lg:pr-5'>
+                        <div className='col-span-1 xl:col-span-2 text-end xl:pr-5'>
                           <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
                             <svg className=' w-4 h-4  2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />

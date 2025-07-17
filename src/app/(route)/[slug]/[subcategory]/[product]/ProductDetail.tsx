@@ -11,7 +11,7 @@ import { detailprops } from 'types/product-detail';
 import ProductContainer from 'components/ProdutDetailContainer/ProductContainer';
 import DetailSkaleton from 'components/skaletons/detail-skaleton';
 
-const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, productData }: detailprops) => {
+const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, productData , AccessoriesProducts }: detailprops) => {
   return (
     <div className="mb-10">
       <Breadcrumb title={ProductName} slug={MainCategory} subcategory={subCategory} />
@@ -42,7 +42,7 @@ const ProductDetail = ({ MainCategory, subCategory, ProductName, ProductInfo, pr
       <Container>
         <Features items={featureItems} />
       </Container>
-      <RelatedSlider products={ProductInfo?.filter((value)=>value.id !==productData.id) || []} />
+      <RelatedSlider products={(AccessoriesProducts) || []} />
     </div>
   );
 };
