@@ -12,7 +12,7 @@ export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
     postpaymentStatus: data
   }
 
-  const date = new Date(data.transactionDate)
+  const date = new Date(data?.transactionDate || data?.checkoutDate || Date.now())
   const formatedDate = formatDate(date)
 
   const TrackingOrder = trackingOrder(data.shippingMethod.name, date)

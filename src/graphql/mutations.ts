@@ -347,6 +347,7 @@ export const ORDER_QUERY = gql`
     totalPrice
     shippingMethod
     transactionDate
+    checkoutDate
     address
     cardLastDigits
     currency

@@ -139,13 +139,15 @@ const Checkout = () => {
             setIsLoading(true)
             if (allItemsAreFreeSamples && !subTotal) {
 
-                await initiateFreesample({ variables: { createFreesample: orderData } });
+                const {data} = await initiateFreesample({ variables: { createFreesample: orderData } });
+                const orderid = data.freeSample.paymentKey
+                console.log(orderid, "data", data)
                 const db = await openDB();
                 const tx = db.transaction("cartfreeSample", "readwrite");
                 const store = tx.objectStore("cartfreeSample");
                 store.clear();
                 window.dispatchEvent(new Event("cartfreeSampleUpdated"));
-                router.push('/thank-you?isFreeSample=true')
+                router.push(`/thank-you?isFreeSample=true&order=${orderid}`)
                 setTimeout(() => {
                     setIsLoading(false)
 

@@ -95,7 +95,7 @@ const ThankYou = async ({ searchParams }: ThankYouProps) => {
   return (
     <>
       <Breadcrumb title="Thank You" />
-      {isFreeSample ? <FreeSampleThank /> : <ThankYouComp extractedParams={extractedParams} />}
+      {isFreeSample ? <FreeSampleThank orderId={extractedParams.orderId} /> : <ThankYouComp extractedParams={extractedParams} />}
       <RelatedSlider products={productData.slice(0, 5)} />
     </>
   );
