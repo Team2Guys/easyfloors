@@ -29,7 +29,6 @@ const CartPage = ({ products }: CartPageProps) => {
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<ICart[]>([]);
-  // const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
   const nonAccessoryItems = cartItems.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
