@@ -23,10 +23,10 @@ export class SalesProductsService {
         "amount": Math.ceil(totalPrice * 100),
         "currency": process.env.PAYMOD_CURRENCY,
         "payment_methods": [
-   57660,
-   52375,
-   52374,
-   52172
+          57660,
+          52375,
+          52374,
+          52172
         ],
         "items": totalAmount,
         "billing_data": {
@@ -55,7 +55,7 @@ export class SalesProductsService {
       let result = await response.json();
 
       console.log(result.intention_order_id, "intention id")
-if(!result.intention_order_id) return customHttpException("Order Id not found ", 'NOT_FOUND');
+      if (!result.intention_order_id) return customHttpException("Order Id not found ", 'NOT_FOUND');
 
       await this.prisma.salesProducts.create({
         data: {
@@ -120,14 +120,14 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
       let totalAccessories = await this.prisma.acessories.count({});
       let appointments = await this.prisma.appointment.findMany({});
 
-  let salesProdu = await this.prisma.salesProducts.findMany({});
+      let salesProdu = await this.prisma.salesProducts.findMany({});
 
-      const reducer_handler = (arr: any[], Boxes?:boolean) => {
+      const reducer_handler = (arr: any[], Boxes?: boolean) => {
         return arr.reduce((totalQuantity: number, currentValue: any) => {
           const productQuantitySum = currentValue.products.reduce(
             (productTotal: number, value: any) => {
 
-              let boxesFlag= Boxes ? "squareMeter" :"requiredBoxes"     
+              let boxesFlag = Boxes ? "squareMeter" : "requiredBoxes"
 
               return productTotal + value[boxesFlag];
             },
@@ -142,38 +142,38 @@ if(!result.intention_order_id) return customHttpException("Order Id not found ",
 
       let abdundant = salesProdu.filter((prod: any) => prod.checkout && !prod.paymentStatus);
       let freeSampleOrders = salesProdu.filter((prod: any) => prod.checkout && (!prod.paymentStatus && prod.isfreesample));
-      
+
       let Total_abandant_order = reducer_handler(abdundant);
 
       let totalRevenue = sucessfulpayment.reduce((accumulator: any, currentValue: any) => {
-          let totalsales=  currentValue.products.reduce((accum: number, value: any) => {
-            return (accum += value.totalPrice);
-          }, 0);
+        let totalsales = currentValue.products.reduce((accum: number, value: any) => {
+          return (accum += value.totalPrice);
+        }, 0);
 
 
-          return  Math.ceil(accumulator + totalsales)
-        },
+        return Math.ceil(accumulator + totalsales)
+      },
         0,
       );
 
-let InstallationAppointments = appointments.filter((value)=>value.AppointsType =="installations")?.length
-let MeasureAppointments = appointments.filter((value)=>value.AppointsType =="appointments")?.length
+      let InstallationAppointments = appointments.filter((value) => value.AppointsType == "installations")?.length
+      let MeasureAppointments = appointments.filter((value) => value.AppointsType == "appointments")?.length
       return {
         totalSubCategories,
         totalProducts,
         totalCategories,
         totalAdmins,
-        totalRevenue ,
-        totalSoldProducts : totalSales,
+        totalRevenue,
+        totalSoldProducts: totalSales,
         totalUsers,
         totalabundantOrderProd: Total_abandant_order,
         totalAccessories,
-        Orders: sucessfulpayment.length ,
-        abdundantOrders: abdundant.length ,
-        freeSamples: freeSampleOrders.length ,
+        Orders: sucessfulpayment.length,
+        abdundantOrders: abdundant.length,
+        freeSamples: freeSampleOrders.length,
         InstallationAppointments,
         MeasureAppointments
-        
+
       };
     } catch (error) {
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
@@ -192,11 +192,11 @@ let MeasureAppointments = appointments.filter((value)=>value.AppointsType =="app
         return;
       }
 
-      // if (existingOrder.paymentStatus) {
-      //   console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
-      //   customHttpException("Payment status already updated", 'BAD_REQUEST');
-      // }
-    
+      if (existingOrder.paymentStatus) {
+        console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
+        customHttpException("Payment status already updated", 'BAD_REQUEST');
+      }
+
 
       const paymentStatus = await this.prisma.salesProducts.update({
         where: { orderId },
@@ -204,11 +204,10 @@ let MeasureAppointments = appointments.filter((value)=>value.AppointsType =="app
       });
 
       const products: ProductInput[] = JSON.parse(JSON.stringify(existingOrder.products)) as ProductInput[];
-
-
       if (Array.isArray(products) && products.length > 0) {
         for (const prod of products) {
-          await this.prisma.products.update({
+          let accessoryFlag = prod.category?.trim()?.toLowerCase() == "accessory" ? "acessories" : "products"
+          await this.prisma[accessoryFlag].update({
             where: { id: prod.id },
             data: {
               stock: {
@@ -258,9 +257,9 @@ let MeasureAppointments = appointments.filter((value)=>value.AppointsType =="app
           orderId: String(orderId),
           checkout: true,
           currency: 'AED',
-          isfreesample:true,
+          isfreesample: true,
           products: createSalesProductInput.products,
-          shipmentFee:0
+          shipmentFee: 0
         }
       })
 
@@ -276,134 +275,134 @@ let MeasureAppointments = appointments.filter((value)=>value.AppointsType =="app
 
 
 
-   async findAllFreesample() {
+  async findAllFreesample() {
     try {
-      return await this.prisma.salesProducts.findMany({where:{isfreesample:true}})
+      return await this.prisma.salesProducts.findMany({ where: { isfreesample: true } })
     } catch (error) {
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
 
     }
   }
 
-  
-// Monthly Orders
+
+  // Monthly Orders
 
 
-async getMonthlyAppointments() {
-  const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth(); // 0-based
+  async getMonthlyAppointments() {
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth(); // 0-based
 
-  // Fetch appointments from Jan 1st to end of current month
-  const orders = await this.prisma.salesProducts.findMany({
-    where: {
-      checkoutDate: {
-        gte: new Date(currentYear, 0, 1),
-        lt: new Date(currentYear, currentMonth + 1, 1),
+    // Fetch appointments from Jan 1st to end of current month
+    const orders = await this.prisma.salesProducts.findMany({
+      where: {
+        checkoutDate: {
+          gte: new Date(currentYear, 0, 1),
+          lt: new Date(currentYear, currentMonth + 1, 1),
+        },
       },
-    },
-  });
+    });
 
-  // Group appointments by year and month
-  const monthlyData = orders.reduce(
-    (acc, appointment) => {
-      const date = new Date(appointment?.checkoutDate ?? "");
-      const year = date.getFullYear();
-      const month = date.getMonth(); 
-      const key = `${year}-${month}`;
+    // Group appointments by year and month
+    const monthlyData = orders.reduce(
+      (acc, appointment) => {
+        const date = new Date(appointment?.checkoutDate ?? "");
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const key = `${year}-${month}`;
 
-      if (!acc[key]) {
-        acc[key] = {
-          year,
-          month,
-          count: 0,
-        };
-      }
+        if (!acc[key]) {
+          acc[key] = {
+            year,
+            month,
+            count: 0,
+          };
+        }
 
-      acc[key].count += 1;
+        acc[key].count += 1;
 
+        return acc;
+      },
+      {} as Record<string, { year: number; month: number; count: number }>,
+    );
+
+    const result = Object.values(monthlyData).map((data: any) => ({
+      year: data.year,
+      month: data.month + 1,
+      count: data.count,
+    }));
+
+    // Sort by year/month
+    result.sort((a, b) => a.year - b.year || a.month - b.month);
+
+    // Generate a complete array with all months till current one
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ];
+
+    const completeMonthlyData = Array.from({ length: currentMonth + 1 }, (_, i) => ({
+      month: `${monthNames[i]} ${currentYear}`,
+      Orders: 0,
+    }));
+
+    // Fill in the counts
+    result.forEach((item) => {
+      const index = item.month - 1;
+      completeMonthlyData[index] = {
+        month: `${monthNames[index]} ${item.year}`,
+        Orders: item.count,
+      };
+    });
+    console.log(completeMonthlyData, "completeMonthlyData")
+    return { completeMonthlyData };
+  }
+
+
+
+  async getLast7DaysStats() {
+    const today = new Date();
+    const startDate = new Date();
+    startDate.setDate(today.getDate() - 6); // last 7 days including today
+
+    const dateKeys = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(startDate);
+      d.setDate(d.getDate() + i);
+      return d.toISOString().split('T')[0]; // e.g., "2025-06-23"
+    });
+
+    // Fetch appointments
+    const appointments = await this.prisma.salesProducts.findMany({
+      where: {
+        checkoutDate: {
+          gte: startDate,
+          lte: today,
+        },
+      },
+    });
+
+    const dailyAppointmentsMap = appointments.reduce((acc, appointment) => {
+      const key = new Date(appointment?.checkoutDate ?? "").toISOString().split('T')[0];
+      if (!acc[key]) acc[key] = 0;
+      acc[key] += 1;
       return acc;
-    },
-    {} as Record<string, { year: number; month: number; count: number }>,
-  );
+    }, {} as Record<string, number>);
 
-  const result = Object.values(monthlyData).map((data:any) => ({
-    year: data.year,
-    month: data.month + 1,
-    count: data.count,
-  }));
+    // Merge data with day name
+    const finalStats = dateKeys.map((dateStr) => {
+      const dateObj = new Date(dateStr);
+      const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
 
-  // Sort by year/month
-  result.sort((a, b) => a.year - b.year || a.month - b.month);
+      return {
+        date: dateStr,
+        day: dayName,
+        orders: dailyAppointmentsMap[dateStr] || 0,
+      };
+    });
 
-  // Generate a complete array with all months till current one
-  const monthNames = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December',
-  ];
-
-  const completeMonthlyData = Array.from({ length: currentMonth + 1 }, (_, i) => ({
-    month: `${monthNames[i]} ${currentYear}`,
-    Orders: 0,
-  }));
-
-  // Fill in the counts
-  result.forEach((item) => {
-    const index = item.month - 1;
-    completeMonthlyData[index] = {
-      month: `${monthNames[index]} ${item.year}`,
-      Orders: item.count,
-    };
-  });
-console.log(completeMonthlyData,"completeMonthlyData")
-  return {completeMonthlyData};
-}
-
-
-
-async getLast7DaysStats() {
-  const today = new Date();
-  const startDate = new Date();
-  startDate.setDate(today.getDate() - 6); // last 7 days including today
-
-  const dateKeys = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(startDate);
-    d.setDate(d.getDate() + i);
-    return d.toISOString().split('T')[0]; // e.g., "2025-06-23"
-  });
-
-  // Fetch appointments
-  const appointments = await this.prisma.salesProducts.findMany({
-    where: {
-      checkoutDate: {
-        gte: startDate,
-        lte: today,
-      },
-    },
-  });
-
-  const dailyAppointmentsMap = appointments.reduce((acc, appointment) => {
-    const key = new Date(appointment?.checkoutDate ?? "").toISOString().split('T')[0];
-    if (!acc[key]) acc[key] = 0;
-    acc[key] += 1;
-    return acc;
-  }, {} as Record<string, number>);
-
-  // Merge data with day name
-  const finalStats = dateKeys.map((dateStr) => {
-    const dateObj = new Date(dateStr);
-    const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
-
-    return {
-      date: dateStr,
-      day: dayName,
-      orders: dailyAppointmentsMap[dateStr] || 0,
-    };
-  });
-
-  console.log(finalStats, "finalStats");
-  return finalStats;
-}
+    console.log(finalStats, "finalStats");
+    return finalStats;
+  }
 
 
 }
