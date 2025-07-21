@@ -3,14 +3,19 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
-const Filters = dynamic(() => import("components/sub-category/filters"), { ssr: false });
-const SubCategory = dynamic(() => import("components/sub-category/sub-category-product"), { ssr: false });
+const Filters = dynamic(() => import("components/sub-category/filters"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full bg-gray-200 rounded animate-pulse" />
+  ),
+});
 import Drawer from "components/ui/drawer";
 import Select from "components/ui/Select";
 import { productFilter } from "lib/helperFunctions";
 import { type ISUBCATEGORY, type Category, FilterState, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
 import { IProduct } from "types/prod";
 import { SelectedFilter } from "types/types";
+import SubCategory from "components/sub-category/sub-category-product";
 
 const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
@@ -29,7 +34,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
-  const [isDesktop, setIsDesktop] = useState(typeof window !== 'undefined' ? window.innerWidth > 1023 : false);
+  const [Width, setWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     if (isSubCategory) {
@@ -66,7 +71,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
 
     useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth > 1023);
+      setWidth(window.innerWidth);
     };
 
     window.addEventListener("resize", handleResize);
@@ -82,7 +87,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
         altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
       />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
-        {isDesktop && (
+        {(Width > 1023) && (
           <div className=" lg:w-[20%] ">
             <Filters
               catgories={catgories}
@@ -111,7 +116,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
             >
             </p>
             <div className="flex items-center justify-between lg:justify-end">
-              {!isDesktop && (
+              {(Width < 1023) && (
                 <div className="">
                   <button onClick={() => setModalOpen(true)}
                     className=" h-9 w-24 shadow text-black rounded-md flex items-center gap-2 justify-center"
