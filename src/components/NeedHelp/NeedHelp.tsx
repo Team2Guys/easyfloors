@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { boxData } from 'data/data';
 import Link from 'next/link';
 import Image from 'next/image';

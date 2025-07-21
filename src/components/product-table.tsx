@@ -100,13 +100,13 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                       {!isSamplePage && 
                       <button 
                         id="AddToCart" 
-                        onClick={() => handleAddToCart(product, isSamplePage, setItems ?? (() => {}))} 
+                        onClick={() => handleAddToCart(product, setItems ?? (() => {}))} 
                         className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2"
                       >
                         Add to Cart
                       </button>}
                       <button 
-                        onClick={() => handleRemoveItem(Number(product.id), isSamplePage, setItems ?? (() => {}))} 
+                        onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => {}), isSamplePage)} 
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
                         <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />

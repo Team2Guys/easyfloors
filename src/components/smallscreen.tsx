@@ -39,9 +39,9 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
+                      onRemove={(id) => setItems && handleRemoveItem(Number(id), setItems)}
                       onQuantityChange={(id, delta) => setItems && setItems((prevItems) => updateQuantity(Number(id), delta, prevItems))}
-                      onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
+                      onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}
                     />
                   </div>
                 ))}
@@ -59,12 +59,12 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(Number(id), isSamplePage, setItems)}
+                      onRemove={(id) => setItems && handleRemoveItem(Number(id), setItems)}
                       onQuantityChange={(id, delta) =>
                         setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
                       }
 
-                      onAddToCart={(product) => setItems && handleAddToCart(product, isSamplePage, setItems)}
+                      onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}
                     />
                   </div>
                 ))}
