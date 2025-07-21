@@ -30,7 +30,6 @@ export const authOptions = {
               userLogin: { email: credentials?.email, password: credentials?.password },
             },
           });
-          console.log(data.userLogin.token, "data")
           Cookies.set(
             "user_token",
             data?.userLogin.token,
