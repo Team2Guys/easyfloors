@@ -9,14 +9,14 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { TbShoppingBag } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart, openDB, removeCartItem, removeWishlistItem, removeFreeSample, getFreeSamplesCart, cartremoveFreeSample, getWishlist, getFreeSamples } from "utils/indexedDB";
+import { getCart, openDB, removeCartItem, removeWishlistItem, removeFreeSample, getWishlist, getFreeSamples } from "utils/indexedDB";
 
 interface DropdownPanelProps {
   icon: ReactNode;
   badgeCount?: number;
   panelClassName?: string;
   cartItems: ICart[];
-  type: "cart" | "wishlist" | "freeSample" | "cartfreeSample";
+  type: "cart" | "wishlist" | "freeSample";
   viewLink?: string;
   emptyMessage?: string;
 }
@@ -74,7 +74,17 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
       const isCartPage = pathname === "/cart";
       const isWishlistPage = pathname === "/wishlist";
       const isFreeSamplePage = pathname === "/freesample";
+      const isFreeSampleCheckoutPage = pathname === "/freesample-checkout";
+      const isCheckoutPage = pathname === "/checkout";
 
+      if (type === "freeSample" && isFreeSampleCheckoutPage) {
+        return;
+      }
+
+      // ✅ Prevent cart modal on checkout page
+      if (type === "cart" && isCheckoutPage) {
+        return;
+      }
       // Special case: On free sample page, only show cart popup for cart updates
       if (isFreeSamplePage && type === "cart") {
         setIsOpen(true);
@@ -103,14 +113,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
       let updatedItems: ICart[] = [];
 
       if (type === "cart") {
-        const normalCart = (await getCart()) || [];
-        const freeCart = (await getFreeSamplesCart()) || [];
-        const markedFreeCart = freeCart.map(item => ({
-          ...item,
-          isfreeSample: true
-        }));
-
-        updatedItems = [...normalCart, ...markedFreeCart];
+        updatedItems = (await getCart()) || [];
       } else if (type === "wishlist") {
         updatedItems = (await getWishlist()) || [];
       } else if (type === "freeSample") {
@@ -135,18 +138,13 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
   const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
     try {
-      if (isFreeSample) {
-        if (type === "freeSample") {
-          await removeFreeSample(id); // Remove from free samples list
-        } else if (type === "cart") {
-          await cartremoveFreeSample(id); // Remove from cart's free samples
-        }
-      } else {
-        if (type === "cart") {
-          await removeCartItem(id);
-        } else if (type === "wishlist") {
-          await removeWishlistItem(id);
-        }
+      if (type === "freeSample" && isFreeSample) {
+        await removeFreeSample(id); // Remove from free samples list
+      }
+      else if (type === "cart") {
+        await removeCartItem(id);
+      } else if (type === "wishlist") {
+        await removeWishlistItem(id);
       }
 
       // Update local items
@@ -156,11 +154,6 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
       // Dispatch appropriate update events
       window.dispatchEvent(new Event(`${type}Updated`));
-
-      // If removing from cart, also update free samples if needed
-      if (type === "cart" && isFreeSample) {
-        window.dispatchEvent(new Event('cartfreeSampleUpdated'));
-      }
     } catch {
       toast.error(`Error removing item from ${type}`);
     }
@@ -297,7 +290,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                 <Link href={viewLink} onClick={closePanel} className="w-full block text-center bg-primary text-white py-1">
                   View {type === "cart" ? "Cart" : type === "wishlist" ? "Wishlist" : "Free Samples"}
                 </Link>
-        
+
                 <div className="border text-center w-full border-primary hover:bg-primary hover:text-white transition duration-300 py-1">
                   <Link href="/collections" onClick={closePanel} className=" text-center  px-4 py-2">Continue Shopping</Link>
                 </div>

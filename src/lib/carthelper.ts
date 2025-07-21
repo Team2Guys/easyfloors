@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { EDIT_CATEGORY } from 'types/cat';
 import { IProduct, ProductImage } from 'types/prod';
-import { AddcartFreeSample, addToCart, addToFreeSample, addToWishlist, getFreeSamples, getFreeSamplesCart } from 'utils/indexedDB';
+import { addToCart, addToFreeSample, addToWishlist, getFreeSamples } from 'utils/indexedDB';
 
 export const handleAddToStorage = async (
   productData: IProduct | EDIT_CATEGORY,
@@ -11,7 +11,7 @@ export const handleAddToStorage = async (
   requiredBoxes: number,
   subCategory: string,
   MainCategory: string,
-  type: 'cart' | 'wishlist' | 'freeSample' | 'cartfreeSample',
+  type: 'cart' | 'wishlist' | 'freeSample',
   image?: string,
   boxCoverage?: string,
   unit?: string,
@@ -90,22 +90,6 @@ export const handleAddToStorage = async (
       
     } 
     
-    else if (type === 'cartfreeSample') {
-      const existingSamples = await getFreeSamplesCart();
-
-      if (existingSamples.some((sample) => sample.id === item.id)) {
-        toast.error('Product already added to Free Samples.');
-        return;
-      }
-
-      if (existingSamples.length >= 5) {
-        toast.error('You can add only up to 5 free samples.');
-        return;
-      }
-
-      await AddcartFreeSample(item);
-      return;
-    }
     else if (type === 'wishlist') {
   const added = await addToWishlist(item);
 

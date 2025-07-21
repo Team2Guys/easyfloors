@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { FiMinus } from "react-icons/fi";
 import { GoPlus } from "react-icons/go";
 import Link from "next/link";
-import { FaArrowLeftLong } from "react-icons/fa6";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
 import { handleAddToCart, handleRemoveItem, updateQuantity } from "utils/cartutils";
 import { ProductTableProps } from "types/type";
 import { generateSlug } from "data/data";
@@ -96,16 +96,17 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     {product.stock > 0 ? "In Stock" : "Out of Stock"}
                   </td>
                   <td className="p-3">
-                    <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center">
+                    <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center justify-center">
+                      {!isSamplePage && 
                       <button 
                         id="AddToCart" 
-                        onClick={() => handleAddToCart(product, isSamplePage, setItems ?? (() => {}))} 
+                        onClick={() => handleAddToCart(product, setItems ?? (() => {}))} 
                         className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2"
                       >
                         Add to Cart
-                      </button>
+                      </button>}
                       <button 
-                        onClick={() => handleRemoveItem(Number(product.id), isSamplePage, setItems ?? (() => {}))} 
+                        onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => {}), isSamplePage)} 
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
                         <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
@@ -118,9 +119,15 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           </tbody>
         </table>
       )}
+      <div className={`flex items-center ${isSamplePage ? 'justify-between' : 'justify-start'}`}>
       <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
         <FaArrowLeftLong /> Continue shopping
       </Link>
+      {isSamplePage && 
+      <Link href="/freesample-checkout" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
+        Checkout <FaArrowRightLong />
+      </Link>}
+      </div>
     </div>
   );
 };

@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import CartSelect from './cart-select';
-import { cartremoveFreeSample, getCart, getFreeSamplesCart, openDB, removeCartItem } from 'utils/indexedDB';
+import { getCart, openDB, removeCartItem } from 'utils/indexedDB';
 import { ICart, IProduct } from 'types/prod';
 import { toast } from 'react-toastify';
 import RelatedSlider from 'components/related-slider/related-slider';
@@ -29,24 +29,20 @@ const CartPage = ({ products }: CartPageProps) => {
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<ICart[]>([]);
-  const [mergedCart, setMergedCart] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
-  const nonAccessoryItems = mergedCart.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
+  const nonAccessoryItems = cartItems.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
-  const allItemsAreFreeSamples = mergedCart.every(item => item.isfreeSample === true);
   useEffect(() => {
     const fetchCartItems = async () => {
       try {
         const items = await getCart();
-        const freeSamples = await getFreeSamplesCart();
         const subTotalPrice = items.reduce(
           (total, item) => total + (item.pricePerBox || 0) * (item.requiredBoxes ?? 0),
           0
         );
         setSubTotal(subTotalPrice);
         setCartItems(items);
-        setMergedCart([...items, ...freeSamples]);
       } catch {
         toast.error("Error fetching cart items");
       }
@@ -61,15 +57,12 @@ const CartPage = ({ products }: CartPageProps) => {
   }, []);
  
 
-   const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
+   const handleRemoveItem = async (id: number) => {
       try {
-        if (isFreeSample) {
-          await cartremoveFreeSample(id); 
-        } else {
+       
             await removeCartItem(id);
-        }
-        setMergedCart(prev => prev.filter(item => 
-          !(item.id === id && item.isfreeSample === isFreeSample)
+        setCartItems(prev => prev.filter(item => 
+          !(item.id === id)
         ));
     
         window.dispatchEvent(new Event("cartUpdated"));
@@ -239,7 +232,7 @@ const CartPage = ({ products }: CartPageProps) => {
     <Container className='font-inter mt-10  mb-4 sm:mb-10 relative max-sm:max-w-[100%]'>
       <h1 className='text-center xl:text-[48px]'>Your Shopping Cart</h1>
       {
-        mergedCart.length === 0 ?
+        cartItems.length === 0 ?
 
           <div className='text-center'>
             <p className='text-center text-[24px] pt-10'>Cart is empty</p>
@@ -266,9 +259,9 @@ const CartPage = ({ products }: CartPageProps) => {
                     {nonAccessoryItems.map((item, cartindex) => (
                       <div key={cartindex}>
                         <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
-                          <div className='col-span-10 xl:col-span-6'>
-                            <div className='flex gap-4'>
-                              <div className='w-full max-w-[74px] md:max-w-[150px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'>
+                          <div className='col-span-11 xl:col-span-6'>
+                            <div className='flex gap-2 xsm:gap-4'>
+                              <div className='w-full max-w-[65px] md:max-w-[140px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'>
                                 <Image
                                   fill
                                   className='!relative block'
@@ -277,7 +270,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                 />
                               </div>
                               <div>
-                                <Link href={`/${generateSlug(item.category ??"")}/${generateSlug(item.subcategories??"")}/${item.custom_url}`} className='text-12 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
+                                <Link href={`/${generateSlug(item.category ??"")}/${generateSlug(item.subcategories??"")}/${item.custom_url}`} className='text-[12px] xsm:text-13 xl:text-14 2xl:text-16 font-medium'>{item.name}</Link>
                                 {
                                   item.isfreeSample ? 
                                   <p className='text-12 sm:text-14 2xl:text-17'>
@@ -345,8 +338,8 @@ const CartPage = ({ products }: CartPageProps) => {
                             {item.isfreeSample ? <p className='text-16 2xl:text-20 font-semibold'><span>Free</span></p> :
                               <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-20 2xl:text-25 "></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>}
                           </div>
-                          <div className='col-span-2 text-end lg:pr-5'>
-                            <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
+                          <div className='col-span-1 xl:col-span-2 text-end xl:pr-5'>
+                            <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id))}>
                               <svg className='w-4 h-4 2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
                               </svg>
@@ -374,13 +367,13 @@ const CartPage = ({ products }: CartPageProps) => {
                   {accessoryItems.map((item, cartindex) => (
                     <div key={cartindex}>
                       <div className='grid grid-cols-12 text-20 font-light py-2 2xl:py-4 items-center'>
-                        <div className=' col-span-10 xl:col-span-6'>
-                          <div className='flex gap-4'>
-                            <Image width={170} height={160} className=' w-[74px] md:w-[150px] h-[69px] md:h-[140px]   2xl:w-[170x] 2xl:h-[140px]'
+                        <div className=' col-span-11 xl:col-span-6'>
+                          <div className='flex gap-2 xsm:gap-4'>
+                            <Image width={170} height={160} className='w-full max-w-[65px] md:max-w-[140px] h-[69px] md:h-[140px] 2xl:max-w-[170x] 2xl:h-[140px]'
                              src={item?.matchedProductImages?.imageUrl ?? item.image ?? '/default-image.png'} alt="cart"
                             />
                             <div>
-                              <Link href={`/accessories/${item.custom_url}`} className='text-14 sm:text-16 2xl:text-24 font-medium'>{item.name}</Link>
+                              <Link href={`/accessories/${item.custom_url}`} className='text-[12px] xsm:text-13 xl:text-14 2xl:text-16 font-medium'>{item.name}</Link>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
                                <span>{item.unit === "ft"? ((item.price?? 0) / 3.28084).toFixed(2): (item.price ?? 0).toFixed(2)}</span>/{item.unit === "ft" ? "ft" : "m"}
                               </p>
@@ -420,8 +413,8 @@ const CartPage = ({ products }: CartPageProps) => {
                         <div className='col-span-2 text-center hidden xl:block'>
                           <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>
                         </div>
-                        <div className='col-span-2 text-end lg:pr-5'>
-                          <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}>
+                        <div className='col-span-1 xl:col-span-2 text-end xl:pr-5'>
+                          <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id))}>
                             <svg className=' w-4 h-4  2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
                             </svg>
@@ -440,7 +433,7 @@ const CartPage = ({ products }: CartPageProps) => {
               <div className='w-full md:w-[45%] xl:w-[30%] 2xl:w-[35%] bg-background p-3 sm:p-5 space-y-5 h-fit'>
                 <div className='flex gap-2 md:gap-5 items-center max-sm:justify-between'>
                   <h2 className=' text-18 md:text-20 2xl:text-28'>Order Summary</h2>
-                  <p className='text-14 text-[#FF0004]'>(*Total {mergedCart.length} {mergedCart.length === 1 ? "Item" : " Items"})</p>
+                  <p className='text-14 text-[#FF0004]'>(*Total {cartItems.length} {cartItems.length === 1 ? "Item" : " Items"})</p>
                 </div>
                 <div className='border border-b border-[#DEDEDE]' />
                 <div className='flex items-center justify-between text-16 lg:text-20'>
@@ -457,7 +450,7 @@ const CartPage = ({ products }: CartPageProps) => {
                     key="1"
                     className="!border-b-0"
                   >
-                {(selectedCity === "Dubai" || selectedCity == "Enter Emirate") && !allItemsAreFreeSamples && (
+                {(selectedCity === "Dubai" || selectedCity == "Enter Emirate") && (
                     <div
                       className={`bg-white px-2 xs:px-4 py-2 mt-2 flex gap-2 xs:gap-4 items-center cursor-pointer border-2 ${
                         selectedShipping === "express" ? "border-primary" : "border-transparent"

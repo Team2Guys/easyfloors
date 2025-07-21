@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { Divider } from "antd";
 import DropdownPanel from "./DropdownPanel";
 import { ICart } from "types/prod";
-import { getCart, getFreeSamples, getFreeSamplesCart, getWishlist } from "utils/indexedDB";
+import { getCart, getFreeSamples, getWishlist } from "utils/indexedDB";
 import { toast } from "react-toastify";
 
 interface UserIconProps {
@@ -34,10 +34,9 @@ const UserIcon = ({ className }: UserIconProps) => {
         const items = await getCart();
         const wishlist = await getWishlist();
         const freesample = await getFreeSamples();
-        const cartfree = await getFreeSamplesCart();
         setWishlistTotal(wishlist);
         setfreeSampleTotal(freesample);
-        setMergedCart([...items, ...cartfree]);
+        setMergedCart(items);
       } catch {
         toast.error("Error fetching items");
       }
@@ -47,18 +46,15 @@ const UserIcon = ({ className }: UserIconProps) => {
     const handleCartUpdate = () => fetchItems();
     const handleWishlistUpdate = () => fetchItems();
     const handlefreeSampleUpdate = () => fetchItems();
-    const handlecartfreeSampleUpdate = () => fetchItems();
 
     window.addEventListener("cartUpdated", handleCartUpdate);
     window.addEventListener("wishlistUpdated", handleWishlistUpdate);
     window.addEventListener("freeSampleUpdated", handlefreeSampleUpdate);
-    window.addEventListener("cartfreeSampleUpdated", handlecartfreeSampleUpdate);
 
     return () => {
       window.removeEventListener("cartUpdated", handleCartUpdate);
       window.removeEventListener("wishlistUpdated", handleWishlistUpdate);
       window.removeEventListener("freeSampleUpdated", handlefreeSampleUpdate);
-      window.addEventListener("cartfreeSampleUpdated", handlecartfreeSampleUpdate);
 
     };
 

@@ -105,8 +105,6 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
     onClose();
   };
 
-
-  console.log(products, "productData")
   return (
     <div id="popup-overlay" className="fixed -inset-3 set-0 mt-0 flex items-center justify-center bg-white/50 z-50 p-4" onClick={handleClickOutside}>
       <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-6xl relative pb-20">

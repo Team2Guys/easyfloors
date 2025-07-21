@@ -1,15 +1,23 @@
 import { ICart } from "types/prod";
-import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, addToCart, AddcartFreeSample } from "utils/indexedDB";
+import { getWishlist, removeWishlistItem, getFreeSamples, removeFreeSample, addToCart } from "utils/indexedDB";
 import { toast } from "react-toastify";
 
-export const fetchItems = async (isSamplePage: boolean, setItems: (_items: ICart[]) => void) => {
+export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICart[]) => void) => {
   try {
     if (isSamplePage) {
       const samples = await getFreeSamples();
-      setItems(samples);
+      if(setItems){
+        setItems(samples);
+      } else {
+        return samples;
+      }
     } else {
       const wishlist = await getWishlist();
-      setItems(wishlist);
+      if(setItems){
+        setItems(wishlist);
+      } else {
+        return wishlist;
+      }
     }
   } catch {
     toast.error("Error fetching items.");
@@ -59,7 +67,7 @@ export const updateQuantity = (
 };
 
 
-export const handleRemoveItem = async (id: number, isSamplePage: boolean, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void) => {
+export const handleRemoveItem = async (id: number, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void ,isSamplePage?: boolean) => {
   try {
     if (isSamplePage) {
       await removeFreeSample(id);
@@ -74,29 +82,12 @@ export const handleRemoveItem = async (id: number, isSamplePage: boolean, setIte
 
 export const handleAddToCart = async (
   product: ICart,
-  isSamplePage: boolean,
   setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void
 ) => {
   try {
-    await handleRemoveItem(Number(product.id), isSamplePage, setItems);
-
-    if (isSamplePage) {
-      const freeSampleProduct = {
-        ...product,
-        requiredBoxes: 1,
-        price: 0,
-        totalPrice: 0,
-        isfreeSample: true,
-      };
-
-      await AddcartFreeSample(freeSampleProduct);
-      window.dispatchEvent(new Event("freeSampleUpdated"));
-      window.dispatchEvent(new Event("cartUpdated"));
-      window.dispatchEvent(new Event("cartfreeSampleUpdated"));
-    } else {
+    await handleRemoveItem(Number(product.id), setItems);
       await addToCart(product);
       window.dispatchEvent(new Event("cartUpdated"));
-    }
   } catch {
     toast.error("Error adding item.");
   }
