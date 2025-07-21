@@ -45,7 +45,6 @@ export default function ViewRedirecturl({
             confirmButtonText: 'Yes, delete it!',
             cancelButtonText: 'No, keep it',
         }).then((result) => {
-            console.log(result, "result")
             if (result.isConfirmed) {
                 handleDelete(key);
             }
@@ -129,7 +128,6 @@ export default function ViewRedirecturl({
                             }`}
                         size={20}
                         onClick={() => {
-                            console.log(record, "id")
                             // if (canDeleteProduct) {
                             confirmDelete(record.id);
                             // }

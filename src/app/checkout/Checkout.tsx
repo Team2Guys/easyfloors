@@ -141,7 +141,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
 
                 const {data} = await initiateFreesample({ variables: { createFreesample: orderData } });
                 const orderid = data.freeSample.paymentKey
-                console.log(orderid, "data", data)
                 const db = await openDB();
                 const tx = db.transaction("freeSample", "readwrite");
                 const store = tx.objectStore("freeSample");
@@ -226,7 +225,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
         }
 
         setSelectedFee(fee);
-        console.log(subTotal, "subTotalPrice", fee)
         setTotal(subTotal + fee);
     };
 
