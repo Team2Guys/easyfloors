@@ -1,6 +1,6 @@
 import { DocumentNode } from "graphql";
 import client from "./apolloClient";
-import { FIND_ONE_REDIRECT_URL, GET_Redirecturls } from "graphql/general";
+import { FIND_ONE_REDIRECT_URL, GET_LAST_7_DAYS_STATS, GET_MONTHLY_STATS, GET_Redirecturls } from "graphql/general";
 
 export const fetchRedirectUrls = async (FIND_QUICK_VIEW_PRODUCT?: DocumentNode) => {
   try {
@@ -44,6 +44,49 @@ export const findOneRedirectUrl = async (
     return data?.findOneRedirecturls || null;
   } catch (err) {
     console.log(err)
+    throw null;
+  }
+};
+
+
+export const GET_MONTHLY_STATSHander = async (
+  CUSTOM_QUERY?: DocumentNode
+) => {
+  try {
+    const { data } = await client.query({
+      query: CUSTOM_QUERY ? CUSTOM_QUERY : GET_MONTHLY_STATS,
+      context: {
+        fetchOptions: {
+          credentials: 'include',
+          next: { tags: ["orders"] }
+        },
+      },
+    });
+
+    return data?.MONTHLYCHARTS || null;
+  } catch (err) {
+    console.error(err, "error message");
+    throw null;
+  }
+};
+
+export const GET_LAST_7_DAYS_STATSHANDLER = async (
+  CUSTOM_QUERY?: DocumentNode
+) => {
+  try {
+    const { data } = await client.query({
+      query: CUSTOM_QUERY ? CUSTOM_QUERY : GET_LAST_7_DAYS_STATS,
+      context: {
+        fetchOptions: {
+          credentials: 'include',
+          next: { tags: ["orders"] }
+        },
+      },
+    });
+
+    return data?.WEEKLYCHARTS || null;
+  } catch (err) {
+    console.log(err, "err")
     throw null;
   }
 };

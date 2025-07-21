@@ -620,14 +620,20 @@ export const GET_ADMIN_DATA = gql`
 export const GET_ALL_RECORDS = gql`
   query GET_ALL_RECORDS {
     GET_ALL_RECORDS {
-    totalSubCategories
+          totalSubCategories
         totalProducts
         totalCategories
         totalAdmins
         totalRevenue
-        totalSales
+        totalSoldProducts
         totalUsers
-        Total_abandant_order
+        totalabundantOrderProd
+        totalAccessories
+        Orders
+        abdundantOrders
+        freeSamples
+        InstallationAppointments
+        MeasureAppointments
     }
   }
 `;
