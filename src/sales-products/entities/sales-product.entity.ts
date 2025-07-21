@@ -9,25 +9,37 @@ export class SalesProduct {
 
 @ObjectType()
 export class ALL_RECORDS {
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
     totalSubCategories: number;
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
     totalProducts: number;
 
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
     totalCategories: number;
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
     totalAdmins: number;
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
     totalRevenue: number;
-    @Field(() => Int)
-    totalSales: number;
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
+    totalSoldProducts: number;
+    @Field(() => Int,{nullable:true})
     totalUsers: number;
-    @Field(() => Int)
-    Total_abandant_order: number;
-    @Field(() => Int)
+    @Field(() => Int,{nullable:true})
+    totalabundantOrderProd: number;
+    @Field(() => Int,{nullable:true})
     totalAccessories: number;
+    @Field(() => Int,{nullable:true})
+    Orders: number;
+    @Field(() => Int,{nullable:true})
+    abdundantOrders: number;
+
+    @Field(() => Int,{nullable:true})
+    freeSamples: number;
+
+    @Field(() => Int,{nullable:true})
+    InstallationAppointments: number;
+    @Field(() => Int,{nullable:true})
+    MeasureAppointments: number;
 
 }
 
@@ -162,4 +174,37 @@ export class paymentStatus {
 
     @Field(() => GraphQLJSON,{nullable:true})
       shippingMethod: any
+}
+
+
+
+@ObjectType()
+export class Last7DaysStat {
+  @Field()
+  date: string;
+
+  @Field()
+  day: string;
+
+  @Field(() => Int)
+  orders: number;
+}
+
+
+
+@ObjectType()
+export class MonthlyData {
+  @Field()
+  month: string;
+
+  @Field(() => Int)
+  Orders: number;
+}
+
+
+
+@ObjectType()
+export class monthlyChart {
+  @Field(() => [MonthlyData])
+  completeMonthlyData: MonthlyData[];
 }

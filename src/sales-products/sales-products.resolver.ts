@@ -1,12 +1,12 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { SalesProductsService } from './sales-products.service';
-import { ALL_RECORDS, contactUsEmail, paymentStatus, SalesProduct } from './entities/sales-product.entity';
+import { ALL_RECORDS, contactUsEmail, Last7DaysStat, monthlyChart, paymentStatus, SalesProduct, } from './entities/sales-product.entity';
 import { contactUsEmailInput, CreateOrderInput, PaymentQueryDto, } from './dto/create-sales-product.input';
 import { Public } from '../decorators/public.decorator';
 
 @Resolver(() => SalesProduct)
 export class SalesProductsResolver {
-  constructor(private readonly salesProductsService: SalesProductsService) {}
+  constructor(private readonly salesProductsService: SalesProductsService) { }
 
   @Public()
   @Mutation(() => SalesProduct)
@@ -16,13 +16,13 @@ export class SalesProductsResolver {
 
 
   @Public()
-  @Mutation(() => SalesProduct,{nullable:true})
+  @Mutation(() => SalesProduct, { nullable: true })
   freeSample(@Args('createFreesample') createFreesample: CreateOrderInput) {
     return this.salesProductsService.freeSample(createFreesample);
-  } 
+  }
 
   @Public()
-  @Mutation(() => paymentStatus,{nullable:true})
+  @Mutation(() => paymentStatus, { nullable: true })
   postpaymentStatus(@Args('postpaymentStatus') updatepaymentstatusInput: PaymentQueryDto) {
     return this.salesProductsService.postpaymentStatus(updatepaymentstatusInput);
   }
@@ -33,7 +33,7 @@ export class SalesProductsResolver {
     return this.salesProductsService.findAll();
   }
 
-  
+
   @Public()
   @Query(() => [paymentStatus], { name: 'AllOrdersFree' })
   findAllFreesample() {
@@ -52,6 +52,7 @@ export class SalesProductsResolver {
     return this.salesProductsService.findOrderByMail(email);
   }
 
+  @Public()
   @Query(() => ALL_RECORDS, { name: 'GET_ALL_RECORDS' })
   get_all_records() {
     return this.salesProductsService.get_all_records();
@@ -61,6 +62,21 @@ export class SalesProductsResolver {
   @Mutation(() => contactUsEmail)
   Contact_email(@Args('contactUsEmail') contactUsEmail: contactUsEmailInput) {
     return this.salesProductsService.contactUs(contactUsEmail);
+  }
+
+
+
+  @Public()
+  @Query(() => monthlyChart, { name: 'MONTHLYCHARTS' })
+  getMonthlyAppointments() {
+    return this.salesProductsService.getMonthlyAppointments();
+  }
+
+
+  @Public()
+  @Query(() => [Last7DaysStat], { name: 'WEEKLYCHARTS' })
+  getLast7DaysStats() {
+    return this.salesProductsService.getLast7DaysStats();
   }
 
 
