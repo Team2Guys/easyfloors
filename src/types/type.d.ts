@@ -130,15 +130,20 @@ export interface Appointmentprops {
   AppointsType: string;
 }
 export interface RECORDS {
-  totalAdmins: string;
-  totalCategories: string;
-  totalProducts: string;
-  totalUsers: string;
-  totalProfit: string;
-  totalSales: string;
-  totalRevenue: string;
   totalSubCategories: string;
-  Total_abandant_order: string;
+  totalProducts: string;
+  totalCategories: string;
+  totalAdmins: string;
+  totalRevenue: string;
+  totalSoldProducts: string;
+  totalUsers: string;
+  totalabundantOrderProd: string;
+  totalAccessories: string;
+  Orders: string;
+  abdundantOrders: string;
+  freeSamples: string;
+  InstallationAppointments: string;
+  MeasureAppointments: string;
 }
 
 export interface specsDetails {
