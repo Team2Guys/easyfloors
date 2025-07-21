@@ -186,15 +186,16 @@ let MeasureAppointments = appointments.filter((value)=>value.AppointsType =="app
       const { orderId } = postpayment;
 
       let existingOrder = await this.prisma.salesProducts.findFirst({ where: { orderId } })
+      console.log(existingOrder, "existingOrder")
       if (!existingOrder) {
         customHttpException("Order not found", 'NOT_FOUND');
         return;
       }
 
-      if (existingOrder.paymentStatus) {
-        console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
-        customHttpException("Payment status already updated", 'BAD_REQUEST');
-      }
+      // if (existingOrder.paymentStatus) {
+      //   console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
+      //   customHttpException("Payment status already updated", 'BAD_REQUEST');
+      // }
     
 
       const paymentStatus = await this.prisma.salesProducts.update({
