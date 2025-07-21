@@ -9,14 +9,14 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { TbShoppingBag } from "react-icons/tb";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart, openDB, removeCartItem, removeWishlistItem, removeFreeSample, getFreeSamplesCart, cartremoveFreeSample, getWishlist, getFreeSamples } from "utils/indexedDB";
+import { getCart, openDB, removeCartItem, removeWishlistItem, removeFreeSample, getWishlist, getFreeSamples } from "utils/indexedDB";
 
 interface DropdownPanelProps {
   icon: ReactNode;
   badgeCount?: number;
   panelClassName?: string;
   cartItems: ICart[];
-  type: "cart" | "wishlist" | "freeSample" | "cartfreeSample";
+  type: "cart" | "wishlist" | "freeSample";
   viewLink?: string;
   emptyMessage?: string;
 }
@@ -113,14 +113,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
       let updatedItems: ICart[] = [];
 
       if (type === "cart") {
-        const normalCart = (await getCart()) || [];
-        const freeCart = (await getFreeSamplesCart()) || [];
-        const markedFreeCart = freeCart.map(item => ({
-          ...item,
-          isfreeSample: true
-        }));
-
-        updatedItems = [...normalCart, ...markedFreeCart];
+        updatedItems = (await getCart()) || [];
       } else if (type === "wishlist") {
         updatedItems = (await getWishlist()) || [];
       } else if (type === "freeSample") {
@@ -145,18 +138,13 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
   const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
     try {
-      if (isFreeSample) {
-        if (type === "freeSample") {
-          await removeFreeSample(id); // Remove from free samples list
-        } else if (type === "cart") {
-          await cartremoveFreeSample(id); // Remove from cart's free samples
-        }
-      } else {
-        if (type === "cart") {
-          await removeCartItem(id);
-        } else if (type === "wishlist") {
-          await removeWishlistItem(id);
-        }
+      if (type === "freeSample" && isFreeSample) {
+        await removeFreeSample(id); // Remove from free samples list
+      }
+      else if (type === "cart") {
+        await removeCartItem(id);
+      } else if (type === "wishlist") {
+        await removeWishlistItem(id);
       }
 
       // Update local items
@@ -166,11 +154,6 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
       // Dispatch appropriate update events
       window.dispatchEvent(new Event(`${type}Updated`));
-
-      // If removing from cart, also update free samples if needed
-      if (type === "cart" && isFreeSample) {
-        window.dispatchEvent(new Event('cartfreeSampleUpdated'));
-      }
     } catch {
       toast.error(`Error removing item from ${type}`);
     }
