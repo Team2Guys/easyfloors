@@ -85,8 +85,6 @@ const FormLayout = ({
       const whatIamIImage = WhatamIImageUrl && WhatamIImageUrl;
       const homePageImage = homePagemageUrl && homePagemageUrl[0];
       const NewbannerImage = bannerImage && bannerImage[0];
-
-      console.log(values, "values")
       const newValue = { ...values, posterImageUrl, BannerImage: NewbannerImage, whatAmiImageBanner: Banner, whatAmiImage: whatIamIImage, homePageImage };
       const updateFlag = editCategoryName ? true : false;
 
