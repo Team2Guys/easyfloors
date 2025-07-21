@@ -7,11 +7,11 @@ import { FC } from "react";
 
 const HeroMain: FC<HeroMainProps> = ({ items }) => {
   return (
-    <div className="relative flex flex-col w-full h-[320px] sm:h-[600px] xl:h-[885px]">
+    <div className="relative flex flex-col w-full h-[320px] sm:h-[600px] xl:h-[800px]">
       {items.map((item, index) => (
         <div
           key={index}
-          className="relative w-full h-[320px] sm:h-[600px] xl:h-[885px]"
+          className="relative w-full h-[320px] sm:h-[600px] xl:h-[800px]"
         >
           <Image
             src="/assets/images/Home/hero-min.avif"
@@ -19,7 +19,7 @@ const HeroMain: FC<HeroMainProps> = ({ items }) => {
             priority
             fill
             fetchPriority="high"
-            sizes="(max-width: 640px) 100px, 800px"
+            sizes="(max-width: 640px) 100px, 600px"
           />
 
           <div className="bg-background hidden sm:block">
