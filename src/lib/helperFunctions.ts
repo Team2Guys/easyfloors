@@ -1,7 +1,7 @@
 import { ImagesProps } from "components/ImageUploader/ImageUploader";
 import { FILE_UPLOAD_MUTATION } from "graphql/mutations";
 import { FilterState, ISUBCATEGORY } from "types/cat";
-import { AdditionalInformation, IProduct, IProductFilter } from "types/prod";
+import { AdditionalInformation, IProduct } from "types/prod";
 import { ProductFilterParams, SelectedFilter } from "types/types";
 import { ProductsSorting } from "utils/helperFunctions";
 
@@ -120,7 +120,7 @@ export const collectionFilter = ({
   products,
   priceValue,
   selectedProductFilters,
-}: ProductFilterParams): { filtered: IProductFilter[]; appliedFilters: SelectedFilter[] } => {
+}: ProductFilterParams): { filtered: ISUBCATEGORY[]; appliedFilters: SelectedFilter[] } => {
   let filtered = products ?? [];
 
   const appliedFilters: SelectedFilter[] = [];

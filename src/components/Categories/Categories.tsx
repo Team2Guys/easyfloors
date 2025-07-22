@@ -18,8 +18,8 @@ const Categories: React.FC<Props> = ({ card, index }) => {
         <Image
           src={card?.homePageImage?.imageUrl || ""}
           alt={card?.homePageImage?.altText || "easy Floor"}
-          width={2000}
-          height={2000}
+          width={500}
+          height={500}
           quality={100}
           unoptimized
           loading="lazy"
