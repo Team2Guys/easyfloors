@@ -5,7 +5,7 @@ import Image from "next/image";
 import Container from "components/common/container/Container";
 import { BreadcrumbProps } from "types/PagesProps";
 
-const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImagetext, imageClass }: BreadcrumbProps) => {
+const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImagetext, imageClass,useHeadingTag }: BreadcrumbProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   
   useEffect(() => {
@@ -81,17 +81,21 @@ const Breadcrumb = ({ title = "", image = "", slug, subcategory, altText,isImage
       {image && (
         <div className="relative h-[110px] sm:h-[200px] xl:h-[332px]">
           <Image
-            className={`object-fill w-full  ${imageClass}`}
+            className={`object-fill w-full ${imageClass}`}
             fill
             src={image}
             alt={altText || title || "breadcrumb-image"}
-            sizes="100wv"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 100vw, 1200px"
             priority
             fetchPriority="high"
           />
        {!isImagetext && (
             <div className="absolute inset-0 flex justify-center items-center text-white text-center">
-              <p className="text-25 md:text-[42.6px] font-bold">{title}</p>
+              {useHeadingTag ? (
+          <h1 className="text-25 md:text-[42.6px] font-bold">{title}</h1>
+        ) : (
+          <p className="text-25 md:text-[42.6px] font-bold">{title}</p>
+        )}
             </div>
           )}
         </div>

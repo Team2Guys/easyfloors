@@ -6,8 +6,6 @@ import { headers } from "next/headers";
 import Category from "./Cetagory";
 import { IProduct } from "types/prod";
 import { staticMenuItems } from "data/data";
-import CategorySkeleton from "components/skaletons/CategorySkeleton";
-import { Suspense } from "react";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -63,9 +61,11 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
   const { slug } = await params
   const categories = await fetchCategories();
   const findCategory = categories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
+
   if (!findCategory) {
     return notFound()
   }
+  
   const reCallFlag = findCategory?.recalledSubCats && findCategory?.recalledSubCats.length > 0;
   if (reCallFlag) {
     let products: IProduct[] = [];
@@ -93,9 +93,7 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
     return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
   }) || []
   return (
-    <Suspense fallback={<CategorySkeleton />} >
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
-    </Suspense>
   );
 };
 
