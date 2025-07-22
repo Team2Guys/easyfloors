@@ -60,25 +60,27 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
   const categories = await fetchCategories();
-  const findCategory = categories.find((cat: ICategory) => (cat.custom_url ?? '') === slug);
+  const findCategory = categories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
 
   if (!findCategory) {
     return notFound()
   }
-
+  
   const reCallFlag = findCategory?.recalledSubCats && findCategory?.recalledSubCats.length > 0;
-if (reCallFlag) {
-  let products: IProduct[] = [];
+  if (reCallFlag) {
+    let products: IProduct[] = [];
 
-  categories.forEach((cat: ICategory) => {
-    const filteredProd = cat.products?.filter((prod) =>
-      findCategory?.recalledSubCats?.some(
-        (subCat: ISUBCATEGORY) => subCat.custom_url === prod.subcategory?.custom_url
-      )
-    ) || [];
+    categories.forEach((cat: ICategory) => {
+      const filteredProd = cat.products?.filter((prod) =>
+        findCategory?.recalledSubCats?.some(
+          (subCat: ISUBCATEGORY) => subCat.custom_url === prod.subcategory?.custom_url
+        )
+      ) || [];
 
-    products = [...products, ...filteredProd];
-  })};
+      products = [...products, ...filteredProd];
+    })
+    findCategory.products = products
+  }
 
 
   const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
@@ -94,5 +96,7 @@ if (reCallFlag) {
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
   );
 };
+
+
 
 export default CategoryPage;

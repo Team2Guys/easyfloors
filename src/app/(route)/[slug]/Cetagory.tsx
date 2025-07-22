@@ -1,20 +1,15 @@
 'use client'
-import dynamic from "next/dynamic";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
-const Filters = dynamic(() => import("components/sub-category/filters"),
-{ssr: false,loading: () => (<div className="h-full w-full bg-gray-200 rounded animate-pulse" />),});
 import Drawer from "components/ui/drawer";
 import Select from "components/ui/Select";
 import { productFilter } from "lib/helperFunctions";
-import { type ISUBCATEGORY, type Category, FilterState, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
-import { IProduct } from "types/prod";
-import { SelectedFilter } from "types/types";
+import { type Category, FilterState, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
 import SubCategory from "components/sub-category/sub-category-product";
+import Filters from "components/sub-category/filters";
 
-const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
-  const [Data, setData] = useState<ISUBCATEGORY | Category>(subCategoryData || categoryData)
+const Category = ({ catgories, categoryData,  isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
     Colours: [],
@@ -25,27 +20,11 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
     plankLength: []
   });
 
-  const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
-  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
-
-  useEffect(() => {
-    if (isSubCategory) {
-      const filtered = categoryData.products?.filter(
-        product => product.subcategory?.custom_url === subcategory
-      );
-      const pushMatchingProducts = { ...subdescription, products: filtered }
-      setData(pushMatchingProducts);
-    } else {
-      setData(categoryData)
-    }
-  }, [categoryData, subCategoryData])
-
-  useEffect(() => {
     const { filtered, appliedFilters } = productFilter({
-      products: Data?.products,
+      products: categoryData.products,
       priceValue,
       sortOption,
       selectedProductFilters,
@@ -53,29 +32,17 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
       subcategory,
     });
 
-    setFilteredProducts(filtered);
-    setSelectedFilters(appliedFilters);
-  }, [
-    selectedProductFilters,
-    priceValue,
-    sortOption,
-    Data?.products,
-    subcategory,
-    isWaterProof,
-  ]);
-
-
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"
-        image={isSubCategory ? subdescription?.[0].BannerImage?.imageUrl : Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
-        altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
+        image={isSubCategory ? subdescription?.[0].BannerImage?.imageUrl : categoryData.whatAmiImageBanner?.imageUrl ? categoryData.whatAmiImageBanner?.imageUrl : categoryData.BannerImage?.imageUrl ? categoryData.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
+        altText={categoryData.whatAmiImageBanner?.altText || categoryData.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
       />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
           <div className=" lg:w-[20%] hidden lg:block ">
             <Filters
               catgories={catgories}
-              category={Data}
+              category={categoryData}
               isWaterProof={isWaterProof}
               setIsWaterProof={setIsWaterProof}
               selectedProductFilters={selectedProductFilters}
@@ -87,13 +54,13 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
           </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-            <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : Data?.Heading || Data?.name}</h1>
+            <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : categoryData?.Heading || categoryData?.name}</h1>
             <p
               className="text-14 md:text-16 2xl:text-18 lg:leading-[26px] font-inter "
               dangerouslySetInnerHTML={{
                 __html: isSubCategory
                   ? subdescription[0].description || ""
-                  : Data?.description || ""
+                  : categoryData?.description || ""
               }}
             >
             </p>
@@ -112,7 +79,7 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
                   <Drawer isOpen={isModalOpen} onClose={() => setModalOpen(false)} >
                     <Filters
                       catgories={catgories}
-                      category={Data}
+                      category={categoryData}
                       isWaterProof={isWaterProof}
                       setIsWaterProof={setIsWaterProof}
                       selectedProductFilters={selectedProductFilters}
@@ -130,12 +97,11 @@ const Category = ({ catgories, categoryData, subCategoryData, isSubCategory, slu
             </div>
           </div>
           <SubCategory
-            filteredProducts={filteredProducts}
-            selectedFilters={selectedFilters}
+            filteredProducts={filtered}
+            selectedFilters={appliedFilters}
             setIsWaterProof={setIsWaterProof}
             setSelectedProductFilters={setSelectedProductFilters}
             categoryData={categoryData}
-            subCategoryData={subCategoryData}
           />
         </div>
       </Container>
