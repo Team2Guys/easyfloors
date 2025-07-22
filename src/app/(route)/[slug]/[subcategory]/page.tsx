@@ -81,8 +81,8 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string, sub
 
   if(matchingSubCategory.length === 0) return notFound();
   return (
-    <Category catgories={filteredCategories} categoryData={findCategory} slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
- 
+      <Category catgories={filteredCategories} categoryData={findCategory} slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
+  
   );
 };
 
