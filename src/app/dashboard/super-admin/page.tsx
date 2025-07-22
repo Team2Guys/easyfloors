@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 
 const SuperAdmin = async() => {
     const allCookies = await cookies();
-   const token = allCookies.get("super_admin_access_token")?.value || allCookies.get("admin_access_token")?.value;
+   const token = allCookies.get("super_admin_access_token")?.value;
   const admins = await get_allAdmins(token)
   return (
     <Admins admins={admins}/>

@@ -1,11 +1,13 @@
 import dynamic from "next/dynamic";
 import { fetchCategories, fetchSingeSubCategory } from "config/fetch";
+import { Suspense } from "react";
 import { Category as ICategory } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
 const Category = dynamic(() => import('../Cetagory'))
 import { staticMenuItems } from "data/data";
+import CategorySkeleton from "components/skaletons/CategorySkeleton";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string, subcategory: string }> }): Promise<Metadata> {
   const { slug, subcategory } = await params
@@ -81,8 +83,9 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string, sub
 
   if(matchingSubCategory.length === 0) return notFound();
   return (
-    <Category catgories={filteredCategories} categoryData={findCategory} slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
- 
+    <Suspense fallback={<CategorySkeleton />} >
+      <Category catgories={filteredCategories} categoryData={findCategory} slug={slug} subcategory={subcategory} subdescription={matchingSubCategory} isSubCategory />
+    </Suspense>
   );
 };
 

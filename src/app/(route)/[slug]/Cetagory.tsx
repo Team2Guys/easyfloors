@@ -1,16 +1,17 @@
 'use client'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import Drawer from "components/ui/drawer";
 import Select from "components/ui/Select";
 import { productFilter } from "lib/helperFunctions";
-import { type Category, FilterState, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
+import { type Category, FilterState, ISUBCATEGORY, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
 import SubCategory from "components/sub-category/sub-category-product";
 import Filters from "components/sub-category/filters";
 
-const Category = ({ catgories, categoryData,  isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
+const Category = ({ catgories, categoryData,isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
+  const [Data, setData] = useState<ISUBCATEGORY | Category>( categoryData)
   const [selectedProductFilters, setSelectedProductFilters] = useState<FilterState>({
     Colours: [],
     commercialWarranty: [],
@@ -23,26 +24,38 @@ const Category = ({ catgories, categoryData,  isSubCategory, slug, subcategory, 
   const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
+
+  useEffect(() => {
+    if (isSubCategory) {
+      const filtered = categoryData.products?.filter(
+        product => product.subcategory?.custom_url === subcategory
+      );
+      const pushMatchingProducts = { ...subdescription, products: filtered }
+      setData(pushMatchingProducts);
+    } else {
+      setData(categoryData)
+    }
+  }, [categoryData])
+
     const { filtered, appliedFilters } = productFilter({
-      products: categoryData.products,
+      products: Data.products,
       priceValue,
       sortOption,
       selectedProductFilters,
       isWaterProof,
       subcategory,
     });
-
   return (
     <>
       <Breadcrumb imageClass="h-[70px] xs:h-auto"
-        image={isSubCategory ? subdescription?.[0].BannerImage?.imageUrl : categoryData.whatAmiImageBanner?.imageUrl ? categoryData.whatAmiImageBanner?.imageUrl : categoryData.BannerImage?.imageUrl ? categoryData.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
-        altText={categoryData.whatAmiImageBanner?.altText || categoryData.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
+        image={isSubCategory ? subdescription?.[0].BannerImage?.imageUrl : Data.whatAmiImageBanner?.imageUrl ? Data.whatAmiImageBanner?.imageUrl : Data.BannerImage?.imageUrl ? Data.BannerImage?.imageUrl : "/assets/images/category/category-breadcrumb.png"}
+        altText={Data.whatAmiImageBanner?.altText || Data.BannerImage?.altText} slug={slug} subcategory={subcategory} isImagetext
       />
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
           <div className=" lg:w-[20%] hidden lg:block ">
             <Filters
               catgories={catgories}
-              category={categoryData}
+              category={Data}
               isWaterProof={isWaterProof}
               setIsWaterProof={setIsWaterProof}
               selectedProductFilters={selectedProductFilters}
@@ -54,13 +67,13 @@ const Category = ({ catgories, categoryData,  isSubCategory, slug, subcategory, 
           </div>
         <div className="lg:w-[80%]">
           <div className="font-inter space-y-4">
-            <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : categoryData?.Heading || categoryData?.name}</h1>
+            <h1 className="text-34 font-bold">{isSubCategory ? subdescription?.[0]?.name || "" : Data?.Heading || Data?.name}</h1>
             <p
               className="text-14 md:text-16 2xl:text-18 lg:leading-[26px] font-inter "
               dangerouslySetInnerHTML={{
                 __html: isSubCategory
                   ? subdescription[0].description || ""
-                  : categoryData?.description || ""
+                  : Data?.description || ""
               }}
             >
             </p>
@@ -79,7 +92,7 @@ const Category = ({ catgories, categoryData,  isSubCategory, slug, subcategory, 
                   <Drawer isOpen={isModalOpen} onClose={() => setModalOpen(false)} >
                     <Filters
                       catgories={catgories}
-                      category={categoryData}
+                      category={Data}
                       isWaterProof={isWaterProof}
                       setIsWaterProof={setIsWaterProof}
                       selectedProductFilters={selectedProductFilters}
@@ -101,7 +114,7 @@ const Category = ({ catgories, categoryData,  isSubCategory, slug, subcategory, 
             selectedFilters={appliedFilters}
             setIsWaterProof={setIsWaterProof}
             setSelectedProductFilters={setSelectedProductFilters}
-            categoryData={categoryData}
+            categoryData={Data}
           />
         </div>
       </Container>
