@@ -138,7 +138,7 @@ function Admins({ setselecteMenu, setEditAdmin,AllAdmins }: any) {//eslint-disab
             <div>
               <button
                 onClick={() => setselecteMenu('Add Admin')}
-                className="bg-primary text-white"
+                className="bg-black dark:bg-primary dark:border-0 text-white rounded-md border lg:p-2 md:p-2"
               >
                 Add new Admin
               </button>

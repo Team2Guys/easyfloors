@@ -79,7 +79,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
             <div className="grid grid-cols-8 gap-2 lg:gap-2 mt-1">
               {uniqueFeatureImages.map((col, index) => (
                 <div key={index} className={`text-center border cursor-pointer w-full lg:w-12 ${selectedColor?.color === col.color ? 'border-primary' : 'border-transparent'}`} onClick={() => handleColorClick(col)}>
-                  <Image alt="img" src={col.imageUrl} height={1000} width={1000} className="h-auto w-full lg:h-12" />
+                  <Image alt="img" src={col.imageUrl} height={100} width={100} quality={70} className="h-auto w-full lg:h-12" />
                   <p className="text-[8px] sm:text-10 font-inter font-normal text-nowrap">{col.color}</p>
                 </div>
               ))}
