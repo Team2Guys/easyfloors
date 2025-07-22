@@ -48,3 +48,27 @@ export const FIND_ONE_REDIRECT_URL = gql`
     }
   }
 `;
+
+
+
+export const GET_LAST_7_DAYS_STATS = gql`
+  query GetLast7DaysStats {
+    WEEKLYCHARTS {
+      date
+      day
+      orders
+    }
+  }
+`;
+
+
+export const GET_MONTHLY_STATS = gql`
+  query GetMonthlyStats {
+    MONTHLYCHARTS {
+      completeMonthlyData {
+        month
+        Orders
+      }
+    }
+  }
+`;

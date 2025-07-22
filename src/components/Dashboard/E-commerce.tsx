@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import ChartOne from './Charts/ChartOne';
-import ChartTwo from './Charts/ChartTwo';
+const ChartTwo = dynamic(()=>import('./Charts/ChartTwo'),{ssr:false})
+const ChartOne = dynamic(()=>import('./Charts/ChartOne'),{ssr:false} )
 import CardDataStats from './CardDataStats';
 import { useAppSelector } from 'components/Others/HelperRedux';
 import { IoMdEye } from 'react-icons/io';
@@ -11,8 +11,10 @@ import { IoBagOutline } from 'react-icons/io5';
 import { BiCategory } from 'react-icons/bi';
 import { GrDocumentPerformance } from 'react-icons/gr';
 import { RECORDS } from 'types/type';
+import dynamic from 'next/dynamic';
+import { MONTHLYGRAPH, WEEKLYGRAPH } from 'types/general';
 
-const ECommerce = ({records}: {records: RECORDS}) => {
+const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:MONTHLYGRAPH, weeklyChart :WEEKLYGRAPH}) => {
   const { loggedInUser } = useAppSelector((state) => state.usersSlice);
 
   const canCheckProfit =
@@ -77,7 +79,7 @@ const ECommerce = ({records}: {records: RECORDS}) => {
             {!canViewSales ? null : (
               <CardDataStats
                 title="Total Orders"
-                total={records?.totalSales ? records?.totalSales : ''}
+                total={records?.Orders ? records?.Orders : ''}
               >
                 <GrDocumentPerformance
                   size={25}
@@ -89,8 +91,8 @@ const ECommerce = ({records}: {records: RECORDS}) => {
               <CardDataStats
                 title="Abandoned Orders"
                 total={
-                  records?.Total_abandant_order
-                    ? records?.Total_abandant_order
+                  records?.abdundantOrders
+                    ? records?.abdundantOrders
                     : ''
                 }
               >
@@ -135,11 +137,60 @@ const ECommerce = ({records}: {records: RECORDS}) => {
                 />
               </CardDataStats>
             )}
+            {!canViewUsers ? null : (
+              <CardDataStats
+                title="Accessories"
+                total={records?.totalAccessories ? records?.totalAccessories : ''}
+              >
+                <PiUsersThreeFill
+                  size={25}
+                  className="fill-white dark:fill-black"
+                />
+              </CardDataStats>
+            )}
+            {!canViewUsers ? null : (
+              <CardDataStats
+                title="Free Samples Orders"
+                total={records?.freeSamples ? records?.freeSamples : ''}
+              >
+                <PiUsersThreeFill
+                  size={25}
+                  className="fill-white dark:fill-black"
+                />
+              </CardDataStats>
+            )}
+
+
+     {!canViewUsers ? null : (
+              <CardDataStats
+                title="Installation Appointments"
+                total={records?.InstallationAppointments ? records?.InstallationAppointments : ''}
+              >
+                <PiUsersThreeFill
+                  size={25}
+                  className="fill-white dark:fill-black"
+                />
+              </CardDataStats>
+            )}
+     {!canViewUsers ? null : (
+              <CardDataStats
+                title="Measure Appointments"
+                total={records?.MeasureAppointments ? records?.MeasureAppointments : ''}
+              >
+                <PiUsersThreeFill
+                  size={25}
+                  className="fill-white dark:fill-black"
+                />
+              </CardDataStats>
+            )}
+
+
+
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        <ChartOne />
-        <ChartTwo />
+        <ChartOne chartData={chartData} />
+        <ChartTwo chartData={weeklyChart} />
       </div>
     </>
   );

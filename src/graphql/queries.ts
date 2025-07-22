@@ -593,14 +593,20 @@ query Product($custom_url: String!,$category: String!,$subCategory: String!, $ac
 export const GET_ALL_RECORDS = gql`
   query GET_ALL_RECORDS {
     GET_ALL_RECORDS {
-    totalSubCategories
+          totalSubCategories
         totalProducts
         totalCategories
         totalAdmins
         totalRevenue
-        totalSales
+        totalSoldProducts
         totalUsers
-        Total_abandant_order
+        totalabundantOrderProd
+        totalAccessories
+        Orders
+        abdundantOrders
+        freeSamples
+        InstallationAppointments
+        MeasureAppointments
     }
   }
 `;

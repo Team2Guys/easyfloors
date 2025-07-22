@@ -13,12 +13,7 @@ const Profile = async () => {
   if (!session) {
     redirect('/login')
   }
-
-
-
-  console.log(session, "session")
-
-
+  
   return (
     <ProfileComponent loggedInUser={session} />
   )
