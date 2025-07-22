@@ -41,8 +41,10 @@ const SampleGrid: React.FC<SampleGridProps> = ({ sections }) => {
             <Image
               src={section.image}
               alt={section.alt}
-              width={500}
-              height={500}
+              width={400}
+              height={400}
+              quality={75}
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 400"
               className="w-full h-full object-cover"
             />
           </div>

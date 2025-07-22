@@ -58,6 +58,7 @@ export interface DASHBOARD_VIEW_SUBCATEGORIES_PROPS {
     isImagetext?: boolean;
     imageClass?:string
     showTitle?:boolean
+    useHeadingTag?:boolean
   };
 
 

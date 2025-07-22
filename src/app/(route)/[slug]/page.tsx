@@ -6,8 +6,6 @@ import { headers } from "next/headers";
 import Category from "./Cetagory";
 import { IProduct } from "types/prod";
 import { staticMenuItems } from "data/data";
-import CategorySkeleton from "components/skaletons/CategorySkeleton";
-import { Suspense } from "react";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
@@ -62,25 +60,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params
   const categories = await fetchCategories();
-  const findCategory = categories.find((cat: ICategory) => (cat.custom_url?.trim() ?? '') === slug.trim());
+  const findCategory = categories.find((cat: ICategory) => (cat.custom_url ?? '') === slug);
+
   if (!findCategory) {
     return notFound()
   }
+
   const reCallFlag = findCategory?.recalledSubCats && findCategory?.recalledSubCats.length > 0;
-  if (reCallFlag) {
-    let products: IProduct[] = [];
+if (reCallFlag) {
+  let products: IProduct[] = [];
 
-    categories.forEach((cat: ICategory) => {
-      const filteredProd = cat.products?.filter((prod) =>
-        findCategory?.recalledSubCats?.some(
-          (subCat: ISUBCATEGORY) => subCat.custom_url === prod.subcategory?.custom_url
-        )
-      ) || [];
+  categories.forEach((cat: ICategory) => {
+    const filteredProd = cat.products?.filter((prod) =>
+      findCategory?.recalledSubCats?.some(
+        (subCat: ISUBCATEGORY) => subCat.custom_url === prod.subcategory?.custom_url
+      )
+    ) || [];
 
-      products = [...products, ...filteredProd];
-    })
-    findCategory.products = products
-  }
+    products = [...products, ...filteredProd];
+  })};
 
 
   const filteredCategories = categories.filter((value: ICategory) => value?.name?.trim() !== "ACCESSORIES").sort((a: ICategory, b: ICategory) => {
@@ -93,12 +91,8 @@ const CategoryPage = async ({ params }: { params: Promise<{ slug: string }> }) =
     return (indexA === -1 ? Infinity : indexA) - (indexB === -1 ? Infinity : indexB);
   }) || []
   return (
-    <Suspense fallback={<CategorySkeleton />} >
       <Category catgories={filteredCategories} categoryData={findCategory} isSubCategory={false} slug={slug} />
-    </Suspense>
   );
 };
-
-
 
 export default CategoryPage;
