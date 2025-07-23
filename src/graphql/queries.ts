@@ -451,7 +451,6 @@ export const FETCHSUBCAT = gql`
       custom_url
       price
       sizes
-      whatamIdetails
       products {
         id
         name
