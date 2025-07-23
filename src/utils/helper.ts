@@ -314,7 +314,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
     }
 
     .container {
-       max-width: 500px;
+       max-width: 600px;
        margin: 20px auto;
        background-color: #fff;
        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -658,9 +658,14 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                             <p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 0px; color: black; font-weight: 600;">${product.name}</p>
                           ${orderDetails.isfreesample ? "" :
 
-         `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>No .of Boxes:</b> ${product.requiredBoxes}(${product.squareMeter} SQM)</p>`
-
+         `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>${product?.category?.trim()?.toLowerCase() == "accessories" ? "Total Required" : "No .of Boxes"}:</b> ${product.requiredBoxes}${product?.category?.trim()?.toLowerCase() == "accessories" ? "m" : `(${product.squareMeter} SQM)`}</p>`
       }
+
+                     ${product?.selectedColor?.color ? `
+               <p class="table-font" style="margin-left: 5px; margin-top: 5px; color: black;">
+                  <b>Color:</b> ${product?.selectedColor?.colorName} (${product?.selectedColor?.color})
+               </p>
+               ` : ''}
                          </div>
                       </div>
                    </td>
@@ -771,7 +776,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
 
          html: emailTemplate
       });
-      
+
       await transporter.sendMail({
          from: `Order Confirmation @EF ${process.env.EMAIL_USER}`,
          to: CustomerEmail,

@@ -88,9 +88,10 @@ export class SalesProductsService {
   async findOne(id: string) {
     try {
 
-      return await this.prisma.salesProducts.findFirst({
+    return  await this.prisma.salesProducts.findFirst({
         where: { orderId: id }
       })
+  
     } catch (error) {
       customHttpException(error.message, 'INTERNAL_SERVER_ERROR');
 
@@ -197,7 +198,6 @@ export class SalesProductsService {
         customHttpException("Payment status already updated", 'BAD_REQUEST');
       }
 
-
       const paymentStatus = await this.prisma.salesProducts.update({
         where: { orderId },
         data: { ...postpayment, checkout: false, paymentStatus: true, transactionDate: new Date() },
@@ -206,7 +206,7 @@ export class SalesProductsService {
       const products: ProductInput[] = JSON.parse(JSON.stringify(existingOrder.products)) as ProductInput[];
       if (Array.isArray(products) && products.length > 0) {
         for (const prod of products) {
-          let accessoryFlag = prod.category?.trim()?.toLowerCase() == "accessory" ? "acessories" : "products"
+          let accessoryFlag = prod.category?.trim()?.toLowerCase() == "accessory" || "acessories" ? "acessories" : "products"
           await this.prisma[accessoryFlag].update({
             where: { id: prod.id },
             data: {

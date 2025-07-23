@@ -49,6 +49,26 @@ export class contactUsEmail {
     message: string;
 }
 
+
+
+@ObjectType()
+export class SelectedColorDto {
+  @Field({ nullable: true })
+  color?: string;
+
+  @Field({ nullable: true })
+  altText?: string;
+
+  @Field({ nullable: true })
+  imageUrl?: string;
+
+  @Field({ nullable: true })
+  colorName?: string;
+
+  @Field({ nullable: true })
+  public_id?: string;
+}
+
 @ObjectType()
 export class Products {
     @Field(() => Int)
@@ -86,6 +106,8 @@ export class Products {
 
     @Field(() => Int)
     requiredBoxes: number;
+   @Field(() => SelectedColorDto, { nullable: true })
+  selectedColor?: SelectedColorDto;
 }
 
 @ObjectType()
