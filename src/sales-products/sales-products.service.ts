@@ -193,11 +193,16 @@ export class SalesProductsService {
         return;
       }
 
+
+
       if (existingOrder.paymentStatus) {
         console.log(existingOrder.paymentStatus, "existingOrder.paymentStatus")
         customHttpException("Payment status already updated", 'BAD_REQUEST');
       }
 
+
+
+      
       const paymentStatus = await this.prisma.salesProducts.update({
         where: { orderId },
         data: { ...postpayment, checkout: false, paymentStatus: true, transactionDate: new Date() },
