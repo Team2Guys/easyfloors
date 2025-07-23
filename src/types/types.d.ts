@@ -1,5 +1,7 @@
+import { SwiperProps } from "swiper/react";
 import { FilterState, ISUBCATEGORY } from "./cat";
 import { IProduct } from "./prod";
+import { ReactNode } from "react";
 
 export interface SocialLink {
   href: string;
@@ -249,4 +251,11 @@ export interface CategoryFeatures{
 export interface Props extends BlogCardProps {
   index: number;
   card:string;
+}
+
+
+export interface CommonSwiperProps extends SwiperProps {
+  children: ReactNode;
+  enablePagination?: boolean;
+  allowTouch?: boolean;
 }
