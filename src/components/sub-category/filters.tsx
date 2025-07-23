@@ -137,7 +137,6 @@ useEffect(() => {
         <Accordion title="Style">
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
 
-            {/* ECO Logic */}
             {(catSlug === 'polar-flooring' || catSlug === 'spc-flooring' || catSlug === 'lvt-flooring' || catSlug === 'richmond-flooring' || catSlug === 'richmond') && (
               <li>
                 <Link
@@ -152,44 +151,31 @@ useEffect(() => {
               </li>
             )}
 
-            {/* Herringbone */}
             <li>
-              <Link
-                href={`/${catSlug === 'spc-flooring' || catSlug === 'polar-flooring' ? 'polar' : 'richmond'
-                  }/spc-herringbone`}
-                className="cursor-pointer hover:text-primary block capitalize"
+              <Link href={`/${catSlug === 'spc-flooring' || catSlug === 'polar-flooring' ? 'polar' : 'richmond'
+                  }/spc-herringbone`} className="cursor-pointer hover:text-primary block capitalize"
               >
                 Herringbone
               </Link>
             </li>
 
-            {/* Only for Polar */}
             {catSlug === 'polar-flooring' && (
-              <li>
-                <Link
-                  href="/polar/lvt"
-                  className="cursor-pointer hover:text-primary block capitalize"
-                >
+              <li> 
+                <Link href="/polar/lvt" className="cursor-pointer hover:text-primary block capitalize">
                   Comfort
                 </Link>
               </li>
             )}
 
-            {/* Prime – Only for Richmond, LVT, SPC */}
             {(catSlug === 'richmond-flooring' || catSlug === 'lvt-flooring' || catSlug === 'spc-flooring' || catSlug === 'richmond') && (
               <li>
-                <Link
-                  href="/richmond/spc-prime"
-                  className="cursor-pointer hover:text-primary block capitalize"
-                >
+                <Link href="/richmond/spc-prime"className="cursor-pointer hover:text-primary block capitalize">
                   Prime
                 </Link>
               </li>
             )}
           </ul>
         </Accordion>
-
-
 
         {!isColection && (
           <Accordion title="Waterproof">
@@ -217,8 +203,6 @@ useEffect(() => {
 
         {Object.entries(uniqueFilters).map(([filterKey, filterValues]) => {
           if (filterValues.length === 0) return null;
-
-
 
           return (
             <Accordion key={filterKey} title={filterTitles[filterKey as keyof typeof uniqueFilters]}>

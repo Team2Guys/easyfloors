@@ -1,9 +1,11 @@
+import React from "react";
+import dynamic from "next/dynamic";
 import { fetchCategories, fetchSingleCategory } from "config/fetch";
 import { Category as ICategory, ISUBCATEGORY } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import Category from "./Cetagory";
+const Category = dynamic(() => import('./Cetagory'))
 import { IProduct } from "types/prod";
 import { staticMenuItems } from "data/data";
 
