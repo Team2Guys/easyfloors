@@ -307,6 +307,7 @@ mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
             category
             subcategories
             pricePerBox
+            selectedColor
         }
     email
     lastName
@@ -343,6 +344,8 @@ export const ORDER_QUERY = gql`
         pricePerBox
         squareMeter
         requiredBoxes
+        category
+        selectedColor
     }
     totalPrice
     shippingMethod

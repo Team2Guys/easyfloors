@@ -148,8 +148,17 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
                                  <Image src={`${prod.image}`} alt={prod.name} width={50} height={50} className='h-auto' />
                                  <div>
                                     <h3 className='font-medium'>{prod.name}</h3>
+                                    {prod.category === "Accessories" ? 
+                                    <>
+                                    <p className='font-medium'>Price per meter: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
+                                    <p className='font-medium'>Total Requirment: <span className='font-normal'>{prod.requiredBoxes}m</span></p>
+                                    </>
+                                    :
+                                    <>
                                     <p className='font-medium'>Price per box: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
                                     <p className='font-medium'>No. Of Boxes: <span className='font-normal'>{prod.requiredBoxes}</span> ({prod.squareMeter} SQM)</p>
+                                    </>
+                                    }
                                  </div>
                               </div>
                               <p className='font-medium'>{prod.totalPrice.toFixed(2)}</p>

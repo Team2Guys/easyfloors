@@ -7,6 +7,8 @@ export interface ORDERS_PROD {
     pricePerBox: number;
     squareMeter: string;
     requiredBoxes: number;
+    category?: string;
+    selectedColor?: ProductImage;
     __typename: string;
   }
   

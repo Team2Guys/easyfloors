@@ -139,7 +139,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
             setIsLoading(true)
             if (allItemsAreFreeSamples && !subTotal) {
 
-                const {data} = await initiateFreesample({ variables: { createFreesample: orderData } });
+                const { data } = await initiateFreesample({ variables: { createFreesample: orderData } });
                 const orderid = data.freeSample.paymentKey
                 const db = await openDB();
                 const tx = db.transaction("freeSample", "readwrite");
@@ -158,10 +158,10 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
             const paymentKey = data.createSalesProduct.paymentKey;
             if (!paymentKey.client_secret) return showToast('error', "payment Key not found")
             const db = await openDB();
-                const tx = db.transaction("cart", "readwrite");
-                const store = tx.objectStore("cart");
-                store.clear();
-                window.dispatchEvent(new Event("cartUpdated"));
+            const tx = db.transaction("cart", "readwrite");
+            const store = tx.objectStore("cart");
+            store.clear();
+            window.dispatchEvent(new Event("cartUpdated"));
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
             revalidateTag('orders')
@@ -239,7 +239,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
         }
         setShipping(shippingData);
     }, [selectedShipping,]);
-
+    console.log(mergedCart, 'mergedCart')
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -429,7 +429,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                             <div className="ml-4">
                                                 <p className="font-bold text-13 xs:text-16">{item.name}</p>
                                                 {item.isfreeSample ? "" :
-                                                    <p className="text-sm text-gray-600 text-12 xs:text-14">No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</p>
+                                                    <p className="text-sm text-gray-600 text-12 xs:text-14">{item.category === "Accessories" ? <>Total Required: <span className="font-semibold">{item.requiredBoxes}m</span></> : <>No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</>}</p>
                                                 }
                                                 {item?.selectedColor?.colorName &&
                                                     <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>

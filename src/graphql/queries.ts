@@ -317,6 +317,7 @@ query AllOrders {
             pricePerBox
             squareMeter
             requiredBoxes
+            selectedColor
         }
     }
 }
