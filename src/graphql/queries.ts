@@ -317,7 +317,13 @@ query AllOrders {
             pricePerBox
             squareMeter
             requiredBoxes
-            selectedColor
+            selectedColor {
+                color
+                altText
+                imageUrl
+                colorName
+                public_id
+            }
         }
     }
 }

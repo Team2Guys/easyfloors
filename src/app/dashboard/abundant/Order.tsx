@@ -151,7 +151,7 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
                                     {prod.category === "Accessories" ? 
                                     <>
                                     <p className='font-medium'>Price per meter: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
-                                    <p className='font-medium'>Total Requirment: <span className='font-normal'>{prod.requiredBoxes}m</span></p>
+                                    <p className='font-medium'>Total Required: <span className='font-normal'>{prod.requiredBoxes}m</span></p>
                                     </>
                                     :
                                     <>
