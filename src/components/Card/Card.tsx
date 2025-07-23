@@ -29,7 +29,8 @@ const Card: React.FC<productCardProps> = ({
   categoryData,
   isAccessories,
   isSoldOut = false,
-  dragging
+  dragging,
+  subCategoryFlag
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCaption, setShowCaption] = useState('');
@@ -219,25 +220,25 @@ const Card: React.FC<productCardProps> = ({
         )}
         {product.sizes && product.sizes.length > 0 ? (
           <div
-            className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-between"}`}
+            className={`flex gap-4 py-2 border-b border-gray-100 px-0 xsm:px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-between"}`}
           >
             {product.sizes.map((feature, index) => (
               <div key={index} className="flex gap-1 xsm:gap-4 w-full justify-between">
                 {feature.width &&
                   <div className="flex justify-between gap-1 items-center">
                     <Leftright />
-                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.width}</span>
+                    <span className=" text-[7px] xs:text-[9px] xsm:text-[10px] text-black md:text-[12px]">{feature.width}</span>
                   </div>
                 }
                 {feature.thickness &&
                   <div className="flex justify-between gap-1 items-center">
                     <Collapsearrow />
-                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.thickness}</span>
+                    <span className=" text-[7px] xs:text-[9px] xsm:text-[10px] text-black md:text-[12px]">{feature.thickness}</span>
                   </div>}
                 {feature.height &&
                   <div className="flex justify-between gap-1 items-center">
                     <TwoArrow />
-                    <span className=" text-[7px] xs:text-[10px] text-black md:text-[12px]">{feature.height}</span>
+                    <span className=" text-[7px] xs:text-[9px] xsm:text-[10px] text-black md:text-[12px]">{feature.height}</span>
                   </div>
                 }
               </div>
@@ -245,7 +246,7 @@ const Card: React.FC<productCardProps> = ({
           </div>
         ) :
 
-          <div className={`flex gap-4 py-2 border-b border-gray-100 px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-evenly"}`}>
+          <div className={`flex gap-4 py-2 border-b border-gray-100 px-0 xsm:px-2 font-inter font-light ${isAccessories ? "py-3 justify-around" : "justify-evenly"}`}>
             {features.map((feature, index) => (
               <div className="flex gap-1 items-center" key={index}>
                 <Image
@@ -262,17 +263,17 @@ const Card: React.FC<productCardProps> = ({
         }
 
 
-        <div className="px-2 pt-2 xsm:p-2 font-inter font-light lg:p-4">
+        <div className="px-0 pt-2 xsm:p-2 font-inter font-light lg:p-4">
           <Link
             href={isAccessories ? `/accessories/${product.custom_url?.toLowerCase() ?? ''}` : handleNavigate(product as IProduct, categoryData)}
-            className={`md:mt-0 mt-1 text-left font-semibold leading-5 h-10 xsm:h-auto block ${isAccessories ? "text-[#594F55] text-base xsm:text-xl" : "text-[#594F55] text-13 sm:text-base"
+            className={`md:mt-0 mt-1 text-left font-semibold min-h-10 xsm:h-auto block ${isAccessories ? "text-[#594F55] text-base xsm:text-xl leading-5" : subCategoryFlag ? "leading-5 text-[#594F55] text-13 sm:text-base" : "text-[#594F55] text-12 sm:text-base leading-4 xsm:leading-5"
               }`}
           >
             <h3>{isAccessories ? `${product.name}` : product.name}</h3>
           </Link>
         </div>
       </div>
-      <div className="px-2 pt-1 xsm:p-2 font-inter font-light lg:p-4">
+      <div className="px-0 pt-1 xsm:p-2 font-inter font-light lg:p-4">
         <div className="flex flex-col justify-between w-full gap-2 items-center lg:items-center md:flex-row md:gap-4 md:items-start sm:py-2 max-sm:text-primary">
           {
 
