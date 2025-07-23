@@ -202,8 +202,7 @@ export class SalesProductsService {
 
 
 
-      
-      const paymentStatus = await this.prisma.salesProducts.update({
+          const paymentStatus = await this.prisma.salesProducts.update({
         where: { orderId },
         data: { ...postpayment, checkout: false, paymentStatus: true, transactionDate: new Date() },
       });
