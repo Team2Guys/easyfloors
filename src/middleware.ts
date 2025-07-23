@@ -6,21 +6,18 @@ export async function middleware(req: NextRequest) {
   try {
     const token = req.cookies.get("admin_access_token")?.value || req.cookies.get("super_admin_access_token")?.value;
     const pathname = req.nextUrl.pathname;
-  
-
-
     const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
-        
-if(redirectUrls){
-     return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
-}
+
+    if (redirectUrls) {
+      return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url), 301);
+    }
     const isAuthRoute = pathname === "/dashboard/Admin-login";
-    const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute; 
-  
+    const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute;
+
     if (token && isAuthRoute) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
-  
+
     if (!token && isProtectedRoute) {
       return NextResponse.redirect(new URL("/dashboard/Admin-login", req.url));
     }
@@ -38,7 +35,7 @@ if(redirectUrls){
 }
 
 export const config = {
-    matcher: [
-        '/((?!api|_next|.*\\.).+)',
-    ],
+  matcher: [
+    '/((?!api|_next|.*\\.).+)',
+  ],
 };

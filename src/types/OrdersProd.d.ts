@@ -7,6 +7,16 @@ export interface ORDERS_PROD {
     pricePerBox: number;
     squareMeter: string;
     requiredBoxes: number;
+    category?:string
+    selectedColor:{
+    color?:string,
+    colorName?:string,
+    imageUrl?:string,
+    public_id?:string,
+    altText?:string,
+
+
+    }
     __typename: string;
   }
   
