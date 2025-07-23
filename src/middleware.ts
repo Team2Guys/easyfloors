@@ -8,12 +8,6 @@ export async function middleware(req: NextRequest) {
     const pathname = req.nextUrl.pathname;
 
    const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
-        
-if(redirectUrls){
-    return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url),301);
-}
-
-    const redirectUrls = await findOneRedirectUrl(pathname.replace(/^\/+|\/+$/g, ''))
 
     if (redirectUrls) {
       return NextResponse.redirect(new URL(`/${redirectUrls?.redirectedUrl}`, req.url), 301);
