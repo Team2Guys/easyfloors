@@ -1,4 +1,6 @@
 'use client'
+import React from "react";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import Container from "components/common/container/Container";
 import Breadcrumb from "components/Reusable/breadcrumb";
@@ -6,8 +8,8 @@ import Drawer from "components/ui/drawer";
 import Select from "components/ui/Select";
 import { productFilter } from "lib/helperFunctions";
 import { type Category, FilterState, ISUBCATEGORY, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
-import SubCategory from "components/sub-category/sub-category-product";
-import Filters from "components/sub-category/filters";
+const SubCategory = dynamic(()=> import("components/sub-category/sub-category-product"));
+const Filters = dynamic(()=> import("components/sub-category/filters"),{ssr: false});
 
 const Category = ({ catgories, categoryData,isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
