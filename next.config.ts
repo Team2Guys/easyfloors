@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     formats: ['image/avif', 'image/webp'],
    unoptimized: false
   },
-   async headers() {
+ async headers() {
     return [
       {
         source: '/_next/image',
@@ -20,9 +20,21 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: '/(.*).(avif|webp|png|jpg|jpeg|svg|gif)',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'auto',
+          },
+          {
+            key: 'Content-Disposition',
+            value: 'inline',
+          },
+        ],
+      },
     ];
   },
-  
 };
 
 export default nextConfig;
