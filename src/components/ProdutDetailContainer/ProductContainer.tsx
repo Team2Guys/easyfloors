@@ -74,10 +74,10 @@ const ProductContainer = ({ MainCategory, subCategory, productData, className, i
         </div>
         <div className="flex text-19 gap-1 items-center">
           <p className="text-12 xs:text-14 2xl:text-23 sm:text-18">
-            Stock:{" "}
-            <span className="text-[#008000] font-bold">
-              {productData?.stock && productData?.stock > 0 ? "In Stock" : "Out of Stock"}
-            </span>
+          Stock:{" "}
+           <span className={`font-bold ${ productData?.stock && productData?.stock > 0 ? "text-[#008000]" : "text-red-500"}`}>
+            {productData?.stock && productData?.stock > 0 ? "In Stock" : "Out of Stock"}
+           </span>
           </p>
           <div className="bg-black h-5 w-[2px]" />
           <p className="text-12 xs:text-14 2xl:text-20 font-bold sm:text-18">

@@ -35,7 +35,7 @@ export interface Category {
   whatAmiImageBanner?: ProductImage
   topHeading?: string
   recalledSubCats: ISUBCATEGORY[]
-  price?: string
+  price?: string | number
   stock?: number
   boxCoverage?: string,
   __typename?: string;
@@ -68,6 +68,7 @@ export interface ISUBCATEGORY extends Category {
   homePageImage?: ProductImage;
   whatAmiTopHeading?: string
   whatamIdetails: AdditionalInformation[]
+  recalledSubCats?: ISUBCATEGORY[]
   Heading?: string
   BannerImage?: ProductImage
   posterImageUrl?: ProductImage;

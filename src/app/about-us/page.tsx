@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 const AboutUs = () => {
   return (
     <>
-      <Breadcrumb title="About Us" showTitle image="/assets/images/aboutus/banner.png" />
+      <Breadcrumb title="About Us" useHeadingTag showTitle image="/assets/images/aboutus/banner.png" />
       <Container>
         <div className="py-12">
           <AboutUsInfo sections={alternatingData} />

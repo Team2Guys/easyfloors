@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ISUBCATEGORY } from "types/cat";
 
-const CollectionCard = ({ subcategory }: { subcategory: ISUBCATEGORY }) => {
+const CollectionCard = ({ subcategory}: { subcategory: ISUBCATEGORY }) => {
   return (
     <div className="md:px-2 hover:bg-[#FFF9F5] flex flex-col justify-between pb-2.5">
       <Link href={`/${subcategory.category.RecallUrl}/${subcategory.custom_url}`}>

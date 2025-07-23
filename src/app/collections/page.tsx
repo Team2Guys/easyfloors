@@ -32,7 +32,7 @@ const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) 
   const sortedSubcategories = [...polarProducts, ...richmondSPC, ...richmondLVT];
   return (
     <div>
-      <Breadcrumb title="All Collections" image='/assets/images/category/allcollection.png' />
+      <Breadcrumb title="All Collections" useHeadingTag image='/assets/images/category/allcollection.png' />
       <Collections sortedSubcategories={sortedSubcategories} categories={categories} slug={slug} />
     </div>
   );

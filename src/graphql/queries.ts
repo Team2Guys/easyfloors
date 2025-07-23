@@ -454,6 +454,7 @@ export const FETCHSUBCAT = gql`
       products {
         id
         name
+        
       }
       category {
         id

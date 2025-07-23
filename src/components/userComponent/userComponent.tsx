@@ -88,7 +88,7 @@ export default function UserComponent({
                   </p>
 
                   <button
-                    className="w-full h-[76px] bg-primary"
+                    className="w-full h-[76px] bg-primary text-white"
                     type="submit"
                   >
                     {loading ? <Loader color="#fff" /> : buttonTitle}
@@ -98,7 +98,7 @@ export default function UserComponent({
                       {InstructionText && InstructionText}{' '}
                       {routingText && (
                         <Link
-                          className="underline text-sm text-primary"
+                          className="underline text-sm"
                           href={
                             title && title === 'Sign In'
                               ? '/register'
@@ -145,7 +145,7 @@ export default function UserComponent({
                   </p>
 
                   <button
-                    className="w-full h-[76px] bg-primary"
+                    className="w-full h-[76px] bg-primary text-white"
                     type="submit"
                   >
                     {loading ? <Loader color="#ffffff" /> : buttonTitle}
@@ -155,7 +155,7 @@ export default function UserComponent({
                       {InstructionText && InstructionText}{' '}
                       {routingText && (
                         <Link
-                          className="underline text-sm text-primary"
+                          className="underline text-sm"
                           href={
                             title && title === 'Sign In'
                               ? '/register'

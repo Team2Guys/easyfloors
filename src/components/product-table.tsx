@@ -109,7 +109,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                         onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => {}), isSamplePage)} 
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
-                        <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={1000} width={1000} />
+                        <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={100} width={100} />
                       </button>
                     </div>
                   </td>

@@ -42,8 +42,6 @@ const router = useRouter()
                   email: values.email,
                   password: values.password,
                   redirect: false,
-  
-  
                 });
                
                  router.replace("/profile");

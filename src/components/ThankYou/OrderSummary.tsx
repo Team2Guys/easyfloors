@@ -8,10 +8,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
 
     const ExpectedDeliveryDAte = getExpectedDeliveryDate(data?.postpaymentStatus?.shippingMethod.name, new Date(data?.postpaymentStatus?.transactionDate));
 
-    const productsPrice = data?.postpaymentStatus.products.reduce((accume, value) => {
-        return accume += value.price;
-    }, 0)
-
+    const productsPrice = data?.postpaymentStatus.totalPrice - data?.postpaymentStatus.shipmentFee;
 
     return (
 
@@ -35,9 +32,11 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
                                             <p className="md:text-sm text-gray-600 mt-1 text-12">{accessoryflag ? "Total Required" : "No. Of Boxes"}: {item.requiredBoxes}{accessoryflag ? "m" : ` (${item.squareMeter}  SQM)`}</p>
                                             {colorFlag && <p className="md:text-sm text-gray-600 mt-1 text-12"> Color : {`${item?.selectedColor?.colorName} (${item?.selectedColor?.color})`}</p>}
                                         </div>
+                                        <p className="md:text-sm text-gray-600 mt-1 text-12">Box Price: <span className="font-currency text-15 font-normal"></span>{item.pricePerBox}</p>
                                     </div>
                                     <p className="md:text-lg text-base font-semibold"><span className="font-currency text-18 font-normal"></span> {item.price.toFixed(2)}</p>
                                 </div>
+                                <p className="md:text-lg text-base font-semibold">{item.totalPrice === 0 ? 'Free' : (<><span className="font-currency text-18 font-normal"></span> {item.totalPrice.toFixed(2)}</>)}</p>
                             </div>
                         )
                     })}
@@ -54,7 +53,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
 
                             <div className="flex justify-between mt-5">
                                 <p className=" whitespace-nowrap font-inter text-20 text-[#818EA1] ">Shipping</p>
-                                <p className=" whitespace-nowrap font-inter text-20 font-normal"><span className="font-currency text-18 font-normal"></span> {data.postpaymentStatus.shipmentFee == 0 ? "Free" : data.postpaymentStatus.shipmentFee}</p>
+                                <p className=" whitespace-nowrap font-inter text-20 font-normal">{data.postpaymentStatus.shipmentFee == 0 ? "Free" : (<><span className="font-currency text-18 font-normal"></span> {data.postpaymentStatus.shipmentFee}</>)}</p>
 
                             </div>
                         </>

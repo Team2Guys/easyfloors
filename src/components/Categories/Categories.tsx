@@ -15,17 +15,15 @@ const Categories: React.FC<Props> = ({ card, index }) => {
   return (
     <div className="group relative overflow-hidden shadow-lg md:h-96 h-60 w-full text-center md:mb-0 mb-10 border-b">
       <div className="relative h-full w-full">
-        <Image
+          <Image
           src={card?.homePageImage?.imageUrl || ""}
           alt={card?.homePageImage?.altText || "easy Floor"}
-          width={2000}
-          height={2000}
-          quality={100}
-          unoptimized
+          fill
+          quality={80}
           loading="lazy"
           style={{ objectFit: "cover", width: "100%", height: "100%" }}
           className="absolute inset-0 transition-transform duration-300 group-hover:scale-105"
-        />
+          />
 
         <div className="relative h-full flex flex-col justify-center items-center transition-opacity duration-300 group-hover:bg-opacity-70">
           <p className="md:mb-3 md:text-6xl text-2xl font-bold text-white drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
@@ -34,14 +32,12 @@ const Categories: React.FC<Props> = ({ card, index }) => {
           <h3 className="mt-1 md:text-2xl text-sm font-inter text-white font-normal drop-shadow-[0_0_10px_rgba(0,0,0,0.8)]">
             {card.name}
           </h3>
-          <div className="md:mt-3">
             <Link
               href={`what-am-i?flooring=${card.whatIamEndpoint}`}
               className="md:text-base text-[12px] font-medium text-white hover:bg-primary transition duration-300 underline hover:no-underline"
             >
               Click Me
             </Link>
-          </div>
           {featureObj && (
             <div className="absolute md:bottom-0 block right-1/2 bottom-1 text-white md:text-sm md:p-4 p-2 rounded-lg opacity-100 xsm:opacity-0 transition-opacity duration-300 group-hover:opacity-100 translate-x-1/2 w-fit whitespace-nowrap">
               <ul className="list-disc pl-5 text-left">

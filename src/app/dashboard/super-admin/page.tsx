@@ -3,10 +3,11 @@ import Admins from "./Admins";
 import { cookies } from "next/headers";
 
 const SuperAdmin = async() => {
-const token = (await cookies()).get("super_admin_access_token")?.value
+    const allCookies = await cookies();
+   const token = allCookies.get("super_admin_access_token")?.value;
   const admins = await get_allAdmins(token)
   return (
-<Admins  admins={admins}/>
+    <Admins admins={admins}/>
   );
 };
 

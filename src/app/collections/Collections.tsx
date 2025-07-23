@@ -3,12 +3,10 @@ import CollectionCard from 'components/CollectionCard/CollectionCard';
 import Container from 'components/common/container/Container';
 import Filters from 'components/sub-category/filters';
 import { collectionFilter } from 'lib/helperFunctions';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { FiX } from 'react-icons/fi';
 import { FilterState, ISUBCATEGORY } from 'types/cat';
-import { IProduct } from 'types/prod';
 import { ICategory } from 'types/type';
-import { SelectedFilter } from 'types/types';
 
 const Collections = ({ sortedSubcategories, categories, slug }: { sortedSubcategories: ISUBCATEGORY[], categories: ICategory[], slug: string }) => {
    const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
@@ -20,10 +18,8 @@ const Collections = ({ sortedSubcategories, categories, slug }: { sortedSubcateg
       plankWidth: [],
       plankLength: []
    });
-   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
      const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
-     const [filteredProducts, setFilteredProducts] = useState<ISUBCATEGORY[] | IProduct[]>([]);
-   useEffect(() => {
+ 
       const { filtered, appliedFilters } = collectionFilter({
         products: sortedSubcategories, 
         priceValue,
@@ -32,13 +28,7 @@ const Collections = ({ sortedSubcategories, categories, slug }: { sortedSubcateg
         isWaterProof: null,
       });
     
-      setFilteredProducts(filtered);
-      setSelectedFilters(appliedFilters);
-    }, [
-      selectedProductFilters,
-      priceValue,
-      sortedSubcategories,
-    ]);
+     
       const handleRemoveFilter = (item: { name: "isWaterProof"; value: boolean }
         | { name: keyof FilterState; value: string }) => {
         if (item.name === "isWaterProof") {
@@ -71,12 +61,12 @@ const Collections = ({ sortedSubcategories, categories, slug }: { sortedSubcateg
             />
          </div>
          <div className='lg:w-[80%]'>
-            <div className={`flex mb-4 ${selectedFilters.length > 0 ? 'justify-between items-center' : 'justify-end items-center'}  bg-[#F2F4F5] p-2 md:p-3 rounded-md w-full min-h-14`}>
-               {selectedFilters.length > 0 &&
+            <div className={`flex mb-4 ${appliedFilters.length > 0 ? 'justify-between items-center' : 'justify-end items-center'}  bg-[#F2F4F5] p-2 md:p-3 rounded-md w-full min-h-14`}>
+               {appliedFilters.length > 0 &&
                   <div className="flex items-center md:gap-3">
                      <span className="text-[#191C1F] text-12 md:text-13 text-nowrap">Active Filters:</span>
                      <div className="flex items-center flex-wrap gap-x-1 gap-y-1 px-3 py-1  text-[#191C1F] text-10 md:text-14">
-                        {selectedFilters.map((item, index) => (
+                        {appliedFilters.map((item, index) => (
                            <div key={index} className="flex items-center gap-1 md:gap-2 flex-nowrap">
                               <span>
                                  {item.value === true ? 'Yes' : item.value === false ? 'No' : item.value}
@@ -92,13 +82,13 @@ const Collections = ({ sortedSubcategories, categories, slug }: { sortedSubcateg
                }
 
                <p className="text-[#191C1F] text-12 md:text-14">
-                  {filteredProducts.length} <span className="text-[#5F6C72]">{filteredProducts.length === 1 ? 'Result' : 'Results'} found</span>
+                  {filtered.length} <span className="text-[#5F6C72]">{filtered.length === 1 ? 'Result' : 'Results'} found</span>
                </p>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 md:gap-6 gap-2">
-               {filteredProducts.map((subcategory, index) => (
+               {filtered && filtered.map((product, index) => (
                   <div key={index}>
-                     <CollectionCard subcategory={subcategory as ISUBCATEGORY} />
+                     <CollectionCard subcategory={product} />
                   </div>
                ))}
             </div>
