@@ -1,20 +1,15 @@
 "use client";
-
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import {SwiperSlide } from "swiper/react";
 import Link from "next/link";
 const Card = dynamic(() => import('components/Card/Card'));
 import { features } from "data/data";
 import { Category, EDIT_CATEGORY, ISUBCATEGORY } from "types/cat";
 import { getSubcategoryOrder } from "data/home-category";
 import dynamic from "next/dynamic";
+import SwiperSlider from "components/common/swiper-slider/swiper-slider";
+import { categoryBreakpoint } from "data/slider";
 
 const CategorySlider = ({ categories }: { categories: Category[] }) => {
-
-
   return (
     <div className="space-y-8">
       {categories?.filter((category) => category.name !== "ACCESSORIES").map((category: Category, index: number) => {
@@ -58,28 +53,23 @@ const CategorySlider = ({ categories }: { categories: Category[] }) => {
               </div>
             </div>
             <div className="md:w-3/4 w-full bg-white md:pr-10 md:pt-0 pt-5">
-              <Swiper
-                modules={[Pagination]}
-                spaceBetween={20}
-                pagination={shouldEnablePagination ? { clickable: true } : false}
-                allowTouchMove={shouldEnablePagination}
-                breakpoints={{
-                  0: { slidesPerView: 2, spaceBetween: 10 },
-                  480: { slidesPerView: 2, spaceBetween: 15 },
-                  640: { slidesPerView: 2, spaceBetween: 15 },
-                  768: { slidesPerView: 2, spaceBetween: 20 },
-                  1024: { slidesPerView: 2.7, spaceBetween: 2 },
-                  1200: { slidesPerView: 3, spaceBetween: 2 },
-                }}
+              <SwiperSlider
+                enablePagination={shouldEnablePagination}
+                allowTouch={shouldEnablePagination}
+                breakpoints={categoryBreakpoint}
               >
-                {subcategories?.map((product: EDIT_CATEGORY, index) => {
-                  return (
-                    <SwiperSlide key={index} className="pb-7">
-                      <Card product={product} categoryData={category} features={features} sldier subCategoryFlag />
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
+                {subcategories?.map((product: EDIT_CATEGORY, index: number) => (
+                  <SwiperSlide key={index} className="pb-7">
+                    <Card
+                      product={product}
+                      categoryData={category}
+                      features={features}
+                      sldier
+                      subCategoryFlag
+                    />
+                  </SwiperSlide>
+                ))}
+              </SwiperSlider>
             </div>
           </div>
         );

@@ -307,7 +307,13 @@ mutation PostPaymentStatus($postpaymentStatus: PaymentQueryDto!) {
             category
             subcategories
             pricePerBox
-            selectedColor
+              selectedColor {
+                color
+                altText
+                imageUrl
+                colorName
+                public_id
+            }
         }
     email
     lastName

@@ -1,35 +1,25 @@
-'use client'
-import React from 'react'
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import { Pagination } from "swiper/modules";
+"use client"
+import React from 'react';
 import { ISUBCATEGORY } from 'types/cat';
-import BlogCard from "components/Categories/Categories";
+import BlogCard from 'components/Categories/Categories';
+import SwiperSlider from 'components/common/swiper-slider/swiper-slider';
+import { SwiperSlide } from 'swiper/react';
+import { whatamiBreakpoint } from 'data/slider';
 
-function CustomSwiper({subCategories}:{subCategories:ISUBCATEGORY[]}) {
-  return (
-    <div className="sm:hidden">
-    <Swiper
-      modules={[Pagination]}
-      spaceBetween={20}
-      pagination={{ clickable: true }}
-      breakpoints={{
-        0: { slidesPerView: 2, spaceBetween: 10 },
-        480: { slidesPerView: 2, spaceBetween: 15 },
-        640: { slidesPerView: 2, spaceBetween: 15 },
-        768: { slidesPerView: 2, spaceBetween: 20 },
-        1024: { slidesPerView: 3, spaceBetween: 20 },
-        1280: { slidesPerView: 3, spaceBetween: 25 },
-      }}
+const BlogSwiper = ({ subCategories }: { subCategories: ISUBCATEGORY[] }) => (
+  <div className="sm:hidden">
+    <SwiperSlider
+      enablePagination
+      allowTouch
+      breakpoints={whatamiBreakpoint}
     >
-      {subCategories?.map((card: ISUBCATEGORY, index: number) => (
+      {subCategories.map((card, index) => (
         <SwiperSlide key={card.id}>
           <BlogCard card={card} index={index} />
         </SwiperSlide>
       ))}
-    </Swiper>
-    </div>
-  )
-}
+    </SwiperSlider>
+  </div>
+);
 
-export default CustomSwiper
+export default BlogSwiper;
