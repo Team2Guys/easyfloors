@@ -21,7 +21,10 @@ const OrderHistory = async () => {
   return (
    <>
     <Breadcrumb title="Order History" />
-    <OrderHistoryTable OrderHistory={OrderHistory} />
+    {OrderHistory.length > 0 ?
+    <OrderHistoryTable OrderHistory={OrderHistory} /> :
+    <h1 className='text-center text-2xl font-semibold my-10'>No Order History Found</h1>
+    }
    </>
   )
 }
