@@ -9,8 +9,8 @@ import Select from "components/ui/Select";
 import { productFilter } from "lib/helperFunctions";
 import { type Category, FilterState, ISUBCATEGORY, SUBNCATEGORIES_PAGES_PROPS } from "types/cat";
 const SubCategory = dynamic(()=> import("components/sub-category/sub-category-product"));
-const Filters = dynamic(()=> import("components/sub-category/filters"),{ssr: false});
-
+const Filters = dynamic(()=> import("components/sub-category/filters"),{ssr: false, 
+  loading: () => <div className="h-full w-full bg-gray-200 rounded animate-pulse" />});
 const Category = ({ catgories, categoryData,isSubCategory, slug, subcategory, subdescription }: SUBNCATEGORIES_PAGES_PROPS) => {
   const [isWaterProof, setIsWaterProof] = useState<boolean | null | undefined>(null);
   const [Data, setData] = useState<ISUBCATEGORY | Category>( categoryData)
