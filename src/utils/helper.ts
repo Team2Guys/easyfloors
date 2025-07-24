@@ -658,7 +658,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                             <p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 0px; color: black; font-weight: 600;">${product.name}</p>
                           ${orderDetails.isfreesample ? "" :
 
-         `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>${product?.category?.trim()?.toLowerCase() == "accessories" ? "Total Required" : "No .of Boxes"}:</b> ${product.requiredBoxes}${product?.category?.trim()?.toLowerCase() == "accessories" ? "m" : `(${product.squareMeter} SQM)`}</p>`
+         `<p class="table-font" style="margin-left: 5px; margin-bottom: 0px; margin-top: 8px; color: black;"><b>${product?.category?.trim()?.toLowerCase() == "accessories" ? "No .of Pieces" : "No .of Boxes"}:</b> ${product.requiredBoxes}${product?.category?.trim()?.toLowerCase() == "accessories" ? "" : `(${product.squareMeter} SQM)`}</p>`
       }
 
                      ${product?.selectedColor?.color ? `
