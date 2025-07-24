@@ -2,6 +2,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { Category } from '../../categories/entities/category.entity';
 import GraphQLJSON from 'graphql-type-json';
 import { Product } from '../../products/entities/product.entity';
+import { BlogStatus } from 'general/dto/enums/enum';
 
 @ObjectType()
 export class SubCategory {
@@ -91,6 +92,10 @@ export class SubCategory {
   whatAmiCanonical_Tag: string;
   @Field({ nullable: true })
   whatAmiMeta_Description: string;
+
+
+    @Field(() => BlogStatus, { nullable: true })
+      status?: BlogStatus
 
 }
 

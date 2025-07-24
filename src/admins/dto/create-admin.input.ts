@@ -1,4 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { BlogStatus } from 'general/dto/enums/enum';
 import GraphQLJSON from 'graphql-type-json';
 
 @InputType()
@@ -59,6 +60,9 @@ export class CreateAdminInput {
 
   @Field(() => String, { defaultValue: 'Admin' })
   role: string;
+  
+    @Field(() => BlogStatus, { nullable: true })
+    status?: BlogStatus
 }
 
 

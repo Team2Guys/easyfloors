@@ -1,4 +1,5 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
+import { BlogStatus } from 'general/dto/enums/enum';
 import { GraphQLJSON } from 'graphql-type-json';
 
 
@@ -73,4 +74,8 @@ export class CreateAccessoryInput {
 
   @Field(() => String, { nullable: true })
   lengthPrice?: string
+
+  
+    @Field(() => BlogStatus, { nullable: true })
+    status?: BlogStatus
 }

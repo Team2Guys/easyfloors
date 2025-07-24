@@ -2,6 +2,7 @@ import { Int, Field, ObjectType, ID } from '@nestjs/graphql';
 import { GraphQLJSON } from 'graphql-type-json';
 import { Product } from '../../products/entities/product.entity';
 import { Category } from '../../categories/entities/category.entity';
+import { BlogStatus } from 'general/dto/enums/enum';
 
 
 
@@ -84,5 +85,9 @@ export class Accessory {
 
   @Field(() => String, { nullable: true })
   lengthPrice?: string
+
+  
+    @Field(() => BlogStatus, { nullable: true })
+    status?: BlogStatus
 
 }

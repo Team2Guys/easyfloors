@@ -13,6 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum BlogStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+model Category {
+  id                 Int             @id @default(autoincrement())
+  name               String          @unique
+  description        String?
+  products           Products[]
+  createdAt          DateTime?       @default(now())
+  updatedAt          DateTime?       @updatedAt
+  posterImageUrl     Json
+  last_editedBy      String?
+  short_description  String?
+  Canonical_Tag      String?
+  Meta_Description   String?
+  Meta_Title         String?
+  custom_url         String
+  subcategories      subCategories[] @relation()
+  Recall_Cat         String?
+  topHeading         String?
+  whatAmiImageBanner Json?
+  RecallUrl          String?
+  accessories        Acessories[]    @relation()
+  recalledSubCats    subCategories[] @relation("RecallCategories")
+  price              String?
+  status             BlogStatus?     @default(PUBLISHED)
+}
+
 model Products {
   id                    Int            @id @default(autoincrement())
   name                  String
@@ -48,90 +79,69 @@ model Products {
   acessories            Acessories[]   @relation("ProductAccessories")
   colors                Json[]         @default([])
   sizes                 Json[]         @default([])
-}
-
-model Category {
-  id                 Int             @id @default(autoincrement())
-  name               String          @unique
-  description        String?
-  products           Products[]
-  createdAt          DateTime?       @default(now())
-  updatedAt          DateTime?       @updatedAt
-  posterImageUrl     Json
-  last_editedBy      String?
-  short_description  String?
-  Canonical_Tag      String?
-  Meta_Description   String?
-  Meta_Title         String?
-  custom_url         String
-  subcategories      subCategories[] @relation()
-  Recall_Cat         String?
-  topHeading         String?
-  whatAmiImageBanner Json?
-  RecallUrl          String?
-  accessories        Acessories[]    @relation()
-  recalledSubCats    subCategories[] @relation("RecallCategories")
-  price              String?
+  status                BlogStatus?    @default(PUBLISHED)
 }
 
 model subCategories {
-  id                   Int        @id @default(autoincrement())
-  name                 String
-  description          String?
-  products             Products[]
-  createdAt            DateTime?  @default(now())
-  updatedAt            DateTime?  @updatedAt
-  posterImageUrl       Json?
-  last_editedBy        String?
-  short_description    String?
-  Canonical_Tag        String?
-  Meta_Description     String?
-  Meta_Title           String?
-  categoryId           Int?
-  category             Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  custom_url           String
-  whatAmiImage         Json[]     @default([])
-  homePageImage        Json?
-  whatAmiImageBanner   Json?
-  BannerImage          Json?
-  Heading              String?
-  whatAmiTopHeading    String?
-  whatamIdetails       Json[]     @default([])
-  recalledByCategories Category[] @relation("RecallCategories")
-  price                String?
-  sizes                 Json[]         @default([])
-  whatIamEndpoint     String?
+  id                      Int         @id @default(autoincrement())
+  name                    String
+  description             String?
+  products                Products[]
+  createdAt               DateTime?   @default(now())
+  updatedAt               DateTime?   @updatedAt
+  posterImageUrl          Json?
+  last_editedBy           String?
+  short_description       String?
+  Canonical_Tag           String?
+  Meta_Description        String?
+  Meta_Title              String?
+  categoryId              Int?
+  category                Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  custom_url              String
+  whatAmiImage            Json[]      @default([])
+  homePageImage           Json?
+  whatAmiImageBanner      Json?
+  BannerImage             Json?
+  Heading                 String?
+  whatAmiTopHeading       String?
+  whatamIdetails          Json[]      @default([])
+  recalledByCategories    Category[]  @relation("RecallCategories")
+  price                   String?
+  sizes                   Json[]      @default([])
+  whatIamEndpoint         String?
   // whatamI
-      whatAmiCanonical_Tag        String?
-    whatAmiMeta_Description     String?
-    whatAmiMeta_Title           String?
+  whatAmiCanonical_Tag    String?
+  whatAmiMeta_Description String?
+  whatAmiMeta_Title       String?
+  status                  BlogStatus? @default(PUBLISHED)
 }
 
 model Admins {
-  id                     Int     @id @default(autoincrement())
+  id                     Int         @id @default(autoincrement())
   fullname               String
-  email                  String  @unique
+  email                  String      @unique
   password               String
-  canAddProduct          Boolean @default(false)
-  canEditProduct         Boolean @default(false)
-  canDeleteProduct       Boolean @default(false)
-  canAddCategory         Boolean @default(false)
-  canDeleteCategory      Boolean @default(false)
-  canEditCategory        Boolean @default(false)
-  canCheckProfit         Boolean @default(false)
-  canCheckRevenue        Boolean @default(false)
-  canCheckVisitors       Boolean @default(false)
-  canViewUsers           Boolean @default(false)
-  canViewSales           Boolean @default(false)
-  canVeiwAdmins          Boolean @default(false)
-  canVeiwTotalproducts   Boolean @default(false)
-  canVeiwTotalCategories Boolean @default(false)
+  canAddProduct          Boolean     @default(false)
+  canEditProduct         Boolean     @default(false)
+  canDeleteProduct       Boolean     @default(false)
+  canAddCategory         Boolean     @default(false)
+  canDeleteCategory      Boolean     @default(false)
+  canEditCategory        Boolean     @default(false)
+  canCheckProfit         Boolean     @default(false)
+  canCheckRevenue        Boolean     @default(false)
+  canCheckVisitors       Boolean     @default(false)
+  canViewUsers           Boolean     @default(false)
+  canViewSales           Boolean     @default(false)
+  canVeiwAdmins          Boolean     @default(false)
+  canVeiwTotalproducts   Boolean     @default(false)
+  canVeiwTotalCategories Boolean     @default(false)
   posterImageUrl         Json?
-  role                   String  @default("Admin")
+  role                   String      @default("Admin")
+  status                 BlogStatus? @default(PUBLISHED)
 }
 
 model Acessories {
-  id                    Int        @id @default(autoincrement())
+  id                    Int         @id @default(autoincrement())
   name                  String
   price                 Int
   description           String
@@ -140,24 +150,25 @@ model Acessories {
   posterImageUrl        Json
   hoverImageUrl         Json?
   productImages         Json[]
-  colors                Json[]     @default([])
-  createdAt             DateTime?  @default(now())
-  updatedAt             DateTime?  @default(now())
+  colors                Json[]      @default([])
+  createdAt             DateTime?   @default(now())
+  updatedAt             DateTime?   @default(now())
   Canonical_Tag         String?
   Meta_Description      String?
   Meta_Title            String?
   last_editedBy         String?
   custom_url            String
-  AdditionalInformation Json[]     @default([])
-  FAQS                  Json[]     @default([])
+  AdditionalInformation Json[]      @default([])
+  FAQS                  Json[]      @default([])
   boxCoverage           String?
   categoryId            Int?
   short_description     String?
-  featureImages         Json[]     @default([])
-  products              Products[] @relation("ProductAccessories")
-  category              Category?  @relation(fields: [categoryId], references: [id], onDelete: SetNull)
-  sizes                 Json[]     @default([])
-  lengthPrice         String?
+  featureImages         Json[]      @default([])
+  products              Products[]  @relation("ProductAccessories")
+  category              Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  sizes                 Json[]      @default([])
+  lengthPrice           String?
+  status                BlogStatus? @default(PUBLISHED)
 }
 
 enum AppointsType {
@@ -222,21 +233,18 @@ model salesProducts {
   pay_methodType     String?
   paymethod_sub_type String?
   shippingMethod     Json?
-  otherCity String?
-  isfreesample Boolean?
+  otherCity          String?
+  isfreesample       Boolean?
 }
-
-
 
 model Redirecturls {
-  id            Int       @id @default(autoincrement())
-  url           String    @unique()
+  id            Int         @id @default(autoincrement())
+  url           String      @unique()
   redirectedUrl String
-  createdAt     DateTime? @default(now())
+  createdAt     DateTime?   @default(now())
   updatedAt     DateTime?
+  status        BlogStatus? @default(PUBLISHED)
 }
-
-
 
 model GoogleToken {
   id           Int      @id @default(autoincrement())

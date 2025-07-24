@@ -1,4 +1,5 @@
 import { InputType, Int, Field, ID } from '@nestjs/graphql';
+import { BlogStatus } from 'general/dto/enums/enum';
 import { GraphQLJSON } from 'graphql-type-json';
 
 @InputType()
@@ -100,4 +101,8 @@ export class CreateProductInput {
   @Field(() => [GraphQLJSON],{nullable:true})
   sizes?: any[]
 
+
+  
+    @Field(() => BlogStatus, { nullable: true })
+    status?: BlogStatus
 }
