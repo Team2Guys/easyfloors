@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { BlogStatus } from '@prisma/client';
 
 
 @ObjectType()
@@ -17,4 +18,8 @@ export class Redirecturls {
 
   @Field(() => Date, { nullable: true })
   updatedAt?: Date;
+
+     @Field(() => BlogStatus, { nullable: true })
+      status?: BlogStatus
+
 }
