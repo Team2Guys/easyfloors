@@ -80,7 +80,12 @@ export default function ViewRedirecturl({
             key: 'url',
             width: 200,
         },
-
+{
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status',
+            width: 200,
+        },
         {
             title: 'Create At',
             dataIndex: 'createdAt',
