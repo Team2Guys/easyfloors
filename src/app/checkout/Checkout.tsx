@@ -239,7 +239,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
         }
         setShipping(shippingData);
     }, [selectedShipping,]);
-    console.log(mergedCart, 'mergedCart')
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>

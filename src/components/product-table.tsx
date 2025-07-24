@@ -11,7 +11,6 @@ import { generateSlug } from "data/data";
 
 const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = false, items = [], setItems }) => {
   const pathname = usePathname();
-  console.log(items)
   return (
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
       {items.length === 0 && pathname === "/freesample" ? (
@@ -71,7 +70,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                       <div className="flex flex-col">
                         <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
                           <button
-                            onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))}
+                            onClick={() => setItems?.((prevItems) => updateQuantity(product.id, -1, prevItems))}
                             className="px-2 text-gray-700"
                           >
                             <FiMinus />
@@ -82,7 +81,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                               : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
                           </span>
                           <button
-                            onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))}
+                            onClick={() => setItems?.((prevItems) => updateQuantity(product.id, 1, prevItems))}
                             className="px-2 text-gray-700"
                           >
                             <GoPlus />
@@ -109,7 +108,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                           Add to Cart
                         </button>}
                       <button
-                        onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => { }), isSamplePage)}
+                        onClick={() => handleRemoveItem(product.id, setItems ?? (() => { }), isSamplePage)}
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
                         <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={100} width={100} />

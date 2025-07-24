@@ -23,7 +23,7 @@ export const openDB = (): Promise<IDBDatabase> => {
   
 export const addToCart = async (product: ICart): Promise<boolean> => {
   try {
-    // First check if requiredBoxes is 0 or negative
+    // Validate box quantity
     if (!product.requiredBoxes || product.requiredBoxes <= 0) {
       toast.error("Please enter a valid box quantity (at least 1).");
       return false;
@@ -33,27 +33,50 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
     const tx = db.transaction("cart", "readwrite");
     const store = tx.objectStore("cart");
 
-    const existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
-      const request = store.get(product.id);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
+    // For Accessories, we may need to treat same ID but different color as a different item
+    let existingProduct: ICart | undefined;
 
+    if (product.category === "Accessories") {
+      // Get all items and search by ID + color
+      const allItems: ICart[] = await new Promise((resolve, reject) => {
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+
+      existingProduct = allItems.find(
+        (item) => (item.id === product.id) && (item.selectedColor?.color === product.selectedColor?.color)
+      );
+
+    } else {
+      // For non-accessories, just get by ID
+      existingProduct = await new Promise<ICart | undefined>((resolve, reject) => {
+        const request = store.get(product.id);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
+    // Handle stock
     let newRequiredBoxes = product.requiredBoxes || 1;
-
     if (existingProduct) {
       newRequiredBoxes += existingProduct.requiredBoxes || 0;
     }
 
     if (newRequiredBoxes > product.stock) {
       toast.error(`Cannot add more than ${product.stock} boxes.`);
-      return false; 
+      return false;
     }
+
+    const idKey =  (product.category === "Accessories" && !existingProduct)
+      ? `${product.id}-${product.selectedColor?.color}`
+      : product.id;
 
     const updatedProduct = {
       ...product,
+      id: idKey,
       requiredBoxes: newRequiredBoxes,
-      totalPrice: product.pricePerBox * newRequiredBoxes, 
+      totalPrice: product.pricePerBox * newRequiredBoxes,
     };
 
     await new Promise<void>((resolve, reject) => {
@@ -61,13 +84,15 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
       request.onsuccess = () => resolve();
       request.onerror = () => reject(request.error);
     });
+
     window.dispatchEvent(new Event("cartUpdated"));
-    return true; 
+    return true;
   } catch (error) {
-    throw error;
+    console.error("Failed to add to cart:", error);
     return false;
   }
 };
+
 
 
   export const getCart = async (): Promise<ICart[]> => {
@@ -83,7 +108,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
   
 
   
-  export const removeCartItem = async (id: number): Promise<void> => {
+  export const removeCartItem = async (id: string | number): Promise<void> => {
     try {
       const db = await openDB();
       await new Promise<void>((resolve, reject) => {
@@ -102,25 +127,46 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
   };
   
   
-  export const addToWishlist = async (product: ICart): Promise<boolean> => {
+export const addToWishlist = async (product: ICart): Promise<boolean> => {
   try {
     const db = await openDB();
     const tx = db.transaction('wishlist', 'readwrite');
     const store = tx.objectStore('wishlist');
 
-    const existingProduct: ICart | undefined = await new Promise((resolve, reject) => {
-      const request = store.get(product.id);
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = () => reject(request.error);
-    });
+    let existingProduct: ICart | undefined;
+
+    if (product.category === 'Accessories') {
+      // Check if this accessory (with same ID + color) already exists
+      const allItems: ICart[] = await new Promise((resolve, reject) => {
+        const request = store.getAll();
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+
+      existingProduct = allItems.find(
+        (item) => (item.id === product.id) && (item.selectedColor?.color === product.selectedColor?.color)
+      );
+    } else {
+      // For non-accessories: just check by ID
+      existingProduct = await new Promise((resolve, reject) => {
+        const request = store.get(product.id);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+    }
+
 
     if (existingProduct) {
       return false;
     }
 
+    const wishlistId =
+      product.category === 'Accessories' ? `${product.id}-${product.selectedColor?.color}` : product.id;
+
     await new Promise<void>((resolve, reject) => {
       const request = store.put({
         ...product,
+        id: wishlistId,
         requiredBoxes: product.requiredBoxes ?? 1,
       });
       request.onsuccess = () => resolve();
@@ -135,7 +181,8 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
   }
 };
 
-  export const removeWishlistItem = async (id: number): Promise<void> => {
+
+  export const removeWishlistItem = async (id: number | string): Promise<void> => {
     try {
       const db = await openDB();
       await new Promise<void>((resolve, reject) => {

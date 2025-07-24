@@ -27,34 +27,34 @@ export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICar
 
 
 export const updateQuantity = (
-  id: number,
+  id: string | number,
   delta: number,
   items: ICart[],
 ): ICart[] => {
   return items.map((item) => {
     if (item.id !== id) return item;
+
+    // Handle Accessories (quantity is in meters)
     if (item.category === "Accessories" || item.category === "Accessory") {
-  const metres     = Math.max(1, (item.requiredBoxes ?? 1) + delta);
-  const unitPrice  = item.price ?? 0;          // price per metre
-  const totalPrice = +(unitPrice * metres).toFixed(2);
+      const metres = Math.max(1, (item.requiredBoxes ?? 1) + delta);
+      const unitPrice = item.price ?? 0; // price per metre
+      const totalPrice = +(unitPrice * metres).toFixed(2);
 
-  return {
-    ...item,
-    requiredBoxes: metres, 
-    squareMeter:   metres,  
-    totalPrice,      
-  };
-}
+      return {
+        ...item,
+        requiredBoxes: metres,
+        squareMeter: metres,
+        totalPrice,
+      };
+    }
 
-    let newArea = +(item.squareMeter + delta).toFixed(2);
-    if (newArea < 1) newArea = 1;  
-
-    const sqmPerBox = Number(item.boxCoverage);   
+    // Handle Tiles and other products (based on square meters)
+    const newArea = Math.max(1, +(item.squareMeter + delta).toFixed(2));
+    const sqmPerBox = Number(item.boxCoverage) || 1;
     const areaInSqm = item.unit === "sqft" ? newArea / 10.764 : newArea;
 
     const boxesNeeded = Math.ceil(areaInSqm / sqmPerBox);
-
-    const unitPrice  = item.pricePerBox ?? 0;
+    const unitPrice = item.pricePerBox ?? 0;
     const totalPrice = +(unitPrice * boxesNeeded).toFixed(2);
 
     return {
@@ -67,10 +67,11 @@ export const updateQuantity = (
 };
 
 
-export const handleRemoveItem = async (id: number, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void ,isSamplePage?: boolean) => {
+
+export const handleRemoveItem = async (id: number | string, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void ,isSamplePage?: boolean) => {
   try {
     if (isSamplePage) {
-      await removeFreeSample(id);
+      await removeFreeSample(Number(id));
     } else {
       await removeWishlistItem(id);
     }
@@ -85,7 +86,7 @@ export const handleAddToCart = async (
   setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void
 ) => {
   try {
-    await handleRemoveItem(Number(product.id), setItems);
+    await handleRemoveItem(product.id, setItems);
       await addToCart(product);
       window.dispatchEvent(new Event("cartUpdated"));
   } catch {
