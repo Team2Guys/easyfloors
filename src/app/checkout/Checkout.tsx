@@ -16,7 +16,7 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { emirateCityMap, emirates } from "data/data";
 import { toast } from "react-toastify";
 import { ICart } from "types/prod";
-import { getCart, openDB } from "utils/indexedDB";
+import { getCart, } from "utils/indexedDB";
 import { paymentcard } from "data/cart";
 import PaymentMethod from "components/product-detail/payment";
 import { useMutation } from "@apollo/client";
@@ -141,10 +141,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
 
                 const { data } = await initiateFreesample({ variables: { createFreesample: orderData } });
                 const orderid = data.freeSample.paymentKey
-                const db = await openDB();
-                const tx = db.transaction("freeSample", "readwrite");
-                const store = tx.objectStore("freeSample");
-                store.clear();
+
                 window.dispatchEvent(new Event("freeSampleUpdated"));
                 router.push(`/thank-you?isFreeSample=true&order=${orderid}`)
                 setTimeout(() => {
@@ -157,11 +154,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
             if (!paymentKey.client_secret) return showToast('error', "payment Key not found")
-            const db = await openDB();
-            const tx = db.transaction("cart", "readwrite");
-            const store = tx.objectStore("cart");
-            store.clear();
-            window.dispatchEvent(new Event("cartUpdated"));
+
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
             revalidateTag('orders')
