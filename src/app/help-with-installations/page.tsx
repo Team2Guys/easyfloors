@@ -1,6 +1,7 @@
 import AppointmentMain from 'components/appointment/appointment-main'
 import { Metadata } from 'next';
 import React from 'react'
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Flooring Installation Help | Expert Service by Easy Floors',
   description:
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Flooring Installation Help | Expert Service by Easy Floors',
     description: 'Need help installing your new floors? Easy Floors offers professional installation support across the UAE. Stress-free, reliable service.',
-    url: '/help-with-installations',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/help-with-installations',
+    images: [{url:logo.src, alt: 'Easyfloors',
       },
     ],
     type:'website'

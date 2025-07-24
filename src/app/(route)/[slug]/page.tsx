@@ -5,8 +5,8 @@ import { Category as ICategory, ISUBCATEGORY } from "types/cat";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { headers } from "next/headers";
-const Category = dynamic(() => import('./Cetagory'))
 import { IProduct } from "types/prod";
+const Category = dynamic(() => import('./Cetagory'))
 import { staticMenuItems } from "data/data";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
