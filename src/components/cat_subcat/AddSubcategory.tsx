@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
-import { Formik, Form, FormikHelpers, Field, ErrorMessage, FieldArray, FormikErrors } from 'formik';
+import { Formik, Form, FormikHelpers, Field, ErrorMessage, FieldArray, FormikErrors, FormikProps } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { subcategoryInitialValues, subcategoryValidationSchema, } from 'data/data';
 import Loader from 'components/Loader/Loader';
@@ -74,6 +74,8 @@ const FormLayout = ({
 
   const [createSubCategory] = useMutation(CREATE_SUBCATEGORY);
   const [updateSubCategory] = useMutation(UPDATE_SUBCATEGORY);
+  const formikRef = useRef<FormikProps<ISUBCATEGORY_EDIT>>(null);
+
 
   const onSubmit = async (values: ISUBCATEGORY_EDIT, { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>) => {
     if (!values.category) {
@@ -149,6 +151,19 @@ const FormLayout = ({
     setImageSrc(imageUrl);
     setIsCropModalVisible(true);
   };
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (formikRef.current?.dirty) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+
 
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
@@ -268,53 +283,82 @@ const FormLayout = ({
 
 
   return (
-    <Formik
+    <>
+      <p
+        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white"
+        onClick={() => {
+          setMenuType('Sub Categories');
+        }}
+      >
+        <IoMdArrowRoundBack /> Back
+      </p>
+
+      <Formik
+        innerRef={formikRef}
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
         }
         validationSchema={subcategoryValidationSchema}
         onSubmit={onSubmit}
-    >
+      >
         {(formik) => {
           return (
+
             <Form onSubmit={formik.handleSubmit}>
-               <div className='flex justify-between items-center'>
-                        <p className="text-lg font-black flex items-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer dark:text-white"onClick={() => {setMenuType('Sub Categories');}}>
-                          <IoMdArrowRoundBack /> Back
-                        </p>
-                        <div className='flex gap-6 items-center'>
-                          <Field name="status">
-                          {({ field, form }: import('formik').FieldProps) => (
-                            <div className="flex gap-4 items-center my-4">
-                              <label className="font-semibold">Sub Category Status:</label>
-              
-                              {['DRAFT', 'PUBLISHED'].map((status) => {
-                                const isActive = field.value === status;
-              
-                                return (
-                                  <button
-                                    key={status}
-                                    type="button"
-                                    onClick={() => form.setFieldValue('status', status)}
-                                    disabled={isActive}
-                                    className={`px-4 py-2 rounded-md text-sm border
+              <div className='flex justify-between items-center'>
+                <p className="text-lg font-black flex items-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer dark:text-white"
+                  onClick={() => { setMenuType('Sub Categories'); }}
+                >
+                  <IoMdArrowRoundBack /> Back
+                </p>
+
+
+                <p
+                  className="dashboard_primary_button"
+                  onClick={() => {
+                    if (formik.dirty) {
+                      const confirmLeave = window.confirm("You have unsaved changes. Do you want to leave without saving?");
+                      if (!confirmLeave) return;
+                    }
+                    setMenuType('Sub Categories');
+                    seteditCategory?.(() => undefined);
+                  }}
+                >
+                  <IoMdArrowRoundBack /> Back
+                </p>
+                <div className='flex gap-6 items-center'>
+                  <Field name="status">
+                    {({ field, form }: import('formik').FieldProps) => (
+                      <div className="flex gap-4 items-center my-4">
+                        <label className="font-semibold">Sub Category Status:</label>
+
+                        {['DRAFT', 'PUBLISHED'].map((status) => {
+                          const isActive = field.value === status;
+
+                          return (
+                            <button
+                              key={status}
+                              type="button"
+                              onClick={() => form.setFieldValue('status', status)}
+                              disabled={isActive}
+                              className={`px-4 py-2 rounded-md text-sm border
                                       ${isActive
-                                        ? 'bg-black text-white border-black cursor-not-allowed'
-                                        : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
-                                      }`}
-                                  >
-                                    {status}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          )}
-                          </Field>
-                        <button type="submit" className=" px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded w-fit" disabled={loading}>
-                        { loading ? <Loader color="#fff" /> : 'Submit'}
-                        </button>
-                        </div>
-               </div>
+                                  ? 'bg-black text-white border-black cursor-not-allowed'
+                                  : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                }`}
+                            >
+                              {status}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </Field>
+                  <button type="submit" className="dashboard_primary_button" disabled={loading}>
+                    {loading ? <Loader color="#fff" /> : 'Submit'}
+                  </button>
+                </div>
+              </div>
               <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                 <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
@@ -942,7 +986,7 @@ const FormLayout = ({
                       <div className="flex gap-4 mt-4">
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                       whatAmiMeta_Title
+                            whatAmiMeta_Title
                           </label>
                           <Field
                             type="text"
@@ -957,7 +1001,7 @@ const FormLayout = ({
                         </div>
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                        whatAmiCanonical_Tag
+                            whatAmiCanonical_Tag
                           </label>
                           <Field
                             type="text"
@@ -974,7 +1018,7 @@ const FormLayout = ({
 
                       <div className="mt-4">
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                whatAmiMeta_Description
+                          whatAmiMeta_Description
                         </label>
                         <Field
                           as="textarea"
@@ -1095,33 +1139,33 @@ const FormLayout = ({
                       )}
                     </FieldArray>
 
-<Field name="status">
-                          {({ field, form }: import('formik').FieldProps) => (
-                            <div className="flex gap-4 items-center my-4">
-                              <label className="font-semibold">Sub Category Status:</label>
-              
-                              {['DRAFT', 'PUBLISHED'].map((status) => {
-                                const isActive = field.value === status;
-              
-                                return (
-                                  <button
-                                    key={status}
-                                    type="button"
-                                    onClick={() => form.setFieldValue('status', status)}
-                                    disabled={isActive}
-                                    className={`px-4 py-2 rounded-md text-sm border
+                    <Field name="status">
+                      {({ field, form }: import('formik').FieldProps) => (
+                        <div className="flex gap-4 items-center my-4">
+                          <label className="font-semibold">Sub Category Status:</label>
+
+                          {['DRAFT', 'PUBLISHED'].map((status) => {
+                            const isActive = field.value === status;
+
+                            return (
+                              <button
+                                key={status}
+                                type="button"
+                                onClick={() => form.setFieldValue('status', status)}
+                                disabled={isActive}
+                                className={`px-4 py-2 rounded-md text-sm border
                                       ${isActive
-                                        ? 'bg-black text-white border-black cursor-not-allowed'
-                                        : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
-                                      }`}
-                                  >
-                                    {status}
-                                  </button>
-                                );
-                              })}
-                            </div>
-                          )}
-</Field>
+                                    ? 'bg-black text-white border-black cursor-not-allowed'
+                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                  }`}
+                              >
+                                {status}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </Field>
 
                   </div>
 
@@ -1131,7 +1175,7 @@ const FormLayout = ({
               <div className="flex justify-center">
                 <button
                   type="submit"
-                  className="mt-4 px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded"
+  className="dashboard_primary_button mt-2" 
                   disabled={loading}
                 >
                   {loading ? <Loader color="#fff" /> : 'Submit'}
@@ -1167,7 +1211,8 @@ const FormLayout = ({
             </Form>
           );
         }}
-    </Formik>
+      </Formik>
+    </>
   );
 };
 

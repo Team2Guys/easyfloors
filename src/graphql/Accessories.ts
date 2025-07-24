@@ -25,6 +25,7 @@ export const FETCH_ALL_ACCESSORIES = gql`
         featureImages
         sizes
         lengthPrice
+        status
       category {
         id
         name

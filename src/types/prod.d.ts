@@ -1,4 +1,5 @@
 import { EDIT_CATEGORY, ISUBCATEGORY, ISUBCATEGORY_EDIT } from "./cat";
+import { BlogStatus } from "./general";
 import { AdditionalInformation } from "./type";
 
 
@@ -66,6 +67,8 @@ export interface IProduct {
     selectedColor?: ProductImage;
     matchedProductImages?: ProductImage[];
     lengthPrice?:string
+      status?:BlogStatus
+
   }
 
 export interface Sizes { width: string, height: string, thickness: string }
