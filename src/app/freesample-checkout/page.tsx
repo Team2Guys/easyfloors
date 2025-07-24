@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'Secure Checkout | Complete Your Flooring Order at Easy Floors',
     description: 'Fast and secure checkout for your Easy Floors order. Enter delivery details, choose payment, and get your dream floors delivered in no time.',
     url: 'https://easyfloors.ae/freesample-checkout',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:'website'

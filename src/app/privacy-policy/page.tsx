@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: 'Easy Floors Privacy Policy | How We Protect Your Data',
     description: 'Learn how Easy Floors collects, uses, and protects your personal information. Read about data privacy, cookies, user rights, and how we keep your info secure.',
     url: 'https://easyfloors.ae/privacy-policy',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:"website"

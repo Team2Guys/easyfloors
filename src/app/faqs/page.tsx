@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: 'SPC & LVT Flooring FAQs | Easy Floors Answers You Can Trust',
     description: "Do you have questions about SPC or LVT flooring? Explore our FAQ page for answers on installation, warranties, pet safety, UAE climate suitability & more.",
     url: 'https://easyfloors.ae/faqs',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
       type:'website'

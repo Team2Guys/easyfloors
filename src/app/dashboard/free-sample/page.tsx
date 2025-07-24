@@ -18,7 +18,7 @@ const OrdersPage= async () => {
 const filteredOrder  = ordersData.filter((value :prodOrder)=>value.isfreesample).sort(
     (a: prodOrder, b: prodOrder) => new Date(b.checkoutDate).getTime() - new Date(a.checkoutDate).getTime()
   );
-  return <Order title="Free Sample Orders" ordersData={filteredOrder} isfreesample />
+  return <Order title="Free Sample Orders" ordersData={filteredOrder} isfreesample orders={ordersData} />
 };
 
 export default OrdersPage;

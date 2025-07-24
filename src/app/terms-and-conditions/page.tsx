@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
     description: "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
     url: 'https://easyfloors.ae/terms-and-conditions',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:'website'

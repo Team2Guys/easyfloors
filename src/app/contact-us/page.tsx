@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
     description: 'Have a question about flooring? Contact Easy Floors for expert support, product guidance, or order help. Fast response, friendly service.',
     url: 'https://easyfloors.ae/contact-us',
-    images: [{url:logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
       type:'website'

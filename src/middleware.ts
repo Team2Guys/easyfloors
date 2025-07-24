@@ -16,6 +16,7 @@ export async function middleware(req: NextRequest) {
     const isAuthRoute = pathname === "/dashboard/Admin-login";
     const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute;
 
+    console.log(isProtectedRoute,"isAuthRoute", isAuthRoute)
     if (token && isAuthRoute) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
@@ -28,8 +29,6 @@ export async function middleware(req: NextRequest) {
 
 
   } catch (error) {
-
-    return NextResponse.redirect(new URL("/dashboard/Admin-login", req.url));
     throw error;
 
   }
