@@ -101,7 +101,7 @@ export default function OrderTracking({ data }: { data: PostPaymentStatus }) {
                   <SiVisa className="text-blue text-4xl shadow px-1 py-0 h-auto w-10" />
                   <p className="text-black">
                     ending with {data.cardLastDigits} -{" "}
-                    {data.currency} {data.totalPrice}
+                    <span className="font-currency text-17 font-normal"></span>{data.totalPrice}
                   </p>
                 </div>
               </div>

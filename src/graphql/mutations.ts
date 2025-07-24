@@ -350,6 +350,14 @@ export const ORDER_QUERY = gql`
         pricePerBox
         squareMeter
         requiredBoxes
+        category
+        selectedColor {
+                color
+                altText
+                imageUrl
+                colorName
+                public_id
+            }
     }
     totalPrice
     shippingMethod
