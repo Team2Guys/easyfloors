@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'Easy Floors Shipping Policy | UAE Delivery & Charges Info',
     description: "Learn about Easy Floors' shipping options across the UAE. Enjoy free delivery on orders over AED 1000, next-day express shipping, and free sample delivery.",
     url: 'https://easyfloors.ae/shipping-policy',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:'website'

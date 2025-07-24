@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     title: 'About Easy Floors UAE | Trusted Online Flooring Store in Dubai',
     description: 'Learn more about Easy Floors—UAE’s leading online store for SPC and LVT flooring. Discover our Richmond & Polar collections, fast delivery, and free samples.',
     url: 'https://easyfloors.ae/about-us',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
           type:'website'

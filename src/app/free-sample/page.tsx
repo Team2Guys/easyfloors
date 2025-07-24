@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     title: 'Order Free Flooring Samples | Easy Floors UAE',
     description: 'Try before you buy! Order up to 5 free flooring samples with free delivery across the UAE. Explore colours, textures, and finishes at home.',
     url: 'https://easyfloors.ae/free-sample',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
       type:'website'

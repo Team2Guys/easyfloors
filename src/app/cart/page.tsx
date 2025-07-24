@@ -3,6 +3,7 @@ import CartPage from 'components/cart/cart-page';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import { fetchProducts } from 'config/fetch';
 import { Metadata } from 'next';
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Your Flooring Cart | Review & Checkout with Easy Floors',
   description:
@@ -10,8 +11,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Your Flooring Cart | Review & Checkout with Easy Floors',
     description: "Ready to upgrade your floors? Review your selected items in the Easy Floors cart and proceed to secure checkout when you're ready.",
-    url: '/cart',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/cart',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
           type:'website'
