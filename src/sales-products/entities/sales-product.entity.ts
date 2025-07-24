@@ -103,6 +103,9 @@ export class Products {
 
     @Field()
     squareMeter: string;
+    
+    @Field()
+    custom_url: string;
 
     @Field(() => Int)
     requiredBoxes: number;
