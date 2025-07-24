@@ -209,10 +209,10 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
                                  <Image src={`${prod.image}`} alt={prod.name} width={50} height={50} className='h-auto' />
                                  <div>
                                     <h3 className='font-medium'>{prod.name}</h3>
-                                    {prod.category === "Accessories" ? 
+                                    {prod.category?.toLowerCase().trim() === 'accessories' ? 
                                     <>
                                     <p className='font-medium'>Price per Piece: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
-                                    <p className='font-medium'>Total Required: <span className='font-normal'>{prod.requiredBoxes}</span></p>
+                                    <p className='font-medium'>No. of Pieces: <span className='font-normal'>{prod.requiredBoxes}</span></p>
                                     </>
                                     :
                                     <>

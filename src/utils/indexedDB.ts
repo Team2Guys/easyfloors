@@ -36,7 +36,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
     // For Accessories, we may need to treat same ID but different color as a different item
     let existingProduct: ICart | undefined;
 
-    if (product.category === "Accessories") {
+    if (product.category?.toLowerCase().trim() === 'accessories') {
       // Get all items and search by ID + color
       const allItems: ICart[] = await new Promise((resolve, reject) => {
         const request = store.getAll();
@@ -68,7 +68,7 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
       return false;
     }
 
-    const idKey =  (product.category === "Accessories" && !existingProduct)
+    const idKey =  (product.category?.toLowerCase() === 'accessories' && !existingProduct)
       ? `${product.id}-${product.selectedColor?.color}`
       : product.id;
 
@@ -135,7 +135,7 @@ export const addToWishlist = async (product: ICart): Promise<boolean> => {
 
     let existingProduct: ICart | undefined;
 
-    if (product.category === 'Accessories') {
+    if (product.category?.toLowerCase().trim() === 'accessories') {
       // Check if this accessory (with same ID + color) already exists
       const allItems: ICart[] = await new Promise((resolve, reject) => {
         const request = store.getAll();
@@ -161,7 +161,7 @@ export const addToWishlist = async (product: ICart): Promise<boolean> => {
     }
 
     const wishlistId =
-      product.category === 'Accessories' ? `${product.id}-${product.selectedColor?.color}` : product.id;
+      product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : product.id;
 
     await new Promise<void>((resolve, reject) => {
       const request = store.put({

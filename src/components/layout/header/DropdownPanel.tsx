@@ -250,12 +250,12 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                         <div className="flex-1 flex flex-col justify-between text-start">
                           <h2 className="text-sm font-semibold leading-snug line-clamp-2">{item.name}</h2>
                           {
-                            item.category === "Accessories" &&
+                            item.category?.toLowerCase().trim() === 'accessories' &&
                               <p className=" text-base sm:text-xs mt-1">Color: {item.selectedColor?.colorName}</p>
                           }
                           {
                             item.isfreeSample ? "free" :
-                              <p className=" text-base sm:text-xs mt-1">{item.category === "Accessories" ? 'Piece Price:' : 'Box Price:'} {' '}<span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
+                              <p className=" text-base sm:text-xs mt-1">{item.category?.toLowerCase().trim() === 'accessories' ? 'Piece Price:' : 'Box Price:'} {' '}<span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
                           }
                           {!item.isfreeSample && type === "cart" && (
                             <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">

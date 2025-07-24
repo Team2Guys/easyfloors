@@ -129,7 +129,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         </div>
       </div>
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
-        <p>Total Required: <span className="text-14 xl:text-17 font-light">{requiredBoxes} Pieces</span></p>
+        <p>No. of Pieces: <span className="text-14 xl:text-17 font-light">{requiredBoxes} Pieces</span></p>
         <p >Price Per Piece: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {productData.price}</span></p>
         <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {formatAED(totalPrice)} ({requiredBoxes < 1 ? `${requiredBoxes} Piece` : `${requiredBoxes} Pieces`} * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>

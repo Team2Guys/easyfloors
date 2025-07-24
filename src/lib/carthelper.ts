@@ -44,7 +44,7 @@ export const handleAddToStorage = async (
   const adjustedSquareMeter =
     squareMeter > 0 ? squareMeter : Number(boxCoverage) * adjustedRequiredBoxes;
   let posterImageUrl;
-  if (MainCategory === 'Accessories') {
+  if (MainCategory.toLowerCase().trim() === 'accessories') {
     posterImageUrl = (productData as IProduct).productImages?.find(
       (img) => img.colorCode === selectedColor?.color
     )?.imageUrl ?? image;

@@ -35,7 +35,7 @@ export const updateQuantity = (
     if (item.id !== id) return item;
 
     // Handle Accessories (quantity is in meters)
-    if (item.category === "Accessories" || item.category === "Accessory") {
+    if (item.category?.toLowerCase() === 'accessories' || item.category === "Accessory") {
       const metres = Math.max(1, (item.requiredBoxes ?? 1) + delta);
       const unitPrice = item.price ?? 0; // price per metre
       const totalPrice = +(unitPrice * metres).toFixed(2);

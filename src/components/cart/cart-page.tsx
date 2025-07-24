@@ -31,7 +31,7 @@ const CartPage = ({ products }: CartPageProps) => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
   const nonAccessoryItems = cartItems.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
-  const accessoryItems = cartItems.filter(item => item.category === 'Accessories' || item.category === "Accessory");
+  const accessoryItems = cartItems.filter(item => item.category?.toLowerCase().trim() === 'accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -58,7 +58,6 @@ const CartPage = ({ products }: CartPageProps) => {
  
 
    const handleRemoveItem = async (id: number | string) => {
-    console.log(id,'id')
       try {
        
             await removeCartItem(id);
@@ -91,7 +90,6 @@ const CartPage = ({ products }: CartPageProps) => {
   const updateQuantity = async (id: number | string, change: number) => {
     try {
       const item = cartItems.find((item) => item.id === id);
-      console.log(cartItems, item , 'itemdata' , id)
       if (!item) {
         toast.error("Item not found in cart.");
         return;
@@ -380,7 +378,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                <span>{(item.price ?? 0).toFixed(2)}</span>/Piece
                               </p>
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                              Total Required:
+                              No. of Pieces:
                                   <span className='font-bold'> {item.requiredBoxes ?? 0}</span> 
                               </p> 
                               <p className='text-12 sm:text-14 2xl:text-17'>

@@ -8,7 +8,7 @@ import { ProductTableProps } from "types/type";
 
 
 const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProps) => {
-  const accessoryItems = (items ?? []).filter((item) => item.category === "Accessories");
+  const accessoryItems = (items ?? []).filter((item) => item.category?.toLowerCase() === 'accessories');
   const productItems = (items ?? []).filter((item) => item.category !== "Accessories");
 
   return (

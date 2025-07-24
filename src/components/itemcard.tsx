@@ -28,10 +28,10 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
           <div className="text-14 font-inter font-normal flex-grow">
             <p className="font-normal text-14">{product.name}</p>
             {!isSamplePage && product.category && (
-            product.category === "Accessories" ? (
+            product.category?.toLowerCase().trim() === 'accessories' ? (
             <>
            <p>Price Per Piece: <span className="font-semibold"> <span className="font-currency text-18 font-normal"></span> {product.price}</span></p>
-           <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}</span></p>
+           <p>No. of Pieces: <span className="font-semibold">{product.requiredBoxes}</span></p>
            <p>color: <span className="font-semibold">{product.selectedColor?.colorName}</span></p>
             </>
            ) : (
@@ -68,7 +68,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
               <FiMinus />
             </button>
             <span className="px-2 text-black font-semibold">
-              {product.category === "Accessories" 
+              {product.category?.toLowerCase() === 'accessories' 
                 ? product.requiredBoxes 
                 : (product.squareMeter === 0 ? '0.00' : product.squareMeter.toFixed(2))}
             </span>

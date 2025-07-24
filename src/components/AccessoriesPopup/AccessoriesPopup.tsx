@@ -101,7 +101,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           squareMeter,
           requiredBoxes[productId] || 1,
           "m",
-          product.category?.name ?? (product?.__typename === 'Accessory' && 'Accessories'),
+          product.category?.name ?? (product?.__typename?.toLowerCase().trim() === 'accessory' ? 'accessories' : product?.__typename),
           "cart",
           product.posterImageUrl.imageUrl ?? product?.matchedProductImages?.[0]?.imageUrl,
           String(boxCoverage),

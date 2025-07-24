@@ -43,12 +43,12 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                   <td className="p-3 flex items-center justify-start gap-3">
                     <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
                     <div className="text-12 xl:text-20 font-inter font-normal w-10/12" >
-                      <Link href={`${product.category === "Accessories" ? `/accessories` : `/${generateSlug(product.category)}/${generateSlug(product.subcategories)}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
+                      <Link href={`${product.category?.toLowerCase().trim() === 'accessories' ? `/accessories` : `/${generateSlug(product.category)}/${generateSlug(product.subcategories)}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
                       {!isSamplePage && (
-                        product.category === "Accessories" ? (
+                        product.category?.toLowerCase().trim() === 'accessories' ? (
                           <>
                             <p className='text-12 sm:text-16'>Price Per Piece: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
-                            <p className='text-12 sm:text-16'>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}</span></p>
+                            <p className='text-12 sm:text-16'>No. of Pieces: <span className="font-semibold">{product.requiredBoxes}</span></p>
                             {product.selectedColor && <p className='text-12 sm:text-16'>
                               Color: <span className='font-bold'>{product.selectedColor.colorName}</span>
                                                       </p>}
@@ -76,7 +76,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                             <FiMinus />
                           </button>
                           <span className="px-2 text-black font-semibold">
-                            {product.category === "Accessories"
+                            {product.category?.toLowerCase().trim() === 'accessories'
                               ? product.requiredBoxes
                               : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
                           </span>
