@@ -8,6 +8,7 @@ import { IoMdArrowRoundBack } from 'react-icons/io';
 import revalidateTag from 'components/ServerActons/ServerAction';
 import showToast from 'components/Toaster/Toaster';
 import { ADD_REDIRECTURLS, UPDATE_REDIRECTURLS } from 'graphql/general';
+import Loader from 'components/Loader/Loader';
 
 interface IVIEWREDIRECTURLS {
   setRedirectUrls: React.Dispatch<SetStateAction<RedirectUrls | undefined>>
@@ -23,7 +24,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
   const [formDate, setformDate] = useState<initialRedirectUrls>({
     redirectedUrl: RedirectUrls?.redirectedUrl,
     url: RedirectUrls?.url,
-
+    status: RedirectUrls?.status
   })
 
   useEffect(() => {
@@ -31,7 +32,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
     setformDate({
       url: RedirectUrls?.url,
       redirectedUrl: RedirectUrls?.redirectedUrl,
-
+      status: RedirectUrls?.status
     })
   }, [RedirectUrls])
 
@@ -70,10 +71,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
   const graphQLError = error?.graphQLErrors?.[0]?.message;
   showToast('error', graphQLError || "Internal server error")
     }
-
-    
   };
-
 
 
   const handleSubmit = async (values: initialRedirectUrls, { resetForm }: FormikHelpers<initialRedirectUrls>) => {
@@ -83,25 +81,52 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
   };
 
   return (
-    <>
-      <p
-        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-parimary bg-black rounded-sm w-fit p-2 cursor-pointer text-white"
-        onClick={() => {
-          setselecteMenu('All Reviews');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
-
-      <Formik enableReinitialize initialValues={formDate}
+    <Formik enableReinitialize initialValues={formDate}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
-      >
+    >
         {() => (
 
 
           <Form className="space-y-4 max-w-2xl mx-auto">
 
+<div className='flex justify-between items-center'>
+          <p className="text-lg font-black flex items-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer dark:text-white"onClick={() => {setselecteMenu('All RedirectUrls')}}>
+            <IoMdArrowRoundBack /> Back
+          </p>
+          <div className='flex gap-6 items-center'>
+            <Field name="status">
+            {({ field, form }: import('formik').FieldProps) => (
+              <div className="flex gap-4 items-center my-4">
+                <label className="font-semibold">Redirect Status:</label>
+
+                {['DRAFT', 'PUBLISHED'].map((status) => {
+                  const isActive = field.value === status;
+
+                  return (
+                    <button
+                      key={status}
+                      type="button"
+                      onClick={() => form.setFieldValue('status', status)}
+                      disabled={isActive}
+                      className={`px-4 py-2 rounded-md text-sm border
+                        ${isActive
+                          ? 'bg-black text-white border-black cursor-not-allowed'
+                          : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                        }`}
+                    >
+                      {status}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            </Field>
+          <button type="submit" className=" px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded w-fit" disabled={loading}>
+          { loading ? <Loader color="#fff" /> : 'Submit'}
+          </button>
+          </div>
+</div>
             <div>
               <label htmlFor="name">Url Endpoint </label>
               <Field name="url" type="text" className="primary-input" />
@@ -113,16 +138,41 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
               <Field name="redirectedUrl" type="text" className="primary-input" />
               <ErrorMessage name="redirectedUrl" component="div" className="text-red-500 text-sm" />
             </div>
+<Field name="status">
+            {({ field, form }: import('formik').FieldProps) => (
+              <div className="flex gap-4 items-center my-4">
+                <label className="font-semibold">Redirect Status:</label>
+
+                {['DRAFT', 'PUBLISHED'].map((status) => {
+                  const isActive = field.value === status;
+
+                  return (
+                    <button
+                      key={status}
+                      type="button"
+                      onClick={() => form.setFieldValue('status', status)}
+                      disabled={isActive}
+                      className={`px-4 py-2 rounded-md text-sm border
+                        ${isActive
+                          ? 'bg-black text-white border-black cursor-not-allowed'
+                          : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                        }`}
+                    >
+                      {status}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+</Field>
 
 
-
-            <button type="submit" disabled={loading || updateloading} className="bg-black cursor-pointer hover:bg-primary hover:border text-white px-4 py-2 rounded">
-              {(loading || updateloading) ? "Submitting" : "Submit"}
+            <button type="submit" className=" px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded w-fit" disabled={loading || updateloading}>
+          { loading || updateloading ? <Loader color="#fff" /> : 'Submit'}
             </button>
           </Form>
         )}
-      </Formik>
-    </>
+    </Formik>
 
   )
 }

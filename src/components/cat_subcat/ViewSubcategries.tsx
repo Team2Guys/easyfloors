@@ -129,6 +129,11 @@ const ViewSubcategries = ({
       key: 'name',
     },
     {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'date',
