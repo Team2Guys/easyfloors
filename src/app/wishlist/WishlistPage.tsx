@@ -21,7 +21,7 @@ const WishlistPage = () => {
 
   const products = items.filter((item) => item.category !== "Accessories");
   const accessories = items.filter(
-    (item) => item.category === "Accessories" || item.category === "Accessory"
+    (item) => item.category?.toLowerCase() === 'accessories' || item.category === "Accessory"
   );
 
   if (items.length === 0) {
@@ -30,7 +30,7 @@ const WishlistPage = () => {
         <Breadcrumb title="Wishlist" />
         <Top heading="Wishlist" Icon={CiHeart} />
         <div className="text-center my-7">
-          <h2 className="text-center xl:text-[48px]">Your Shopping Cart</h2>
+          <h2 className="text-center xl:text-[48px]">Your Shopping Wishlist</h2>
           <p className="text-center text-[24px] pt-10">Wishlist is empty</p>
           <Link
             href="/"

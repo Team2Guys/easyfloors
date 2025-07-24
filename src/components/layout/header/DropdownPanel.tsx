@@ -136,10 +136,10 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
   const closePanel = () => { setIsOpen(false) };
 
-  const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
+  const handleRemoveItem = async (id: number | string, isFreeSample: boolean) => {
     try {
       if (type === "freeSample" && isFreeSample) {
-        await removeFreeSample(id); // Remove from free samples list
+        await removeFreeSample(Number(id)); // Remove from free samples list
       }
       else if (type === "cart") {
         await removeCartItem(id);
@@ -160,7 +160,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
   };
 
 
-  const updateQuantity = useCallback(async (id: number, change: number) => {
+  const updateQuantity = useCallback(async (id: number | string, change: number) => {
     try {
       const item = localItems.find(item => item.id === id);
       if (!item) return toast.error("Item not found.");
@@ -190,8 +190,8 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
     }
   }, [localItems, type]);
 
-  const increment = (id: number) => updateQuantity(id, 1);
-  const decrement = (id: number) => updateQuantity(id, -1);
+  const increment = (id: number | string) => updateQuantity(id, 1);
+  const decrement = (id: number | string) => updateQuantity(id, -1);
 
   const totalAmount = localItems.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
   return (
@@ -240,7 +240,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                             />
                           </div>
                           <button
-                            onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}
+                            onClick={() => handleRemoveItem(item.id, item.isfreeSample || false)}
                             className="absolute -top-2 -right-2 bg-white shadow h-4 w-4 rounded-full flex items-center justify-center text-xs"
                           >
                             <IoCloseSharp size={10} />
@@ -250,16 +250,20 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                         <div className="flex-1 flex flex-col justify-between text-start">
                           <h2 className="text-sm font-semibold leading-snug line-clamp-2">{item.name}</h2>
                           {
+                            item.category?.toLowerCase().trim() === 'accessories' &&
+                              <p className=" text-base sm:text-xs mt-1">Color: {item.selectedColor?.colorName}</p>
+                          }
+                          {
                             item.isfreeSample ? "free" :
-                              <p className=" text-base sm:text-xs mt-1"><span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
+                              <p className=" text-base sm:text-xs mt-1">{item.category?.toLowerCase().trim() === 'accessories' ? 'Piece Price:' : 'Box Price:'} {' '}<span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
                           }
                           {!item.isfreeSample && type === "cart" && (
                             <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">
-                              <button onClick={() => decrement(Number(item.id))} className="px-1 hover:text-black">
+                              <button onClick={() => decrement(item.id)} className="px-1 hover:text-black">
                                 <LuMinus />
                               </button>
                               <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                              <button onClick={() => increment(Number(item.id))} className="px-1 hover:text-black">
+                              <button onClick={() => increment(item.id)} className="px-1 hover:text-black">
                                 <LuPlus />
                               </button>
                             </div>

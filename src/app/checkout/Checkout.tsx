@@ -239,7 +239,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
         }
         setShipping(shippingData);
     }, [selectedShipping,]);
-    console.log(mergedCart, 'mergedCart')
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -429,8 +428,9 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                             <div className="ml-4">
                                                 <p className="font-bold text-13 xs:text-16">{item.name}</p>
                                                 {item.isfreeSample ? "" :
-                                                    <p className="text-sm text-gray-600 text-12 xs:text-14">{item.category === "Accessories" ? <>Total Required: <span className="font-semibold">{item.requiredBoxes}m</span></> : <>No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</>}</p>
+                                                    <p className="text-sm text-gray-600 text-12 xs:text-14">{item.category?.toLowerCase().trim() === 'accessories' ? <>No. of Pieces: <span className="font-semibold">{item.requiredBoxes}</span></> : <>No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</>}</p>
                                                 }
+                                                <p className="md:text-sm text-gray-600 text-12">{item.category?.toLowerCase().trim() === 'accessories' ? "Piece Price" : "Box Price"}: <span className="font-currency text-15 font-normal"></span>{item.pricePerBox}</p>
                                                 {item?.selectedColor?.colorName &&
                                                     <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>
                                                 }

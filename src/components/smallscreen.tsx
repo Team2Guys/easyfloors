@@ -8,7 +8,7 @@ import { ProductTableProps } from "types/type";
 
 
 const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProps) => {
-  const accessoryItems = (items ?? []).filter((item) => item.category === "Accessories");
+  const accessoryItems = (items ?? []).filter((item) => item.category?.toLowerCase() === 'accessories');
   const productItems = (items ?? []).filter((item) => item.category !== "Accessories");
 
   return (
@@ -59,9 +59,9 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(Number(id), setItems)}
+                      onRemove={(id) => setItems && handleRemoveItem(id, setItems)}
                       onQuantityChange={(id, delta) =>
-                        setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
+                        setItems?.((prevItems) => updateQuantity(id, delta, prevItems))
                       }
 
                       onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}
