@@ -25,10 +25,7 @@ export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise
         description:
           'Thank you for your purchase! Your payment was successful. Your flooring products will be delivered soon.',
         url: 'https://easyfloors.ae/thank-you',
-        images: [
-          {
-            url: logo.src,
-            alt: 'Easyfloors',
+        images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
           },
         ],
         type: 'website',
@@ -46,10 +43,7 @@ export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise
         description:
           'There was an issue processing your payment. Please retry or get in touch with our support team.',
         url: 'https://easyfloors.ae/thank-you',
-        images: [
-          {
-            url: logo.src,
-            alt: 'Easyfloors',
+        images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
           },
         ],
         type: 'website',

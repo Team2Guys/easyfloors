@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: 'Easy Floors Return & Refund Policy | Hassle-Free 7-Day Returns',
     description: 'Changed your mind? Return unused items within 7 days. Learn about refund timelines, return shipping, and what to do if you receive a defective product.',
     url: 'https://easyfloors.ae/return-and-refund-policy',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:"website"

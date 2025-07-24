@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Flooring Installation Help | Expert Service by Easy Floors',
     description: 'Need help installing your new floors? Easy Floors offers professional installation support across the UAE. Stress-free, reliable service.',
     url: 'https://easyfloors.ae/help-with-installations',
-    images: [{url:logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:'website'

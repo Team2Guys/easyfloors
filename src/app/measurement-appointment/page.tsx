@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'Book a Flooring Measurement Appointment | Easy Floors UAE',
     description: 'Schedule a professional flooring measurement with Easy Floors. AED 150 fee fully refunded upon order. Accurate sizing, no guesswork.',
     url: 'https://easyfloors.ae/measurement-appointment',
-    images: [{url: logo.src, alt: 'Easyfloors',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:"website"
