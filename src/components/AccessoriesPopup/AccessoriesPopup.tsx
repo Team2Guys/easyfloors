@@ -87,7 +87,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           const baseImage = product.posterImageUrl ?? { imageUrl: '', public_id: '' };
           selectedColor = {
             ...baseImage,
-            color: 'fff',
+            color: '1067',
             colorName: 'White',
           }
         } else {

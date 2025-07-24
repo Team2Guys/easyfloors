@@ -67,9 +67,9 @@ export const addToCart = async (product: ICart): Promise<boolean> => {
       toast.error(`Cannot add more than ${product.stock} boxes.`);
       return false;
     }
-
-    const idKey =  (product.category?.toLowerCase() === 'accessories' && !existingProduct)
-      ? `${product.id}-${product.selectedColor?.color}`
+    const colorValue = String(product.selectedColor?.color)?.replace(/\D/g, '') ?? '';
+    const idKey =  (product.category?.toLowerCase().trim() === 'accessories' && !existingProduct)
+      ? Number(`${product.id}${colorValue ?? ''}`)
       : product.id;
 
     const updatedProduct = {
@@ -159,9 +159,9 @@ export const addToWishlist = async (product: ICart): Promise<boolean> => {
     if (existingProduct) {
       return false;
     }
-
+    const colorValue = String(product.selectedColor?.color)?.replace(/\D/g, '') ?? '';
     const wishlistId =
-      product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : product.id;
+      product.category?.toLowerCase().trim() === 'accessories' ? Number(`${product.id}${colorValue ?? ''}`) : product.id;
 
     await new Promise<void>((resolve, reject) => {
       const request = store.put({

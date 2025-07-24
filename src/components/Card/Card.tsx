@@ -77,7 +77,7 @@ const Card: React.FC<productCardProps> = ({
         const baseImage = typedProduct.posterImageUrl ?? { imageUrl: '', public_id: '' };
         setSelectedColor({
           ...baseImage,
-          color: 'fff',
+          color: '1067',
           colorName: 'White',
         });
       }
