@@ -30,7 +30,7 @@ const OrderSummary: React.FC<PostPaymentStatusResponse> = ({ data, trackingOrer 
                                         <div>
                                             <p className="font-inter font-bold md:text-base text-sm">{item?.name}</p>
                                             <p className="md:text-sm text-gray-600 text-12">{accessoryflag ? "Total Required" : "No. Of Boxes"}: {item.requiredBoxes}{accessoryflag ? "m" : ` (${item.squareMeter}  SQM)`}</p>
-                                            <p className="md:text-sm text-gray-600 text-12">{accessoryflag ? "Mater Price" : "Box Price"}: <span className="font-currency text-15 font-normal"></span>{item.pricePerBox}</p>
+                                            <p className="md:text-sm text-gray-600 text-12">{accessoryflag ? "Per Metre Price" : "Box Price"}: <span className="font-currency text-15 font-normal"></span>{item.pricePerBox}</p>
                                             {colorFlag && <p className="md:text-sm text-gray-600 text-12"> Color : {`${item?.selectedColor?.colorName} (${item?.selectedColor?.color})`}</p>}
                                         </div>
                                     </div>

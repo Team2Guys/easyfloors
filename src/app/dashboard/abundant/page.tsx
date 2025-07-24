@@ -16,7 +16,7 @@ const Abandoned= async () => {
   const abandonedOrder = ordersData.filter((item: ProdOrder) => (item.paymentStatus === false) && (item.checkout === true) && (item.isfreesample === false || item.isfreesample === null)).sort(
     (a: ProdOrder, b: ProdOrder) => new Date(b.checkoutDate).getTime() - new Date(a.checkoutDate).getTime()
   );
-  return <Order title="Abandoned Order" ordersData={abandonedOrder} />
+  return <Order title="Abandoned Order" ordersData={abandonedOrder} orders={ordersData} />
 };
 
 export default Abandoned;
