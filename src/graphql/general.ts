@@ -31,10 +31,11 @@ export const GET_Redirecturls = gql`
   query findAllRedirecturls {
     findAllRedirecturls {
       id
-        url
-        redirectedUrl
-  createdAt     
-  updatedAt
+      url
+      redirectedUrl
+      status
+      createdAt     
+      updatedAt
     }
   }
 `;

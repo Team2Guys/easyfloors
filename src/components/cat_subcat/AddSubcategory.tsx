@@ -50,7 +50,7 @@ const FormLayout = ({
       whatAmiCanonical_Tag: editCategory.whatAmiCanonical_Tag || "",
       whatAmiMeta_Description: editCategory.whatAmiMeta_Description || "",
       whatAmiMeta_Title: editCategory.whatAmiMeta_Title || "",
-
+      status: editCategory?.status || 'DRAFT',
     } as ISUBCATEGORY_EDIT
     : undefined;
 
@@ -268,26 +268,53 @@ const FormLayout = ({
 
 
   return (
-    <>
-      <p
-        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white"
-        onClick={() => {
-          setMenuType('Sub Categories');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
-
-      <Formik
+    <Formik
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
         }
         validationSchema={subcategoryValidationSchema}
         onSubmit={onSubmit}
-      >
+    >
         {(formik) => {
           return (
             <Form onSubmit={formik.handleSubmit}>
+               <div className='flex justify-between items-center'>
+                        <p className="text-lg font-black flex items-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer dark:text-white"onClick={() => {setMenuType('Sub Categories');}}>
+                          <IoMdArrowRoundBack /> Back
+                        </p>
+                        <div className='flex gap-6 items-center'>
+                          <Field name="status">
+                          {({ field, form }: import('formik').FieldProps) => (
+                            <div className="flex gap-4 items-center my-4">
+                              <label className="font-semibold">Sub Category Status:</label>
+              
+                              {['DRAFT', 'PUBLISHED'].map((status) => {
+                                const isActive = field.value === status;
+              
+                                return (
+                                  <button
+                                    key={status}
+                                    type="button"
+                                    onClick={() => form.setFieldValue('status', status)}
+                                    disabled={isActive}
+                                    className={`px-4 py-2 rounded-md text-sm border
+                                      ${isActive
+                                        ? 'bg-black text-white border-black cursor-not-allowed'
+                                        : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                      }`}
+                                  >
+                                    {status}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+                          </Field>
+                        <button type="submit" className=" px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded w-fit" disabled={loading}>
+                        { loading ? <Loader color="#fff" /> : 'Submit'}
+                        </button>
+                        </div>
+               </div>
               <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                 <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
@@ -1068,7 +1095,33 @@ const FormLayout = ({
                       )}
                     </FieldArray>
 
-
+<Field name="status">
+                          {({ field, form }: import('formik').FieldProps) => (
+                            <div className="flex gap-4 items-center my-4">
+                              <label className="font-semibold">Sub Category Status:</label>
+              
+                              {['DRAFT', 'PUBLISHED'].map((status) => {
+                                const isActive = field.value === status;
+              
+                                return (
+                                  <button
+                                    key={status}
+                                    type="button"
+                                    onClick={() => form.setFieldValue('status', status)}
+                                    disabled={isActive}
+                                    className={`px-4 py-2 rounded-md text-sm border
+                                      ${isActive
+                                        ? 'bg-black text-white border-black cursor-not-allowed'
+                                        : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                      }`}
+                                  >
+                                    {status}
+                                  </button>
+                                );
+                              })}
+                            </div>
+                          )}
+</Field>
 
                   </div>
 
@@ -1114,8 +1167,7 @@ const FormLayout = ({
             </Form>
           );
         }}
-      </Formik>
-    </>
+    </Formik>
   );
 };
 

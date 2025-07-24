@@ -8,11 +8,7 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import { ISUBCATEGORY } from 'types/cat';
 import { TrimerHandler } from 'utils/helperFunctions';
-interface SlugPageProps {
-  searchParams: Promise<{ flooring?: string }>;
-  
-}
-
+interface SlugPageProps {searchParams: Promise<{ flooring?: string }>; }
 
 export async function generateMetadata({ searchParams }: SlugPageProps): Promise<Metadata> {
   const { flooring } = await searchParams
@@ -75,10 +71,9 @@ const Whatami = async ({ searchParams }: SlugPageProps) => {
 
   const subcat = subCategories.find((value: ISUBCATEGORY) => TrimerHandler(value?.whatIamEndpoint || value.custom_url) == TrimerHandler(flooring))
 
-
   return (
     <>
-      <Breadcrumb title="What Am I?" image={subcat.whatAmiImageBanner ? subcat.whatAmiImageBanner.imageUrl : "/assets/category/header-image.png"}
+      <Breadcrumb title="What Am I?" image={subcat.whatAmiImageBanner ? subcat.whatAmiImageBanner.imageUrl : ""}
         altText={subcat.whatAmiImageBanner && subcat.whatAmiImageBanner?.altText}
       />
       <WhatAmICetagory subcat={subcat} />

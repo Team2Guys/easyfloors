@@ -22,6 +22,7 @@ export interface Category {
   Heading?: string
   sizes?: Sizes[];
   BannerImage?: ProductImage
+  status?: string
   subcategories?: {
     id: number | string;
     name: string;
@@ -56,7 +57,7 @@ export interface EDIT_CATEGORY extends Category {
   subcategory?: ISUBCATEGORY_EDIT;
   sizes?: Sizes[];
   pricePerBox?: number;
-
+  staus?: string
 }
 
 export interface ISUBCATEGORY extends Category {

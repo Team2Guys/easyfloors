@@ -52,7 +52,8 @@ const FormLayout = ({
       custom_url: editCategory.custom_url || "",
       topHeading:editCategory.topHeading || "",
       RecallUrl:editCategory.RecallUrl || "",
-      price: editCategory.price  || ""
+      price: editCategory.price  || "",
+      status: editCategory?.status || 'DRAFT',
     }
     : null;
     const token = Cookies.get('admin_access_token');
@@ -222,30 +223,58 @@ const FormLayout = ({
     setCroppedImage(null);
   };
   return (
-    <>
-      <p
-        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white"
-        onClick={() => {
-          setMenuType('Categories');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
-
-      <Formik
+    <Formik
         initialValues={
           editCategoryName ? editCategoryName : categoryInitialValues
         }
         validationSchema={categoryValidationSchema}
         onSubmit={onSubmit}
-      >
+    >
         {(formik) => {
           return (
             <Form onSubmit={formik.handleSubmit}>
+             <div className='flex justify-between items-center'>
+          <p className="text-lg font-black flex items-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer dark:text-white"onClick={() => {setMenuType('Categories');}}>
+            <IoMdArrowRoundBack /> Back
+          </p>
+          <div className='flex gap-6 items-center'>
+            <Field name="status">
+            {({ field, form }: import('formik').FieldProps) => (
+              <div className="flex gap-4 items-center my-4">
+                <label className="font-semibold">Sub Category Status:</label>
+
+                {['DRAFT', 'PUBLISHED'].map((status) => {
+                  const isActive = field.value === status;
+
+                  return (
+                    <button
+                      key={status}
+                      type="button"
+                      onClick={() => form.setFieldValue('status', status)}
+                      disabled={isActive}
+                      className={`px-4 py-2 rounded-md text-sm border
+                        ${isActive
+                          ? 'bg-black text-white border-black cursor-not-allowed'
+                          : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                        }`}
+                    >
+                      {status}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            </Field>
+          <button type="submit" className=" px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded w-fit" disabled={loading}>
+          { loading ? <Loader color="#fff" /> : 'Submit'}
+          </button>
+          </div>
+             </div>
               <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                 <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
                     <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
+                      
                       <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Category Images
@@ -572,7 +601,33 @@ const FormLayout = ({
                         />
                         <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
                       </div>
+                        <Field name="status">
+                            {({ field, form }: import('formik').FieldProps) => (
+                              <div className="flex gap-4 items-center my-4">
+                                <label className="font-semibold">Category Status:</label>
 
+                                {['DRAFT', 'PUBLISHED'].map((status) => {
+                                  const isActive = field.value === status;
+
+                                  return (
+                                    <button
+                                      key={status}
+                                      type="button"
+                                      onClick={() => form.setFieldValue('status', status)}
+                                      disabled={isActive}
+                                      className={`px-4 py-2 rounded-md text-sm border
+                                        ${isActive
+                                          ? 'bg-black text-white border-black cursor-not-allowed'
+                                          : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                        }`}
+                                    >
+                                      {status}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+                        </Field>
                     </div>
 
 
@@ -591,8 +646,7 @@ const FormLayout = ({
             </Form>
           );
         }}
-      </Formik>
-    </>
+    </Formik>
   );
 };
 
