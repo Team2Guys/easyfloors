@@ -7,12 +7,14 @@ export interface RedirectUrls {
   id: number,
   url: string,
   redirectedUrl: string
+  status?: string
 }
 
 
 export interface initialRedirectUrls extends Omit<RedirectUrls, "id"> {
   redirectedUrl?: string
-  url?: string,
+  url?: string
+  status?: string
 }
 
 

@@ -474,10 +474,7 @@ export const categoriesFeatures: CategoryFeatures[] = [
 export const categoryData: TCategoryData = {
   title: "What Am I?",
   subtitle: "(Compare us)",
-  // description:
-  //   `I am more than just a surface beneath your feet. I'm a flooring solution for anyone who wants elegance, strength, and simplicity in their space. I support your everyday life, from busy mornings to quiet evenings, standing strong through it all. With the natural beauty of wood and the toughness of modern design, I resist water, scratches, and the test of time. Whether it’s the sturdy reliability of SPC, the soft comfort of LVT, or the timeless charm of Herringbone, I make every space look and feel better. I am easy to install, simple to maintain, and built to last.
-  //   I am more than something you walk on; we are a collection of flooring solutions that bring durability and simplicity to your space. You can choose any of the flooring solutions that fit your needs. We are here to handle your everyday life, from a busy morning to a simple, relaxing evening. All of the flooring options mentioned are designed to withstand heavy foot traffic and daily wear and tear. Whether you choose the sturdy SPC, the luxurious feel of LVT, or the timeless classiness of Herringbone, I make every room feel simply amazing. All of us are easy to install and simple to maintain while built for durability.`,
-  backgroundImage: "/assets/category/campare-us.png",
+ backgroundImage: "/assets/category/campare-us.png",
 };
 export const HomeUserInfo = [
   {

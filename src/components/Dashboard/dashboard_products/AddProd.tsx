@@ -107,7 +107,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
-    const formikRef = useRef<FormikProps<IProductValues>>(null);
+  const formikRef = useRef<FormikProps<IProductValues>>(null);
 
 
 
@@ -234,16 +234,16 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
 
 
-useEffect(() => {
-  const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-    if (formikRef.current?.dirty) {
-      e.preventDefault();
-    }
-  };
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (formikRef.current?.dirty) {
+        e.preventDefault();
+      }
+    };
 
-  window.addEventListener('beforeunload', handleBeforeUnload);
-  return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-}, []);
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
 
 
   const [updateProduct] = useMutation(
@@ -482,7 +482,7 @@ useEffect(() => {
 
 
     <Formik
-          innerRef={formikRef}
+      innerRef={formikRef}
 
       enableReinitialize
       initialValues={
@@ -1742,7 +1742,7 @@ useEffect(() => {
 
             <button
               type="submit"
-              className="px-10 py-2 mt-2 bg-black text-white rounded-md shadow-md dark:bg-primary dark:border-0"
+              className="dashboard_primary_button mt-2"
               disabled={loading}
             >
               {loading ? <Loader color="white" /> : "Submit"}

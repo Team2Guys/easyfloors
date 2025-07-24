@@ -2,21 +2,9 @@ import React from 'react';
 import CartPage from 'components/cart/cart-page';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import { fetchProducts } from 'config/fetch';
-import { Metadata } from 'next';
-import logo from "../../../public/assets/images/logo.webp"
-export const metadata: Metadata = {
-  title: 'Your Flooring Cart | Review & Checkout with Easy Floors',
-  description:
-    "Ready to upgrade your floors? Review your selected items in the Easy Floors cart and proceed to secure checkout when you're ready.",
-  openGraph: {
-    title: 'Your Flooring Cart | Review & Checkout with Easy Floors',
-    description: "Ready to upgrade your floors? Review your selected items in the Easy Floors cart and proceed to secure checkout when you're ready.",
-    url: 'https://easyfloors.ae/cart',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',},],type:'website'},
-  alternates: {
-    canonical: 'https://easyfloors.ae/cart',
-  },
-};
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.cart);
 const Cart = async () => {
   const products = await fetchProducts()
   return (

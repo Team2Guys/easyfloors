@@ -2,25 +2,9 @@ import Container from 'components/common/container/Container';
 import { termsConditionsData } from 'data/terms-condition';
 import Link from 'next/link';
 import React from 'react';
-import logo from "../../../public/assets/images/logo.webp"
-import { Metadata } from 'next';
-export const metadata: Metadata = {
-  title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
-  description:
-    "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
-  openGraph: {
-    title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
-    description: "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
-    url: 'https://easyfloors.ae/terms-and-conditions',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
-      },
-    ],
-    type:'website'
-  },
-  alternates: {
-    canonical: 'https://easyfloors.ae/terms-and-conditions',
-  },
-};
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.terms_and_conditions);
 
 const TermsAndConditions = () => {
     const renderLinkableText = (text: string) => {

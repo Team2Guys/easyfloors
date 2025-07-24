@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import localFont from 'next/font/local'
@@ -8,6 +7,9 @@ import { ToastContainer } from "react-toastify";
 import Script from "next/script";
 import Image from "next/image";
 import { GoogleTagManager } from '@next/third-parties/google';
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.HomePage);
 
 const inter = Inter({
   subsets: ["latin"],
@@ -16,24 +18,6 @@ const inter = Inter({
   style: ["normal", "italic"],
 });
 
-export const metadata: Metadata = {
-  title: ' Flooring in UAE | SPC, LVT & Herringbone | Easy Floors',
-  description:
-    'Shop SPC, LVT, and Herringbone flooring at factory-direct prices. Fast UAE delivery, free samples, easy installment options only at Easy Floors.',
-  openGraph: {
-    title: ' Flooring in UAE | SPC, LVT & Herringbone | Easy Floors',
-    description: 'Shop SPC, LVT, and Herringbone flooring at factory-direct prices. Fast UAE delivery, free samples, easy installment options only at Easy Floors.',
-    url: '/',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
-      },
-    ],
-          type:'website'
-
-  },
-  alternates: {
-    canonical: '/',
-  },
-};
 const currency = localFont({ src: [
   {
     path: '../../public/assets/currency-symbol-v2.otf',

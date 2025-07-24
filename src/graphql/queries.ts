@@ -116,6 +116,7 @@ export const FETCH_ALL_CATEGORIES = gql`
       whatAmiImageBanner
       topHeading
       RecallUrl
+      status
       price
         recalledSubCats {
             id
@@ -204,6 +205,7 @@ export const FETCH_ALL_SUB_CATEGORIES = gql`
       BannerImage
       price
       sizes
+      status
       whatIamEndpoint
         whatAmiMeta_Title
         whatAmiCanonical_Tag

@@ -2,25 +2,9 @@ import React from "react";
 import { faqspage } from "data/data";
 import FAQsList from "components/FaqsPageComponent/Faqs";
 import Breadcrumb from "components/Reusable/breadcrumb";
-import { Metadata } from 'next';
-import logo from "../../../public/assets/images/logo.webp"
-export const metadata: Metadata = {
-  title: 'SPC & LVT Flooring FAQs | Easy Floors Answers You Can Trust',
-  description:
-    "Do you have questions about SPC or LVT flooring? Explore our FAQ page for answers on installation, warranties, pet safety, UAE climate suitability & more.",
-  openGraph: {
-    title: 'SPC & LVT Flooring FAQs | Easy Floors Answers You Can Trust',
-    description: "Do you have questions about SPC or LVT flooring? Explore our FAQ page for answers on installation, warranties, pet safety, UAE climate suitability & more.",
-    url: 'https://easyfloors.ae/faqs',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
-      },
-    ],
-      type:'website'
-  },
-  alternates: {
-    canonical: 'https://easyfloors.ae/faqs',
-  },
-};
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.faqs);
 const FAQsPage: React.FC = () => {
     return (
         <>

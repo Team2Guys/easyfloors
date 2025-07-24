@@ -52,7 +52,8 @@ const FormLayout = ({
       custom_url: editCategory.custom_url || "",
       topHeading: editCategory.topHeading || "",
       RecallUrl: editCategory.RecallUrl || "",
-      price: editCategory.price || ""
+      price: editCategory.price || "",
+      status: editCategory?.status || 'DRAFT',
     }
     : null;
   const token = Cookies.get('admin_access_token');
@@ -231,428 +232,449 @@ const FormLayout = ({
         e.preventDefault();
       }
     };
-  
+
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, []);
-  
+
   return (
- 
-      <Formik
-        innerRef={formikRef}
-        initialValues={
-          editCategoryName ? editCategoryName : categoryInitialValues
-        }
-        validationSchema={categoryValidationSchema}
-        onSubmit={onSubmit}
-      >
-        {(formik) => {
-          return (
-            <Form onSubmit={formik.handleSubmit}>
 
-              <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
-                <p
-                  className="dashboard_primary_button"
-                  onClick={() => {
-                    if (formik.dirty) {
-                      const confirmLeave = window.confirm("You have unsaved changes. Do you want to leave without saving?");
-                      if (!confirmLeave) return;
-                    }
-                    setMenuType('Categories');
-                    setEditCategoryName?.(() => undefined);
-                  }}
-                >
-                  <IoMdArrowRoundBack /> Back
-                </p>
-                <div className="flex justify-center gap-4">
-                  <Field name="status">
-                    {({ field, form }: import('formik').FieldProps) => (
-                      <div className="flex gap-4 items-center border-r-2 px-2">
+    <Formik
+      innerRef={formikRef}
+      initialValues={
+        editCategoryName ? editCategoryName : categoryInitialValues
+      }
+      validationSchema={categoryValidationSchema}
+      onSubmit={onSubmit}
+    >
+      {(formik) => {
+        return (
+          <Form onSubmit={formik.handleSubmit}>
+            <div className='flex justify-between items-center'>
+              <p
+                className="dashboard_primary_button"
+                onClick={() => {
+                  if (formik.dirty) {
+                    const confirmLeave = window.confirm("You have unsaved changes. Do you want to leave without saving?");
+                    if (!confirmLeave) return;
+                  }
+                  setMenuType('Categories');
+                  seteditCategory?.(() => undefined);
+                }}
+              >
+                <IoMdArrowRoundBack /> Back
+              </p>
+              <div className='flex gap-6 items-center'>
+                <Field name="status">
+                  {({ field, form }: import('formik').FieldProps) => (
+                    <div className="flex gap-4 items-center my-4">
+                      <label className="font-semibold">Sub Category Status:</label>
 
-                        {['DRAFT', 'PUBLISHED'].map((status) => {
-                          const isActive = field.value === status;
+                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                        const isActive = field.value === status;
+
+                        return (
+                          <button
+                            key={status}
+                            type="button"
+                            onClick={() => form.setFieldValue('status', status)}
+                            disabled={isActive}
+                            className={`px-4 py-2 rounded-md text-sm border
+                        ${isActive
+                                ? 'bg-black text-white border-black cursor-not-allowed'
+                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                              }`}
+                          >
+                            {status}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </Field>
+                <button type="submit" className="dashboard_primary_button" disabled={loading}>
+                  {loading ? <Loader color="#fff" /> : 'Submit'}
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+              <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
+                  <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
+
+                    <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Add Category Images
+                      </h3>
+                    </div>
+                    {posterimageUrl && posterimageUrl.length > 0 ? (
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4  dark:border-white dark:bg-black">
+                        {posterimageUrl.map((item: ProductImage, index: number) => {
+
                           return (
-                            <button
-                              key={status}
-                              type="button"
-                              onClick={() => form.setFieldValue('status', status)}
-                              disabled={isActive}
-                              className={`px-4 py-2 rounded-md text-sm
-                                                ${isActive
-                                  ?
-                                  ' border-gray-300 border text-opacity-1 bg-gray-100 cursor-not-allowed'
-                                  :
-                                  'dashboard_primary_button '
-                                }`}
+                            <div
+                              className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              key={index}
                             >
-                              {status}
-                            </button>
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                                <RxCross2
+                                  className="cursor-pointer text-red-500 dark:text-red-700"
+                                  size={17}
+                                  onClick={() => {
+                                    ImageRemoveHandler(
+                                      item.public_id,
+                                      setposterimageUrl,
+                                      finalToken
+                                    );
+                                  }}
+                                />
+                              </div>
+
+                              <Image
+                                onClick={() => handleCropClick(item.imageUrl)}
+                                key={index}
+                                className="object-cover w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
+                                width={300}
+                                height={200}
+                                src={item.imageUrl}
+                                loading='lazy'
+                                alt={`productImage-${index}`}
+                              />
+
+                              <input
+                                className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                placeholder="Alt Text"
+                                type="text"
+                                name="altText"
+                                value={item?.altText || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setposterimageUrl,
+                                    "altText"
+                                  )
+                                }
+                              />
+                            </div>
                           );
                         })}
                       </div>
+                    ) : (
+                      <ImageUploader setposterimageUrl={setposterimageUrl} />
                     )}
-                  </Field>
-                  <button
-                    type="submit"
-                    className="dashboard_primary_button cursor-pointer"
-                    disabled={loading}
+                  </div>
+                  <Modal
+                    title="Crop Image"
+                    open={isCropModalVisible}
+                    onOk={handleCropModalOk}
+                    onCancel={handleCropModalCancel}
+                    width={500}
+                    height={400}
                   >
-                    {loading ? "loading.." : 'Submit'}
-                  </button>
-                </div>
-              </div>
-
-
-              <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                  <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Add Category Images
-                        </h3>
-                      </div>
-                      {posterimageUrl && posterimageUrl.length > 0 ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4  dark:border-white dark:bg-black">
-                          {posterimageUrl.map((item: ProductImage, index: number) => {
-
-                            return (
-                              <div
-                                className="relative group rounded-lg overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                                key={index}
-                              >
-                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
-                                  <RxCross2
-                                    className="cursor-pointer text-red-500 dark:text-red-700"
-                                    size={17}
-                                    onClick={() => {
-                                      ImageRemoveHandler(
-                                        item.public_id,
-                                        setposterimageUrl,
-                                        finalToken
-                                      );
-                                    }}
-                                  />
-                                </div>
-
-                                <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
-                                  key={index}
-                                  className="object-cover w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
-                                  width={300}
-                                  height={200}
-                                  src={item.imageUrl}
-                                  loading='lazy'
-                                  alt={`productImage-${index}`}
-                                />
-
-                                <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                  placeholder="Alt Text"
-                                  type="text"
-                                  name="altText"
-                                  value={item?.altText || ""}
-                                  onChange={(e) =>
-                                    handleImageAltText(
-                                      index,
-                                      String(e.target.value),
-                                      setposterimageUrl,
-                                      "altText"
-                                    )
-                                  }
-                                />
-                              </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <ImageUploader setposterimageUrl={setposterimageUrl} />
-                      )}
+                    {imageSrc && (
+                      <ReactCrop
+                        crop={crop}
+                        onChange={(newCrop) => setCrop(newCrop)}
+                        onComplete={onCropComplete}
+                      >
+                        <Image
+                          width={500}
+                          height={300}
+                          ref={imgRef}
+                          src={imageSrc}
+                          alt="Crop me"
+                          style={{ maxWidth: '100%' }}
+                          onLoad={onImageLoad}
+                          crossOrigin="anonymous"
+                        />
+                      </ReactCrop>
+                    )}
+                  </Modal>
+                  <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                    <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                      <h3 className="font-medium text-black dark:text-white">
+                        Add Banner Image
+                      </h3>
                     </div>
-                    <Modal
-                      title="Crop Image"
-                      open={isCropModalVisible}
-                      onOk={handleCropModalOk}
-                      onCancel={handleCropModalCancel}
-                      width={500}
-                      height={400}
-                    >
-                      {imageSrc && (
-                        <ReactCrop
-                          crop={crop}
-                          onChange={(newCrop) => setCrop(newCrop)}
-                          onComplete={onCropComplete}
-                        >
-                          <Image
-                            width={500}
-                            height={300}
-                            ref={imgRef}
-                            src={imageSrc}
-                            alt="Crop me"
-                            style={{ maxWidth: '100%' }}
-                            onLoad={onImageLoad}
-                            crossOrigin="anonymous"
-                          />
-                        </ReactCrop>
-                      )}
-                    </Modal>
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                        <h3 className="font-medium text-black dark:text-white">
-                          Add Banner Image
-                        </h3>
-                      </div>
-                      {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                          {BannerImageUrl.map((item: ProductImage, index: number) => {
-                            return (
-                              <div
-                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
-                                key={index}
-                              >
-                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
-                                  <RxCross2
-                                    className="cursor-pointer border rounded text-red-500 dark:text-red-700"
-                                    size={17}
-                                    onClick={() => {
-                                      ImageRemoveHandler(
-                                        item.public_id,
-                                        setBannerImageUrl,
-                                        finalToken
-                                      );
-                                    }}
-                                  />
-                                </div>
-                                <Image
-                                  onClick={() => handleCropClick(item.imageUrl)}
-                                  key={index}
-                                  className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
-
-                                  width={200}
-                                  height={500}
-                                  loading='lazy'
-                                  src={item?.imageUrl || ""}
-                                  alt={`productImage-${index}`}
-                                />
-                                <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
-                                  placeholder="Alt Text"
-                                  type="text"
-                                  name="altText"
-                                  value={item?.altText || ""}
-                                  onChange={(e) =>
-                                    handleImageAltText(
-                                      index,
-                                      String(e.target.value),
+                    {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
+                      <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        {BannerImageUrl.map((item: ProductImage, index: number) => {
+                          return (
+                            <div
+                              className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              key={index}
+                            >
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                                <RxCross2
+                                  className="cursor-pointer border rounded text-red-500 dark:text-red-700"
+                                  size={17}
+                                  onClick={() => {
+                                    ImageRemoveHandler(
+                                      item.public_id,
                                       setBannerImageUrl,
-                                      "altText"
-                                    )
-                                  }
+                                      finalToken
+                                    );
+                                  }}
                                 />
                               </div>
-                            );
-                          })}
-                        </div>
-                      ) : (
-                        <ImageUploader setposterimageUrl={setBannerImageUrl} />
-                      )}
+                              <Image
+                                onClick={() => handleCropClick(item.imageUrl)}
+                                key={index}
+                                className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
+
+                                width={200}
+                                height={500}
+                                loading='lazy'
+                                src={item?.imageUrl || ""}
+                                alt={`productImage-${index}`}
+                              />
+                              <input
+                                className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                placeholder="Alt Text"
+                                type="text"
+                                name="altText"
+                                value={item?.altText || ""}
+                                onChange={(e) =>
+                                  handleImageAltText(
+                                    index,
+                                    String(e.target.value),
+                                    setBannerImageUrl,
+                                    "altText"
+                                  )
+                                }
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <ImageUploader setposterimageUrl={setBannerImageUrl} />
+                    )}
+                  </div>
+
+
+
+                  <div className="flex flex-col">
+
+
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        Category Title
+                      </label>
+                      <Field
+                        type="text"
+                        name="name"
+                        placeholder="Title"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name ? "border-red-500" : ""
+                          }`}
+                      />
+                      <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        Custom URL
+                      </label>
+                      <Field
+                        type="text"
+                        name="custom_url"
+                        placeholder="Custom URL"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
+                          }`}
+                      />
+                      <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        starting Price
+                      </label>
+                      <Field
+                        type="text"
+                        name="price"
+                        placeholder="Add Starting Price"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
+                          }`}
+                      />
+                      <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
                     </div>
 
 
 
-                    <div className="flex flex-col">
+
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        RecallUrl(products & Categories)
+                      </label>
+                      <Field
+                        type="text"
+                        name="RecallUrl"
+                        placeholder="Custom Url"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.RecallUrl && formik.errors.RecallUrl ? "border-red-500" : ""
+                          }`}
+                      />
+                      <ErrorMessage name="RecallUrl" component="div" className="text-red-500 text-sm" />
+                    </div>
 
 
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Category Title
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        Category Top Heading
+                      </label>
+                      <Field
+                        type="text"
+                        name="topHeading"
+                        placeholder="Top Heading"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.topHeading && formik.errors.topHeading ? "border-red-500" : ""
+                          }`}
+                      />
+                      <ErrorMessage name="topHeading" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        Category Description
+                      </label>
+                      <TinyMCEEditor name="description" />
+                      <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
+                    </div>
+
+                    <div>
+                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                        Short Description
+                      </label>
+                      <textarea
+                        name="short_description"
+                        onChange={formik.handleChange}
+                        value={formik.values.short_description}
+                        placeholder="Short Description"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                          ? 'border-red-500'
+                          : ''
+                          }`}
+                      />
+                      {formik.touched.name && formik.errors.name ? (
+                        <div className="text-red-500 text-sm">
+                          {formik.errors.name}
+                        </div>
+                      ) : null}
+                    </div>
+                    <div className="flex gap-4 mt-4">
+                      <div className="w-2/4">
+                        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                          Meta Title
                         </label>
-                        <Field
+                        <input
                           type="text"
-                          name="name"
-                          placeholder="Title"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name ? "border-red-500" : ""
-                            }`}
-                        />
-                        <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Custom URL
-                        </label>
-                        <Field
-                          type="text"
-                          name="custom_url"
-                          placeholder="Custom URL"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
-                            }`}
-                        />
-                        <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          starting Price
-                        </label>
-                        <Field
-                          type="text"
-                          name="price"
-                          placeholder="Add Starting Price"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
-                            }`}
-                        />
-                        <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-
-
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          RecallUrl(products & Categories)
-                        </label>
-                        <Field
-                          type="text"
-                          name="RecallUrl"
-                          placeholder="Custom Url"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.RecallUrl && formik.errors.RecallUrl ? "border-red-500" : ""
-                            }`}
-                        />
-                        <ErrorMessage name="RecallUrl" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Category Top Heading
-                        </label>
-                        <Field
-                          type="text"
-                          name="topHeading"
-                          placeholder="Top Heading"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.topHeading && formik.errors.topHeading ? "border-red-500" : ""
-                            }`}
-                        />
-                        <ErrorMessage name="topHeading" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Category Description
-                        </label>
-                        <TinyMCEEditor name="description" />
-                        <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Short Description
-                        </label>
-                        <textarea
-                          name="short_description"
+                          name="Meta_Title"
                           onChange={formik.handleChange}
-                          value={formik.values.short_description}
-                          placeholder="Short Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                          onBlur={formik.handleBlur}
+                          value={formik.values.Meta_Title}
+                          placeholder="Meta Title"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title &&
+                            formik.errors.Meta_Title
                             ? 'border-red-500'
                             : ''
                             }`}
                         />
-                        {formik.touched.name && formik.errors.name ? (
-                          <div className="text-red-500 text-sm">
-                            {formik.errors.name}
+                        {formik.touched.Meta_Title &&
+                          formik.errors.Meta_Title ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.Meta_Title as string}
                           </div>
                         ) : null}
                       </div>
-                      <div className="flex gap-4 mt-4">
-                        <div className="w-2/4">
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                            Meta Title
-                          </label>
-                          <input
-                            type="text"
-                            name="Meta_Title"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.Meta_Title}
-                            placeholder="Meta Title"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title &&
-                              formik.errors.Meta_Title
-                              ? 'border-red-500'
-                              : ''
-                              }`}
-                          />
-                          {formik.touched.Meta_Title &&
-                            formik.errors.Meta_Title ? (
-                            <div className="text-red text-sm">
-                              {formik.errors.Meta_Title as string}
-                            </div>
-                          ) : null}
-                        </div>
-                        <div className="w-2/4">
-                          <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                            Canonical Tag
-                          </label>
-                          <input
-                            onBlur={formik.handleBlur}
-                            type="text"
-                            name="Canonical_Tag"
-                            onChange={formik.handleChange}
-                            value={formik.values.Canonical_Tag}
-                            placeholder="Canonical Tag"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag &&
-                              formik.errors.Canonical_Tag
-                              ? 'border-red-500'
-                              : ''
-                              }`}
-                          />
-
-                          {formik.touched.Canonical_Tag &&
-                            formik.errors.Canonical_Tag ? (
-                            <div className="text-red text-sm">
-                              {formik.errors.Canonical_Tag as string}
-                            </div>
-                          ) : null}
-                        </div>
-                      </div>
-
-                      <div className="mt-4">
+                      <div className="w-2/4">
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                          Meta Description
+                          Canonical Tag
                         </label>
-                        <Field
-                          as="textarea"
-                          name="Meta_Description"
-                          placeholder="Meta Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description
-                            ? "border-red-500"
-                            : ""
+                        <input
+                          onBlur={formik.handleBlur}
+                          type="text"
+                          name="Canonical_Tag"
+                          onChange={formik.handleChange}
+                          value={formik.values.Canonical_Tag}
+                          placeholder="Canonical Tag"
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag &&
+                            formik.errors.Canonical_Tag
+                            ? 'border-red-500'
+                            : ''
                             }`}
                         />
-                        <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
-                      </div>
 
+                        {formik.touched.Canonical_Tag &&
+                          formik.errors.Canonical_Tag ? (
+                          <div className="text-red text-sm">
+                            {formik.errors.Canonical_Tag as string}
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
 
+                    <div className="mt-4">
+                      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                        Meta Description
+                      </label>
+                      <Field
+                        as="textarea"
+                        name="Meta_Description"
+                        placeholder="Meta Description"
+                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description
+                          ? "border-red-500"
+                          : ""
+                          }`}
+                      />
+                      <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
+                    </div>
+                    <Field name="status">
+                      {({ field, form }: import('formik').FieldProps) => (
+                        <div className="flex gap-4 items-center my-4">
+                          <label className="font-semibold">Category Status:</label>
 
+                          {['DRAFT', 'PUBLISHED'].map((status) => {
+                            const isActive = field.value === status;
+
+                            return (
+                              <button
+                                key={status}
+                                type="button"
+                                onClick={() => form.setFieldValue('status', status)}
+                                disabled={isActive}
+                                className={`px-4 py-2 rounded-md text-sm border
+                                        ${isActive
+                                    ? 'bg-black text-white border-black cursor-not-allowed'
+                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                  }`}
+                              >
+                                {status}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </Field>
                   </div>
+
+
                 </div>
               </div>
-              <div className="flex justify-center">
-                <button
-                  type="submit"
-                  className="mt-4 px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded "
-                  disabled={loading}
-                >
-                  {loading ? <Loader color="#fff" /> : 'Submit'}
-                </button>
-              </div>
-            </Form>
-          );
-        }}
-      </Formik>
+            </div>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+  className="dashboard_primary_button mt-2" 
+  disabled={loading}
+        
+              >
+                {loading ? <Loader color="#fff" /> : 'Submit'}
+              </button>
+            </div>
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
 

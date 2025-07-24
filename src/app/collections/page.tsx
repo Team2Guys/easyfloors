@@ -2,27 +2,11 @@ import Breadcrumb from "components/Reusable/breadcrumb";
 import { fetchCategories, fetchSubCategories } from "config/fetch";
 import { FETCHSUBCAT } from "graphql/queries";
 import React from "react";
-import { Metadata } from 'next';
 import { filterAndSort } from "lib/helperFunctions";
 import Collections from "./Collections";
-import logo from "../../../public/assets/images/logo.webp"
-export const metadata: Metadata = {
-  title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
-  description:
-    "Browse Easy Floors’ premium SPC and LVT flooring collections. From herringbone to luxury vinyl, durable, stylish floors for homes and commercial spaces.",
-  openGraph: {
-    title: 'SPC & LVT Flooring Collection UAE | Easy Floors Dubai',
-    description: "Browse Easy Floors’ premium SPC and LVT flooring collections. From herringbone to luxury vinyl, durable, stylish floors for homes and commercial spaces.",
-    url: 'https://easyfloors.ae/collections',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
-      },
-    ],
-      type:'website'
-  },
-  alternates: {
-    canonical: 'https://easyfloors.ae/collections',
-  },
-};
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.collections);
 
 const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
