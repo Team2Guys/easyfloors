@@ -12,12 +12,7 @@ export const metadata: Metadata = {
     title: 'Your Flooring Cart | Review & Checkout with Easy Floors',
     description: "Ready to upgrade your floors? Review your selected items in the Easy Floors cart and proceed to secure checkout when you're ready.",
     url: 'https://easyfloors.ae/cart',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
-      },
-    ],
-          type:'website'
-
-  },
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',},],type:'website'},
   alternates: {
     canonical: 'https://easyfloors.ae/cart',
   },

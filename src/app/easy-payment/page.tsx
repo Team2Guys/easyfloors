@@ -2,7 +2,25 @@ import React from 'react'
 import Container from 'components/common/container/Container'
 import { easyPayment } from 'data/cart'
 import Image from 'next/image'
-
+import logo from "../../../public/assets/images/logo.webp"
+import { Metadata } from 'next'
+export const metadata: Metadata = {
+  title: 'Order Free Flooring Samples | Easy Floors UAE',
+  description:
+    'Try before you buy! Order up to 5 free flooring samples with free delivery across the UAE. Explore colours, textures, and finishes at home.',
+  openGraph: {
+    title: 'Order Free Flooring Samples | Easy Floors UAE',
+    description: 'Try before you buy! Order up to 5 free flooring samples with free delivery across the UAE. Explore colours, textures, and finishes at home.',
+    url: 'https://easyfloors.ae/easy-payment',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
+      },
+    ],
+      type:'website'
+  },
+  alternates: {
+    canonical: 'https://easyfloors.ae/easy-payment',
+  },
+};
 const EasyPayment = () => {
   return (
     <Container className='space-y-2 sm:space-y-4 my-10 font-inter'>
