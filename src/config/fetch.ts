@@ -101,7 +101,7 @@ export const fetchOrders = async (token: string | undefined, FETCH_ORDERS?: Docu
     });
     return data?.AllOrders || [];
   } catch (error) {
-    return []
+    // return []
     throw error;
   }
 };

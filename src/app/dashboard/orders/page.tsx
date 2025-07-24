@@ -14,8 +14,6 @@ const OrdersPage= async () => {
     (a: ProdOrder, b: ProdOrder) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime()
   );
 
-
-  console.log(ordersData, "ordersData")
   return <Order title="Order" ordersData={abandonedOrder} orders= {ordersData} />
 };
 

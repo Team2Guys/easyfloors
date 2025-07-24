@@ -4,6 +4,7 @@ import ContactInfo from "components/contact/contact-info";
 import Breadcrumb from "components/Reusable/breadcrumb";
 import { Metadata } from "next";
 import React from "react";
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
   description:
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Contact Easy Floors | We’re Here to Help with Flooring Advice',
     description: 'Have a question about flooring? Contact Easy Floors for expert support, product guidance, or order help. Fast response, friendly service.',
-    url: '/contact-us',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/contact-us',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
       type:'website'

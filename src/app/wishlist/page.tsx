@@ -1,6 +1,7 @@
 import React from 'react'
 import WishlistPage from './WishlistPage'
 import { Metadata } from 'next';
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Your Flooring Wishlist | Save Favourite Easy Floors Picks',
   description:
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Your Flooring Wishlist | Save Favourite Easy Floors Picks',
     description: 'Save your favourite flooring styles with the Easy Floors wishlist. Compare options, plan your space, and revisit your top picks anytime.',
-    url: '/wishlist',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/wishlist',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:'website'

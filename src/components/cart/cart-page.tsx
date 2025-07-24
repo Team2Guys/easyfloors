@@ -382,7 +382,7 @@ const CartPage = ({ products }: CartPageProps) => {
                                   <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
                               </p> 
                               <p className='text-12 sm:text-14 2xl:text-17'>
-                              Color:<span className='font-bold'> {item?.selectedColor?.colorName || "White"}</span>
+                              Color:<span className='font-bold'> {item?.selectedColor?.colorName || ""}</span>
                               </p> 
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">

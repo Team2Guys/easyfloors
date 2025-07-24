@@ -4,6 +4,7 @@ import RoomMeasurement from 'components/RoomMeasurement/RoomMeasurement'
 import { featureItems } from 'data/data'
 import React from 'react'
 import { Metadata } from 'next';
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Flooring Calculator Guide | How to Measure at Easy Floors UAE',
   description:
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Flooring Calculator Guide | How to Measure at Easy Floors UAE',
     description: 'Measure your room the right way! Use our step-by-step guide to calculate flooring quantity accurately and avoid waste. Expert help is available across the UAE.',
-    url: '/how-to-measure-your-room',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/how-to-measure-your-room',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
     type:'website'

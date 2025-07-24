@@ -3,7 +3,7 @@ import { freeSampleImage } from 'data/free-sample'
 import { Metadata } from 'next';
 import Image from 'next/image'
 import React from 'react'
-
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Order Free Flooring Samples | Easy Floors UAE',
   description:
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Order Free Flooring Samples | Easy Floors UAE',
     description: 'Try before you buy! Order up to 5 free flooring samples with free delivery across the UAE. Explore colours, textures, and finishes at home.',
-    url: 'https://easyfloors.ae/free-sampl',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/free-sample',
+    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
       },
     ],
       type:'website'

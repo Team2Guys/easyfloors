@@ -103,7 +103,9 @@ export interface ICollectionFilter extends ISUBCATEGORY {
     isfreeSample?:boolean;
     selectedColor?: ProductImage;
     matchedProductImages?: ProductImage;
-    custom_url?: string
+    custom_url?: string;
+    productImages?: ProductImage[];
+    featureImages?: ProductImage[];
   }
 
 export interface EDIT_PRODUCT_PROPS extends IProduct {

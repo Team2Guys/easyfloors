@@ -322,6 +322,13 @@ query AllOrders {
             squareMeter
             requiredBoxes
             custom_url
+            selectedColor {
+                color
+                altText
+                imageUrl
+                colorName
+                public_id
+            }
         }
     }
 }
@@ -502,6 +509,7 @@ export const FIND_ONE_Accessory = gql`
             discountPrice
             stock
             posterImageUrl
+            featureImages
             custom_url
               sizes
         }
