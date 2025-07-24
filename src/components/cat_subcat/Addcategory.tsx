@@ -4,7 +4,7 @@ import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
 import Toaster from 'components/Toaster/Toaster';
-import { Formik, Form, FormikHelpers, ErrorMessage, Field } from 'formik';
+import { Formik, Form, FormikHelpers, ErrorMessage, Field, FormikProps } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { categoryInitialValues, categoryValidationSchema } from 'data/data';
 import Loader from 'components/Loader/Loader';
@@ -17,7 +17,7 @@ import client from 'config/apolloClient';
 import { CREATE_CATEGORY, UPDATE_CATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_CATEGORIES } from 'graphql/queries';
 import Cookies from 'js-cookie';
-import ReactCrop, { Crop} from 'react-image-crop';
+import ReactCrop, { Crop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import { Modal } from 'antd';
 import { uploadPhotosToBackend } from 'lib/helperFunctions';
@@ -50,17 +50,17 @@ const FormLayout = ({
       Meta_Description: editCategory.Meta_Description || '',
       Canonical_Tag: editCategory.Canonical_Tag || '',
       custom_url: editCategory.custom_url || "",
-      topHeading:editCategory.topHeading || "",
-      RecallUrl:editCategory.RecallUrl || "",
-      price: editCategory.price  || ""
+      topHeading: editCategory.topHeading || "",
+      RecallUrl: editCategory.RecallUrl || "",
+      price: editCategory.price || ""
     }
     : null;
-    const token = Cookies.get('admin_access_token');
+  const token = Cookies.get('admin_access_token');
   const superAdminToken = Cookies.get('super_admin_access_token');
   const finalToken = token ? token : superAdminToken;
 
   const [posterimageUrl, setposterimageUrl] = useState<ProductImage[] | undefined>((editCategory && editCategory.posterImageUrl) ? [editCategory.posterImageUrl] : undefined);
-  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ?  [editCategory?.whatAmiImageBanner] : undefined);
+  const [BannerImageUrl, setBannerImageUrl] = useState<ProductImage[] | undefined>(editCategory && editCategory?.whatAmiImageBanner ? [editCategory?.whatAmiImageBanner] : undefined);
 
   const [loading, setloading] = useState<boolean>(false);
   const [editCategoryName, setEditCategoryName] = useState<EDIT_CATEGORY | null | undefined>(CategoryName);
@@ -69,21 +69,23 @@ const FormLayout = ({
   const [crop, setCrop] = useState<Crop>();
   const [croppedImage, setCroppedImage] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const formikRef = useRef<FormikProps<EDIT_CATEGORY>>(null);
+
   const onSubmit = async (values: EDIT_CATEGORY, { resetForm }: FormikHelpers<EDIT_CATEGORY>) => {
     try {
       setloading(true);
       const posterImageUrl = posterimageUrl && posterimageUrl[0];
       const Banner = BannerImageUrl && BannerImageUrl[0];
-    
+
       if (!posterImageUrl) throw new Error('Please select relevant Images');
-      const newValue = { ...values, posterImageUrl,whatAmiImageBanner:Banner };
+      const newValue = { ...values, posterImageUrl, whatAmiImageBanner: Banner };
 
       const updateFlag = editCategoryName ? true : false;
 
       if (updateFlag) {
         await client.mutate({
           mutation: UPDATE_CATEGORY,
-          variables: { input: { id: Number(editCategory?.id), posterImageUrl,whatAmiImageBanner:Banner , ...values } },
+          variables: { input: { id: Number(editCategory?.id), posterImageUrl, whatAmiImageBanner: Banner, ...values } },
           refetchQueries: [{ query: FETCH_ALL_CATEGORIES }],
         });
       } else {
@@ -129,15 +131,15 @@ const FormLayout = ({
   const onCropComplete = (crop: Crop) => {
     const image = imgRef.current;
     if (!image || !crop.width || !crop.height) return;
-  
+
     const canvas = document.createElement('canvas');
     const scaleX = image.naturalWidth / image.width;
     const scaleY = image.naturalHeight / image.height;
     const ctx = canvas?.getContext('2d');
-  
+
     canvas.width = crop?.width;
     canvas.height = crop?.height;
-  
+
     if (ctx) {
       ctx.drawImage(
         image,
@@ -151,21 +153,21 @@ const FormLayout = ({
         crop.height
       );
     }
-  
+
     const base64Image = canvas?.toDataURL('image/jpeg');
     setCroppedImage(base64Image);
   };
-  
+
 
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
       try {
         // Convert the cropped image (base64) to a File
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-  
+
         // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend([file]);
-  
+
         // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         const uploadedImageUrl = response[0].imageUrl;
@@ -173,13 +175,13 @@ const FormLayout = ({
         const newImageUrl = uploadedImageUrl.startsWith('http')
           ? uploadedImageUrl
           : `${baseUrl}${uploadedImageUrl}`;
-  
+
         const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-  
+
         // First close the modal and reset croppedImage
         setIsCropModalVisible(false);
         setCroppedImage(null);
-  
+
         // Use a timeout to update states after the modal has closed
         setTimeout(() => {
           setposterimageUrl((prevImages) =>
@@ -199,7 +201,7 @@ const FormLayout = ({
       }
     }
   };
-  
+
   // Helper function to convert a base64 string to a File object
   const base64ToFile = (base64: string, filename: string): File => {
     const arr = base64.split(',');
@@ -208,31 +210,36 @@ const FormLayout = ({
     const bstr = atob(arr[1]);
     let n = bstr.length;
     const u8arr = new Uint8Array(n);
-  
+
     while (n--) {
       u8arr[n] = bstr.charCodeAt(n);
     }
-  
+
     return new File([u8arr], filename, { type: mime });
   };
-  
+
 
   const handleCropModalCancel = () => {
     setIsCropModalVisible(false);
     setCroppedImage(null);
   };
-  return (
-    <>
-      <p
-        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white"
-        onClick={() => {
-          setMenuType('Categories');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
 
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (formikRef.current?.dirty) {
+        e.preventDefault();
+      }
+    };
+  
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+  
+  return (
+ 
       <Formik
+        innerRef={formikRef}
         initialValues={
           editCategoryName ? editCategoryName : categoryInitialValues
         }
@@ -242,6 +249,60 @@ const FormLayout = ({
         {(formik) => {
           return (
             <Form onSubmit={formik.handleSubmit}>
+
+              <div className='flex flex-wrap mb-5 gap-2 justify-between items-center'>
+                <p
+                  className="dashboard_primary_button"
+                  onClick={() => {
+                    if (formik.dirty) {
+                      const confirmLeave = window.confirm("You have unsaved changes. Do you want to leave without saving?");
+                      if (!confirmLeave) return;
+                    }
+                    setMenuType('Categories');
+                    setEditCategoryName?.(() => undefined);
+                  }}
+                >
+                  <IoMdArrowRoundBack /> Back
+                </p>
+                <div className="flex justify-center gap-4">
+                  <Field name="status">
+                    {({ field, form }: import('formik').FieldProps) => (
+                      <div className="flex gap-4 items-center border-r-2 px-2">
+
+                        {['DRAFT', 'PUBLISHED'].map((status) => {
+                          const isActive = field.value === status;
+                          return (
+                            <button
+                              key={status}
+                              type="button"
+                              onClick={() => form.setFieldValue('status', status)}
+                              disabled={isActive}
+                              className={`px-4 py-2 rounded-md text-sm
+                                                ${isActive
+                                  ?
+                                  ' border-gray-300 border text-opacity-1 bg-gray-100 cursor-not-allowed'
+                                  :
+                                  'dashboard_primary_button '
+                                }`}
+                            >
+                              {status}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </Field>
+                  <button
+                    type="submit"
+                    className="dashboard_primary_button cursor-pointer"
+                    disabled={loading}
+                  >
+                    {loading ? "loading.." : 'Submit'}
+                  </button>
+                </div>
+              </div>
+
+
               <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                 <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                   <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
@@ -273,9 +334,9 @@ const FormLayout = ({
                                     }}
                                   />
                                 </div>
-                            
+
                                 <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
                                   className="object-cover w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
                                   width={300}
@@ -284,8 +345,8 @@ const FormLayout = ({
                                   loading='lazy'
                                   alt={`productImage-${index}`}
                                 />
-                          
-                              <input
+
+                                <input
                                   className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                   placeholder="Alt Text"
                                   type="text"
@@ -299,7 +360,7 @@ const FormLayout = ({
                                       "altText"
                                     )
                                   }
-                              />
+                                />
                               </div>
                             );
                           })}
@@ -309,31 +370,31 @@ const FormLayout = ({
                       )}
                     </div>
                     <Modal
-                title="Crop Image"
-                open={isCropModalVisible}
-                onOk={handleCropModalOk}
-                onCancel={handleCropModalCancel}
-                width={500}
-                height={400}
+                      title="Crop Image"
+                      open={isCropModalVisible}
+                      onOk={handleCropModalOk}
+                      onCancel={handleCropModalCancel}
+                      width={500}
+                      height={400}
                     >
-                {imageSrc && (
-                  <ReactCrop
-                    crop={crop}
-                    onChange={(newCrop) => setCrop(newCrop)}
-                    onComplete={onCropComplete}
-                  >
-                    <Image
-                    width={500}
-                    height={300}
-                      ref={imgRef}
-                      src={imageSrc}
-                      alt="Crop me"
-                      style={{ maxWidth: '100%' }}
-                      onLoad={onImageLoad}
-                      crossOrigin="anonymous"
-                    />
-                  </ReactCrop>
-                )}
+                      {imageSrc && (
+                        <ReactCrop
+                          crop={crop}
+                          onChange={(newCrop) => setCrop(newCrop)}
+                          onComplete={onCropComplete}
+                        >
+                          <Image
+                            width={500}
+                            height={300}
+                            ref={imgRef}
+                            src={imageSrc}
+                            alt="Crop me"
+                            style={{ maxWidth: '100%' }}
+                            onLoad={onImageLoad}
+                            crossOrigin="anonymous"
+                          />
+                        </ReactCrop>
+                      )}
                     </Modal>
                     <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
                       <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
@@ -363,7 +424,7 @@ const FormLayout = ({
                                   />
                                 </div>
                                 <Image
-                                onClick={() => handleCropClick(item.imageUrl)}
+                                  onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
                                   className="w-full h-full dark:bg-black dark:shadow-lg cursor-crosshair"
 
@@ -395,9 +456,9 @@ const FormLayout = ({
                       ) : (
                         <ImageUploader setposterimageUrl={setBannerImageUrl} />
                       )}
-                    </div>   
+                    </div>
 
-                    
+
 
                     <div className="flex flex-col">
 
@@ -450,7 +511,7 @@ const FormLayout = ({
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                        RecallUrl(products & Categories)
+                          RecallUrl(products & Categories)
                         </label>
                         <Field
                           type="text"
@@ -465,7 +526,7 @@ const FormLayout = ({
 
                       <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                        Category Top Heading
+                          Category Top Heading
                         </label>
                         <Field
                           type="text"
@@ -592,7 +653,6 @@ const FormLayout = ({
           );
         }}
       </Formik>
-    </>
   );
 };
 

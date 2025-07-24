@@ -31,6 +31,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       FAQS
         boxCoverage
         featureImages
+        status
       category {
         id
         name

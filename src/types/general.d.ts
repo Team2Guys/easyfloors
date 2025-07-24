@@ -1,3 +1,6 @@
+export type BlogStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED"
+
+
 export interface RedirectUrls {
   updatedAt?: string
   createdAt?: string;

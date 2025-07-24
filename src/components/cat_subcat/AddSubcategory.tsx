@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import Image from 'next/image';
 import { handleImageAltText, ImageRemoveHandler } from 'utils/helperFunctions';
-import { Formik, Form, FormikHelpers, Field, ErrorMessage, FieldArray, FormikErrors } from 'formik';
+import { Formik, Form, FormikHelpers, Field, ErrorMessage, FieldArray, FormikErrors, FormikProps } from 'formik';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { subcategoryInitialValues, subcategoryValidationSchema, } from 'data/data';
 import Loader from 'components/Loader/Loader';
@@ -74,6 +74,8 @@ const FormLayout = ({
 
   const [createSubCategory] = useMutation(CREATE_SUBCATEGORY);
   const [updateSubCategory] = useMutation(UPDATE_SUBCATEGORY);
+    const formikRef = useRef<FormikProps<ISUBCATEGORY_EDIT>>(null);
+  
 
   const onSubmit = async (values: ISUBCATEGORY_EDIT, { resetForm }: FormikHelpers<ISUBCATEGORY_EDIT>) => {
     if (!values.category) {
@@ -149,6 +151,19 @@ const FormLayout = ({
     setImageSrc(imageUrl);
     setIsCropModalVisible(true);
   };
+
+
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (formikRef.current?.dirty) {
+        e.preventDefault();
+      }
+    };
+  
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, []);
+  
 
   const onImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const { width, height } = e.currentTarget;
@@ -279,6 +294,7 @@ const FormLayout = ({
       </p>
 
       <Formik
+      innerRef={formikRef}
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
         }
@@ -287,6 +303,7 @@ const FormLayout = ({
       >
         {(formik) => {
           return (
+            
             <Form onSubmit={formik.handleSubmit}>
               <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                 <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
