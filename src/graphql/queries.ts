@@ -303,6 +303,10 @@ query AllOrders {
         is3DSecure
         checkoutDate
         shippingMethod
+        pay_methodType
+  paymethod_sub_type
+  cardLastDigits
+
         isfreesample
         products {
             id
@@ -317,6 +321,7 @@ query AllOrders {
             pricePerBox
             squareMeter
             requiredBoxes
+            custom_url
         }
     }
 }

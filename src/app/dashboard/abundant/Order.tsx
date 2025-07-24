@@ -5,9 +5,12 @@ import DefaultLayout from 'components/Dashboard/DefaultLayout'
 import Image from 'next/image'
 import React, { useState } from 'react'
 import { BsEyeFill } from 'react-icons/bs'
+import { FiDownloadCloud } from 'react-icons/fi'
 import { Order as prodOrder } from 'types/prod'
+import * as XLSX from 'xlsx';
 
-const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData: prodOrder[], isfreesample?: boolean }) => {
+
+const Order = ({ title, ordersData, isfreesample, orders }: { title: string, orders: prodOrder[], ordersData: prodOrder[], isfreesample?: boolean }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedOrder, setSelectedOrder] = useState<prodOrder | null>(null);
    const showModal = (record: prodOrder) => {
@@ -92,14 +95,14 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
                },
             ]
          : [
-      {
-         title: 'Create At',
-         dataIndex: 'createdAt',
-         key: 'createdAt',
-         width: 140,
-         render: (text: string, record: prodOrder) =>
-            record?.checkoutDate ? new Date(record.checkoutDate).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
-      },]),
+            {
+               title: 'Create At',
+               dataIndex: 'createdAt',
+               key: 'createdAt',
+               width: 140,
+               render: (text: string, record: prodOrder) =>
+                  record?.checkoutDate ? new Date(record.checkoutDate).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
+            },]),
       {
          title: "View",
          dataIndex: "view",
@@ -113,9 +116,67 @@ const Order = ({ title, ordersData, isfreesample }: { title: string, ordersData:
       },
    ].filter(Boolean);
 
+
+   const handleExport = () => {
+      // Flatten the data (convert nested product into single row or join important values)
+      const filtered_orders = orders?.map((order) => {
+
+
+         return ({
+            OrderID: order.orderId,
+            Email: order.email,
+            Name: `${order.firstName} ${order.lastName}`,
+            Address: order.address,
+            Phone: order.phone,
+            City: order.city,
+            Country: order.country,
+            Emirate: order.emirate,
+            checkoutDate: new Date(order.checkoutDate).toLocaleString(),
+            transactionDate: new Date(order?.transactionDate).toLocaleString(),
+            PaymentStatus: order.paymentStatus ? 'Paid' : 'Unpaid',
+            TotalPrice: order.totalPrice,
+            ProductNames: order.products.map((p) => p.name).join(', '),
+            Productslength: order.products.map((p) => p.requiredBoxes).join(', '),
+            squareMeter: order.products.map((p) => p.squareMeter).join(', '),
+            ProductsIds: order.products.map((p) => p.id).join(', '),
+            ProductsUrls: order.products.map((p) => {
+               let urls = 'https://easyfloors.ae/'
+               const category = p.category.trim().toLowerCase();
+               console.log(category, "Accessory", p.name, p.category , order.orderId)
+               if (category == "accessories" || category === 'accessory') {
+                  urls += `accessories/${p.custom_url}`
+
+               } else {
+                  urls += `${p.category}/${p.subcategories}/${p.custom_url}`
+               }
+               return (
+                  urls
+               )
+            }).join(', '),
+            SellingPrice: order.products.map((p) => p.price).join(', '),
+            Delivery_Charges: order?.shipmentFee,
+            shippingMethod: order?.shippingMethod?.name,
+            is3DSecure:order.is3DSecure,
+            Note:order.note,
+            FreeSample:order?.isfreesample,
+            PaymentMethodType:order?.pay_methodType,
+            paymethod_sub_type:order?.paymethod_sub_type,
+            cardLastDigits:order?.cardLastDigits,
+            Currency:order?.currency,
+         })
+      });
+
+      const worksheet = XLSX.utils.json_to_sheet(filtered_orders);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Orders-IF');
+      XLSX.writeFile(workbook, 'Orders-EF.xlsx');
+   };
+
    return (
       <DefaultLayout>
          <Breadcrumb pageName={title} />
+         <button className='flex items-center gap-2' onClick={handleExport}> Export Orders <FiDownloadCloud className='text-primary' /></button>
+
          {ordersData && ordersData.length > 0 ? (
             <>
                <Table

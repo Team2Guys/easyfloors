@@ -176,4 +176,5 @@ interface orderProduct {
   stock: number
   subcategories: string
   totalPrice: number
+  custom_url:string
 }
