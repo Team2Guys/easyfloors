@@ -52,7 +52,8 @@ const FormLayout = ({
       custom_url: editCategory.custom_url || "",
       topHeading:editCategory.topHeading || "",
       RecallUrl:editCategory.RecallUrl || "",
-      price: editCategory.price  || ""
+      price: editCategory.price  || "",
+      status: editCategory?.status || 'DRAFT',
     }
     : null;
     const token = Cookies.get('admin_access_token');
@@ -572,7 +573,33 @@ const FormLayout = ({
                         />
                         <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
                       </div>
+                        <Field name="status">
+                            {({ field, form }: import('formik').FieldProps) => (
+                              <div className="flex gap-4 items-center my-4">
+                                <label className="font-semibold">Category Status:</label>
 
+                                {['DRAFT', 'PUBLISHED'].map((status) => {
+                                  const isActive = field.value === status;
+
+                                  return (
+                                    <button
+                                      key={status}
+                                      type="button"
+                                      onClick={() => form.setFieldValue('status', status)}
+                                      disabled={isActive}
+                                      className={`px-4 py-2 rounded-md text-sm border
+                                        ${isActive
+                                          ? 'bg-black text-white border-black cursor-not-allowed'
+                                          : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                        }`}
+                                    >
+                                      {status}
+                                    </button>
+                                  );
+                                })}
+                              </div>
+                            )}
+                        </Field>
                     </div>
 
 

@@ -1,25 +1,9 @@
 import Container from 'components/common/container/Container';
 import { policySections } from 'data/data';
 import React from 'react';
-import { Metadata } from 'next';
-import logo from "../../../public/assets/images/logo.webp"
-export const metadata: Metadata = {
-  title: 'Easy Floors Return & Refund Policy | Hassle-Free 7-Day Returns',
-  description:
-    'Changed your mind? Return unused items within 7 days. Learn about refund timelines, return shipping, and what to do if you receive a defective product.',
-  openGraph: {
-    title: 'Easy Floors Return & Refund Policy | Hassle-Free 7-Day Returns',
-    description: 'Changed your mind? Return unused items within 7 days. Learn about refund timelines, return shipping, and what to do if you receive a defective product.',
-    url: 'https://easyfloors.ae/return-and-refund-policy',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
-      },
-    ],
-    type:"website"
-  },
-  alternates: {
-    canonical: 'https://easyfloors.ae/return-and-refund-policy',
-  },
-};
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.return_and_refund_policy);
 const ReturnRefundPolicy = () => {
   return (
     <Container className="pt-10 md:pt-20">

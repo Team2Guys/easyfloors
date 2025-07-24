@@ -4,26 +4,9 @@ import Breadcrumb from "components/Reusable/breadcrumb";
 import SampleGrid from "components/SampleGrid/SampleGrid";
 import VideoComponent from "components/VideoComponent/AboutCompany";
 import { alternatingData, sampleGridData } from "data/data";
-import { Metadata } from "next";
-import logo from "../../../public/assets/images/logo.webp"
-export const metadata: Metadata = {
-  title: 'About Easy Floors UAE | Trusted Online Flooring Store in Dubai',
-  description:
-    'Learn more about Easy Floors—UAE’s leading online store for SPC and LVT flooring. Discover our Richmond & Polar collections, fast delivery, and free samples.',
-  openGraph: {
-    title: 'About Easy Floors UAE | Trusted Online Flooring Store in Dubai',
-    description: 'Learn more about Easy Floors—UAE’s leading online store for SPC and LVT flooring. Discover our Richmond & Polar collections, fast delivery, and free samples.',
-    url: 'https://easyfloors.ae/about-us',
-    images: [{url: `https://easyfloors.ae${logo.src}`, alt: 'Easyfloors',
-      },
-    ],
-          type:'website'
-
-  },
-  alternates: {
-    canonical: 'https://easyfloors.ae/about-us',
-  },
-};
+import { createMetadata } from 'utils/metadataHelper';
+import { pageMetadataData } from 'data/meta-data';
+export const metadata = createMetadata(pageMetadataData.aboutUs);
 
 const AboutUs = () => {
   return (
