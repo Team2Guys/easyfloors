@@ -23,7 +23,6 @@ export const handleAddToStorage = async (
     toast.error('Product is undefined');
     return;
   }
-
   if (type === 'cart') {
     if (requiredBoxes <= 0) {
       toast.error('Please enter quantity to add the product to the cart.');
@@ -48,12 +47,11 @@ export const handleAddToStorage = async (
   if (MainCategory === 'Accessories') {
     posterImageUrl = (productData as IProduct).productImages?.find(
       (img) => img.colorCode === selectedColor?.color
-    )?.imageUrl;
+    )?.imageUrl ?? image;
   } else {
     posterImageUrl =
       matchedProductImages?.imageUrl ?? image;
   }
-
   const adjustedUnit = unit || 'sqm';
 
   const item = {

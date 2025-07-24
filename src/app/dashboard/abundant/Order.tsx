@@ -211,8 +211,8 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
                                     <h3 className='font-medium'>{prod.name}</h3>
                                     {prod.category === "Accessories" ? 
                                     <>
-                                    <p className='font-medium'>Price per meter: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
-                                    <p className='font-medium'>Total Required: <span className='font-normal'>{prod.requiredBoxes}m</span></p>
+                                    <p className='font-medium'>Price per Piece: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
+                                    <p className='font-medium'>Total Required: <span className='font-normal'>{prod.requiredBoxes}</span></p>
                                     </>
                                     :
                                     <>

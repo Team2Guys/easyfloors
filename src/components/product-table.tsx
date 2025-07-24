@@ -47,8 +47,8 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                       {!isSamplePage && (
                         product.category === "Accessories" ? (
                           <>
-                            <p className='text-12 sm:text-16'>Price Per m: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
-                            <p className='text-12 sm:text-16'>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
+                            <p className='text-12 sm:text-16'>Price Per Piece: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
+                            <p className='text-12 sm:text-16'>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}</span></p>
                             {product.selectedColor && <p className='text-12 sm:text-16'>
                               Color: <span className='font-bold'>{product.selectedColor.colorName}</span>
                                                       </p>}

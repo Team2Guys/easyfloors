@@ -30,9 +30,9 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
             {!isSamplePage && product.category && (
             product.category === "Accessories" ? (
             <>
-           <p>Price Per m: <span className="font-semibold"> <span className="font-currency text-18 font-normal"></span> {product.price}</span></p>
-           <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
-           <p>color: <span className="font-semibold">{product.selectedColor?.colorName}m</span></p>
+           <p>Price Per Piece: <span className="font-semibold"> <span className="font-currency text-18 font-normal"></span> {product.price}</span></p>
+           <p>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}</span></p>
+           <p>color: <span className="font-semibold">{product.selectedColor?.colorName}</span></p>
             </>
            ) : (
           <>

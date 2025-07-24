@@ -47,7 +47,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
     if (uniqueFeatureImages.length > 0) {
       setSelectedColor(uniqueFeatureImages[0]);
     } else {
-      const baseImage: ProductImage = productData?.productImages?.[0] ?? {imageUrl: '' , public_id: ''};
+      const baseImage: ProductImage = productData?.productImages?.[0] ?? { imageUrl: '', public_id: '' };
       setSelectedColor({
         ...baseImage,
         color: 'fff',
@@ -73,7 +73,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
         <h1 className="text-18 lg:text-[33.6px] font-semibold font-inter">{productData.name}</h1>
         <div className="flex border-b-[1px] border-gray-300"></div>
         <p className="text-14 xl:text-[23.6px] font-semibold font-inter">
-          Price Per Metre: <span className="text-primary"><span className="font-currency font-normal text-18 xl:text-28"></span> {productData.price}</span>
+          Price Per Piece: <span className="text-primary"><span className="font-currency font-normal text-18 xl:text-28"></span> {productData.price}</span>
         </p>
         <p className="text-15 xl:text-[19.6px] font-inter font-normal">Stock: <span className="text-green">In Stock</span>
         </p>
@@ -110,28 +110,28 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       {/* Length Input */}
       <div className="border border-black mt-2 p-3">
         <div className="flex items-center gap-2 ">
-          <p className="font-semibold font-inter text-16 xl:text-[23.6px]">Length:</p>
+          <p className="font-semibold font-inter text-16 xl:text-[23.6px]">Pieces:</p>
           <input
             type="number"
             value={length}
             onChange={handleLengthChange}
-            placeholder="Enter your required meter"
+            placeholder="No. of Required Pieces"
             min="0"
             className="border px-2 py-1 font-light font-inter text-black w-[60%] mt-1 border-primary text-12 xl:text-14"
           />
         </div>
-        <p className="font-inter font-light tecxt-12 xl:text-sm mt-2">
-          {productData.lengthPrice ? "Length Per Piece: " + productData.lengthPrice : "Selling in fixed length of 240cm"}
-        </p>
         <div className="mt-2 font-semibold text-16 lg:text-18">
+          <p>
+            {productData.lengthPrice ? <>Length Per Piece: <span className="font-light text-14 xl:text-18">{productData.lengthPrice}</span></> : <span className="font-light text-14 xl:text-18">Selling in fixed length of 240cm</span>}
+          </p>
           <p>Height: <span className="font-light text-14 xl:text-18">10 cm</span></p>
           <p>Depth: <span className="font-light text-14 xl:text-18">1.6 cm</span></p>
         </div>
       </div>
       <div className="mt-2 px-3 border border-black font-inter text-16 xl:text-18 font-semibold">
-        <p>Total Required: <span className="text-14 xl:text-17 font-light">{requiredBoxes}  metres</span></p>
-        <p >Price Per Metre: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {productData.price}</span></p>
-        <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {formatAED(totalPrice)} ({requiredBoxes} metre * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
+        <p>Total Required: <span className="text-14 xl:text-17 font-light">{requiredBoxes} Pieces</span></p>
+        <p >Price Per Piece: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {productData.price}</span></p>
+        <p>Total Amount: <span className="text-14 xl:text-17 font-light"><span className="font-currency font-normal text-18 xl:text-20"></span> {formatAED(totalPrice)} ({requiredBoxes < 1 ? `${requiredBoxes} Piece` : `${requiredBoxes} Pieces`} * <span className="font-currency text-18 xl:text-20 font-normal"></span> {productData.price})</span></p>
       </div>
 
       <div className="my-3 flex w-full gap-1 items-center sm:gap-3">

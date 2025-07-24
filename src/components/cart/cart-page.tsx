@@ -88,9 +88,10 @@ const CartPage = ({ products }: CartPageProps) => {
       setTotal(totalBeforeTax);
     }, [cartItems]);
 
-  const updateQuantity = async (id: number, change: number) => {
+  const updateQuantity = async (id: number | string, change: number) => {
     try {
       const item = cartItems.find((item) => item.id === id);
+      console.log(cartItems, item , 'itemdata' , id)
       if (!item) {
         toast.error("Item not found in cart.");
         return;
@@ -140,8 +141,8 @@ const CartPage = ({ products }: CartPageProps) => {
     }
   };
 
-  const increment = (id: number) => updateQuantity(id, 1);
-  const decrement = (id: number) => updateQuantity(id, -1);
+  const increment = (id: number | string) => updateQuantity(id, 1);
+  const decrement = (id: number | string) => updateQuantity(id, -1);
 
   useEffect(() => {
     handleShippingSelect("standard");
@@ -359,7 +360,7 @@ const CartPage = ({ products }: CartPageProps) => {
                    <>
                   <div className=' hidden xl:grid grid-cols-12 text-20 font-light pb-3'>
                     <div className='col-span-6'>Accessories</div>
-                    <div className='col-span-2 text-center'>Qty m</div>
+                    <div className='col-span-2 text-center'>Qty Piece</div>
                     <div className='col-span-2 text-center'>Price</div>
                     <div className='col-span-2 text-end'>Remove</div>
                   </div>
@@ -376,22 +377,22 @@ const CartPage = ({ products }: CartPageProps) => {
                             <div>
                               <Link href={`/accessories/${item.custom_url}`} className='text-[12px] xsm:text-13 xl:text-14 2xl:text-16 font-medium'>{item.name}</Link>
                               <p className='text-12 sm:text-14 2xl:text-17 '>Price: <span className="font-currency font-normal text-16 2xl:text-18"></span>{' '}
-                               <span>{item.unit === "ft"? ((item.price?? 0) / 3.28084).toFixed(2): (item.price ?? 0).toFixed(2)}</span>/{item.unit === "ft" ? "ft" : "m"}
+                               <span>{(item.price ?? 0).toFixed(2)}</span>/Piece
                               </p>
                               <p className='text-12 sm:text-14 2xl:text-17'>
                               Total Required:
-                                  <span className='font-bold'> {item.requiredBoxes ?? 0}{item.unit === "ft" ? "ft" : "m"}</span> 
+                                  <span className='font-bold'> {item.requiredBoxes ?? 0}</span> 
                               </p> 
                               <p className='text-12 sm:text-14 2xl:text-17'>
                               Color:<span className='font-bold'> {item?.selectedColor?.colorName || ""}</span>
                               </p> 
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
-                                  <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
+                                  <button className="px-1 hover:text-black" onClick={() => decrement(item.id)}>
                                     <LuMinus />
                                   </button>
                                   <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                                  <button className="px-1 hover:text-black" onClick={() => increment(Number(item.id))}>
+                                  <button className="px-1 hover:text-black" onClick={() => increment(item.id)}>
                                     <LuPlus />
                                   </button>
                                 </div>
@@ -402,11 +403,11 @@ const CartPage = ({ products }: CartPageProps) => {
                         </div>
                         <div className='col-span-2 mx-auto hidden xl:block'>
                           <div className="flex items-center justify-center border border-[#959595] px-1 2xl:px-2 py-2 2xl:py-3 w-fit text-16 text-purple">
-                            <button className="px-3 hover:text-black" onClick={() => decrement(Number(item.id))}>
+                            <button className="px-3 hover:text-black" onClick={() => decrement(item.id)}>
                               <LuMinus />
                             </button>
                             <span className="text-16 text-purple px-2 2xl:px-3">{item.requiredBoxes}</span>
-                            <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(Number(item.id))}>
+                            <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(item.id)}>
                               <LuPlus />
                             </button>
                           </div>
