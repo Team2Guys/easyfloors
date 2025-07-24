@@ -1,5 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { BlogStatus } from '@prisma/client';
+import { BlogStatus } from 'general/dto/enums/enum';
 
 
 @ObjectType()
