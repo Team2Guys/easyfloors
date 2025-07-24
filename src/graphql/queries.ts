@@ -504,6 +504,7 @@ export const FIND_ONE_Accessory = gql`
             discountPrice
             stock
             posterImageUrl
+            featureImages
             custom_url
               sizes
         }

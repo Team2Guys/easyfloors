@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-import { lazy, MouseEvent, useState } from "react";
+import { lazy, MouseEvent, useEffect, useState } from "react";
 import { FiEye, FiHeart } from "react-icons/fi";
 import { productCardProps } from "types/PagesProps";
-import { IProduct } from "types/prod";
+import { IProduct, ProductImage } from "types/prod";
 import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import { generateSlug } from "data/data";
 import { FIND_QUICK_VIEW_PRODUCT } from "graphql/queries";
@@ -34,7 +34,8 @@ const Card: React.FC<productCardProps> = ({
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showCaption, setShowCaption] = useState('');
-  const [modalData, setModalData] = useState<IProduct | undefined>(undefined)
+  const [modalData, setModalData] = useState<IProduct | undefined>(undefined);
+  const [selectedColor, setSelectedColor] = useState<ProductImage>();
   const handleModel = async (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -60,9 +61,28 @@ const Card: React.FC<productCardProps> = ({
     }
   };
 
-  const selectedColor = (product as IProduct)?.featureImages?.find(
-    (img) => img.color === (product as IProduct)?.productImages?.[0]?.colorCode
-  );
+  useEffect(() => {
+    const typedProduct = product as IProduct;
+
+    if (typedProduct.__typename === 'Accessories' || typedProduct.__typename === 'Accessory') {
+      const uniqueFeatureImages = typedProduct.featureImages?.filter(
+        (image, index, self) =>
+          index === self.findIndex((img) => img.color === image.color)
+      ) || [];
+
+      if (uniqueFeatureImages.length > 0) {
+        setSelectedColor(uniqueFeatureImages[0]);
+        return;
+      } else {
+        const baseImage = typedProduct.posterImageUrl ?? { imageUrl: '', public_id: '' };
+        setSelectedColor({
+          ...baseImage,
+          color: 'fff',
+          colorName: 'White',
+        });
+      }
+    }
+  }, [(product as IProduct)?.featureImages]);
 
   return (
     <div className={`overflow-hidden group flex flex-col justify-between ${isAccessories ? "hover:bg-[#FFF9F5] p-2 " : "p-2 "}`}>
@@ -152,7 +172,8 @@ const Card: React.FC<productCardProps> = ({
                         product.posterImageUrl?.imageUrl
                         : product.posterImageUrl?.imageUrl,
                       product?.boxCoverage,
-                      "m"
+                      "m",
+                      selectedColor
                     );
                   }}
                   onMouseEnter={() => setShowCaption('Add to Wishlist')}

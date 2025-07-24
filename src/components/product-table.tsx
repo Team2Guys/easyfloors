@@ -11,7 +11,7 @@ import { generateSlug } from "data/data";
 
 const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = false, items = [], setItems }) => {
   const pathname = usePathname();
-
+  console.log(items)
   return (
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
       {items.length === 0 && pathname === "/freesample" ? (
@@ -30,7 +30,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
               {(columns ?? [])
                 .filter((col) => (pathname === "/freesample" ? col !== "QTY (m/m²)" : true))
                 .map((col, index) => (
-                  <th key={index} className={`${isSamplePage  ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left whitespace-nowrap " : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start text-left "} ${index==0 ? " w-[70%] lg:w-[60%] 2xl:w-[35%] 3xl:w-[35%]" : "w-[20%] lg:w-[20%] 2xl:w-[22%] 3xl:w-[25%]"} ${index==3 ? "text-center" : ""} ${index==4 ? "text-center" : ""} ${pathname === "/freesample" && col =='Stock Status' ? "text-center" : ""}`}>
+                  <th key={index} className={`${isSamplePage ? "xl:text-20 2xl:text-24 p-3 xl:p-2 text-left whitespace-nowrap " : "md:text-12 md:text-nowrap lg:text-14 xl:text-18 2xl:text-24 p-3 md:p-2 lg:p-3 2xl:p-4 justify-start text-left "} ${index == 0 ? " w-[70%] lg:w-[60%] 2xl:w-[35%] 3xl:w-[35%]" : "w-[20%] lg:w-[20%] 2xl:w-[22%] 3xl:w-[25%]"} ${index == 3 ? "text-center" : ""} ${index == 4 ? "text-center" : ""} ${pathname === "/freesample" && col == 'Stock Status' ? "text-center" : ""}`}>
                     {col}
                   </th>
                 ))}
@@ -38,7 +38,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           </thead>
           <tbody>
             {items.map((product) => {
-   
+
               return (
                 <tr key={product.id} className="border-t w-full">
                   <td className="p-3 flex items-center justify-start gap-3">
@@ -50,6 +50,9 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                           <>
                             <p className='text-12 sm:text-16'>Price Per m: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
                             <p className='text-12 sm:text-16'>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
+                            {product.selectedColor && <p className='text-12 sm:text-16'>
+                              Color: <span className='font-bold'>{product.selectedColor.colorName}</span>
+                                                      </p>}
                           </>
                         ) : (
                           <>
@@ -62,51 +65,51 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                       )}
                     </div>
                   </td>
-                  
+
                   {pathname !== "/freesample" && (
-                  <td className="p-3">
-                        <div className="flex flex-col">
-                          <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
-                            <button 
-                              onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))} 
-                              className="px-2 text-gray-700"
-                            >
-                              <FiMinus />
-                            </button>
-                            <span className="px-2 text-black font-semibold">
-                              {product.category === "Accessories" 
-                                ? product.requiredBoxes 
-                                : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
-                            </span>
-                            <button
-                              onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))} 
-                              className="px-2 text-gray-700"
-                            >
-                              <GoPlus />
-                            </button>
-                          </div>
+                    <td className="p-3">
+                      <div className="flex flex-col">
+                        <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
+                          <button
+                            onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))}
+                            className="px-2 text-gray-700"
+                          >
+                            <FiMinus />
+                          </button>
+                          <span className="px-2 text-black font-semibold">
+                            {product.category === "Accessories"
+                              ? product.requiredBoxes
+                              : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
+                          </span>
+                          <button
+                            onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))}
+                            className="px-2 text-gray-700"
+                          >
+                            <GoPlus />
+                          </button>
                         </div>
-                  </td>
+                      </div>
+                    </td>
                   )}
 
                   <td className="p-3 font-inter text-12 xl:text-20 font-normal">
-                    {pathname === "/freesample" ? "Free" :  product.totalPrice.toFixed(2)}
+                    {pathname === "/freesample" ? "Free" : product.totalPrice.toFixed(2)}
                   </td>
                   <td className="p-3 text-center font-inter text-12 xl:text-20 font-normal">
                     {product.stock > 0 ? "In Stock" : "Out of Stock"}
                   </td>
                   <td className="p-3">
                     <div className="flex gap-4 lg:gap-6 xl:gap-10 items-center justify-center">
-                      {!isSamplePage && 
-                      <button 
-                        id="AddToCart" 
-                        onClick={() => handleAddToCart(product, setItems ?? (() => {}))} 
-                        className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2"
-                      >
-                        Add to Cart
-                      </button>}
-                      <button 
-                        onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => {}), isSamplePage)} 
+                      {!isSamplePage &&
+                        <button
+                          id="AddToCart"
+                          onClick={() => handleAddToCart(product, setItems ?? (() => { }))}
+                          className="bg-black text-white text-10 xl:text-20 2xl:text-24 flex gap-2 items-center whitespace-nowrap px-4 py-2"
+                        >
+                          Add to Cart
+                        </button>}
+                      <button
+                        onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => { }), isSamplePage)}
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
                         <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={100} width={100} />
@@ -120,13 +123,13 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
         </table>
       )}
       <div className={`flex items-center ${isSamplePage ? 'justify-between' : 'justify-start'}`}>
-      <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
-        <FaArrowLeftLong /> Continue shopping
-      </Link>
-      {isSamplePage && 
-      <Link href="/freesample-checkout" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
-        Checkout <FaArrowRightLong />
-      </Link>}
+        <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
+          <FaArrowLeftLong /> Continue shopping
+        </Link>
+        {isSamplePage &&
+          <Link href="/freesample-checkout" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
+            Checkout <FaArrowRightLong />
+          </Link>}
       </div>
     </div>
   );

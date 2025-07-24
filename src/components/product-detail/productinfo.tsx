@@ -50,7 +50,7 @@ const SkirtingProductDetail = ({ productData, MainCategory, image, selectedColor
       const baseImage: ProductImage = productData?.productImages?.[0] ?? {imageUrl: '' , public_id: ''};
       setSelectedColor({
         ...baseImage,
-        color: '2865',
+        color: 'fff',
         colorName: 'White',
       });
     }
