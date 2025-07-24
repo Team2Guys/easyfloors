@@ -1,4 +1,5 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
+import { BlogStatus } from './enums/enum';
 
 @InputType()
 export class CreatedRedirecturls {
@@ -10,6 +11,8 @@ export class CreatedRedirecturls {
   redirectedUrl: string;
 
 
+     @Field(() => BlogStatus, { nullable: true })
+      status?: BlogStatus
   
 
 
