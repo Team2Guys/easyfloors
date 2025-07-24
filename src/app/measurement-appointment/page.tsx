@@ -1,6 +1,7 @@
 import AppointmentMain from 'components/appointment/appointment-main'
 import { Metadata } from 'next';
 import React from 'react'
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Book a Flooring Measurement Appointment | Easy Floors UAE',
   description:
@@ -8,8 +9,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Book a Flooring Measurement Appointment | Easy Floors UAE',
     description: 'Schedule a professional flooring measurement with Easy Floors. AED 150 fee fully refunded upon order. Accurate sizing, no guesswork.',
-    url: '/measurement-appointment',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/measurement-appointment',
+    images: [{url: logo.src, alt: 'Easyfloors',
       },
     ],
     type:"website"

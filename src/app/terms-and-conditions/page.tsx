@@ -2,7 +2,7 @@ import Container from 'components/common/container/Container';
 import { termsConditionsData } from 'data/terms-condition';
 import Link from 'next/link';
 import React from 'react';
-
+import logo from "../../../public/assets/images/logo.webp"
 import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
@@ -11,8 +11,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Easy Floors Terms & Conditions | Ordering & Warranty Info',
     description: "Read Easy Floors' terms & conditions, including order process, cancellations, shipping, returns, warranty, and privacy policy. Know your rights before you buy.",
-    url: '/terms-and-conditions',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/terms-and-conditions',
+    images: [{url: logo.src, alt: 'Easyfloors',
       },
     ],
     type:'website'
