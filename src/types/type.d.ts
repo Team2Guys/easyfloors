@@ -165,6 +165,8 @@ export interface ICategory {
   Canonical_Tag?: string;
   subcategories?: ICategory[];
   custom_url?: string
+  status?: string
+  recalledSubCats?: ISUBCATEGORY[]
 }
 export interface Sizes {
   name: string;

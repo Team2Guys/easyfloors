@@ -64,13 +64,13 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 const Whatami = async ({ searchParams }: SlugPageProps) => {
   const { flooring } = await searchParams
   const subCategories = await fetchSubCategories(FETCH_ALL_WHAT_AM_I)
-
-  if (!flooring) {
-    return notFound()
+ if (!flooring) {
+    return notFound();
   }
-
   const subcat = subCategories.find((value: ISUBCATEGORY) => TrimerHandler(value?.whatIamEndpoint || value.custom_url) == TrimerHandler(flooring))
-
+  if (!subcat || subcat.status === "DRAFT") {
+    return notFound();
+  }
   return (
     <>
       <Breadcrumb title="What Am I?" image={subcat.whatAmiImageBanner ? subcat.whatAmiImageBanner.imageUrl : ""}

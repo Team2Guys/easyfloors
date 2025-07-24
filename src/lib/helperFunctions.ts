@@ -163,6 +163,7 @@ export const filterAndSort = (
   items
     .filter(
       item =>
+        item.status === "PUBLISHED" &&
         item.category?.name === categoryName &&
         item.custom_url.includes(urlIncludes)
     )

@@ -136,6 +136,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         sizes
         BannerImage
         price
+        status
       }
       products {
         id
@@ -237,7 +238,8 @@ export const FETCH_ALL_WHAT_AM_I = gql`
       whatAmiTopHeading
       whatAmiImageBanner
       homePageImage
-      whatIamEndpoint    
+      whatIamEndpoint
+      status    
     }
   }
 `;
@@ -415,6 +417,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       id
       name
       custom_url
+      status
       RecallUrl
       price
         accessories {
@@ -430,6 +433,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
         posterImageUrl
         price
         sizes
+        status
       }
          products {
         id
@@ -447,6 +451,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
             posterImageUrl
              sizes
               price
+              status
               category {
                 RecallUrl
                 
@@ -465,6 +470,7 @@ export const FETCHSUBCAT = gql`
       custom_url
       price
       sizes
+      status
       products {
         id
         name

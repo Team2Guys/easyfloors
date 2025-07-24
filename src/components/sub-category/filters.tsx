@@ -67,11 +67,12 @@ const Filters = ({
   }, [catgories, isColection]);
 
   useEffect(() => {
+    if (!catgories?.length) return;
     const richmond = catgories.find(
-      (cat: Category) => cat.name.toLowerCase() === "richmond flooring"
+      (cat: Category) => cat.name.toLowerCase() === "richmond flooring" && cat.status === "PUBLISHED"
     );
     const polar = catgories.find(
-      (cat: Category) => cat.name.toLowerCase() === "polar flooring"
+      (cat: Category) => cat.name.toLowerCase() === "polar flooring" && cat.status === "PUBLISHED"
     );
     setCategoryState({ polar, richmond });
   }, [catgories]);
@@ -121,7 +122,7 @@ useEffect(() => {
       ))}
         <Accordion title='Manufacturer' >
           <ul className="pl-4 text-sm text-gray-600 space-y-1 font-inter">
-            {Object.values(categoryState ?? {}).map((item) => {
+            {categoryState && Object.values(categoryState ?? {}).map((item) => {
               if (!item) return null;
               return (
                 <li key={item.custom_url}>
@@ -262,10 +263,11 @@ useEffect(() => {
         <p className="text-16 font-medium uppercase pb-5  text-[#191C1F] font-inter">popular Brands</p>
         <div className="flex gap-4 flex-wrap items-center">
           <ul className="space-y-3 font-inter">
-            {Object.values(categoryState).map((item) => {
+            {categoryState && Object.values(categoryState ?? {}).map((item) => {
+              if (!item) return null;
               return (
                 <li key={item.custom_url}>
-                  <Link href={`/${item.custom_url}`} className="cursor-pointer hover:text-primary block">
+                  <Link href={`/${item.custom_url ?? ""}`} className="cursor-pointer hover:text-primary block">
 
                     <Checkbox
                       checked={path === `/${item.custom_url}`}

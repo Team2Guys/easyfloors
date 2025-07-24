@@ -79,6 +79,7 @@ export interface ISUBCATEGORY extends Category {
   whatAmiCanonical_Tag?: string,
   whatAmiMeta_Description?: string,
   whatAmiMeta_Title?: string,
+  status?: string
 }
 
 
