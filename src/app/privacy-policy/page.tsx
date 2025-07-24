@@ -3,6 +3,7 @@ import { privacyPolicyData } from 'data/privacy-policy';
 import Link from 'next/link';
 import React from 'react';
 import { Metadata } from 'next';
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Easy Floors Privacy Policy | How We Protect Your Data',
   description:
@@ -10,8 +11,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Easy Floors Privacy Policy | How We Protect Your Data',
     description: 'Learn how Easy Floors collects, uses, and protects your personal information. Read about data privacy, cookies, user rights, and how we keep your info secure.',
-    url: '/privacy-policy',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/privacy-policy',
+    images: [{url: logo.src, alt: 'Easyfloors',
       },
     ],
     type:"website"

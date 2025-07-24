@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import Container from 'components/common/container/Container';
 import { Metadata } from 'next';
+import logo from "../../../public/assets/images/logo.webp"
 export const metadata: Metadata = {
   title: 'Easy Floors Shipping Policy | UAE Delivery & Charges Info',
   description:
@@ -9,8 +10,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Easy Floors Shipping Policy | UAE Delivery & Charges Info',
     description: "Learn about Easy Floors' shipping options across the UAE. Enjoy free delivery on orders over AED 1000, next-day express shipping, and free sample delivery.",
-    url: '/shipping-policy',
-    images: [{url: "/assets/images/logo.webp", alt: 'Easyfloors',
+    url: 'https://easyfloors.ae/shipping-policy',
+    images: [{url: logo.src, alt: 'Easyfloors',
       },
     ],
     type:'website'

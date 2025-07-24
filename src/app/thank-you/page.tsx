@@ -5,7 +5,7 @@ import ThankYouComp from 'components/ThankYou/ThankYou';
 import { fetchProducts } from 'config/fetch';
 import { Metadata } from 'next';
 import React from 'react';
-
+import logo from "../../../public/assets/images/logo.webp"
 interface ThankYouProps {
   searchParams: Promise<Record<string, string | null>>;
 }
@@ -27,7 +27,7 @@ export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise
         url: 'https://easyfloors.ae/thank-you',
         images: [
           {
-            url: '/assets/images/logo.webp',
+            url: logo.src,
             alt: 'Easyfloors',
           },
         ],
@@ -48,7 +48,7 @@ export const generateMetadata = async ({ searchParams }: ThankYouProps): Promise
         url: 'https://easyfloors.ae/thank-you',
         images: [
           {
-            url: '/assets/images/logo.webp',
+            url: logo.src,
             alt: 'Easyfloors',
           },
         ],
