@@ -1,4 +1,4 @@
-
+'use client'
 import { useEffect } from "react";
 import Shipping from "./Shipping";
 import { openDB } from "utils/indexedDB";
@@ -21,7 +21,7 @@ const FreeSampleThank = ({ orderId }: { orderId?: string }) => {
          console.error("Error accessing IndexedDB:", error);
       }
    };
-   
+
    useEffect(() => {
       if (!orderId) return;
       clearFreeSample();
