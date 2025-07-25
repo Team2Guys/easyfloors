@@ -25,7 +25,6 @@ const Footer = () => {
         const getCategories = async () => {
             try {
                 const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-                console.log(data,"datadatadata")
                 const publishedCategories = (data || [])
                         .filter((cat: ICategory) => cat.status === "PUBLISHED")
                         .map((cat: ICategory) => ({

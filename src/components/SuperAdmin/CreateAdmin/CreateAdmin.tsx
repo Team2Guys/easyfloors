@@ -93,9 +93,12 @@ const CreateAdmin = ({
 
       console.log(data, "Mutation Response"); //eslint-disable-line
 
+      setTimeout(() => {
       setFormData(intitalValues);
+      setselecteMenu('AllAdmin');
+      setEditProduct(undefined);
+    }, 500);
       showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
-      setselecteMenu('AllAdmin')
     } catch (err:any) {//eslint-disable-line
 
       setError(err?.message || "An unexpected error occurred.");
@@ -200,7 +203,7 @@ const CreateAdmin = ({
                               );
                             })}
                         </div>
-                        <button type="submit" className="dashboard_primary_button" disabled={loading}>
+                        <button onClick={handleSubmit} className="dashboard_primary_button" disabled={loading}>
                           {loading ? <Loader color="#fff" /> : 'Add Admin'}
                         </button>
                       </div>
@@ -328,13 +331,34 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 24 }}
             xs={{ order: 1, span: 24 }}
           >
-            <button
-              disabled={loading}
-              className="dashboard_primary_button mx-auto"
-              onClick={handleSubmit}
-            >
-              {loading ? <Loader color="White" /> : 'Add Admin'}
-            </button>
+             
+            <div className='flex gap-6 items-center'>
+              <div className="flex gap-4 items-center my-4">
+                  <label className="font-semibold">Admin Status:</label>
+                  {['DRAFT', 'PUBLISHED'].map((status) => {
+                    const isActive = formData.status === status;
+
+                    return (
+                      <button
+                        key={status}
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, status }))}
+                        disabled={isActive}
+                        className={`px-4 py-2 rounded-md text-sm border
+                          ${isActive
+                            ? 'bg-black text-white border-black cursor-not-allowed'
+                            : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                          }`}
+                      >
+                        {status}
+                      </button>
+                    );
+                  })}
+              </div>
+              <button onClick={handleSubmit} className="dashboard_primary_button" disabled={loading}>
+                {loading ? <Loader color="#fff" /> : 'Add Admin'}
+              </button>
+            </div>
           </Col>
 
           {error &&  <p>{error}</p>}

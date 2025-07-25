@@ -31,7 +31,7 @@ const Admins = ({admins}:{admins:Admin[]}) => {
     canVeiwTotalCategories: editAdmin?.canVeiwTotalproducts,
     canVeiwTotalproducts: editAdmin?.canVeiwTotalproducts,
     canViewUsers: editAdmin?.canViewUsers,
-    status: editAdmin?.status,
+    status: editAdmin?.status || 'DRAFT',
   };
 
   return (
