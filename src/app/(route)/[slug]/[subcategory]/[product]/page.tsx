@@ -1,5 +1,5 @@
 import React from "react";
-import { fetchAccessories, fetchProducts, fetchSingeProduct } from "config/fetch";
+import { fetchAccessories, fetchSingeProduct } from "config/fetch";
 import ProductDetail from "./ProductDetail";
 import { IProduct } from "types/prod";
 import { notFound } from "next/navigation";
@@ -62,15 +62,12 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 
 const Product = async ({ params }: { params: Promise<IParams> }) => {
   const { slug, subcategory, product: paramsprod } = await params;
-  const [ProductInfo , AccessoriesProducts] = await Promise.all([fetchProducts() , fetchAccessories()]);
-  const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory && product.status === "PUBLISHED");
-  if (!productData) return notFound()
-
-   const products = ProductInfo.filter((product: IProduct) => (product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
+  const [ProductInfo , AccessoriesProducts] = await Promise.all([fetchSingeProduct(paramsprod.trim(),slug.trim(), subcategory.trim(), true) , fetchAccessories()]);
+  if (!ProductInfo || ProductInfo.status !== "PUBLISHED") return notFound()
    const PublishAccessory = AccessoriesProducts.filter((acc: IProduct)=> acc.status === "PUBLISHED");
   
   return (
-    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={products} productData={productData} AccessoriesProducts={PublishAccessory} />
+    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod}  productData={ProductInfo} AccessoriesProducts={PublishAccessory} />
   );
 };
 

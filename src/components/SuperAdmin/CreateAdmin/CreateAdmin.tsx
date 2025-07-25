@@ -8,12 +8,13 @@ import { Input } from 'components/ui/input';
 import showToast from 'components/Toaster/Toaster';
 import { useMutation } from '@apollo/client';
 import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/mutations';
+import { BlogStatus } from 'types/general';
 
 type formDataTypes = {
   fullname: string;
   email: string;
   password: string;
-  status: string;
+  status: BlogStatus;
   canAddProduct: boolean;
   canEditProduct: boolean;
   canDeleteProduct: boolean;
@@ -34,7 +35,7 @@ const intitalValues = {
   fullname: '',
   email: '',
   password: '',
-  status: 'DRAFT',
+  status: 'DRAFT' as BlogStatus,
   canAddProduct: false,
   canEditProduct: false,
   canDeleteProduct: false,
@@ -190,7 +191,7 @@ const CreateAdmin = ({
                                 <button
                                   key={status}
                                   type="button"
-                                  onClick={() => setFormData(prev => ({ ...prev, status }))}
+                                  onClick={() => setFormData(prev => ({ ...prev, status: status as BlogStatus }))}
                                   disabled={isActive}
                                   className={`px-4 py-2 rounded-md text-sm border
                                     ${isActive
@@ -342,7 +343,7 @@ const CreateAdmin = ({
                       <button
                         key={status}
                         type="button"
-                        onClick={() => setFormData(prev => ({ ...prev, status }))}
+                        onClick={() => setFormData(prev => ({ ...prev, status: status as BlogStatus }))}
                         disabled={isActive}
                         className={`px-4 py-2 rounded-md text-sm border
                           ${isActive

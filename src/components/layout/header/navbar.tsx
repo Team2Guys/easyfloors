@@ -108,7 +108,7 @@ const Navbar = ({ categories, products}: INavbar) => {
                 products={
                   item.label === "Accessories"
                     ? (
-                        (categories?.find(cat => cat.name === "ACCESSORIES")?.accessories || [])
+                        (categories?.find(cat => cat.name?.trim().toLowerCase() === "accessories")?.accessories || [])
                           .filter((acc: IProduct) => acc.status === "PUBLISHED")
                           .sort((a: IProduct, b:IProduct) => {
                             const indexA = defaultOrder.indexOf(a.name);
@@ -163,7 +163,7 @@ const Navbar = ({ categories, products}: INavbar) => {
 
                   {item.label === "Accessories" && openMenus["Accessories"] && (
                     <div className="pt-2 grid grid-cols-2 gap-5">
-                      {categories?.find(cat => cat.name === "ACCESSORIES")?.accessories?.filter((product: IProduct) => product.status === "PUBLISHED")
+                      {categories?.find(cat => cat.name?.trim().toLowerCase() === "accessories")?.accessories?.filter((product: IProduct) => product.status === "PUBLISHED")
                       ?.map((product: HeaderAccessoriesProps, index: number) => (
                         <Link
                           href={`/accessories/${product.custom_url}`}

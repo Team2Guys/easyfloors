@@ -165,7 +165,7 @@ export interface ICategory {
   Canonical_Tag?: string;
   subcategories?: ICategory[];
   custom_url?: string
-  status?: string
+  status?: BlogStatus
   recalledSubCats?: ISUBCATEGORY[]
 }
 export interface Sizes {
@@ -274,7 +274,7 @@ export interface Admin {
   fullname?: string;
   email?: string;
   password?: string;
-  status?: string;
+  status?: BlogStatus;
   canAddCategory?: boolean;
   canAddProduct?: boolean;
   canCheckProfit?: boolean;

@@ -560,15 +560,41 @@ query SubCategory($customUrl: String!, $category: String!) {
 
 
 export const FIND_ONE_PRODUCT = gql`
-query Product($custom_url: String!,$category: String!,$subCategory: String!) {
-  product(custom_url: $custom_url, category:$category,subCategory:$subCategory) {
+query Product($custom_url: String!,$category: String!,$subCategory: String!,$acessories: Boolean) {
+  product(custom_url: $custom_url, category:$category,subCategory:$subCategory,acessories: $acessories) {
     id
     name
+    price
+    discountPrice
+    status
+    stock
+    productImages
+    boxCoverage
+    featureImages
+    posterImageUrl
+    Meta_Title
+    Meta_Description
+    Canonical_Tag
+    AdditionalInformation
+    colors
+    thickness
+    sizes
+    FAQS
+    description
+       acessories {
+        id
+        name
+        price
+        discountPrice
+        custom_url
+        stock
         posterImageUrl
-        Meta_Title
-        Meta_Description
-        Canonical_Tag
-
+        hoverImageUrl
+        sizes
+        featureImages
+        productImages
+        status
+      }
           category {
             RecallUrl
         }

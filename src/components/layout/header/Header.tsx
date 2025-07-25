@@ -14,8 +14,7 @@ const Header = () => {
     useEffect(() => {
       const fetchItems = async () => {
         try {
-          const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-          const product = await fetchProducts(FETCH_HEADER_PRODUCTS);  
+          const [data, product] = await Promise.all([fetchCategories(FETCH_HEADER_CATEGORIES),fetchProducts(FETCH_HEADER_PRODUCTS),]);
            const publishedCategories = data.map((cat: Category) => ({
             ...cat,
             subcategories: cat.subcategories?.filter(
