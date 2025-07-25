@@ -182,4 +182,5 @@ interface orderProduct {
   subcategories: string
   totalPrice: number
   custom_url:string
+  selectedColor?: ProductImage;
 }

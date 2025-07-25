@@ -92,6 +92,7 @@ const OrderHistoryTable = ({ OrderHistory }: { OrderHistory: Order[] }) => {
                                                 <>
                                                 <p className='font-medium'>Price per Piece: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
                                                 <p className='font-medium'>No. of Pieces: <span className='font-normal'>{prod.requiredBoxes}</span></p>
+                                                {prod.selectedColor && <p className='font-medium'>Color: <span className='font-normal'>{prod.selectedColor.colorName} ({prod.selectedColor.color})</span></p>}
                                                 </>
                                                 :
                                                 <>
