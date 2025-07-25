@@ -62,14 +62,17 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 
 const Accessories = async () => {
   const category = await fetchSingleCategory("accessories", FIND_ONE_Accessory, true)
-  if (!category) return notFound()
-  const sortedAccessories = (category.accessories || []).slice().sort((a, b) => {
+  if (!category || category.status !== "PUBLISHED") {
+    return notFound();
+  }
+  const publishedAccessories = (category.accessories || []).filter(
+    acc => acc.status === "PUBLISHED"
+  );
+  const sortedAccessories = publishedAccessories.slice().sort((a, b) => {
     const indexA = defaultOrder.indexOf(a?.name || "");
     const indexB = defaultOrder.indexOf(b?.name || "");
-
     const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
     const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
-
     return safeIndexA - safeIndexB;
   });
 

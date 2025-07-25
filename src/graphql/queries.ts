@@ -9,6 +9,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       discountPrice
       description
       stock
+      status
       posterImageUrl
       hoverImageUrl
       productImages
@@ -31,17 +32,19 @@ export const FETCH_ALL_PRODUCTS = gql`
       FAQS
         boxCoverage
         featureImages
-        status
+        
       category {
         id
         name
         RecallUrl
         custom_url
+        status
       }
       subcategory {
         id
         name
         custom_url
+        status
       }
        acessories {
         id
@@ -78,11 +81,13 @@ export const FETCH_HEADER_PRODUCTS = gql`
         name
         RecallUrl
         custom_url
+        status
       }
       subcategory {
         id
         name
         custom_url
+        status
       }
        acessories {
         id
@@ -94,6 +99,7 @@ export const FETCH_HEADER_PRODUCTS = gql`
         posterImageUrl
         hoverImageUrl
         productImages
+        status
          }
           }
         }`;
@@ -122,6 +128,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         recalledSubCats {
             id
             name
+            status
             custom_url
             sizes
               category {
@@ -160,11 +167,12 @@ export const FETCH_ALL_CATEGORIES = gql`
         thickness
         boxCoverage
         sizes
+        status
         subcategory {
           id
           name
           custom_url
-          
+          status
         }
         acessories {
           id
@@ -176,6 +184,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         }
            category {
                 RecallUrl
+                status
             }
           
       }
@@ -512,7 +521,7 @@ export const FIND_ONE_Accessory = gql`
         Meta_Title
         Canonical_Tag
         whatAmiImageBanner
-      
+        status
         accessories {
             id
             name
@@ -522,7 +531,8 @@ export const FIND_ONE_Accessory = gql`
             posterImageUrl
             featureImages
             custom_url
-              sizes
+            sizes
+            status
         }
   }}
 

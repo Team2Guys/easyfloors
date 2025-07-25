@@ -13,14 +13,23 @@ export const metadata = createMetadata(pageMetadataData.collections);
 const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const [subcategories, categories] = await Promise.all([fetchSubCategories(FETCHSUBCAT), fetchCategories()]);
-  const categoriesData = categories
+ const categoriesData = categories
   .filter((cat: ICategory) => cat.status === "PUBLISHED")
-  .map((cat: ICategory) => ({
-    ...cat,
-    subcategories: cat.subcategories?.filter(
+  .map((cat: ICategory) => {
+    const publishedSubcategories = cat.subcategories?.filter(
       (sub: ICategory) => sub.status === "PUBLISHED"
-    ) || [],
-  }));
+    ) || [];
+
+    const publishedRecalledSubCats = cat.recalledSubCats?.filter(
+      (sub) => sub.status === "PUBLISHED"
+    ) || [];
+
+    return {
+      ...cat,
+      subcategories: publishedSubcategories,
+      recalledSubCats: publishedRecalledSubCats,
+    };
+  });
   const polarProducts = filterAndSort(subcategories, "POLAR FLOORING", "");
   const richmondSPC = filterAndSort(subcategories, "RICHMOND FLOORING", "spc");
   const richmondLVT = filterAndSort(subcategories, "RICHMOND FLOORING", "lvt");

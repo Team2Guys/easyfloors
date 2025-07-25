@@ -53,7 +53,7 @@ export const productFilter = ({
 
   if (subcategory) {
     filtered = filtered?.filter(
-      product => product.subcategory?.custom_url === subcategory
+      product => product.subcategory?.custom_url === subcategory && product.status === "PUBLISHED"
     );
   }
 

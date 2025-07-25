@@ -13,6 +13,7 @@ import { ISUBCATEGORY } from "types/cat";
 import { HeaderAccessoriesProps, INavbar } from "types/types";
 import { usePathname } from "next/navigation";
 import { IProduct } from "types/prod";
+import { defaultOrder } from "data/accessory";
 
 const Navbar = ({ categories, products}: INavbar) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -104,8 +105,21 @@ const Navbar = ({ categories, products}: INavbar) => {
                 label={item.label}
                 href={item.href}
                 submenu={item.submenu}
-                products={item.label === "Accessories"? categories?.find(cat => cat.name === "ACCESSORIES")?.accessories?.filter
-                ((acc:IProduct) => acc.status === "PUBLISHED") || []: []}
+                products={
+                  item.label === "Accessories"
+                    ? (
+                        (categories?.find(cat => cat.name === "ACCESSORIES")?.accessories || [])
+                          .filter((acc: IProduct) => acc.status === "PUBLISHED")
+                          .sort((a: IProduct, b:IProduct) => {
+                            const indexA = defaultOrder.indexOf(a.name);
+                            const indexB = defaultOrder.indexOf(b.name);
+                            const safeIndexA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA;
+                            const safeIndexB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB;
+                            return safeIndexA - safeIndexB;
+                          })
+                      )
+                    : []
+                }
               />
             ))}
           </div>
@@ -170,7 +184,6 @@ const Navbar = ({ categories, products}: INavbar) => {
                     </div>
                   )}
 
-                  {/* Submenu for Other Categories */}
                   {item?.submenu && item?.submenu.length > 0 && !openMenus["Accessories"] && openMenus[item.label] && (
                     <div className="grid grid-cols-2 gap-5 pt-2">
                       {[...item.submenu]

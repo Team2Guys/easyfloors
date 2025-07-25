@@ -63,13 +63,14 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 const Product = async ({ params }: { params: Promise<IParams> }) => {
   const { slug, subcategory, product: paramsprod } = await params;
   const [ProductInfo , AccessoriesProducts] = await Promise.all([fetchProducts() , fetchAccessories()]);
-  const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
+  const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory && product.status === "PUBLISHED");
   if (!productData) return notFound()
 
    const products = ProductInfo.filter((product: IProduct) => (product?.category?.RecallUrl?.trim() === slug) && product.subcategory?.custom_url?.trim() == subcategory);
+   const PublishAccessory = AccessoriesProducts.filter((acc: IProduct)=> acc.status === "PUBLISHED");
   
   return (
-    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={products} productData={productData} AccessoriesProducts={AccessoriesProducts} />
+    <ProductDetail MainCategory={slug} subCategory={subcategory} ProductName={paramsprod} ProductInfo={products} productData={productData} AccessoriesProducts={PublishAccessory} />
   );
 };
 

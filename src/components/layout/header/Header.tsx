@@ -16,9 +16,6 @@ const Header = () => {
         try {
           const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
           const product = await fetchProducts(FETCH_HEADER_PRODUCTS);  
-          setCategories(data)
-          setProducts(product)
-
            const publishedCategories = data.map((cat: Category) => ({
             ...cat,
             subcategories: cat.subcategories?.filter(
@@ -29,9 +26,12 @@ const Header = () => {
             ) || [],
             products: cat.products?.filter(prod => prod.status === 'PUBLISHED') || []
           }));
-        const publishedProducts = product.filter(
-          (prod: IProduct) => prod.status === 'PUBLISHED'
-        );
+        const publishedProducts = product.filter((products: IProduct) => {
+          const isCategoryPublished = products.category?.status === 'PUBLISHED';
+          const isSubcategoryPublished = products.subcategory.status === 'PUBLISHED';
+          const isProductPublished = products.status === 'PUBLISHED';
+          return isCategoryPublished && isSubcategoryPublished && isProductPublished;
+        });
 
         setCategories(publishedCategories);
         setProducts(publishedProducts);
@@ -44,7 +44,6 @@ const Header = () => {
   
       fetchItems();  
     }, []);
-    console.log(categories,"categoriescategories")
   return (
     <>
     <TopNav/>

@@ -26,18 +26,56 @@ const Category = ({ catgories, categoryData,isSubCategory, slug, subcategory, su
   const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
+ console.log(Data,"DataDataData")
+ const publishedCategories = catgories
+  .filter((cat : Category) => cat.status === "PUBLISHED")
+  .map((cat : Category) => ({
+    ...cat,
+    subcategories: cat.subcategories?.filter(sub => sub.status === "PUBLISHED") || [],
+    recalledSubCats: cat.recalledSubCats?.filter(recall => recall?.status === "PUBLISHED") || [],
+    products: cat.products?.filter(prod => prod.status === "PUBLISHED") || [],
+  })) || [];
 
-  useEffect(() => {
-    if (isSubCategory) {
-      const filtered = categoryData.products?.filter(
-        product => product.subcategory?.custom_url === subcategory
-      );
-      const pushMatchingProducts = { ...subdescription, products: filtered }
-      setData(pushMatchingProducts);
+useEffect(() => {
+  const filteredCategoryData = { ...categoryData };
+
+  if (filteredCategoryData.subcategories) {
+    filteredCategoryData.subcategories = filteredCategoryData.subcategories.filter(
+      (sub) => sub.status === "PUBLISHED"
+    );
+  }
+
+  if (filteredCategoryData.recalledSubCats) {
+    filteredCategoryData.recalledSubCats = filteredCategoryData.recalledSubCats.filter(
+      (recall) => recall.category?.status === "PUBLISHED"
+    );
+  }
+  if (filteredCategoryData.products) {
+    filteredCategoryData.products = filteredCategoryData.products.filter(
+      (prod) =>
+        prod.status === "PUBLISHED" &&
+        prod.subcategory?.status === "PUBLISHED"
+    );
+  }
+
+  if (isSubCategory) {
+    const filteredProducts = filteredCategoryData.products?.filter(
+      (product) => product.subcategory?.custom_url === subcategory
+    );
+
+    const subcatMatch = filteredCategoryData.subcategories?.find(
+      (sub) => sub.custom_url === subcategory
+    );
+    if (!subcatMatch) {
+      setData({ ...subdescription, products: [] });
     } else {
-      setData(categoryData)
+      const pushMatchingProducts = { ...subdescription, products: filteredProducts };
+      setData(pushMatchingProducts);
     }
-  }, [categoryData])
+  } else {
+    setData(filteredCategoryData);
+  }
+}, [categoryData, isSubCategory, subcategory, subdescription]);
 
     const { filtered, appliedFilters } = productFilter({
       products: Data.products,
@@ -56,7 +94,7 @@ const Category = ({ catgories, categoryData,isSubCategory, slug, subcategory, su
       <Container className="flex flex-wrap lg:flex-nowrap lg:gap-4 xl:gap-8 mt-4 lg:mt-10">
           <div className=" lg:w-[20%] hidden lg:block ">
             <Filters
-              catgories={catgories}
+              catgories={publishedCategories}
               category={Data}
               isWaterProof={isWaterProof}
               setIsWaterProof={setIsWaterProof}

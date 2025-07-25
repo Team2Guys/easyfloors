@@ -64,10 +64,15 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 const ProductImageGallery = async ({ params }: { params: Promise<IParams> }) => {
   const { product: paramsprod } = await params;
   const ProductInfo = await fetchAccessories();
-  const productData = ProductInfo.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.custom_url?.trim() === "accessories"));
+    const PublishAccessory = ProductInfo.filter(
+    (acc: IProduct) =>
+      acc.status === "PUBLISHED" &&
+      acc.category?.status === "PUBLISHED"
+  );
+  const productData = PublishAccessory.find((product: IProduct) => (product?.custom_url?.trim() == paramsprod?.trim() && product?.category?.custom_url?.trim() === "accessories"));
   if (!productData) return notFound()
   return (
-    <AccessoriesDetail ProductName={paramsprod} ProductInfo={ProductInfo} productData={productData} />
+    <AccessoriesDetail ProductName={paramsprod} ProductInfo={PublishAccessory} productData={productData} />
   );
 };
 
