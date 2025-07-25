@@ -15,7 +15,6 @@ const Cart = async () => {
     const isCategoryPublished = categoryStatus === 'PUBLISHED';
     const isSubcategoryPublished = !product.subcategory || subcategoryStatus === 'PUBLISHED';
     const isProductPublished = productStatus === 'PUBLISHED';
-
     return isCategoryPublished && isSubcategoryPublished && isProductPublished;
   });
   return (

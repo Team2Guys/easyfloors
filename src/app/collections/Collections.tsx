@@ -19,7 +19,6 @@ const Collections = ({ sortedSubcategories, categories, slug }: { sortedSubcateg
       plankLength: []
    });
      const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
- 
       const { filtered, appliedFilters } = collectionFilter({
         products: sortedSubcategories, 
         priceValue,

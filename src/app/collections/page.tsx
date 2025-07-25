@@ -23,7 +23,6 @@ const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) 
     const publishedRecalledSubCats = cat.recalledSubCats?.filter(
       (sub) => sub.status === "PUBLISHED"
     ) || [];
-
     return {
       ...cat,
       subcategories: publishedSubcategories,
