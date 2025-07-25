@@ -243,7 +243,7 @@ const CartPage = ({ products }: CartPageProps) => {
 
           <div className='text-center'>
             <p className='text-center text-[24px] pt-10'>Cart is empty</p>
-            <Link href='/' className='text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4'>
+            <Link href='/collections' className='text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4'>
               <FaArrowLeftLong /> Go Back to Shop
             </Link>
           </div>

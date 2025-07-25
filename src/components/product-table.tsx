@@ -18,7 +18,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           <p className="text-center text-[24px] ">
             {isSamplePage ? "Free Sample list is empty" : "Wishlist is empty"}
           </p>
-          <Link href="/" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
+          <Link href="/collections" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
             <FaArrowLeftLong /> Go Back to Shop
           </Link>
         </div>
@@ -125,7 +125,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
         <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
           <FaArrowLeftLong /> Continue shopping
         </Link>
-        {isSamplePage &&
+        {(isSamplePage && items.length > 0) &&
           <Link href="/freesample-checkout" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
             Checkout <FaArrowRightLong />
           </Link>}

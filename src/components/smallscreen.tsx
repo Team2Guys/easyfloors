@@ -20,7 +20,7 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
               {isSamplePage ? "Free Sample is Empty" : "Wishlist is Empty"}
             </h3>
             <Link
-              href="/"
+              href="/collections"
               className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4"
             >
               <FaArrowLeftLong /> Go Back to Shop
@@ -75,7 +75,7 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
       </div>
       <div className={`flex items-center ${isSamplePage ? 'justify-between' : 'justify-start'}`}>
         <Link href="/collections" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'><FaArrowLeftLong /> Continue shopping</Link>
-        {isSamplePage &&<Link href="/freesample-checkout" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'>Checkout <FaArrowRightLong /></Link>
+        {(isSamplePage && (items && items?.length > 0) ) && <Link href="/freesample-checkout" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'>Checkout <FaArrowRightLong /></Link>
       }
       </div>
     </Container>
