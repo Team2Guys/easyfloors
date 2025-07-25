@@ -44,7 +44,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                     <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
                     <div className="text-12 xl:text-20 font-inter font-normal w-10/12" >
                       <Link href={`${product.category?.toLowerCase().trim() === 'accessories' ? `/accessories` : `/${generateSlug(product.category)}/${generateSlug(product.subcategories)}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
-                      {!isSamplePage && (
+                      {!isSamplePage ? (
                         product.category?.toLowerCase().trim() === 'accessories' ? (
                           <>
                             <p className='text-12 sm:text-16'>Price Per Piece: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
@@ -55,13 +55,13 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                           </>
                         ) : (
                           <>
-                            <p className='text-12 sm:text-16'>Price Per Box: {pathname === "/freesample" ? "Free" : product.pricePerBox.toFixed(2)}</p>
+                            <p className='text-12 sm:text-16'>Price Per Box: {product.pricePerBox.toFixed(2)}</p>
                             <p className='text-12 sm:text-16'>
                               No. Of Boxes: <span className='font-bold'>{product.requiredBoxes}</span> ({product.squareMeter.toFixed(2)} {product.unit === "sqft" ? "ft²" : "SQM"})
                             </p>
                           </>
                         )
-                      )}
+                      ) : <p className='text-12 sm:text-16'>Price Per Box: {product.pricePerBox.toFixed(2)}</p>}
                     </div>
                   </td>
 

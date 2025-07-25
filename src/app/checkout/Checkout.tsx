@@ -420,7 +420,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                                 {item.isfreeSample ? "" :
                                                     <p className="text-sm text-gray-600 text-12 xs:text-14">{item.category?.toLowerCase().trim() === 'accessories' ? <>No. of Pieces: <span className="font-semibold">{item.requiredBoxes}</span></> : <>No. of Boxes: <span className="font-semibold">{item.requiredBoxes}</span> ({item.squareMeter.toFixed(2)} SQM)</>}</p>
                                                 }
-                                                <p className="md:text-sm text-gray-600 text-12">{item.category?.toLowerCase().trim() === 'accessories' ? "Piece Price" : "Box Price"}: <span className="font-currency text-15 font-normal"></span>{item.pricePerBox}</p>
+                                                <p className="md:text-sm text-gray-600 text-12">{item.category?.toLowerCase().trim() === 'accessories' ? "Piece Price" : "Box Price"}: <span className="font-currency text-15 font-normal"></span>{item.pricePerBox.toFixed(2)}</p>
                                                 {item?.selectedColor?.colorName &&
                                                     <p className="text-sm text-gray-600 text-12 xs:text-14">Color:<span> {item?.selectedColor?.colorName || ""}</span></p>
                                                 }
