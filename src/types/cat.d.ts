@@ -27,6 +27,7 @@ export interface Category {
     id: number | string;
     name: string;
     posterImageUrl?: ProductImage;
+    status?: string
     custom_url: string
     createdAt: Date;
     updatedAt: Date;

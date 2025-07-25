@@ -70,6 +70,7 @@ export const FETCH_HEADER_PRODUCTS = gql`
       discountPrice
       description
       stock
+      status
       posterImageUrl
       custom_url
       category {
@@ -426,6 +427,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       name
       custom_url 
       posterImageUrl
+      status
       }
       subcategories {
         id

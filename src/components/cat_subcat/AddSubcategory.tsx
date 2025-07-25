@@ -283,36 +283,19 @@ const FormLayout = ({
 
 
   return (
-    <>
-      <p
-        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer text-black dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white"
-        onClick={() => {
-          setMenuType('Sub Categories');
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
-
-      <Formik
+    <Formik
         innerRef={formikRef}
         initialValues={
           editCategoryName ? editCategoryName : subcategoryInitialValues
         }
         validationSchema={subcategoryValidationSchema}
         onSubmit={onSubmit}
-      >
+    >
         {(formik) => {
           return (
 
             <Form onSubmit={formik.handleSubmit}>
               <div className='flex justify-between items-center'>
-                <p className="text-lg font-black flex items-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer dark:text-white"
-                  onClick={() => { setMenuType('Sub Categories'); }}
-                >
-                  <IoMdArrowRoundBack /> Back
-                </p>
-
-
                 <p
                   className="dashboard_primary_button"
                   onClick={() => {
@@ -1211,8 +1194,7 @@ const FormLayout = ({
             </Form>
           );
         }}
-      </Formik>
-    </>
+    </Formik>
   );
 };
 

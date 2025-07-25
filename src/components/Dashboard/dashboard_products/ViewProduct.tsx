@@ -153,6 +153,12 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       width: 200,
     },
     {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      width: 200,
+    },
+    {
       title: "Stock Quantity",
       width: 170,
       dataIndex: "stock",

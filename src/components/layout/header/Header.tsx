@@ -18,6 +18,24 @@ const Header = () => {
           const product = await fetchProducts(FETCH_HEADER_PRODUCTS);  
           setCategories(data)
           setProducts(product)
+
+           const publishedCategories = data.map((cat: Category) => ({
+            ...cat,
+            subcategories: cat.subcategories?.filter(
+              sub => sub.status === 'PUBLISHED'
+            ) || [],
+            recalledSubCats: cat.recalledSubCats?.filter(
+              recall => recall?.status === 'PUBLISHED'
+            ) || [],
+            products: cat.products?.filter(prod => prod.status === 'PUBLISHED') || []
+          }));
+        const publishedProducts = product.filter(
+          (prod: IProduct) => prod.status === 'PUBLISHED'
+        );
+
+        setCategories(publishedCategories);
+        setProducts(publishedProducts);
+
     
         } catch {
           toast.error("Error fetching items");
@@ -26,6 +44,7 @@ const Header = () => {
   
       fetchItems();  
     }, []);
+    console.log(categories,"categoriescategories")
   return (
     <>
     <TopNav/>
