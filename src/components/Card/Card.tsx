@@ -60,7 +60,6 @@ const Card: React.FC<productCardProps> = ({
       throw error;
     }
   };
-
   useEffect(() => {
     const typedProduct = product as IProduct;
 
@@ -171,7 +170,7 @@ const Card: React.FC<productCardProps> = ({
                         ? product.productImages?.[0]?.imageUrl ??
                         product.posterImageUrl?.imageUrl
                         : product.posterImageUrl?.imageUrl,
-                      product?.boxCoverage,
+                      product?.boxCoverage || '2.4',
                       "m",
                       selectedColor
                     );

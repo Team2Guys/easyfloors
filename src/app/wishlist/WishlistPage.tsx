@@ -60,7 +60,7 @@ const WishlistPage = () => {
         {accessories.length > 0 && (
         <div className="hidden md:block pb-6 xl:pt-6 xl:mb-10 ">
           <ProductTable
-            columns={["Accessories","QTY m","Total Price", "Availability", "Action"]}
+            columns={["Accessories","QTY Piece","Total Price", "Availability", "Action"]}
             items={accessories} 
             setItems={setItems} 
           />
