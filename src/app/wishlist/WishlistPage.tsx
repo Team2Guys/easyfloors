@@ -29,11 +29,10 @@ const WishlistPage = () => {
       <Container>
         <Breadcrumb title="Wishlist" />
         <Top heading="Wishlist" Icon={CiHeart} />
-        <div className="text-center my-7">
-          <h2 className="text-center xl:text-[48px]">Your Shopping Wishlist</h2>
-          <p className="text-center text-[24px] pt-10">Wishlist is empty</p>
+        <div className="text-center pb-10 xsm:pb-20 pt-2">
+          <p className="text-center text-[24px]">Wishlist is empty</p>
           <Link
-            href="/"
+            href="/collections"
             className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4"
           >
             <FaArrowLeftLong /> Go Back to Shop

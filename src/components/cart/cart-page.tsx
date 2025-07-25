@@ -30,7 +30,7 @@ const CartPage = ({ products }: CartPageProps) => {
   const [total, setTotal] = useState(0);
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const [selectedFee, setSelectedFee] = useState(0);
-  const nonAccessoryItems = cartItems.filter(item => item.category !== 'Accessories' && item.category !== "Accessory");
+  const nonAccessoryItems = cartItems.filter(item => item.category?.toLowerCase().trim() !== 'accessories' && item.category !== "Accessory");
   const accessoryItems = cartItems.filter(item => item.category?.toLowerCase().trim() === 'accessories' || item.category === "Accessory");
   const [shipping, setShipping] = useState<{ name: string; fee: number; deliveryDuration: string; freeShipping?: number; } | undefined>(undefined);
   useEffect(() => {
@@ -57,12 +57,15 @@ const CartPage = ({ products }: CartPageProps) => {
   }, []);
  
 
-   const handleRemoveItem = async (id: number | string) => {
+   const handleRemoveItem = async (product: ICart) => {
       try {
-       
-            await removeCartItem(id);
+          const compositeKey = product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : `${product.id}`;
+            await removeCartItem(compositeKey);
         setCartItems(prev => prev.filter(item => 
-          !(item.id === id)
+          !(
+            item.id === product.id &&
+            item.selectedColor?.color === product.selectedColor?.color
+          )
         ));
     
         window.dispatchEvent(new Event("cartUpdated"));
@@ -87,14 +90,18 @@ const CartPage = ({ products }: CartPageProps) => {
       setTotal(totalBeforeTax);
     }, [cartItems]);
 
-  const updateQuantity = async (id: number | string, change: number) => {
+  const updateQuantity = async (product: ICart, change: number) => {
     try {
-      const item = cartItems.find((item) => item.id === id);
-      if (!item) {
-        toast.error("Item not found in cart.");
-        return;
-      }
-
+      const item = cartItems.find((item) => (
+            item.id === product.id &&
+            item.selectedColor?.color === product.selectedColor?.color
+          ));
+          if (!item) {
+            toast.error("Item not found in cart.");
+            return;
+          }
+          
+      const compositeKey = item.category?.toLowerCase().trim() === 'accessories' ? `${item.id}-${item.selectedColor?.color}` : `${item.id}`;
       const newRequiredBoxes = (item.requiredBoxes || 0) + change;
       if (newRequiredBoxes < 1) {
         toast.error("Minimum quantity is 1 box.");
@@ -121,13 +128,13 @@ const CartPage = ({ products }: CartPageProps) => {
       const tx = db.transaction("cart", "readwrite");
       const store = tx.objectStore("cart");
       await new Promise<void>((resolve, reject) => {
-        const request = store.put(updatedItem);
+        const request = store.put(updatedItem, compositeKey);
         request.onsuccess = () => resolve();
         request.onerror = () => reject(request.error);
       });
       setCartItems((prevCart) =>
         prevCart.map((cartItem) =>
-          cartItem.id === id ? { ...cartItem, requiredBoxes: newRequiredBoxes, totalPrice: newTotalPrice } : cartItem
+          (cartItem.id === product.id) && (cartItem.selectedColor?.color === product.selectedColor?.color) ? { ...cartItem, requiredBoxes: newRequiredBoxes, totalPrice: newTotalPrice } : cartItem
         )
       );
 
@@ -139,8 +146,8 @@ const CartPage = ({ products }: CartPageProps) => {
     }
   };
 
-  const increment = (id: number | string) => updateQuantity(id, 1);
-  const decrement = (id: number | string) => updateQuantity(id, -1);
+  const increment = (product: ICart) => updateQuantity(product, 1);
+  const decrement = (product: ICart) => updateQuantity(product, -1);
 
   useEffect(() => {
     handleShippingSelect("standard");
@@ -236,7 +243,7 @@ const CartPage = ({ products }: CartPageProps) => {
 
           <div className='text-center'>
             <p className='text-center text-[24px] pt-10'>Cart is empty</p>
-            <Link href='/' className='text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4'>
+            <Link href='/collections' className='text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4'>
               <FaArrowLeftLong /> Go Back to Shop
             </Link>
           </div>
@@ -309,11 +316,11 @@ const CartPage = ({ products }: CartPageProps) => {
                                 
                                 <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                   <div className={`flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ${item.isfreeSample ? "hidden" : "block"}`}>
-                                    <button className="px-1 hover:text-black" onClick={() => decrement(Number(item.id))}>
+                                    <button className="px-1 hover:text-black" onClick={() => decrement(item)}>
                                       <LuMinus />
                                     </button>
                                     <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                                    <button className="px-1 hover:text-black" onClick={() => increment(Number(item.id))}>
+                                    <button className="px-1 hover:text-black" onClick={() => increment(item)}>
                                       <LuPlus />
                                     </button>
                                   </div>
@@ -325,11 +332,11 @@ const CartPage = ({ products }: CartPageProps) => {
 
                           <div className='col-span-2 mx-auto hidden xl:block'>
                             <div className={`flex items-center justify-center border border-[#959595] px-1 2xl:px-2 py-2 2xl:py-3 w-fit text-16 text-purple ${item.isfreeSample ? "hidden" : "block"}`}>
-                              <button className="px-3 hover:text-black" onClick={() => decrement(Number(item.id))}>
+                              <button className="px-3 hover:text-black" onClick={() => decrement(item)}>
                                 <LuMinus />
                               </button>
                               <span className="text-16 text-purple px-2 2xl:px-3">{item.requiredBoxes}</span>
-                              <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(Number(item.id))}>
+                              <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(item)}>
                                 <LuPlus />
                               </button>
                             </div>
@@ -339,7 +346,7 @@ const CartPage = ({ products }: CartPageProps) => {
                               <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal text-20 2xl:text-25 "></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>}
                           </div>
                           <div className='col-span-1 xl:col-span-2 text-end xl:pr-5'>
-                            <button className='text-primary' onClick={() => handleRemoveItem(Number(item.id))}>
+                            <button className='text-primary' onClick={() => handleRemoveItem(item)}>
                               <svg className='w-4 h-4 2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
                               </svg>
@@ -386,11 +393,11 @@ const CartPage = ({ products }: CartPageProps) => {
                               </p> 
                               <div className='flex xl:hidden gap-5 mt-2 items-center'>
                                 <div className="flex items-center justify-center border border-[#959595] px-1 py-1 w-fit text-16 text-purple ">
-                                  <button className="px-1 hover:text-black" onClick={() => decrement(item.id)}>
+                                  <button className="px-1 hover:text-black" onClick={() => decrement(item)}>
                                     <LuMinus />
                                   </button>
                                   <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                                  <button className="px-1 hover:text-black" onClick={() => increment(item.id)}>
+                                  <button className="px-1 hover:text-black" onClick={() => increment(item)}>
                                     <LuPlus />
                                   </button>
                                 </div>
@@ -401,11 +408,11 @@ const CartPage = ({ products }: CartPageProps) => {
                         </div>
                         <div className='col-span-2 mx-auto hidden xl:block'>
                           <div className="flex items-center justify-center border border-[#959595] px-1 2xl:px-2 py-2 2xl:py-3 w-fit text-16 text-purple">
-                            <button className="px-3 hover:text-black" onClick={() => decrement(item.id)}>
+                            <button className="px-3 hover:text-black" onClick={() => decrement(item)}>
                               <LuMinus />
                             </button>
                             <span className="text-16 text-purple px-2 2xl:px-3">{item.requiredBoxes}</span>
-                            <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(item.id)}>
+                            <button className=" px-2 2xl:px-3 hover:text-black" onClick={() => increment(item)}>
                               <LuPlus />
                             </button>
                           </div>
@@ -414,7 +421,7 @@ const CartPage = ({ products }: CartPageProps) => {
                           <p className='text-16 2xl:text-20 font-semibold'><span className="font-currency font-normal"></span> <span>{formatAED(item.totalPrice ?? 0)}</span></p>
                         </div>
                         <div className='col-span-1 xl:col-span-2 text-end xl:pr-5'>
-                          <button className='text-primary' onClick={() => handleRemoveItem(item.id)}>
+                          <button className='text-primary' onClick={() => handleRemoveItem(item)}>
                             <svg className=' w-4 h-4  2xl:w-6 2xl:h-5' viewBox="0 0 23 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M21.4688 4H17.8438V1.8125C17.8438 0.847266 17.031 0.0625 16.0313 0.0625H6.96875C5.96904 0.0625 5.15625 0.847266 5.15625 1.8125V4H1.53125C1.02998 4 0.625 4.39102 0.625 4.875V5.75C0.625 5.87031 0.726953 5.96875 0.851563 5.96875H2.56211L3.26162 20.2695C3.30693 21.202 4.10557 21.9375 5.07129 21.9375H17.9287C18.8973 21.9375 19.6931 21.2047 19.7384 20.2695L20.4379 5.96875H22.1484C22.273 5.96875 22.375 5.87031 22.375 5.75V4.875C22.375 4.39102 21.97 4 21.4688 4ZM15.8047 4H7.19531V2.03125H15.8047V4Z" fill="#BF6933" />
                             </svg>
