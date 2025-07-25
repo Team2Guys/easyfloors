@@ -23,7 +23,6 @@ export const handleAddToStorage = async (
     toast.error('Product is undefined');
     return;
   }
-
   if (type === 'cart') {
     if (requiredBoxes <= 0) {
       toast.error('Please enter quantity to add the product to the cart.');
@@ -44,16 +43,23 @@ export const handleAddToStorage = async (
 
   const adjustedSquareMeter =
     squareMeter > 0 ? squareMeter : Number(boxCoverage) * adjustedRequiredBoxes;
-    const adjustedImage =
-    matchedProductImages?.imageUrl ?? image;
+  let posterImageUrl;
+  if (MainCategory.toLowerCase().trim() === 'accessories') {
+    posterImageUrl = (productData as IProduct).productImages?.find(
+      (img) => img.colorCode === selectedColor?.color
+    )?.imageUrl ?? image;
+  } else {
+    posterImageUrl =
+      matchedProductImages?.imageUrl ?? image;
+  }
   const adjustedUnit = unit || 'sqm';
 
   const item = {
-    id:  Number(productData.id),
+    id: Number(productData.id),
     name: productData.name,
     price: Number(productData.price),
     stock: Number(productData.stock),
-    image:adjustedImage,
+    image: posterImageUrl,
     subcategories: subCategory,
     category: MainCategory,
     boxCoverage,
@@ -87,18 +93,18 @@ export const handleAddToStorage = async (
 
       await addToFreeSample(item);
       return;
-      
-    } 
-    
+
+    }
+
     else if (type === 'wishlist') {
-  const added = await addToWishlist(item);
+      const added = await addToWishlist(item);
 
       if (!added) {
         toast.info('Product is already in your wishlist.');
       }
       return;
     }
-  } catch  {
+  } catch {
     toast.error(`Error adding product to ${type}`);
   }
 };

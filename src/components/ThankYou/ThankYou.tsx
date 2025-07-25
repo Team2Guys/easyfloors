@@ -10,22 +10,34 @@ import CardSkeleton from "components/skaletons/card-skaleton";
 import Image from "next/image";
 import revalidateTag from "components/ServerActons/ServerAction";
 import Shipping from "./Shipping";
+import { openDB } from "utils/indexedDB";
 const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extractedParams }) => {
     const hasRun = useRef(false);
     const [postPaymentStatus, { data, loading, error }] = useMutation(POST_PAYMENT_STATUS);
 
-
-    useEffect(() => {
+    const paymenthanlder = async () => {
         if ((!hasRun.current) && extractedParams.success) {
-            postPaymentStatus({ variables: { postpaymentStatus: extractedParams } });
+            await postPaymentStatus({ variables: { postpaymentStatus: extractedParams } });
+            const db = await openDB();
+            const freeSampleTx = db.transaction("freeSample", "readwrite");
+            const cartTx = db.transaction("cart", "readwrite");
+            const cartStore = cartTx.objectStore("cart");
+            const freeSampleStore = freeSampleTx.objectStore("freeSample");
+            freeSampleStore.clear();
+            cartStore.clear();
+            window.dispatchEvent(new Event("cartUpdated"));
+            window.dispatchEvent(new Event("freeSampleUpdated"));
             hasRun.current = true;
             revalidateTag("orders")
             revalidateTag("products")
         }
+    }
+    useEffect(() => {
+        paymenthanlder()
     }, []);
 
-   
-return (
+
+    return (
 
         loading ? <CardSkeleton length={3} /> : error || !extractedParams.success ?
 
@@ -39,15 +51,15 @@ return (
                 </div>
             </div>
             :
- (           data &&
-            <div className="max-w-4xl mx-auto md:p-0 p-2">
-                <h1 className="md:text-6xl text-3xl font-bold text-center font-inter">THANK YOU!</h1>
-                <p className="text-center mt-2 md:text-xl text-base md:px-0 px-4">Say thanks, confirm the payment, provide the order ID and mention that the order confirmation email has been sent.</p>
-          <Shipping orderid={extractedParams.orderId}/>
-                <OrderSummary data={data} />
+            (data &&
+                <div className="max-w-4xl mx-auto md:p-0 p-2">
+                    <h1 className="md:text-6xl text-3xl font-bold text-center font-inter">THANK YOU!</h1>
+                    <p className="text-center mt-2 md:text-xl text-base md:px-0 px-4">Say thanks, confirm the payment, provide the order ID and mention that the order confirmation email has been sent.</p>
+                    <Shipping orderid={extractedParams.orderId} />
+                    <OrderSummary data={data} />
 
 
-            </div>)
+                </div>)
 
 
 

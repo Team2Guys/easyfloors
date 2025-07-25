@@ -8,7 +8,7 @@ import { ProductTableProps } from "types/type";
 
 
 const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProps) => {
-  const accessoryItems = (items ?? []).filter((item) => item.category === "Accessories");
+  const accessoryItems = (items ?? []).filter((item) => item.category?.toLowerCase() === 'accessories');
   const productItems = (items ?? []).filter((item) => item.category !== "Accessories");
 
   return (
@@ -20,7 +20,7 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
               {isSamplePage ? "Free Sample is Empty" : "Wishlist is Empty"}
             </h3>
             <Link
-              href="/"
+              href="/collections"
               className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4"
             >
               <FaArrowLeftLong /> Go Back to Shop
@@ -32,15 +32,15 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
             {productItems.length > 0 && (
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
                 {productItems.slice(0, isSamplePage ? 5 : productItems.length).map((product, index) => (
-                  <div key={product.id}>
+                  <div key={index}>
                     {index === 0 && (
                       <p className="font-inter font-semibold text-12">Product</p>
                     )}
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(Number(id), setItems)}
-                      onQuantityChange={(id, delta) => setItems && setItems((prevItems) => updateQuantity(Number(id), delta, prevItems))}
+                      onRemove={(product) => setItems && handleRemoveItem(product, setItems)}
+                      onQuantityChange={(product, delta) => setItems && setItems((prevItems) => updateQuantity(product, delta, prevItems))}
                       onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}
                     />
                   </div>
@@ -52,16 +52,16 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
             {accessoryItems.length > 0 && (
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
                 {accessoryItems.slice(0, isSamplePage ? 5 : accessoryItems.length).map((product, index) => (
-                  <div key={product.id}>
+                  <div key={index}>
                     {index === 0 && (
                       <p className="font-inter font-semibold text-12 mt-7">Accessories</p>
                     )}
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(Number(id), setItems)}
-                      onQuantityChange={(id, delta) =>
-                        setItems?.((prevItems) => updateQuantity(Number(id), delta, prevItems))
+                      onRemove={(product) => setItems && handleRemoveItem(product, setItems)}
+                      onQuantityChange={(product, delta) =>
+                        setItems?.((prevItems) => updateQuantity(product, delta, prevItems))
                       }
 
                       onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}
@@ -75,7 +75,7 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
       </div>
       <div className={`flex items-center ${isSamplePage ? 'justify-between' : 'justify-start'}`}>
         <Link href="/collections" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'><FaArrowLeftLong /> Continue shopping</Link>
-        {isSamplePage &&<Link href="/freesample-checkout" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'>Checkout <FaArrowRightLong /></Link>
+        {(isSamplePage && (items && items?.length > 0) ) && <Link href="/freesample-checkout" className='bg-black text-white px-2 xs:px-4 py-2 gap-2  justify-center items-center w-fit mt-5 flex md:hidden my-10 text-sm xs:text-base'>Checkout <FaArrowRightLong /></Link>
       }
       </div>
     </Container>

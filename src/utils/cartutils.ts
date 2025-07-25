@@ -6,14 +6,14 @@ export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICar
   try {
     if (isSamplePage) {
       const samples = await getFreeSamples();
-      if(setItems){
+      if (setItems) {
         setItems(samples);
       } else {
         return samples;
       }
     } else {
       const wishlist = await getWishlist();
-      if(setItems){
+      if (setItems) {
         setItems(wishlist);
       } else {
         return wishlist;
@@ -27,34 +27,37 @@ export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICar
 
 
 export const updateQuantity = (
-  id: number,
+  product: ICart,
   delta: number,
   items: ICart[],
 ): ICart[] => {
   return items.map((item) => {
-    if (item.id !== id) return item;
-    if (item.category === "Accessories" || item.category === "Accessory") {
-  const metres     = Math.max(1, (item.requiredBoxes ?? 1) + delta);
-  const unitPrice  = item.price ?? 0;          // price per metre
-  const totalPrice = +(unitPrice * metres).toFixed(2);
+    if (!(
+      item.id === product.id &&
+      item.selectedColor?.color === product.selectedColor?.color
+    )) return item;
 
-  return {
-    ...item,
-    requiredBoxes: metres, 
-    squareMeter:   metres,  
-    totalPrice,      
-  };
-}
+    // Handle Accessories (quantity is in meters)
+    if (item.category?.toLowerCase() === 'accessories' || item.category === "Accessory") {
+      const metres = Math.max(1, (item.requiredBoxes ?? 1) + delta);
+      const unitPrice = item.price ?? 0; // price per metre
+      const totalPrice = +(unitPrice * metres).toFixed(2);
 
-    let newArea = +(item.squareMeter + delta).toFixed(2);
-    if (newArea < 1) newArea = 1;  
+      return {
+        ...item,
+        requiredBoxes: metres,
+        squareMeter: metres,
+        totalPrice,
+      };
+    }
 
-    const sqmPerBox = Number(item.boxCoverage);   
+    // Handle Tiles and other products (based on square meters)
+    const newArea = Math.max(1, +(item.squareMeter + delta).toFixed(2));
+    const sqmPerBox = Number(item.boxCoverage) || 1;
     const areaInSqm = item.unit === "sqft" ? newArea / 10.764 : newArea;
 
     const boxesNeeded = Math.ceil(areaInSqm / sqmPerBox);
-
-    const unitPrice  = item.pricePerBox ?? 0;
+    const unitPrice = item.pricePerBox ?? 0;
     const totalPrice = +(unitPrice * boxesNeeded).toFixed(2);
 
     return {
@@ -67,14 +70,26 @@ export const updateQuantity = (
 };
 
 
-export const handleRemoveItem = async (id: number, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void ,isSamplePage?: boolean) => {
+
+export const handleRemoveItem = async (product: ICart, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void, isSamplePage?: boolean) => {
   try {
+    const compositeKey = product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : `${product.id}`;
     if (isSamplePage) {
-      await removeFreeSample(id);
+      await removeFreeSample(compositeKey);
+      window.dispatchEvent(new Event("freeSampleUpdated"));
     } else {
-      await removeWishlistItem(id);
+      await removeWishlistItem(compositeKey);
+      window.dispatchEvent(new Event("wishlistUpdated"));
     }
-    setItems((_prev) => _prev.filter((item) => item.id !== id));
+    setItems((_prev) =>
+      _prev.filter(
+        (item) =>
+          !(
+            item.id === product.id &&
+            item.selectedColor?.color === product.selectedColor?.color
+          )
+      )
+    );
   } catch {
     toast.error("Error removing item.");
   }
@@ -85,9 +100,9 @@ export const handleAddToCart = async (
   setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void
 ) => {
   try {
-    await handleRemoveItem(Number(product.id), setItems);
-      await addToCart(product);
-      window.dispatchEvent(new Event("cartUpdated"));
+    await handleRemoveItem(product, setItems);
+    await addToCart(product);
+    window.dispatchEvent(new Event("cartUpdated"));
   } catch {
     toast.error("Error adding item.");
   }

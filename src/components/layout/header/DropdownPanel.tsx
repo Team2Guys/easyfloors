@@ -74,15 +74,10 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
       const isCartPage = pathname === "/cart";
       const isWishlistPage = pathname === "/wishlist";
       const isFreeSamplePage = pathname === "/freesample";
-      const isFreeSampleCheckoutPage = pathname === "/freesample-checkout";
-      const isCheckoutPage = pathname === "/checkout";
+      const isThankYouPage = pathname === "/thank-you";
 
-      if (type === "freeSample" && isFreeSampleCheckoutPage) {
-        return;
-      }
-
-      // ✅ Prevent cart modal on checkout page
-      if (type === "cart" && isCheckoutPage) {
+      // ✅ Prevent cart modal on Thank You page
+      if (type === "cart" && isThankYouPage || type === "freeSample" && isThankYouPage) {
         return;
       }
       // Special case: On free sample page, only show cart popup for cart updates
@@ -136,20 +131,21 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
   const closePanel = () => { setIsOpen(false) };
 
-  const handleRemoveItem = async (id: number, isFreeSample: boolean) => {
+  const handleRemoveItem = async (product: ICart , isFreeSample: boolean) => {
+    const compositeKey = product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : `${product.id}`;
     try {
       if (type === "freeSample" && isFreeSample) {
-        await removeFreeSample(id); // Remove from free samples list
+        await removeFreeSample(compositeKey); // Remove from free samples list
       }
       else if (type === "cart") {
-        await removeCartItem(id);
+        await removeCartItem(compositeKey);
       } else if (type === "wishlist") {
-        await removeWishlistItem(id);
+        await removeWishlistItem(compositeKey);
       }
 
       // Update local items
       setLocalItems(prev => prev.filter(item =>
-        !(item.id === id && (item.isfreeSample === isFreeSample))
+        !((item.id === product.id) && (item.selectedColor?.color === product.selectedColor?.color) && (item.isfreeSample === isFreeSample))
       ));
 
       // Dispatch appropriate update events
@@ -160,9 +156,10 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
   };
 
 
-  const updateQuantity = useCallback(async (id: number, change: number) => {
+  const updateQuantity = useCallback(async (product: ICart, change: number) => {
     try {
-      const item = localItems.find(item => item.id === id);
+      const compositeKey = product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : `${product.id}`;
+      const item = localItems.find(item => (item.id === product.id) && (item.selectedColor?.color === product.selectedColor?.color));
       if (!item) return toast.error("Item not found.");
 
       const newQty = (item.requiredBoxes || 0) + change;
@@ -178,10 +175,10 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
       const db = await openDB();
       const tx = db.transaction(type, "readwrite");
-      await tx.objectStore(type).put(updatedItem);
+      await tx.objectStore(type).put(updatedItem , compositeKey);
 
       setLocalItems(prev => prev.map(cartItem =>
-        cartItem.id === id ? updatedItem : cartItem
+        (cartItem.id === product.id) && (cartItem.selectedColor?.color === product.selectedColor?.color) ? updatedItem : cartItem
       ));
 
       window.dispatchEvent(new Event(`${type}Updated`));
@@ -190,8 +187,8 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
     }
   }, [localItems, type]);
 
-  const increment = (id: number) => updateQuantity(id, 1);
-  const decrement = (id: number) => updateQuantity(id, -1);
+  const increment = (item: ICart) => updateQuantity(item, 1);
+  const decrement = (item: ICart) => updateQuantity(item, -1);
 
   const totalAmount = localItems.reduce((acc, item) => acc + (item.totalPrice || 0), 0);
   return (
@@ -226,8 +223,8 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
 
               <div className="max-h-52 border w-[280px] sm:w-full border-slate-100 overflow-y-auto p-1 custom-scrollbar">
                 {localItems.length > 0 ? (
-                  localItems.map((item) => (
-                    <div key={item.id} className="rounded-lg border p-3 bg-white shadow-sm mb-2">
+                  localItems.map((item, index) => (
+                    <div key={index} className="rounded-lg border p-3 bg-white shadow-sm mb-2">
                       <div className="flex gap-3">
                         <div className="relative">
                           <div className="bg-gray-100 p-1 rounded-md">
@@ -240,7 +237,7 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                             />
                           </div>
                           <button
-                            onClick={() => handleRemoveItem(Number(item.id), item.isfreeSample || false)}
+                            onClick={() => handleRemoveItem(item, item.isfreeSample || false)}
                             className="absolute -top-2 -right-2 bg-white shadow h-4 w-4 rounded-full flex items-center justify-center text-xs"
                           >
                             <IoCloseSharp size={10} />
@@ -250,16 +247,20 @@ const DropdownPanel: React.FC<DropdownPanelProps> = ({
                         <div className="flex-1 flex flex-col justify-between text-start">
                           <h2 className="text-sm font-semibold leading-snug line-clamp-2">{item.name}</h2>
                           {
+                            item.category?.toLowerCase().trim() === 'accessories' &&
+                              <p className=" text-base sm:text-xs mt-1">Color: {item.selectedColor?.colorName}</p>
+                          }
+                          {
                             item.isfreeSample ? "free" :
-                              <p className=" text-base sm:text-xs mt-1"><span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
+                              <p className=" text-base sm:text-xs mt-1">{item.category?.toLowerCase().trim() === 'accessories' ? 'Piece Price:' : 'Box Price:'} {' '}<span className="font-currency text-20 sm:text-14 font-normal"></span> {item.price}</p>
                           }
                           {!item.isfreeSample && type === "cart" && (
                             <div className="flex items-center border w-28 h-8 justify-between px-2 mt-2">
-                              <button onClick={() => decrement(Number(item.id))} className="px-1 hover:text-black">
+                              <button onClick={() => decrement(item)} className="px-1 hover:text-black">
                                 <LuMinus />
                               </button>
                               <span className="text-16 text-purple px-1">{item.requiredBoxes}</span>
-                              <button onClick={() => increment(Number(item.id))} className="px-1 hover:text-black">
+                              <button onClick={() => increment(item)} className="px-1 hover:text-black">
                                 <LuPlus />
                               </button>
                             </div>

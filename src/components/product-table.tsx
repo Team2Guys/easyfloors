@@ -11,7 +11,6 @@ import { generateSlug } from "data/data";
 
 const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = false, items = [], setItems }) => {
   const pathname = usePathname();
-  console.log(items)
   return (
     <div className={`overflow-x-auto px-4 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
       {items.length === 0 && pathname === "/freesample" ? (
@@ -19,7 +18,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
           <p className="text-center text-[24px] ">
             {isSamplePage ? "Free Sample list is empty" : "Wishlist is empty"}
           </p>
-          <Link href="/" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
+          <Link href="/collections" className="text-center text-[18px] bg-primary p-2 flex w-fit mx-auto items-center text-white gap-2 mt-4">
             <FaArrowLeftLong /> Go Back to Shop
           </Link>
         </div>
@@ -37,19 +36,19 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
             </tr>
           </thead>
           <tbody>
-            {items.map((product) => {
+            {items.map((product, index) => {
 
               return (
-                <tr key={product.id} className="border-t w-full">
+                <tr key={index} className="border-t w-full">
                   <td className="p-3 flex items-center justify-start gap-3">
                     <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
                     <div className="text-12 xl:text-20 font-inter font-normal w-10/12" >
-                      <Link href={`${product.category === "Accessories" ? `/accessories` : `/${generateSlug(product.category)}/${generateSlug(product.subcategories)}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
+                      <Link href={`${product.category?.toLowerCase().trim() === 'accessories' ? `/accessories` : `/${generateSlug(product.category)}/${generateSlug(product.subcategories)}`}/${product.custom_url}`} className="font-medium">{product.name}</Link>
                       {!isSamplePage && (
-                        product.category === "Accessories" ? (
+                        product.category?.toLowerCase().trim() === 'accessories' ? (
                           <>
-                            <p className='text-12 sm:text-16'>Price Per m: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
-                            <p className='text-12 sm:text-16'>Total Required QTY: <span className="font-semibold">{product.requiredBoxes}m</span></p>
+                            <p className='text-12 sm:text-16'>Price Per Piece: <span className="font-semibold"><span className="font-currency font-normal text-18"></span> {product.price}</span></p>
+                            <p className='text-12 sm:text-16'>No. of Pieces: <span className="font-semibold">{product.requiredBoxes}</span></p>
                             {product.selectedColor && <p className='text-12 sm:text-16'>
                               Color: <span className='font-bold'>{product.selectedColor.colorName}</span>
                                                       </p>}
@@ -71,18 +70,18 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                       <div className="flex flex-col">
                         <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
                           <button
-                            onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), -1, prevItems))}
+                            onClick={() => setItems?.((prevItems) => updateQuantity(product, -1, prevItems))}
                             className="px-2 text-gray-700"
                           >
                             <FiMinus />
                           </button>
                           <span className="px-2 text-black font-semibold">
-                            {product.category === "Accessories"
+                            {product.category?.toLowerCase().trim() === 'accessories'
                               ? product.requiredBoxes
                               : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
                           </span>
                           <button
-                            onClick={() => setItems?.((prevItems) => updateQuantity(Number(product.id), 1, prevItems))}
+                            onClick={() => setItems?.((prevItems) => updateQuantity(product, 1, prevItems))}
                             className="px-2 text-gray-700"
                           >
                             <GoPlus />
@@ -109,7 +108,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                           Add to Cart
                         </button>}
                       <button
-                        onClick={() => handleRemoveItem(Number(product.id), setItems ?? (() => { }), isSamplePage)}
+                        onClick={() => handleRemoveItem(product, setItems ?? (() => { }), isSamplePage)}
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
                         <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={100} width={100} />
@@ -126,7 +125,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
         <Link href="/collections" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
           <FaArrowLeftLong /> Continue shopping
         </Link>
-        {isSamplePage &&
+        {(isSamplePage && items.length > 0) &&
           <Link href="/freesample-checkout" className='bg-black text-white px-4 py-2 gap-2 justify-center items-center w-fit mt-5 hidden md:flex'>
             Checkout <FaArrowRightLong />
           </Link>}
