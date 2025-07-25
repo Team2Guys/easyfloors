@@ -142,7 +142,6 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
             ProductsUrls: order.products.map((p) => {
                let urls = 'https://easyfloors.ae/'
                const category = p.category.trim().toLowerCase();
-               console.log(category, "Accessory", p.name, p.category , order.orderId)
                if (category == "accessories" || category === 'accessory') {
                   urls += `accessories/${p.custom_url}`
 
@@ -213,6 +212,7 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
                                     <>
                                     <p className='font-medium'>Price per Piece: <span className='font-normal'>{prod.pricePerBox.toFixed(2)}</span></p>
                                     <p className='font-medium'>No. of Pieces: <span className='font-normal'>{prod.requiredBoxes}</span></p>
+                                    {prod.selectedColor && <p className='font-medium'>Color: <span className='font-normal'>{prod.selectedColor.colorName} ({prod.selectedColor.color})</span></p>}
                                     </>
                                     :
                                     <>
