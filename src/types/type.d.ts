@@ -274,6 +274,7 @@ export interface Admin {
   fullname?: string;
   email?: string;
   password?: string;
+  status?: string;
   canAddCategory?: boolean;
   canAddProduct?: boolean;
   canCheckProfit?: boolean;

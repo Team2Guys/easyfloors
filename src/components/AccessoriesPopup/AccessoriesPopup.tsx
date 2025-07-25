@@ -16,7 +16,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const [totalPrice, setTotalPrice] = useState<{ [key: string]: number }>({});
   if (!isOpen) return null;
   const boxCoverage = 1;
-
+  const PublishAccessory = products.filter((product) => product.status === "PUBLISHED");
   const toggleSelect = (id: string | number) => {
     const idStr = String(id);
     setSelectedProducts((prev) =>
@@ -27,7 +27,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
   const recalculateBoxesAndPrice = (idStr: string, value: string) => {
     const areaValue = parseFloat(value);
     if (!isNaN(areaValue)) {
-      const product = products.find((p) => String(p.id) === idStr);
+      const product = PublishAccessory.find((p) => String(p.id) === idStr);
       if (!product) return;
 
       const pieces = Math.ceil(areaValue / boxCoverage);
@@ -79,7 +79,7 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
 
   const handleAddSelectedToCart = () => {
     selectedProducts.forEach((productId) => {
-      const product = products.find((p) => String(p.id) === productId);
+      const product = PublishAccessory.find((p) => String(p.id) === productId);
       if (product) {
         const squareMeter = boxCoverage * (requiredBoxes[productId] || 1);
         let selectedColor;
@@ -122,11 +122,11 @@ const AccessoriesPopup = ({ isOpen, onClose, products }: AccessoriesPopupProps) 
           <AiOutlineClose size={20} />
         </button>
         <h2 className="text-xl font-semibold mb-4 text-left">Accessories</h2>
-        {products.length === 0 ? (
+        {PublishAccessory.length === 0 ? (
           <p className="text-center text-gray-700">No accessory available.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 px-2 gap-2 xl:gap-4 overflow-y-auto max-h-[50vh] lg:max-h-[78vh] thin-scrollbar">
-            {products.map((product) => (
+            {PublishAccessory.map((product) => (
               <div key={product.id} className={` ${selectedProducts.includes(String(product.id)) ? "" : "border-gray-300"}`}>
                 <div className="relative">
                   <input

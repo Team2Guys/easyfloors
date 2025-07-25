@@ -26,7 +26,6 @@ const Category = ({ catgories, categoryData,isSubCategory, slug, subcategory, su
   const [priceValue, setPriceValue] = useState<[number, number]>([49, 149]);
   const [isModalOpen, setModalOpen] = useState(false);
   const [sortOption, setSortOption] = useState<string>('Default');
- console.log(Data,"DataDataData")
  const publishedCategories = catgories
   .filter((cat : Category) => cat.status === "PUBLISHED")
   .map((cat : Category) => ({

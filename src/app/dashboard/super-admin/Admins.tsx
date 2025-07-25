@@ -31,6 +31,7 @@ const Admins = ({admins}:{admins:Admin[]}) => {
     canVeiwTotalCategories: editAdmin?.canVeiwTotalproducts,
     canVeiwTotalproducts: editAdmin?.canVeiwTotalproducts,
     canViewUsers: editAdmin?.canViewUsers,
+    status: editAdmin?.status,
   };
 
   return (
@@ -51,7 +52,8 @@ const Admins = ({admins}:{admins:Admin[]}) => {
               EditAdminValue={
                 EditInitialValues &&
                 (EditInitialValues.fullname !== undefined ||
-                  EditInitialValues.email !== undefined)
+                  EditInitialValues.email !== undefined) ||
+                EditInitialValues.status !== undefined
                   ? EditInitialValues
                   : undefined
               }

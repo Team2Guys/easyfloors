@@ -58,6 +58,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         sizes
         featureImages
         productImages
+        status
       }
     }
   }
@@ -403,6 +404,7 @@ export const GET_ALL_ADMINS = gql`
       fullname
       email
       password
+      status
       canAddProduct
       canEditProduct
       canDeleteProduct
