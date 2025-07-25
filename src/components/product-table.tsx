@@ -36,10 +36,10 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
             </tr>
           </thead>
           <tbody>
-            {items.map((product) => {
+            {items.map((product, index) => {
 
               return (
-                <tr key={product.id} className="border-t w-full">
+                <tr key={index} className="border-t w-full">
                   <td className="p-3 flex items-center justify-start gap-3">
                     <Image height={64} width={64} src={product.image || "/assets/images/default.png"} alt={product.name} className="lg:h-[100px] lg:w-[100px] 2xl:h-[151px] 2xl:w-[194px] object-cover" />
                     <div className="text-12 xl:text-20 font-inter font-normal w-10/12" >
@@ -70,7 +70,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                       <div className="flex flex-col">
                         <div className="flex justify-center items-center text-12 xl:text-20 bg-gray-200 px-3 py-2 w-fit">
                           <button
-                            onClick={() => setItems?.((prevItems) => updateQuantity(product.id, -1, prevItems))}
+                            onClick={() => setItems?.((prevItems) => updateQuantity(product, -1, prevItems))}
                             className="px-2 text-gray-700"
                           >
                             <FiMinus />
@@ -81,7 +81,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                               : (product.squareMeter === 0 ? '0.00' : product.squareMeter)}
                           </span>
                           <button
-                            onClick={() => setItems?.((prevItems) => updateQuantity(product.id, 1, prevItems))}
+                            onClick={() => setItems?.((prevItems) => updateQuantity(product, 1, prevItems))}
                             className="px-2 text-gray-700"
                           >
                             <GoPlus />
@@ -108,7 +108,7 @@ const ProductTable: React.FC<ProductTableProps> = ({ columns, isSamplePage = fal
                           Add to Cart
                         </button>}
                       <button
-                        onClick={() => handleRemoveItem(product.id, setItems ?? (() => { }), isSamplePage)}
+                        onClick={() => handleRemoveItem(product, setItems ?? (() => { }), isSamplePage)}
                         className="h-5 w-5 lg:h-7 lg:w-7 xl:h-10 xl:w-10"
                       >
                         <Image src="/assets/images/Wishlist/close.svg" alt="Remove" height={100} width={100} />

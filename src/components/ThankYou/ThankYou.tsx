@@ -19,14 +19,14 @@ const ThankYouComp: React.FC<{ extractedParams: PaymentQueryParams }> = ({ extra
         if ((!hasRun.current) && extractedParams.success) {
             await postPaymentStatus({ variables: { postpaymentStatus: extractedParams } });
             const db = await openDB();
-            const tx = db.transaction("freeSample", "readwrite");
-            const tx2 = db.transaction("cart", "readwrite");
-            const store2 = tx2.objectStore("cart");
-            const store = tx.objectStore("freeSample");
-            store.clear();
-            store2.clear();
+            const freeSampleTx = db.transaction("freeSample", "readwrite");
+            const cartTx = db.transaction("cart", "readwrite");
+            const cartStore = cartTx.objectStore("cart");
+            const freeSampleStore = freeSampleTx.objectStore("freeSample");
+            freeSampleStore.clear();
+            cartStore.clear();
             window.dispatchEvent(new Event("cartUpdated"));
-
+            window.dispatchEvent(new Event("freeSampleUpdated"));
             hasRun.current = true;
             revalidateTag("orders")
             revalidateTag("products")

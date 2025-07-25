@@ -32,15 +32,15 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
             {productItems.length > 0 && (
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
                 {productItems.slice(0, isSamplePage ? 5 : productItems.length).map((product, index) => (
-                  <div key={product.id}>
+                  <div key={index}>
                     {index === 0 && (
                       <p className="font-inter font-semibold text-12">Product</p>
                     )}
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(Number(id), setItems)}
-                      onQuantityChange={(id, delta) => setItems && setItems((prevItems) => updateQuantity(Number(id), delta, prevItems))}
+                      onRemove={(product) => setItems && handleRemoveItem(product, setItems)}
+                      onQuantityChange={(product, delta) => setItems && setItems((prevItems) => updateQuantity(product, delta, prevItems))}
                       onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}
                     />
                   </div>
@@ -52,16 +52,16 @@ const SmallScreen = ({ isSamplePage = false, items, setItems }: ProductTableProp
             {accessoryItems.length > 0 && (
               <div className={`space-y-6 ${!isSamplePage ? "max-h-[950px] overflow-y-auto" : ""}`}>
                 {accessoryItems.slice(0, isSamplePage ? 5 : accessoryItems.length).map((product, index) => (
-                  <div key={product.id}>
+                  <div key={index}>
                     {index === 0 && (
                       <p className="font-inter font-semibold text-12 mt-7">Accessories</p>
                     )}
                     <ItemCard
                       product={product}
                       isSamplePage={isSamplePage}
-                      onRemove={(id) => setItems && handleRemoveItem(id, setItems)}
-                      onQuantityChange={(id, delta) =>
-                        setItems?.((prevItems) => updateQuantity(id, delta, prevItems))
+                      onRemove={(product) => setItems && handleRemoveItem(product, setItems)}
+                      onQuantityChange={(product, delta) =>
+                        setItems?.((prevItems) => updateQuantity(product, delta, prevItems))
                       }
 
                       onAddToCart={(product) => setItems && handleAddToCart(product, setItems)}

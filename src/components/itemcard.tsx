@@ -8,8 +8,8 @@ import { ICart } from "types/prod";
 interface ItemCardProps {
   product: ICart;
   isSamplePage?: boolean;
-  onRemove: (_id: string | number) => void;
-  onQuantityChange?: (_id: string | number, _delta: number) => void;
+  onRemove: (_product: ICart) => void;
+  onQuantityChange?: (_product: ICart, _delta: number) => void;
   onAddToCart: (_product: ICart) => void;
 }
 
@@ -50,7 +50,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
             </p>
           </div>
         </div>
-        <button onClick={() => onRemove(product.id)} className="text-gray-500 hover:text-red-500">
+        <button onClick={() => onRemove(product)} className="text-gray-500 hover:text-red-500">
           <svg className="w-5 h-5" viewBox="0 0 48 48" fill="none">
             <rect x="0.5" y="0.5" width="47" height="47" stroke="#424542" />
             <path
@@ -64,7 +64,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
       <div className="flex gap-2 w-full justify-between mt-3">
         {!isSamplePage && onQuantityChange && (
           <div className="flex items-center bg-[#F0F0F0] text-black px-4 py-1">
-            <button onClick={() => onQuantityChange(product.id, -1)} className="p-2">
+            <button onClick={() => onQuantityChange(product, -1)} className="p-2">
               <FiMinus />
             </button>
             <span className="px-2 text-black font-semibold">
@@ -72,7 +72,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ product, isSamplePage, onRemove, on
                 ? product.requiredBoxes 
                 : (product.squareMeter === 0 ? '0.00' : product.squareMeter.toFixed(2))}
             </span>
-            <button onClick={() => onQuantityChange(product.id, 1)} className="p-2">
+            <button onClick={() => onQuantityChange(product, 1)} className="p-2">
               <GoPlus />
             </button>
           </div>

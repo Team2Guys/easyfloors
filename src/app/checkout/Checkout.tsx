@@ -141,8 +141,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
 
                 const { data } = await initiateFreesample({ variables: { createFreesample: orderData } });
                 const orderid = data.freeSample.paymentKey
-
-                window.dispatchEvent(new Event("freeSampleUpdated"));
                 router.push(`/thank-you?isFreeSample=true&order=${orderid}`)
                 setTimeout(() => {
                     setIsLoading(false)
@@ -154,7 +152,6 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
             const { data } = await initiatePayment({ variables: { createSalesProductInput: orderData } });
             const paymentKey = data.createSalesProduct.paymentKey;
             if (!paymentKey.client_secret) return showToast('error', "payment Key not found")
-
             const redirect_url = `https://uae.paymob.com/unifiedcheckout/?publicKey=${process.env.NEXT_PUBLIC_PAYMOB_PUBLIC_KEY}&clientSecret=${paymentKey.client_secret}`;
             window.location.href = redirect_url
             revalidateTag('orders')

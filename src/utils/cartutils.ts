@@ -6,14 +6,14 @@ export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICar
   try {
     if (isSamplePage) {
       const samples = await getFreeSamples();
-      if(setItems){
+      if (setItems) {
         setItems(samples);
       } else {
         return samples;
       }
     } else {
       const wishlist = await getWishlist();
-      if(setItems){
+      if (setItems) {
         setItems(wishlist);
       } else {
         return wishlist;
@@ -27,12 +27,15 @@ export const fetchItems = async (isSamplePage: boolean, setItems?: (_items: ICar
 
 
 export const updateQuantity = (
-  id: string | number,
+  product: ICart,
   delta: number,
   items: ICart[],
 ): ICart[] => {
   return items.map((item) => {
-    if (item.id !== id) return item;
+    if (!(
+      item.id === product.id &&
+      item.selectedColor?.color === product.selectedColor?.color
+    )) return item;
 
     // Handle Accessories (quantity is in meters)
     if (item.category?.toLowerCase() === 'accessories' || item.category === "Accessory") {
@@ -68,14 +71,25 @@ export const updateQuantity = (
 
 
 
-export const handleRemoveItem = async (id: number | string, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void ,isSamplePage?: boolean) => {
+export const handleRemoveItem = async (product: ICart, setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void, isSamplePage?: boolean) => {
   try {
+    const compositeKey = product.category?.toLowerCase().trim() === 'accessories' ? `${product.id}-${product.selectedColor?.color}` : `${product.id}`;
     if (isSamplePage) {
-      await removeFreeSample(Number(id));
+      await removeFreeSample(compositeKey);
+      window.dispatchEvent(new Event("freeSampleUpdated"));
     } else {
-      await removeWishlistItem(id);
+      await removeWishlistItem(compositeKey);
+      window.dispatchEvent(new Event("wishlistUpdated"));
     }
-    setItems((_prev) => _prev.filter((item) => item.id !== id));
+    setItems((_prev) =>
+      _prev.filter(
+        (item) =>
+          !(
+            item.id === product.id &&
+            item.selectedColor?.color === product.selectedColor?.color
+          )
+      )
+    );
   } catch {
     toast.error("Error removing item.");
   }
@@ -86,9 +100,9 @@ export const handleAddToCart = async (
   setItems: (_callback: (_prevItems: ICart[]) => ICart[]) => void
 ) => {
   try {
-    await handleRemoveItem(product.id, setItems);
-      await addToCart(product);
-      window.dispatchEvent(new Event("cartUpdated"));
+    await handleRemoveItem(product, setItems);
+    await addToCart(product);
+    window.dispatchEvent(new Event("cartUpdated"));
   } catch {
     toast.error("Error adding item.");
   }
