@@ -137,9 +137,9 @@ export default function ViewRedirecturl({
       ),
     },
   ];
-  const filteredRedirectUrls = Redirecturls.filter(item =>
+  const filteredRedirectUrls = Redirecturls?.filter(item =>
     item.url.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.status && item.status.toLowerCase().includes(searchTerm.toLowerCase())
+    (item.status && item.status.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
 const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
