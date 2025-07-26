@@ -25,16 +25,16 @@ import { GqlThrottlerGuard } from 'general/GraphQLThrottlerGuard';
 
 @Module({
   imports: [
-    ThrottlerModule.forRoot({
-      throttlers: [
-        {
-          limit: 10, // Max 10 requests
-          ttl: 60000,   // In 60 seconds
-        },
-      ],
-      errorMessage: 'Too many requests. Please try again later.',
+    // ThrottlerModule.forRoot({
+    //   throttlers: [
+    //     {
+    //       limit: 10, // Max 10 requests
+    //       ttl: 60000,   // In 60 seconds
+    //     },
+    //   ],
+    //   errorMessage: 'Too many requests. Please try again later.',
 
-    }),
+    // }),
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -62,10 +62,10 @@ import { GqlThrottlerGuard } from 'general/GraphQLThrottlerGuard';
   ],
   controllers: [AppController],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: GqlThrottlerGuard,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: GqlThrottlerGuard,
+    // },
     // {
     //   provide: APP_GUARD,
     //   useClass: AuthGuard,
