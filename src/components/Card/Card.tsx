@@ -229,7 +229,6 @@ const Card: React.FC<productCardProps> = ({
                   subCategory={product?.subcategory?.name || ""}
                   ProductName={product?.name || ""}
                   productData={modalData as IProduct || []}
-                  ProductInfo={[]}
                   isQuickView
                 />
 

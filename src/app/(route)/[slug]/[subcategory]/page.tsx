@@ -59,7 +59,7 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string, subcategory: string }> }) => {
   const { slug, subcategory } = await params
   const [categories] = await Promise.all([fetchCategories()]);
-  const findCategory = categories.find((cat: ICategory) => (cat?.RecallUrl) === slug.trim());
+  const findCategory = categories.find((cat: ICategory) => (cat?.RecallUrl) === slug.trim() && cat.status === "PUBLISHED");
   if (!findCategory) {
     return notFound()
   }
@@ -75,7 +75,7 @@ const SubCategoryPage = async ({ params }: { params: Promise<{ slug: string, sub
   }) || []
 
   const getMatchingSubCategory = (subcategories: ICategory[], subCategoryUrl: string) => {
-    return subcategories.filter((sub) => sub.custom_url === subCategoryUrl);
+    return subcategories.filter((sub) => sub.custom_url === subCategoryUrl && sub.status === "PUBLISHED") || [];
   };
   const matchingSubCategory = getMatchingSubCategory(findCategory.subcategories, subcategory);
 

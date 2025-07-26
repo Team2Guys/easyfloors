@@ -52,6 +52,11 @@ function Admins({ setselecteMenu, setEditAdmin,AllAdmins }: any) {//eslint-disab
       key: 'email',
     },
     {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+    {
       title: 'Can Add Product',
       dataIndex: 'canAddProduct',
       key: 'canAddProduct',

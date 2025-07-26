@@ -25,7 +25,17 @@ const Footer = () => {
         const getCategories = async () => {
             try {
                 const data = await fetchCategories(FETCH_HEADER_CATEGORIES);
-                const sortedCategories = data?.sort((a: ICategory, b: ICategory) => {
+                const publishedCategories = (data || [])
+                        .filter((cat: ICategory) => cat.status === "PUBLISHED")
+                        .map((cat: ICategory) => ({
+                        ...cat,
+                        accessories: cat.accessories?.filter(acc => acc.status === "PUBLISHED") || [],
+                        subcategories: cat.subcategories?.filter(sub => sub.status === "PUBLISHED") || [],
+                        products: cat.products || [], // Products don't have status in query, filter later if needed
+                        recalledSubCats: cat.recalledSubCats?.filter(
+                            recall => recall.status === "PUBLISHED") || [],
+                        }));
+                const sortedCategories = publishedCategories.sort((a: ICategory, b: ICategory) => {
                     const indexA = staticMenuItems.findIndex(
                         (item) => item.label.toLowerCase() === a.name.trim().toLowerCase()
                     );

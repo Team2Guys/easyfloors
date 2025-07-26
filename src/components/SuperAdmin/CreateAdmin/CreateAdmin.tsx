@@ -8,11 +8,13 @@ import { Input } from 'components/ui/input';
 import showToast from 'components/Toaster/Toaster';
 import { useMutation } from '@apollo/client';
 import { CREATE_ADMIN, UPDATE_ADMIN } from 'graphql/mutations';
+import { BlogStatus } from 'types/general';
 
 type formDataTypes = {
   fullname: string;
   email: string;
   password: string;
+  status: BlogStatus;
   canAddProduct: boolean;
   canEditProduct: boolean;
   canDeleteProduct: boolean;
@@ -33,6 +35,7 @@ const intitalValues = {
   fullname: '',
   email: '',
   password: '',
+  status: 'DRAFT' as BlogStatus,
   canAddProduct: false,
   canEditProduct: false,
   canDeleteProduct: false,
@@ -91,7 +94,11 @@ const CreateAdmin = ({
 
       console.log(data, "Mutation Response"); //eslint-disable-line
 
+      setTimeout(() => {
       setFormData(intitalValues);
+      setselecteMenu('AllAdmin');
+      setEditProduct(undefined);
+    }, 500);
       showToast("success", `Admin ${updateFlag ? "updated" : "created"} successfully`);
     } catch (err:any) {//eslint-disable-line
 
@@ -159,23 +166,50 @@ const CreateAdmin = ({
   };
 
   return (
-    <>
-      <p
-        className="text-lg font-black mb-4 flex items-center justify-center gap-2 hover:bg-gray-200 w-fit p-2 cursor-pointer"
-        onClick={() => {
-          setselecteMenu('AllAdmin');
-          setEditProduct(undefined)
-        }}
-      >
-        <IoMdArrowRoundBack /> Back
-      </p>
-
-      <Form
-        className="max-w-screen-md mx-auto rounded-md shadow-xl mt-1 mb-5"
+    <Form
+        className="max-w-screen-md mx-auto rounded-md mt-1 mb-5 space-y-4"
         layout="vertical"
         onFinish={handleSubmit}
-      >
-        <Row gutter={[10, 10]} className="lg:p-6 p-4">
+    >
+        <div className='flex justify-between items-center'>
+                      <p
+                        className="dashboard_primary_button"
+                        onClick={() => {
+                          setselecteMenu('AllAdmin');
+                          setEditProduct(undefined)
+                        }}
+                      >
+                        <IoMdArrowRoundBack /> Back
+                      </p>
+                      <div className='flex gap-6 items-center'>
+                        <div className="flex gap-4 items-center my-4">
+                            <label className="font-semibold">Admin Status:</label>
+                            {['DRAFT', 'PUBLISHED'].map((status) => {
+                              const isActive = formData.status === status;
+
+                              return (
+                                <button
+                                  key={status}
+                                  type="button"
+                                  onClick={() => setFormData(prev => ({ ...prev, status: status as BlogStatus }))}
+                                  disabled={isActive}
+                                  className={`px-4 py-2 rounded-md text-sm border
+                                    ${isActive
+                                      ? 'bg-black text-white border-black cursor-not-allowed'
+                                      : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                    }`}
+                                >
+                                  {status}
+                                </button>
+                              );
+                            })}
+                        </div>
+                        <button onClick={handleSubmit} className="dashboard_primary_button" disabled={loading}>
+                          {loading ? <Loader color="#fff" /> : 'Add Admin'}
+                        </button>
+                      </div>
+        </div>
+        <Row gutter={[10, 10]} className="lg:p-6 p-4 rounded-md bg-white shadow-xl">
           <Col
             xl={{ order: 1, span: 24 }}
             lg={{ order: 1, span: 24 }}
@@ -298,19 +332,39 @@ const CreateAdmin = ({
             sm={{ order: 1, span: 24 }}
             xs={{ order: 1, span: 24 }}
           >
-            <button
-              disabled={loading}
-              className="h-14 w-full"
-              onClick={handleSubmit}
-            >
-              {loading ? <Loader color="White" /> : 'Add Admin'}
-            </button>
+             
+            <div className='flex gap-6 items-center'>
+              <div className="flex gap-4 items-center my-4">
+                  <label className="font-semibold">Admin Status:</label>
+                  {['DRAFT', 'PUBLISHED'].map((status) => {
+                    const isActive = formData.status === status;
+
+                    return (
+                      <button
+                        key={status}
+                        type="button"
+                        onClick={() => setFormData(prev => ({ ...prev, status: status as BlogStatus }))}
+                        disabled={isActive}
+                        className={`px-4 py-2 rounded-md text-sm border
+                          ${isActive
+                            ? 'bg-black text-white border-black cursor-not-allowed'
+                            : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                          }`}
+                      >
+                        {status}
+                      </button>
+                    );
+                  })}
+              </div>
+              <button onClick={handleSubmit} className="dashboard_primary_button" disabled={loading}>
+                {loading ? <Loader color="#fff" /> : 'Add Admin'}
+              </button>
+            </div>
           </Col>
 
           {error &&  <p>{error}</p>}
         </Row>
-      </Form>
-    </>
+    </Form>
   );
 };
 

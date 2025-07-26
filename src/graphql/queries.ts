@@ -9,6 +9,7 @@ export const FETCH_ALL_PRODUCTS = gql`
       discountPrice
       description
       stock
+      status
       posterImageUrl
       hoverImageUrl
       productImages
@@ -31,17 +32,19 @@ export const FETCH_ALL_PRODUCTS = gql`
       FAQS
         boxCoverage
         featureImages
-        status
+        
       category {
         id
         name
         RecallUrl
         custom_url
+        status
       }
       subcategory {
         id
         name
         custom_url
+        status
       }
        acessories {
         id
@@ -55,6 +58,7 @@ export const FETCH_ALL_PRODUCTS = gql`
         sizes
         featureImages
         productImages
+        status
       }
     }
   }
@@ -70,6 +74,7 @@ export const FETCH_HEADER_PRODUCTS = gql`
       discountPrice
       description
       stock
+      status
       posterImageUrl
       custom_url
       category {
@@ -77,11 +82,13 @@ export const FETCH_HEADER_PRODUCTS = gql`
         name
         RecallUrl
         custom_url
+        status
       }
       subcategory {
         id
         name
         custom_url
+        status
       }
        acessories {
         id
@@ -93,6 +100,7 @@ export const FETCH_HEADER_PRODUCTS = gql`
         posterImageUrl
         hoverImageUrl
         productImages
+        status
          }
           }
         }`;
@@ -121,6 +129,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         recalledSubCats {
             id
             name
+            status
             custom_url
             sizes
               category {
@@ -137,6 +146,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         sizes
         BannerImage
         price
+        status
       }
       products {
         id
@@ -158,11 +168,12 @@ export const FETCH_ALL_CATEGORIES = gql`
         thickness
         boxCoverage
         sizes
+        status
         subcategory {
           id
           name
           custom_url
-          
+          status
         }
         acessories {
           id
@@ -174,6 +185,7 @@ export const FETCH_ALL_CATEGORIES = gql`
         }
            category {
                 RecallUrl
+                status
             }
           
       }
@@ -238,7 +250,8 @@ export const FETCH_ALL_WHAT_AM_I = gql`
       whatAmiTopHeading
       whatAmiImageBanner
       homePageImage
-      whatIamEndpoint    
+      whatIamEndpoint
+      status    
     }
   }
 `;
@@ -391,6 +404,7 @@ export const GET_ALL_ADMINS = gql`
       fullname
       email
       password
+      status
       canAddProduct
       canEditProduct
       canDeleteProduct
@@ -416,6 +430,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       id
       name
       custom_url
+      status
       RecallUrl
       price
         accessories {
@@ -423,6 +438,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
       name
       custom_url 
       posterImageUrl
+      status
       }
       subcategories {
         id
@@ -431,6 +447,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
         posterImageUrl
         price
         sizes
+        status
       }
          products {
         id
@@ -448,6 +465,7 @@ export const FETCH_HEADER_CATEGORIES = gql`
             posterImageUrl
              sizes
               price
+              status
               category {
                 RecallUrl
                 
@@ -466,6 +484,7 @@ export const FETCHSUBCAT = gql`
       custom_url
       price
       sizes
+      status
       products {
         id
         name
@@ -504,7 +523,7 @@ export const FIND_ONE_Accessory = gql`
         Meta_Title
         Canonical_Tag
         whatAmiImageBanner
-      
+        status
         accessories {
             id
             name
@@ -514,7 +533,8 @@ export const FIND_ONE_Accessory = gql`
             posterImageUrl
             featureImages
             custom_url
-              sizes
+            sizes
+            status
         }
   }}
 
@@ -540,20 +560,47 @@ query SubCategory($customUrl: String!, $category: String!) {
 
 
 export const FIND_ONE_PRODUCT = gql`
-query Product($custom_url: String!,$category: String!,$subCategory: String!) {
-  product(custom_url: $custom_url, category:$category,subCategory:$subCategory) {
+query Product($custom_url: String!,$category: String!,$subCategory: String!,$acessories: Boolean) {
+  product(custom_url: $custom_url, category:$category,subCategory:$subCategory,acessories: $acessories) {
     id
     name
+    price
+    discountPrice
+    status
+    stock
+    productImages
+    boxCoverage
+    featureImages
+    posterImageUrl
+    Meta_Title
+    Meta_Description
+    Canonical_Tag
+    AdditionalInformation
+    colors
+    thickness
+    sizes
+    FAQS
+    description
+       acessories {
+        id
+        name
+        price
+        discountPrice
+        custom_url
+        stock
         posterImageUrl
-        Meta_Title
-        Meta_Description
-        Canonical_Tag
-
+        hoverImageUrl
+        sizes
+        featureImages
+        productImages
+        status
+      }
           category {
             RecallUrl
         }
         subcategory {
             custom_url
+            status
         }
   }}
 

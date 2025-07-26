@@ -6,6 +6,7 @@ import { fetchProducts } from 'config/fetch';
 import { Metadata } from 'next';
 import React from 'react';
 import logo from "../../../public/assets/images/logo.webp"
+import { IProduct } from 'types/prod';
 interface ThankYouProps {
   searchParams: Promise<Record<string, string | null>>;
 }
@@ -73,6 +74,7 @@ export interface PaymentQueryParams {
 
 const ThankYou = async ({ searchParams }: ThankYouProps) => {
   const productData = await fetchProducts();
+  const PublishProduct = productData.filter((product:IProduct) => product.status === 'PUBLISHED');
   const params = await searchParams
   const isFreeSample = params.isFreeSample === 'true';
   const extractedParams: PaymentQueryParams = {
@@ -90,7 +92,7 @@ const ThankYou = async ({ searchParams }: ThankYouProps) => {
     <>
       <Breadcrumb title="Thank You" />
       {isFreeSample ? <FreeSampleThank orderId={extractedParams.orderId} /> : <ThankYouComp extractedParams={extractedParams} />}
-      <RelatedSlider products={productData.slice(0, 5)} />
+      <RelatedSlider products={PublishProduct.slice(0, 5)} />
     </>
   );
 };

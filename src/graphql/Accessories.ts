@@ -31,6 +31,7 @@ export const FETCH_ALL_ACCESSORIES = gql`
         name
         custom_url
         description
+        status
       RecallUrl
       }
       products {

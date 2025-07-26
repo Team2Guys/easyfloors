@@ -1,3 +1,4 @@
+import { BlogStatus } from "./general";
 import { AdditionalInformation, IProduct, ProductImage, Sizes } from "./prod";
 import { Product } from "./type";
 
@@ -22,11 +23,12 @@ export interface Category {
   Heading?: string
   sizes?: Sizes[];
   BannerImage?: ProductImage
-  status?: string
+  status?: BlogStatus
   subcategories?: {
     id: number | string;
     name: string;
     posterImageUrl?: ProductImage;
+    status?: BlogStatus
     custom_url: string
     createdAt: Date;
     updatedAt: Date;
@@ -79,6 +81,7 @@ export interface ISUBCATEGORY extends Category {
   whatAmiCanonical_Tag?: string,
   whatAmiMeta_Description?: string,
   whatAmiMeta_Title?: string,
+  status?: BlogStatus
 }
 
 

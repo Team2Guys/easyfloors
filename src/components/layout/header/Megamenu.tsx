@@ -42,10 +42,8 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
         {label}
       </Link>
 
-      {/* Megamenu Container */}
       {isOpen && (
         <div className="absolute left-0 top-9 pt-2 z-50 w-screen">
-          {/* Accessories Mega Menu */}
           {label === "Accessories" && products && products.length > 0 && (
             <div
               className="fixed z-50 bg-white shadow overflow-y-auto border-primary border-t w-screen left-1/2 -translate-x-1/2"
@@ -84,7 +82,7 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
           {label !== "Accessories" && submenu && (
             <div
               className={`fixed z-50 bg-white shadow overflow-y-auto border-primary border-t ${
-                submenu.length === 3 ? "w-[60vw] xl:w-[50vw]" : "w-screen left-1/2 -translate-x-1/2"
+                submenu.length <= 3 ? "w-[60vw] xl:w-[50vw]" : "w-screen left-1/2 -translate-x-1/2"
               }`}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -110,7 +108,7 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
                         key={index}
                         href={sub.href}
                         className={`group ${
-                          submenu.length === 3 ? "w-4/12" : "w-[20%]"
+                          submenu.length <= 3 ? "w-4/12" : "w-[20%]"
                         }`}
                         onClick={handleLinkClick}
                       >
@@ -131,11 +129,11 @@ const Megamenu: React.FC<MenuItemProps & { submenu?: { label: string; href: stri
                 </Container>
               ) : (
                 <Container className="w-full animate-pulse px-2 flex gap-4 my-2">
-                  {[...Array(submenu.length === 3 ? 3 : 5)].map((_, i) => (
+                  {[...Array(submenu.length <= 3 ? 3 : 5)].map((_, i) => (
                     <div
                       key={i}
                       className={`h-[220px] ${
-                        submenu.length === 3 ? "w-4/12" : "w-[20%]"
+                        submenu.length <= 3 ? "w-4/12" : "w-[20%]"
                       } bg-gray-300 rounded mb-3`}
                     />
                   ))}

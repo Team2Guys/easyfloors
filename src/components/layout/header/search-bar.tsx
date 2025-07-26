@@ -33,19 +33,18 @@ const SearchBar = ({ className, productData }: SearchBarProps) => {
       const matchingAccessories =
         product.acessories?.filter(
           (acc) =>
+            acc.status === "PUBLISHED" &&
             ((acc.stock && acc.stock > 0) || isExplicitSearch) &&
-            acc.name.toLowerCase().includes(searchTerm)
+            acc.name.toLowerCase().includes(searchTerm) 
         ) || [];
 
       return productMatches ? [product, ...matchingAccessories] : matchingAccessories;
     }) || [];
 
-
-
   const uniqueItems = filteredItems.filter(
     (item, index, self) =>
       item.__typename !== "Accessory" ||
-      self.findIndex((acc) => acc.id === item.id) === index
+      self.findIndex((acc) => acc.id === item.id) === index 
   );
 
   return (

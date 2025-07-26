@@ -213,6 +213,7 @@ export const UPDATE_ADMIN = gql`
       id
       fullname
       email
+      status
       role
       canAddProduct
       canEditProduct
@@ -240,6 +241,7 @@ export const CREATE_ADMIN = gql`
       id
       fullname
       email
+      status
       role
       canAddProduct
       canEditProduct

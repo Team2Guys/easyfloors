@@ -53,7 +53,7 @@ export const productFilter = ({
 
   if (subcategory) {
     filtered = filtered?.filter(
-      product => product.subcategory?.custom_url === subcategory
+      product => product.subcategory?.custom_url === subcategory && product.status === "PUBLISHED"
     );
   }
 
@@ -163,6 +163,7 @@ export const filterAndSort = (
   items
     .filter(
       item =>
+        item.status === "PUBLISHED" &&
         item.category?.name === categoryName &&
         item.custom_url.includes(urlIncludes)
     )
