@@ -23,8 +23,12 @@ const Shipping = () => {
         <li>Delivery: Next working day (cut-off time 1pm)</li>
         <li>Delivery Cost: <span className="font-currency font-normal text-16 sm:text-25"></span> 150</li>
       </ul>
-
-      <h2 className=" text-20 sm:text-24 font-semibold font-inter">Standard Service (All Emirates)</h2>
+        <h2 className=" text-20 sm:text-24 font-semibold font-inter">Standard Service (Dubai)</h2>
+        <ul className='list-disc px-6 text-14 sm:text-20 sm:leading-[26px] font-inter'>
+        <li>Delivery: 2 working days</li>
+        <li>Delivery Cost: Free</li>
+        </ul>
+      <h2 className=" text-20 sm:text-24 font-semibold font-inter">Standard Service (All Other Emirates)</h2>
         <ul className='list-disc px-6 text-14 sm:text-20 sm:leading-[26px] font-inter'>
         <li>Delivery: 2-3 working days</li>
         <li>Delivery Cost: Free for orders above <span className="font-currency font-normal text-16 sm:text-25"></span> 1,000. <span className="font-currency font-normal text-16 sm:text-25"></span> 150 delivery charge applies for orders below <span className="font-currency font-normal text-16 sm:text-25"></span> 999</li>
