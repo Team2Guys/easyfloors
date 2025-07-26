@@ -49,6 +49,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
 
     return (
       product.name.toLowerCase().includes(searchtext) ||
+      product?.status?.toLowerCase().includes(searchtext) ||
       product.description?.toLowerCase().includes(searchtext) ||
       product.price?.toString().includes(searchtext) ||
       product?.discountPrice?.toString().includes(searchtext) ||

@@ -48,6 +48,7 @@ const DashboardCat  = ({
         .filter(
           (category) =>
             category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            (category.status && category.status.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (category.description &&
               category.description
                 .toLowerCase()

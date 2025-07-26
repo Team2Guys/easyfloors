@@ -37,7 +37,8 @@ const ViewSubcategries = ({
 
   const filteredSubCategories: ISUBCATEGORY[] | undefined = category?.filter(
     (category) =>
-      category.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      category.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (category.status && category.status.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
 
