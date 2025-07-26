@@ -4,9 +4,57 @@ import { graphqlUploadExpress } from 'graphql-upload';
 
 import cookieParser from 'cookie-parser';
 import { AuthGuard } from './gaurds/auth.guard';
+import helmet from 'helmet';
+
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 5 }));
+
+  const isProd = process.env.NODE_ENV === 'production';
+
+  app.use(
+    helmet({
+      crossOriginEmbedderPolicy: false,
+      contentSecurityPolicy: isProd
+        ? undefined // Use default Helmet CSP in production
+        : {
+          directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'", "'unsafe-inline'", 'https:'],
+            styleSrc: ["'self'", "'unsafe-inline'", 'https:'],
+            imgSrc: ["'self'", 'data:', 'apollo-server-landing-page.cdn.apollographql.com'],
+            frameSrc: ["'self'", 'sandbox.embed.apollographql.com'],
+            manifestSrc: ["'self'", 'apollo-server-landing-page.cdn.apollographql.com'],
+            objectSrc: ["'none'"],
+            upgradeInsecureRequests: [],
+          },
+        },
+      referrerPolicy: { policy: 'no-referrer' },
+      frameguard: { action: 'deny' },
+      hsts: isProd
+        ? {
+          maxAge: 60 * 60 * 24 * 365, // 1 year
+          includeSubDomains: true,
+          preload: true,
+        }
+        : false,
+      xssFilter: true,
+      noSniff: true,
+      dnsPrefetchControl: { allow: false },
+      hidePoweredBy: true,
+    }),
+  );
+
+  // Permissions-Policy manually (Helmet doesn’t support it natively yet)
+  app.use((req, res, next) => {
+    res.setHeader(
+      'Permissions-Policy',
+      'camera=(), microphone=(), geolocation=(), interest-cohort=()',
+    );
+    next();
+  });
+
   app.enableCors({
     origin: [
       'http://localhost:3000',
@@ -14,21 +62,21 @@ async function bootstrap() {
       'http://localhost:3002',
       'http://127.0.0.1:3000',
       'https://easyfloors.vercel.app',
-     "http://185.151.51.28:5007",
-    "http://185.151.51.28:3001",
-    "http://185.151.51.28:3000",
-    "http://localhost:5007",
-      
+      "http://185.151.51.28:5007",
+      "http://185.151.51.28:3001",
+      "http://185.151.51.28:3000",
+      "http://localhost:5007",
+
     ],
     credentials: true,
-    allowedHeaders: ["Authorization", "Content-Type"], 
+    allowedHeaders: ["Authorization", "Content-Type"],
   });
   app.setGlobalPrefix('backend');
 
   app.use(cookieParser());
   app.useGlobalGuards(new AuthGuard(new Reflector()));
 
-  await app.listen(process.env.PORT ?? 3200,()=>{
+  await app.listen(process.env.PORT ?? 3200, () => {
     console.log('connected to ' + `http://localhost:${process.env.PORT}/`)
   });
 }
