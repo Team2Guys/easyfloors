@@ -63,7 +63,7 @@ const protocol = protoHeader && protoHeader.startsWith('https') ? 'https' : 'htt
 const Product = async ({ params }: { params: Promise<IParams> }) => {
   const { slug, subcategory, product: paramsprod } = await params;
   const [ProductInfo , AccessoriesProducts] = await Promise.all([fetchSingeProduct(paramsprod.trim(),slug.trim(), subcategory.trim(), true) , fetchAccessories()]);
-  if (!ProductInfo || ProductInfo.status !== "PUBLISHED") return notFound()
+  if (!ProductInfo || ProductInfo.status !== "PUBLISHED" || ProductInfo.subcategory?.status !== "PUBLISHED") return notFound()
    const PublishAccessory = AccessoriesProducts.filter((acc: IProduct)=> acc.status === "PUBLISHED");
   
   return (

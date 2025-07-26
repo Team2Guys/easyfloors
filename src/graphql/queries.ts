@@ -600,6 +600,7 @@ query Product($custom_url: String!,$category: String!,$subCategory: String!,$ace
         }
         subcategory {
             custom_url
+            status
         }
   }}
 
