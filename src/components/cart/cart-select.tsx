@@ -3,19 +3,26 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { CartSelectProps } from "types/type";
 
-const CartSelect = ({ select, onSelect, selectedFee }: CartSelectProps) => {
+const CartSelect = ({ select, onSelect, selectedFee,selectedShipping }: CartSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedState, setSelectedState] = useState("Enter Emirate");
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSelect = (state: string) => {
-    setSelectedState(state);
-    setIsOpen(false);
-    const fee = selectedFee > 1000 ? 0 : state === 'Dubai' ? 100 : 150; 
-    onSelect(state, fee);
-    localStorage.setItem('selectedEmirate', JSON.stringify(state)); // 👈 Save to localStorage
+const handleSelect = (state: string) => {
+  setSelectedState(state);
+  setIsOpen(false);
+  
+  let fee = 0;
+  if (state === 'Dubai') {
+    fee = selectedShipping === 'express' ? 150 : 0;
+  } else {
+    // Other Emirates - standard only
+    fee = selectedFee > 1000 ? 0 : 150;
+  }
 
-  };
+  onSelect(state, fee);
+  localStorage.setItem('selectedEmirate', JSON.stringify(state));
+};
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

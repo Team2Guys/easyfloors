@@ -264,8 +264,8 @@ const FormLayout = ({
                             disabled={isActive}
                             className={`px-4 py-2 rounded-md text-sm border
                         ${isActive
-                                ? 'bg-black text-white border-black cursor-not-allowed'
-                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
+                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer border dark:border-white'
                               }`}
                           >
                             {status}
@@ -280,11 +280,10 @@ const FormLayout = ({
                 </button>
               </div>
             </div>
-            <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-              <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
-                  <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
 
+            <div className="grid grid-cols-2 gap-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                <div className='space-y-4'>
+                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
                     <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Category Images
@@ -346,7 +345,7 @@ const FormLayout = ({
                     ) : (
                       <ImageUploader setposterimageUrl={setposterimageUrl} />
                     )}
-                  </div>
+                    </div>
                   <Modal
                     title="Crop Image"
                     open={isCropModalVisible}
@@ -374,21 +373,21 @@ const FormLayout = ({
                       </ReactCrop>
                     )}
                   </Modal>
-                  <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
+                  <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
                     <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Banner Image
                       </h3>
                     </div>
                     {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                      <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                      <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white  dark:border-white">
                         {BannerImageUrl.map((item: ProductImage, index: number) => {
                           return (
                             <div
-                              className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                              className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white dark:border-white dark:bg-black"
                               key={index}
                             >
-                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                              <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white dark:bg-black rounded-full ">
                                 <RxCross2
                                   className="cursor-pointer border rounded text-red-500 dark:text-red-700"
                                   size={17}
@@ -413,7 +412,7 @@ const FormLayout = ({
                                 alt={`productImage-${index}`}
                               />
                               <input
-                                className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="border text-black mt-2 w-full dark:bg-black dark:text-white rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
                                 placeholder="Alt Text"
                                 type="text"
                                 name="altText"
@@ -435,14 +434,9 @@ const FormLayout = ({
                       <ImageUploader setposterimageUrl={setBannerImageUrl} />
                     )}
                   </div>
-
-
-
-                  <div className="flex flex-col">
-
-
+                     <div className='grid grid-cols-3 gap-4'>
                     <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      <label className=" block mb-3 text-sm font-medium text-black dark:text-white">
                         Category Title
                       </label>
                       <Field
@@ -454,10 +448,8 @@ const FormLayout = ({
                       />
                       <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
                     </div>
-
-
                     <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      <label className="block mb-3 text-sm font-medium text-black dark:text-white">
                         Custom URL
                       </label>
                       <Field
@@ -469,9 +461,8 @@ const FormLayout = ({
                       />
                       <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
                     </div>
-
                     <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      <label className="block mb-3 text-sm font-medium text-black dark:text-white">
                         starting Price
                       </label>
                       <Field
@@ -483,12 +474,11 @@ const FormLayout = ({
                       />
                       <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
                     </div>
-
-
+                     </div>
 
 
                     <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      <label className="block mb-3 text-sm font-medium text-black dark:text-white">
                         RecallUrl(products & Categories)
                       </label>
                       <Field
@@ -500,10 +490,8 @@ const FormLayout = ({
                       />
                       <ErrorMessage name="RecallUrl" component="div" className="text-red-500 text-sm" />
                     </div>
-
-
-                    <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      <div >
+                      <label className="block mb-3 text-sm font-medium text-black dark:text-white">
                         Category Top Heading
                       </label>
                       <Field
@@ -514,18 +502,9 @@ const FormLayout = ({
                           }`}
                       />
                       <ErrorMessage name="topHeading" component="div" className="text-red-500 text-sm" />
-                    </div>
-
-                    <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                        Category Description
-                      </label>
-                      <TinyMCEEditor name="description" />
-                      <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
-                    </div>
-
-                    <div>
-                      <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                      </div>
+                        <div>
+                      <label className="block mb-3 text-sm font-medium text-black dark:text-white">
                         Short Description
                       </label>
                       <textarea
@@ -543,7 +522,22 @@ const FormLayout = ({
                           {formik.errors.name}
                         </div>
                       ) : null}
+                        </div>
+                </div>
+
+                  <div className='space-y-4'>
+
+                    
+
+                    <div>
+                      <label className="block mb-3 text-sm font-medium text-black dark:text-white">
+                        Category Description
+                      </label>
+                      <TinyMCEEditor name="description" />
+                      <ErrorMessage name="description" component="div" className="text-red-500 text-sm" />
                     </div>
+
+                
                     <div className="flex gap-4 mt-4">
                       <div className="w-2/4">
                         <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -627,8 +621,8 @@ const FormLayout = ({
                                 disabled={isActive}
                                 className={`px-4 py-2 rounded-md text-sm border
                                         ${isActive
-                                    ? 'bg-black text-white border-black cursor-not-allowed'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                    ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
+                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer rder dark:border-white'
                                   }`}
                               >
                                 {status}
@@ -641,14 +635,12 @@ const FormLayout = ({
                   </div>
 
 
-                </div>
-              </div>
             </div>
             <div className="flex justify-center">
               <button
                 type="submit"
-  className="dashboard_primary_button mt-2" 
-  disabled={loading}
+            className="dashboard_primary_button mt-2" 
+            disabled={loading}
         
               >
                 {loading ? <Loader color="#fff" /> : 'Submit'}

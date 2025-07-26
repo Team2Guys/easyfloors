@@ -323,6 +323,7 @@ export interface CartSelectProps {
   select: { value: string; label: string }[];
   onSelect: (state: string, fee: number) => void;
   selectedFee: number;
+  selectedShipping: string;
 };
 export interface PrivacyPolicyItem {
   title?: string;
