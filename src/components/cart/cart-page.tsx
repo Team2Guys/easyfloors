@@ -153,35 +153,44 @@ const CartPage = ({ products }: CartPageProps) => {
     handleShippingSelect("standard");
   }, []);
 
-  const calculateShippingFee = (
-    subtotal: number,
-    shippingType: string | null,
-    selectedCity: string
-  ): number => {
-    if (!selectedCity) return 0;
-    
-    switch (shippingType) {
-      case 'express':
-        return subtotal >= 1000 ? 0 : 150;
-      case 'standard':
-      case 'self-collect':
-        return 0;
-      default:
-        return 0;
+ const calculateShippingFee = (
+  subtotal: number,
+  shippingType: string | null,
+  selectedCity: string
+): number => {
+  if (shippingType === 'express') {
+  return 150;}
+  if (shippingType === 'self-collect') {
+    return 0;
+  }
+  if (selectedCity === 'Dubai') {
+    if (shippingType === 'express') {
+      return 150;
+    } else if (shippingType === 'standard') {
+      return 0; 
     }
-  };
+  } else {
+    if (subtotal >= 1000) {
+      return 0;
+    } else {
+      return 150;
+    }
+  }
+
+  return 0;
+};
   
-  // Update your state handlers in the CartPage component
  const handleStateSelect = (state: string) => {
   setSelectedCity(state);
   localStorage.setItem('selectedEmirate', JSON.stringify(state));
 
   // If not Dubai, force standard shipping
+  const shippingType = state === 'Dubai' ? selectedShipping : 'standard';
   if (state !== 'Dubai') {
     setSelectedShipping("standard");
   }
 
-  const fee = calculateShippingFee(subTotal, state === "Dubai" ? selectedShipping : "standard", state);
+  const fee = calculateShippingFee(subTotal, shippingType, state);
   setSelectedFee(fee);
 
   const totalBeforeTax = subTotal + fee;
@@ -220,19 +229,41 @@ const CartPage = ({ products }: CartPageProps) => {
 
   },[selectedCity, selectedShipping]);
 
-  useEffect(() => {
-    let shippingData;
+ useEffect(() => {
+  let shippingData;
 
-    if (selectedShipping === "standard") {
-      shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
-    } else if (selectedShipping === "express") {
-      shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
-    } else if (selectedShipping === "self-collect") {
-      shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
+  if (selectedShipping === 'standard') {
+    if (selectedCity === 'Dubai') {
+      shippingData = {
+        name: 'Standard Service (Dubai)',
+        fee: 0,
+        deliveryDuration: '2 working days',
+      };
+    } else {
+      shippingData = {
+        name: 'Standard Service (Other Emirates)',
+        fee: selectedFee,
+        deliveryDuration: '2-3 working days',
+        freeShipping: 1000,
+      };
     }
-    localStorage.setItem('shipping', JSON.stringify(shippingData));
-    setShipping(shippingData);
-  }, [selectedShipping]);
+  } else if (selectedShipping === 'express') {
+    shippingData = {
+      name: 'Express Service (Dubai Only)',
+      fee: 150,
+      deliveryDuration: 'Next working day (cut-off 1pm)',
+    };
+  } else if (selectedShipping === 'self-collect') {
+    shippingData = {
+      name: 'Self-Collect',
+      fee: 0,
+      deliveryDuration: 'Mon-Sat (9am–6pm)'
+    };
+  }
+
+  localStorage.setItem('shipping', JSON.stringify(shippingData));
+  setShipping(shippingData);
+}, [selectedShipping, selectedCity, selectedFee]);
 
 
   return (
@@ -448,7 +479,7 @@ const CartPage = ({ products }: CartPageProps) => {
                   <p><span className="font-currency font-normal text-20 2xl:text-25"></span> {formatAED(subTotal)}</p>
                 </div>
                 {selectedShipping !== "self-collect" && (
-                    <CartSelect select={emirates} selectedFee={selectedFee} onSelect={handleStateSelect} />
+                    <CartSelect select={emirates} selectedFee={selectedFee} selectedShipping={selectedShipping ?? ''} onSelect={handleStateSelect} />
                   )}
 
                 <Collapse accordion defaultActiveKey={['1']} bordered={false} expandIcon={({ isActive }) => (isActive ? <MdKeyboardArrowDown size={20} /> : <MdKeyboardArrowDown size={20} />)} expandIconPosition="end" className="w-full bg-transparent custom-collapse">
@@ -467,9 +498,8 @@ const CartPage = ({ products }: CartPageProps) => {
                       <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                       <div className="text-11 xs:text-16">
                         <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
-                        <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
-                        <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong> for orders under <strong><span className="font-currency font-normal text-18"></span>999</strong></p>
-                        <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>
+                        <p className="text-11 xs:text-16">Delivery: <strong>Next working day (cut-off time 1pm)</strong></p>
+                        <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong></p>
                       </div>
                     </div>
                   )}
@@ -480,10 +510,15 @@ const CartPage = ({ products }: CartPageProps) => {
                     >
                       <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
-                        <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
-                        <p className="text-11 xs:text-16">Within <strong>2-3 working days</strong></p>
+                        <strong className="text-15 xs:text-20">Standard Service { selectedCity === "Dubai" ? "(Dubai)" : "(All Other Emirates)"} </strong>
+                        <p className="text-11 xs:text-16">Delivery: <strong>2-3 working days</strong></p>
                         <p className="text-11 xs:text-16">
-                          <span>Shipping Fee:</span> <strong>Free</strong>
+                          <span>Delivery Cost:</span> 
+                          {
+                            selectedCity === "Dubai" ? <strong>Free</strong>
+                            :
+                             <>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1,000</strong>. <strong><span className="font-currency font-normal text-18"></span>150</strong> delivery charge applies for orders below <strong><span className="font-currency font-normal text-18"></span>999</strong></>
+                            }
                         </p>
                       </div>
                     </div>

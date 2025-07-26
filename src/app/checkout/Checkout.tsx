@@ -31,6 +31,7 @@ import showToast from "components/Toaster/Toaster";
 import revalidateTag from "components/ServerActons/ServerAction";
 import { useRouter } from "next/navigation";
 import { fetchItems } from "utils/cartutils";
+import { getShippingData } from "utils/helperFunctions";
 
 
 const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
@@ -50,12 +51,15 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
     const [allItemsAreFreeSamples, seallItemsAreFreeSamples] = useState(isFreeSample);
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    useEffect(() => {
-        const savedEmirate = localStorage.getItem('selectedEmirate');
-        if (savedEmirate) {
-            setSelectedEmirate(savedEmirate.replaceAll('"', ""));
-        }
-    }, []);
+   useEffect(() => {
+    const savedEmirate = localStorage.getItem('selectedEmirate');
+    if (savedEmirate) {
+        setSelectedEmirate(savedEmirate.replaceAll('"', ""));
+    } else {
+        setSelectedEmirate("Dubai"); // 👈 Default to Dubai
+        localStorage.setItem('selectedEmirate', JSON.stringify("Dubai"));
+    }
+}, []);
 
     useEffect(() => {
         if (!selectedEmirate) return;
@@ -70,13 +74,13 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
         if (selectedShipping === 'express' && selectedEmirate !== 'Dubai') {
             setSelectedShipping('standard');
             handleShippingSelect('standard');
+        } else if (selectedShipping === 'standard') {
+            handleShippingSelect('standard');
         }
 
         localStorage.setItem('selectedEmirate', JSON.stringify(selectedEmirate));
 
     }, [selectedEmirate]);
-
-
 
     useEffect(() => {
         if (shipping) {
@@ -86,36 +90,55 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
     }, [shipping]);
 
 
-    useEffect(() => {
-        const savedShipping = localStorage.getItem('shipping');
-        if (savedShipping) {
+  useEffect(() => {
+    const savedShipping = localStorage.getItem('shipping');
+
+    if (savedShipping && savedShipping !== "undefined" && savedShipping !== "null") {
+        try {
             const parsedShipping = JSON.parse(savedShipping);
-            handleShippingSelect(parsedShipping.name.toLowerCase().replace(" ", "-"));
+            if (parsedShipping?.name) {
+                const key = parsedShipping.name.toLowerCase().replace(/\s+/g, "-");
+                handleShippingSelect(key);
+            }
+        } catch {
+            localStorage.removeItem('shipping');
         }
-    }, [subTotal]);
+    } else {
+        handleShippingSelect("standard");
+    }
+}, [subTotal]);
 
 
-    useEffect(() => {
-        const savedShipping = localStorage.getItem('shipping');
-        if (!savedShipping) return;
-        if (savedShipping) {
+
+ useEffect(() => {
+    const savedShipping = localStorage.getItem('shipping');
+
+    if (savedShipping && savedShipping !== "undefined" && savedShipping !== "null") {
+        try {
             const parsedShipping = JSON.parse(savedShipping);
 
-            if (parsedShipping.name === "Express Shipping") {
+            if (parsedShipping?.name === "Express Shipping") {
                 setSelectedShipping("express");
                 handleShippingSelect("express");
-            } else if (parsedShipping.name === "Self-Collect") {
+            } else if (parsedShipping?.name === "Self-Collect") {
                 setSelectedShipping("self-collect");
                 handleShippingSelect("self-collect");
-            } else if (parsedShipping.name === "Standard Shipping") {
+            } else if (parsedShipping?.name === "Standard Shipping") {
                 setSelectedShipping("standard");
                 handleShippingSelect("standard");
-            }
-            else {
+            } else {
                 handleShippingSelect("standard");
             }
+
+        } catch {
+            localStorage.removeItem('shipping');
+            handleShippingSelect("standard");
         }
-    }, [subTotal]);
+    } else {
+        handleShippingSelect("standard");
+    }
+}, [subTotal]);
+
 
     type FormInitialValues = {
         firstName: string;
@@ -200,35 +223,47 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
         fetchCartItems();
     }, []);
 
-    const handleShippingSelect = (type: string) => {
-        setSelectedShipping(type);
+      const handleShippingSelect = (type: string) => {
+  setSelectedShipping(type);
+  let fee = 0;
 
-        let fee = 0;
-        if (type === 'express') {
-            fee = selectedEmirate === 'Dubai' ? (subTotal > 1000 ? 0 : 150) : (subTotal > 1000 ? 0 : 150);
-        } else if (type === 'standard') {
-            fee = 0;
-        } else if (type === 'self-collect') {
-            setSelectedEmirate('Dubai');
-            localStorage.setItem('selectedEmirate', JSON.stringify('Dubai'));
-            fee = 0;
-        }
+  if (allItemsAreFreeSamples) {
+    fee = 0;
+  } else if (type === 'express') {
+    fee = 150;
+  } else if (type === 'standard') {
+    if (selectedEmirate === 'Dubai') {
+      fee = 0;
+    } else {
+      fee = subTotal >= 1000 ? 0 : 150;
+    }
+  } else if (type === 'self-collect') {
+    setSelectedEmirate('Dubai');
+    localStorage.setItem('selectedEmirate', JSON.stringify('Dubai'));
+    fee = 0;
+  }
 
-        setSelectedFee(fee);
-        setTotal(subTotal + fee);
-    };
+  setSelectedFee(fee);
+  setTotal(subTotal + fee);
 
-    useEffect(() => {
-        let shippingData;
-        if (selectedShipping === "standard") {
-            shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
-        } else if (selectedShipping === "express") {
-            shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
-        } else if (selectedShipping === "self-collect") {
-            shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
-        }
-        setShipping(shippingData);
-    }, [selectedShipping,]);
+  const shippingData = getShippingData(type, fee, selectedEmirate);
+  setShipping(shippingData);
+  localStorage.setItem('shipping', JSON.stringify(shippingData));
+};
+
+
+        useEffect(() => {
+            let shippingData;
+            if (selectedShipping === "standard") {
+                shippingData = { name: "Standard Shipping", fee: 0, deliveryDuration: "3-4 working days" };
+            } else if (selectedShipping === "express") {
+                shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
+            } else if (selectedShipping === "self-collect") {
+                shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
+            }
+            setShipping(shippingData);
+        }, [selectedShipping,]);
+
     return (
         <Container>
             <h1 className='text-4xl text-center my-2'>Checkout</h1>
@@ -450,9 +485,8 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                                         <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                                                         <div className="text-11 xs:text-16">
                                                             <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
-                                                            <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
-                                                            <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong> for orders under <strong><span className="font-currency font-normal text-18"></span>999</strong></p>
-                                                            <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>
+                                                            <p className="text-11 xs:text-16">Delivery: <strong>Next working day (cut-off time 1pm)</strong></p>
+                                                            <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong></p>
                                                         </div>
                                                     </div>
                                                 )}
@@ -463,10 +497,21 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                                 >
                                                     <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                                                     <div>
-                                                        <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
-                                                        <p className="text-11 xs:text-16">Receive within <strong>2-3 working days</strong></p>
+                                                        <strong className="text-15 xs:text-20">Standard Service {!allItemsAreFreeSamples && ( selectedEmirate === "Dubai" ? " (Dubai)" : " (All Other Emirates)")}
+                                                        </strong>
+                                                        <p className="text-11 xs:text-16">Delivery: <strong>2-3 working days</strong></p>
                                                         <p className="text-11 xs:text-16">
-                                                            <span>Delivery Cost:</span> <strong>Free</strong>
+                                                            <span>Delivery Cost:</span>
+                                                            {allItemsAreFreeSamples ? (
+                                                                <strong>Free</strong>
+                                                            ) : selectedEmirate === "Dubai" ? (
+                                                                <strong>Free</strong>
+                                                            ) : (
+                                                                <>
+                                                                    Free for orders above <strong><span className="font-currency font-normal text-18"></span>1,000</strong>.{" "}
+                                                                    <strong><span className="font-currency font-normal text-18"></span>150</strong> delivery charge applies for orders below <strong><span className="font-currency font-normal text-18"></span>999</strong>
+                                                                </>
+                                                            )}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -514,16 +559,26 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                         <span className="flex items-center gap-2">
                                             Shipping <CiDeliveryTruck size={16} className="mt-1" />
                                         </span>
-                                        <span className="text-black">
-                                            {!selectedCity
-                                                ? 'Select shipping city'
-                                                : selectedShipping === 'express'
-                                                    ? subTotal > 1000
-                                                        ? 'Free'
-                                                        : <span className="font-currency font-normal text-18"> {selectedFee}</span>
-                                                    : 'Free'
-                                            }
-                                        </span>
+                                          <span className="text-black">
+                                                {!selectedCity ? (
+                                                'Select shipping city'
+                                                ) : allItemsAreFreeSamples ? (
+                                                'Free'
+                                                ) : selectedShipping === 'express' ? (
+                                                <span className="font-currency font-normal text-18">
+                                                     {formatAED(150)}
+                                                </span>
+                                                ) : selectedEmirate === 'Dubai' ? (
+                                                'Free'
+                                                ) : subTotal >= 1000 ? (
+                                                'Free'
+                                                ) : (
+                                                <span className="font-currency font-normal text-18">
+                                                     {formatAED(150)}
+                                                </span>
+                                                )}
+                                          </span>
+
                                     </p>
                                     <p className="text-lg font-bold flex justify-between">Total Incl. VAT: <span><span className="font-currency font-normal text-20"></span> {selectedEmirate ? formatAED(total) : formatAED(subTotal)}</span></p>
                                 </div>

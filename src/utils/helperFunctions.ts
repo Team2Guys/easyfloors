@@ -194,3 +194,34 @@ export const handleNavigate = (product: IProduct, categoryData: Category) => {
   };
 
 
+export const getShippingData = (type: string, fee: number,selectedEmirate: string) => {
+  if (type === 'express') {
+    return {
+      name: "Express Service (Dubai Only)",
+      fee,
+      deliveryDuration: "Next working day (cut-off time 1pm)"
+    };
+  } else if (type === 'standard') {
+    if (selectedEmirate === 'Dubai') {
+      return {
+        name: "Standard Service (Dubai)",
+        fee,
+        deliveryDuration: "2 working days"
+      };
+    } else {
+      return {
+        name: "Standard Service (All Other Emirates)",
+        fee,
+        deliveryDuration: "2-3 working days",
+        freeShipping: 1000
+      };
+    }
+  } else if (type === 'self-collect') {
+    return {
+      name: "Self-Collect",
+      fee,
+      deliveryDuration: "Monday to Saturday, 9am – 6pm",
+      location: "22nd 15B St - Al Quoz - Al Quoz Industrial Area 4 - Dubai - UAE"
+    };
+  }
+};
