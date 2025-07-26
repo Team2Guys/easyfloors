@@ -34,7 +34,7 @@ async function bootstrap() {
       frameguard: { action: 'deny' },
       hsts: isProd
         ? {
-          maxAge: 60 * 60 * 24 * 365, // 1 year
+          maxAge: 63072000, // 2 years (required for preload)
           includeSubDomains: true,
           preload: true,
         }
