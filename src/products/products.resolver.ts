@@ -4,6 +4,7 @@ import { Product } from './entities/product.entity';
 import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Public } from '../decorators/public.decorator';
+import { Throttle } from '@nestjs/throttler';
 
 @Resolver(() => Product)
 export class ProductsResolver {
@@ -17,6 +18,7 @@ export class ProductsResolver {
   @Public()
   @Query(() => [Product], { name: 'products' })
   findAll(@Context('req') req) {
+    console.log(+1, "request recieved")
     return this.productsService.findAll();
   }
 

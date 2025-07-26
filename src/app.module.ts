@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { ExecutionContext, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { GraphQLModule } from '@nestjs/graphql';
@@ -18,20 +18,35 @@ import { PrismaService } from './prisma/prisma.service'
 import { GeneralModule } from './general/general.module';
 import { GcpModule } from 'gcp/gcp.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ThrottlerGuard, ThrottlerModule, ThrottlerModuleOptions, ThrottlerStorageService } from '@nestjs/throttler';
+import { GqlExecutionContext } from '@nestjs/graphql';
+import { GqlThrottlerGuard } from 'general/GraphQLThrottlerGuard';
+
 
 @Module({
   imports: [
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          limit: 10, // Max 10 requests
+          ttl: 60000,   // In 60 seconds
+        },
+      ],
+      errorMessage: 'Too many requests. Please try again later.',
+
+    }),
+
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      // autoSchemaFile: join(process.cwd(), 'src/graphql/schema.gql'),
-      path:"backend/graphql",
-      autoSchemaFile:true,
+      path: "backend/graphql",
+      autoSchemaFile: true,
       csrfPrevention: false,
       playground: true,
       context: ({ req, res }) => ({ req, res }),
 
     }),
-        ScheduleModule.forRoot(),
+
+    ScheduleModule.forRoot(),
 
     ProductsModule,
     CategoriesModule,
@@ -46,10 +61,22 @@ import { ScheduleModule } from '@nestjs/schedule';
     GcpModule,
   ],
   controllers: [AppController],
-  providers: [ PrismaService,AppService, {
-    provide: APP_GUARD,
-    useClass: AuthGuard, 
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: GqlThrottlerGuard,
+    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: AuthGuard,
 
-  },],
+
+    // },
+    AuthGuard,
+
+    PrismaService, AppService,
+
+
+  ],
 })
 export class AppModule { }

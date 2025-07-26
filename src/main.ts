@@ -5,6 +5,8 @@ import { graphqlUploadExpress } from 'graphql-upload';
 import cookieParser from 'cookie-parser';
 import { AuthGuard } from './gaurds/auth.guard';
 import helmet from 'helmet';
+import { GqlThrottlerGuard } from 'general/GraphQLThrottlerGuard';
+import { ThrottlerModuleOptions, ThrottlerStorageService } from '@nestjs/throttler';
 
 
 async function bootstrap() {
@@ -12,6 +14,7 @@ async function bootstrap() {
   app.use(graphqlUploadExpress({ maxFileSize: 1000000, maxFiles: 5 }));
 
   const isProd = process.env.NODE_ENV === 'production';
+
 
   app.use(
     helmet({
@@ -46,14 +49,6 @@ async function bootstrap() {
     }),
   );
 
-  // Permissions-Policy manually (Helmet doesn’t support it natively yet)
-  app.use((req, res, next) => {
-    res.setHeader(
-      'Permissions-Policy',
-      'camera=(), microphone=(), geolocation=(), interest-cohort=()',
-    );
-    next();
-  });
 
   app.enableCors({
     origin: [
@@ -71,10 +66,14 @@ async function bootstrap() {
     credentials: true,
     allowedHeaders: ["Authorization", "Content-Type"],
   });
+
+  
   app.setGlobalPrefix('backend');
 
   app.use(cookieParser());
+
   app.useGlobalGuards(new AuthGuard(new Reflector()));
+  
 
   await app.listen(process.env.PORT ?? 3200, () => {
     console.log('connected to ' + `http://localhost:${process.env.PORT}/`)
