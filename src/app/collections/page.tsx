@@ -6,8 +6,8 @@ import { filterAndSort } from "lib/helperFunctions";
 import Collections from "./Collections";
 import { createMetadata } from 'utils/metadataHelper';
 import { pageMetadataData } from 'data/meta-data';
-import NotFound from "app/not-found";
 import { ICategory } from "types/type";
+import { notFound } from "next/navigation";
 export const metadata = createMetadata(pageMetadataData.collections);
 
 const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -34,7 +34,7 @@ const AllCollection = async ({ params }: { params: Promise<{ slug: string }> }) 
   const richmondLVT = filterAndSort(subcategories, "RICHMOND FLOORING", "lvt");
   const sortedSubcategories = [...polarProducts, ...richmondSPC, ...richmondLVT];
   if (sortedSubcategories.length === 0) {
-    return NotFound();
+    return notFound();
   }
   return (
     <div>
