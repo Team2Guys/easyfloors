@@ -32,10 +32,6 @@ interface editCategoryProps {
 
 }
 
-
-
-
-
 const FormLayout = ({
   seteditCategory,
   editCategory,
@@ -163,27 +159,17 @@ const FormLayout = ({
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
       try {
-        // Convert the cropped image (base64) to a File
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
-
-        // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend([file]);
-
-        // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         const uploadedImageUrl = response[0].imageUrl;
-        // Append the base URL if needed
         const newImageUrl = uploadedImageUrl.startsWith('http')
           ? uploadedImageUrl
           : `${baseUrl}${uploadedImageUrl}`;
 
         const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
-
-        // First close the modal and reset croppedImage
         setIsCropModalVisible(false);
         setCroppedImage(null);
-
-        // Use a timeout to update states after the modal has closed
         setTimeout(() => {
           setposterimageUrl((prevImages) =>
             prevImages?.map((img) =>
@@ -202,8 +188,6 @@ const FormLayout = ({
       }
     }
   };
-
-  // Helper function to convert a base64 string to a File object
   const base64ToFile = (base64: string, filename: string): File => {
     const arr = base64.split(',');
     const mimeMatch = arr[0].match(/:(.*?);/);
@@ -224,7 +208,6 @@ const FormLayout = ({
     setIsCropModalVisible(false);
     setCroppedImage(null);
   };
-
 
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {

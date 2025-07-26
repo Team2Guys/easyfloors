@@ -41,7 +41,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5 dark:bg-black dark:text-white dark:bg-boxdark dark:border-blue-50 dark:border-strokedark dark:bg-boxdark">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 xl:grid-cols-4 2xl:gap-10 dark:bg-black dark:text-white dark:bg-boxdark dark:border-blue-50 dark:border-strokedark dark:bg-boxdark">
           {!canVeiwAdmins ? null : (
               <CardDataStats
                 title="Admins"
@@ -183,12 +183,9 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 />
               </CardDataStats>
             )}
-
-
-
       </div>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-8 2xl:mt-10 2xl:gap-10">
         <ChartOne chartData={chartData} />
         <ChartTwo chartData={weeklyChart} />
       </div>

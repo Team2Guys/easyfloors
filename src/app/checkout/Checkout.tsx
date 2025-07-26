@@ -450,9 +450,8 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                                         <Image src={lightImg} alt="icon" className="size-12 xs:size-16" />
                                                         <div className="text-11 xs:text-16">
                                                             <strong className="text-15 xs:text-20">Express Service (Dubai Only)</strong>
-                                                            <p className="text-11 xs:text-16">Delivery <strong>Next working day (cut-off time 1pm)</strong></p>
-                                                            <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong> for orders under <strong><span className="font-currency font-normal text-18"></span>999</strong></p>
-                                                            <p>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1000</strong></p>
+                                                            <p className="text-11 xs:text-16">Delivery: <strong>Next working day (cut-off time 1pm)</strong></p>
+                                                            <p>Delivery Cost: <strong><span className="font-currency font-normal text-18"></span>150</strong></p>
                                                         </div>
                                                     </div>
                                                 )}
@@ -463,10 +462,15 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                                 >
                                                     <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                                                     <div>
-                                                        <strong className="text-15 xs:text-20">Standard Service (All Emirates)</strong>
-                                                        <p className="text-11 xs:text-16">Receive within <strong>2-3 working days</strong></p>
+                                                        <strong className="text-15 xs:text-20">Standard Service { selectedEmirate === "Dubai" ? "(Dubai)" : "(All Other Emirates)"} </strong>
+                                                        <p className="text-11 xs:text-16">Delivery: <strong>2-3 working days</strong></p>
                                                         <p className="text-11 xs:text-16">
-                                                            <span>Delivery Cost:</span> <strong>Free</strong>
+                                                        <span>Delivery Cost:</span> 
+                                                        {
+                                                            selectedEmirate === "Dubai" ? <strong>Free</strong>
+                                                            :
+                                                            <>Free for orders above <strong><span className="font-currency font-normal text-18"></span>1,000</strong>. <strong><span className="font-currency font-normal text-18"></span>150</strong> delivery charge applies for orders below <strong><span className="font-currency font-normal text-18"></span>999</strong></>
+                                                            }
                                                         </p>
                                                     </div>
                                                 </div>
