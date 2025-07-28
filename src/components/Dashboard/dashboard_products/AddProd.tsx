@@ -1475,7 +1475,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               />
                             </div>
                             <input
-                              className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="altText"
                               type="text"
                               name="altText"
@@ -1551,7 +1551,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             </div>
 
                             <input
-                              className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="altText"
                               type="text"
                               name="altText"
@@ -1566,7 +1566,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               }
                             />
                             <input
-                              className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="Plank Width"
                               type="text"
                               name="plankWidth"
@@ -1581,7 +1581,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               }
                             />
                             <input
-                              className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="Plank Height"
                               type="text"
                               name="plankHeight"
@@ -1597,7 +1597,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               }
                             />
                             <input
-                              className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                              className="dashboard_input"
                               placeholder="colorCode"
                               type="text"
                               name="colorCode"
@@ -1677,7 +1677,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               </div>
 
                               <input
-                                className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="dashboard_input"
                                 placeholder="altText"
                                 type="text"
                                 name="altText"
@@ -1695,7 +1695,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               {accessoryFlag && (
                                 <>
                                   <input
-                                    className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    className="dashboard_input"
                                     placeholder="color"
                                     type="text"
                                     name="color"
@@ -1710,7 +1710,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                     }
                                   />
                                   <input
-                                    className="border mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                    className="dashboard_input"
                                     placeholder="colorName"
                                     type="text"
                                     name="colorName"

@@ -162,7 +162,7 @@ const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
         <div>
           <p
             className={`py-2 px-4 rounded-md text-nowrap text-12 xs:text-base ${canAddProduct
-              ? 'cursor-pointer text-white bg-black'
+              ? 'cursor-pointer text-white bg-black dark:bg-white dark:text-black'
               : 'cursor-not-allowed bg-gray-500 text-white'
               }`}
             onClick={() => {
