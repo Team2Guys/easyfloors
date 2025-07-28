@@ -342,26 +342,23 @@ const FormLayout = ({
                   </button>
                 </div>
               </div>
-              <div className="flex justify-center dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                <div className="flex flex-col gap-5 md:gap-9 w-full lg:w-4/5 xl:w-2/5 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
-                  <div className="rounded-sm border border-stroke bg-white  dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white p-3">
-
-
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+              <div className="grid grid-cols-2 gap-4 mt-4 mb-4 dark:bg-black dark:text-white dark:border-white">
+                <div className='space-y-4'>
+                      <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
+                      <div className="border-b border-stroke py-4 px-2 dark:bg-black dark:text-white dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Sub Category Images
                         </h3>
                       </div>
                       {posterimageUrl?.[0] && posterimageUrl.length > 0 ? (
-                        <div className="p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <div className="p-4 dark:bg-black dark:text-white  dark:border-white">
                           {posterimageUrl.map((item: ProductImage, index: number) => {
                             return (
                               <div
-                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white transform transition-transform duration-300 hover:scale-105"
+                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105"
                                 key={index}
                               >
-                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white rounded-full ">
+                                <div className="absolute top-1 right-1 invisible group-hover:visible text-red  rounded-full ">
                                   <RxCross2
                                     className="cursor-pointer border rounded text-red-500 dark:text-red-700"
                                     size={17}
@@ -409,16 +406,16 @@ const FormLayout = ({
                       ) : (
                         <ImageUploader setposterimageUrl={setposterimageUrl} />
                       )}
-                    </div>
+                      </div>
 
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
+                      <div className="border-b border-stroke py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Banner Image (What Am I )
                         </h3>
                       </div>
                       {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <div className=" p-4 dark:text-white dark:bg-black dark:border-white">
                           {BannerImageUrl.map((item: ProductImage, index: number) => {
                             return (
                               <div
@@ -475,8 +472,8 @@ const FormLayout = ({
                     </div>
 
 
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
+                      <div className="border-b border-stroke py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           what Am I Image
                         </h3>
@@ -538,14 +535,14 @@ const FormLayout = ({
                     </div>
 
 
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark mt-5">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black mt-5">
+                      <div className="border-b border-stroke py-4 px-2 dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Banner Image
                         </h3>
                       </div>
                       {bannerImage?.[0] && bannerImage?.length > 0 ? (
-                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <div className=" p-4 dark:text-white dark:bg-black dark:border-white">
                           {bannerImage.map((item: ProductImage, index: number) => {
                             return (
                               <div
@@ -601,14 +598,14 @@ const FormLayout = ({
                       )}
                     </div>
 
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
+                      <div className="border-b border-stroke py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           What am I (home Page)
                         </h3>
                       </div>
                       {homePagemageUrl?.[0] && homePagemageUrl?.length > 0 ? (
-                        <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                        <div className=" p-4 dark:text-white dark:bg-black dark:border-white">
                           {homePagemageUrl.map((item: ProductImage, index: number) => {
                             return (
                               <div
@@ -663,96 +660,7 @@ const FormLayout = ({
                         <ImageUploader setposterimageUrl={sethomePagemageUrl} />
                       )}
                     </div>
-
-
-
-
-
-
-                    <div className="flex flex-col gap-5.5 p-6.5">
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Sub Category Name
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="name"
-                          placeholder="Title"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-
-                        <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          What am I Endpoint
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="whatIamEndpoint"
-                          placeholder="What Am I Endpoint"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-                        <ErrorMessage name="whatIamEndpoint" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Custom Url
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="custom_url"
-                          placeholder="Custom Url"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-                        <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Add Starting price
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="price"
-                          placeholder="Add starting price"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-                        <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Heading
-                        </label>
-
-                        <Field
-                          type="text"
-                          name="Heading"
-                          placeholder="Top Heading"
-                          className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
-                        />
-                        <ErrorMessage name="Heading" component="div" className="text-red-500 text-sm" />
-                      </div>
-
-                      <div>
-                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
-                          Category Description
-                        </label>
-                        <TinyMCEEditor name="description" />
-                        {formik.touched.description && formik.errors.description && (
-                          <div className="text-red-500 text-sm">{formik.errors.description}</div>
-                        )}
-                      </div>
-
-                      <div>
+                        <div>
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
                           What Am I heading
                         </label>
@@ -760,14 +668,14 @@ const FormLayout = ({
                           as="textarea"
                           name="whatAmiTopHeading"
                           placeholder="What Am I Heading"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik?.touched?.whatAmiTopHeading && formik.errors.whatAmiTopHeading ? "border-red-500" : ""
+                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik?.touched?.whatAmiTopHeading && formik.errors.whatAmiTopHeading ? "border-red-500" : ""
                             }`}
                         />
                         <ErrorMessage name="whatAmiTopHeading" component="div" className="text-red-500 text-sm" />
-                      </div>
+                        </div>
 
                       <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                        <div className="border-b border-stroke py-4 px-6 ">
                           <h3 className="font-medium text-black dark:text-white">
                             What AM I Details
                           </h3>
@@ -794,7 +702,7 @@ const FormLayout = ({
                                             ].name
                                           }
                                           placeholder="Model Name"
-                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
                                             (
                                               formik.errors
                                                 .whatamIdetails as FormikErrors<
@@ -818,7 +726,7 @@ const FormLayout = ({
                                               ].detail
                                             }
                                             placeholder="Model Detail"
-                                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
                                               (
                                                 formik.errors
                                                   .whatamIdetails as FormikErrors<ISUBCATEGORY['whatamIdetails']>
@@ -858,9 +766,8 @@ const FormLayout = ({
 
 
                       </div>
-
-                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black mt-2">
-                        <div className="border-b border-stroke py-4 px-6 dark:border-strokedark">
+                     <div className="rounded-sm border border-stroke bg-white  dark:bg-black mt-2">
+                        <div className="border-b border-stroke py-4 px-6 ">
                           <h3 className="font-medium text-black dark:text-white">
                             Add Sizes
                           </h3>
@@ -877,7 +784,7 @@ const FormLayout = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.sizes?.at(0)?.width}
                               placeholder="Add Width"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary'
                             />
                           </div>
                           <div className="flex items-center gap-4">
@@ -891,7 +798,7 @@ const FormLayout = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.sizes?.at(0)?.height}
                               placeholder="Add Height"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary'
                             />
                           </div>
                           <div className="flex items-center gap-4">
@@ -905,11 +812,31 @@ const FormLayout = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.sizes?.at(0)?.thickness}
                               placeholder="Add Thickness"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary'
                             />
                           </div>
                         </div>
+                     </div>
+                </div>
+                
+                    <div>
+
+                    <div className="flex flex-col">
+               
+
+                      <div>
+                        <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
+                          Category Description
+                        </label>
+                        <TinyMCEEditor name="description" />
+                        {formik.touched.description && formik.errors.description && (
+                          <div className="text-red-500 text-sm">{formik.errors.description}</div>
+                        )}
                       </div>
+
+                  
+
+                    
 
                       <div className="flex gap-4 mt-4">
                         <div className="w-2/4">
@@ -920,7 +847,7 @@ const FormLayout = ({
                             type="text"
                             name="Meta_Title"
                             placeholder="Meta Title"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.Meta_Title && formik.errors.Meta_Title && (
@@ -935,7 +862,7 @@ const FormLayout = ({
                             type="text"
                             name="Canonical_Tag"
                             placeholder="Canonical Tag"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.Canonical_Tag && formik.errors.Canonical_Tag && (
@@ -952,7 +879,7 @@ const FormLayout = ({
                           as="textarea"
                           name="Meta_Description"
                           placeholder="Meta Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
                             }`}
                         />
                         {formik.touched.Meta_Description && formik.errors.Meta_Description && (
@@ -975,7 +902,7 @@ const FormLayout = ({
                             type="text"
                             name="whatAmiMeta_Title"
                             placeholder="whatAmiMeta_Title"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.whatAmiMeta_Title && formik.errors.whatAmiMeta_Title && (
@@ -990,7 +917,7 @@ const FormLayout = ({
                             type="text"
                             name="whatAmiCanonical_Tag"
                             placeholder="Canonical Tag"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.whatAmiCanonical_Tag && formik.errors.whatAmiCanonical_Tag && (
@@ -1007,7 +934,7 @@ const FormLayout = ({
                           as="textarea"
                           name="whatAmiMeta_Description"
                           placeholder="Meta Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
+                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
                             }`}
                         />
                         {formik.touched.whatAmiMeta_Description && formik.errors.whatAmiMeta_Description && (
@@ -1034,7 +961,7 @@ const FormLayout = ({
                             type="text"
                             name="short_description"
                             placeholder="Short Description"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.short_description && formik.errors.short_description ? "border-red-500" : ""
+                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.short_description && formik.errors.short_description ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.short_description && formik.errors.short_description && (
@@ -1045,7 +972,9 @@ const FormLayout = ({
 
 
 
-                      <div>
+                 
+                    </div>
+  <div>
 
                         <label className="mb-3 block py-4 px-2 text-sm font-medium text-black dark:text-white">
                           Select Parent Category (atleat one)
@@ -1056,7 +985,7 @@ const FormLayout = ({
                             as="select"
                             name="category"
 
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary"
                           >
                             <option value="" disabled>
                               Select Category
@@ -1071,15 +1000,12 @@ const FormLayout = ({
 
                         </div>
                         <ErrorMessage name="category" component="div" className="text-red-500 " />
-                      </div>
+  </div>
 
-                    </div>
-
-
-
-                    <label className="mb-3 block text-sm font-medium text-black dark:text-white">
+                    <div>
+                      <label className="mb-3 mt-3 block text-sm font-medium text-black dark:text-white">
                       Add Re Category
-                    </label>
+                      </label>
                     <FieldArray name="recalledByCategories">
                       {({ push, remove }) => (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1121,6 +1047,7 @@ const FormLayout = ({
                         </div>
                       )}
                     </FieldArray>
+                    </div>
 
                     <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
@@ -1150,9 +1077,7 @@ const FormLayout = ({
                       )}
                     </Field>
 
-                  </div>
-
-                </div>
+                    </div>
               </div>
 
               <div className="flex justify-center">
