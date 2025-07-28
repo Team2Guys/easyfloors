@@ -580,6 +580,7 @@ query Product($custom_url: String!,$category: String!,$subCategory: String!,$ace
     thickness
     sizes
     FAQS
+    custom_url
     description
        acessories {
         id
