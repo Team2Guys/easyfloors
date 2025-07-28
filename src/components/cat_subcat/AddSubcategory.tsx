@@ -472,7 +472,7 @@ const FormLayout = ({
                     </div>
 
 
-                    <div className="rounded-sm border  bg-white   dark:bg-black">
+                    <div className="rounded-sm border  bg-white  dark:bg-black">
                       <div className="border-b  py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           what Am I Image
@@ -513,7 +513,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="dashboard_input "
+                                  className="dashboard_input  "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
