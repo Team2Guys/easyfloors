@@ -5,11 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { MdOutlineDashboard, MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { BiCategoryAlt, BiEnvelope } from 'react-icons/bi';
+import { BiCategoryAlt } from 'react-icons/bi';
 import { GrCodeSandbox, GrUserAdmin } from 'react-icons/gr';
 import { useAppSelector } from 'components/Others/HelperRedux';
 import { TfiShoppingCartFull } from 'react-icons/tfi';
 import { TbGardenCartOff } from 'react-icons/tb';
+import { SiGotomeeting } from 'react-icons/si';
 
 
 interface SidebarProps {
@@ -391,47 +392,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                               View Free Sample Orders
                             </Link>
                           </li>
-                        </ul>
-                      </div>
-                      {/* <!-- Dropdown Menu End --> */}
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
-              <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/abundant'}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/abundant' &&
-                          'bg-black dark:bg-primary'
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
-                          if (sidebarExpanded) {
-                            handleClick();
-                          } else {
-                            setSidebarExpanded(true);
-                          }
-                        }}
-                      >
-                        <TbGardenCartOff size={20} className="text-white" />
-                        Abandoned Order
-                        <MdOutlineKeyboardArrowDown
-                          size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
-                            }`}
-                        />
-                      </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
-                      >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/dashboard/abundant"
@@ -444,10 +404,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                         </ul>
                       </div>
+                      {/* <!-- Dropdown Menu End --> */}
                     </>
                   );
                 }}
               </SidebarLinkGroup>
+  
               <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/measurement-appointment'}
               >
@@ -468,7 +430,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           }
                         }}
                       >
-                        <TbGardenCartOff size={20} className="text-white" />
+                        <SiGotomeeting  size={20} className="text-white" />
                         Appointments
                         <MdOutlineKeyboardArrowDown
                           size={30}
@@ -509,58 +471,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
 
-
-              <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/usernewsletter'}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/usernewsletter' &&
-                          'bg-black dark:bg-primary'
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (sidebarExpanded) {
-                            handleClick();
-                          } else {
-                            setSidebarExpanded(true);
-                          }
-                        }}
-                      >
-                        <BiEnvelope size={20} className="text-white" />
-                        User Newsletter
-                        <MdOutlineKeyboardArrowDown
-                          size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
-                            }`}
-                        />
-                      </Link>
-
-                      <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
-                      >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/dashboard/usernewsletter"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/usernewsletter' &&
-                                'text-white'
-                                } `}
-                            >
-                              View User Newsletter
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
                    <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/general'}
               >

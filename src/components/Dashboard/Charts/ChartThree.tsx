@@ -60,7 +60,7 @@ const ChartThree: React.FC = () => {
   }, []);
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:drop-shadow-none dark:border-blue-50 px-5 pb-5 pt-7 shadow-default  dark:bg-boxdark sm:px-7 xl:col-span-5">
+    <div className="col-span-12 rounded-sm border    dark:bg-black dark:text-white  dark:drop-shadow-none dark:border-blue-50 px-5 pb-5 pt-7    sm:px-7 xl:col-span-5">
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-primary dark:text-white ">
@@ -74,10 +74,10 @@ const ChartThree: React.FC = () => {
               id=""
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none text-primary dark:text-white"
             >
-              <option value="" className="dark:bg-boxdark text-primary ">
+              <option value="" className=" text-primary ">
                 Monthly
               </option>
-              <option value="" className="dark:bg-boxdark text-primary">
+              <option value="" className=" text-primary">
                 Yearly
               </option>
             </select>

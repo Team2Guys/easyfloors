@@ -101,7 +101,7 @@ const ImageUploader = ({ setImagesUrl, setposterimageUrl, sethoverImage }: PROPS
 
   return (
     <div
-      className={`m-4 cursor-pointer ${isDraggableArea ? 'border border-sky-500' : 'border border-stroke'}`}
+      className={`m-4 cursor-pointer ${isDraggableArea ? 'border border-sky-500' : 'border '}`}
       onDrop={handleDrop}
       onDragOver={(e) => {
         e.preventDefault();

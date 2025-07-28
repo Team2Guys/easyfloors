@@ -84,11 +84,11 @@ const Measurement = ({ appointments , title }: { appointments: IAppointment[] , 
          {appointments && appointments.length > 0 ? (
             <>
                <Table
-                  className="xl:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
                   dataSource={appointments}
                   columns={columns}
                   rowKey="id"
                   pagination={false}
+                  scroll={{ y: 500 }}
                />
                <Modal title="Appointment Details" open={isModalOpen} onCancel={handleCancel} footer={null}>
                   {selectedAppointment && (

@@ -178,11 +178,11 @@ const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
 
       <Table
         key={sortedRedirectUrls.map(r => r.id).join(',')}
-        className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
         dataSource={sortedRedirectUrls}
         columns={columns}
         rowKey="id"
         pagination={false}
+        scroll={{ y: 500 }}
       />
     </>
   );

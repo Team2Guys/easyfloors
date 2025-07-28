@@ -1,12 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { FaRegUser } from 'react-icons/fa6';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import { useAppSelector } from 'Others/HelperRedux';
 
@@ -96,21 +94,10 @@ const DropdownUser = () => {
         ref={dropdown}
         onFocus={() => setDropdownOpen(true)}
         onBlur={() => setDropdownOpen(false)}
-        className={`absolute right-0 mt-1 flex w-62 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-blue-50 ${
+        className={`absolute right-0 mt-1 flex flex-col rounded-sm border bg-white  dark:bg-black dark:text-white  dark:border-blue-50 ${
           dropdownOpen === true ? 'block' : 'hidden'
         }`}
       >
-        <ul className="flex flex-col w-44 space-y-6 border-b border-stroke px-6 py-3 dark:border-strokedark">
-          <li>
-            <Link
-              href="/dashboard/settings"
-              className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white "
-            >
-              <FaRegUser size={20} />
-              My Profile
-            </Link>
-          </li>
-        </ul>
         <button
           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white "
           onClick={logoutHhandler}

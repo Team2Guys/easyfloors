@@ -151,7 +151,7 @@ function Admins({ setselecteMenu, setEditAdmin,AllAdmins }: any) {//eslint-disab
           </div>
           {admins && admins.length > 0 ? (
             <Table
-              className="overflow-auto dark:border-strokedark dark:bg-boxdark"
+              className="overflow-auto  "
               dataSource={admins}
               columns={columns}
               pagination={false}

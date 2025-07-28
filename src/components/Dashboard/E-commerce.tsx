@@ -4,15 +4,18 @@ const ChartTwo = dynamic(()=>import('./Charts/ChartTwo'),{ssr:false})
 const ChartOne = dynamic(()=>import('./Charts/ChartOne'),{ssr:false} )
 import CardDataStats from './CardDataStats';
 import { useAppSelector } from 'components/Others/HelperRedux';
-import { IoMdEye } from 'react-icons/io';
-import { FiShoppingCart } from 'react-icons/fi';
 import { PiUsersThreeFill } from 'react-icons/pi';
-import { IoBagOutline } from 'react-icons/io5';
 import { BiCategory } from 'react-icons/bi';
-import { GrDocumentPerformance } from 'react-icons/gr';
 import { RECORDS } from 'types/type';
 import dynamic from 'next/dynamic';
 import { MONTHLYGRAPH, WEEKLYGRAPH } from 'types/general';
+import { RiAdminLine, RiHomeGearLine } from 'react-icons/ri';
+import { MdOutlineShoppingCartCheckout } from 'react-icons/md';
+import { TbCalendarCancel, TbCategoryPlus, TbRulerMeasure2 } from 'react-icons/tb';
+import { LiaCashRegisterSolid } from 'react-icons/lia';
+import { BsBoxes } from 'react-icons/bs';
+import { SiReactrouter } from 'react-icons/si';
+import { FaInstalod } from 'react-icons/fa';
 
 const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:MONTHLYGRAPH, weeklyChart :WEEKLYGRAPH}) => {
   const { loggedInUser } = useAppSelector((state) => state.usersSlice);
@@ -41,13 +44,13 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 xl:grid-cols-4 2xl:gap-10 dark:bg-black dark:text-white dark:bg-boxdark dark:border-blue-50 dark:border-strokedark dark:bg-boxdark">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 xl:grid-cols-4 2xl:gap-10 dark:bg-black dark:text-white  dark:border-blue-50  ">
           {!canVeiwAdmins ? null : (
               <CardDataStats
                 title="Admins"
                 total={records?.totalAdmins ? records?.totalAdmins : '0'}
               >
-                <IoMdEye size={25} className="fill-white dark:fill-black" />
+                <RiAdminLine size={25} className="fill-white dark:fill-black" />
               </CardDataStats>
             )}
 
@@ -69,7 +72,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Total Revenue"
                 total={records?.totalRevenue ? records?.totalRevenue : ''}
               >
-                <FiShoppingCart
+                <LiaCashRegisterSolid
                   size={25}
                   className="text-white dark:text-black"
                 />
@@ -81,7 +84,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Total Orders"
                 total={records?.Orders ? records?.Orders : ''}
               >
-                <GrDocumentPerformance
+                <MdOutlineShoppingCartCheckout
                   size={25}
                   className="text-white dark:text-black"
                 />
@@ -96,7 +99,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                     : ''
                 }
               >
-                <GrDocumentPerformance
+                <TbCalendarCancel
                   size={25}
                   className="text-white dark:text-black"
                 />
@@ -108,7 +111,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Total Categories"
                 total={records?.totalCategories ? records?.totalCategories : ''}
               >
-                <IoBagOutline
+                <TbCategoryPlus
                   size={25}
                   className="text-white dark:text-black"
                 />
@@ -120,7 +123,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Total Product"
                 total={records?.totalProducts ? records?.totalProducts : ''}
               >
-                <IoBagOutline
+                <BsBoxes
                   size={25}
                   className="text-white dark:text-black"
                 />
@@ -142,7 +145,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Accessories"
                 total={records?.totalAccessories ? records?.totalAccessories : ''}
               >
-                <PiUsersThreeFill
+                <RiHomeGearLine
                   size={25}
                   className="fill-white dark:fill-black"
                 />
@@ -153,7 +156,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Free Samples Orders"
                 total={records?.freeSamples ? records?.freeSamples : ''}
               >
-                <PiUsersThreeFill
+                <SiReactrouter
                   size={25}
                   className="fill-white dark:fill-black"
                 />
@@ -166,7 +169,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Installation Appointments"
                 total={records?.InstallationAppointments ? records?.InstallationAppointments : ''}
               >
-                <PiUsersThreeFill
+                <FaInstalod
                   size={25}
                   className="fill-white dark:fill-black"
                 />
@@ -177,9 +180,9 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
                 title="Measure Appointments"
                 total={records?.MeasureAppointments ? records?.MeasureAppointments : ''}
               >
-                <PiUsersThreeFill
+                <TbRulerMeasure2
                   size={25}
-                  className="fill-white dark:fill-black"
+                  className="text-white dark:text-black"
                 />
               </CardDataStats>
             )}

@@ -31,19 +31,9 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
   };
-
-
-  // const canAddProduct=loggedInUser && (loggedInUser.role =='Admin' ?   loggedInUser.canAddProduct : true )
   const canAddProduct = true;
-  // const canDeleteProduct =
-  //   loggedInUser &&
-  //   (loggedInUser.role == 'Admin' ? loggedInUser.canDeleteProduct : true);
   const canDeleteProduct = true;
-  // const canEditproduct =
-  //   loggedInUser &&
-  //   (loggedInUser.role == 'Admin' ? loggedInUser.canEditproduct : true);
   const canEditproduct = true;
-
   const filteredProducts: IProduct[] = products?.filter((product: IProduct) => {
     const searchtext = searchTerm.trim().toLowerCase();
 
@@ -61,21 +51,14 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     );
   }).sort((a: IProduct, b: IProduct) => {
     const searchText = searchTerm.trim().toLowerCase();
-
-    // First sort by whether the name starts with the search term
     const aStartsWith = a.name.toLowerCase().startsWith(searchText) ? -1 : 1;
     const bStartsWith = b.name.toLowerCase().startsWith(searchText) ? -1 : 1;
-
-    // Then sort by creation date (newest first)
     const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
     const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
 
-    // If search term is empty, sort by date only (newest first)
     if (!searchText) {
       return dateB - dateA;
     }
-
-    // Otherwise, sort by search match first, then by date
     return aStartsWith - bStartsWith || dateB - dateA;
   }) || [];
 
@@ -260,7 +243,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     <div>
       <div className="flex justify-between gap-2 mb-4 items-center flex-nowrap text-black dark:text-white">
         <input
-          className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200 dark:bg-boxdark dark:bg-transparent dark:border-white text-11 xs:text-sm dark:focus:border-primary focus:border-dark focus:ring-dark-500 disabled:opacity-50 disabled:pointer-events-none dark:text-black"
+          className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200  dark:bg-transparent dark:border-white text-11 xs:text-sm dark:focus:border-primary focus:border-dark focus:ring-dark-500 disabled:opacity-50 disabled:pointer-events-none dark:text-black"
           type="search"
           placeholder="Search Product"
           value={searchTerm}
@@ -287,11 +270,12 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       </div>
       {filteredProducts && filteredProducts.length > 0 ? (
         <Table
-          className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
+          className="!bg-transparent"
           dataSource={filteredProducts}
           columns={columns}
           rowKey="id"
           pagination={false}
+           scroll={{ y: 500 }}
         />
       ) : (
         <p className="text-primary dark:text-white">No products found</p>
