@@ -46,6 +46,7 @@ export const FIND_ONE_REDIRECT_URL = gql`
     findOneRedirecturls(url: $url) {
         url
         redirectedUrl
+        status
     }
   }
 `;
