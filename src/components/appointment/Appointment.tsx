@@ -165,7 +165,7 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
                 <label className="text-13 font-medium font-inter">How shall we contact you?</label>
                 <div className="flex gap-4 items-center pt-2">
                   <Field name="contactMethod.whatsapp" component={Checkbox} label="WhatsApp" />
-                  <Field name="contactMethod.telephone" component={Checkbox} label="Telephone" />
+                  <Field name="contactMethod.telephone" component={Checkbox} label="Call" />
                   <Field name="contactMethod.email" component={Checkbox} label="Email" />
                 </div>
               </div>

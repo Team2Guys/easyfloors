@@ -259,7 +259,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
             } else if (selectedShipping === "express") {
                 shippingData = { name: "Express Shipping", fee: 150, deliveryDuration: "Next day delivery", freeShipping: 1000 };
             } else if (selectedShipping === "self-collect") {
-                shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Mon-Sat (9am-6pm)" };
+                shippingData = { name: "Self-Collect", fee: 0, deliveryDuration: "Monday to Saturday (9am-6pm)" };
             }
             setShipping(shippingData);
         }, [selectedShipping,]);
@@ -499,7 +499,7 @@ const Checkout = ({ isFreeSample = false }: { isFreeSample?: boolean }) => {
                                                     <div>
                                                         <strong className="text-15 xs:text-20">Standard Service {!allItemsAreFreeSamples && ( selectedEmirate === "Dubai" ? " (Dubai)" : " (All Other Emirates)")}
                                                         </strong>
-                                                        <p className="text-11 xs:text-16">Delivery: <strong>2-3 working days</strong></p>
+                                                        <p className="text-11 xs:text-16">Delivery: <strong>2{ selectedCity === "Dubai" ? "" : "-3"} working days</strong></p>
                                                         <p className="text-11 xs:text-16">
                                                             <span>Delivery Cost:</span>
                                                             {allItemsAreFreeSamples ? (

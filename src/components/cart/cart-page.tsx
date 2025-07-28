@@ -257,7 +257,7 @@ const CartPage = ({ products }: CartPageProps) => {
     shippingData = {
       name: 'Self-Collect',
       fee: 0,
-      deliveryDuration: 'Mon-Sat (9am–6pm)'
+      deliveryDuration: 'Monday to Saturday (9am–6pm)'
     };
   }
 
@@ -511,9 +511,9 @@ const CartPage = ({ products }: CartPageProps) => {
                       <Image src={deliveryImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
                         <strong className="text-15 xs:text-20">Standard Service { selectedCity === "Dubai" ? "(Dubai)" : "(All Other Emirates)"} </strong>
-                        <p className="text-11 xs:text-16">Delivery: <strong>2-3 working days</strong></p>
+                        <p className="text-11 xs:text-16">Delivery: <strong>2{ selectedCity === "Dubai" ? "" : "-3"} working days</strong></p>
                         <p className="text-11 xs:text-16">
-                          <span>Delivery Cost:</span> 
+                          <span>Delivery Cost: </span> 
                           {
                             selectedCity === "Dubai" ? <strong>Free</strong>
                             :
@@ -528,7 +528,7 @@ const CartPage = ({ products }: CartPageProps) => {
                       <Image src={locationImg} alt="icon" className="size-12 xs:size-16" />
                       <div>
                         <strong className="text-15 xs:text-20">Self-Collect:</strong>
-                        <p className="text-11 xs:text-16">Collection Mon-Sat <strong>(9am-6pm)</strong></p>
+                        <p className="text-11 xs:text-16">Collection: Monday to Saturday <strong>(9am-6pm)</strong></p>
                         <p className="text-11 xs:text-16">
                           <span>Location:</span> <strong><Link className="hover:text-primary" target="_blank" rel="noopener noreferrer" href="https://maps.app.goo.gl/BBJjwVKgTK4PPTWR8">22nd 15B St - Al Quoz - Al Quoz Industrial Area 4 - Dubai - UAE</Link></strong>
                         </p>
