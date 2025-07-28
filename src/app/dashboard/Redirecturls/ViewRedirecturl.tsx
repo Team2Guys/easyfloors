@@ -152,7 +152,8 @@ const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
     <>
       <div className="flex justify-between gap-2 mb-4 items-center flex-nowrap">
         <input
-          className="primary-input w-fit max-w-96"
+          className="dashboard_input"
+          style={{ width: 'max-content' }}
           type="search"
           placeholder="Search URL"
           value={searchTerm}
