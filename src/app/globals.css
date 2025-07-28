@@ -90,12 +90,6 @@
 
 
 @layer components {
-  .primary-input {
-    @apply w-full rounded-lg border px-5 py-3 outline-none transition border-primary placeholder:text-black focus:border-black;
-  }
-}
-
-@layer components {
   .primary-label {
     @apply mb-3 block text-sm font-medium mt-3;
   }
