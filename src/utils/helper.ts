@@ -142,7 +142,7 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
 
             ${selectRooms ? `
               <div class="field">
-                <span class="label">Selected Rooms:</span> ${selectRooms}
+                <span class="label">Approximate Area :</span> ${selectRooms}
               </div>
             ` : ""}
 
