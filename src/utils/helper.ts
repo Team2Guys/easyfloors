@@ -178,8 +178,11 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
               </div>
             ` : ""}
 
-            <p>We will contact you soon to confirm your appointment. If you need to make any changes, please reply to this email or call us at +971 50 597 4385.</p>
-          </div>
+<div class='text-center'>Measurement appointment will be charged at <strong><span ></span> 150</strong> which is fully <strong>REFUNDABLE</strong> if you place an order with us.</div>
+
+<p>We will contact you soon to confirm your appointment. If you need to make any changes, please reply to this email or call us at +971 50 597 4385.</p>
+          
+            </div>
           <div class="footer">
             <p>&copy; ${new Date().getFullYear()} Easyfloors. All rights reserved.</p>
             <p>This is an automated message. Please do not reply directly to this email unless instructed.</p>
@@ -188,16 +191,16 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
       </body>
     </html>
   `;
-
+console.log(AppointsType, "AppointsType")
    try {
       await transporter.sendMail({
-         from: process.env.EMAIL_USER,
-         to: email,
+         from: `${AppointsType =='appointments' ? 'Measurement Appointment' : "Installation Appointments"} ${process.env.EMAIL_USER}`,
+         to: `${email}`,
          subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
          html: htmlTemplate,
       });
       await transporter.sendMail({
-         from: process.env.EMAIL_USER,
+         from:`${AppointsType =='appointments' ? 'Measurement Appointment' : "Installation Appointments"} ${process.env.EMAIL_USER}` ,
          to: `${process.env.EMAIL_USER},${process.env.ORDER_MAIL1},${process.env.ORDER_MAIL2},${process.env.ORDER_MAIL3}`,
          subject: `Appointment Request Confirmation - ${AppointsType || "General"}`,
          html: htmlTemplate,
