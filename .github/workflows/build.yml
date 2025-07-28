@@ -47,6 +47,6 @@ jobs:
           npm install 
           npx prisma generate
           npm run build
-          pm2 restart easyfloors_be
+          pm2 restart easyfloors_be --update-env
           exit
           EOF
