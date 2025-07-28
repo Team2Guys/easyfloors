@@ -243,7 +243,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     <div>
       <div className="flex justify-between gap-2 mb-4 items-center flex-nowrap text-black dark:text-white">
         <input
-          className="peer lg:p-3 p-2 block outline-none border rounded-md border-gray-200  dark:bg-transparent dark:border-white text-11 xs:text-sm dark:focus:border-primary focus:border-dark focus:ring-dark-500 disabled:opacity-50 disabled:pointer-events-none dark:text-black"
+          className="dashboard_input"
+            style={{ width: 'max-content' }}
           type="search"
           placeholder="Search Product"
           value={searchTerm}
