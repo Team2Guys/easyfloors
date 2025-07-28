@@ -173,7 +173,7 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
               <div class="field">
                 <span class="label">Preferred Contact Method:</span> 
                 ${contactMethod.whatsapp ? "WhatsApp" : ""}
-                ${contactMethod.telephone ? "TelePhone" : ""}
+                ${contactMethod.telephone ? "Call" : ""}
                 ${contactMethod.email ? "Email" : ""}
               </div>
             ` : ""}
