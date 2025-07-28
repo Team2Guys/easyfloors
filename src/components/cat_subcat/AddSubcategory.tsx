@@ -385,7 +385,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -448,7 +448,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -513,7 +513,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -575,7 +575,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -638,7 +638,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"

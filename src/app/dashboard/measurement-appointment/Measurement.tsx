@@ -11,7 +11,11 @@ import { IAppointment } from 'types/types'
 const Measurement = ({ appointments , title }: { appointments: IAppointment[] , title: string }) => {
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [selectedAppointment, setSelectedAppointment] = useState<IAppointment | null>(null);
-
+   const sortedAppointments = [...appointments].sort((a, b) => {
+   const dateA = new Date(a.preferredDate).getTime();
+   const dateB = new Date(b.preferredDate).getTime();
+   return dateB - dateA;
+   });
    const showModal = (record: IAppointment) => {
       setSelectedAppointment(record);
       setIsModalOpen(true);
@@ -84,7 +88,7 @@ const Measurement = ({ appointments , title }: { appointments: IAppointment[] , 
          {appointments && appointments.length > 0 ? (
             <>
                <Table
-                  dataSource={appointments}
+                  dataSource={sortedAppointments}
                   columns={columns}
                   rowKey="id"
                   pagination={false}

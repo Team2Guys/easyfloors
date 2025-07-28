@@ -589,7 +589,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                               </div>
 
                               <input
-                                className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="dashboard_input "
                                 placeholder="altText"
                                 type="text"
                                 name="altText"

@@ -324,7 +324,7 @@ const FormLayout = ({
                               />
 
                               <input
-                                className="border text-black mt-2 w-full rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="dashboard_input"
                                 placeholder="Alt Text"
                                 type="text"
                                 name="altText"
@@ -412,7 +412,7 @@ const FormLayout = ({
                                 alt={`productImage-${index}`}
                               />
                               <input
-                                className="border text-black mt-2 w-full dark:bg-black dark:text-white rounded-md  px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="dashboard_input"
                                 placeholder="Alt Text"
                                 type="text"
                                 name="altText"
@@ -512,7 +512,7 @@ const FormLayout = ({
                         onChange={formik.handleChange}
                         value={formik.values.short_description}
                         placeholder="Short Description"
-                        className={`w-full rounded-lg border-[1.5px]  bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                        className={`dashboard_input ${formik.touched.name && formik.errors.name
                           ? 'border-red-500'
                           : ''
                           }`}

@@ -231,7 +231,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                                                 Full Name
                                             </label>
                                             <input
-                                                className="w-full rounded border  bg-gray px-4 py-3  focus:border-primary focus-visible:outline-none  dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                                className="dashboard_input"
                                                 type="text"
                                                 name="name"
                                                 id="name"
@@ -275,7 +275,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                                                     </svg>
                                                 </span>
                                                 <input
-                                                    className="w-full rounded border  bg-gray py-3 pl-11 pr-4  focus:border-primary focus-visible:outline-none  dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                                    className="dashboard_input pl-11"
                                                     type="email"
                                                     name="email"
                                                     id="email"
