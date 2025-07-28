@@ -127,18 +127,18 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
           </button>
           </div>
 </div>
-            <div>
+            <div className='space-y-2'>
               <label htmlFor="name">Url Endpoint </label>
-              <Field name="url" type="text" className="primary-input" />
+              <Field name="url" type="text" className="dashboard_input" />
               <ErrorMessage name="url" component="div" className="text-red-500 text-sm" />
             </div>
 
-            <div>
+            <div className='space-y-2'>
               <label htmlFor="redirectedUrl">Redirect Pages</label>
-              <Field name="redirectedUrl" type="text" className="primary-input" />
+              <Field name="redirectedUrl" type="text" className="dashboard_input" />
               <ErrorMessage name="redirectedUrl" component="div" className="text-red-500 text-sm" />
             </div>
-<Field name="status">
+            <Field name="status">
             {({ field, form }: import('formik').FieldProps) => (
               <div className="flex gap-4 items-center my-4">
                 <label className="font-semibold">Redirect Status:</label>
@@ -164,7 +164,7 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
                 })}
               </div>
             )}
-</Field>
+            </Field>
 
 
             <button type="submit" className=" px-8 py-2 bg-primary dark:bg-primary dark:border-0 text-white rounded w-fit" disabled={loading || updateloading}>

@@ -326,8 +326,8 @@ const FormLayout = ({
                               disabled={isActive}
                               className={`px-4 py-2 rounded-md text-sm border
                                       ${isActive
-                                  ? 'bg-black text-white border-black cursor-not-allowed'
-                                  : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                  ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
+                                  : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer border dark:border-white'
                                 }`}
                             >
                               {status}
@@ -344,8 +344,8 @@ const FormLayout = ({
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4 mb-4 dark:bg-black dark:text-white dark:border-white">
                 <div className='space-y-4'>
-                      <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
-                      <div className="border-b border-stroke py-4 px-2 dark:bg-black dark:text-white dark:border-white">
+                      <div className="rounded-sm border  bg-white   dark:bg-black">
+                      <div className="border-b  py-4 px-2 dark:bg-black dark:text-white dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Sub Category Images
                         </h3>
@@ -385,7 +385,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -408,8 +408,8 @@ const FormLayout = ({
                       )}
                       </div>
 
-                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
-                      <div className="border-b border-stroke py-4 px-2  dark:text-white dark:bg-black dark:border-white">
+                    <div className="rounded-sm border  bg-white   dark:bg-black">
+                      <div className="border-b  py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Banner Image (What Am I )
                         </h3>
@@ -448,7 +448,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -472,8 +472,8 @@ const FormLayout = ({
                     </div>
 
 
-                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
-                      <div className="border-b border-stroke py-4 px-2  dark:text-white dark:bg-black dark:border-white">
+                    <div className="rounded-sm border  bg-white   dark:bg-black">
+                      <div className="border-b  py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           what Am I Image
                         </h3>
@@ -513,7 +513,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -535,8 +535,8 @@ const FormLayout = ({
                     </div>
 
 
-                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black mt-5">
-                      <div className="border-b border-stroke py-4 px-2 dark:text-white dark:bg-black dark:border-white">
+                    <div className="rounded-sm border  bg-white   dark:bg-black mt-5">
+                      <div className="border-b  py-4 px-2 dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Banner Image
                         </h3>
@@ -575,7 +575,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -598,8 +598,8 @@ const FormLayout = ({
                       )}
                     </div>
 
-                    <div className="rounded-sm border border-stroke bg-white   dark:bg-black">
-                      <div className="border-b border-stroke py-4 px-2  dark:text-white dark:bg-black dark:border-white">
+                    <div className="rounded-sm border  bg-white   dark:bg-black">
+                      <div className="border-b  py-4 px-2  dark:text-white dark:bg-black dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           What am I (home Page)
                         </h3>
@@ -638,7 +638,7 @@ const FormLayout = ({
                                   alt={`productImage-${index}`}
                                 />
                                 <input
-                                  className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                  className="dashboard_input "
                                   placeholder="Alt Text"
                                   type="text"
                                   name="altText"
@@ -668,14 +668,14 @@ const FormLayout = ({
                           as="textarea"
                           name="whatAmiTopHeading"
                           placeholder="What Am I Heading"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik?.touched?.whatAmiTopHeading && formik.errors.whatAmiTopHeading ? "border-red-500" : ""
+                          className={`dashboard_input ${formik?.touched?.whatAmiTopHeading && formik.errors.whatAmiTopHeading ? "border-red-500" : ""
                             }`}
                         />
                         <ErrorMessage name="whatAmiTopHeading" component="div" className="text-red-500 text-sm" />
                         </div>
 
-                      <div className="rounded-sm border border-stroke bg-white  dark:bg-black">
-                        <div className="border-b border-stroke py-4 px-6 ">
+                      <div className="rounded-sm border  bg-white  dark:bg-black">
+                        <div className="border-b  py-4 px-6 ">
                           <h3 className="font-medium text-black dark:text-white">
                             What AM I Details
                           </h3>
@@ -702,7 +702,7 @@ const FormLayout = ({
                                             ].name
                                           }
                                           placeholder="Model Name"
-                                          className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${model.name &&
+                                          className={`dashboard_input ${model.name &&
                                             (
                                               formik.errors
                                                 .whatamIdetails as FormikErrors<
@@ -726,7 +726,7 @@ const FormLayout = ({
                                               ].detail
                                             }
                                             placeholder="Model Detail"
-                                            className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${model.detail &&
+                                            className={`dashboard_input ${model.detail &&
                                               (
                                                 formik.errors
                                                   .whatamIdetails as FormikErrors<ISUBCATEGORY['whatamIdetails']>
@@ -766,8 +766,8 @@ const FormLayout = ({
 
 
                       </div>
-                     <div className="rounded-sm border border-stroke bg-white  dark:bg-black mt-2">
-                        <div className="border-b border-stroke py-4 px-6 ">
+                     <div className="rounded-sm border  bg-white  dark:bg-black mt-2">
+                        <div className="border-b  py-4 px-6 ">
                           <h3 className="font-medium text-black dark:text-white">
                             Add Sizes
                           </h3>
@@ -784,7 +784,7 @@ const FormLayout = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.sizes?.at(0)?.width}
                               placeholder="Add Width"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary'
+                              className='dashboard_input'
                             />
                           </div>
                           <div className="flex items-center gap-4">
@@ -798,7 +798,7 @@ const FormLayout = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.sizes?.at(0)?.height}
                               placeholder="Add Height"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary'
+                              className='dashboard_input'
                             />
                           </div>
                           <div className="flex items-center gap-4">
@@ -812,7 +812,7 @@ const FormLayout = ({
                               onBlur={formik.handleBlur}
                               value={formik.values.sizes?.at(0)?.thickness}
                               placeholder="Add Thickness"
-                              className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary'
+                              className='dashboard_input'
                             />
                           </div>
                         </div>
@@ -834,10 +834,7 @@ const FormLayout = ({
                         )}
                       </div>
 
-                  
-
-                    
-
+                
                       <div className="flex gap-4 mt-4">
                         <div className="w-2/4">
                           <label className="mb-3 block text-sm font-medium text-black dark:text-white">
@@ -847,7 +844,7 @@ const FormLayout = ({
                             type="text"
                             name="Meta_Title"
                             placeholder="Meta Title"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
+                            className={`dashboard_input ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.Meta_Title && formik.errors.Meta_Title && (
@@ -862,7 +859,7 @@ const FormLayout = ({
                             type="text"
                             name="Canonical_Tag"
                             placeholder="Canonical Tag"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
+                            className={`dashboard_input ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.Canonical_Tag && formik.errors.Canonical_Tag && (
@@ -879,7 +876,7 @@ const FormLayout = ({
                           as="textarea"
                           name="Meta_Description"
                           placeholder="Meta Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
+                          className={`dashboard_input ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
                             }`}
                         />
                         {formik.touched.Meta_Description && formik.errors.Meta_Description && (
@@ -902,7 +899,7 @@ const FormLayout = ({
                             type="text"
                             name="whatAmiMeta_Title"
                             placeholder="whatAmiMeta_Title"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
+                            className={`dashboard_input ${formik.touched.Meta_Title && formik.errors.Meta_Title ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.whatAmiMeta_Title && formik.errors.whatAmiMeta_Title && (
@@ -917,7 +914,7 @@ const FormLayout = ({
                             type="text"
                             name="whatAmiCanonical_Tag"
                             placeholder="Canonical Tag"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
+                            className={`dashboard_input ${formik.touched.Canonical_Tag && formik.errors.Canonical_Tag ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.whatAmiCanonical_Tag && formik.errors.whatAmiCanonical_Tag && (
@@ -934,23 +931,14 @@ const FormLayout = ({
                           as="textarea"
                           name="whatAmiMeta_Description"
                           placeholder="Meta Description"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
+                          className={`dashboard_input ${formik.touched.Meta_Description && formik.errors.Meta_Description ? "border-red-500" : ""
                             }`}
                         />
                         {formik.touched.whatAmiMeta_Description && formik.errors.whatAmiMeta_Description && (
                           <div className="text-red text-sm">{formik.errors.whatAmiMeta_Description as string}</div>
                         )}
 
-
-
                       </div>
-
-
-
-
-
-
-
 
                       <div className="flex gap-4 mt-2">
                         <div className="w-full">
@@ -961,7 +949,7 @@ const FormLayout = ({
                             type="text"
                             name="short_description"
                             placeholder="Short Description"
-                            className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.short_description && formik.errors.short_description ? "border-red-500" : ""
+                            className={`dashboard_input ${formik.touched.short_description && formik.errors.short_description ? "border-red-500" : ""
                               }`}
                           />
                           {formik.touched.short_description && formik.errors.short_description && (
@@ -985,7 +973,7 @@ const FormLayout = ({
                             as="select"
                             name="category"
 
-                            className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            className="dashboard_input"
                           >
                             <option value="" disabled>
                               Select Category
@@ -1065,8 +1053,8 @@ const FormLayout = ({
                                 disabled={isActive}
                                 className={`px-4 py-2 rounded-md text-sm border
                                       ${isActive
-                                    ? 'bg-black text-white border-black cursor-not-allowed'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
+                                    ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
+                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer border dark:border-white'
                                   }`}
                               >
                                 {status}

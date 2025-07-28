@@ -195,7 +195,7 @@ const CreateAdmin = ({
                                   disabled={isActive}
                                   className={`px-4 py-2 rounded-md text-sm border
                                     ${isActive
-                                      ? 'bg-black text-white border-black cursor-not-allowed'
+                                      ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
                                       : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
                                     }`}
                                 >
@@ -347,7 +347,7 @@ const CreateAdmin = ({
                         disabled={isActive}
                         className={`px-4 py-2 rounded-md text-sm border
                           ${isActive
-                            ? 'bg-black text-white border-black cursor-not-allowed'
+                            ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
                             : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer'
                           }`}
                       >

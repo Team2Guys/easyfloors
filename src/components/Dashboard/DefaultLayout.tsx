@@ -12,9 +12,9 @@ export default function DefaultLayout({
   return (
     <div className="flex h-screen overflow-hidden">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden dark:border-strokedark dark:bg-boxdark dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white border">
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden dark:bg-black dark:text-white ">
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <main className="dark:border-strokedark dark:bg-boxdark dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white border ">
+          <main className="  dark:bg-black dark:text-white  border-white border ">
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
               {children}
             </div>

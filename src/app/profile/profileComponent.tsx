@@ -115,7 +115,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
 
     return (
 
-        <Container className="mt-4  dark:border-strokedark dark:bg-boxdark dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white border">
+        <Container className="mt-4      dark:bg-black dark:text-white  dark:border-white border">
             <div className="flex flex-wrap md:flex-nowrap md:gap-4">
                 <div className="p-2 rounded-md shadow w-full md:w-4/12 hidden md:block">
                     <div className="space-y-2 flex flex-col">
@@ -213,9 +213,9 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                         </div>
                     </div>
 
-                    <div className="col-span-5 xl:col-span-3 dark:border-strokedark dark:bg-boxdark dark:border-strokedark dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white border">
-                        <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-                            <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
+                    <div className="col-span-5 xl:col-span-3     dark:bg-black dark:text-white  dark:border-white border">
+                        <div className="rounded-sm border  bg-white   ">
+                            <div className="border-b  px-7 py-4 ">
                                 <h3 className="font-medium  dark:text-white">
                                     Personal Information
                                 </h3>
@@ -231,7 +231,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                                                 Full Name
                                             </label>
                                             <input
-                                                className="w-full rounded border border-stroke bg-gray px-4 py-3  focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                                className="dashboard_input"
                                                 type="text"
                                                 name="name"
                                                 id="name"
@@ -275,7 +275,7 @@ function ProfileComponent({ loggedInUser }: { loggedInUser: Session | null | und
                                                     </svg>
                                                 </span>
                                                 <input
-                                                    className="w-full rounded border border-stroke bg-gray py-3 pl-11 pr-4  focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
+                                                    className="dashboard_input pl-11"
                                                     type="email"
                                                     name="email"
                                                     id="email"

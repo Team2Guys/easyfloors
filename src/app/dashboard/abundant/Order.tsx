@@ -143,10 +143,10 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
                let urls = 'https://easyfloors.ae/'
                const category = p.category.trim().toLowerCase();
                if (category == "accessories" || category === 'accessory') {
-                  urls += `accessories/${p.custom_url}`
+                  urls += `accessories/${p.custom_url ?? ""}`
 
                } else {
-                  urls += `${p.category}/${p.subcategories}/${p.custom_url}`
+                  urls += `${p.category}/${p.subcategories}/${p.custom_url ?? ""}`
                }
                return (
                   urls
@@ -179,11 +179,11 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
          {ordersData && ordersData.length > 0 ? (
             <>
                <Table
-                  className="xl:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
                   dataSource={ordersData}
                   columns={columns}
                   rowKey="id"
                   pagination={false}
+                  scroll={{ y: 500 }}
                />
 
                <Modal title="Order Details" open={isModalOpen} onCancel={handleCancel} footer={null} className=''>

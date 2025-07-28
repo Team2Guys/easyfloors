@@ -152,7 +152,8 @@ const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
     <>
       <div className="flex justify-between gap-2 mb-4 items-center flex-nowrap">
         <input
-          className="primary-input w-fit max-w-96"
+          className="dashboard_input"
+          style={{ width: 'max-content' }}
           type="search"
           placeholder="Search URL"
           value={searchTerm}
@@ -161,7 +162,7 @@ const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
         <div>
           <p
             className={`py-2 px-4 rounded-md text-nowrap text-12 xs:text-base ${canAddProduct
-              ? 'cursor-pointer text-white bg-black'
+              ? 'cursor-pointer text-white bg-black dark:bg-white dark:text-black'
               : 'cursor-not-allowed bg-gray-500 text-white'
               }`}
             onClick={() => {
@@ -178,11 +179,11 @@ const sortedRedirectUrls = [...filteredRedirectUrls].sort((a, b) => {
 
       <Table
         key={sortedRedirectUrls.map(r => r.id).join(',')}
-        className="lg:overflow-hidden overflow-x-scroll !dark:border-strokedark !dark:bg-boxdark !bg-transparent"
         dataSource={sortedRedirectUrls}
         columns={columns}
         rowKey="id"
         pagination={false}
+        scroll={{ y: 500 }}
       />
     </>
   );

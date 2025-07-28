@@ -251,7 +251,7 @@ const FormLayout = ({
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
                     <div className="flex gap-4 items-center my-4">
-                      <label className="font-semibold">Sub Category Status:</label>
+                      <label className="font-semibold">Category Status:</label>
 
                       {['DRAFT', 'PUBLISHED'].map((status) => {
                         const isActive = field.value === status;
@@ -281,10 +281,10 @@ const FormLayout = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+            <div className="grid grid-cols-2 gap-4  dark:bg-black dark:text-white  dark:border-white">
                 <div className='space-y-4'>
-                    <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
-                    <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                    <div className="rounded-sm border  bg-white    dark:bg-black">
+                    <div className="border-b  py-4 px-2  dark:bg-black dark:text-white  dark:border-white">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Category Images
                       </h3>
@@ -324,7 +324,7 @@ const FormLayout = ({
                               />
 
                               <input
-                                className="border text-black mt-2 w-full rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="dashboard_input"
                                 placeholder="Alt Text"
                                 type="text"
                                 name="altText"
@@ -373,14 +373,14 @@ const FormLayout = ({
                       </ReactCrop>
                     )}
                   </Modal>
-                  <div className="rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark dark:bg-black">
-                    <div className="border-b border-stroke py-4 px-2 dark:bg-boxdark dark:bg-black dark:text-white dark:bg-boxdark dark:border-white">
+                  <div className="rounded-sm border  bg-white    dark:bg-black">
+                    <div className="border-b  py-4 px-2  dark:bg-black dark:text-white  dark:border-white">
                       <h3 className="font-medium text-black dark:text-white">
                         Add Banner Image
                       </h3>
                     </div>
                     {BannerImageUrl?.[0] && BannerImageUrl?.length > 0 ? (
-                      <div className=" p-4 dark:bg-boxdark dark:bg-black dark:text-white  dark:border-white">
+                      <div className=" p-4  dark:bg-black dark:text-white  dark:border-white">
                         {BannerImageUrl.map((item: ProductImage, index: number) => {
                           return (
                             <div
@@ -412,7 +412,7 @@ const FormLayout = ({
                                 alt={`productImage-${index}`}
                               />
                               <input
-                                className="border text-black mt-2 w-full dark:bg-black dark:text-white rounded-md border-stroke px-2 text-14 py-2 focus:border-primary active:border-primary outline-none"
+                                className="dashboard_input"
                                 placeholder="Alt Text"
                                 type="text"
                                 name="altText"
@@ -443,7 +443,7 @@ const FormLayout = ({
                         type="text"
                         name="name"
                         placeholder="Title"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name ? "border-red-500" : ""
+                        className={`dashboard_input ${formik.touched.name && formik.errors.name ? "border-red-500" : ""
                           }`}
                       />
                       <ErrorMessage name="name" component="div" className="text-red-500 text-sm" />
@@ -456,7 +456,7 @@ const FormLayout = ({
                         type="text"
                         name="custom_url"
                         placeholder="Custom URL"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
+                        className={`dashboard_input ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
                           }`}
                       />
                       <ErrorMessage name="custom_url" component="div" className="text-red-500 text-sm" />
@@ -469,7 +469,7 @@ const FormLayout = ({
                         type="text"
                         name="price"
                         placeholder="Add Starting Price"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
+                        className={`dashboard_input ${formik.touched.custom_url && formik.errors.custom_url ? "border-red-500" : ""
                           }`}
                       />
                       <ErrorMessage name="price" component="div" className="text-red-500 text-sm" />
@@ -485,7 +485,7 @@ const FormLayout = ({
                         type="text"
                         name="RecallUrl"
                         placeholder="Custom Url"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.RecallUrl && formik.errors.RecallUrl ? "border-red-500" : ""
+                        className={`dashboard_input ${formik.touched.RecallUrl && formik.errors.RecallUrl ? "border-red-500" : ""
                           }`}
                       />
                       <ErrorMessage name="RecallUrl" component="div" className="text-red-500 text-sm" />
@@ -498,7 +498,7 @@ const FormLayout = ({
                         type="text"
                         name="topHeading"
                         placeholder="Top Heading"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.topHeading && formik.errors.topHeading ? "border-red-500" : ""
+                        className={`dashboard_input ${formik.touched.topHeading && formik.errors.topHeading ? "border-red-500" : ""
                           }`}
                       />
                       <ErrorMessage name="topHeading" component="div" className="text-red-500 text-sm" />
@@ -512,7 +512,7 @@ const FormLayout = ({
                         onChange={formik.handleChange}
                         value={formik.values.short_description}
                         placeholder="Short Description"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter  dark:text-white dark:focus:border-primary ${formik.touched.name && formik.errors.name
+                        className={`dashboard_input ${formik.touched.name && formik.errors.name
                           ? 'border-red-500'
                           : ''
                           }`}
@@ -550,7 +550,7 @@ const FormLayout = ({
                           onBlur={formik.handleBlur}
                           value={formik.values.Meta_Title}
                           placeholder="Meta Title"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Title &&
+                          className={`dashboard_input ${formik.touched.Meta_Title &&
                             formik.errors.Meta_Title
                             ? 'border-red-500'
                             : ''
@@ -574,7 +574,7 @@ const FormLayout = ({
                           onChange={formik.handleChange}
                           value={formik.values.Canonical_Tag}
                           placeholder="Canonical Tag"
-                          className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Canonical_Tag &&
+                          className={`dashboard_input ${formik.touched.Canonical_Tag &&
                             formik.errors.Canonical_Tag
                             ? 'border-red-500'
                             : ''
@@ -598,7 +598,7 @@ const FormLayout = ({
                         as="textarea"
                         name="Meta_Description"
                         placeholder="Meta Description"
-                        className={`w-full rounded-lg border-[1.5px] border-stroke placeholder:text-lightgrey bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary ${formik.touched.Meta_Description && formik.errors.Meta_Description
+                        className={`dashboard_input ${formik.touched.Meta_Description && formik.errors.Meta_Description
                           ? "border-red-500"
                           : ""
                           }`}

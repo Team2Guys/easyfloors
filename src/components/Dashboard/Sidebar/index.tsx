@@ -5,11 +5,12 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SidebarLinkGroup from './SidebarLinkGroup';
 import { MdOutlineDashboard, MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { BiCategoryAlt, BiEnvelope } from 'react-icons/bi';
+import { BiCategoryAlt } from 'react-icons/bi';
 import { GrCodeSandbox, GrUserAdmin } from 'react-icons/gr';
 import { useAppSelector } from 'components/Others/HelperRedux';
 import { TfiShoppingCartFull } from 'react-icons/tfi';
 import { TbGardenCartOff } from 'react-icons/tb';
+import { SiGotomeeting } from 'react-icons/si';
 
 
 interface SidebarProps {
@@ -113,7 +114,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
           {/* <!-- Menu Group --> */}
           <div>
-            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+            <h3 className="mb-4 ml-4 text-sm font-semibold ">
               MENU
             </h3>
 
@@ -153,7 +154,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === '/dashboard' && 'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard' && 'text-white'
                                 }`}
                             >
                               eCommerce
@@ -178,7 +179,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/category' ||
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/category' ||
                             pathname === '/dashboard/subcategory'
                             ? 'bg-black dark:bg-primary'
                             : ''
@@ -209,7 +210,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/category"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${pathname === '/dashboard/category' &&
+                              className={`dashboard_side_bar mt-2.5 ${pathname === '/dashboard/category' &&
                                 'text-white'
                                 }`}
                             >
@@ -219,7 +220,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/subcategory"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white mt-2.5 ${pathname === '/dashboard/subcategory' &&
+                              className={`dashboard_side_bar mt-2.5 ${pathname === '/dashboard/subcategory' &&
                                 'text-white'
                                 }`}
                             >
@@ -242,7 +243,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/products' &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/products' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -271,7 +272,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/products"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/products' &&
+                              className={`dashboard_side_bar ${pathname === 'dashboard/products' &&
                                 'text-white'
                                 } `}
                             >
@@ -294,7 +295,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/accessories' &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/accessories' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -323,7 +324,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/accessories"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/accessories' &&
+                              className={`dashboard_side_bar ${pathname === 'dashboard/accessories' &&
                                 'text-white'
                                 } `}
                             >
@@ -348,7 +349,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/orders' &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/orders' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -376,7 +377,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/orders"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/orders' && 'text-white'
+                              className={`dashboard_side_bar ${pathname === 'dashboard/orders' && 'text-white'
                                 } `}
                             >
                               View Orders
@@ -385,10 +386,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/free-sample"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/orders' && 'text-white'
+                              className={`dashboard_side_bar ${pathname === 'dashboard/orders' && 'text-white'
                                 } `}
                             >
                               View Free Sample Orders
+                            </Link>
+                          </li>
+                          <li>
+                            <Link
+                              href="/dashboard/abundant"
+                              className={`dashboard_side_bar ${pathname === 'dashboard/abundant' &&
+                                'text-white'
+                                } `}
+                            >
+                              View Abandoned Orders
                             </Link>
                           </li>
                         </ul>
@@ -398,56 +409,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   );
                 }}
               </SidebarLinkGroup>
-              <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/abundant'}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/abundant' &&
-                          'bg-black dark:bg-primary'
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
-                          if (sidebarExpanded) {
-                            handleClick();
-                          } else {
-                            setSidebarExpanded(true);
-                          }
-                        }}
-                      >
-                        <TbGardenCartOff size={20} className="text-white" />
-                        Abandoned Order
-                        <MdOutlineKeyboardArrowDown
-                          size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
-                            }`}
-                        />
-                      </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
-                      >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/dashboard/abundant"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/abundant' &&
-                                'text-white'
-                                } `}
-                            >
-                              View Abandoned Orders
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
+  
               <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/measurement-appointment'}
               >
@@ -456,7 +418,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/measurement-appointment' &&
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/measurement-appointment' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -468,7 +430,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           }
                         }}
                       >
-                        <TbGardenCartOff size={20} className="text-white" />
+                        <SiGotomeeting  size={20} className="text-white" />
                         Appointments
                         <MdOutlineKeyboardArrowDown
                           size={30}
@@ -485,7 +447,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/measurement-appointment"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/measurement-appointment' &&
+                              className={`dashboard_side_bar ${pathname === 'dashboard/measurement-appointment' &&
                                 'text-white'
                                 } `}
                             >
@@ -495,7 +457,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/installation-appointments"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/installation-appointments' &&
+                              className={`dashboard_side_bar ${pathname === 'dashboard/installation-appointments' &&
                                 'text-white'
                                 } `}
                             >
@@ -509,58 +471,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
 
-
-              <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/usernewsletter'}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/usernewsletter' &&
-                          'bg-black dark:bg-primary'
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (sidebarExpanded) {
-                            handleClick();
-                          } else {
-                            setSidebarExpanded(true);
-                          }
-                        }}
-                      >
-                        <BiEnvelope size={20} className="text-white" />
-                        User Newsletter
-                        <MdOutlineKeyboardArrowDown
-                          size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
-                            }`}
-                        />
-                      </Link>
-
-                      <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
-                      >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
-                            <Link
-                              href="/dashboard/usernewsletter"
-                              className={`group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${pathname === 'dashboard/usernewsletter' &&
-                                'text-white'
-                                } `}
-                            >
-                              View User Newsletter
-                            </Link>
-                          </li>
-                        </ul>
-                      </div>
-
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
                    <SidebarLinkGroup
                 activeCondition={pathname === '/dashboard/general'}
               >
@@ -599,7 +509,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li key={link?.href}>
                               <Link
                                 href={link?.href || ""}
-                                className={`dashboard_side_bar_links group ${pathname === link?.href ? 'active' : ''
+                                className={`dashboard_side_bar group ${pathname === link?.href ? 'active' : ''
                                   }`}
                               >
                                 {link?.label}
@@ -620,7 +530,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <Link
                     href="/dashboard/super-admin"
-                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname.includes('super-admin') &&
+                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname.includes('super-admin') &&
                       'bg-black dark:bg-primary'
                       }`}
                   >
