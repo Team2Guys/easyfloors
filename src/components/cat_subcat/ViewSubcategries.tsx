@@ -14,6 +14,7 @@ import { ISUBCATEGORY } from 'types/cat';
 import { useMutation } from '@apollo/client';
 import { REMOVE_SUBCATEGORY } from 'graphql/mutations';
 import { FETCH_ALL_SUB_CATEGORIES } from 'graphql/queries';
+import { ColumnsType } from 'antd/es/table';
 
 
 const ViewSubcategries = ({
@@ -106,7 +107,7 @@ const ViewSubcategries = ({
     }
   };
 
-  const columns = [
+  const columns: ColumnsType<ISUBCATEGORY> = [
     {
       title: 'Image',
       dataIndex: 'posterImageUrl',
@@ -178,9 +179,11 @@ const ViewSubcategries = ({
     {
       title: 'Edit',
       key: 'Edit',
+      width: 80,
+      fixed:"right",
       render: (_: string, record: ISUBCATEGORY) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+          className={`cursor-pointer ${canEditCategory && 'text-black'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -189,6 +192,8 @@ const ViewSubcategries = ({
     {
       title: 'Action',
       key: 'action',
+      width: 80,
+      fixed:"right",
       render: (_: string, record: ISUBCATEGORY) => (
         <RiDeleteBin6Line
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${!canDeleteCategory && 'cursor-not-allowed text-slate-300'
@@ -235,13 +240,16 @@ const ViewSubcategries = ({
       </div>
 
       {filteredSubCategories && filteredSubCategories.length > 0 ? (
+        <div  className="overflow-x-scroll">
         <Table
-          className="overflow-x-scroll lg:overflow-auto"
+        className="!bg-transparent"
           dataSource={filteredSubCategories}
           columns={columns}
           pagination={false}
           rowKey="id"
+          scroll={{ y: 500, x: 1200 }}
         />
+        </div>
       ) : (
         'No Sub Categories found'
       )}

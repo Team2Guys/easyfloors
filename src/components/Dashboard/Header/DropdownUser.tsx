@@ -13,8 +13,6 @@ const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const loggedInUser = useAppSelector((state) => state.usersSlice.loggedInUser);
   
-
-
   const router = useRouter();
 
   const trigger = useRef<HTMLDivElement>(null);

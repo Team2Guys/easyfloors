@@ -562,7 +562,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         {posterimageUrl.map((item: ProductImage, index) => {
                           return (
                             <div key={index}>
-                              <div className="relative group rounded-lg overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105">
+                              <div className="relative group rounded-lg overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105 w-fit">
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red bg-white dark:bg-black rounded-full">
                                   <RxCross2
                                     className="cursor-pointer border border-black  text-red-500 dark:text-red-700"
@@ -579,7 +579,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                                 <Image
                                   onClick={() => handleCropClick(item.imageUrl)}
                                   key={index}
-                                  className="object-cover cursor-crosshair"
+                                  className="object-cover cursor-crosshair w-44 h-44"
                                   width={300}
                                   height={400}
                                   loading="lazy"
@@ -920,7 +920,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                           </label>
                           <FieldArray name="products">
                             {({ push, remove }) => (
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[600px] overflow-y-scroll">
                                 {products?.map((product) => {
                                   const isChecked =
                                     formik.values.products?.includes(
@@ -1293,6 +1293,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                       </FieldArray>
                     </div>
                   </div>
+                  <div className="grid grid-cols-2 gap-2">
+
                   <div className="mb-4 bg-white dark:bg-black text-black dark:text-white">
                     <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-white">
                       Add Color Code
@@ -1431,6 +1433,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                         className="text-red-500 dark:text-red-700 text-sm"
                       />
                     </div>}
+
+                  </div>
                 </div>
 
 
@@ -1508,7 +1512,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                   <ImageUploader setImagesUrl={setImagesUrl} />
 
                   {imagesUrl && imagesUrl.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 max-h-[400px] overflow-y-scroll">
                       {imagesUrl.map((item: ProductImage, index) => {
                         return (
                           <div
@@ -1633,7 +1637,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
 
                   {featureImagesimagesUrl &&
                     featureImagesimagesUrl.length > 0 ? (
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4 max-h-[400px] overflow-y-scroll">
                       {featureImagesimagesUrl.map(
                         (item: ProductImage, index) => {
                           return (
@@ -1741,10 +1745,36 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                 <div className="text-red-500 pt-2 pb-2">{imgError}</div>
               </div>
             ) : null}
-
+                <Field name="status">
+                  {({ field, form }: import('formik').FieldProps) => (
+                    <div className="flex gap-4 items-center border-r-2 px-2">
+                    <label className="font-semibold"> {accessoryFlag ? "Accessory" :"Product"} Status:</label>
+                      {['DRAFT', 'PUBLISHED'].map((status) => {
+                        const isActive = field.value === status;
+                        return (
+                          <button
+                            key={status}
+                            type="button"
+                            onClick={() => form.setFieldValue('status', status)}
+                            disabled={isActive}
+                            className={`px-4 py-2 rounded-md text-sm
+                                  ${isActive
+                                ?
+                                ' border text-opacity-1 cursor-not-allowed'
+                                :
+                                'dashboard_primary_button'
+                              }`}
+                          >
+                            {status}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
+                </Field>
             <button
               type="submit"
-              className="dashboard_primary_button mt-2"
+              className="dashboard_primary_button mt-2 mx-auto"
               disabled={loading}
             >
               {loading ? <Loader color="white" /> : "Submit"}

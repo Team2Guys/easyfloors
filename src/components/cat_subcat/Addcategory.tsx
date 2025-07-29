@@ -605,7 +605,12 @@ const FormLayout = ({
                       />
                       <ErrorMessage name="Meta_Description" component="div" className="text-red text-sm" />
                     </div>
-                    <Field name="status">
+                    
+                  </div>
+
+
+            </div>
+            <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
                         <div className="flex gap-4 items-center my-4">
                           <label className="font-semibold">Category Status:</label>
@@ -631,12 +636,9 @@ const FormLayout = ({
                           })}
                         </div>
                       )}
-                    </Field>
-                  </div>
-
-
-            </div>
+            </Field>
             <div className="flex justify-center">
+              
               <button
                 type="submit"
             className="dashboard_primary_button mt-2" 
@@ -645,6 +647,7 @@ const FormLayout = ({
               >
                 {loading ? <Loader color="#fff" /> : 'Submit'}
               </button>
+             
             </div>
           </Form>
         );

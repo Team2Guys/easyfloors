@@ -73,7 +73,13 @@
 
 @layer components {
   .active {
-    @apply text-white bg-black;
+    @apply text-white bg-black dark:bg-primary;
+  }
+}
+
+@layer components {
+  .Sidebar-Link {
+    @apply relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium duration-300 ease-in-out hover:bg-black dark:hover:bg-primary;
   }
 }
 

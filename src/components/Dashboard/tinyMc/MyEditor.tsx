@@ -33,7 +33,6 @@ const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
         "accordion",
         "quickbars",
         "autosave",
-        "importword",
         "link",
         "image",
         "lists",
@@ -50,7 +49,6 @@ const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
         "fullscreen",
         "insertdatetime",
         "quickbars",
-        "editimage",
         "media",
         "table",
         "emoticons",
@@ -59,14 +57,14 @@ const TinyMCEEditor = ({ name, placeholder }:TinyMCEEditorProps) => {
         "nonbreaking",
       ],
       toolbar1:
-        "undo redo | blocks | fontsize | styles | nonbreaking | bold italic | accordion | ltr rtl | quickimage | quicktable | importword",
+        "undo redo | blocks | fontsize | styles | nonbreaking | bold italic | accordion | ltr rtl | quickimage | quicktable ",
       toolbar2:
         "alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullscreen | forecolor backcolor emoticons | anchor | restoredraft | help",
       menu: {
         file: {
           title: "File",
           items:
-            "newdocument restoredraft | preview | importword exportpdf exportword | print | deleteallconversations",
+            "newdocument restoredraft | preview | print | deleteallconversations",
         },
         edit: {
           title: "Edit",

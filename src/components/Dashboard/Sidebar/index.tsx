@@ -70,7 +70,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
     const GeneralLinks = [
     { href: '/dashboard/Redirecturls', label: 'View Redirecturls' },
-   ,
   ];
 
   return (
@@ -126,7 +125,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard' && 'bg-black dark:bg-primary'
+                        className={`Sidebar-Link group ${pathname === '/dashboard' && 'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -154,7 +153,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard"
-                              className={`dashboard_side_bar ${pathname === '/dashboard' && 'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard' && 'active'
                                 }`}
                             >
                               eCommerce
@@ -206,12 +205,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
+                        <ul className=" flex flex-col pl-6">
                           <li>
                             <Link
                               href="/dashboard/category"
                               className={`dashboard_side_bar mt-2.5 ${pathname === '/dashboard/category' &&
-                                'text-white'
+                                'active'
                                 }`}
                             >
                               View Categories
@@ -221,7 +220,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <Link
                               href="/dashboard/subcategory"
                               className={`dashboard_side_bar mt-2.5 ${pathname === '/dashboard/subcategory' &&
-                                'text-white'
+                                'active'
                                 }`}
                             >
                               View Sub Categories
@@ -236,18 +235,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
 
               <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/products'}
+                activeCondition={pathname === '/dashboard/products'||
+                  pathname === '/dashboard/accessories'}
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/products' &&
+                        href="#"
+                        className={`Sidebar-Link group ${pathname === '/dashboard/products' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
+                          e.preventDefault();
                           if (sidebarExpanded) {
                             handleClick();
                           } else {
@@ -263,69 +263,26 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             }`}
                         />
                       </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
+                        <ul className="gap-2.5 mt-3 flex flex-col pl-6">
                           <li>
                             <Link
                               href="/dashboard/products"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/products' &&
-                                'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard/products' &&
+                                'active'
                                 } `}
                             >
                               View Products
                             </Link>
                           </li>
-                        </ul>
-                      </div>
-                    </>
-                  );
-                }}
-              </SidebarLinkGroup>
-
-
-              <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/accessories'}
-              >
-                {(handleClick, open) => {
-                  return (
-                    <>
-                      <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/accessories' &&
-                          'bg-black dark:bg-primary'
-                          }`}
-                        onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
-                          if (sidebarExpanded) {
-                            handleClick();
-                          } else {
-                            setSidebarExpanded(true);
-                          }
-                        }}
-                      >
-                        <GrCodeSandbox size={20} className="text-white" />
-                        Accessories
-                        <MdOutlineKeyboardArrowDown
-                          size={30}
-                          className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current text-white ${open && 'rotate-180'
-                            }`}
-                        />
-                      </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
-                      <div
-                        className={`translate transform overflow-hidden ${!open && 'hidden'
-                          }`}
-                      >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
-                          <li>
+                           <li>
                             <Link
                               href="/dashboard/accessories"
                               className={`dashboard_side_bar ${pathname === 'dashboard/accessories' &&
-                                'text-white'
+                                'active'
                                 } `}
                             >
                               View accessories
@@ -339,17 +296,15 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </SidebarLinkGroup>
 
 
-
-
               <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/orders'}
+                activeCondition={pathname === '/dashboard/orders' || pathname === '/dashboard/free-sample' || pathname === '/dashboard/abundant'}
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/orders' &&
+                        href="#"
+                        className={`Sidebar-Link group ${pathname === '/dashboard/orders'|| pathname === '/dashboard/free-sample' || pathname === '/dashboard/abundant'  &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -373,11 +328,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
                       >
-                        <ul className="mb-3 mt-3 flex flex-col gap-2.5 pl-6">
+                        <ul className="mt-3 flex flex-col gap-2.5 pl-6">
                           <li>
                             <Link
                               href="/dashboard/orders"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/orders' && 'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard/orders' && 'active'
                                 } `}
                             >
                               View Orders
@@ -386,7 +341,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/free-sample"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/orders' && 'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard/free-sample' && 'active'
                                 } `}
                             >
                               View Free Sample Orders
@@ -395,8 +350,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/abundant"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/abundant' &&
-                                'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard/abundant' &&
+                                'active'
                                 } `}
                             >
                               View Abandoned Orders
@@ -404,21 +359,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                         </ul>
                       </div>
-                      {/* <!-- Dropdown Menu End --> */}
                     </>
                   );
                 }}
               </SidebarLinkGroup>
   
               <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/measurement-appointment'}
+                activeCondition={pathname === '/dashboard/measurement-appointment' || pathname === '/dashboard/installation-appointments'}
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <Link
-                        href="/dashboard"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/measurement-appointment' &&
+                        href="#"
+                        className={`Sidebar-Link group ${pathname === '/dashboard/measurement-appointment' || pathname === '/dashboard/installation-appointments' &&
                           'bg-black dark:bg-primary'
                           }`}
                         onClick={(e) => {
@@ -438,7 +392,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             }`}
                         />
                       </Link>
-                      {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${!open && 'hidden'
                           }`}
@@ -447,8 +400,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/measurement-appointment"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/measurement-appointment' &&
-                                'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard/measurement-appointment' &&
+                                'active'
                                 } `}
                             >
                               View Measurement Appointment
@@ -457,8 +410,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/installation-appointments"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/installation-appointments' &&
-                                'text-white'
+                              className={`dashboard_side_bar ${pathname === '/dashboard/installation-appointments' &&
+                                'active'
                                 } `}
                             >
                               View Installation Appointment
@@ -471,19 +424,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
 
-                   <SidebarLinkGroup
-                activeCondition={pathname === '/dashboard/general'}
+              <SidebarLinkGroup
+                activeCondition={GeneralLinks.some(link => pathname === link.href)}
               >
                 {(handleClick, open) => {
                   return (
                     <>
                       <Link
                         href="/dashboard"
-                        className={`dashboard_side_bar group ${pathname === '/dashboard/general' &&
-                          'active'
-                          }`}
+                        className={`dashboard_side_bar group  ${
+                              GeneralLinks.some(link => pathname === link.href) ? 'active' : ''
+                            }`}
                         onClick={(e) => {
-                          e.preventDefault(); // Prevent default link behavior
+                          e.preventDefault();
                           if (sidebarExpanded) {
                             handleClick();
                           } else {
@@ -530,7 +483,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <li>
                   <Link
                     href="/dashboard/super-admin"
-                    className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname.includes('super-admin') &&
+                    className={`Sidebar-Link group ${pathname.includes('super-admin') &&
                       'bg-black dark:bg-primary'
                       }`}
                   >

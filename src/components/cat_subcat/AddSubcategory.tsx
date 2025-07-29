@@ -1037,7 +1037,11 @@ const FormLayout = ({
                     </FieldArray>
                     </div>
 
-                    <Field name="status">
+                   
+
+                    </div>
+              </div>
+              <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
                         <div className="flex gap-4 items-center my-4">
                           <label className="font-semibold">Sub Category Status:</label>
@@ -1063,11 +1067,7 @@ const FormLayout = ({
                           })}
                         </div>
                       )}
-                    </Field>
-
-                    </div>
-              </div>
-
+              </Field>
               <div className="flex justify-center">
                 <button
                   type="submit"

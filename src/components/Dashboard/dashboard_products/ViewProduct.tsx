@@ -14,6 +14,7 @@ import { useMutation } from '@apollo/client';
 import { REMOVE_ACCESSORY, REMOVE_PRODUCT } from 'graphql/mutations';
 import { FETCH_ALL_PRODUCTS } from 'graphql/queries';
 import { FETCH_ALL_ACCESSORIES } from 'graphql/Accessories';
+import { ColumnsType } from 'antd/es/table';
 
 const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   products,
@@ -113,12 +114,12 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
   };
 
 
-  const columns = [
+  const columns: ColumnsType<IProduct> = [
     {
       title: 'Image',
       dataIndex: 'posterImageUrl',
-      width: 150,
       key: 'posterImageUrl',
+      width: 100,
       render: (text: string, record: IProduct) => (
         <Image
           src={record.posterImageUrl.imageUrl || ""}
@@ -135,12 +136,13 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: 'name',
       key: 'name',
       width: 200,
+    ellipsis: true,
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 200,
+      width: 120,
     },
     {
       title: "Stock Quantity",
@@ -148,8 +150,6 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       dataIndex: "stock",
       key: "stock",
       render: (text: string, record: IProduct) => {
-
-
         return (
 
           <p>{record.stock}</p>
@@ -160,6 +160,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Create At',
       dataIndex: 'createdAt',
       key: 'createdAt',
+      width: 180,
       render: (text: string, record: IProduct) =>
         record?.createdAt ? new Date(record.createdAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
     },
@@ -168,6 +169,7 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Updated At',
       dataIndex: 'updatedAt',
       key: 'updatedAt',
+      width: 180,
       render: (text: string, record: IProduct) =>
         record?.updatedAt ? new Date(record.updatedAt).toLocaleString('en-US', { hour12: true }).replace(/:\d{2}\s/, ' ') : null,
     },
@@ -176,11 +178,14 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
       title: 'Edited By',
       dataIndex: 'last_editedBy',
       key: 'last_editedBy',
+      width: 120,
+    ellipsis: true,
     },
     {
       title: 'Preview',
       key: 'Preview',
-      width: 120,
+      fixed: 'right',
+      width: 100,
       render: (text: string, record: IProduct) => {
         let urls;
         if (record.subcategory?.custom_url) {
@@ -205,7 +210,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Edit',
       key: 'Edit',
-      width: 150,
+      width: 80,
+      fixed: 'right',
       render: (text: string, record: IProduct) => (
         <LiaEdit
           className={`${canEditproduct ? 'cursor-pointer' : ''} ${!canEditproduct ? 'cursor-not-allowed text-slate-200' : ''
@@ -223,7 +229,8 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
     {
       title: 'Action',
       key: 'action',
-      width: 150,
+      width: 80,
+      fixed: 'right',
       render: (text: string, record: IProduct) => (
         <RiDeleteBin6Line
           className={`${canDeleteProduct ? 'text-red-600 cursor-pointer' : ''} ${!canDeleteProduct ? 'cursor-not-allowed text-slate-200' : ''
@@ -270,14 +277,16 @@ const ViewProduct: React.FC<DASHBOARD_MAIN_PRODUCT_PROPS> = ({
         </div>
       </div>
       {filteredProducts && filteredProducts.length > 0 ? (
+        <div className="overflow-x-auto">
         <Table
           className="!bg-transparent"
           dataSource={filteredProducts}
           columns={columns}
           rowKey="id"
           pagination={false}
-           scroll={{ y: 500 }}
+          scroll={{ y: 500, x: 1200 }}
         />
+        </div>
       ) : (
         <p className="text-primary dark:text-white">No products found</p>
       )}
