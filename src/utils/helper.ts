@@ -178,7 +178,7 @@ export const sendAppointmentEmail = async (appointmentData: CreateAppointmentInp
               </div>
             ` : ""}
 
-<div class='text-center'>Measurement appointment will be charged at <strong><span ></span> 150</strong> which is fully <strong>REFUNDABLE</strong> if you place an order with us.</div>
+<div class='text-center'>Measurement appointment will be charged at <strong><span ></span> AED 150</strong> which is fully <strong>REFUNDABLE</strong> if you place an order with us.</div>
 
 <p>We will contact you soon to confirm your appointment. If you need to make any changes, please reply to this email or call us at +971 50 597 4385.</p>
           
