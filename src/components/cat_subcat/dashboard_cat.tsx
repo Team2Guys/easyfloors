@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Category } from 'types/cat';
 import { useMutation } from '@apollo/client';
 import { REMOVE_CATEGORY } from 'graphql/mutations';
+import { ColumnsType } from 'antd/es/table';
 
 interface CategoryProps {
   setMenuType: React.Dispatch<SetStateAction<string>>;
@@ -90,8 +91,6 @@ const DashboardCat  = ({
 
   const handleDelete = async (key: number | string) => {
     try {
-   
-
       await removeCategory({ variables: { id: Number(key) } }); 
       
       setCategory((prev: Category[] | undefined) => (prev ? prev.filter((item) => item.id !== key) : []));
@@ -119,7 +118,7 @@ const DashboardCat  = ({
     }
   };
 
-  const columns = [
+  const columns: ColumnsType<Category>  = [
     {
       title: 'Image',
       dataIndex: 'posterImageUrl',
@@ -180,9 +179,10 @@ const DashboardCat  = ({
     {
       title: 'Edit',
       key: 'Edit',
+      width: 80,
       render: (_:string, record: Category) => (
         <LiaEdit
-          className={`cursor-pointer ${canEditCategory && 'text-black dark:text-white'} ${!canEditCategory && 'cursor-not-allowed text-slate-300'}`}
+          className={`cursor-pointer ${canEditCategory && 'text-black '} ${!canEditCategory && 'cursor-not-allowed text-slate-200'}`}
           size={20}
           onClick={() => handleEdit(record)}
         />
@@ -191,6 +191,7 @@ const DashboardCat  = ({
     {
       title: 'Action',
       key: 'action',
+            fixed:"right",
       render: (text: string, record: Category) => (
         <RiDeleteBin6Line
           className={`cursor-pointer ${canDeleteCategory && 'text-red-500 dark:text-red-700'} ${
@@ -240,13 +241,16 @@ const DashboardCat  = ({
       </div>
 
         {filteredCategories && filteredCategories.length > 0 ? (
+          <div  className="overflow-x-scroll">
           <Table
-            className="overflow-x-scroll lg:overflow-auto"
-            dataSource={filteredCategories}
-            columns={columns}
-            pagination={false}
-            rowKey="id"
+          className="!bg-transparent"
+           dataSource={filteredCategories}
+           columns={columns}
+           pagination={false}
+           rowKey="id"
+           scroll={{ y: 500, x: 1200 }}
           />
+          </div>
         ) : (
           'No Categories found'
         )}

@@ -259,3 +259,13 @@ export interface CommonSwiperProps extends SwiperProps {
   enablePagination?: boolean;
   allowTouch?: boolean;
 }
+
+export interface InputWithUnitProps {
+  label: string;
+  name: string;
+  required?: boolean;
+  placeholder?: string;
+  value: string;
+  selectOptions: string[];
+  setFieldValue: (_field: string, _value: string) => void;
+}

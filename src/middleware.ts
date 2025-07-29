@@ -28,7 +28,8 @@ export async function middleware(req: NextRequest) {
 
 
   } catch (error) {
-    throw error;
+    console.error('Middleware error:', error);
+    return NextResponse.next();
 
   }
 

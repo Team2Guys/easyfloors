@@ -9,6 +9,7 @@ import { CREATE_APPOINTMENT } from "graphql/mutations";
 import { toast } from "react-toastify";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
+import InputWithUnit from "./InputWithSelect";
 
 export default function Appointment({ AppointsType }: { AppointsType: string }) {
   const [createAppointment] = useMutation(CREATE_APPOINTMENT);
@@ -46,7 +47,7 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
             }
           }}
         >
-          {({ values, handleChange, isSubmitting }) => (
+          {({ values, handleChange, isSubmitting, setFieldValue }) => (
             <Form className="space-y-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 sm:gap-2 lg:gap-4 mb-3">
                 <Input
@@ -119,15 +120,15 @@ export default function Appointment({ AppointsType }: { AppointsType: string }) 
                   options={Appointmentlocation}
                 />
 
-                <Input
-                  type="text"
-                  label="Approximate Area"
-                  name="selectRooms"
-                  placeholder="Approximate Area"
-                  required
-                  value={values.selectRooms}
-                  onChange={handleChange}
-                />
+              <InputWithUnit
+                label="Approximate Area"
+                name="selectRooms"
+                required
+                placeholder="Enter area"
+                value={values.selectRooms}
+                selectOptions={["sqm", "sqft"]}
+                setFieldValue={setFieldValue}
+              />
 
                 <Input
                   type="date"
