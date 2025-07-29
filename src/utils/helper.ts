@@ -727,7 +727,7 @@ export const sendEmailHandler = async (orderDetails: orderEmailInput, CustomerEm
                       <table style="border-collapse: collapse;">
                          <tr>
                             <td colspan="5" style="padding: 8px;" class="table-font">Subtotal</td>
-                            <td style="padding: 8px;" class="table-font">${(totalPrice && shipmentFee) && totalPrice - shipmentFee || "Free"}</td>
+                            <td style="padding: 8px;" class="table-font">${(totalPrice && shipmentFee)  ? totalPrice - shipmentFee : (totalPrice || "Free")}</td>
                          </tr>
                          <tr style="border-bottom: 2px solid #ccc;">
                             <td colspan="5" style="padding: 8px;" class="table-font">Shipment</td>
