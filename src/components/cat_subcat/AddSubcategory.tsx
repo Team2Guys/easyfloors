@@ -204,27 +204,21 @@ const FormLayout = ({
   const handleCropModalOk = async () => {
     if (croppedImage && imageSrc) {
       try {
-        // Convert the cropped image (base64) to a File
         const file = base64ToFile(croppedImage, `cropped_${Date.now()}.jpg`);
 
-        // Upload the cropped image to your backend or Cloudinary
         const response = await uploadPhotosToBackend([file]);
 
-        // Use the base URL from your environment variables
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         const uploadedImageUrl = response[0].imageUrl;
-        // Append the base URL if needed
         const newImageUrl = uploadedImageUrl.startsWith('http')
           ? uploadedImageUrl
           : `${baseUrl}${uploadedImageUrl}`;
 
         const newImage = { imageUrl: newImageUrl, public_id: response[0].public_id };
 
-        // First close the modal and reset croppedImage
         setIsCropModalVisible(false);
         setCroppedImage(null);
 
-        // Use a timeout to update states after the modal has closed
         setTimeout(() => {
           setposterimageUrl((prevImages) =>
             prevImages?.map((img) =>
@@ -259,7 +253,7 @@ const FormLayout = ({
     }
   };
 
-  // Helper function to convert a base64 string to a File object
+
   const base64ToFile = (base64: string, filename: string): File => {
     const arr = base64.split(',');
     const mimeMatch = arr[0].match(/:(.*?);/);
@@ -344,7 +338,7 @@ const FormLayout = ({
               </div>
               <div className="grid grid-cols-2 gap-4 mt-4 mb-4 bg-white dark:bg-black dark:text-white dark:border-white py-10 px-4 rounded-md shadow">
                 <div className='space-y-4'>
-                      <div className="rounded-sm border  bg-white   dark:bg-black">
+                      <div className="rounded-sm border  bg-white dark:bg-black">
                       <div className="border-b  py-4 px-2 dark:bg-black dark:text-white dark:border-white">
                         <h3 className="font-medium text-black dark:text-white">
                           Add Sub Category Images
@@ -355,7 +349,7 @@ const FormLayout = ({
                           {posterimageUrl.map((item: ProductImage, index: number) => {
                             return (
                               <div
-                                className="relative group rounded-lg w-fit  overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105"
+                                className="relative group rounded-lg w-fit overflow-hidden shadow-md bg-white dark:bg-black transform transition-transform duration-300 hover:scale-105"
                                 key={index}
                               >
                                 <div className="absolute top-1 right-1 invisible group-hover:visible text-red  rounded-full ">
