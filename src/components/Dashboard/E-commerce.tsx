@@ -44,7 +44,7 @@ const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 xl:grid-cols-4 2xl:gap-10 dark:bg-black dark:text-white  dark:border-blue-50  ">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 xl:grid-cols-4 2xl:gap-10 dark:border-blue-50  ">
           {!canVeiwAdmins ? null : (
               <CardDataStats
                 title="Admins"

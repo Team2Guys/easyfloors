@@ -525,7 +525,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             className={`px-4 py-2 rounded-md text-sm
                                   ${isActive
                                 ?
-                                ' border text-opacity-1 cursor-not-allowed'
+                                ' border text-opacity-1 cursor-not-allowed bg-white dark:bg-black dark:text-white'
                                 :
                                 'dashboard_primary_button'
                               }`}
@@ -547,7 +547,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-9 sm:grid-cols-2 bg-white dark:bg-black py-10 px-4 rounded-md shadow">
               <div className="flex flex-col gap-9 ">
                 <div className="rounded-sm border  bg-white dark:bg-black py-4 px-6">
                   <div className="rounded-sm border  bg-white dark:bg-black">
@@ -1747,8 +1747,8 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
             ) : null}
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
-                    <div className="flex gap-4 items-center border-r-2 px-2">
-                    <label className="font-semibold"> {accessoryFlag ? "Accessory" :"Product"} Status:</label>
+                    <div className="flex gap-4 items-center mt-5">
+                    <label className="font-semibold text-black dark:text-white"> {accessoryFlag ? "Accessory" :"Product"} Status:</label>
                       {['DRAFT', 'PUBLISHED'].map((status) => {
                         const isActive = field.value === status;
                         return (

@@ -153,7 +153,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard"
-                              className={`dashboard_side_bar ${pathname === '/dashboard' && 'active'
+                              className={`Sidebar-Link ${pathname === '/dashboard' && 'active'
                                 }`}
                             >
                               eCommerce
@@ -178,7 +178,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium  duration-300 ease-in-out hover:bg-black dark:hover:bg-primary ${pathname === '/dashboard/category' ||
+                        className={`Sidebar-Link group ${pathname === '/dashboard/category' ||
                             pathname === '/dashboard/subcategory'
                             ? 'bg-black dark:bg-primary'
                             : ''
@@ -209,7 +209,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/category"
-                              className={`dashboard_side_bar mt-2.5 ${pathname === '/dashboard/category' &&
+                              className={`Sidebar-Link mt-2.5 ${pathname === '/dashboard/category' &&
                                 'active'
                                 }`}
                             >
@@ -219,7 +219,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/subcategory"
-                              className={`dashboard_side_bar mt-2.5 ${pathname === '/dashboard/subcategory' &&
+                              className={`Sidebar-Link mt-2.5 ${pathname === '/dashboard/subcategory' &&
                                 'active'
                                 }`}
                             >
@@ -271,7 +271,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/products"
-                              className={`dashboard_side_bar ${pathname === '/dashboard/products' &&
+                              className={`Sidebar-Link ${pathname === '/dashboard/products' &&
                                 'active'
                                 } `}
                             >
@@ -281,7 +281,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                            <li>
                             <Link
                               href="/dashboard/accessories"
-                              className={`dashboard_side_bar ${pathname === 'dashboard/accessories' &&
+                              className={`Sidebar-Link ${pathname === 'dashboard/accessories' &&
                                 'active'
                                 } `}
                             >
@@ -332,7 +332,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/orders"
-                              className={`dashboard_side_bar ${pathname === '/dashboard/orders' && 'active'
+                              className={`Sidebar-Link ${pathname === '/dashboard/orders' && 'active'
                                 } `}
                             >
                               View Orders
@@ -341,7 +341,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/free-sample"
-                              className={`dashboard_side_bar ${pathname === '/dashboard/free-sample' && 'active'
+                              className={`Sidebar-Link ${pathname === '/dashboard/free-sample' && 'active'
                                 } `}
                             >
                               View Free Sample Orders
@@ -350,7 +350,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/abundant"
-                              className={`dashboard_side_bar ${pathname === '/dashboard/abundant' &&
+                              className={`Sidebar-Link ${pathname === '/dashboard/abundant' &&
                                 'active'
                                 } `}
                             >
@@ -400,7 +400,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/measurement-appointment"
-                              className={`dashboard_side_bar ${pathname === '/dashboard/measurement-appointment' &&
+                              className={`Sidebar-Link ${pathname === '/dashboard/measurement-appointment' &&
                                 'active'
                                 } `}
                             >
@@ -410,7 +410,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           <li>
                             <Link
                               href="/dashboard/installation-appointments"
-                              className={`dashboard_side_bar ${pathname === '/dashboard/installation-appointments' &&
+                              className={`Sidebar-Link ${pathname === '/dashboard/installation-appointments' &&
                                 'active'
                                 } `}
                             >
@@ -432,7 +432,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <>
                       <Link
                         href="/dashboard"
-                        className={`dashboard_side_bar group  ${
+                        className={`Sidebar-Link group  ${
                               GeneralLinks.some(link => pathname === link.href) ? 'active' : ''
                             }`}
                         onClick={(e) => {
@@ -462,7 +462,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li key={link?.href}>
                               <Link
                                 href={link?.href || ""}
-                                className={`dashboard_side_bar group ${pathname === link?.href ? 'active' : ''
+                                className={`Sidebar-Link group ${pathname === link?.href ? 'active' : ''
                                   }`}
                               >
                                 {link?.label}

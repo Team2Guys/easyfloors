@@ -98,11 +98,10 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
             <Field name="status">
             {({ field, form }: import('formik').FieldProps) => (
               <div className="flex gap-4 items-center my-4">
-                <label className="font-semibold">Redirect Status:</label>
+                <label className="font-semibold dark:text-white">Redirect Status:</label>
 
                 {['DRAFT', 'PUBLISHED'].map((status) => {
                   const isActive = field.value === status;
-
                   return (
                     <button
                       key={status}
@@ -127,21 +126,23 @@ function AddRedirecturl({ RedirectUrls, setRedirectUrls, setselecteMenu }: IVIEW
           </button>
           </div>
 </div>
-            <div className='space-y-2'>
+          <div className='bg-white dark:bg-black p-4 rounded-lg shadow-md space-y-4 dark:text-white'>
+              <div className='space-y-2'>
               <label htmlFor="name">Url Endpoint </label>
-              <Field name="url" type="text" className="dashboard_input" />
+              <Field name="url" type="text" className="dashboard_input" placeholder="Url Endpoint" />
               <ErrorMessage name="url" component="div" className="text-red-500 text-sm" />
-            </div>
+              </div>
 
             <div className='space-y-2'>
               <label htmlFor="redirectedUrl">Redirect Pages</label>
-              <Field name="redirectedUrl" type="text" className="dashboard_input" />
+              <Field name="redirectedUrl" type="text" className="dashboard_input" placeholder="Redirect Pages" />
               <ErrorMessage name="redirectedUrl" component="div" className="text-red-500 text-sm" />
             </div>
+          </div>
             <Field name="status">
             {({ field, form }: import('formik').FieldProps) => (
               <div className="flex gap-4 items-center my-4">
-                <label className="font-semibold">Redirect Status:</label>
+                <label className="font-semibold dark:text-white">Redirect Status:</label>
 
                 {['DRAFT', 'PUBLISHED'].map((status) => {
                   const isActive = field.value === status;

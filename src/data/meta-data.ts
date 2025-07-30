@@ -1,5 +1,5 @@
 
-import logo from "../../public/assets/images/logo.webp";
+import logo from "../../public/assets/images/logo.png";
 export const BASE_URL = 'https://easyfloors.ae';
 
 export const pageMetadataData = {

@@ -88,10 +88,10 @@ const Navbar = ({ categories, products}: INavbar) => {
         <div className="w-2/12 lg:w-[6%] 2xl:w-[10.3%] 3xl:w-[11%] ">
           <Link href="/">
             <Image
-              width={200}
-              height={200}
+              width={300}
+              height={300}
               className="w-[54px] h-[30px] lg:h-[35px] xl:w-[150px] xl:h-[50px] 2xl:h-auto max-h-20 md:pb-2"
-              src="/assets/images/logo.webp"
+              src="/assets/images/logo.png"
               alt="logo"
               sizes="(max-width: 768px) 54px, 200px"
             />

@@ -174,7 +174,7 @@ const Order = ({ title, ordersData, isfreesample, orders }: { title: string, ord
    return (
       <DefaultLayout>
          <Breadcrumb pageName={title} />
-         <button className='flex items-center gap-2' onClick={handleExport}> Export Orders <FiDownloadCloud className='text-primary' /></button>
+         <button className='flex items-center gap-2 dark:text-white mb-4' onClick={handleExport}> Export Orders <FiDownloadCloud className='text-primary' /></button>
 
          {ordersData && ordersData.length > 0 ? (
             <>

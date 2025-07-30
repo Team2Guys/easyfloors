@@ -251,7 +251,7 @@ const FormLayout = ({
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
                     <div className="flex gap-4 items-center my-4">
-                      <label className="font-semibold">Category Status:</label>
+                      <label className="font-semibold text-black dark:text-white">Category Status:</label>
 
                       {['DRAFT', 'PUBLISHED'].map((status) => {
                         const isActive = field.value === status;
@@ -264,8 +264,8 @@ const FormLayout = ({
                             disabled={isActive}
                             className={`px-4 py-2 rounded-md text-sm border
                         ${isActive
-                                ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
-                                : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer border dark:border-white'
+                                ? 'border text-opacity-1 cursor-not-allowed bg-white dark:bg-black dark:text-white'
+                                : 'dashboard_primary_button'
                               }`}
                           >
                             {status}
@@ -281,7 +281,7 @@ const FormLayout = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4  dark:bg-black dark:text-white  dark:border-white">
+            <div className="grid grid-cols-2 gap-4 bg-white dark:bg-black dark:text-white  dark:border-white py-10 px-4 rounded-md shadow">
                 <div className='space-y-4'>
                     <div className="rounded-sm border  bg-white    dark:bg-black">
                     <div className="border-b  py-4 px-2  dark:bg-black dark:text-white  dark:border-white">
@@ -613,7 +613,7 @@ const FormLayout = ({
             <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
                         <div className="flex gap-4 items-center my-4">
-                          <label className="font-semibold">Category Status:</label>
+                          <label className="font-semibold text-black dark:text-white">Category Status:</label>
 
                           {['DRAFT', 'PUBLISHED'].map((status) => {
                             const isActive = field.value === status;
@@ -626,8 +626,8 @@ const FormLayout = ({
                                 disabled={isActive}
                                 className={`px-4 py-2 rounded-md text-sm border
                                         ${isActive
-                                    ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer rder dark:border-white'
+                                    ? 'border text-opacity-1 cursor-not-allowed bg-white dark:bg-black dark:text-white'
+                                    : 'dashboard_primary_button'
                                   }`}
                               >
                                 {status}
