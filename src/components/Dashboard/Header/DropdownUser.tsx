@@ -45,15 +45,18 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
-  const logoutHhandler = () => {
-    try {
-      Cookies.remove('admin_access_token');
-      Cookies.remove('super_admin_access_token');
+const logoutHhandler = async () => {
+  try {
+    Cookies.remove('admin_access_token');
+    Cookies.remove('super_admin_access_token');
+    setTimeout(() => {
       router.push('/dashboard/Admin-login');
-    } catch (err) {
-      throw err
-    }
-  };
+    }, 100);
+  } catch (err) {
+    console.error("Logout failed", err);
+  }
+};
+
 
   return (
     <div className="relative">
