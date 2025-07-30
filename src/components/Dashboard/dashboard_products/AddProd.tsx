@@ -525,7 +525,7 @@ const AddProd: React.FC<DASHBOARD_ADD_SUBCATEGORIES_PROPS_PRODUCTFORMPROPS> = ({
                             className={`px-4 py-2 rounded-md text-sm
                                   ${isActive
                                 ?
-                                ' border text-opacity-1 cursor-not-allowed'
+                                ' border text-opacity-1 cursor-not-allowed bg-white dark:bg-black dark:text-white'
                                 :
                                 'dashboard_primary_button'
                               }`}

@@ -326,8 +326,8 @@ const FormLayout = ({
                               disabled={isActive}
                               className={`px-4 py-2 rounded-md text-sm border
                                       ${isActive
-                                  ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
-                                  : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer border dark:border-white'
+                                  ? 'border text-opacity-1 cursor-not-allowed bg-white dark:bg-black dark:text-white'
+                                  : 'dashboard_primary_button'
                                 }`}
                             >
                               {status}
@@ -1057,8 +1057,8 @@ const FormLayout = ({
                                 disabled={isActive}
                                 className={`px-4 py-2 rounded-md text-sm border
                                       ${isActive
-                                    ? 'bg-black text-white border-black cursor-not-allowed border dark:border-white'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100 cursor-pointer border dark:border-white'
+                                    ? 'border text-opacity-1 cursor-not-allowed bg-white dark:bg-black dark:text-white'
+                                    : 'dashboard_primary_button'
                                   }`}
                               >
                                 {status}
