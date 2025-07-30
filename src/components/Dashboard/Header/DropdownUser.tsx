@@ -45,15 +45,18 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
-  const logoutHhandler = () => {
-    try {
-      Cookies.remove('admin_access_token');
-      Cookies.remove('super_admin_access_token');
+const logoutHandler = async () => {
+  try {
+    Cookies.remove('admin_access_token');
+    Cookies.remove('super_admin_access_token');
+    setTimeout(() => {
       router.push('/dashboard/Admin-login');
-    } catch (err) {
-      throw err
-    }
-  };
+    }, 100);
+  } catch (err) {
+    console.error("Logout failed", err);
+  }
+};
+
 
   return (
     <div className="relative">
@@ -98,7 +101,7 @@ const DropdownUser = () => {
       >
         <button
           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white "
-          onClick={logoutHhandler}
+          onClick={logoutHandler}
         >
           <RiLogoutBoxLine size={20} />
           Log Out
