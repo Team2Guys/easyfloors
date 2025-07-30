@@ -45,7 +45,7 @@ const DropdownUser = () => {
     return () => document.removeEventListener('keydown', keyHandler);
   });
 
-const logoutHhandler = async () => {
+const logoutHandler = async () => {
   try {
     Cookies.remove('admin_access_token');
     Cookies.remove('super_admin_access_token');
@@ -101,7 +101,7 @@ const logoutHhandler = async () => {
       >
         <button
           className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base text-black dark:text-white "
-          onClick={logoutHhandler}
+          onClick={logoutHandler}
         >
           <RiLogoutBoxLine size={20} />
           Log Out
