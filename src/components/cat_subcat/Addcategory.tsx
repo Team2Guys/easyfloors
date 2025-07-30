@@ -251,7 +251,7 @@ const FormLayout = ({
                 <Field name="status">
                   {({ field, form }: import('formik').FieldProps) => (
                     <div className="flex gap-4 items-center my-4">
-                      <label className="font-semibold">Category Status:</label>
+                      <label className="font-semibold text-black dark:text-white">Category Status:</label>
 
                       {['DRAFT', 'PUBLISHED'].map((status) => {
                         const isActive = field.value === status;
@@ -281,7 +281,7 @@ const FormLayout = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4  dark:bg-black dark:text-white  dark:border-white">
+            <div className="grid grid-cols-2 gap-4 bg-white dark:bg-black dark:text-white  dark:border-white py-10 px-4 rounded-md shadow">
                 <div className='space-y-4'>
                     <div className="rounded-sm border  bg-white    dark:bg-black">
                     <div className="border-b  py-4 px-2  dark:bg-black dark:text-white  dark:border-white">
@@ -613,7 +613,7 @@ const FormLayout = ({
             <Field name="status">
                       {({ field, form }: import('formik').FieldProps) => (
                         <div className="flex gap-4 items-center my-4">
-                          <label className="font-semibold">Category Status:</label>
+                          <label className="font-semibold text-black dark:text-white">Category Status:</label>
 
                           {['DRAFT', 'PUBLISHED'].map((status) => {
                             const isActive = field.value === status;

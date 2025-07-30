@@ -12,7 +12,6 @@ const Customprovider: React.FC<ProvidersProps> = ({ children }) => {
     <Provider store={store}>
       <SessionProvider>
 
-
         {children}
       </SessionProvider>
 

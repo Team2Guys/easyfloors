@@ -16,7 +16,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   className,
 }) => {
   return (
-<div className={`rounded-md shadow border px-7 py-6 relative overflow-hidden ${className}`}>
+<div className={`rounded-md shadow dark:border px-7 py-6 relative overflow-hidden bg-white dark:bg-transparent ${className}`}>
   
       <div className="flex h-full w-28 items-center justify-end pr-4 rounded-full bg-primary dark:text-black dark:bg-white absolute -top-0 left-0 -translate-x-1/2">
         {children}

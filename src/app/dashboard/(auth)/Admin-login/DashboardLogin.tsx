@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-
-
 import { useRouter } from 'next/navigation';
 import Toaster from 'components/Toaster/Toaster';
 import { useAppDispatch } from 'components/Others/HelperRedux';
@@ -50,18 +48,20 @@ const DashboardLogin = () => {
       const { email, password } = formData
 
       const adminFlag = adminType == 'Admin'
-const Admin_type = adminFlag ? "adminLogin" :"superAdminLogin"
-
-      const response = adminFlag ? await adminLogin({
-        variables: { email, password }}) : await superadminLogin({variables: { email, password },})
+      const Admin_type = adminFlag ? "adminLogin" :"superAdminLogin"
+      
+      const response = adminFlag ? await adminLogin({variables: { email, password }}) : await superadminLogin({variables: { email, password },})
       dispatch(loggedInAdminAction(response.data[Admin_type]));
       Cookies.set(
         adminType == 'Admin' ? 'admin_access_token' : 'super_admin_access_token',
         response.data[Admin_type].token,
         {
-          expires: 24 * 60 * 60 * 1000,
+          expires: 1,
         },
       );
+      Cookies.set('loggedInUser', JSON.stringify(response.data[Admin_type]), {
+        expires: 1,
+      });
       setFormData(intialvalue);
       Toaster('success', 'You have sucessfully login');
 
