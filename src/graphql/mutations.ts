@@ -158,6 +158,34 @@ export const super_admin_ADMIN_LOGIN = gql`
   }
 `;
 
+export const FIND_ADMIN_MUTATION = gql`
+  mutation FindAdmin {
+    admin {
+      id
+        fullname
+        email
+        password
+        canAddProduct
+        canEditProduct
+        canDeleteProduct
+        canAddCategory
+        canDeleteCategory
+        canEditCategory
+        canCheckProfit
+        canCheckRevenue
+        canCheckVisitors
+        canViewUsers
+        canViewSales
+        canVeiwAdmins
+        canVeiwTotalproducts
+        canVeiwTotalCategories
+        posterImageUrl
+        role
+        status
+    }
+  }
+`;
+
 
 
 export const UPDATE_PRODUCT = gql`

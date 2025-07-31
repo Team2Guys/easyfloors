@@ -6,14 +6,13 @@ import NeedHelp from './NeedHelp/NeedHelp';
 import { ApolloProvider } from '@apollo/client';
 import client from 'config/apolloClient';
 import { ReactNode } from 'react';
-import { useAdminAuthInit } from 'hooks/useAuthInitializer';
 
 const PathnameWrapper = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname() as string;
 
   const withoutHeaderPages = ['/dashboard', '/thanks', '/login', '/signup', '/forgot-password'];
   const hideNeedHelpPages = ['/privacy-policy', '/terms-and-conditions','/return-and-refund-policy','/how-to-measure-your-room','/shipping-policy','/faqs','/measurement-appointment',"/checkout",'/contact-us',"/track-order","/help-with-installations"];
-  useAdminAuthInit()
+
   return (
     <ApolloProvider client={client}>
       <>
