@@ -49,7 +49,7 @@ const logoutHandler = async () => {
   try {
     Cookies.remove('admin_access_token');
     Cookies.remove('super_admin_access_token');
-     Cookies.remove('loggedInUser');
+    Cookies.remove('admin_data');
     setTimeout(() => {
       router.push('/dashboard/Admin-login');
     }, 100);

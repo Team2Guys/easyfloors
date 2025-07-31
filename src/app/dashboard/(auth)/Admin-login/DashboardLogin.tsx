@@ -59,9 +59,10 @@ const DashboardLogin = () => {
           expires: 1,
         },
       );
-      Cookies.set('loggedInUser', JSON.stringify(response.data[Admin_type]), {
-        expires: 1,
-      });
+      Cookies.set(
+        'admin_data',JSON.stringify({...response.data[Admin_type],role: adminType}),
+        { expires: 1 }
+      );
       setFormData(intialvalue);
       Toaster('success', 'You have sucessfully login');
 
