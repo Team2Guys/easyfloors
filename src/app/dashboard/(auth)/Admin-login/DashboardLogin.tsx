@@ -56,12 +56,12 @@ const DashboardLogin = () => {
         adminType == 'Admin' ? 'admin_access_token' : 'super_admin_access_token',
         response.data[Admin_type].token,
         {
-          expires: 1,
+          expires: 24 * 60 * 60 * 1000,
         },
       );
       Cookies.set(
         'admin_data',JSON.stringify({...response.data[Admin_type],role: adminType}),
-        { expires: 1 }
+        { expires: 24 * 60 * 60 * 1000 }
       );
       setFormData(intialvalue);
       Toaster('success', 'You have sucessfully login');
