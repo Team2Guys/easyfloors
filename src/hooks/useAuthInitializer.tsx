@@ -12,7 +12,6 @@ export const useAdminAuthInit = () => {
     const adminToken = Cookies.get('admin_access_token');
     const superAdminToken = Cookies.get('super_admin_access_token');
     const userData = Cookies.get('loggedInUser');
-
     if (userData) {
       try {
         const parsedUser = JSON.parse(userData);
