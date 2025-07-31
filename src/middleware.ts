@@ -18,8 +18,7 @@ export async function middleware(req: NextRequest) {
 
     console.log(isProtectedRoute,"isAuthRoute", isAuthRoute)
 
-       let validToken = false;
-
+    let validToken = false;
     if (token) {
       try {
         const adminList = await get_allAdmins(token);

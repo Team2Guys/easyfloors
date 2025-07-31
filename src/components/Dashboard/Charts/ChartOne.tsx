@@ -104,7 +104,7 @@ const ChartOne = ({ chartData }: { chartData: MONTHLYGRAPH }) => {
 
   return (
     <div className="col-span-12 border p-5 shadow rounded-xl sm:px-7 xl:col-span-8 space-y-4 bg-white dark:bg-black">
-      <p className="font-semibold">
+      <p className="font-semibold dark:text-white">
         Monthly Statistics
       </p>
       {chartData && (
