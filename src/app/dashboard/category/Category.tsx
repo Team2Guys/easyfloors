@@ -2,10 +2,11 @@
 
 import Breadcrumb from 'components/Dashboard/Breadcrumbs/Breadcrumb';
 import DefaultLayout from 'components/Dashboard/DefaultLayout';
+import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import Addcategory from 'components/cat_subcat/Addcategory';
+const Addcategory = dynamic(()=> import("components/cat_subcat/Addcategory"),{ssr: false});
+const DashboardCat = dynamic(()=> import("components/cat_subcat/dashboard_cat"),{ssr: false});
 import { Category } from 'types/cat';
-import DashboardCat from 'components/cat_subcat/dashboard_cat';
 
 const CATEGORY = ({ cetagories }: { cetagories: Category[] }) => {
   const [menuType, setMenuType] = useState<string>('Categories');

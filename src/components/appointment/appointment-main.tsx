@@ -1,5 +1,7 @@
+"use client"
 import React from 'react'
-import Appointment from './Appointment'
+import dynamic from "next/dynamic";
+const Appointment = dynamic(()=> import("./Appointment"),{ssr: false});
 import { Appointmentprops } from 'types/type'
 
 const AppointmentMain = ({title,description, AppointsType}:Appointmentprops) => {

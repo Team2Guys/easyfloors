@@ -3,10 +3,8 @@ import dynamic from 'next/dynamic';
 import { cookies } from 'next/headers';
 import React from 'react'
 import { IAppointment } from 'types/types';
-
-
-
 const Measurement = dynamic(() => import('../measurement-appointment/Measurement'));
+
 const Page = async () => {
   const allCookies = await cookies();
   const token =

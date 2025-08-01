@@ -1,12 +1,11 @@
 'use client';
-import React, { Fragment, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Loader from 'components/Loader/Loader';
 import { Input } from '../ui/input';
 import { USRPROPS } from 'types/type';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { FaRegUser } from 'react-icons/fa';
-import Services from '../services/services';
 
 export default function UserComponent({
   handleSubmit,
@@ -31,8 +30,7 @@ export default function UserComponent({
   };
 
   return (
-    <>
-      <div className="grid grid-cols-1 justify-center px-2 py-5">
+    <div className="grid grid-cols-1 justify-center px-2 py-5">
         <div className="max-w-screen-sm mx-auto px-2 py-5 xs:p-5 sm:p-10 shadow-[0px_3px_6px_#00000029] rounded-md h-fit">
 
           <Tabs value={activeTab} onValueChange={handleTabChange}>
@@ -172,8 +170,6 @@ export default function UserComponent({
             </TabsContent>
           </Tabs>
         </div>
-      </div>
-      <Services />
-    </>
+    </div>
   );
 }

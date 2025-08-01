@@ -1,13 +1,14 @@
 "use client";
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
 import Container from "components/common/container/Container";
 import PaymentMethod from "components/product-detail/payment";
-import Thumbnail from "components/product-detail/thumbnail";
-import AreaCalculator from "components/product-detail/AreaCalculator";
+const Thumbnail = dynamic(()=> import("components/product-detail/thumbnail"),{ssr: false});
+const AreaCalculator = dynamic(()=> import("components/product-detail/AreaCalculator"),{ssr: false});
 import Image from "next/image";
 import { LuHeart } from "react-icons/lu";
 import { calculateProductDetails, handleAddToStorage } from "lib/carthelper";
 import { detailprops } from "types/product-detail";
-import React, { useState } from "react";
 import { paymentcard } from "data/cart";
 import { formatAED } from "lib/helperFunctions";
 const ProductContainer = ({ MainCategory, subCategory, productData, className, isQuickView }: detailprops) => {

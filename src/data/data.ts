@@ -1,11 +1,6 @@
 import { BoxData, CardData, FAQItem, Feature, HeroItem, TCategoryData } from "types/type";
 import { AuthData, CategoryFeatures, FAQ, SampleGridData, SocialLink, TAboutUs } from "types/types";
 import * as Yup from 'yup';
-import palette from '../../public/assets/images/icon/chat-46.png';
-import delivery from '../../public/assets/images/icon/delivery-fast.png';
-import privacy from '../../public/assets/images/icon/privacy.png';
-import support from '../../public/assets/images/icon/chat-46.png';
-import { StaticImageData } from 'next/image';
 import { AdditionalInformation } from 'types/prod';
 import { EDIT_CATEGORY, ISUBCATEGORY_EDIT } from 'types/cat';
 import { MeasurementSection } from '../types/types';
@@ -171,36 +166,6 @@ export const AddProductvalidationSchema = Yup.object().shape({
   discountPrice: Yup.number().nullable(),
 });
 
-
-
-interface IServiceItem {
-  id: number;
-  icon: StaticImageData;
-  title: string;
-}
-
-export const serviceItems: IServiceItem[] = [
-  {
-    id: 1,
-    icon: palette,
-    title: 'Unique Everything',
-  },
-  {
-    id: 2,
-    icon: delivery,
-    title: 'Free Shipping & Return',
-  },
-  {
-    id: 3,
-    icon: privacy,
-    title: 'Secure Payments',
-  },
-  {
-    id: 4,
-    icon: support,
-    title: 'Support Customer',
-  },
-];
 
 export const Appointmentlocation = [
   { value: "Dubai", label: "Dubai" },
@@ -384,8 +349,8 @@ export const blocksData = [
 ];
 export const FloorItemsData = [
   { id: 1, title: 'Herringbone Floor', imageUrl: '/assets/images/Home/Herringbone.webp' , hoverImage: '/assets/images/Home/HerringboneHover.webp' },
-  { id: 2, title: 'Eco Floor ', imageUrl: '/assets/images/Home/Eco.webp' , hoverImage: '/assets/images/Home/EcoHover.webp' },
-  { id: 3, title: 'Prime Floor', imageUrl: '/assets/images/Home/Prime.webp' , hoverImage: '/assets/images/Home/PrimeHover.webp' },
+  { id: 2, title: 'Eco Floor', imageUrl: '/assets/images/Home/Eco.webp' , hoverImage: '/assets/images/Home/EcoHover.webp' },
+  { id: 3, title: 'Prime Floor', imageUrl: '/assets/images/Home/Prime.webp' , hoverImage: '/assets/images/Home/PrimeHover.webp' },
 ];
 
 
@@ -394,7 +359,7 @@ export const categoriesFeatures: CategoryFeatures[] = [
     name: "Richmond SPC Eco",
     features: [
       "Hottest selling collection",
-      "⁠Ideal for large projects",
+      "Ideal for large projects",
       "Most affordable",
       "Scratch/water resistant",
       "1220 x 183 x 4mm"
@@ -404,8 +369,8 @@ export const categoriesFeatures: CategoryFeatures[] = [
     name: "Richmond LVT Comfort",
     features: [
       "Affordable luxury",
-      "⁠Free underlay with all Polar",
-      "⁠5 year residential warranty",
+      "Free underlay with all Polar",
+      "5 year residential warranty",
       "Water resistant",
       "640 x 128 x 4mm"
     ],
@@ -414,9 +379,9 @@ export const categoriesFeatures: CategoryFeatures[] = [
     name: "Richmond LVT Luxury",
     features: [
       "Affordable collection",
-      "⁠Perfect for kitchen and kids areas",
-      "⁠Natural wood finishes",
-      "⁠Free underlay with all Polar",
+      "Perfect for kitchen and kids areas",
+      "Natural wood finishes",
+      "Free underlay with all Polar",
       "1220 x 180 x 4mm"
     ],
   },
@@ -424,9 +389,9 @@ export const categoriesFeatures: CategoryFeatures[] = [
     name: "Richmond SPC Prime",
     features: [
       "IXPE attached underlay",
-      "⁠Click system",
-      "⁠No gaps installation",
-      "⁠1220 x 183 x 4mm"
+      "Click system",
+      "No gaps installation",
+      "1220 x 183 x 4mm"
     ],
   },
   {
@@ -463,7 +428,7 @@ export const categoriesFeatures: CategoryFeatures[] = [
     features: [
       "Easy-clean technology",
       "No shrinking/expansion",
-      "⁠Water resistant",
+      "Water resistant",
       "Wider luxury plank",
       "1220 X 228mm"
     ],
@@ -594,12 +559,12 @@ export const popupCards: CardData[] = [
 
   {
     id: 8,
-    heading: "Polar <br /> LVT Comfort",
+    heading: "Polar <br /> LVT Comfort",
     content: [
       "Wood-like textured finish",
       "Durable with 0.3mm wear layer",
       "1220mm x 180mm plank size",
-      "Up to 5-year warranty",
+      "Up to 5-year warranty",
       "15-year warranty",
     ],
   },
