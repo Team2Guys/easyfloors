@@ -1,14 +1,15 @@
 "use client";
+import React from 'react';
+import dynamic from 'next/dynamic';
 import Container from 'components/common/container/Container';
-import AdditionalInfo from 'components/product-detail/additional-information';
-import FaqDetail from 'components/product-detail/faq-detail';
-import Features from 'components/Reusable/features';
 import Breadcrumb from 'components/Reusable/breadcrumb';
 import RelatedSlider from 'components/related-slider/related-slider';
 import { featureItems } from 'data/data';
-import React from 'react';
 import { detailprops } from 'types/product-detail';
 import ProductContainer from 'components/ProdutDetailContainer/ProductContainer';
+const AdditionalInfo = dynamic(()=> import("components/product-detail/additional-information"),{ssr: false});
+const FaqDetail = dynamic(()=> import("components/product-detail/faq-detail"),{ssr: false});
+const Features = dynamic(()=> import("components/Reusable/features"),{ssr: false});
 
 const ProductDetail = ({ MainCategory, subCategory, ProductName, productData , AccessoriesProducts }: detailprops) => {
   return (

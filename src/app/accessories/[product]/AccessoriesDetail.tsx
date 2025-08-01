@@ -1,12 +1,13 @@
 "use client"
 import AccessoriesContainer from 'components/accessoriesDetailProduct/AccessoriesContainer'
 import Container from 'components/common/container/Container'
-import AdditionalInfo from 'components/product-detail/additional-information'
-import FaqDetail from 'components/product-detail/faq-detail'
+const AdditionalInfo = dynamic(()=> import("components/product-detail/additional-information"),{ssr: false});
+const FaqDetail = dynamic(()=> import("components/product-detail/faq-detail"),{ssr: false});
+const Features = dynamic(()=> import("components/Reusable/features"),{ssr: false});
 import RelatedSlider from 'components/related-slider/related-slider'
 import Breadcrumb from 'components/Reusable/breadcrumb'
-import Features from 'components/Reusable/features'
 import { featureItems } from 'data/data'
+import dynamic from 'next/dynamic';
 import React from 'react'
 import { IProduct } from 'types/prod'
 import { detailprops } from 'types/product-detail'
