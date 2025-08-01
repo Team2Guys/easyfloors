@@ -6,13 +6,14 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { RiLogoutBoxLine } from 'react-icons/ri';
-import { useAppSelector } from 'Others/HelperRedux';
+import { useAppDispatch, useAppSelector } from 'Others/HelperRedux';
+import { loggedInAdminAction } from '../../../redux/slices/Admin/AdminsSlice';
 
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const loggedInUser = useAppSelector((state) => state.usersSlice.loggedInUser);
-  
+const dispatch = useAppDispatch();
   const router = useRouter();
 
   const trigger = useRef<HTMLDivElement>(null);
@@ -49,7 +50,9 @@ const logoutHandler = async () => {
   try {
     Cookies.remove('admin_access_token');
     Cookies.remove('super_admin_access_token');
-     Cookies.remove('loggedInUser');
+    Cookies.remove('admin_data');
+    
+    dispatch(loggedInAdminAction(undefined));
     setTimeout(() => {
       router.push('/dashboard/Admin-login');
     }, 100);

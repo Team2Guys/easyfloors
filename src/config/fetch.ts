@@ -4,7 +4,7 @@ import { DocumentNode } from '@apollo/client';
 import { FETCH_ALL_ACCESSORIES, FETCH_META_TITLE } from 'graphql/Accessories';
 import { Category } from 'types/cat';
 import { IProduct } from 'types/prod';
-import { ORDER_QUERY } from 'graphql/mutations';
+import { FIND_ADMIN_MUTATION, ORDER_QUERY } from 'graphql/mutations';
 
 
 export const fetchProducts = async (CUSTOMIZE_QUERY?: DocumentNode) => {
@@ -169,7 +169,24 @@ export const get_allAdmins = async (token: string | undefined) => {
 
 }
 
+export const get_Admin = async (token: string | undefined) => {
+  try {
 
+    const { data } = await client.query({
+      query: FIND_ADMIN_MUTATION,
+      context: {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    })
+    return data?.admin || []
+  } catch (error) {
+    console.log(error, "error in get_Admin")
+    return error;
+  }
+
+}
 
 export const fetchAccessories = async (CUSTOMISE_ACCESSORIES?: DocumentNode) => {
   try {

@@ -1,3 +1,4 @@
+import { get_allAdmins } from "config/fetch";
 import { findOneRedirectUrl } from "config/general";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
@@ -16,11 +17,24 @@ export async function middleware(req: NextRequest) {
     const isProtectedRoute = pathname.startsWith("/dashboard") && !isAuthRoute;
 
     console.log(isProtectedRoute,"isAuthRoute", isAuthRoute)
-    if (token && isAuthRoute) {
+
+    let validToken = false;
+    if (token) {
+      try {
+        const adminList = await get_allAdmins(token);
+        if (adminList && adminList.length > 0) {
+          validToken = true;
+        }
+      } catch {
+        validToken = false;
+      }
+    }
+
+    if (validToken && isAuthRoute) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
 
-    if (!token && isProtectedRoute) {
+    if (!validToken && isProtectedRoute) {
       return NextResponse.redirect(new URL("/dashboard/Admin-login", req.url));
     }
 

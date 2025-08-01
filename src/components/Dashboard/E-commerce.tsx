@@ -16,9 +16,11 @@ import { LiaCashRegisterSolid } from 'react-icons/lia';
 import { BsBoxes } from 'react-icons/bs';
 import { SiReactrouter } from 'react-icons/si';
 import { FaInstalod } from 'react-icons/fa';
+import { useAdminAuthInit } from 'hooks/useAuthInitializer';
 
 const ECommerce = ({records,chartData,weeklyChart}: {records: RECORDS,chartData:MONTHLYGRAPH, weeklyChart :WEEKLYGRAPH}) => {
   const { loggedInUser } = useAppSelector((state) => state.usersSlice);
+  useAdminAuthInit()
 
   const canCheckProfit =
     loggedInUser &&
